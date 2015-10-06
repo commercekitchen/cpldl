@@ -1,14 +1,15 @@
-# Greenfield Starter Project
+# Chicago Public Library - Digital Learn
 
-The purpose of this project is to speed up initializing a new Rails
-project.  Our agreed upon list of Rails gems and settings are included so
-that we don't need to discuss each choice that has been made in the past.
+## Install Dependencies
+RVM
+Postgresql
+Redis
+
 
 ## Starting a new project using this template
 
 * Clone this project from Github
-* Create a new gemset with 'rvm gemset create <project name>'
-* Change .ruby-gemset for new project name
+* Create a new gemset with 'rvm gemset create cpldl' (assumes rvm is installed)
 * Run `bundle install`
 * Configure Devise - TODO:
 * Configure Redis - TODO:

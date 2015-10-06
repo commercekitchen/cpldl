@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 # Base set of gems
 gem 'rails', '4.2.4'
+# gem 'pg'
+gem 'sqlite3'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
@@ -41,7 +43,7 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  gem 'spring'
+  # gem 'spring'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
   # gem 'httplog'  # Note: uncomment and bundle to see api calls, if needed.
