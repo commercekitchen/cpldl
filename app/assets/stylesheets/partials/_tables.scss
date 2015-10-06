@@ -1,0 +1,40 @@
+@import "vars";
+
+table.info-table {
+  margin: 0 0 2em 0;
+  padding: 0;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table.info-table th,
+table.info-table td {
+  padding: 10px 20px;
+  text-align: left;
+  border-bottom: 1px solid $purple;
+
+  &.align-right {
+    text-align: right;
+  }
+}
+
+table.info-table th {
+  border-width: 2px;
+}
+
+table.info-table tr.strong {
+  font-weight: bold;
+}
+
+table.info-table tr:last-child th,
+table.info-table tr:last-child td {
+  border-bottom: none;
+}
+
+table.info-table tr:nth-child(even) {
+  background-color: $white;
+}
+
+table.info-table tr:hover {
+  background-color: $light-grey;
+}

@@ -1,0 +1,23 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+
+.two-col {
+  @include span-columns(6 of 12);
+}
+
+.three-col {
+  @include span-columns(4 of 12);
+}
+
+.four-col {
+  @include span-columns(3 of 12);
+}
+
+.six-col {
+  @include span-columns(2 of 12);
+}
+
+.last {
+  @include omega();
+}

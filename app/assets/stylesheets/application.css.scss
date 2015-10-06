@@ -13,3 +13,16 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bourbon";
+@import "partials/grid_settings";
+@import "neat";
+
+@import "partials/vars";
+@import "partials/normalize";
+@import "partials/base";
+@import "partials/grid";
+@import "partials/forms";
+@import "partials/tables";
+@import "partials/classes";
+@import "partials/course_widget";

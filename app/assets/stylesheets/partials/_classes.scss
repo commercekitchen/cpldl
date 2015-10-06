@@ -1,0 +1,73 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+
+.container {
+  @include outer-container;
+}
+
+.alert {
+  color: $error-font-color;
+  border: 1px solid $error-border-color;
+  background: $error-color;
+  margin: 0 0 1em;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px -2px $error-border-color;
+  border-radius: 4px;
+}
+
+.notice {
+  color: $notice-font-color;
+  border: 1px solid $notice-border-color;
+  background: $notice-color;
+  margin: 0 0 1em;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px -2px $notice-border-color;
+  border-radius: 4px;
+}
+
+.button-style-1 {
+  background-color: $purple;
+  border-bottom-color: $white;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: $white;
+  border-left-style: solid;
+  border-left-width: 3px;
+  border-right-color: $white;
+  border-right-style: solid;
+  border-right-width: 3px;
+  border-top-color: $white;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-top-style: solid;
+  border-top-width: 3px;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px 0px;
+  color: $white;
+  cursor: pointer;
+  fill: $purple;
+  font-size: 16px;
+  font-weight: bold;
+  height: 50px;
+  margin: 0px;
+  outline-color: $white;
+  outline-style: none;
+  outline-width: 0px;
+  padding-bottom: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 2px;
+  text-align: center;
+  width: 302px;
+}

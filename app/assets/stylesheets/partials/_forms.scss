@@ -1,0 +1,43 @@
+@import "vars";
+
+form {
+
+}
+
+label {
+  font-weight: bold;
+}
+
+label.plain {
+  font-weight: normal;
+  text-transform: capitalize;
+}
+
+.required:after {
+  content: " *";
+  color: $red;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
+  width: 100%;
+  font-size: 14px;
+  padding: 0.5rem;
+  border: 1px solid $light-grey;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+  font-size: 14px;
+  padding: 0.5rem;
+  border: 1px solid $light-grey;
+  background: $white;
+}
+
+.field {
+  .narrow {
+  }
+  &.inline {
+    display: inline-block;
+  }
+}
