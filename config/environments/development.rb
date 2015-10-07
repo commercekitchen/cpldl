@@ -15,7 +15,7 @@ Rails.application.configure do
 
   # => to send email from local host
   config.action_mailer.default_url_options = { :host => 'localhost', port: 3000, only_path: false }
-  
+
   # => to be informed of delivery errors
   config.action_mailer.raise_delivery_errors = true
 

@@ -1,7 +1,7 @@
 @import "vars";
 
-form {
-
+fieldset {
+  margin: 1em 0;
 }
 
 label {
@@ -32,12 +32,4 @@ textarea {
   padding: 0.5rem;
   border: 1px solid $light-grey;
   background: $white;
-}
-
-.field {
-  .narrow {
-  }
-  &.inline {
-    display: inline-block;
-  }
 }

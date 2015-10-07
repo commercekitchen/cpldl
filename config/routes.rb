@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-
-  devise_for :users
   root 'home#index'
-
+  devise_for :users
   get 'user_accounts/new'
+  resource :profile, only: [:show, :update]
 end
