@@ -2,20 +2,85 @@
 @import "neat";
 @import "vars";
 
+.row {
+  @include row();
+}
+
 .two-col {
-  @include span-columns(6 of 12);
+  @include span-columns(2);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
 }
 
 .three-col {
-  @include span-columns(4 of 12);
+  @include span-columns(3);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
 }
 
 .four-col {
-  @include span-columns(3 of 12);
+  @include span-columns(4);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.five-col {
+  @include span-columns(5);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
 }
 
 .six-col {
-  @include span-columns(2 of 12);
+  @include span-columns(6);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.seven-col {
+  @include span-columns(7);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.eight-col {
+  @include span-columns(8);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.nine-col {
+  @include span-columns(9);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.ten-col {
+  @include span-columns(10);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.eleven-col {
+  @include span-columns(11);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.twelve-col {
+  @include span-columns(12);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
 }
 
 .last {

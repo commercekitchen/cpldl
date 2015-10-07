@@ -4,6 +4,13 @@
 
 .container {
   @include outer-container;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  @include breakpoint($desktop) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .alert {
@@ -49,7 +56,66 @@
   font-size: 16px;
   font-weight: bold;
   height: 50px;
-  padding: 11px 6px;
+  padding: 11px 40px;
   text-align: center;
   min-width: 300px;
+  text-decoration: none;
+
+  @include breakpoint($tablet) {
+    min-width: initial;
+  }
+}
+
+.header-primary {
+  margin-bottom: 2em;
+  padding: 3em 0;
+  min-height: 236px;
+  background-color: $teal;
+  /*position: relative;*/
+
+  .icon {
+    height: 100%;
+    width: 100%;
+    /*position: absolute;
+    left: 2em;*/
+
+    @include breakpoint($mobile) {
+      height: 8em;
+      width: 8em;
+    }
+  }
+
+  h1 {
+    font-family: $font-secondary;
+    color: $white;
+    font-size: 2em;
+    font-weight: 100;
+    margin-top: 0;
+   /* padding-left: 2em;
+    padding-right: 4em;*/
+    text-transform: uppercase;
+
+    @include breakpoint($desktop) {
+      font-size: 3.5em;
+    }
+  }
+
+  .btn {
+    /*position: absolute;
+    right: 2em;
+    top: 3em;*/
+  }
+}
+
+.header-secondary {
+
+}
+
+.footer-primary {
+  margin-top: 2em;
+  padding: 2em 0;
+  height: 236px;
+  background-color: $teal;
+  color: $white;
+  text-align: center;
 }
