@@ -19,17 +19,8 @@ Rails.application.configure do
   # => to be informed of delivery errors
   config.action_mailer.raise_delivery_errors = true
 
-   # => to send email over network
-   # => this is temporary (we will need to change this)
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      address: 'smtp.sendgrid.net',
-      port: 587,
-      domain: 'projectoutcome.org',
-      authentication: :plain,
-      user_name: 'projectoutcome',
-      password: 'plal0g!n'
-    }
+  # => to send email over network => use letter opener for time being
+  config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
