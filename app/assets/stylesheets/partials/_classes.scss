@@ -38,44 +38,18 @@
   font-weight: 100;
 }
 
-.button-style-1 {
+.btn {
+  display: inline-block;
   background-color: $purple;
-  border-bottom-color: $white;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  border-bottom-style: solid;
-  border-bottom-width: 3px;
-  border-image-outset: 0px;
-  border-image-repeat: stretch;
-  border-image-slice: 100%;
-  border-image-source: none;
-  border-image-width: 1;
-  border-left-color: $white;
-  border-left-style: solid;
-  border-left-width: 3px;
-  border-right-color: $white;
-  border-right-style: solid;
-  border-right-width: 3px;
-  border-top-color: $white;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  border-top-style: solid;
-  border-top-width: 3px;
+  border: 3px solid $white;
+  border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px 0px;
   color: $white;
   cursor: pointer;
-  fill: $purple;
   font-size: 16px;
   font-weight: bold;
   height: 50px;
-  margin: 0px;
-  outline-color: $white;
-  outline-style: none;
-  outline-width: 0px;
-  padding-bottom: 3px;
-  padding-left: 6px;
-  padding-right: 6px;
-  padding-top: 2px;
+  padding: 11px 6px;
   text-align: center;
-  width: 302px;
+  min-width: 300px;
 }

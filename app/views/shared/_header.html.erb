@@ -19,5 +19,10 @@
     <h1>Connect to the Digital World</h1>
   </div>
 
-  <button class="button-style-1" ><%= link_to "Log In", user_accounts_new_path %></button>
+  <% if user_signed_in? %>
+    <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "btn" %>
+  <% else %>
+    <%= link_to "Log In", user_accounts_new_path, class: "btn" %>
+  <% end %>
+
 </header>

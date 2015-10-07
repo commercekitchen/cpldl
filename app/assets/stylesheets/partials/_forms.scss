@@ -33,3 +33,19 @@ textarea {
   border: 1px solid $light-grey;
   background: $white;
 }
+
+button, input[type="submit"] {
+  display: inline-block;
+  background-color: $purple;
+  border: 3px solid $white;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px 0px;
+  color: $white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  height: 50px;
+  padding: 11px 6px;
+  text-align: center;
+  min-width: 300px;
+}

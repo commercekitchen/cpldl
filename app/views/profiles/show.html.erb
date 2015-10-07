@@ -21,16 +21,15 @@
     <%= f.email_field :email, autofocus: true %>
   </fieldset>
 
-  <%# TODO: put this back in once the confirmable module is added. %>
-  <%# if @user.pending_reconfirmation? %>
-    <%# <div>Currently waiting confirmation for: <%# @user.unconfirmed_email %#></div> %>
-  <%# end %>
+  <% if @user.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
+  <% end %>
 
   <fieldset>
     <%= f.label :password do %>
       Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
     <% end %>
-    <%= f.password_field :password, autocomplete: "off", class: "strength" %><br />
+    <%= f.password_field :password, autocomplete: "off", class: "strength" %>
     <span class="password-indicator"></span>
   </fieldset>
 
