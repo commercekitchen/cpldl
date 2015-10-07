@@ -41,12 +41,14 @@ group :development do
 end
 
 group :development, :test do
+  gem 'pry'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   # gem 'spring'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
   # gem 'httplog'  # Note: uncomment and bundle to see api calls, if needed.
+  gem 'rspec-rails', '~> 3.0'
 end
 
 # Capistrano Deployment
@@ -62,8 +64,8 @@ end
 group :test do
   gem 'launchy'
   gem 'factory_girl_rails'
-  gem 'rspec-rails', '~> 3.0'
   gem 'capybara-webkit'
   gem 'mocha'
   # gem 'webmock'
+  gem "codeclimate-test-reporter"
 end
