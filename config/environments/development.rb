@@ -19,7 +19,7 @@ Rails.application.configure do
   # => to be informed of delivery errors
   config.action_mailer.raise_delivery_errors = true
 
-  # => to send email over network
+  # => to send email over network => use letter opener for time being
   config.action_mailer.delivery_method = :letter_opener
 
   # Print deprecation notices to the Rails logger.
