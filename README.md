@@ -1,5 +1,7 @@
 # Chicago Public Library - Digital Learn
 
+[![Code Climate](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/badges/gpa.svg)](https://codeclimate.com/github/PublicLibraryAssoc/cpldl)[![Test Coverage](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/badges/coverage.svg)](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/coverage)
+
 ## Install Dependencies
 RVM
 Postgresql
