@@ -1,3 +1,6 @@
+# Use single quotes within config files.
+# rubocop:disable Style/StringLiterals
+
 source 'https://rubygems.org'
 
 # Base set of gems
@@ -22,7 +25,7 @@ gem 'redis-namespace'
 
 # Background processing
 gem 'sidekiq'
-gem 'sinatra', require: nil  # For the sidekiq web interface
+gem 'sinatra', require: nil # For the sidekiq web interface.
 gem 'sidekiq-failures'
 
 # Error reporting
@@ -47,13 +50,13 @@ group :development, :test do
   # gem 'spring'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
-  # gem 'httplog'  # Note: uncomment and bundle to see api calls, if needed.
+  # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
   gem 'rspec-rails', '~> 3.0'
 end
 
 # Capistrano Deployment
 group :development, :deployment do
-  gem 'capistrano', '3.4.0', require: false  #deploy is locked to this version
+  gem 'capistrano', '3.4.0', require: false # Deploy is locked to this version.
   gem 'capistrano-rails', '~> 1.1.3', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-faster-assets', '~> 1.0', require: false

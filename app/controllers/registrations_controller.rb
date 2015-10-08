@@ -1,6 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-
-    # extend create to send email
+  # Extend create to send email
   def create
     super
     if @user.persisted?
