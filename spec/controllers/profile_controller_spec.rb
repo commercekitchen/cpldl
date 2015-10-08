@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ProfilesController, type: :controller do
-  
+
   describe "GET #show" do
     before(:each) do
       set_devise_env
@@ -10,21 +10,21 @@ RSpec.describe ProfilesController, type: :controller do
     end
 
     context "when logged in" do
-      it ".show" do 
+      it ".show" do
         get :show
         expect(response).to have_http_status(:success)
       end
 
-      # => I have no idea, I don't get why this wont pass, it complains about hash
       it ".update" do
-        put :update, id: @user.profile, :user => { :email => @user.email, 
-                                                   :password => @user.password, 
-                                                   :password_confirmation => @user.password, 
-                          :profile_attributes => { :first_name => "Robby", 
-                                                   :last_name => @user.profile.last_name, 
-                                                   :zip_code => @user.profile.zip_code } }, authenticity_token: set_authenticity_token
+        put :update, id: @user.profile,
+          user: { email: @user.email, password: @user.password, password_confirmation: @user.password,
+          profile_attributes: { first_name: "Robby", last_name: "Rrown", zip_code: "12345" } },
+          authenticity_token: set_authenticity_token
 
-        @user.reload.profile.first_name.should == "Robby"
+        @user.reload
+        expect(@user.profile.first_name).to eq("Robby")
+        expect(@user.profile.last_name).to eq("Rrown")
+        expect(@user.profile.zip_code).to eq("12345")
       end
     end
 
@@ -34,6 +34,6 @@ RSpec.describe ProfilesController, type: :controller do
         get :show
         expect(response).to have_http_status(:redirect)
       end
-    end  
+    end
   end
 end

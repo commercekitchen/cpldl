@@ -45,6 +45,9 @@ Style/IfUnlessModifier:
 Style/BlockComments:
   Enabled: false
 
+Style/AlignHash:
+  Enabled: false
+
 Rails/HasAndBelongsToMany:
   Exclude:
     - "app/models/role.rb" # This instance was auto generated.

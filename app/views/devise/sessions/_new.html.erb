@@ -4,12 +4,12 @@
 
   <fieldset>
     <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.email_field :email, autofocus: true, id: "login_email" %>
   </fieldset>
 
   <fieldset>
     <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.password_field :password, autocomplete: "off", id: "login_password" %>
   </fieldset>
 
   <% if devise_mapping.rememberable? -%>

@@ -5,7 +5,6 @@ feature "User logs in" do
   scenario "with valid email and password" do
     user ||= FactoryGirl.create(:user)
     log_in_with user.email, user.password
-
     expect(page).to have_content("Signed in successfully.")
   end
 
