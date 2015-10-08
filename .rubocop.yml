@@ -42,6 +42,9 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   Enabled: false
 
+Style/BlockComments:
+  Enabled: false
+
 Rails/HasAndBelongsToMany:
   Exclude:
     - "app/models/role.rb" # This instance was auto generated.
