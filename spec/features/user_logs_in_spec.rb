@@ -3,7 +3,7 @@ require "feature_helper"
 feature "User logs in" do
 
   scenario "with valid email and password" do
-    user ||= FactoryGirl.create(:user)
+    user = FactoryGirl.create(:user)
     log_in_with user.email, user.password
     expect(page).to have_content("Signed in successfully.")
   end
@@ -14,7 +14,6 @@ feature "User logs in" do
 
     log_in_with "not@real.com", "password"
     expect(page).to have_content("Invalid email or password.")
-
   end
 
   scenario "with blank password" do
@@ -26,16 +25,9 @@ feature "User logs in" do
   end
 
   scenario "with unconfirmed email" do
-    user ||= FactoryGirl.create(:unconfirmed_user)
+    user = FactoryGirl.create(:unconfirmed_user)
     log_in_with user.email, user.password
     expect(page).to have_content("You have to confirm your email address before continuing.")
   end
 
-  def log_in_with(email, password)
-    visit user_account_path
-    find("#login_email").set(email)
-    find("#login_password").set(password)
-    fill_in "Password confirmation", with: password
-    click_button "Log in"
-  end
 end

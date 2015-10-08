@@ -1,6 +1,7 @@
 require "feature_helper"
 
 feature "User signs up" do
+
   scenario "with valid email and password" do
     sign_up_with "valid@example.com", "password"
     expect(page).to have_content("A message with a confirmation link has been sent \
@@ -17,11 +18,13 @@ feature "User signs up" do
     expect(page).to have_content("Password can't be blank")
   end
 
-  def sign_up_with(email, password)
+  scenario "with non-matching passwords" do
     visit user_account_path
-    find("#new_email").set(email)
-    find("#new_password").set(password)
-    fill_in "Password confirmation", with: password
+    find("#new_email").set("valid@example.com")
+    find("#new_password").set("password")
+    fill_in "Password confirmation", with: "PASSWORD"
     click_button "Sign up"
+    expect(page).to have_content("Password confirmation doesn't match Password")
   end
+
 end
