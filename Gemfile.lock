@@ -99,6 +99,10 @@ GEM
       timers (>= 4.1.1)
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.7)
+      climate_control (>= 0.0.3, < 1.0)
     codeclimate-test-reporter (0.4.8)
       simplecov (>= 0.7.1, < 1.0.0)
     coderay (1.1.0)
@@ -122,6 +126,8 @@ GEM
     factory_girl_rails (4.5.0)
       factory_girl (~> 4.5.0)
       railties (>= 3.0.0)
+    faker (1.5.0)
+      i18n (~> 0.5)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hitimes (1.2.3)
@@ -143,6 +149,7 @@ GEM
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (2.6.2)
+    mimemagic (0.3.0)
     mini_portile (0.6.2)
     minitest (5.8.1)
     mocha (1.1.0)
@@ -157,6 +164,12 @@ GEM
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
+    paperclip (4.3.1)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      cocaine (~> 0.5.5)
+      mime-types
+      mimemagic (= 0.3.0)
     parser (2.2.2.6)
       ast (>= 1.1, < 3.0)
     powerpack (0.1.1)
@@ -304,6 +317,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  faker
   honeybadger (~> 2.0)
   jquery-rails
   launchy
@@ -311,6 +325,7 @@ DEPENDENCIES
   mocha
   neat
   newrelic_rpm
+  paperclip (~> 4.3)
   pry
   quiet_assets
   rails (= 4.2.4)

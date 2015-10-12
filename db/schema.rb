@@ -11,7 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007231646) do
+ActiveRecord::Schema.define(version: 20151012212330) do
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "course_id"
+    t.string   "title"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
+
+  create_table "course_topics", force: :cascade do |t|
+    t.integer  "topic_id"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.string   "title",          limit: 90
+    t.string   "seo_page_title", limit: 90
+    t.string   "meta_desc",      limit: 156
+    t.string   "summary",        limit: 156
+    t.text     "description"
+    t.string   "contributor"
+    t.string   "pub_status",     limit: 2
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  create_table "language_courses", force: :cascade do |t|
+    t.integer  "language_id"
+    t.integer  "course_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "languages", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "profiles", force: :cascade do |t|
     t.string   "first_name"
@@ -32,6 +75,12 @@ ActiveRecord::Schema.define(version: 20151007231646) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], name: "index_roles_on_name"
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
