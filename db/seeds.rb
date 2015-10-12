@@ -18,3 +18,36 @@ super_profile = Profile.create(first_name: "Super",
 
 super_user.update(profile_id: super_profile.id)
 super_user.add_role(:super)
+
+# => temporary topics for development
+Topic.create(title: "Road Warriors")
+Topic.create(title: "ThunderDome")
+Topic.create(title: "War Boys")
+Topic.create(title: "Gas Town")
+
+# => fake languages
+Language.create(name: "Klingon")
+Language.create(name: "Orc")
+Language.create(name: "Zanzibarzian")
+
+# => Temporary courses for development
+6.times do 
+  Course.create!(
+  :title => Faker::Company.name,
+  :seo_page_title => Faker::Company.bs,
+  :meta_desc => Faker::Company.bs,
+  :summary => Faker::Lorem.sentence(5),
+  :description => Faker::Lorem.paragraph(3),
+  :contributor => Faker.name,
+  :pub_status => "p" 
+  )
+end
+
+
+# => give each course a language and a topic
+# Need to complete association to make this work
+
+# Course.all.each do |c|
+#   c.topics << Topic.all.sample
+#   c.languages << Language.all.sample
+# end
