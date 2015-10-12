@@ -29,6 +29,9 @@ rerun.txt
 pickle-email-*.html
 dump.rdb
 
+# Code Climate coverage stats don't belong in the repo.
+/coverage
+
 config/database.yml
 config/database.yml.vm
 config/initializers/secret_token.rb

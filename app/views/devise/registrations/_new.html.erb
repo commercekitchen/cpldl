@@ -15,12 +15,12 @@
         <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
       <% end %>
     <% end %>
-    <%= f.password_field :password, autocomplete: "off", id: "new_password" %>
+    <%= f.text_field :password, autocomplete: "off", id: "new_password" %>
   </fieldset>
 
   <fieldset>
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.text_field :password_confirmation, autocomplete: "off" %>
   </fieldset>
 
   <%= f.submit "Sign up" %>

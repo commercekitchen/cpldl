@@ -16,17 +16,17 @@
     <%= f.label :password do %>
       Password <i class="note">(leave blank if you don't want to change it)</i>
     <% end %>
-    <%= f.password_field :password, autocomplete: "off" %>
+    <%= f.text_field :password, autocomplete: "off" %>
   </fieldset>
 
   <fieldset>
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
+    <%= f.text_field :password_confirmation, autocomplete: "off" %>
   </fieldset>
 
   <fieldset>
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-    <%= f.password_field :current_password, autocomplete: "off" %>
+    <%= f.text_field :current_password, autocomplete: "off" %>
   </fieldset>
 
   <%= f.submit "Update" %>

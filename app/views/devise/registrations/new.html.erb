@@ -1,25 +1,29 @@
-<h2>Change your password</h2>
+<h2>Sign up</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+
+  <fieldset>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true %>
+  </fieldset>
 
   <fieldset>
     <%= f.label :password do %>
-      New Password
+      Password
       <% if @minimum_password_length %>
         <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
       <% end %>
     <% end %>
-    <%= f.text_field :password, autofocus: true, autocomplete: "off" %>
+    <%= f.text_field :password, autocomplete: "off", id: "new_password" %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :password_confirmation, "Confirm new password" %>
+    <%= f.label :password_confirmation %>
     <%= f.text_field :password_confirmation, autocomplete: "off" %>
   </fieldset>
 
-  <%= f.submit "Change my password" %>
+  <%= f.submit "Sign up" %>
 
 <% end %>
 

@@ -29,13 +29,13 @@
     <%= f.label :password do %>
       Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
     <% end %>
-    <%= f.password_field :password, autocomplete: "off", class: "strength" %>
+    <%= f.text_field :password, autocomplete: "off", class: "strength" %>
     <span class="password-indicator"></span>
   </fieldset>
 
   <fieldset>
     <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
+    <%= f.text_field :password_confirmation %>
   </fieldset>
 
   <%= f.fields_for :profile do |p| %>
