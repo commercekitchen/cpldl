@@ -52,3 +52,7 @@ Style/AlignHash:
 Rails/HasAndBelongsToMany:
   Exclude:
     - "app/models/role.rb" # This instance was auto generated.
+
+Rails/Output:
+  Exclude:
+    - "db/seeds.rb"

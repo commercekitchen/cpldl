@@ -19,7 +19,7 @@ describe CoursesController do
 
   describe "GET #show" do
     it "assigns the requested course as @course" do
-      get :show, { id: @course2.to_param }
+      get :show, id: @course2.to_param
       expect(assigns(:course)).to eq(@course2)
     end
   end

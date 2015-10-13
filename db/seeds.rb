@@ -9,7 +9,7 @@ super_profile = Profile.create(first_name: "Super", last_name: "User", zip_code:
 super_user.update(profile_id: super_profile.id)
 super_user.add_role(:super)
 
-puts "Super User Created UN: super@commercekitchen.com, PW: password "
+puts "Super User Created - Username: super@commercekitchen.com, Password: password "
 
 # => temporary topics for development
 Topic.create(title: "Road Warriors")
@@ -27,13 +27,13 @@ puts "#{Language.count} languages created"
 # => Temporary courses for development
 6.times do
   Course.create!(
-  :title => Faker::Company.name,
-  :seo_page_title => Faker::Company.bs,
-  :meta_desc => Faker::Company.bs,
-  :summary => Faker::Lorem.sentence(5),
-  :description => Faker::Lorem.paragraph(3),
-  :contributor => Faker.name,
-  :pub_status => "p"
+    title: Faker::Company.name,
+    seo_page_title: Faker::Company.bs,
+    meta_desc: Faker::Company.bs,
+    summary: Faker::Lorem.sentence(5),
+    description: Faker::Lorem.paragraph(3),
+    contributor: Faker.name,
+    pub_status: "P"
   )
 end
 puts "#{Course.count} courses created"
