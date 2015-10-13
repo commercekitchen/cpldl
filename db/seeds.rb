@@ -3,21 +3,26 @@
 #
 
 # => super user account
-super_user = User.create(email: "super@commercekitchen.com", password: "superM@n", confirmed_at: Time.zone.now)
+# => CHANGE pwd for production!!!
+super_user = User.create(email: "super@commercekitchen.com", password: "password", confirmed_at: Time.zone.now)
 super_profile = Profile.create(first_name: "Super", last_name: "User", zip_code: "80206", user_id: super_user.id)
 super_user.update(profile_id: super_profile.id)
 super_user.add_role(:super)
+
+puts "Super User Created UN: super@commercekitchen.com, PW: password "
 
 # => temporary topics for development
 Topic.create(title: "Road Warriors")
 Topic.create(title: "ThunderDome")
 Topic.create(title: "War Boys")
 Topic.create(title: "Gas Town")
+puts "#{Topic.count} topics created"
 
 # => fake languages
 Language.create(name: "Klingon")
 Language.create(name: "Orc")
 Language.create(name: "Zanzibarzian")
+puts "#{Language.count} languages created"
 
 # => Temporary courses for development
 6.times do
@@ -31,11 +36,13 @@ Language.create(name: "Zanzibarzian")
   :pub_status => "p"
   )
 end
+puts "#{Course.count} courses created"
 
-# => give each course a language and a topic
-# Need to complete association to make this work
+# lang_ids = Language.all.map { |l| l.id.to_i }
 
-# Course.all.each do |c|
-#   c.topics << Topic.all.sample
-#   c.languages << Language.all.sample
-# end
+Course.all.each do |c|
+  c.topics << Topic.all.sample
+  c.language_id = Language.all.sample.id
+  c.save
+end
+puts "courses updated with topics and languages"
