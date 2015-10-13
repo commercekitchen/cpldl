@@ -1,3 +1,3 @@
 class Administrators::BaseController < ApplicationController
-  # before_action :authenticate!
+  before_action :authorize
 end

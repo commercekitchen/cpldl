@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def authenticate
+  def authorize
     if current_user.nil?
       redirect_to root_path
       flash[:alert] = %Q[You must be Logged In to do that. Please <a href="/user_accounts/new">Log In</a> and try again.]
