@@ -35,8 +35,12 @@
 }
 
 .header-logged-in {
+  position: fixed;
+  top: 0;
+  width: 100%;
   padding: .5em 0;
   background-color: $white;
+  border-bottom: 1px solid $grey;
 
   .language-links {
     color: $purple;
@@ -58,12 +62,11 @@
     font-family: $font-secondary;
     color: $purple;
     font-size: 2em;
-    font-weight: 100;
+    font-weight: 400;
     margin-top: 0;
-    text-transform: uppercase;
 
     @include breakpoint($desktop) {
-      font-size: 2em;
+      font-size: 1.5em;
     }
   }
 

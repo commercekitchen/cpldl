@@ -10,13 +10,14 @@
       <div class="one-col">
         <%= render "shared/icon" %>
       </div>
-      <div class="seven-col">
+      <div class="six-col">
         <h1>Chicago Public Libraries</h1>
       </div>
-      <div class="four-col last">
+      <div class="five-col last">
         <nav>
-          <%= link_to "Hi User", "#" %> |
-          <%= link_to "User Dashboard", "#" %> |
+          <%= link_to "Hi User!", "#" %> |
+          <%= link_to "Your Account", profile_path %> |
+          <%= link_to "Your Courses", "#" %> |
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
         </nav>
       </div>
