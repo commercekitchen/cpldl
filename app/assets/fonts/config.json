@@ -1,0 +1,28 @@
+{
+  "name": "",
+  "css_prefix_text": "icon-",
+  "css_use_suffix": false,
+  "hinting": true,
+  "units_per_em": 1000,
+  "ascent": 850,
+  "glyphs": [
+    {
+      "uid": "348b04ea17f646fbc6a46e20ebe4fe12",
+      "css": "download",
+      "code": 59394,
+      "src": "mfglabs"
+    },
+    {
+      "uid": "6059b7737287728091ce7e4c600cca56",
+      "css": "pencil",
+      "code": 59392,
+      "src": "elusive"
+    },
+    {
+      "uid": "d1fd686179920f26e0f1e83816fb40fe",
+      "css": "clock",
+      "code": 59393,
+      "src": "elusive"
+    }
+  ]
+}
