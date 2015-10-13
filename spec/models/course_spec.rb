@@ -1,5 +1,32 @@
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe Course, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Course do
+
+  before do
+    @course = FactoryGirl.build(:course)
+  end
+
+  it "is initially valid" do
+    expect(@course).to be_valid
+  end
+
+  it "can only have listed statuses" do
+    allowed_statuses = ["P"]
+    allowed_statuses.each do |status|
+      @course.pub_status = status
+      expect(@course).to be_valid
+    end
+
+    @course.pub_status = ""
+    expect(@course).to_not be_valid
+
+    @course.pub_status = nil
+    expect(@course).to_not be_valid
+
+    @course.pub_status = "X"
+    expect(@course).to_not be_valid
+  end
+
+  pending "the status should be set by default"
+
 end

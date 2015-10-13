@@ -2,12 +2,23 @@
   <%= @course.title %>
 <% end %>
 
-<small><%= link_to "Courses", "#" %> >> Getting Started on the Computer</small>
+<small><%= link_to "Courses", "#" %> >> <%= @course.title %></small>
 
-<p><i class="icon-pencil"></i>4 Lessons</p>
-<p><i class="icon-clock"></i><span>15 Minutes</span></p>
-<p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
-<button>Start Course</button>
+<div class="row">
+  <div class="eight-col">
+    <%# TODO: Fill in dynamic info when ready. %>
+    <div class="course-details">
+      <div><i class="icon-pencil"></i>4 Lessons</div>
+      <div><i class="icon-clock"></i>15 Minutes</div>
+    </div>
+    <p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
+  </div>
+
+  <div class="four-col last align-right">
+    <p>+ Add to / - Remove from Your Plan</p>
+    <button>Start Course</button>
+  </div>
+</div>
 
 <p>
   <%= @course.summary %>

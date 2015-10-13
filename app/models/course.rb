@@ -10,6 +10,6 @@ class Course < ActiveRecord::Base
   # has_many :lessons
   # has_one :assessment
 
-  validates :title, :seo_page_title, :meta_desc, :summary, :description, 
-            :contributor, :pub_status, presence: true
+  validates :title, :seo_page_title, :meta_desc, :summary, :description, :contributor, presence: true
+  validates :pub_status, presence: true, inclusion: { in: %w(P), message: "%{value} is not a valid status" }
 end
