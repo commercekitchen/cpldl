@@ -2,7 +2,9 @@
 
   <div class="container">
     <div class="row">
-      English | Spanish
+      <small>
+        <%= link_to "English", "#" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#" %>
+      </small>
     </div>
     <div class="row">
       <div class="one-col">
@@ -12,7 +14,11 @@
         <h1>Chicago Public Libraries</h1>
       </div>
       <div class="four-col last">
-        Hi User | User Dashboard
+        <nav>
+          <%= link_to "Hi User", "#" %> |
+          <%= link_to "User Dashboard", "#" %> |
+          <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
+        </nav>
       </div>
     </div>
   </div>

@@ -1,0 +1,12 @@
+@import "bourbon";
+@import "neat";
+@import "vars";
+
+.footer-primary {
+  margin-top: 2em;
+  padding: 2em 0;
+  height: 236px;
+  background-color: $teal;
+  color: $white;
+  text-align: center;
+}

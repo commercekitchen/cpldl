@@ -7,15 +7,15 @@
       </div>
 
       <div class="six-col">
-        <h1>Connect to the Digital World</h1>
+        <% if content_for?(:callout) %>
+          <h1><%= yield :callout %></h1>
+        <% else %>
+          <h1>Connect to the Digital World</h1>
+        <% end %>
       </div>
 
       <div class="four-col last">
-        <% if user_signed_in? %>
-          <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "btn" %>
-        <% else %>
-          <%= link_to "Log In", user_account_path, class: "btn" %>
-        <% end %>
+        <%= link_to "Log In", user_account_path, class: "btn" %>
       </div>
     </div>
   </div>

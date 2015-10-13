@@ -1,12 +1,12 @@
-<%= content_for :banner do %>
-  <h1><%= @course.title %></h1>
+<%= content_for :callout do %>
+  <%= @course.title %>
 <% end %>
 
-<p class="breadcrumbs">Courses >> Getting Started on the Computer</p>
+<small><%= link_to "Courses", "#" %> >> Getting Started on the Computer</small>
 
 <p><span>Icon</span><span>4 Lessons</span></p>
 <p><span>Icon</span><span>15 Minutes</span></p>
-<p class="note">Contributed by Leslie James, Commerce Kitchen</p>
+<p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
 <button>Start Course</button>
 
 <p>
