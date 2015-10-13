@@ -1,13 +1,12 @@
 @import "bourbon";
 @import "neat";
-@import "vars";
 
 .container {
   @include outer-container;
   padding-left: 1em;
   padding-right: 1em;
 
-  @include breakpoint($desktop) {
+  @include media($desktop) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -61,7 +60,7 @@
   min-width: 300px;
   text-decoration: none;
 
-  @include breakpoint($tablet) {
+  @include media($tablet) {
     min-width: initial;
   }
 }
@@ -78,7 +77,7 @@
     font-weight: 100;
     margin-top: 0;
 
-    @include breakpoint($desktop) {
+    @include media($desktop) {
       font-size: 3.5em;
     }
   }

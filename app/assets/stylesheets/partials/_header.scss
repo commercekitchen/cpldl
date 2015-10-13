@@ -1,6 +1,5 @@
 @import "bourbon";
 @import "neat";
-@import "vars";
 
 .header-logged-out {
   margin-bottom: 2em;
@@ -13,7 +12,7 @@
     width: 100%;
     fill: $white;
 
-    @include breakpoint($mobile) {
+    @include media($mobile) {
       height: 8em;
       width: 8em;
     }
@@ -27,7 +26,7 @@
     margin-top: 0;
     text-transform: uppercase;
 
-    @include breakpoint($desktop) {
+    @include media($desktop) {
       font-size: 3.5em;
     }
   }
@@ -52,7 +51,7 @@
     width: 2em;
     fill: $purple;
 
-    @include breakpoint($mobile) {
+    @include media($mobile) {
       height: 8em;
       width: 8em;
     }
@@ -65,7 +64,7 @@
     font-weight: 400;
     margin-top: 0;
 
-    @include breakpoint($desktop) {
+    @include media($desktop) {
       font-size: 1.5em;
     }
   }
