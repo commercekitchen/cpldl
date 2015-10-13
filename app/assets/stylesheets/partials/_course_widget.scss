@@ -57,7 +57,7 @@ a.course-widget:hover {
   margin: 0em auto;
   /*background: url(/sites/all/themes/custom/dlc/img/default_book.png) no-repeat right 5px;*/
   width: 75%;
-  padding: .5em 3em .5em .25em;
+  padding: .5em .5em .5em .25em;
   height: 45px;
 }
 
@@ -74,7 +74,7 @@ div.course-widget h3 {
 }
 
 .course-widget p {
-  color: #575757;
+  color: $grey;
   margin: 0;
   font-weight: 300;
 }

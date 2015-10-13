@@ -1,43 +1,20 @@
-<p id="notice"><%= notice %></p>
+<%= content_for :banner do %>
+  <h1><%= @course.title %></h1>
+<% end %>
+
+<p class="breadcrumbs">Courses >> Getting Started on the Computer</p>
+
+<p><span>Icon</span><span>4 Lessons</span></p>
+<p><span>Icon</span><span>15 Minutes</span></p>
+<p class="note">Contributed by Leslie James, Commerce Kitchen</p>
+<button>Start Course</button>
 
 <p>
-  <strong>Title:</strong>
-  <%= @course.title %>
-</p>
-
-<p>
-  <strong>Seo page title:</strong>
-  <%= @course.seo_page_title %>
-</p>
-
-<p>
-  <strong>Meta desc:</strong>
-  <%= @course.meta_desc %>
-</p>
-
-<p>
-  <strong>Summary:</strong>
   <%= @course.summary %>
 </p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @course.description %>
-</p>
+<hr>
 
-<p>
-  <strong>Contributor:</strong>
-  <%= @course.contributor %>
-</p>
+<h2>Lessons in this course</h2>
 
-<p>
-  <strong>Pub status:</strong>
-  <%= @course.pub_status %>
-</p>
-
-<p>
-  <strong>Language:</strong>
-</p>
-
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>
+<h2>Supplemental Materials</h2>

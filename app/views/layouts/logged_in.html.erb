@@ -7,7 +7,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <%= render "shared/logged_out/header" %>
+  <%= render "shared/logged_in/header" %>
+
+  <div class="banner">
+    <div class="container">
+      <%= yield :banner %>
+    </div>
+  </div>
 
   <main class="container">
     <%= render "shared/flashes" %>

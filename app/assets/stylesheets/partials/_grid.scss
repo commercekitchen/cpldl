@@ -6,6 +6,13 @@
   @include row();
 }
 
+.one-col {
+  @include span-columns(1);
+  @include breakpoint($mobile) {
+    @include span-columns(12);
+  }
+}
+
 .two-col {
   @include span-columns(2);
   @include breakpoint($mobile) {

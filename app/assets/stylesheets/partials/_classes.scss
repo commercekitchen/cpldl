@@ -66,18 +66,16 @@
   }
 }
 
-.header-primary {
+.header-logged-out {
   margin-bottom: 2em;
   padding: 3em 0;
   min-height: 236px;
   background-color: $teal;
-  /*position: relative;*/
 
-  .icon {
+  svg {
     height: 100%;
     width: 100%;
-    /*position: absolute;
-    left: 2em;*/
+    fill: $white;
 
     @include breakpoint($mobile) {
       height: 8em;
@@ -91,8 +89,6 @@
     font-size: 2em;
     font-weight: 100;
     margin-top: 0;
-   /* padding-left: 2em;
-    padding-right: 4em;*/
     text-transform: uppercase;
 
     @include breakpoint($desktop) {
@@ -100,15 +96,54 @@
     }
   }
 
-  .btn {
-    /*position: absolute;
-    right: 2em;
-    top: 3em;*/
-  }
 }
 
-.header-secondary {
+.header-logged-in {
+  margin-bottom: 2em;
+  padding: .5em 0;
+  background-color: $white;
 
+  svg {
+    height: 2em;
+    width: 2em;
+    fill: $purple;
+
+    @include breakpoint($mobile) {
+      height: 8em;
+      width: 8em;
+    }
+  }
+
+  h1 {
+    font-family: $font-secondary;
+    color: $purple;
+    font-size: 2em;
+    font-weight: 100;
+    margin-top: 0;
+    text-transform: uppercase;
+
+    @include breakpoint($desktop) {
+      font-size: 2em;
+    }
+  }
+
+}
+
+.banner {
+  background-color: $teal;
+  min-height: 3em;
+  h1 {
+    font-family: $font-secondary;
+    color: $white;
+    font-size: 2em;
+    font-weight: 100;
+    margin-top: 0;
+    text-align: center;
+
+    @include breakpoint($desktop) {
+      font-size: 3.5em;
+    }
+  }
 }
 
 .footer-primary {
