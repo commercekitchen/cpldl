@@ -1,4 +1,4 @@
-class TopicsController < ApplicationController
+class Administrators::TopicsController < Administrators::BaseController
   before_action :set_topic, only: [:show, :edit, :update, :destroy]
 
   # GET /topics

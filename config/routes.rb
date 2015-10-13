@@ -7,8 +7,17 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
-  resources :courses
+  resources :courses, only: [:show, :index]
   resources :topics
   resources :languages
-  resources :attachments
+
+
+  resources :administrators, only: [:index]
+
+  namespace :administrators do 
+    resources :courses
+    resources :attachments
+    resources :topics
+    resources :languages
+  end
 end
