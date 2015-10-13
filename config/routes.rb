@@ -6,8 +6,7 @@ Rails.application.routes.draw do
   get 'user_accounts/new', as: :user_account
 
   resource :profile, only: [:show, :update]
-
-  resources :courses
+  resources :courses, only: [:index, :show]
   resources :topics
   resources :languages
   resources :attachments
