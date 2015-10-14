@@ -5,7 +5,7 @@ describe Course do
   context "verify validations" do
 
     before(:each) do
-      @course = FactoryGirl.build(:course)
+      @course = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
     end
 
     it "is initially valid" do
@@ -13,7 +13,7 @@ describe Course do
     end
 
     it "can only have listed statuses" do
-      allowed_statuses = ["P", "D"]
+      allowed_statuses = %w(P D T)
       allowed_statuses.each do |status|
         @course.pub_status = status
         expect(@course).to be_valid

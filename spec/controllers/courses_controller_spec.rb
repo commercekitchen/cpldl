@@ -3,9 +3,9 @@ require "rails_helper"
 describe CoursesController do
 
   before(:each) do
-    @course1 = FactoryGirl.create(:course, title: "Course 1")
-    @course2 = FactoryGirl.create(:course, title: "Course 2")
-    @course3 = FactoryGirl.create(:course, title: "Course 3")
+    @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
+    @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
+    @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
   end
 
   describe "GET #index" do

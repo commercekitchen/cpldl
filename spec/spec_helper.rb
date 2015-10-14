@@ -100,3 +100,9 @@ end
 def set_authenticity_token
   session[:_csrf_token] = SecureRandom.base64(32)
 end
+
+def admin_user
+  user ||= FactoryGirl.create(:admin_user)
+  user.add_role(:admin)
+  sign_in(user)
+end

@@ -10,9 +10,16 @@ class Course < ActiveRecord::Base
 
   accepts_nested_attributes_for :attachments, reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
-  validates :title, :seo_page_title, :meta_desc, :summary,
-    :description, :contributor, :language_id, :level, presence: true
-  validates :pub_status, presence: true, inclusion: { in: %w(P D), message: "%{value} is not a valid status" }
+  validates :title,
+            :seo_page_title,
+            :meta_desc,
+            :summary,
+            :description,
+            :contributor,
+            :language_id, presence: true
+
+  validates :pub_status, presence: true, inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
+  validates :level, presence: true, inclusion: { in: %w(Beginner Intermediate Advanced), message: "%{value} is not a valid level"}
 
   def topics_list(topic_list)
     if topic_list

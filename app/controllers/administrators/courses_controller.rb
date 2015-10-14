@@ -5,7 +5,6 @@ class Administrators::CoursesController < Administrators::BaseController
     @courses = Course.all
   end
 
-  
   def show
   end
 
@@ -48,12 +47,12 @@ class Administrators::CoursesController < Administrators::BaseController
     end
 
     def course_params
-      params.require(:course).permit(:title, 
-                                     :seo_page_title, 
-                                     :meta_desc, 
-                                     :summary, 
-                                     :description, 
-                                     :contributor, 
+      params.require(:course).permit(:title,
+                                     :seo_page_title,
+                                     :meta_desc,
+                                     :summary,
+                                     :description,
+                                     :contributor,
                                      :pub_status,
                                      :language_id,
                                      :level,
