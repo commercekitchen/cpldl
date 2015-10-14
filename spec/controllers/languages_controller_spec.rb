@@ -24,11 +24,11 @@ RSpec.describe LanguagesController, type: :controller do
   # Language. As you add validations to Language, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: "Kingon" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: "" }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -103,7 +103,7 @@ RSpec.describe LanguagesController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: "Goober"}
       }
 
       it "updates the requested language" do

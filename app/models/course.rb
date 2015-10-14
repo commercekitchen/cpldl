@@ -11,6 +11,27 @@ class Course < ActiveRecord::Base
   # has_many :lessons
   # has_one :assessment
 
-  validates :title, :seo_page_title, :meta_desc, :summary, :description, 
-            :contributor, :pub_status, presence: true
+  validates :title, 
+            :seo_page_title, 
+            :meta_desc, 
+            :summary, 
+            :description, 
+            :contributor, 
+            :pub_status, 
+            :language_id, 
+            :level, presence: true
+
+  def topics_list(topic_list)
+    if topic_list
+      valid_topics = topic_list.reject do |topic|
+       topic.blank?
+      end
+
+      new_or_found_topics = valid_topics.map do |title|
+        Topic.find_or_create_by(title: title)
+      end
+
+      self.topics = new_or_found_topics
+    end
+  end
 end

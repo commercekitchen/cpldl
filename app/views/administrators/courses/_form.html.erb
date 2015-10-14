@@ -12,36 +12,58 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :title %><br>
+    <%= f.label "Title*" %><br>
     <%= f.text_field :title %>
   </div>
+
   <div class="field">
-    <%= f.label :seo_page_title %><br>
-    <%= f.text_field :seo_page_title %>
-  </div>
-  <div class="field">
-    <%= f.label :meta_desc %><br>
-    <%= f.text_field :meta_desc %>
-  </div>
-  <div class="field">
-    <%= f.label :summary %><br>
-    <%= f.text_field :summary %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br>
-    <%= f.text_field :description %>
-  </div>
-  <div class="field">
-    <%= f.label :contributor %><br>
+    <%= f.label "Contributor*" %><br>
     <%= f.text_field :contributor %>
   </div>
+
   <div class="field">
-    <%= f.label :pub_status %><br>
-    <%= f.text_field :pub_status %>
+    <%= f.label "Course Summary*" %><br>
+    <%= f.text_field :summary %>
   </div>
+
   <div class="field">
-    <%= f.label "language" %><br>
+    <%= f.label "Course Description*" %><br>
+    <%= f.text_field :description %>
   </div>
+
+  <div class="field">
+    <%= f.label "Course Topics*" %><br>
+    <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
+      <%= b.check_box(checked: current_topics(@course, b.object)) %>
+      <%= b.label %> &nbsp;
+    <% end %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Course Language*" %><br>
+    <%= f.collection_select(:language_id, Language.all, :id, "name", options = { include_blank: true } ) %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Course Level*" %><br>
+    <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level) ) %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Publication Status*" %><br>
+    <%= f.select(:pub_status, options_for_select(["Draft", "Published", "Trashed"], @course.level) ) %>
+  </div>
+
+  <div class="field">
+    <%= f.label "SEO page title*" %><br>
+    <%= f.text_field :seo_page_title %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Meta description*" %><br>
+    <%= f.text_field :meta_desc %>
+  </div>
+
   <div class="actions">
     <%= f.submit %>
   </div>

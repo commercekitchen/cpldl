@@ -21,6 +21,7 @@ class CoursesController < ApplicationController
     @course = Course.new(course_params)
 
     if @course.save
+      @course.topics_list(params[:course][:topics])
       redirect_to @course, notice: 'Course was successfully created.'
     else
       render :new
@@ -29,6 +30,7 @@ class CoursesController < ApplicationController
 
   def update
     if @course.update(course_params)
+      @course.topics_list(params[:course][:topics])
       redirect_to @course, notice: 'Course was successfully updated.'
     else
       render :edit
@@ -53,6 +55,8 @@ class CoursesController < ApplicationController
                                      :summary, 
                                      :description, 
                                      :contributor, 
-                                     :pub_status)
+                                     :pub_status,
+                                     :language_id,
+                                     :level)
     end
 end

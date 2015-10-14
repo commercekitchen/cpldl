@@ -17,15 +17,15 @@ class Administrators::CoursesController < Administrators::BaseController
   end
 
   
-  def create
-    @course = Course.new(course_params)
+  # def create
+  #   @course = Course.new(course_params)
 
-    if @course.save
-      redirect_to @course, notice: 'Course was successfully created.'
-    else
-      render :new
-    end
-  end
+  #   if @course.save
+  #     redirect_to @course, notice: 'Course was successfully created.'
+  #   else
+  #     render :new
+  #   end
+  # end
 
   def update
     if @course.update(course_params)
@@ -44,15 +44,5 @@ class Administrators::CoursesController < Administrators::BaseController
 
     def set_course
       @course = Course.find(params[:id])
-    end
-
-    def course_params
-      params.require(:course).permit(:title, 
-                                     :seo_page_title, 
-                                     :meta_desc, 
-                                     :summary, 
-                                     :description, 
-                                     :contributor, 
-                                     :pub_status)
     end
 end

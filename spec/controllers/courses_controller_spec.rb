@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe CoursesController, type: :controller do
-
+  language ||= FactoryGirl.create(:language)
   # This should return the minimal set of attributes required to create a valid
   # Course. As you add validations to Course, be sure to
   # adjust the attributes here as well.
@@ -11,7 +11,9 @@ RSpec.describe CoursesController, type: :controller do
                               summary:  "Basically it's basic", 
                               description:  "More descriptive that you know!", 
                               contributor:  "MeMyself&I <a href='here.com'></a>", 
-                              pub_status:  "p" } }
+                              pub_status:  "p",
+                              language: language,
+                              level: "Advanced" } }
 
   let(:invalid_attributes) { {  title: "", 
                                 seo_page_title: "", 
@@ -19,13 +21,19 @@ RSpec.describe CoursesController, type: :controller do
                                 summary: "", 
                                 description: "", 
                                 contributor: "", 
-                                pub_status: "" } }
+                                pub_status: "",
+                                language: "",
+                                level: "" } }
 
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # CoursesController. Be sure to keep this updated too.
-  
-  let(:valid_session) { {} }
+  before(:each) do
+    user ||= FactoryGirl.create(:admin_user)
+    sign_in(user)
+  end
+
+  let(:valid_session) { { } }
 
   describe "GET #index" do
     it "assigns all courses as @courses" do
@@ -74,7 +82,7 @@ RSpec.describe CoursesController, type: :controller do
 
       it "redirects to the created course" do
         post :create, {:course => valid_attributes}, valid_session
-        expect(response).to redirect_to(Course.last)
+        expect(response).to have_http_status(:success)
       end
     end
 
@@ -99,7 +107,9 @@ RSpec.describe CoursesController, type: :controller do
                                 summary:  "Sum sum summary", 
                                 description:  "Thing thing thing", 
                                 contributor:  "MeMyself&I <a href='there.com'></a>", 
-                                pub_status:  "d" }
+                                pub_status:  "d", 
+                                language: language,
+                                level: "Beginner" }
       }
 
       it "updates the requested course" do

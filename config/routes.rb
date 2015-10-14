@@ -7,7 +7,7 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show, :update]
 
-  resources :courses, only: [:show, :index]
+  resources :courses
   resources :topics
   resources :languages
 
