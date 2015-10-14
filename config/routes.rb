@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   root 'home#index'
 
   devise_for :users
@@ -10,7 +11,8 @@ Rails.application.routes.draw do
   resources :courses
   resources :topics
   resources :languages
-
+  
+  mount Ckeditor::Engine => '/ckeditor'
 
   resources :administrators, only: [:index]
 

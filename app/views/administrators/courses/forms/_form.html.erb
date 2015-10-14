@@ -1,0 +1,93 @@
+<%= form_for(@course) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+      <% @course.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label "Title*" %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Contributor*" %><br>
+    <%= f.text_field :contributor %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Course Summary*" %><br>
+    <%= f.text_field :summary %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Course Description*" %><br>
+    <%= f.cktext_area :description %>
+  </div>
+
+  <div class="row">
+    <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
+      <%= render "administrators/courses/forms/supplemental_attachment_fields", f: attachment_builder %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label "Post-Course Completion Notes and Partner Resources" %>
+    <%= f.cktext_area :notes %>
+  </div>
+
+  <div class="row">
+    <div class="six-col">
+      <%= f.label "Course Topics*" %><br>
+      <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
+        <%= b.check_box(checked: current_topics(@course, b.object)) %>
+        <%= b.label %> &nbsp;
+      <% end %>
+    </div>
+
+    <div class="six-col last">
+      <%= f.label "Course Language*" %><br>
+      <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: true } ) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six-col">
+      <%= f.label "Course Level*" %><br>
+      <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: true } ) %>
+    </div>
+
+    <div class="six-col last">
+      <%= f.label "Publication Status*" %><br>
+      <%= f.select(:pub_status, options_for_select(["Draft", "Published", "Trashed"], @course.pub_status), { include_blank: true } ) %>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label "SEO page title*" %><br>
+    <%= f.text_field :seo_page_title %>
+  </div>
+
+  <div class="field">
+    <%= f.label "Meta description*" %><br>
+    <%= f.text_field :meta_desc %>
+  </div>
+
+  <div class="actions">
+    <div class="row">
+      <div class="four-col">
+        <%= f.submit "Save Course" %>
+      </div>
+      <div class="four-col">
+        <%= f.submit "Save Course and Edit Lesson" %>
+      </div>
+      <div class="four-col last"></div>
+    </div>
+  </div>
+<% end %>

@@ -33,7 +33,9 @@ puts "#{Language.count} languages created"
   :summary => Faker::Lorem.sentence(5),
   :description => Faker::Lorem.paragraph(3),
   :contributor => Faker.name,
-  :pub_status => "p"
+  :pub_status => "p",
+  :language_id => Language.all.sample.id,
+  :level => ["Beginner", "Intermediate", "Advanced"].sample
   )
 end
 puts "#{Course.count} courses created"
@@ -42,7 +44,6 @@ puts "#{Course.count} courses created"
 
 Course.all.each do |c|
   c.topics << Topic.all.sample
-  c.language_id = Language.all.sample.id
   c.save
 end
 puts "courses updated with topics and languages"

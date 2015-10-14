@@ -6,7 +6,7 @@ class Course < ActiveRecord::Base
   belongs_to :language
 
   has_many :attachments, dependent: :destroy
-  accepts_nested_attributes_for :attachments, reject_if: proc { |a| a[:attachment].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :attachments, reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
   # has_many :lessons
   # has_one :assessment

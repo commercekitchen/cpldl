@@ -18,6 +18,7 @@ class CoursesController < ApplicationController
 
   
   def create
+    binding.pry
     @course = Course.new(course_params)
 
     if @course.save
@@ -57,6 +58,14 @@ class CoursesController < ApplicationController
                                      :contributor, 
                                      :pub_status,
                                      :language_id,
-                                     :level)
+                                     :level,
+                                     :topics,
+                                     :notes,
+                                     :delete_document,
+            attachments_attributes: [:course_id,
+                                     :document,
+                                     :title,
+                                     :doc_type,
+                                     :_destroy])
     end
 end
