@@ -12,7 +12,7 @@ class LessonsController < ApplicationController
   end
 
   def show
-    @lesson = @course.lesson.find(params[:id])
+    @lesson = @course.lessons.find(params[:id])
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @lesson }

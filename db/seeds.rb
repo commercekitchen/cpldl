@@ -16,13 +16,13 @@ Topic.create(title: "Road Warriors")
 Topic.create(title: "ThunderDome")
 Topic.create(title: "War Boys")
 Topic.create(title: "Gas Town")
-puts "#{Topic.count} topics created"
+puts "#{Topic.count} topics created."
 
 # => fake languages
 Language.create(name: "Klingon")
 Language.create(name: "Orc")
 Language.create(name: "Zanzibarzian")
-puts "#{Language.count} languages created"
+puts "#{Language.count} languages created."
 
 # => Temporary courses for development
 6.times do
@@ -33,15 +33,19 @@ puts "#{Language.count} languages created"
   summary: Faker::Lorem.sentence(5),
   description: Faker::Lorem.paragraph(3),
   contributor: Faker.name,
-  pub_status: "p",
+  pub_status: "P",
   language_id: Language.all.sample.id,
   level: ["Beginner", "Intermediate", "Advanced"].sample
   )
 end
-puts "#{Course.count} courses created"
+puts "#{Course.count} courses created."
 
 Course.all.each do |c|
   c.topics << Topic.all.sample
+  c.lessons << Lesson.create(title: "Lesson 1", description: "Lesson A description", duration: 90, order: 1)
+  c.lessons << Lesson.create(title: "Lesson 2", description: "Lesson B description", duration: 120, order: 2)
   c.save
 end
-puts "courses updated with topics and languages"
+puts "courses updated with topics, languages, and lessons."
+
+

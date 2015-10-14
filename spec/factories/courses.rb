@@ -7,5 +7,11 @@ FactoryGirl.define do
     description "Description"
     contributor "John Doe"
     pub_status "P"
+    level "Beginner"
+    language
+
+    after(:create) do |course|
+      create(:lesson, course: course)
+    end
   end
 end
