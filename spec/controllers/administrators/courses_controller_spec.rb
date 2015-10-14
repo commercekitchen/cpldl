@@ -5,22 +5,22 @@
 #   # This should return the minimal set of attributes required to create a valid
 #   # Course. As you add validations to Course, be sure to
 #   # adjust the attributes here as well.
-#   let(:valid_attributes) {  { title:  "Course you can", 
-#                               seo_page_title:  "Doo it | Foo it | Moo it ", 
-#                               meta_desc:  "You're so friggin meta", 
-#                               summary:  "Basically it's basic", 
-#                               description:  "More descriptive that you know!", 
-#                               contributor:  "MeMyself&I <a href='here.com'></a>", 
+#   let(:valid_attributes) {  { title:  "Course you can",
+#                               seo_page_title:  "Doo it | Foo it | Moo it ",
+#                               meta_desc:  "You're so friggin meta",
+#                               summary:  "Basically it's basic",
+#                               description:  "More descriptive that you know!",
+#                               contributor:  "MeMyself&I <a href='here.com'></a>",
 #                               pub_status:  "p",
 #                               language: language,
 #                               level: "Advanced" } }
 
-#   let(:invalid_attributes) { {  title: "", 
-#                                 seo_page_title: "", 
-#                                 meta_desc: "", 
-#                                 summary: "", 
-#                                 description: "", 
-#                                 contributor: "", 
+#   let(:invalid_attributes) { {  title: "",
+#                                 seo_page_title: "",
+#                                 meta_desc: "",
+#                                 summary: "",
+#                                 description: "",
+#                                 contributor: "",
 #                                 pub_status: "",
 #                                 language: "",
 #                                 level: "" } }
@@ -101,13 +101,13 @@
 
 #   describe "PUT #update" do
 #     context "with valid params" do
-#       let(:new_attributes) { {  title:  "What you need", 
-#                                 seo_page_title:  "More-we-learn", 
-#                                 meta_desc:  "Hows that Meta-tate?", 
-#                                 summary:  "Sum sum summary", 
-#                                 description:  "Thing thing thing", 
-#                                 contributor:  "MeMyself&I <a href='there.com'></a>", 
-#                                 pub_status:  "d", 
+#       let(:new_attributes) { {  title:  "What you need",
+#                                 seo_page_title:  "More-we-learn",
+#                                 meta_desc:  "Hows that Meta-tate?",
+#                                 summary:  "Sum sum summary",
+#                                 description:  "Thing thing thing",
+#                                 contributor:  "MeMyself&I <a href='there.com'></a>",
+#                                 pub_status:  "d",
 #                                 language: language,
 #                                 level: "Beginner" }
 #       }

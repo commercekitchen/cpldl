@@ -13,7 +13,7 @@ describe Course do
     end
 
     it "can only have listed statuses" do
-      allowed_statuses = ["P"]
+      allowed_statuses = ["P", "D"]
       allowed_statuses.each do |status|
         @course.pub_status = status
         expect(@course).to be_valid
@@ -29,7 +29,9 @@ describe Course do
       expect(@course).to_not be_valid
     end
 
-    pending "the status should be set by default"
+    it "should initially be set to draft status" do
+      expect(@course.pub_status).to eq("D")
+    end
 
   end
 

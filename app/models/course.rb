@@ -12,7 +12,7 @@ class Course < ActiveRecord::Base
 
   validates :title, :seo_page_title, :meta_desc, :summary,
     :description, :contributor, :language_id, :level, presence: true
-  validates :pub_status, presence: true, inclusion: { in: %w(P), message: "%{value} is not a valid status" }
+  validates :pub_status, presence: true, inclusion: { in: %w(P D), message: "%{value} is not a valid status" }
 
   def topics_list(topic_list)
     if topic_list

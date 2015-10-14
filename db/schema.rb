@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151014201805) do
+ActiveRecord::Schema.define(version: 20151014214757) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "course_id"
@@ -55,9 +55,9 @@ ActiveRecord::Schema.define(version: 20151014201805) do
     t.string   "summary",        limit: 156
     t.text     "description"
     t.string   "contributor"
-    t.string   "pub_status",     limit: 2
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.string   "pub_status",     limit: 2,   default: "D"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "language_id"
     t.string   "level"
     t.text     "notes"

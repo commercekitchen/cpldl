@@ -6,7 +6,6 @@ FactoryGirl.define do
     summary "In this class you will..."
     description "Description"
     contributor "John Doe"
-    pub_status "P"
     level "Beginner"
     language
 
