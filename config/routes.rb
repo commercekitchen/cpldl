@@ -9,7 +9,14 @@ Rails.application.routes.draw do
   resources :courses, only: [:index, :show] do
     resources :lessons, only: [:index, :show]
   end
-  # resources :topics
-  # resources :languages
-  # resources :attachments
+
+  mount Ckeditor::Engine => '/ckeditor'
+
+  namespace :administrators do
+    resources :dashboard
+    resources :courses
+    resources :attachments
+    resources :topics
+    resources :languages
+  end
 end

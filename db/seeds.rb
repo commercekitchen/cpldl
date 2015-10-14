@@ -27,22 +27,21 @@ puts "#{Language.count} languages created"
 # => Temporary courses for development
 6.times do
   Course.create!(
-    title: Faker::Company.name,
-    seo_page_title: Faker::Company.bs,
-    meta_desc: Faker::Company.bs,
-    summary: Faker::Lorem.sentence(5),
-    description: Faker::Lorem.paragraph(3),
-    contributor: Faker.name,
-    pub_status: "P"
+  title: Faker::Company.name,
+  seo_page_title: Faker::Company.bs,
+  meta_desc: Faker::Company.bs,
+  summary: Faker::Lorem.sentence(5),
+  description: Faker::Lorem.paragraph(3),
+  contributor: Faker.name,
+  pub_status: "p",
+  language_id: Language.all.sample.id,
+  level: ["Beginner", "Intermediate", "Advanced"].sample
   )
 end
 puts "#{Course.count} courses created"
 
-# lang_ids = Language.all.map { |l| l.id.to_i }
-
 Course.all.each do |c|
   c.topics << Topic.all.sample
-  c.language_id = Language.all.sample.id
   c.save
 end
 puts "courses updated with topics and languages"
