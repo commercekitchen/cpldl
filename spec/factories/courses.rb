@@ -7,5 +7,6 @@ FactoryGirl.define do
     description "Description"
     contributor "John Doe"
     pub_status "P"
+    level ["Beginner", "Intermediate", "Advanced"].sample
   end
 end

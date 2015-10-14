@@ -6,10 +6,6 @@ class Administrators::TopicsController < Administrators::BaseController
     @topics = Topic.all
   end
 
-  # GET /topics/1
-  def show
-  end
-
   # GET /topics/new
   def new
     @topic = Topic.new
@@ -24,7 +20,7 @@ class Administrators::TopicsController < Administrators::BaseController
     @topic = Topic.new(topic_params)
 
     if @topic.save
-      redirect_to @topic, notice: 'Topic was successfully created.'
+      redirect_to administrators_topics_path, notice: 'Topic was successfully created.'
     else
       render :new
     end
@@ -33,17 +29,19 @@ class Administrators::TopicsController < Administrators::BaseController
   # PATCH/PUT /topics/1
   def update
     if @topic.update(topic_params)
-      redirect_to @topic, notice: 'Topic was successfully updated.'
+      redirect_to administrators_topics_path, notice: 'Topic was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /topics/1
-  def destroy
-    @topic.destroy
-    redirect_to topics_url, notice: 'Topic was successfully destroyed.'
-  end
+  # => not sure if this action will be allowed yet
+
+  # # DELETE /topics/1
+  # def destroy
+  #   @topic.destroy
+  #   redirect_to topics_url, notice: 'Topic was successfully destroyed.'
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

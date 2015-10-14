@@ -17,10 +17,10 @@ class Course < ActiveRecord::Base
             :summary,
             :description,
             :contributor,
-            :language_id,
-            :level, presence: true
+            :language_id, presence: true
 
-  validates :pub_status, presence: true, inclusion: { in: %w(P), message: "%{value} is not a valid status" }
+  validates :pub_status, presence: true, inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
+  validates :level, presence: true, inclusion: { in: %w(Beginner Intermediate Advanced), message: "%{value} is not a valid level"}
 
   def topics_list(topic_list)
     if topic_list

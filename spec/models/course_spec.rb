@@ -3,7 +3,7 @@ require "rails_helper"
 describe Course do
 
   before do
-    @course = FactoryGirl.build(:course)
+    @course = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
   end
 
   it "is initially valid" do
