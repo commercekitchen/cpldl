@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
       sign_out :user
       flash[:alert] = %Q[Your account has been placed on hold, please contact a site administrator.]
     elsif user.has_role?(:super) || user.has_role?(:admin)
-      administrators_path
+      administrators_dashboard_index_path
     else
       root_path
     end
