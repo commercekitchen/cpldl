@@ -1,9 +1,9 @@
 class Course < ActiveRecord::Base
 
+  # has_one :assessment
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  # has_one :assessment
   has_many :attachments, dependent: :destroy
 
   belongs_to :language

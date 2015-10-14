@@ -30,7 +30,7 @@
   width: 1em;
   margin-right: .2em;
   text-align: center;
-  /* opacity: .8; */
+  color: $teal;
 
   /* For safety - reset parent styles, that can break glyph codes*/
   font-variant: normal;
@@ -42,9 +42,6 @@
   /* Animation center compensation - margins should be symmetric */
   /* remove if not needed */
   margin-left: .2em;
-
-  color: $teal;
-
 
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;

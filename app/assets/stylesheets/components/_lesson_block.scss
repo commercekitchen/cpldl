@@ -1,0 +1,73 @@
+.lesson-block {
+  height: 200px;
+  width: 200px;
+  background-color: $teal;
+  color: $white;
+  text-align: center;
+  margin-bottom: 1em;
+
+  @include media($tablet) {
+    height: 150px;
+    width: 150px;
+  }
+
+  @include media($mobile-large) {
+    height: 100px;
+    width: 100px;
+  }
+
+  .lesson-order {
+    font-size: 4em;
+
+    @include media($tablet) {
+     font-size: 2em;
+    }
+
+    @include media($mobile-large) {
+      font-size: 1.5em;
+    }
+  }
+
+  .lesson-title {
+    font-size: 2em;
+    margin-bottom: 2em;
+
+    @include media($tablet) {
+      font-size: 1.5em;
+      /*margin-bottom: 1em;*/
+    }
+
+    @include media($mobile-large) {
+      font-size: 1em;
+    }
+  }
+
+  .lesson-duration {
+    [class^="icon-"]:before, [class*=" icon-"]:before {
+      color: $white;
+    }
+  }
+
+  .default-state {
+    display: block;
+  }
+
+  .hover-state {
+    display: none;
+  }
+
+  &:hover {
+    background-color: $white;
+    color: $grey;
+    border: 1px solid $grey;
+    border-radius: 5px;
+
+    .default-state {
+      display: none;
+    }
+
+    .hover-state {
+      display: block;
+    }
+  }
+}

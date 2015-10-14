@@ -23,9 +23,14 @@
 <p>
   <%= @course.summary %>
 </p>
-
 <hr>
 
 <h2>Lessons in this course</h2>
+<%= render partial: "shared/lessons_grid", locals: { lessons: @course.lessons } %>
+<hr>
 
 <h2>Supplemental Materials</h2>
+
+<%= link_to "#" do %>
+  <i class="icon-download"></i>This is a PDF of the Course
+<% end %>

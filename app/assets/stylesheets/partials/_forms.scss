@@ -50,4 +50,8 @@ button, input[type="submit"] {
   @include media($tablet) {
     min-width: initial;
   }
+
+  &.small{
+    min-width: initial;
+  }
 }
