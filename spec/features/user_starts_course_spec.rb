@@ -27,8 +27,9 @@ feature "User visits course listing page" do
 
       scenario "can click to start a course and be required to login" do
         visit course_path(@course1)
-        click "Start Course"
-        expect(current_path).to eq(user_account_path)
+        save_page
+        click_link "Start Course"
+        expect(current_path).to eq(new_user_session_path)
       end
 
     end
@@ -55,8 +56,11 @@ feature "User visits course listing page" do
   context "as a logged in user" do
 
     pending "can click to start a course and be taken to the first lesson" do
+      user = FactoryGirl.create(:user)
+      login_as(user)
       visit course_path(@course1)
-      click "Start Course"
+      click_link "Start Course"
+      expect(current_path).to eq(course_lesson_path(@course1, 1))
     end
 
   end
