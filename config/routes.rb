@@ -9,14 +9,11 @@ Rails.application.routes.draw do
   resource :profile, only: [:show, :update]
 
   resources :courses
-  resources :topics
-  resources :languages
   
   mount Ckeditor::Engine => '/ckeditor'
 
-  resources :administrators, only: [:index]
-
   namespace :administrators do 
+    resources :dashboard
     resources :courses
     resources :attachments
     resources :topics

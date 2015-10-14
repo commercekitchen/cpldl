@@ -15,6 +15,15 @@ class Administrators::AttachmentsController < Administrators::BaseController
     @attachment = Attachment.new
   end
 
+  def create
+    @attachment = Attachment.new(attachment_params)
+  end
+
+  def update
+    @attachment = Attachment.find(params[:id])
+    @attachment.update(attachment_params)
+  end
+
   # DELETE /attachments/1
   def destroy
     @attachment.destroy
@@ -25,5 +34,10 @@ class Administrators::AttachmentsController < Administrators::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_attachment
       @attachment = Attachment.find(params[:id])
+    end
+
+    # Only allow a trusted parameter "white list" through.
+    def attachment_params
+      params.require(:attachment).permit(:course_id, :title, :document, :doc_type)
     end
 end

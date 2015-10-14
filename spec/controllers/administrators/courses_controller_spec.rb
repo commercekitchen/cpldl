@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CoursesController, type: :controller do
+describe Administrators::CoursesController do
   language ||= FactoryGirl.create(:language)
   # This should return the minimal set of attributes required to create a valid
   # Course. As you add validations to Course, be sure to

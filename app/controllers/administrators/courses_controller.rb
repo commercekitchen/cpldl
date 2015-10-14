@@ -1,6 +1,6 @@
 class Administrators::CoursesController < Administrators::BaseController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate!, only: [:new, :create, :edit, :update, :destroy]
+
   def index
     @courses = Course.all
   end
@@ -16,19 +16,20 @@ class Administrators::CoursesController < Administrators::BaseController
   def edit
   end
 
-  
-  # def create
-  #   @course = Course.new(course_params)
+  def create
+    @course = Course.new(course_params)
 
-  #   if @course.save
-  #     redirect_to @course, notice: 'Course was successfully created.'
-  #   else
-  #     render :new
-  #   end
-  # end
+    if @course.save
+      @course.topics_list(params[:course][:topics])
+      redirect_to @course, notice: 'Course was successfully created.'
+    else
+      render :new
+    end
+  end
 
   def update
     if @course.update(course_params)
+      @course.topics_list(params[:course][:topics])
       redirect_to @course, notice: 'Course was successfully updated.'
     else
       render :edit
@@ -44,5 +45,25 @@ class Administrators::CoursesController < Administrators::BaseController
 
     def set_course
       @course = Course.find(params[:id])
+    end
+
+    def course_params
+      params.require(:course).permit(:title, 
+                                     :seo_page_title, 
+                                     :meta_desc, 
+                                     :summary, 
+                                     :description, 
+                                     :contributor, 
+                                     :pub_status,
+                                     :language_id,
+                                     :level,
+                                     :topics,
+                                     :notes,
+                                     :delete_document,
+            attachments_attributes: [:course_id,
+                                     :document,
+                                     :title,
+                                     :doc_type,
+                                     :_destroy])
     end
 end

@@ -18,7 +18,7 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe TopicsController, type: :controller do
+describe Administrators::TopicsController do
 
   # This should return the minimal set of attributes required to create a valid
   # Topic. As you add validations to Topic, be sure to

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AdministratorsController, type: :controller do
+AdministratorsController do
 
   # => this should be removed from here and moved to application controller spec, but I am not sure how to do this
   describe "#index" do
