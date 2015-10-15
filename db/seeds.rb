@@ -4,12 +4,12 @@
 
 # => super user account
 # => CHANGE pwd for production!!!
-super_user = User.create(email: "super@commercekitchen.com", password: "password", confirmed_at: Time.zone.now)
+super_user = User.create(email: "super@cpl.com", password: "password", confirmed_at: Time.zone.now)
 super_profile = Profile.create(first_name: "Super", last_name: "User", zip_code: "80206", user_id: super_user.id)
 super_user.update(profile_id: super_profile.id)
 super_user.add_role(:super)
 
-puts "Super User Created - Username: super@commercekitchen.com, Password: password "
+puts "Super User Created - Username: #{super_user.email}, Password: password"
 
 # => temporary topics for development
 Topic.create(title: "Road Warriors")
@@ -33,7 +33,7 @@ puts "#{Language.count} languages created."
     summary: Faker::Lorem.sentence(5),
     description: Faker::Lorem.paragraph(3),
     contributor: Faker.name,
-    pub_status: "P",
+    pub_status: ["P", "D", "T"].sample,
     language_id: Language.all.sample.id,
     level: ["Beginner", "Intermediate", "Advanced"].sample
   )

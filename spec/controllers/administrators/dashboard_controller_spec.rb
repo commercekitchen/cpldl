@@ -29,5 +29,15 @@ describe Administrators::DashboardController do
       get :index
       expect(response).to have_http_status(:redirect)
     end
+
+    it "assigns all courses as @courses" do
+      admin_user
+      course1 ||= FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
+      course2 ||= FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
+      course3 ||= FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
+
+      get :index
+      expect(assigns(:courses)).to eq([course1, course2, course3])
+    end
   end
 end
