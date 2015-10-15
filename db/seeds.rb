@@ -27,15 +27,15 @@ puts "#{Language.count} languages created."
 # => Temporary courses for development
 6.times do
   Course.create!(
-  title: Faker::Company.name,
-  seo_page_title: Faker::Company.bs,
-  meta_desc: Faker::Company.bs,
-  summary: Faker::Lorem.sentence(5),
-  description: Faker::Lorem.paragraph(3),
-  contributor: Faker.name,
-  pub_status: "P",
-  language_id: Language.all.sample.id,
-  level: ["Beginner", "Intermediate", "Advanced"].sample
+    title: Faker::Company.name,
+    seo_page_title: Faker::Company.bs,
+    meta_desc: Faker::Company.bs,
+    summary: Faker::Lorem.sentence(5),
+    description: Faker::Lorem.paragraph(3),
+    contributor: Faker.name,
+    pub_status: "P",
+    language_id: Language.all.sample.id,
+    level: ["Beginner", "Intermediate", "Advanced"].sample
   )
 end
 puts "#{Course.count} courses created."
@@ -49,5 +49,3 @@ Course.all.each do |c|
   c.save
 end
 puts "courses updated with topics, languages, and lessons."
-
-

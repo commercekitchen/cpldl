@@ -20,7 +20,7 @@ class Administrators::TopicsController < Administrators::BaseController
     @topic = Topic.new(topic_params)
 
     if @topic.save
-      redirect_to administrators_topics_path, notice: 'Topic was successfully created.'
+      redirect_to administrators_topics_path, notice: "Topic was successfully created."
     else
       render :new
     end
@@ -29,7 +29,7 @@ class Administrators::TopicsController < Administrators::BaseController
   # PATCH/PUT /topics/1
   def update
     if @topic.update(topic_params)
-      redirect_to administrators_topics_path, notice: 'Topic was successfully updated.'
+      redirect_to administrators_topics_path, notice: "Topic was successfully updated."
     else
       render :edit
     end
@@ -40,17 +40,18 @@ class Administrators::TopicsController < Administrators::BaseController
   # # DELETE /topics/1
   # def destroy
   #   @topic.destroy
-  #   redirect_to topics_url, notice: 'Topic was successfully destroyed.'
+  #   redirect_to topics_url, notice: "Topic was successfully destroyed."
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_topic
-      @topic = Topic.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def topic_params
-      params.require(:topic).permit(:title)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_topic
+    @topic = Topic.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def topic_params
+    params.require(:topic).permit(:title)
+  end
 end

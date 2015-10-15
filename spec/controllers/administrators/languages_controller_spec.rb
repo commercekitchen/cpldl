@@ -41,30 +41,30 @@ describe Administrators::LanguagesController do
     context "with valid params" do
       it "creates a new Language" do
         expect {
-          post :create, { :language => valid_attributes }
+          post :create, { language: valid_attributes }
         }.to change(Language, :count).by(1)
       end
 
       it "assigns a newly created language as @language" do
-        post :create, { :language => valid_attributes }
+        post :create, { language: valid_attributes }
         expect(assigns(:language)).to be_a(Language)
         expect(assigns(:language)).to be_persisted
       end
 
       it "redirects to language index" do
-        post :create, {:language => valid_attributes}
+        post :create, { language: valid_attributes }
         expect(response).to redirect_to(administrators_languages_path)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved language as @language" do
-        post :create, {:language => invalid_attributes}
+        post :create, { language: invalid_attributes }
         expect(assigns(:language)).to be_a_new(Language)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:language => invalid_attributes}
+        post :create, { language: invalid_attributes }
         expect(response).to render_template("new")
       end
     end
@@ -73,7 +73,7 @@ describe Administrators::LanguagesController do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        { name: "Goober"}
+        { name: "Goober" }
       }
 
       it "updates the requested language" do
@@ -83,24 +83,24 @@ describe Administrators::LanguagesController do
       end
 
       it "assigns the requested language as @language" do
-        put :update, {id: @language1.to_param, language:valid_attributes}
+        put :update, { id: @language1.to_param, language: valid_attributes }
         expect(assigns(:language)).to eq(@language1)
       end
 
       it "redirects to the language index" do
-        put :update, {id: @language1.to_param, language: valid_attributes}
+        put :update, { id: @language1.to_param, language: valid_attributes }
         expect(response).to redirect_to(administrators_languages_path)
       end
     end
 
     context "with invalid params" do
       it "assigns the language as @language" do
-        put :update, {id: @language1.to_param, language: invalid_attributes}
+        put :update, { id: @language1.to_param, language: invalid_attributes }
         expect(assigns(:language)).to eq(@language1)
       end
 
       it "re-renders the 'edit' template" do
-        put :update, {id: @language1.to_param, language: invalid_attributes}
+        put :update, { id: @language1.to_param, language: invalid_attributes }
         expect(response).to render_template("edit")
       end
     end

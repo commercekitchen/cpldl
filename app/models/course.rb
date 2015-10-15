@@ -18,13 +18,15 @@ class Course < ActiveRecord::Base
             :contributor,
             :language_id, presence: true
 
-  validates :pub_status, presence: true, inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
-  validates :level, presence: true, inclusion: { in: %w(Beginner Intermediate Advanced), message: "%{value} is not a valid level"}
+  validates :pub_status, presence: true,
+    inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
+  validates :level, presence: true,
+    inclusion: { in: %w(Beginner Intermediate Advanced), message: "%{value} is not a valid level" }
 
   def topics_list(topic_list)
     if topic_list
       valid_topics = topic_list.reject do |topic|
-       topic.blank?
+        topic.blank?
       end
 
       new_or_found_topics = valid_topics.map do |title|

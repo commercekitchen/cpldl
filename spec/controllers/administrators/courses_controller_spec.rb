@@ -38,7 +38,7 @@ describe Administrators::CoursesController do
   end
 
   describe "POST #create" do
-    let(:valid_attributes) {  { title:  "Course you can",
+    let(:valid_attributes) { { title:  "Course you can",
                                 seo_page_title:  "Doo it | Foo it | Moo it ",
                                 meta_desc:  "You're so friggin meta",
                                 summary:  "Basically it's basic",
@@ -46,7 +46,8 @@ describe Administrators::CoursesController do
                                 contributor:  "MeMyself&I <a href='here.com'></a>",
                                 pub_status:  "P",
                                 language_id: FactoryGirl.create(:language),
-                                level: "Advanced" } }
+                                level: "Advanced" }
+                              }
 
     let(:invalid_attributes) { {  title: "",
                                   seo_page_title: "",
@@ -56,35 +57,36 @@ describe Administrators::CoursesController do
                                   contributor: "",
                                   pub_status: "",
                                   language: "",
-                                  level: "" } }
+                                  level: "" }
+                                }
 
     context "with valid params" do
       it "creates a new Course" do
         expect {
-          post :create, {:course => valid_attributes}
+          post :create, { course: valid_attributes }
         }.to change(Course, :count).by(1)
       end
 
       it "assigns a newly created course as @course" do
-        post :create, {:course => valid_attributes}
+        post :create, { course: valid_attributes }
         expect(assigns(:course)).to be_a(Course)
         expect(assigns(:course)).to be_persisted
       end
 
       it "redirects to the created course" do
-        post :create, {:course => valid_attributes}
+        post :create, { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
       end
     end
 
     context "with invalid params" do
       it "assigns a newly created but unsaved course as @course" do
-        post :create, {:course => invalid_attributes}
+        post :create, { course: invalid_attributes }
         expect(assigns(:course)).to be_a_new(Course)
       end
 
       it "re-renders the 'new' template" do
-        post :create, {:course => invalid_attributes}
+        post :create, { course: invalid_attributes }
         expect(response).to render_template("new")
       end
     end

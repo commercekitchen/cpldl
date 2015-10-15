@@ -17,7 +17,7 @@ Style/StringLiterals:
     - double_quotes
 
 Metrics/LineLength:
-  Max: 120
+  Max: 128
 
 Metrics/MethodLength:
   Max: 32
@@ -47,6 +47,9 @@ Style/BlockComments:
   Enabled: false
 
 Style/AlignHash:
+  Enabled: false
+
+Style/BracesAroundHashParameters:
   Enabled: false
 
 Rails/HasAndBelongsToMany:

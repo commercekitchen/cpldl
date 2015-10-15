@@ -20,7 +20,7 @@ class Administrators::LanguagesController < Administrators::BaseController
     @language = Language.new(language_params)
 
     if @language.save
-      redirect_to administrators_languages_path, notice: 'Language was successfully created.'
+      redirect_to administrators_languages_path, notice: "Language was successfully created."
     else
       render :new
     end
@@ -29,14 +29,14 @@ class Administrators::LanguagesController < Administrators::BaseController
   # PATCH/PUT /languages/1
   def update
     if @language.update(language_params)
-      redirect_to administrators_languages_path, notice: 'Language was successfully updated.'
+      redirect_to administrators_languages_path, notice: "Language was successfully updated."
     else
       render :edit
     end
   end
 
   # => not sure yet if we will allow this action
-  
+
   # # DELETE /languages/1
   # def destroy
   #   @language.destroy
@@ -44,13 +44,15 @@ class Administrators::LanguagesController < Administrators::BaseController
   # end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_language
-      @language = Language.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def language_params
-      params.require(:language).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_language
+    @language = Language.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def language_params
+    params.require(:language).permit(:name)
+  end
+
 end

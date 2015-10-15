@@ -27,17 +27,19 @@ class Administrators::AttachmentsController < Administrators::BaseController
   # DELETE /attachments/1
   def destroy
     @attachment.destroy
-    redirect_to attachments_url, notice: 'Attachment was successfully destroyed.'
+    redirect_to attachments_url, notice: "Attachment was successfully destroyed."
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_attachment
-      @attachment = Attachment.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def attachment_params
-      params.require(:attachment).permit(:course_id, :title, :document, :doc_type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_attachment
+    @attachment = Attachment.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def attachment_params
+    params.require(:attachment).permit(:course_id, :title, :document, :doc_type)
+  end
+
 end
