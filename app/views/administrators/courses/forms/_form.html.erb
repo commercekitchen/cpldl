@@ -13,7 +13,8 @@
 
   <div class="field">
     <%= f.label "Title*" %><br>
-    <%= f.text_field :title %>
+    <%= f.text_field :title, id: "title_text" %>
+    <span id="title_counter"></span> out of <%= @max_title %> characters remaining.
   </div>
 
   <div class="field">
@@ -23,7 +24,8 @@
 
   <div class="field">
     <%= f.label "Course Summary*" %><br>
-    <%= f.text_field :summary %>
+    <%= f.text_field :summary, id: "summary_text" %>
+    <span id="summary_counter"></span> out of <%= @max_summary %> characters remaining.
   </div>
 
   <div class="field">
@@ -71,12 +73,14 @@
 
   <div class="field">
     <%= f.label "SEO page title*" %><br>
-    <%= f.text_field :seo_page_title %>
+    <%= f.text_field :seo_page_title, id: "seo_text" %>
+    <span id="seo_counter"></span> out of <%= @max_seo %> characters remaining.
   </div>
 
   <div class="field">
     <%= f.label "Meta description*" %><br>
-    <%= f.text_field :meta_desc %>
+    <%= f.text_field :meta_desc, id: "meta_text" %>
+    <span id="meta_counter"></span> out of <%= @max_meta %> characters remaining.
   </div>
 
   <div class="actions">
@@ -91,3 +95,37 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  $('#title_text').simplyCountable({
+    counter: '#title_counter',
+    countable: 'characters',
+    maxCount: 90,
+    strictMax: true,
+    countDirection: 'down'
+    });
+
+  $('#seo_text').simplyCountable({
+    counter: '#seo_counter',
+    countable: 'characters',
+    maxCount: 90,
+    strictMax: true,
+    countDirection: 'down'
+    });
+
+  $('#summary_text').simplyCountable({
+    counter: '#summary_counter',
+    countable: 'characters',
+    maxCount: 156,
+    strictMax: true,
+    countDirection: 'down'
+    });
+
+  $('#meta_text').simplyCountable({
+    counter: '#meta_counter',
+    countable: 'characters',
+    maxCount: 156,
+    strictMax: true,
+    countDirection: 'down'
+    });
+</script>
