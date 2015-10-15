@@ -30,7 +30,7 @@
         </tr>
         <% @courses.each do |course| %>
           <tr>
-            <td><%= link_to course.title, administrators_course_path(course) %></td>
+            <td><%= link_to course.title, course_path(course) %></td>
             <td>
               <% course.topics.each do |topic| %>
                 <%= topic.title %> &nbsp;

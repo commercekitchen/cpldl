@@ -14,10 +14,17 @@
     <p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
   </div>
 
-  <div class="four-col last align-right">
-    <p>+ Add to / - Remove from Your Plan</p>
-    <%= link_to "Start Course", course_lesson_path(@course, 1), class: "btn" %>
-  </div>
+  <% if current_user && (current_user.has_role?(:admin) || current_user.has_role?(:super)) %>
+    <div class="four-col last align-right">
+      <p><small><%= link_to "Edit Course", edit_administrators_course_path(@course) %> >></small></p>
+      <%= link_to "Start Course", course_lesson_path(@course, 1), class: "btn" %>
+    </div>
+  <% else %>
+    <div class="four-col last align-right">
+      <p>+ Add to / - Remove from Your Plan</p>
+      <%= link_to "Start Course", course_lesson_path(@course, 1), class: "btn" %>
+    </div>
+  <% end %>
 </div>
 
 <p>

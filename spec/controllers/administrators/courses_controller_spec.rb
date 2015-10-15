@@ -16,13 +16,6 @@ describe Administrators::CoursesController do
     end
   end
 
-  describe "GET #show" do
-    it "assigns the requested course as @course" do
-      get :show, id: @course1.to_param
-      expect(assigns(:course)).to eq(@course1)
-    end
-  end
-
   describe "GET #new" do
     it "assigns a new course as @course" do
       get :new
@@ -76,6 +69,7 @@ describe Administrators::CoursesController do
       it "redirects to the created course" do
         post :create, { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(Course.last)
       end
     end
 
