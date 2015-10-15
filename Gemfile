@@ -37,6 +37,8 @@ gem 'newrelic_rpm'
 gem 'paperclip', '~> 4.3' # File uploads
 gem 'ckeditor', '~> 4.1.1'
 
+gem 'friendly_id'
+
 group :development do
   gem 'rubocop', require: false
   gem 'quiet_assets'

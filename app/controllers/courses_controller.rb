@@ -9,7 +9,7 @@ class CoursesController < ApplicationController
   end
 
   def show
-    @course = Course.find(params[:id])
+    @course = Course.friendly.find(params[:id])
     respond_to do |format|
       format.html { render :show }
       format.json { render json: @course }

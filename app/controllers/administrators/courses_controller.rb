@@ -43,7 +43,7 @@ class Administrators::CoursesController < Administrators::BaseController
   private
 
   def set_course
-    @course = Course.find(params[:id])
+    @course = Course.friendly.find(params[:id])
   end
 
   def course_params

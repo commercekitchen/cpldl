@@ -1,4 +1,6 @@
 class Course < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :title, use: :history
 
   # has_one :assessment
   has_many :course_topics
