@@ -24,6 +24,7 @@ describe ProfilesController do
   describe "#update" do
 
     context "when logged in" do
+
       it "allows the user to update thier profile information" do
         user = FactoryGirl.create(:user)
         sign_in user
@@ -36,6 +37,16 @@ describe ProfilesController do
         expect(user.profile.first_name).to eq("Robby")
         expect(user.profile.last_name).to eq("Rrown")
         expect(user.profile.zip_code).to eq("12345")
+      end
+
+      it "should not allow invalid user information" do
+        user = FactoryGirl.create(:user)
+        sign_in user
+        put :update, id: user.profile,
+        user: { email: user.email, password: user.password, password_confirmation: "something else",
+          profile_attributes: { first_name: "", last_name: "", zip_code: "" } },
+          authenticity_token: set_authenticity_token
+        expect(assigns(:user).errors.any?).to be true
       end
     end
 

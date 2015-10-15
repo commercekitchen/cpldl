@@ -10,11 +10,13 @@ class ProfilesController < ApplicationController
   def update
     # Try to update devise fields first, then other fields if successful.
     update_user(devise_params)
+    @profile = Profile.find_or_initialize_by(user: @user)
     if @user.errors.any?
-      format.html { render :show }
-      format.json { render json: @user.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render :show }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
     else
-      @profile = Profile.find_or_initialize_by(user: @user)
       respond_to do |format|
         if @profile.update(profile_params[:profile_attributes])
           format.html { redirect_to profile_path, notice: "Profile was successfully updated." }
