@@ -3,7 +3,7 @@ FactoryGirl.define do
     title "Computer Course"
     seo_page_title "Computer Course"
     meta_desc "A first course in computing"
-    summary "In this class you will..."
+    summary "In this course you will..."
     description "Description"
     contributor "John Doe"
     level ["Beginner", "Intermediate", "Advanced"].sample # TODO: I think this should be known, to test against.

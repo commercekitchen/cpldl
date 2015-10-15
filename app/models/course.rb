@@ -21,7 +21,6 @@ class Course < ActiveRecord::Base
   validates :summary,
             :meta_desc, length: { maximum: 156 }, presence: true
 
-
   validates :pub_status, presence: true,
     inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
 
