@@ -12,4 +12,5 @@ class Administrators::BaseController < ApplicationController
       flash[:alert] = %Q[You don't have permission to do that | If you feel this wrong please contact a site administrator.]
     end
   end
+
 end

@@ -9,6 +9,10 @@ def log_in_with(email, password)
   click_button "Log in"
 end
 
+def log_out
+  click_link "Sign Out"
+end
+
 def sign_up_with(email, password)
   visit user_account_path
   find("#new_email").set(email)
@@ -17,19 +21,9 @@ def sign_up_with(email, password)
   click_button "Sign up"
 end
 
-# examples
-# def admin_login
-#   click_link('Sign In')
-#   expect(current_path).to eq(signin_path)
-#   fill_in("Email", with: "admin@example.com")
-#   fill_in("Password", with: "adminpassword")
-#   click_button('Signin')
-# end
-
-# def default_login
-#   click_link('Sign In')
-#   expect(current_path).to eq(signin_path)
-#   fill_in("Email", with: "user@example.com")
-#   fill_in("Password", with: "userpassword")
-#   click_button('Signin')
-# end
+def change_password(password)
+  visit profile_path
+  fill_in "user_password", with: password
+  fill_in "user_password_confirmation", with: password
+  click_button "Save"
+end

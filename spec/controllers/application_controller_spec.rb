@@ -1,27 +1,27 @@
-# require "rails_helper"
+require "rails_helper"
 
-# RSpec.configure do |c|
-#   c.infer_base_class_for_anonymous_controllers = false
-# end
+describe ApplicationController do
 
-# class ApplicationController < ActionController::Base; end
+  describe "#after_signin_path_for" do
 
-# RSpec.describe ApplicationController do
-#   controller do
-#     def index; end
+    it "should redirect a first time super admin to the profile path" do
+      user = FactoryGirl.create(:user)
+      user.add_role(:super)
+      user.sign_in_count = 1
+      expect(@controller.after_sign_in_path_for(user)).to eq(profile_path)
+    end
 
-#   describe "#authorize" do
-#     it "allows access" do
-#       adminu = FactoryGirl.create(:user)
-#       superu = FactoryGirl.create(:user)
-#       adminu.add_role(:admin)
-#       superu.add_role(:super)
+    it "should redirect a super admin to the admin dashboard path" do
+      user = FactoryGirl.create(:user)
+      user.add_role(:super)
+      user.sign_in_count = 2
+      expect(@controller.after_sign_in_path_for(user)).to eq(administrators_dashboard_index_path)
+    end
 
-#       sign_in(adminu)
-#       expect(subject.authorize).to redirect_to(administrators_path)
+    it "should redirect a regular user to the root_path" do
+      user = FactoryGirl.create(:user)
+      expect(@controller.after_sign_in_path_for(user)).to eq(root_path)
+    end
+  end
 
-#     end
-
-#     it "refuses access" do
-#     end
-# end
+end
