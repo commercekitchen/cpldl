@@ -2,17 +2,22 @@
   <%= @lesson.title %>
 <% end %>
 
+
+<img src="http://placehold.it/1024x400?text=Interactive Story Line">
+
+<hr />
+
 <div class="row">
-  <div class="eight-col">
-    <%# TODO: Fill in dynamic info when ready. %>
-    <div class="course-details">
-      <div><i class="icon-pencil"></i>4 Lessons</div>
-      <div><i class="icon-clock"></i>15 Minutes</div>
+  <div class="six-col">
+    <h3><%= @course.title %></h3>
+    <div>
+      <small><%= @course.lessons.count %> Lessons</small>
+      <small>13 Minutes</small> <%# TODO: make dynamic %>
     </div>
-    <p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
+    <%= render partial: "shared/lessons/listing", locals: { course: @course } %>
   </div>
 
-  <div class="four-col last align-right">
-
+  <div class="six-col last">
+    <%= render partial: "shared/supplemental_materials" %>
   </div>
 </div>

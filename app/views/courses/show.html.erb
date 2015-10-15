@@ -16,7 +16,7 @@
 
   <div class="four-col last align-right">
     <p>+ Add to / - Remove from Your Plan</p>
-    <%= link_to "Start Course", course_lesson_path(@course, 1), class: "btn" %>
+    <%= link_to "Start Course", course_lesson_path(@course, @course.lessons.first), class: "btn" %>
   </div>
 </div>
 
@@ -26,7 +26,7 @@
 <hr>
 
 <h2>Lessons in this course</h2>
-<%= render partial: "shared/lessons_grid", locals: { lessons: @course.lessons } %>
+<%= render partial: "shared/lessons/grid", locals: { course: @course } %>
 <hr>
 
 <h2>Supplemental Materials</h2>

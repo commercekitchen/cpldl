@@ -1,4 +1,4 @@
-<% lessons.each_with_index do |l, index| %>
+<% course.lessons.each_with_index do |l, index| %>
   <% if index % 4 == 0 %>
     <div class="row">
   <% end %>
@@ -14,7 +14,7 @@
           <div class="lesson-title-hover"><%= l.title %></div>
           <div class="lesson-order"><%= l.order %></div>
           <div class="lesson-duration"><i class="icon-clock"></i><%= l.duration %></div>
-          <button class="small">Start Lesson</button>
+          <%= link_to "Start Lesson", course_lesson_path(course, l), class: "btn small" %>
         </div>
       </div>
     </div>
