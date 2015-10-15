@@ -13,4 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require ckeditor/init
+//= require jquery.simplyCountable.js
 //= require_tree .

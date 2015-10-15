@@ -9,7 +9,11 @@ class Administrators::CoursesController < Administrators::BaseController
   end
 
   def new
-    @course = Course.new
+    @course      = Course.new
+    @max_title   = Course.validators_on(:title).first.options[:maximum]
+    @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
+    @max_summary = Course.validators_on(:summary).first.options[:maximum]
+    @max_meta    = Course.validators_on(:meta_desc).first.options[:maximum]
   end
 
   def edit
