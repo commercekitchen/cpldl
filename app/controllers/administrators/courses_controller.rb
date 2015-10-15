@@ -1,5 +1,6 @@
 class Administrators::CoursesController < Administrators::BaseController
   before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_maximums, only: [:new, :edit]
 
   def index
     @courses = Course.all
@@ -10,13 +11,10 @@ class Administrators::CoursesController < Administrators::BaseController
 
   def new
     @course      = Course.new
-    @max_title   = Course.validators_on(:title).first.options[:maximum]
-    @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
-    @max_summary = Course.validators_on(:summary).first.options[:maximum]
-    @max_meta    = Course.validators_on(:meta_desc).first.options[:maximum]
   end
 
   def edit
+
   end
 
   def create
@@ -45,6 +43,13 @@ class Administrators::CoursesController < Administrators::BaseController
   end
 
   private
+
+  def set_maximums
+    @max_title   = Course.validators_on(:title).first.options[:maximum]
+    @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
+    @max_summary = Course.validators_on(:summary).first.options[:maximum]
+    @max_meta    = Course.validators_on(:meta_desc).first.options[:maximum]
+  end
 
   def set_course
     @course = Course.friendly.find(params[:id])
