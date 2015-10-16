@@ -1,6 +1,6 @@
 module CoursesHelper
   def current_topics(course, topic)
-    titles = course.topics.map { |t| t.title }
+    titles = course.topics.map(&:title)
     titles.include?(topic.title)
   end
 

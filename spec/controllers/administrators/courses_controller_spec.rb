@@ -2,10 +2,9 @@ require "rails_helper"
 
 describe Administrators::CoursesController do
   before(:each) do
-    @course1 ||= FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
-    @course2 ||= FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
-    @course3 ||= FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
-
+    @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
+    @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
+    @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
     admin_user
   end
 
@@ -38,33 +37,35 @@ describe Administrators::CoursesController do
   end
 
   describe "POST #create" do
-    let(:valid_attributes) { { title:  "Course you can",
-                                seo_page_title:  "Doo it | Foo it | Moo it ",
-                                meta_desc:  "You're so friggin meta",
-                                summary:  "Basically it's basic",
-                                description:  "More descriptive that you know!",
-                                contributor:  "MeMyself&I <a href='here.com'></a>",
-                                pub_status:  "P",
-                                language_id: FactoryGirl.create(:language),
-                                level: "Advanced" }
-                              }
+    let(:valid_attributes) do
+      { title:  "Course you can",
+        seo_page_title:  "Doo it | Foo it | Moo it ",
+        meta_desc:  "You're so friggin meta",
+        summary:  "Basically it's basic",
+        description:  "More descriptive that you know!",
+        contributor:  "MeMyself&I <a href='here.com'></a>",
+        pub_status:  "P",
+        language_id: FactoryGirl.create(:language),
+        level: "Advanced" }
+    end
 
-    let(:invalid_attributes) { {  title: "",
-                                  seo_page_title: "",
-                                  meta_desc: "",
-                                  summary: "",
-                                  description: "",
-                                  contributor: "",
-                                  pub_status: "",
-                                  language: "",
-                                  level: "" }
-                                }
+    let(:invalid_attributes) do
+      { title: "",
+        seo_page_title: "",
+        meta_desc: "",
+        summary: "",
+        description: "",
+        contributor: "",
+        pub_status: "",
+        language: "",
+        level: "" }
+    end
 
     context "with valid params" do
       it "creates a new Course" do
-        expect {
+        expect do
           post :create, { course: valid_attributes }
-        }.to change(Course, :count).by(1)
+        end.to change(Course, :count).by(1)
       end
 
       it "assigns a newly created course as @course" do

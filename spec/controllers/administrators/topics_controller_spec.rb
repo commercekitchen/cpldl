@@ -9,13 +9,13 @@ describe Administrators::TopicsController do
     admin_user
   end
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     { title: "Carrot You Got?" }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { title: "" }
-  }
+  end
 
   describe "GET #index" do
     it "assigns all topics as @topics" do
@@ -41,9 +41,9 @@ describe Administrators::TopicsController do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Topic" do
-        expect {
+        expect do
           post :create, { topic: valid_attributes }
-        }.to change(Topic, :count).by(1)
+        end.to change(Topic, :count).by(1)
       end
 
       it "assigns a newly created topic as @topic" do
@@ -73,9 +73,9 @@ describe Administrators::TopicsController do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
+      let(:new_attributes) do
         { title: "You can Beets this!" }
-      }
+      end
 
       it "updates the requested topic" do
         put :update, { id: @topic1.to_param, topic: new_attributes }

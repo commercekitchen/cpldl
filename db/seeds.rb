@@ -33,9 +33,9 @@ puts "#{Language.count} languages created."
     summary: Faker::Lorem.sentence(5),
     description: Faker::Lorem.paragraph(3),
     contributor: Faker.name,
-    pub_status: ["P", "D", "T"].sample,
+    pub_status: %w(P, D, T).sample,
     language_id: Language.all.sample.id,
-    level: ["Beginner", "Intermediate", "Advanced"].sample
+    level: %w(Beginner, Intermediate, Advanced).sample
   )
 end
 puts "#{Course.count} courses created."

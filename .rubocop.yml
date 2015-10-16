@@ -52,6 +52,9 @@ Style/AlignHash:
 Style/BracesAroundHashParameters:
   Enabled: false
 
+Style/AlignParameters:
+  Enabled: false
+
 Rails/HasAndBelongsToMany:
   Exclude:
     - "app/models/role.rb" # This instance was auto generated.

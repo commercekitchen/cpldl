@@ -59,7 +59,7 @@ feature "User visits course listing page" do
       login_as(user)
       visit course_path(@course1)
       click_link "Start Course"
-      expect(current_path).to eq(course_lesson_path(@course1, 1))
+      expect(current_path).to eq(course_lesson_path(@course1, @course1.lessons.first))
     end
 
   end

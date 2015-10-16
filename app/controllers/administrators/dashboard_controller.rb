@@ -1,6 +1,8 @@
-class Administrators::DashboardController < Administrators::BaseController
+module Administrators
+  class DashboardController < BaseController
 
-  def index
-    @courses = Course.all
+    def index
+      @courses = Course.all
+    end
   end
 end

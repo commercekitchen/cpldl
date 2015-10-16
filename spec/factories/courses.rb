@@ -6,7 +6,7 @@ FactoryGirl.define do
     summary "In this course you will..."
     description "Description"
     contributor "John Doe"
-    level ["Beginner", "Intermediate", "Advanced"].sample # TODO: I think this should be known, to test against.
+    level "Beginner"
     language
 
     after(:create) do |course|

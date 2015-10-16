@@ -8,13 +8,13 @@ describe Administrators::LanguagesController do
     admin_user
   end
 
-  let(:valid_attributes) {
+  let(:valid_attributes) do
     { name: "Kingon" }
-  }
+  end
 
-  let(:invalid_attributes) {
+  let(:invalid_attributes) do
     { name: "" }
-  }
+  end
 
   describe "GET #index" do
     it "assigns all languages as @languages" do
@@ -40,9 +40,9 @@ describe Administrators::LanguagesController do
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Language" do
-        expect {
+        expect do
           post :create, { language: valid_attributes }
-        }.to change(Language, :count).by(1)
+        end.to change(Language, :count).by(1)
       end
 
       it "assigns a newly created language as @language" do
@@ -72,9 +72,9 @@ describe Administrators::LanguagesController do
 
   describe "PUT #update" do
     context "with valid params" do
-      let(:new_attributes) {
+      let(:new_attributes) do
         { name: "Goober" }
-      }
+      end
 
       it "updates the requested language" do
         put :update, { id: @language1.to_param, language: new_attributes }

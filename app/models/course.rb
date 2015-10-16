@@ -30,9 +30,7 @@ class Course < ActiveRecord::Base
 
   def topics_list(topic_list)
     if topic_list
-      valid_topics = topic_list.reject do |topic|
-        topic.blank?
-      end
+      valid_topics = topic_list.reject(&:blank?)
 
       new_or_found_topics = valid_topics.map do |title|
         Topic.find_or_create_by(title: title)
