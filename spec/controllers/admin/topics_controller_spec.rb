@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Administrators::TopicsController do
+describe Admin::TopicsController do
 
   before(:each) do
     @topic1 ||= FactoryGirl.create(:topic, title: "Kale Salad")
@@ -54,7 +54,7 @@ describe Administrators::TopicsController do
 
       it "redirects to the created topic" do
         post :create, { topic: valid_attributes }
-        expect(response).to redirect_to(administrators_topics_path)
+        expect(response).to redirect_to(admin_topics_path)
       end
     end
 
@@ -90,7 +90,7 @@ describe Administrators::TopicsController do
 
       it "redirects to the topic" do
         put :update, { id: @topic1.to_param, topic: valid_attributes }
-        expect(response).to redirect_to(administrators_topics_path)
+        expect(response).to redirect_to(admin_topics_path)
       end
     end
 

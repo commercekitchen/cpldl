@@ -16,7 +16,7 @@
         <p><i>Sort by clicking column headers. <br> Edit by clicking the appropriate course below.</i></p>
       </div>
       <div class="three-col">
-        <%= link_to "Add a New Course", new_administrators_course_path, class: "btn" %>
+        <%= link_to "Add a New Course", new_admin_course_path, class: "btn" %>
       </div>
     </div>
     <div>
@@ -30,7 +30,7 @@
         </tr>
         <% @courses.each do |course| %>
           <tr>
-            <td><%= link_to course.title, edit_administrators_course_path(course) %></td>
+            <td><%= link_to course.title, edit_admin_course_path(course) %></td>
             <td>
               <% course.topics.each do |topic| %>
                 <%= topic.title %> &nbsp;

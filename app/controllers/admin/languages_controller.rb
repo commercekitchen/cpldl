@@ -1,4 +1,4 @@
-module Administrators
+module Admin
   class LanguagesController < BaseController
     before_action :set_language, only: [:show, :edit, :update, :destroy]
 
@@ -21,7 +21,7 @@ module Administrators
       @language = Language.new(language_params)
 
       if @language.save
-        redirect_to administrators_languages_path, notice: "Language was successfully created."
+        redirect_to admin_languages_path, notice: "Language was successfully created."
       else
         render :new
       end
@@ -30,7 +30,7 @@ module Administrators
     # PATCH/PUT /languages/1
     def update
       if @language.update(language_params)
-        redirect_to administrators_languages_path, notice: "Language was successfully updated."
+        redirect_to admin_languages_path, notice: "Language was successfully updated."
       else
         render :edit
       end

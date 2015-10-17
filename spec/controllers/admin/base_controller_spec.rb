@@ -1,6 +1,6 @@
 # require 'rails_helper'
 
-# describe Administrators::BaseController do
+# describe Admin::BaseController do
 
 #   # => this should be removed from here and moved to application controller spec, but I am not sure how to do this
 #   describe "#index" do

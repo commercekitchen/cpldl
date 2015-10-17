@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Administrators::CoursesController do
+describe Admin::CoursesController do
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
     @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))

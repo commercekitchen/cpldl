@@ -1,4 +1,4 @@
-<%= form_for([:administrators, @course]) do |f| %>
+<%= form_for([:admin, @course]) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -35,7 +35,7 @@
 
   <div class="row">
     <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
-      <%= render "administrators/courses/forms/supplemental_attachment_fields", f: attachment_builder %>
+      <%= render "admin/courses/forms/supplemental_attachment_fields", f: attachment_builder %>
     <% end %>
   </div>
 

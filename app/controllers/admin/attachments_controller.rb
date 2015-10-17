@@ -1,4 +1,4 @@
-module Administrators
+module Admin
   class AttachmentsController < BaseController
     before_action :set_attachment, only: [:show, :edit, :update, :destroy]
 

@@ -1,4 +1,4 @@
-module Administrators
+module Admin
   class CoursesController < BaseController
 
     before_action :set_course, only: [:show, :edit, :update, :destroy]

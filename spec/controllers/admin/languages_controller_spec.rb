@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Administrators::LanguagesController do
+describe Admin::LanguagesController do
   before(:each) do
     @language1 = FactoryGirl.create(:language, name: "German")
     @language2 = FactoryGirl.create(:language, name: "Swedish")
@@ -53,7 +53,7 @@ describe Administrators::LanguagesController do
 
       it "redirects to language index" do
         post :create, { language: valid_attributes }
-        expect(response).to redirect_to(administrators_languages_path)
+        expect(response).to redirect_to(admin_languages_path)
       end
     end
 
@@ -89,7 +89,7 @@ describe Administrators::LanguagesController do
 
       it "redirects to the language index" do
         put :update, { id: @language1.to_param, language: valid_attributes }
-        expect(response).to redirect_to(administrators_languages_path)
+        expect(response).to redirect_to(admin_languages_path)
       end
     end
 

@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
       flash[:notice] = "This is the first time you have logged in, please change your password."
       profile_path
     elsif user.has_role?(:super) || user.has_role?(:admin)
-      administrators_dashboard_index_path
+      admin_dashboard_index_path
     else
       root_path
     end

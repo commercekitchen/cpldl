@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   mount Ckeditor::Engine => '/ckeditor'
 
-  namespace :administrators do
+  namespace :admin do
     resources :dashboard
     resources :courses
     resources :attachments

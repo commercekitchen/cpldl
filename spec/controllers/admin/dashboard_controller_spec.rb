@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe Administrators::DashboardController do
+describe Admin::DashboardController do
   context "get #index" do
     it "allow admin access" do
       adminu ||= FactoryGirl.create(:admin_user)

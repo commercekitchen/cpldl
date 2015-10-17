@@ -15,7 +15,7 @@ describe ApplicationController do
       user = FactoryGirl.create(:user)
       user.add_role(:super)
       user.sign_in_count = 2
-      expect(@controller.after_sign_in_path_for(user)).to eq(administrators_dashboard_index_path)
+      expect(@controller.after_sign_in_path_for(user)).to eq(admin_dashboard_index_path)
     end
 
     it "should redirect a regular user to the root_path" do

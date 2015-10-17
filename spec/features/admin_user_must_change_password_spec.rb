@@ -23,7 +23,7 @@ feature "Super admin user logs in" do
       user.sign_in_count = 1
       user.save
       log_in_with user.email, user.password
-      expect(current_path).to eq(administrators_dashboard_index_path)
+      expect(current_path).to eq(admin_dashboard_index_path)
     end
 
   end

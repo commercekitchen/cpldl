@@ -1,4 +1,4 @@
-module Administrators
+module Admin
   class TopicsController < BaseController
     before_action :set_topic, only: [:show, :edit, :update, :destroy]
 
@@ -21,7 +21,7 @@ module Administrators
       @topic = Topic.new(topic_params)
 
       if @topic.save
-        redirect_to administrators_topics_path, notice: "Topic was successfully created."
+        redirect_to admin_topics_path, notice: "Topic was successfully created."
       else
         render :new
       end
@@ -30,7 +30,7 @@ module Administrators
     # PATCH/PUT /topics/1
     def update
       if @topic.update(topic_params)
-        redirect_to administrators_topics_path, notice: "Topic was successfully updated."
+        redirect_to admin_topics_path, notice: "Topic was successfully updated."
       else
         render :edit
       end

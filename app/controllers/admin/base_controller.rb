@@ -1,4 +1,4 @@
-module Administrators
+module Admin
   class BaseController < ApplicationController
     before_action :authorize
 

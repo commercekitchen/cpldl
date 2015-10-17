@@ -18,7 +18,7 @@
 # # Message expectations are only used when there is no simpler way to specify
 # # that an instance is receiving a specific message.
 
-# describe Administrators::AttachmentsController do
+# describe Admin::AttachmentsController do
 
 #   # This should return the minimal set of attributes required to create a valid
 #   # Attachment. As you add validations to Attachment, be sure to
