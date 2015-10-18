@@ -5,7 +5,10 @@ describe Admin::LanguagesController do
     @language1 = FactoryGirl.create(:language, name: "German")
     @language2 = FactoryGirl.create(:language, name: "Swedish")
     @language3 = FactoryGirl.create(:language, name: "Korean")
-    admin_user
+
+    @admin = FactoryGirl.create(:admin_user)
+    @admin.add_role(:admin)
+    sign_in @admin
   end
 
   let(:valid_attributes) do

@@ -9,6 +9,7 @@ module Admin
     end
 
     def show
+      render "courses/show"
     end
 
     def new

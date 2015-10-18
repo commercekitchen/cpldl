@@ -5,7 +5,10 @@ describe Admin::CoursesController do
     @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
     @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
     @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
-    admin_user
+
+    @admin = FactoryGirl.create(:admin_user)
+    @admin.add_role(:admin)
+    sign_in @admin
   end
 
   describe "GET #index" do

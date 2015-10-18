@@ -10,27 +10,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label "Title*" %><br>
+  <fieldset>
+    <%= f.label "Title*" %>
     <%= f.text_field :title, id: "title_text" %>
     <span id="title_counter"></span> out of <%= @max_title %> characters remaining.
-  </div>
+  </fieldset>
 
-  <div class="field">
-    <%= f.label "Contributor*" %><br>
+  <fieldset>
+    <%= f.label "Contributor*" %>
     <%= f.text_field :contributor %>
-  </div>
+  </fieldset>
 
-  <div class="field">
-    <%= f.label "Course Summary*" %><br>
+  <fieldset>
+    <%= f.label "Course Summary*" %>
     <%= f.text_field :summary, id: "summary_text" %>
     <span id="summary_counter"></span> out of <%= @max_summary %> characters remaining.
-  </div>
+  </fieldset>
 
-  <div class="field">
-    <%= f.label "Course Description*" %><br>
+  <fieldset>
+    <%= f.label "Course Description*" %>
     <%= f.cktext_area :description %>
-  </div>
+  </fieldset>
 
   <div class="row">
     <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
@@ -45,7 +45,7 @@
 
   <div class="row">
     <div class="six-col">
-      <%= f.label "Course Topics*" %><br>
+      <%= f.label "Course Topics*" %>
       <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
         <%= b.check_box(checked: current_topics(@course, b.object)) %>
         <%= b.label %> &nbsp;
@@ -53,31 +53,31 @@
     </div>
 
     <div class="six-col last">
-      <%= f.label "Course Language*" %><br>
+      <%= f.label "Course Language*" %>
       <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: true } ) %>
     </div>
   </div>
 
   <div class="row">
     <div class="six-col">
-      <%= f.label "Course Level*" %><br>
+      <%= f.label "Course Level*" %>
       <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: true } ) %>
     </div>
 
     <div class="six-col last">
-      <%= f.label "Publication Status*" %><br>
+      <%= f.label "Publication Status*" %>
       <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @course.pub_status), { include_blank: true } ) %>
     </div>
   </div>
 
-  <div class="field">
-    <%= f.label "SEO page title*" %><br>
+  <fieldset>
+    <%= f.label "SEO page title*" %>
     <%= f.text_field :seo_page_title, id: "seo_text" %>
     <span id="seo_counter"></span> out of <%= @max_seo %> characters remaining.
   </div>
 
-  <div class="field">
-    <%= f.label "Meta description*" %><br>
+  <fieldset>
+    <%= f.label "Meta description*" %>
     <%= f.text_field :meta_desc, id: "meta_text" %>
     <span id="meta_counter"></span> out of <%= @max_meta %> characters remaining.
   </div>

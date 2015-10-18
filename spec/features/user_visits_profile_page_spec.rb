@@ -2,7 +2,7 @@ require "feature_helper"
 
 feature "Registered user visits profile page" do
 
-  before(:all) do
+  before(:each) do
     @user = FactoryGirl.create(:user)
     login_as(@user)
   end

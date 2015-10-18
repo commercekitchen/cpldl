@@ -6,7 +6,10 @@ describe Admin::TopicsController do
     @topic1 ||= FactoryGirl.create(:topic, title: "Kale Salad")
     @topic2 ||= FactoryGirl.create(:topic, title: "Cucumber Me up")
     @topic3 ||= FactoryGirl.create(:topic, title: "Sure I like parsley")
-    admin_user
+
+    @admin = FactoryGirl.create(:admin_user)
+    @admin.add_role(:admin)
+    sign_in @admin
   end
 
   let(:valid_attributes) do
