@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chicago Public Library - Digital Learn</title>
+  <%= stylesheet_link_tag "application", media: "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+  <%= render "shared/logged_in/header" %>
+
+  <div class="banner large-top-padding">
+    <div class="container">
+      <% if content_for?(:callout) %>
+        <h1><%= yield :callout %></h1>
+      <% else %>
+        <h1>Connect to the Digital World</h1>
+      <% end %>
+    </div>
+  </div>
+
+  <main class="container">
+    <%= render "shared/flashes" %>
+    <div class="row">
+      <div class="four-col">
+        <%= render "shared/sidebar" %>
+      </div>
+      <div class="eight-col last">
+        <%= yield %>
+      </div>
+    </div>
+  </main>
+
+  <%= render "shared/footer" %>
+</body>
+</html>

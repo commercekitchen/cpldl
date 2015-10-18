@@ -1,14 +1,11 @@
-<h1>Your profile</h1>
+<h1>Your Profile</h1>
 
-<%= form_for @user, url: profile_path, method: :put do |f| %>
+<%= form_for @profile, url: profile_path, method: :put do |f| %>
 
-  <% if @user.errors.any? || @profile.errors.any? %>
+  <% if @profile.errors.any? %>
     <div id="error_explanation">
       <h2>The following errors prohibited this profile from being saved:</h2>
       <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
       <% @profile.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
@@ -17,45 +14,19 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true %>
-  </fieldset>
-
-  <% if @user.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
-  <% end %>
-
-  <fieldset>
-    <%= f.label :password do %>
-      Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
-    <% end %>
-    <%= f.text_field :password, autocomplete: "off", class: "strength" %>
-    <span class="password-indicator"></span>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :password_confirmation %>
-    <%= f.text_field :password_confirmation %>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
   </fieldset>
 
-  <%= f.fields_for :profile do |p| %>
-
-    <fieldset>
-      <%= p.label :first_name %>
-      <%= p.text_field :first_name %>
-    </fieldset>
-
-    <fieldset>
-      <%= p.label :last_name %>
-      <%= p.text_field :last_name %>
-    </fieldset>
-
-    <fieldset>
-      <%= p.label :zip_code %>
-      <%= p.text_field :zip_code %>
-    </fieldset>
-
-  <% end %>
+  <fieldset>
+    <%= f.label :zip_code %>
+    <%= f.text_field :zip_code %>
+  </fieldset>
 
   <fieldset>
     <%= f.submit "Save" %>

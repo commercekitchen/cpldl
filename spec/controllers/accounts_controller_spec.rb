@@ -1,10 +1,10 @@
 require "rails_helper"
 
-describe ProfilesController do
+describe AccountsController do
 
   describe "#show" do
     context "when logged in" do
-      it "should show the user's profile information" do
+      it "should show the user's account information" do
         user = FactoryGirl.create(:user)
         sign_in user
         get :show
@@ -30,17 +30,22 @@ describe ProfilesController do
         sign_in @user
       end
 
-      it "allows the user to update their profile information" do
+      it "allows the user to update just their email" do
         put :update, id: @user.profile,
-          profile: { first_name: "Robby", last_name: "Rrown", zip_code: "12345" },
+          user: { email: "new@commercekitchen.com", password: "", password_confirmation: "" },
           authenticity_token: set_authenticity_token
-
         @user.reload
-        expect(@user.profile.first_name).to eq("Robby")
-        expect(@user.profile.last_name).to eq("Rrown")
-        expect(@user.profile.zip_code).to eq("12345")
+        expect(response).to redirect_to(account_path)
+        expect(flash[:notice]).to be_present
+        expect(@user.unconfirmed_email).to eq("new@commercekitchen.com")
       end
 
+      it "should not allow invalid user information" do
+        put :update, id: @user.profile,
+          user: { email: @user.email, password: @user.password, password_confirmation: "something else" },
+          authenticity_token: set_authenticity_token
+        expect(assigns(:user).errors.any?).to be true
+      end
     end
 
     context "when logged out" do

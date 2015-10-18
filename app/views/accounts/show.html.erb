@@ -1,0 +1,42 @@
+<h1>Your Account</h1>
+
+<%= form_for @user, url: account_path, method: :put do |f| %>
+
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2>The following errors prohibited this account from being saved:</h2>
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true %>
+  </fieldset>
+
+  <% if @user.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :password do %>
+      Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
+    <% end %>
+    <%= f.text_field :password, autocomplete: "off", class: "strength" %>
+    <span class="password-indicator"></span>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :password_confirmation %>
+    <%= f.text_field :password_confirmation %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.submit "Save" %>
+  </fieldset>
+
+<% end %>
