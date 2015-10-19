@@ -16,8 +16,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :dashboard
     resources :courses
-    resources :attachments
-    resources :topics
-    resources :languages, only: [:index, :new, :create, :edit, :update]
+    # resources :attachments # TODO: do we need a global view of all attachments?
   end
 end
