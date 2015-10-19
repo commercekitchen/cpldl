@@ -14,7 +14,14 @@ class LessonsController < ApplicationController
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
     respond_to do |format|
-      format.html { render :show }
+      format.html do
+        # Need to handle the change of course slug, which should 301 redirect.
+        if request.path != course_lesson_path(@course, @lesson)
+          redirect_to course_lesson_path(@course, @lesson), status: :moved_permanently
+        else
+          render :show
+        end
+      end
       format.json { render json: @lesson }
     end
   end

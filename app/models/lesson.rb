@@ -1,6 +1,6 @@
 class Lesson < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :title, use: :history
+  friendly_id :title, use: [:slugged, :history]
 
   belongs_to :course
   validates :title, presence: true, length: { maximum: 90 }

@@ -32,6 +32,7 @@ module Admin
     end
 
     def update
+      @course.slug = nil # The slug must be set to nil for the friendly_id to update
       if @course.update(course_params)
         @course.topics_list(params[:course][:topics])
         redirect_to @course, notice: "Course was successfully updated."
