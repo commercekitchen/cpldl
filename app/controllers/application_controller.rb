@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     if user.blocked? # TODO: I think this belongs in a before_action method, not here.
       sign_out :user
       flash[:alert] = "Your account has been placed on hold, please contact a site administrator."
-    elsif user.has_role?(:super) && user.sign_in_count == 1
+    elsif user.sign_in_count == 1 && (user.is_super? || user.is_admin?)
       flash[:notice] = "This is the first time you have logged in, please change your password."
       profile_path
     elsif user.has_role?(:super) || user.has_role?(:admin)

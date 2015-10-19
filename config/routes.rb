@@ -14,7 +14,8 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
 
   namespace :admin do
-    resources :dashboard
+    root 'dashboard#index'
+    resources :dashboard, only: [:index]
     resources :courses
     # resources :attachments # TODO: do we need a global view of all attachments?
   end

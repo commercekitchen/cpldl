@@ -1,12 +1,12 @@
 require "feature_helper"
 
-feature "Super admin user logs in" do
+feature "Admin user logs in" do
 
   context "for the first time" do
 
     scenario "is prompted to change password" do
       user = FactoryGirl.create(:user)
-      user.add_role(:super)
+      user.add_role(:admin)
       expect(user.sign_in_count).to eq(0)
       log_in_with user.email, user.password
       expect(current_path).to eq(profile_path)
@@ -19,7 +19,7 @@ feature "Super admin user logs in" do
 
     scenario "is not prompted to change password" do
       user = FactoryGirl.create(:user)
-      user.add_role(:super)
+      user.add_role(:admin)
       user.sign_in_count = 1
       user.save
       log_in_with user.email, user.password
