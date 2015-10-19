@@ -35,4 +35,45 @@ describe Course do
 
   end
 
+  context "#topics_list" do
+
+    before(:each) do
+      @course = FactoryGirl.create(:course, language: FactoryGirl.create(:language))
+      @topic = FactoryGirl.create(:topic, title: "Existing Topic")
+    end
+
+    it "assigns topics to a course" do
+      topics = ["Topic 1", "Topic2"]
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics.count).to eq(2)
+    end
+
+    it "skips blank topics when assigning to a course" do
+      topics = ["Topic 1", "Topic2", ""]
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics.count).to eq(2)
+    end
+
+    it "adds new topics to the list, if not previously there" do
+      topics = ["Topic 1", "Topic2", "Topic3", ""]
+      @course.topics_list(topics)
+      expect(Topic.count).to eq(4) # The exising + the 3 non-empty topics.
+    end
+
+    it "does nothing if the topics list is blank" do
+      topics = nil
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics.count).to eq(0)
+
+      topics = []
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics.count).to eq(0)
+    end
+
+  end
+
 end

@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory(:topic) do
-    title "Romulan Verbage"
+    title "Topic A"
   end
 end

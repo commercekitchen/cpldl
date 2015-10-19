@@ -29,7 +29,7 @@ class Course < ActiveRecord::Base
       message: "%{value} is not a valid level" }
 
   def topics_list(topic_list)
-    if topic_list
+    if topic_list.present?
       valid_topics = topic_list.reject(&:blank?)
 
       new_or_found_topics = valid_topics.map do |title|

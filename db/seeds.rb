@@ -40,7 +40,7 @@ Course.all.each do |c|
   c.topics << Topic.first
   c.lessons << Lesson.create(title: "Lesson 1", description: "Lesson A description", duration: 90, order: 1)
   c.lessons << Lesson.create(title: "Lesson 2", description: "Lesson B description", duration: 120, order: 2)
-  c.lessons << Lesson.create(title: "Lesson 3", description: "Lesson B description", duration: 80, order: 3)
-  c.lessons << Lesson.create(title: "Lesson 4", description: "Lesson B description", duration: 40, order: 4)
+  c.lessons << Lesson.create(title: "Lesson 3", description: "Lesson C description", duration: 80, order: 3)
+  c.lessons << Lesson.create(title: "Lesson 4", description: "Lesson D description", duration: 40, order: 4)
   c.save
 end
