@@ -1,43 +1,32 @@
-# require "rails_helper"
+require "rails_helper"
 
-# describe Admin::DashboardController do
-#   context "get #index" do
-#     it "allow admin access" do
-#       adminu ||= FactoryGirl.create(:admin_user)
-#       adminu.add_role(:admin)
-#       sign_in(adminu)
+describe Admin::DashboardController do
 
-#       get :index
-#       expect(response).to have_http_status(:success)
-#       sign_out(adminu)
-#     end
+  describe "#authorize_admin" do
 
-#     it "allow super access" do
-#       superu ||= FactoryGirl.create(:super_user)
-#       superu.add_role(:super)
-#       sign_in(superu)
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
 
-#       get :index
-#       expect(response).to have_http_status(:success)
-#       sign_out(superu)
-#     end
+    it "redirects non admin users to the root of the site" do
+      get :index
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(root_path)
+    end
 
-#     it "refuse access" do
-#       user ||= FactoryGirl.create(:user)
+    it "redirects nil users to the root of the site" do
+      @user = nil
+      get :index
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(root_path)
+    end
 
-#       sign_in(user)
-#       get :index
-#       expect(response).to have_http_status(:redirect)
-#     end
+    it "allows admin users" do
+      @user.add_role(:admin)
+      get :index
+      expect(response).to have_http_status(:success)
+    end
 
-#     it "assigns all courses as @courses" do
-#       admin_user
-#       course1 ||= FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
-#       course2 ||= FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
-#       course3 ||= FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
-
-#       get :index
-#       expect(assigns(:courses)).to eq([course1, course2, course3])
-#     end
-#   end
-# end
+  end
+end
