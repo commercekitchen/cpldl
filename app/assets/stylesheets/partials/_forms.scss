@@ -60,5 +60,7 @@ button, input[type="submit"], .btn {
 
   &.small{
     min-width: initial;
+    height: 35px;
+    padding: 6px 40px;
   }
 }

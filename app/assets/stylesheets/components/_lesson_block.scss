@@ -5,6 +5,8 @@
   color: $white;
   text-align: center;
   margin-bottom: 1em;
+  position: relative;
+  cursor: pointer;
 
   @include media($tablet) {
     height: 150px;
@@ -48,6 +50,13 @@
     }
   }
 
+  .icon-arrow::before {
+    position: absolute;
+    right: 0;
+    color: $orange;
+    font-size: 2em;
+  }
+
   .default-state {
     display: block;
   }
@@ -61,6 +70,40 @@
     color: $grey;
     border: 1px solid $grey;
     border-radius: 5px;
+    padding: 5px 15px;
+
+    .lesson-order {
+      font-size: 2em;
+    }
+
+    .icon-clock::before {
+      color: $grey;
+      font-size: 1.25em;
+      padding-right: 1em;
+    }
+
+    .lesson-title {
+      font-size: 1em;
+      font-weight: bold;
+      color: $dark-grey;
+      margin-bottom: 0;
+      text-align: left;
+    }
+
+    .lesson-duration {
+      font-size: 1.25em;
+    }
+
+    .lesson-description {
+      font-size: .8em;
+      text-align: left;
+    }
+
+    .btn {
+      position: absolute;
+      bottom: 5px;
+      left: 5px;
+    }
 
     .default-state {
       display: none;

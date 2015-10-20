@@ -28,7 +28,7 @@ h1 {
 }
 
 p {
-
+  line-height: 1.5em;
 }
 
 small {
@@ -36,6 +36,6 @@ small {
   padding-bottom: 1em;
 }
 
-i {
+i::before {
   padding-right: 1em;
 }

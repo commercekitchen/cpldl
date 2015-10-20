@@ -49,8 +49,8 @@
   }
 
   svg {
-    height: 2em;
-    width: 2em;
+    height: 1.25em;
+    width: 1.25em;
     fill: $purple;
 
     @include media($mobile) {
@@ -62,8 +62,8 @@
   h1 {
     font-family: $font-secondary;
     color: $purple;
-    font-size: 2em;
-    font-weight: 400;
+    font-size: 1.5em;
+    font-weight: bold;
     margin-top: 0;
   }
 

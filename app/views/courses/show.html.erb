@@ -8,7 +8,7 @@
   <%= @course.title %>
 <% end %>
 
-<small><%= link_to "Courses", "#" %> >> <%= @course.title %></small>
+<small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
 
 <div class="row">
   <div class="eight-col">
@@ -17,7 +17,7 @@
       <div><i class="icon-pencil"></i>4 Lessons</div>
       <div><i class="icon-clock"></i>15 Minutes</div>
     </div>
-    <p class="note">Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></p>
+    <small>Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></small>
   </div>
 
   <div class="four-col last align-right">
@@ -30,9 +30,7 @@
   </div>
 </div>
 
-<p>
-  <%= @course.summary %>
-</p>
+<p><%= @course.description %></p>
 <hr>
 
 <h2>Lessons in this course</h2>
