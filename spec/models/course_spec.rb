@@ -46,11 +46,11 @@ describe Course do
     end
 
     it "seo page title cannot be longer than 90 chars" do
-      valid_title = (0...90).map { ('a'..'z').to_a[rand(26)] }.join
+      valid_title = (0...90).map { ("a".."z").to_a[rand(26)] }.join
       @course.seo_page_title = valid_title
       expect(@course).to be_valid
 
-      invalid_title = (0...91).map { ('a'..'z').to_a[rand(26)] }.join
+      invalid_title = (0...91).map { ("a".."z").to_a[rand(26)] }.join
       @course.seo_page_title = invalid_title
       expect(@course).to_not be_valid
     end
@@ -61,11 +61,11 @@ describe Course do
     end
 
     it "meta description cannot be longer than 156 chars" do
-      valid_meta = (0...156).map { ('a'..'z').to_a[rand(26)] }.join
+      valid_meta = (0...156).map { ("a".."z").to_a[rand(26)] }.join
       @course.meta_desc = valid_meta
       expect(@course).to be_valid
 
-      invalid_meta = (0...157).map { ('a'..'z').to_a[rand(26)] }.join
+      invalid_meta = (0...157).map { ("a".."z").to_a[rand(26)] }.join
       @course.meta_desc = invalid_meta
       expect(@course).to_not be_valid
     end

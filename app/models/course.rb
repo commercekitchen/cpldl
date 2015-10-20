@@ -26,7 +26,7 @@ class Course < ActiveRecord::Base
   validates :level, presence: true,
     inclusion: { in: %w(Beginner Intermediate Advanced),
       message: "%{value} is not a valid level" }
-  validates_presence_of :other_topic_text, if: Proc.new { |a| a.other_topic == "1" }
+  validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == "1" }
 
   def topics_list(topic_list)
     if topic_list.present?

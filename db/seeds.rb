@@ -23,7 +23,7 @@ puts "#{Language.count} languages created."
 # => Temporary courses for development
 6.times do |i|
   description = <<-DESCRIPTION
-    Description for Sample Course #{i+1}. At vero eos et accusamus et iusto odio
+    Description for Sample Course #{i + 1}. At vero eos et accusamus et iusto odio
     dignissimos ducimus qui blanditiis praesentium voluptatum deleniti
     atque corrupti quos dolores et quas molestias excepturi
     sint occaecati cupiditate non provident, similique sunt
@@ -39,10 +39,10 @@ puts "#{Language.count} languages created."
     voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat..
   DESCRIPTION
   Course.create!(
-    title: "Sample Course #{i+1}",
-    seo_page_title: "Sample Course #{i+1}",
-    meta_desc: "Meta Description for Sample Course #{i+1}",
-    summary: "Summary for Sample Course #{i+1}",
+    title: "Sample Course #{i + 1}",
+    seo_page_title: "Sample Course #{i + 1}",
+    meta_desc: "Meta Description for Sample Course #{i + 1}",
+    summary: "Summary for Sample Course #{i + 1}",
     description: description,
     contributor: "John Doe",
     pub_status: "P",
