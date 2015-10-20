@@ -70,6 +70,20 @@ describe Course do
       expect(@course).to_not be_valid
     end
 
+    it "should not allow the other topics value to be set without text" do
+      @course.other_topic = nil
+      @course.other_topic_text = ""
+      expect(@course).to be_valid
+
+      @course.other_topic = "1"
+      @course.other_topic_text = ""
+      expect(@course).to_not be_valid
+
+      @course.other_topic = "1"
+      @course.other_topic_text = "New topic"
+      expect(@course).to be_valid
+    end
+
   end
 
   context "#topics_list" do

@@ -77,9 +77,19 @@ describe Admin::CoursesController do
         expect(assigns(:course)).to be_persisted
       end
 
-      it "redirects to the created course" do
+      it "creates a new topic, if given" do
+        valid_attributes[:other_topic] = "1"
+        valid_attributes[:other_topic_text] = "Some other topic"
+        post :create, { course: valid_attributes }
+        expect(assigns(:course)).to be_a(Course)
+        expect(assigns(:course)).to be_persisted
+        expect(assigns(:course).topics.last.title).to include("Some other topic")
+      end
+
+      it "redirects to the admin edit view of the course" do
         post :create, { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(edit_admin_course_path(Course.last))
       end
     end
 
@@ -92,6 +102,23 @@ describe Admin::CoursesController do
       it "re-renders the 'new' template" do
         post :create, { course: invalid_attributes }
         expect(response).to render_template("new")
+      end
+    end
+  end
+
+  describe "POST #update" do
+    context "with valid params" do
+      it "updates an existing Course" do
+        patch :update, { id: @course1.to_param, course: @course1.attributes }
+        expect(response).to redirect_to(edit_admin_course_path(@course1))
+      end
+
+      it "creates a new topic, if given" do
+        valid_attributes = @course1.attributes
+        valid_attributes[:other_topic] = "1"
+        valid_attributes[:other_topic_text] = "Another new topic"
+        patch :update, { id: @course1.to_param, course: valid_attributes }
+        expect(assigns(:course).topics.last.title).to include("Another new topic")
       end
     end
   end

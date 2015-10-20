@@ -6,14 +6,21 @@ label {
   color: $teal;
   font-size: 1.5em;
   margin-bottom: .5em;
+  display: block;
+}
+
+label.plain {
+  color: $dark-grey;
+  font-size: 1em;
+  margin-bottom: .5em;
   display: inline-block;
+  padding-right: 1em;
 }
 
 .required:after {
   content: " *";
   color: $teal;
   font-weight: bold;
-  font-size: 1.5em;
 }
 
 input[type="text"], input[type="email"], input[type="password"], input[type="url"] {

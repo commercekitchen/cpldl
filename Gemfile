@@ -49,6 +49,7 @@ end
 group :development, :test do
   gem 'faker'
   gem 'pry'
+  gem 'pry-nav'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   # gem 'spring'

@@ -22,10 +22,9 @@ module Admin
 
     def create
       @course = Course.new(course_params)
-
       if @course.save
-        @course.topics_list(params[:course][:topics])
-        redirect_to @course, notice: "Course was successfully created."
+        @course.topics_list(build_topics_list(params))
+        redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
       else
         render :new
       end
@@ -34,8 +33,8 @@ module Admin
     def update
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
       if @course.update(course_params)
-        @course.topics_list(params[:course][:topics])
-        redirect_to @course, notice: "Course was successfully updated."
+        @course.topics_list(build_topics_list(params))
+        redirect_to edit_admin_course_path(@course), notice: "Course was successfully updated."
       else
         render :edit
       end
@@ -61,8 +60,14 @@ module Admin
 
     def course_params
       params.require(:course).permit(:title, :seo_page_title, :meta_desc, :summary, :description, :contributor, :pub_status,
-        :language_id, :level, :topics, :notes, :delete_document,
+        :language_id, :level, :topics, :notes, :delete_document, :other_topic, :other_topic_text,
         attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy])
+    end
+
+    def build_topics_list(params)
+      topics_list = params[:course][:topics] || []
+      other_topic = params[:course][:other_topic] == "1" ? [params[:course][:other_topic_text]] : []
+      topics_list | other_topic
     end
   end
 end

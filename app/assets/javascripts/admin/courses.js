@@ -8,7 +8,7 @@ $(document).ready(function() {
   });
 
   $("#course_title").simplyCountable({
-    counter: "#title_counter",
+    counter: "#course_title_counter",
     countable: "characters",
     maxCount: 90,
     strictMax: true,
@@ -16,23 +16,23 @@ $(document).ready(function() {
     });
 
   $("#course_seo_page_title").simplyCountable({
-    counter: "#seo_counter",
+    counter: "#course_seo_page_title_counter",
     countable: "characters",
     maxCount: 90,
     strictMax: true,
     countDirection: "down"
     });
 
-  $("#summary_text").simplyCountable({
-    counter: "#summary_counter",
+  $("#course_summary").simplyCountable({
+    counter: "#course_summary_counter",
     countable: "characters",
     maxCount: 156,
     strictMax: true,
     countDirection: "down"
     });
 
-  $("#meta_text").simplyCountable({
-    counter: "#meta_counter",
+  $("#course_meta_desc").simplyCountable({
+    counter: "#course_meta_desc_counter",
     countable: "characters",
     maxCount: 156,
     strictMax: true,

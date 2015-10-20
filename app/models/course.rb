@@ -2,6 +2,9 @@ class Course < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
+  # Attributes not saved to db, but still needed for validation
+  attr_accessor :other_topic, :other_topic_text
+
   # has_one :assessment
   has_many :course_topics
   has_many :topics, through: :course_topics
@@ -23,15 +26,14 @@ class Course < ActiveRecord::Base
   validates :level, presence: true,
     inclusion: { in: %w(Beginner Intermediate Advanced),
       message: "%{value} is not a valid level" }
+  validates_presence_of :other_topic_text, if: Proc.new { |a| a.other_topic == "1" }
 
   def topics_list(topic_list)
     if topic_list.present?
       valid_topics = topic_list.reject(&:blank?)
-
       new_or_found_topics = valid_topics.map do |title|
         Topic.find_or_create_by(title: title)
       end
-
       self.topics = new_or_found_topics
     end
   end
