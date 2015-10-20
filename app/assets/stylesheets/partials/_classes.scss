@@ -47,14 +47,13 @@
 .banner {
   background-color: $teal;
   margin-bottom: 2em;
-  padding: 3em 0 2em 0;
+  padding: 1em 0 2em 0;
   min-height: 2em;
   h1 {
     font-family: $font-secondary;
     color: $white;
     font-size: 2em;
     font-weight: 100;
-    margin-top: 1em;
 
     @include media($desktop) {
       font-size: 3.5em;
@@ -70,6 +69,7 @@
   color: $teal;
   font-size: 2em;
   margin: 1em 0 .5em 0;
+  font-weight: 200;
 }
 
 .left-or-right {
