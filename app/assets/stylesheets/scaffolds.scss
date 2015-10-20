@@ -11,32 +11,36 @@ div {
 }
 
 .field_with_errors {
-  padding: 2px;
-  background-color: red;
-  display: table;
+  input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
+    background-color: $error-color;
+  }
+  label {
+    display: block;
+    color: $black;
+  }
 }
 
 #error_explanation {
-  width: 450px;
-  border: 2px solid red;
+  border: 2px solid $error-color;
   padding: 7px;
   padding-bottom: 0;
   margin-bottom: 20px;
-  background-color: #f0f0f0;
-
+  background-color: $light-grey;
   h2 {
+    font-size: 1em;
     text-align: left;
     font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
+    padding: 5px;
     margin: -7px;
     margin-bottom: 0px;
-    background-color: #c00;
-    color: #fff;
+    background-color: $error-color;
+    color: $black;
   }
-
+  ul {
+    list-style-type: none;
+  }
   ul li {
-    font-size: 12px;
-    list-style: square;
+    padding: 0.25rem 0;
+    font-size: 0.9rem;
   }
 }
