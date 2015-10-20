@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151015192553) do
+ActiveRecord::Schema.define(version: 20151020051806) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "course_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20151015192553) do
   end
 
   add_index "courses", ["slug"], name: "index_courses_on_slug"
+  add_index "courses", ["title"], name: "index_courses_on_title", unique: true
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false

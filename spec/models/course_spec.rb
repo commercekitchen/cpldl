@@ -12,6 +12,13 @@ describe Course do
       expect(@course).to be_valid
     end
 
+    it "should not allow two courses with the same title" do
+      @course.save
+      @course2 = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
+      expect(@course2).to_not be_valid
+      expect(@course2.errors.full_messages.first).to eq("Title has already been taken")
+    end
+
     it "can only have listed statuses" do
       allowed_statuses = %w(P D T)
       allowed_statuses.each do |status|
