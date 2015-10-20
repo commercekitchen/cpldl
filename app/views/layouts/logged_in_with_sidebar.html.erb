@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Chicago Public Library - Digital Learn</title>
-  <%= stylesheet_link_tag "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
+  <%= render "shared/meta_tags" %>
 </head>
 <body>
   <%= render "shared/logged_in/header" %>

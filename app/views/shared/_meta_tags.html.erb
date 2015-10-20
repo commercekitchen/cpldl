@@ -1,0 +1,14 @@
+<% if content_for?(:meta_title) %>
+  <title><%= content_for(:meta_title).strip %></title>
+<% else %>
+  <title>Chicago Public Library - Digital Learn</title>
+<% end %>
+
+<%= stylesheet_link_tag "application", media: "all" %>
+<%= javascript_include_tag "application" %>
+<%= javascript_include_tag :defaults %>
+<%= csrf_meta_tags %>
+
+<% if content_for?(:meta_description) %>
+  <meta name="description" content="<%=content_for(:meta_description).strip%>">
+<% end %>

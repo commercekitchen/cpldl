@@ -1,7 +1,6 @@
 FactoryGirl.define do
   factory(:course) do
     title "Computer Course"
-    seo_page_title "Computer Course"
     meta_desc "A first course in computing"
     summary "In this course you will..."
     description "Description"

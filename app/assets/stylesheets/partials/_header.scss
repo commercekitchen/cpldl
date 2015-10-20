@@ -6,6 +6,7 @@
   padding: 3em 0;
   min-height: 236px;
   background-color: $teal;
+  z-index: 100;
 
   svg {
     height: 100%;
@@ -40,6 +41,7 @@
   padding: .5em 0;
   background-color: $white;
   border-bottom: 1px solid $grey;
+  z-index: 100;
 
   .language-links {
     color: $purple;

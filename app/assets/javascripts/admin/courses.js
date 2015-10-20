@@ -1,6 +1,13 @@
 $(document).ready(function() {
 
-  $("#title_text").simplyCountable({
+  // If the seo title is empty, prepopulate with title value.
+  $("body").on("blur", "#course_title", function() {
+    if($("#course_seo_page_title").val().trim() === "") {
+      $("#course_seo_page_title").val($("#course_title").val());
+    }
+  });
+
+  $("#course_title").simplyCountable({
     counter: "#title_counter",
     countable: "characters",
     maxCount: 90,
@@ -8,7 +15,7 @@ $(document).ready(function() {
     countDirection: "down"
     });
 
-  $("#seo_text").simplyCountable({
+  $("#course_seo_page_title").simplyCountable({
     counter: "#seo_counter",
     countable: "characters",
     maxCount: 90,
