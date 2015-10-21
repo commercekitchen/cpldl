@@ -1,12 +1,11 @@
-table.info-table {
+table {
   margin: 0 0 2em 0;
   padding: 0;
   width: 100%;
   border-collapse: collapse;
 }
 
-table.info-table th,
-table.info-table td {
+table th, table td {
   padding: 10px 20px;
   text-align: left;
   border-bottom: 1px solid $purple;
@@ -16,23 +15,38 @@ table.info-table td {
   }
 }
 
-table.info-table th {
+table th {
   border-width: 2px;
+  color: $teal;
+  font-size: 1.5em;
+  font-weight: 100;
 }
 
-table.info-table tr.strong {
-  font-weight: bold;
-}
-
-table.info-table tr:last-child th,
-table.info-table tr:last-child td {
-  border-bottom: none;
-}
-
-table.info-table tr:nth-child(even) {
+table thead tr:hover {
   background-color: $white;
 }
 
-table.info-table tr:hover {
+table tr.strong {
+  font-weight: bold;
+}
+
+table tr:last-child th,
+table tr:last-child td {
+  border-bottom: none;
+}
+
+table tr:nth-child(even) {
+  background-color: $white;
+}
+
+table tr:hover {
   background-color: $light-grey;
+}
+
+table.reorderable tr:hover {
+  cursor: move;
+}
+
+td.nowrap {
+  white-space: nowrap;
 }

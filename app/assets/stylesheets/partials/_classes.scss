@@ -44,6 +44,11 @@
   font-weight: 100;
 }
 
+.emphasis {
+  color: $grey;
+  font-style: italic;
+}
+
 .banner {
   background-color: $teal;
   margin-bottom: 2em;

@@ -6,84 +6,84 @@
   margin-bottom: 1em;
 }
 
-.one-col {
+.onecol {
   @include span-columns(1);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.two-col {
+.twocol {
   @include span-columns(2);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.three-col {
+.threecol {
   @include span-columns(3);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.four-col {
+.fourcol {
   @include span-columns(4);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.five-col {
+.fivecol {
   @include span-columns(5);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.six-col {
+.sixcol {
   @include span-columns(6);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.seven-col {
+.sevencol {
   @include span-columns(7);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.eight-col {
+.eightcol {
   @include span-columns(8);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.nine-col {
+.ninecol {
   @include span-columns(9);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.ten-col {
+.tencol {
   @include span-columns(10);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.eleven-col {
+.elevencol {
   @include span-columns(11);
   @include media($mobile) {
     @include span-columns(12);
   }
 }
 
-.twelve-col {
+.twelvecol {
   @include span-columns(12);
   @include media($mobile) {
     @include span-columns(12);

@@ -2,11 +2,11 @@
 
   <div class="container">
     <div class="row">
-      <div class="two-col">
+      <div class="twocol">
         <%= render "shared/icon" %>
       </div>
 
-      <div class="six-col">
+      <div class="sixcol">
         <% if content_for?(:callout) %>
           <h1><%= yield :callout %></h1>
         <% else %>
@@ -14,7 +14,7 @@
         <% end %>
       </div>
 
-      <div class="four-col last">
+      <div class="fourcol last">
         <%= link_to "Log In", user_account_path, class: "btn" %>
       </div>
     </div>

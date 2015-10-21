@@ -37,4 +37,8 @@ class Course < ActiveRecord::Base
       self.topics = new_or_found_topics
     end
   end
+
+  def topics_str
+    topics.map(&:title).join(", ")
+  end
 end

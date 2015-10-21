@@ -8,7 +8,7 @@
 <hr />
 
 <div class="row">
-  <div class="six-col">
+  <div class="sixcol">
     <h3><%= @course.title %></h3>
     <div>
       <small><%= @course.lessons.count %> Lessons</small>
@@ -17,7 +17,7 @@
     <%= render partial: "shared/lessons/listing", locals: { course: @course } %>
   </div>
 
-  <div class="six-col last">
+  <div class="sixcol last">
     <%= render partial: "shared/supplemental_materials" %>
   </div>
 </div>

@@ -1,37 +1,36 @@
-<h1>Listing Courses</h1>
+<h1>Courses</h1>
 
-<table>
+<div class="row">
+  <div class="sixcol">
+    <p class="emphasis">
+      Re-order courses on the homepage by clicking on the arrow icon to drag and drop courses. Edit by clicking the appropriate course below.
+    </p>
+  </div>
+  <div class="sixcol last left-or-right">
+    <%= link_to "Add a New Course", new_admin_course_path, class: "btn" %>
+  </div>
+</div>
+
+<table class="reorderable">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Seo page title</th>
-      <th>Meta desc</th>
-      <th>Summary</th>
-      <th>Description</th>
-      <th>Contributor</th>
-      <th>Pub status</th>
-      <th colspan="3"></th>
+      <th>Course</th>
+      <th>Topic</th>
+      <th>Language</th>
+      <th>Publication Status</th>
     </tr>
   </thead>
 
   <tbody>
     <% @courses.each do |course| %>
       <tr>
-        <td><%= course.title %></td>
-        <td><%= course.seo_page_title %></td>
-        <td><%= course.meta_desc %></td>
-        <td><%= course.summary %></td>
-        <td><%= course.description %></td>
-        <td><%= course.contributor %></td>
-        <td><%= course.pub_status %></td>
-        <td><%= link_to 'Show', course %></td>
-        <td><%= link_to 'Edit', edit_admin_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td class="nowrap"><%= link_to course.title, edit_admin_course_path(course) %></td>
+        <td><%= course.topics_str %></td>
+        <td><%= course.language.name %></td>
+        <%# TODO: should this be a helper, or a model method? %>
+        <%# TODO: Status also needs a published date. %>
+        <td><%= pub_status_str(course) %> <span class="note">(11/01/2015)</span></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Course', new_admin_course_path %>

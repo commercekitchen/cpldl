@@ -6,6 +6,7 @@ module Admin
 
     def index
       @courses = Course.all
+      render layout: "admin/base_with_sidebar"
     end
 
     def show

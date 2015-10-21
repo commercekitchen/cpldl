@@ -4,7 +4,7 @@ module CoursesHelper
     titles.include?(topic.title)
   end
 
-  def humanize_pub_status(course)
+  def pub_status_str(course)
     case course.pub_status
     when "D" then "Draft"
     when "P" then "Published"

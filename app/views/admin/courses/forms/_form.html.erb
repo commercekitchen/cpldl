@@ -60,7 +60,7 @@
   </div>
 
   <div class="row">
-    <div class="six-col">
+    <div class="sixcol">
       <fieldset>
         <%= f.label :topics do %>
           Course Topics<span class="required"></span>
@@ -78,7 +78,7 @@
       </fieldset>
     </div>
 
-    <div class="six-col last">
+    <div class="sixcol last">
       <fieldset>
         <%= f.label :language_id do %>
           Course Language<span class="required"></span>
@@ -89,7 +89,7 @@
   </div>
 
   <div class="row">
-    <div class="six-col">
+    <div class="sixcol">
       <fieldset>
         <%= f.label :level do %>
           Course Level<span class="required"></span>
@@ -98,7 +98,7 @@
       </fieldset>
     </div>
 
-    <div class="six-col last">
+    <div class="sixcol last">
       <fieldset>
         <%= f.label :pub_status do %>
           Publication Status<span class="required"></span>
@@ -120,19 +120,19 @@
     <%= f.label "Meta description" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
-      <span id="meta_counter"></span> out of <%= @max_meta %> characters
+      <span id="course_meta_desc_counter"></span> out of <%= @max_meta %> characters
     </div>
   </fieldset>
 
   <div class="actions">
     <div class="row">
-      <div class="four-col">
+      <div class="fourcol">
         <%= f.submit "Save Course" %>
       </div>
-      <div class="four-col">
+      <div class="fourcol">
         <%= f.submit "Save Course and Edit Lesson" %>
       </div>
-      <div class="four-col last"></div>
+      <div class="fourcol last"></div>
     </div>
   </div>
 <% end %>
