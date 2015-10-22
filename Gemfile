@@ -35,7 +35,6 @@ gem 'newrelic_rpm'
 # CK's preferred tools (not used in every project)
 # gem 'twilio-ruby', '~> 3.12' # Twilio for SMS
 gem 'paperclip', '~> 4.3' # File uploads
-gem 'ckeditor', '~> 4.1.1'
 
 gem 'friendly_id'
 

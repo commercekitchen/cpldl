@@ -12,8 +12,6 @@ Rails.application.routes.draw do
     resources :lessons, only: [:index, :show]
   end
 
-  mount Ckeditor::Engine => '/ckeditor'
-
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]

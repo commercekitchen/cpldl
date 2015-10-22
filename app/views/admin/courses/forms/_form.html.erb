@@ -1,3 +1,5 @@
+<%= javascript_include_tag "/ckeditor/ckeditor.js" %>
+
 <small>Admin >> Courses >> Edit Course</small>
 
 <h1>Course Information</h1>
@@ -43,7 +45,7 @@
     <%= f.label :description do %>
       Course Description<span class="required"></span>
     <% end %>
-    <%= f.cktext_area :description %>
+    <%= f.text_area :description %>
   </fieldset>
 
   <div class="row">
@@ -54,8 +56,8 @@
 
   <div>
     <fieldset>
-      <%= f.label "Post-Course Completion Notes and Partner Resources" %>
-      <%= f.cktext_area :notes %>
+      <%= f.label :notes, "Post-Course Completion Notes and Partner Resources" %>
+      <%= f.text_area :notes %>
     </fieldset>
   </div>
 
@@ -136,4 +138,9 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  CKEDITOR.replace("course_description");
+  CKEDITOR.replace("course_notes");
+</script>
 
