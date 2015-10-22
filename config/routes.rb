@@ -2,9 +2,7 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
-  devise_for :users
-  get 'user_accounts/new', as: :user_account
-
+  get 'login/new', as: :login
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update]
   resources :courses, only: [:index, :show] do
@@ -17,6 +15,8 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
     resources :courses
-    # resources :attachments # TODO: do we need a global view of all attachments?
   end
+
+  devise_for :users , controllers: { registrations: 'registrations' }
+
 end

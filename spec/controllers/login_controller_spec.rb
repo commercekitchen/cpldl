@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe UserAccountsController do
+describe LoginController do
 
   describe "GET #new" do
     it "returns http success" do

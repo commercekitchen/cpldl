@@ -1,9 +1,9 @@
 class RegistrationsController < Devise::RegistrationsController
-  # Extend create to send email
-  def create
-    super
-    if @user.persisted?
-      ProjectOutcomeMailer.new_registration(@user).deliver_later
-    end
+
+  private
+
+  def sign_up_params
+    params.require(:user).permit(:email, :password, :password_confirmation,
+      profile_attributes: [:first_name, :last_name, :zip_code])
   end
 end
