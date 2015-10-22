@@ -51,4 +51,49 @@ describe CoursesController do
     end
   end
 
+  describe "GET #your" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        sign_in @user
+      end
+
+      it "allows the user to view their courses" do
+        get :your
+        expect(assigns(:courses)).to eq([])
+      end
+    end
+
+    context "when logged out" do
+      it "should redirect to login page" do
+        get :your
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
+
+  end
+
+  describe "GET #completed" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        sign_in @user
+      end
+
+      it "allows the user to view their completed courses" do
+        get :completed
+        expect(assigns(:courses)).to eq([])
+      end
+    end
+
+    context "when logged out" do
+      it "should redirect to login page" do
+        get :completed
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
+  end
+
 end

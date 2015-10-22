@@ -3,8 +3,10 @@
 <% end %>
 
 <% if user_signed_in? %>
-  <h1>Choose a course below to start learning, or visit <%= link_to "Your Courses", "#" %> to view
-    your customized learning plan.</h1>
+  <h1>
+    Choose a course below to start learning, or visit
+    <%= link_to "Your Courses", your_courses_path %> to view your customized learning plan.
+  </h1>
 <% else %>
   <h1>Choose a course below to start learning.</h1>
 <% end %>

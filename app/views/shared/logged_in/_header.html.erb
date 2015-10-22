@@ -15,9 +15,9 @@
       </div>
       <div class="fivecol last">
         <nav class="left-or-right">
-          <%= link_to "Hi User!", "#" %> |
-          <%= link_to "Your Account", profile_path %> |
-          <%= link_to "Your Courses", "#" %> |
+          <%= link_to "Hi User!", profile_path %> |
+          <%= link_to "Your Account", account_path %> |
+          <%= link_to "Your Courses", your_courses_path %> |
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
         </nav>
       </div>
