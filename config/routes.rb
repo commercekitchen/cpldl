@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
-    resources :courses
+    resources :courses do
+      resources :lessons
+    end
   end
 
   devise_for :users , controllers: { registrations: 'registrations' }

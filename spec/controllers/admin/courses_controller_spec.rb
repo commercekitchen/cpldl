@@ -109,8 +109,13 @@ describe Admin::CoursesController do
   describe "POST #update" do
     context "with valid params" do
       it "updates an existing Course" do
-        patch :update, { id: @course1.to_param, course: @course1.attributes }
+        patch :update, { id: @course1.to_param, course: @course1.attributes, commit: "Save Course" }
         expect(response).to redirect_to(edit_admin_course_path(@course1))
+      end
+
+      it "updates an existing Course, and moves on to lessons" do
+        patch :update, { id: @course1.to_param, course: @course1.attributes, commit: "Save Course and Edit Lessons" }
+        expect(response).to redirect_to(new_admin_course_lesson_path(@course1))
       end
 
       it "creates a new topic, if given" do

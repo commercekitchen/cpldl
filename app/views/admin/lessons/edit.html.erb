@@ -1,0 +1,11 @@
+<%= render "form" %>
+
+<hr>
+
+<h1>Lessons</h1>
+
+<p class="emphasis">
+  Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
+</p>
+
+<%= render partial: "/shared/lessons/grid", locals: { course: @course } %>

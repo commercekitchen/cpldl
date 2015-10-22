@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151020222324) do
+ActiveRecord::Schema.define(version: 20151022192231) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "course_id"
@@ -88,13 +88,17 @@ ActiveRecord::Schema.define(version: 20151020222324) do
 
   create_table "lessons", force: :cascade do |t|
     t.integer  "order"
-    t.string   "title",       limit: 90
-    t.text     "description"
+    t.string   "title",          limit: 90
     t.integer  "duration"
     t.integer  "course_id"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "slug"
+    t.string   "summary",        limit: 156
+    t.string   "story_line",     limit: 156
+    t.string   "seo_page_title", limit: 90
+    t.string   "meta_desc",      limit: 156
+    t.boolean  "is_assessment"
   end
 
   add_index "lessons", ["slug"], name: "index_lessons_on_slug"

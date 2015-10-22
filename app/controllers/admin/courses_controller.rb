@@ -35,7 +35,11 @@ module Admin
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
       if @course.update(course_params)
         @course.topics_list(build_topics_list(params))
-        redirect_to edit_admin_course_path(@course), notice: "Course was successfully updated."
+        if params[:commit] == "Save Course"
+          redirect_to edit_admin_course_path(@course), notice: "Course was successfully updated."
+        else
+          redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully updated."
+        end
       else
         render :edit
       end

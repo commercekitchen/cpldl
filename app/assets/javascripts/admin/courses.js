@@ -13,7 +13,7 @@ $(document).ready(function() {
     maxCount: 90,
     strictMax: true,
     countDirection: "down"
-    });
+  });
 
   $("#course_seo_page_title").simplyCountable({
     counter: "#course_seo_page_title_counter",
@@ -21,7 +21,7 @@ $(document).ready(function() {
     maxCount: 90,
     strictMax: true,
     countDirection: "down"
-    });
+  });
 
   $("#course_summary").simplyCountable({
     counter: "#course_summary_counter",
@@ -29,7 +29,7 @@ $(document).ready(function() {
     maxCount: 156,
     strictMax: true,
     countDirection: "down"
-    });
+  });
 
   $("#course_meta_desc").simplyCountable({
     counter: "#course_meta_desc_counter",
@@ -37,5 +37,5 @@ $(document).ready(function() {
     maxCount: 156,
     strictMax: true,
     countDirection: "down"
-    });
+  });
 });

@@ -1,0 +1,91 @@
+<small>Admin >> Courses >> Course Title >> Lessons</small>
+
+<h1>Edit Lesson</h1>
+
+<%= form_for([:admin, @course, @lesson]) do |f| %>
+  <% if @lesson.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
+      <ul>
+      <% @lesson.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :title do %>
+      Lesson Title<span class="required"></span>
+    <% end %>
+    <%= f.text_field :title %>
+    <div class="note left-or-right">
+      <span id="lesson_title_counter"></span> out of <%= @max_title %> characters remaining.
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :summary do %>
+      Lesson Summary<span class="required"></span>
+    <% end %>
+    <%= f.text_field :summary %>
+    <div class="note left-or-right">
+      <span id="lesson_summary_counter"></span> out of <%= @max_summary %> characters remaining.
+    </div>
+  </fieldset>
+
+  <div class="row">
+    <div class="sixcol">
+      <fieldset>
+        <%= f.label :duration do %>
+          Duration<span class="required"></span>
+        <% end %>
+        <p class="note">Enter the estimated amount of time that this lesson
+        will take to complete in the format (MM:SS).</p>
+        <%= f.text_field :duration %>
+      </fieldset>
+    </div>
+
+    <div class="sixcol last">
+      <fieldset>
+        <%= f.label :story_line do %>
+          Articulate Storyline Package<span class="required"></span>
+        <% end %>
+        <p class="note">Upload a zip file containing all of the directories and
+        files exported from Articulate for this lesson.</p>
+        <%= f.text_field :story_line %>
+      </fieldset>
+    </div>
+  </div>
+
+  <fieldset>
+    <%= f.label :seo_page_title do %>
+      Page Title
+    <% end %>
+    <%= f.text_field :seo_page_title %>
+    <div class="note left-or-right">
+      <span id="course_seo_page_title_counter"></span> out of <%= @max_seo_page_title %> characters
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "Meta description" %>
+    <%= f.text_field :meta_desc %>
+    <div class="note left-or-right">
+      <span id="course_meta_desc_counter"></span> out of <%= @max_meta_desc %> characters
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "Assessment" %>
+    <p class="note">Is this lesson the final assessment for the course?</p>
+    <%=  f.radio_button :is_assessment, true %>
+    <%= f.label :is_assessment_yes, "Yes", class: "plain" %>
+    <%= f.radio_button :is_assessment, false %>
+    <%= f.label :is_assessment_no, "No", class: "plain" %>
+  </fieldset>
+
+  <%= f.submit "Save Lesson" %>
+  <%= f.submit "Cancel Editing" %>
+
+<% end %>
