@@ -5,7 +5,11 @@ feature "User logs in" do
   scenario "with valid email and password" do
     user = FactoryGirl.create(:user)
     log_in_with user.email, user.password
-    expect(page).to have_content("Signed in successfully.")
+    expect(current_path).to eq(root_path)
+    expect(page).to_not have_content("Signed in successfully.")
+    expect(page).to have_content("Hi Jane! Connect to the Digital World.")
+    expect(page).to have_content("Choose a course below to start learning, or visit
+      Your Courses to view your customized learning plan.")
   end
 
   scenario "with invalid or blank email" do
