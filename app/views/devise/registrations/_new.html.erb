@@ -9,21 +9,21 @@
   <%= devise_error_messages! %>
 
   <fieldset>
-    <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "Email" %>
+    <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "Email *" %>
   </fieldset>
 
-  <p class="note">
+  <p class="small-14 grey">
     Don't have an email address? <%= link_to "Click here", "http://digitallearn.org/learn/intro-email", target: "_blank" %> to open a tutorial in a new tab that explains how to set up an email account.
   </p>
 
   <% resource.build_profile %>
   <%= f.fields_for :profile do |p| %>
     <fieldset>
-      <%= p.text_field :first_name, placeholder: "First Name" %>
+      <%= p.text_field :first_name, placeholder: "First Name *" %>
     </fieldset>
 
     <fieldset>
-      <%= p.text_field :last_name, placeholder: "Last Name" %>
+      <%= p.text_field :last_name, placeholder: "Last Name *" %>
     </fieldset>
 
     <fieldset>
@@ -32,11 +32,11 @@
   <% end %>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password" %>
+    <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password *" %>
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password" %>
+    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
   </fieldset>
 
   <%= f.submit "Sign Up" %>

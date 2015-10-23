@@ -49,6 +49,14 @@
   font-style: italic;
 }
 
+.light-emphasis {
+  color: $grey;
+}
+
+.small-14 {
+  font-size: 14px;
+}
+
 .banner {
   background-color: $teal;
   margin-bottom: 2em;
@@ -90,4 +98,35 @@
 
 .align-right {
   text-align: right;
+}
+
+.border-left {
+  border-left: 2px solid $grey;
+  @include media($mobile) {
+    border-left: none;
+  }
+}
+
+.grey {
+  color: $grey;
+}
+
+.extra-padding-left {
+  padding-left: 5em;
+  @include media($mobile) {
+    padding-left: 0em;
+  }
+}
+
+.extra-padding-right {
+  padding-right: 4em;
+  @include media($mobile) {
+    padding-right: 0em;
+  }
+}
+
+.hide-on-mobile {
+  @include media($mobile) {
+    display: none;
+  }
 }
