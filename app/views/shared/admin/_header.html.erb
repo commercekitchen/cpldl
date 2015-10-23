@@ -1,0 +1,26 @@
+<header class="header-logged-in">
+
+  <div class="container">
+    <div class="row">
+      <small>
+        <%= link_to "English", "#" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#" %>
+      </small>
+    </div>
+    <div class="row">
+      <div class="sevencol">
+        <h1>
+          <%= render "shared/icon" %>
+          Chicago Public Libraries
+        </h1>
+      </div>
+      <div class="fivecol last">
+        <nav class="left-or-right">
+          Hi Admin! |
+          <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
+          <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+</header>

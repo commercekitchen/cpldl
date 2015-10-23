@@ -3,7 +3,7 @@ FactoryGirl.define do
     email "user@example.com"
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
-    association :profile, factory: :profile
+    profile
   end
 
   factory :unconfirmed_user, class: User do
@@ -16,6 +16,7 @@ FactoryGirl.define do
     email "admin@example.com"
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
+    profile
   end
 
   factory :super_user, class: User do

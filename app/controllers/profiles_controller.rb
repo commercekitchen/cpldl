@@ -2,7 +2,7 @@ class ProfilesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_user
-  layout "logged_in_with_sidebar"
+  layout "user/logged_in_with_sidebar"
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)

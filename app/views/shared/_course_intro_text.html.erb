@@ -1,14 +1,17 @@
-<% if user_signed_in? %>
+<% if user_signed_in? && current_user.is_admin? %>
+  <%= content_for(:callout) { "Hi Admin! Connect to the Digital World." } %>
+  <h1>
+    Edit a course by clicking on a course below, search courses or navigate to the
+    <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
+  </h1>
+<% elsif user_signed_in? %>
   <%= content_for(:callout) { "Hi #{current_user.profile.first_name}! Connect to the Digital World." } %>
-<% end %>
-
-<% if user_signed_in? %>
   <h1>
     Choose a course below to start learning, or visit
     <%= link_to "Your Courses", your_courses_path %> to view your customized learning plan.
   </h1>
 <% else %>
   <h1>Choose a course below to start learning.</h1>
-<% end %>
 
-<p>If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
+  <p>If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
+<% end %>

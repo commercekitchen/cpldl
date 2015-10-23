@@ -4,7 +4,11 @@
   <%= render "shared/meta_tags" %>
 </head>
 <body>
-  <%= render "shared/logged_in/header" %>
+  <% if current_user.is_admin? %>
+    <%= render "shared/admin/header" %>
+  <% else %>
+    <%= render "shared/user/header" %>
+  <% end %>
 
   <div class="banner large-top-padding">
     <div class="container">
@@ -20,7 +24,7 @@
     <%= render "shared/flashes" %>
     <div class="row">
       <div class="fourcol sidebar">
-        <%= render "shared/sidebar" %>
+        <%= render "shared/user/sidebar" %>
       </div>
       <div class="eightcol last">
         <%= yield %>

@@ -2,7 +2,7 @@ class AccountsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_user
-  layout "logged_in_with_sidebar"
+  layout "user/logged_in_with_sidebar"
 
   def show
   end

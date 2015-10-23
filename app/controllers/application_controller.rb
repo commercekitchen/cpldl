@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
-  layout proc { user_signed_in? ? "logged_in" : "application" }
+  layout proc { user_signed_in? ? "user/logged_in" : "application" }
 
   def after_sign_in_path_for(user)
     if first_admin_login? user

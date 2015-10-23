@@ -2,27 +2,28 @@ require "feature_helper"
 
 feature "Admin user clicks through each page" do
 
-  context "courses pages" do
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+    @user.add_role(:admin)
+    log_in_with @user.email, @user.password
+  end
 
-    before(:each) do
-      @user = FactoryGirl.create(:user)
-      @user.add_role(:admin)
-      log_in_with @user.email, @user.password
+  scenario "can visit each link in the header" do
+    visit admin_dashboard_index_path
+    expect(page).to have_content("Hi Admin!")
+
+    visit admin_dashboard_index_path
+    within(:css, ".header-logged-in") do
+      click_link "Admin Dashboard"
     end
+    expect(current_path).to eq(admin_dashboard_index_path)
 
-    scenario "can visit the courses index page and click sidebar links" do
-      visit admin_courses_path
-      expect(page).to have_content("Courses")
-
-      # Check sidebar links
-      within(:css, ".sidebar-links") do
-        click_link "Change Login Information"
-        # click_link "Update Profile"
-        # click_link "Courses"
-        # click_link "User Accounts"
-      end
+    visit admin_dashboard_index_path
+    within(:css, ".header-logged-in") do
+      click_link "Sign Out"
     end
-
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("Signed out successfully.")
   end
 
 end
