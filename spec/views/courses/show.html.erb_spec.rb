@@ -48,5 +48,11 @@ describe "courses/show.html.erb" do
       render template: "courses/show", layout: "layouts/application"
       expect(rendered).to have_selector("title", text: "Computer Course", visible: false)
     end
+
+    it "respects html formatting of the body" do
+      @course.description = "<strong>Should display in bold</strong>"
+      render
+      expect(rendered).to have_selector("p strong", text: "Should display in bold")
+    end
   end
 end
