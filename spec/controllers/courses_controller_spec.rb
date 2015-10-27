@@ -71,7 +71,6 @@ describe CoursesController do
         expect(response).to redirect_to(user_session_path)
       end
     end
-
   end
 
   describe "GET #completed" do
@@ -90,6 +89,51 @@ describe CoursesController do
     context "when logged out" do
       it "should redirect to login page" do
         get :completed
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
+  end
+
+  describe "POST #start" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        @lesson2 = FactoryGirl.create(:lesson)
+        @lesson3 = FactoryGirl.create(:lesson)
+        @course1.lessons << [@lesson2, @lesson3]
+        sign_in @user
+      end
+
+      it "records that a user started a course" do
+        post :start, { course_id: @course1 }
+        progress = @user.course_progresses.last
+        expect(progress.course_id).to eq(@course1.id)
+        expect(response).to redirect_to(course_lesson_path(@course1, 1))
+      end
+
+      it "sends a user to the correct lesson if the course was already started" do
+        @user.course_progresses.create({ user_id: @user.id, course_id: @course1.id, lessons_completed: 2 })
+        post :start, { course_id: @course1 }
+        expect(response).to redirect_to(course_lesson_path(@course1, 3))
+      end
+
+      it "only creates one course progress record per user per course" do
+        expect(@user.course_progresses.count).to eq(0)
+        post :start, { course_id: @course1 }
+        expect(@user.course_progresses.count).to eq(1)
+        post :start, { course_id: @course1 }
+        expect(@user.course_progresses.count).to eq(1)
+        post :start, { course_id: @course2 }
+        expect(@user.course_progresses.count).to eq(2)
+        post :start, { course_id: @course2 }
+        expect(@user.course_progresses.count).to eq(2)
+      end
+    end
+
+    context "when logged out" do
+      it "should redirect to login page" do
+        post :start, { course_id: @course1 }
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)
       end

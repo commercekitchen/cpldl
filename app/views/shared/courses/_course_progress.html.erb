@@ -1,0 +1,12 @@
+<div class="course-progress">
+  <header>Course: <%= course.title %></header>
+  <div class="progress-bar">
+    <span class="meter" style="width: <%= course_progress.percent_complete %>%"></span>
+  </div>
+  <footer>
+    <span class="percent-complete"><%= course_progress.percent_complete %>% Complete</span>
+    <span class="next-lesson-link">
+      <%= link_to "Skip to next lesson >>", "#", class: "inverted" %>
+    </span>
+  </footer>
+</div>

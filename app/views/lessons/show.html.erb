@@ -2,6 +2,10 @@
   <%= @lesson.title %>
 <% end %>
 
+<%= content_for :course_progress do %>
+  <%= render partial: "shared/courses/course_progress",
+    locals: { course: @course, course_progress: @course_progress } %>
+<% end %>
 
 <img src="http://placehold.it/1024x400?text=Interactive Story Line">
 

@@ -26,7 +26,7 @@
       <p><small><%= link_to "Edit Course >>", edit_admin_course_path(@course) %></small></p>
     <% end %>
     <p>+ Add to / - Remove from Your Plan</p>
-    <%= link_to "Start Course", course_lesson_path(@course, @course.lessons.first), class: "btn" %>
+    <%= link_to "Start Course", course_start_path(@course), method: :post, class: "btn" %>
   </div>
 </div>
 

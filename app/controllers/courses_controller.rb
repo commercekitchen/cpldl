@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
 
-  before_action :authenticate_user!, only: [:your, :completed]
+  before_action :authenticate_user!, only: [:your, :completed, :start]
 
   def index
     @courses = Course.all
@@ -23,6 +23,12 @@ class CoursesController < ApplicationController
       end
       format.json { render json: @course }
     end
+  end
+
+  def start
+    @course = Course.friendly.find(params[:course_id])
+    course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
+    redirect_to course_lesson_path(@course, course_progress.next_lesson)
   end
 
   def your

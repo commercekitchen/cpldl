@@ -13,6 +13,7 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
+    @course_progress = CourseProgress.find_by_user_id_and_course_id(current_user.id, @course.id)
     respond_to do |format|
       format.html do
         # Need to handle the change of course slug, which should 301 redirect.

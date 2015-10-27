@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'courses/your' =>'courses#your', as: :your_courses
   get 'courses/completed' =>'courses#completed', as: :completed_courses
   resources :courses, only: [:index, :show] do
+    post 'start'
     resources :lessons, only: [:index, :show]
   end
 
