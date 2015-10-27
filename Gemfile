@@ -40,6 +40,7 @@ gem 'friendly_id'
 
 group :development do
   gem 'rubocop', require: false
+  gem 'brakeman', require: false
   gem 'quiet_assets'
   gem 'letter_opener'
   gem 'bullet'
