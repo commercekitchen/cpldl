@@ -7,5 +7,10 @@
 <p class="emphasis">
   Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
 </p>
+<div>
+  <%= render partial: "/shared/lessons/grid", locals: { course: @course } %>
+</div>
 
-<%= render partial: "/shared/lessons/grid", locals: { course: @course } %>
+<div>
+  <%= button_to  "Return To Courses", admin_dashboard_index_path, class: "grey-btn" %>
+</div>

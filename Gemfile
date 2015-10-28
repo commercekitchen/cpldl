@@ -36,6 +36,10 @@ gem 'newrelic_rpm'
 # gem 'twilio-ruby', '~> 3.12' # Twilio for SMS
 gem 'paperclip', '~> 4.3' # File uploads
 
+# ruby zip for ASL files
+gem 'rubyzip'
+
+
 gem 'friendly_id'
 
 group :development do
@@ -75,5 +79,8 @@ group :test do
   gem 'mocha'
   gem 'database_cleaner'
   # gem 'webmock'
+  # => codeclimate, for project level test coverage reporting
   gem "codeclimate-test-reporter"
+  # => simplecov, for easy fast local test coverage reporting
+  gem 'simplecov', require: false
 end

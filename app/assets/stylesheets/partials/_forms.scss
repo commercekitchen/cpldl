@@ -64,3 +64,13 @@ button, input[type="submit"], .btn {
     padding: 6px 40px;
   }
 }
+
+.upload-field {
+  margin-top: 0;
+  border-radius: 5px;
+  border: 2px solid $grey;
+  padding-top: 11.5px;
+  padding-bottom: 11.5px;
+  padding-left: 10px;
+  width: 100%;
+}

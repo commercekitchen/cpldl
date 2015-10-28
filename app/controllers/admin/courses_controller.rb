@@ -25,7 +25,11 @@ module Admin
       @course = Course.new(course_params)
       if @course.save
         @course.topics_list(build_topics_list(params))
-        redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
+        if params[:commit] == "Save Course"
+          redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
+        else
+          redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully created. Now add some lessons."
+        end
       else
         render :new
       end

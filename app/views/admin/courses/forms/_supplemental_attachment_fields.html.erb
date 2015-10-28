@@ -4,7 +4,7 @@
   <%= f.hidden_field :type, value: "supplemental" %>
   <%= f.label :document, "Course Supplemental Materials" %>
   <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
-  <%= f.file_field :document %>
+  <%= f.file_field :document, class: "upload-field" %>
 </div>
 
 <!-- Fields for Post Course Materials -->
@@ -13,5 +13,5 @@
   <%= f.hidden_field :type, value: "post" %>
   <%= f.label :document, "Post-Course Supplemental Materials" %>
   <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
-  <%= f.file_field :document %>
+  <%= f.file_field :document, class: "upload-field" %>
 </div>

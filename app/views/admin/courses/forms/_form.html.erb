@@ -4,7 +4,7 @@
 
 <h1>Course Information</h1>
 
-<%= form_for([:admin, @course]) do |f| %>
+<%= form_for([:admin, @course], html: { multipart: true } ) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -129,7 +129,7 @@
   <div class="actions">
     <div class="row">
       <div class="fourcol">
-        <%= f.submit "Save Course" %>
+        <%= f.submit "Save Course", params: { commit: "Save Course" } %>
       </div>
       <div class="fourcol">
         <%= f.submit "Save Course and Edit Lessons" %>

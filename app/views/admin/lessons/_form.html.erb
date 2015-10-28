@@ -2,7 +2,7 @@
 
 <h1>Edit Lesson</h1>
 
-<%= form_for([:admin, @course, @lesson]) do |f| %>
+<%= form_for( [:admin, @course, @lesson], html: { multipart: true } ) do |f| %>
   <% if @lesson.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@lesson.errors.count, "error") %> prohibited this lesson from being saved:</h2>
@@ -47,14 +47,28 @@
     </div>
 
     <div class="sixcol last">
-      <fieldset>
-        <%= f.label :story_line do %>
-          Articulate Storyline Package<span class="required"></span>
-        <% end %>
-        <p class="note">Upload a zip file containing all of the directories and
-        files exported from Articulate for this lesson.</p>
-        <%= f.text_field :story_line %>
-      </fieldset>
+      <% if @lesson.story_line.blank? %>
+        <fieldset>
+          <%= f.label :story_line do %>
+            Articulate Storyline Package<span class="required"></span>
+          <% end %>
+          <p class="note">Upload a zip file containing all of the directories and
+          files exported from Articulate for this lesson.</p>
+          <%= f.file_field :story_line, class: "upload-field" %>
+        </fieldset>
+      <% else %>
+        <fieldset>
+          <%= f.label :story_line do %>
+            Articulate Storyline Package<span class="required"></span>
+          <% end %>
+          <p class="note">There can only be one story line per lesson, if you want
+          to upload a new on, you need to delete the current one first.</p>
+          <p class="upload-field">
+            <%= @lesson.story_line.instance.story_line_file_name %>
+              <%= link_to "Remove", destroy_asl_attachment_admin_course_lessons_path(@course, @lesson), method: "delete", data: { confirm: "Are you sure?" } %>
+          </p>
+        </fieldset>
+      <% end %>
     </div>
   </div>
 
@@ -64,7 +78,7 @@
     <% end %>
     <%= f.text_field :seo_page_title %>
     <div class="note left-or-right">
-      <span id="course_seo_page_title_counter"></span> out of <%= @max_seo_page_title %> characters
+      <span id="lesson_seo_page_title_counter"></span> out of <%= @max_seo_page_title %> characters
     </div>
   </fieldset>
 
@@ -72,7 +86,7 @@
     <%= f.label "Meta description" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
-      <span id="course_meta_desc_counter"></span> out of <%= @max_meta_desc %> characters
+      <span id="lesson_meta_desc_counter"></span> out of <%= @max_meta_desc %> characters
     </div>
   </fieldset>
 

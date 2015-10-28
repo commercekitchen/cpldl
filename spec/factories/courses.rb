@@ -7,9 +7,5 @@ FactoryGirl.define do
     contributor "John Doe"
     level "Beginner"
     language
-
-    after(:create) do |course|
-      create(:lesson, course: course)
-    end
   end
 end

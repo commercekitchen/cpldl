@@ -5,12 +5,12 @@ admin_user = User.create(email: "admin@commercekitchen.com", password: "ChangeMe
 admin_profile = Profile.create(first_name: "Super", last_name: "User", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)
 admin_user.add_role(:admin)
-puts "Admin User Created - Username: #{admin_user.email}, Password: password"
+puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
 regular_user = User.create(email: "alex@commercekitchen.com", password: "asdfasdf", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Alex", last_name: "Brinkman", zip_code: "80209", user_id: regular_user.id)
 regular_user.update(profile_id: admin_profile.id)
-puts "Regular User Created - Username: #{regular_user.email}, Password: password"
+puts "Regular User Created - Username: #{regular_user.email}, Password: asdfasdf"
 
 Topic.create(title: "Computers")
 Topic.create(title: "Internet")
