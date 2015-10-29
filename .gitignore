@@ -24,6 +24,7 @@ capybara-*.html
 /tmp
 /public/assets
 /spec/tmp
+/spec/examples.txt
 **.orig
 rerun.txt
 pickle-email-*.html
