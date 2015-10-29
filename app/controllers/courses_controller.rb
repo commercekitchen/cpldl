@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
   def start
     @course = Course.friendly.find(params[:course_id])
     course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
-    redirect_to course_lesson_path(@course, course_progress.next_lesson)
+    redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
   end
 
   def your

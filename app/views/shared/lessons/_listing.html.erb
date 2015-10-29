@@ -1,5 +1,5 @@
 <% course.lessons.each do |l| %>
   <ul>
-    <li><%= l.order %> <%= link_to l.title, course_lesson_path(course, l) %></li>
+    <li><%= l.lesson_order %> <%= link_to l.title, course_lesson_path(course, l) %></li>
   </ul>
 <% end %>

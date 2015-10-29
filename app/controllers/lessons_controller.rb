@@ -27,6 +27,21 @@ class LessonsController < ApplicationController
     end
   end
 
+  def complete
+    lesson = @course.lessons.friendly.find(params[:lesson_id])
+
+    # TODO: move to user model?
+    course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
+    course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
+
+    respond_to do |format|
+      format.html do
+        redirect_to course_lesson_path(@course, @course.next_lesson_id(lesson.id))
+      end
+      format.json { render status: :ok, json: { next_lesson: course_lesson_path(@course, @course.next_lesson_id(lesson.id)) } }
+    end
+  end
+
   private
 
   def set_course

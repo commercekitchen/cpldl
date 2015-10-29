@@ -54,12 +54,22 @@ feature "User visits course listing page" do
 
   context "as a logged in user" do
 
+    before(:each) do
+      @course_with_lessons = FactoryGirl.create(:course_with_lessons)
+      @user = FactoryGirl.create(:user)
+      login_as(@user)
+    end
+
     scenario "can click to start a course and be taken to the first lesson" do
-      user = FactoryGirl.create(:user)
-      login_as(user)
-      visit course_path(@course1)
+      visit course_path(@course_with_lessons)
       click_link "Start Course"
-      expect(current_path).to eq(course_lesson_path(@course1, @course1.lessons.first))
+      expect(current_path).to eq(course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.first))
+    end
+
+    scenario "page should pop the modal box when a course finishes", js: true do
+      # visit course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.first)
+      # execute_script("alert('hello')");
+      # save_and_open_page
     end
 
   end

@@ -93,6 +93,8 @@ RSpec.configure do |config|
 =end
 end
 
+Capybara.javascript_driver = :webkit
+
 def set_devise_env
   @request.env["devise.mapping"] = Devise.mappings[:user]
 end

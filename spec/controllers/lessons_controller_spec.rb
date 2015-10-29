@@ -4,9 +4,10 @@ describe LessonsController do
 
   before(:each) do
     @course1 = FactoryGirl.create(:course)
-    @lesson2 = FactoryGirl.create(:lesson)
-    @lesson3 = FactoryGirl.create(:lesson)
-    @course1.lessons << [@lesson2, @lesson3]
+    @lesson1 = FactoryGirl.create(:lesson, title: "lesson-1", lesson_order: 1)
+    @lesson2 = FactoryGirl.create(:lesson, title: "lesson-2", lesson_order: 2)
+    @lesson3 = FactoryGirl.create(:lesson, title: "lesson-3", lesson_order: 3)
+    @course1.lessons << [@lesson1, @lesson2, @lesson3]
     @course1.save
 
     @user = FactoryGirl.create(:user)
@@ -29,7 +30,7 @@ describe LessonsController do
 
   describe "GET #show" do
     it "assigns the requested lesson as @lesson" do
-      get :show, course_id: @course1.to_param, id: 2
+      get :show, course_id: @course1.to_param, id: @lesson2.id
       expect(assigns(:lesson)).to eq(@lesson2)
     end
 
@@ -48,8 +49,24 @@ describe LessonsController do
     end
 
     it "responds to json" do
-      get :show, course_id: @course1.to_param, id: 2, format: :json
+      get :show, course_id: @course1.to_param, id: @lesson2.id, format: :json
       expect(response).to have_http_status(:success)
+    end
+  end
+
+  describe "POST #complete" do
+    it "marks a lesson for a given user as complete" do
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param
+      progress = @user.course_progresses.find_by_course_id(@course1.id)
+      expect(progress.completed_lessons.count).to eq(1)
+      expect(response).to redirect_to(course_lesson_path(@course1.to_param, @lesson3.id))
+    end
+
+    it "responds to json" do
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param, format: :json
+      expect(response).to have_http_status(:success)
+      json = JSON(response.body)
+      expect(json["next_lesson"]).to eq(course_lesson_path(@course1.to_param, @lesson3.id))
     end
   end
 

@@ -99,9 +99,12 @@ describe CoursesController do
     context "when logged in" do
       before(:each) do
         @user = FactoryGirl.create(:user)
-        @lesson2 = FactoryGirl.create(:lesson)
-        @lesson3 = FactoryGirl.create(:lesson)
-        @course1.lessons << [@lesson2, @lesson3]
+        @lesson1 = FactoryGirl.create(:lesson, lesson_order: 1)
+        @lesson2 = FactoryGirl.create(:lesson, lesson_order: 2)
+        @lesson3 = FactoryGirl.create(:lesson, lesson_order: 3)
+        @lesson4 = FactoryGirl.create(:lesson)
+        @course1.lessons << [@lesson1, @lesson2, @lesson3]
+        @course2.lessons << [@lesson4]
         sign_in @user
       end
 
@@ -109,13 +112,15 @@ describe CoursesController do
         post :start, { course_id: @course1 }
         progress = @user.course_progresses.last
         expect(progress.course_id).to eq(@course1.id)
-        expect(response).to redirect_to(course_lesson_path(@course1, 1))
+        expect(response).to redirect_to(course_lesson_path(@course1, @course1.lessons.where(lesson_order: 1).first.id))
       end
 
       it "sends a user to the correct lesson if the course was already started" do
-        @user.course_progresses.create({ user_id: @user.id, course_id: @course1.id, lessons_completed: 2 })
+        @user.course_progresses.create({ user_id: @user.id, course_id: @course1.id })
+        @user.course_progresses.first.completed_lessons.create({ lesson_id: @lesson1.id })
+        @user.course_progresses.first.completed_lessons.create({ lesson_id: @lesson2.id })
         post :start, { course_id: @course1 }
-        expect(response).to redirect_to(course_lesson_path(@course1, 3))
+        expect(response).to redirect_to(course_lesson_path(@course1, @lesson3.id))
       end
 
       it "only creates one course progress record per user per course" do

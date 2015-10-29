@@ -1,5 +1,12 @@
 FactoryGirl.define do
   factory(:course_progress) do
-    lessons_completed 0
+  end
+
+  factory(:course_progress_with_completed_lessons) do
+    after(:create) do |course_progress|
+      create(:completed_lesson, course_progress: course_progress)
+      create(:completed_lesson, course_progress: course_progress)
+      create(:completed_lesson, course_progress: course_progress)
+    end
   end
 end

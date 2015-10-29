@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   get 'courses/completed' =>'courses#completed', as: :completed_courses
   resources :courses, only: [:index, :show] do
     post 'start'
-    resources :lessons, only: [:index, :show]
+    resources :lessons, only: [:index, :show] do
+      post 'complete'
+    end
   end
 
   namespace :admin do

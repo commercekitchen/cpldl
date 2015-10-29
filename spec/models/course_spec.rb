@@ -127,4 +127,33 @@ describe Course do
 
   end
 
+  context "#next_lesson_id" do
+
+    before :each do
+      @course = FactoryGirl.create(:course_with_lessons)
+    end
+
+    it "should return the first lesson id if called without an id" do
+      expect(@course.next_lesson_id).to be(@course.lessons.first.id)
+    end
+
+    it "should return the second lesson id if called with the first lesson id" do
+      expect(@course.next_lesson_id(@course.lessons.first.id)).to be(@course.lessons.second.id)
+    end
+
+    it "should return the last lesson id if called with the last lesson id" do
+      expect(@course.next_lesson_id(@course.lessons.last.id)).to be(@course.lessons.last.id)
+    end
+
+    it "should return the first lesson id if called with an invalid lesson id" do
+      expect(@course.next_lesson_id(123)).to be(@course.lessons.first.id)
+    end
+
+    it "should raise an error if called when there are no lessons" do
+      @course.lessons.destroy_all
+      expect { @course.next_lesson_id }.to raise_error(StandardError)
+    end
+
+  end
+
 end

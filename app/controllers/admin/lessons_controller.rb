@@ -22,8 +22,8 @@ module Admin
 
     def create
       @lesson = @course.lessons.build(lesson_params)
-      @lesson.order = 1
-      @lesson.duration = 90
+      @lesson.lesson_order = 1 # TODO: this isn't finished.
+      @lesson.duration = 90 # TODO: this isn't finished.
       if @lesson.save
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: "Lesson was successfully created."
       else
@@ -47,7 +47,7 @@ module Admin
 
     def lesson_params
       params.require(:lesson).permit(:title, :summary, :duration, :story_line,
-       :seo_page_title, :meta_desc, :is_assessment, :order)
+       :seo_page_title, :meta_desc, :is_assessment, :lesson_order)
     end
 
     def set_maximums

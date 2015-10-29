@@ -3,6 +3,6 @@ FactoryGirl.define do
     title "Lesson 1"
     summary "Lesson summary"
     duration 90
-    order 1
+    lesson_order 1
   end
 end

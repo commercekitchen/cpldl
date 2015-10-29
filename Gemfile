@@ -43,7 +43,6 @@ group :development do
   gem 'brakeman', require: false
   gem 'quiet_assets'
   gem 'letter_opener'
-  gem 'bullet'
 end
 
 group :development, :test do
@@ -57,6 +56,7 @@ group :development, :test do
   gem 'awesome_print', require: 'ap'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
   gem 'rspec-rails', '~> 3.0'
+  gem 'bullet'
 end
 
 # Capistrano Deployment

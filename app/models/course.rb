@@ -41,4 +41,24 @@ class Course < ActiveRecord::Base
   def topics_str
     topics.map(&:title).join(", ")
   end
+
+  def next_lesson_id(current_lesson_id = 0)
+    fail StandardError, "There are no available lessons for this course." if lessons.count == 0
+
+    begin
+      current_lesson = lessons.find(current_lesson_id)
+      order = current_lesson.lesson_order
+      order += 1
+      return lessons.order("lesson_order").last.id if order >= last_lesson_order
+      next_lesson = lessons.find_by_lesson_order(order)
+      next_lesson.id
+    rescue
+      lessons.order("lesson_order").first.id
+    end
+  end
+
+  def last_lesson_order
+    fail StandardError, "There are no available lessons for this course." if lessons.count == 0
+    lessons.maximum("lesson_order")
+  end
 end
