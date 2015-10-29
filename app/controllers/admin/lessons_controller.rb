@@ -25,6 +25,8 @@ module Admin
       @lesson.order    = 1
       @lesson.duration = 90
 
+      validate_assessment or return if @lesson.is_assessment?
+
       if @lesson.save
         Unzipper.new(@lesson.story_line)
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: "Lesson was successfully created."
@@ -45,14 +47,14 @@ module Admin
       end
     end
 
-    # => not yet implemented <=
+    #TODO: not yet implemented
     # def destroy
     #   if @lesson.destroy
     #     @lesson.story_line.destroy
     #     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
     #     redirect_to admin_dashboard_index_path, notice: "#{@lesson.title} successfully destroyed."
     #   else
-    #     render :edit, notice: "#{@lesson.title} could not be deleted."
+    #     render :edit, alert: "#{@lesson.title} could not be deleted."
     #   end
     # end
 
@@ -63,6 +65,22 @@ module Admin
       render :edit, notice: "Story Line successfully removed, please upload a new story line .zip file."
     end
 
+    #TODO: find out how to handle a new assessment if one already exists
+    # => Not Yet Implemented <=
+    # def destroy_existing_assessment
+    #   @lesson = Lesson.find(params[:id])
+
+    #   if @lesson.destroy
+    #     @lesson = params[:lesson]
+    #     flash[:notice] = "Existing final assessment has been deleted, please create a new one."
+    #     render :new
+    #   else
+    #     @lesson = params[:lesson]
+    #     flash.now[:alert] = "The existing assessment could not be deleted at this time."
+    #     render :new
+    #   end
+    # end
+
     private
 
     def set_course
@@ -70,8 +88,14 @@ module Admin
     end
 
     def lesson_params
-      params.require(:lesson).permit(:title, :summary, :duration, :story_line,
-       :seo_page_title, :meta_desc, :is_assessment, :order)
+      params.require(:lesson).permit(:title,
+                                     :summary,
+                                     :duration,
+                                     :story_line,
+                                     :seo_page_title,
+                                     :meta_desc,
+                                     :is_assessment,
+                                     :order)
     end
 
     def set_maximums
@@ -79,6 +103,19 @@ module Admin
       @max_summary = Lesson.validators_on(:summary).first.options[:maximum]
       @max_seo_page_title = Lesson.validators_on(:seo_page_title).first.options[:maximum]
       @max_meta_desc = Lesson.validators_on(:meta_desc).first.options[:maximum]
+    end
+
+    def validate_assessment
+      if @course.lessons.where(is_assessment: true).blank?
+        @lesson.order = @lesson.course.lessons.count + 1
+        return true
+      else
+        @assessment = @course.lessons.find_by(is_assessment: true)
+        warnings = [ "There can only be one assessment for a Course.",
+                     "If you are sure you want to replace it, please delete the existing one and try again." ]
+        flash.now[:alert] = warnings.join("<br/>").html_safe
+        render :new and return
+      end
     end
   end
 end
