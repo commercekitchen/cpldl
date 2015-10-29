@@ -4,5 +4,6 @@ FactoryGirl.define do
     summary "Lesson summary"
     duration 90
     lesson_order 1
+    story_line File.new("spec/fixtures/BasicSearch1.zip")
   end
 end

@@ -33,6 +33,8 @@ gem 'honeybadger', '~> 2.0'
 gem 'newrelic_rpm'
 
 gem 'paperclip', '~> 4.3' # File uploads
+gem 'rubyzip' # ASL files
+
 gem 'friendly_id'
 
 group :development do
@@ -48,11 +50,11 @@ group :development, :test do
   gem 'pry-nav'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
-  # gem 'spring'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
   gem 'rspec-rails', '~> 3.0'
   gem 'bullet'
+  # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end
 
@@ -72,6 +74,7 @@ group :test do
   gem 'capybara-webkit'
   gem 'mocha'
   gem 'database_cleaner'
-  gem "codeclimate-test-reporter"
+  gem 'codeclimate-test-reporter'
+  gem 'simplecov', require: false
   # gem 'webmock'
 end

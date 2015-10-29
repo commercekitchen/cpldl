@@ -2,9 +2,9 @@ require "rails_helper"
 
 describe Admin::CoursesController do
   before(:each) do
-    @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
-    @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
-    @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
+    @course1 = FactoryGirl.create(:course, title: "Course1", language: FactoryGirl.create(:language))
+    @course2 = FactoryGirl.create(:course, title: "Course2", language: FactoryGirl.create(:language))
+    @course3 = FactoryGirl.create(:course, title: "Course3", language: FactoryGirl.create(:language))
 
     @admin = FactoryGirl.create(:admin_user)
     @admin.add_role(:admin)
@@ -89,7 +89,7 @@ describe Admin::CoursesController do
       it "redirects to the admin edit view of the course" do
         post :create, { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(edit_admin_course_path(Course.last))
+        expect(response).to redirect_to(new_admin_course_lesson_path(Course.last))
       end
     end
 

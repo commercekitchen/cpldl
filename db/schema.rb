@@ -107,14 +107,18 @@ ActiveRecord::Schema.define(version: 20151028205201) do
     t.string   "title",          limit: 90
     t.integer  "duration"
     t.integer  "course_id"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "slug"
-    t.string   "summary",        limit: 156
-    t.string   "story_line",     limit: 156
-    t.string   "seo_page_title", limit: 90
-    t.string   "meta_desc",      limit: 156
+    t.string   "summary",                 limit: 156
+    t.string   "story_line",              limit: 156
+    t.string   "seo_page_title",          limit: 90
+    t.string   "meta_desc",               limit: 156
     t.boolean  "is_assessment"
+    t.string   "story_line_file_name"
+    t.string   "story_line_content_type"
+    t.integer  "story_line_file_size"
+    t.datetime "story_line_updated_at"
   end
 
   add_index "lessons", ["slug"], name: "index_lessons_on_slug"
