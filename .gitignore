@@ -45,3 +45,5 @@ config/secrets.yml
 
 # Sublime files
 *.sublime-*
+
+/public/system
