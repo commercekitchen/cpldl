@@ -60,6 +60,17 @@ describe Admin::LessonsController do
       }
     end
 
+    let(:assessment_attributes) do
+      { duration: 20,
+        title:  "I am an assessment",
+        seo_page_title:  "See | Bee | Mee ",
+        meta_desc:  "is this like inception",
+        summary:  "Sum-tings-smelly",
+        is_assessment: true,
+        story_line: @story_line,
+      }
+    end
+
     let(:invalid_attributes) do
       { duration: "",
         title:  "",
@@ -76,6 +87,25 @@ describe Admin::LessonsController do
         expect do
           post :create, { course_id: @course1.to_param, lesson: valid_attributes }
         end.to change(Lesson, :count).by(1)
+      end
+
+      it "creates a new assessment" do
+        expect do
+          post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        end.to change(Lesson, :count).by(1)
+      end
+
+      it "assigns a new assessment to the end of the course lessons" do
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        lesson = Lesson.last
+        expect(lesson.order).to be(3)
+      end
+
+      it "renders new if an assessment already exists" do
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        expect(@course1.lessons.count).to eq(3)
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes, title: "something different" }
+        expect(@course1.lessons.count).to eq(3)
       end
 
       it "assigns a new lesson as @lesson" do
@@ -108,7 +138,7 @@ describe Admin::LessonsController do
     context "with valid params" do
       it "updates an existing Lesson" do
         patch :update, { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(edit_admin_course_lesson_path)
       end
     end
   end

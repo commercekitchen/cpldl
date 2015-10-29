@@ -65,22 +65,6 @@ module Admin
       render :edit, notice: "Story Line successfully removed, please upload a new story line .zip file."
     end
 
-    #TODO: find out how to handle a new assessment if one already exists
-    # => Not Yet Implemented <=
-    # def destroy_existing_assessment
-    #   @lesson = Lesson.find(params[:id])
-
-    #   if @lesson.destroy
-    #     @lesson = params[:lesson]
-    #     flash[:notice] = "Existing final assessment has been deleted, please create a new one."
-    #     render :new
-    #   else
-    #     @lesson = params[:lesson]
-    #     flash.now[:alert] = "The existing assessment could not be deleted at this time."
-    #     render :new
-    #   end
-    # end
-
     private
 
     def set_course
@@ -110,9 +94,9 @@ module Admin
         @lesson.order = @lesson.course.lessons.count + 1
         return true
       else
-        @assessment = @course.lessons.find_by(is_assessment: true)
         warnings = [ "There can only be one assessment for a Course.",
-                     "If you are sure you want to replace it, please delete the existing one and try again." ]
+                     "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
+                     "Otherwise, please edit the existing assessment for this course." ]
         flash.now[:alert] = warnings.join("<br/>").html_safe
         render :new and return
       end

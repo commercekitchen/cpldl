@@ -47,3 +47,4 @@ config/secrets.yml
 *.sublime-*
 
 /public/system
+/public/storylines

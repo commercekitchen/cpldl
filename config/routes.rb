@@ -19,7 +19,6 @@ Rails.application.routes.draw do
       resources :lessons do
         collection do
           delete :destroy_asl_attachment
-          delete '/destroy_existing_assessment/:id', to: 'lessons#destroy_existing_assessment'
         end
       end
     end
