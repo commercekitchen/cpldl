@@ -6,7 +6,7 @@ class Lesson < ActiveRecord::Base
 
   belongs_to :course
 
-  validates :title, length: { maximum: 90 }, presence: true #, uniqueness: true
+  validates :title, length: { maximum: 90 }, presence: true # , uniqueness: true
   validates :summary, length: { maximum: 156 }, presence: true
   validates :duration, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0 }
@@ -28,6 +28,6 @@ class Lesson < ActiveRecord::Base
   end
 
   def delete_associated_asl_files
-    FileUtils.remove_dir "#{Rails.root}/public/storylines/#{self.id}", true
+    FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
   end
 end

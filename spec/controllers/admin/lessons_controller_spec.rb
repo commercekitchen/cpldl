@@ -46,7 +46,7 @@ describe Admin::LessonsController do
 
   describe "POST #create" do
     before(:each) do
-      @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/BasicSearch1.zip'), 'application/zip')
+      @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
     end
 
     let(:valid_attributes) do
@@ -56,7 +56,7 @@ describe Admin::LessonsController do
         meta_desc:  "Its good to Meta-Tate",
         summary:  "Sum-tings-smelly",
         is_assessment: false,
-        story_line: @story_line,
+        story_line: @story_line
       }
     end
 
@@ -67,7 +67,7 @@ describe Admin::LessonsController do
         meta_desc:  "",
         summary:  "",
         is_assessment: "",
-        story_line: nil,
+        story_line: nil
       }
     end
 
@@ -107,7 +107,8 @@ describe Admin::LessonsController do
   describe "POST #update" do
     context "with valid params" do
       it "updates an existing Lesson" do
-        patch :update, { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
+        patch :update,
+          { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
         expect(response).to have_http_status(:success)
       end
     end

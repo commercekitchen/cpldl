@@ -33,7 +33,7 @@ module Admin
     end
 
     def update
-      @lesson  ||= @course.lessons.friendly.find(params[:id])
+      @lesson ||= @course.lessons.friendly.find(params[:id])
       asl_is_new = @lesson.story_line.nil?
 
       if @lesson.update(lesson_params)
