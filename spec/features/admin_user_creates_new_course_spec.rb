@@ -6,7 +6,7 @@ feature "Admin user creates new course and lesson" do
     @course = FactoryGirl.create(:course)
     @topic = FactoryGirl.create(:topic)
 
-    @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/BasicSearch1.zip'), 'application/zip')
+    @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 
     @user = FactoryGirl.create(:user)
     @user.add_role(:admin)
@@ -41,7 +41,7 @@ feature "Admin user creates new course and lesson" do
       fill_in :lesson_title, with: "New Lesson Title"
       fill_in :lesson_summary, with: "Summary for new lesson"
       fill_in :lesson_duration, with: "05:15"
-      File.open('spec/fixtures/BasicSearch1.zip') { |file| @story_line.upload = file }
+      File.open("spec/fixtures/BasicSearch1.zip") { |file| @story_line.upload = file }
       click_button "Save Lesson"
     end
     expect(current_path).to eq(edit_admin_course_lesson_path(@course, Lesson.last))

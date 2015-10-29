@@ -29,6 +29,6 @@ class Lesson < ActiveRecord::Base
   end
 
   def delete_associated_asl_files
-    FileUtils.remove_dir "#{Rails.root}/public/storylines/#{self.id}", true
+    FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
   end
 end

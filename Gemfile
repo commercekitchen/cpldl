@@ -39,7 +39,6 @@ gem 'paperclip', '~> 4.3' # File uploads
 # ruby zip for ASL files
 gem 'rubyzip'
 
-
 gem 'friendly_id'
 
 group :development do

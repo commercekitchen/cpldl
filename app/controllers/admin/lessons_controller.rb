@@ -25,7 +25,7 @@ module Admin
       @lesson.order    = 1
       @lesson.duration = 90
 
-      validate_assessment or return if @lesson.is_assessment?
+      validate_assessment || return if @lesson.is_assessment?
 
       if @lesson.save
         Unzipper.new(@lesson.story_line)
@@ -36,7 +36,7 @@ module Admin
     end
 
     def update
-      @lesson  ||= @course.lessons.friendly.find(params[:id])
+      @lesson ||= @course.lessons.friendly.find(params[:id])
       asl_is_new = @lesson.story_line.nil?
 
       if @lesson.update(lesson_params)
@@ -47,7 +47,7 @@ module Admin
       end
     end
 
-    #TODO: not yet implemented
+    # TODO: not yet implemented
     # def destroy
     #   if @lesson.destroy
     #     @lesson.story_line.destroy
@@ -94,11 +94,11 @@ module Admin
         @lesson.order = @lesson.course.lessons.count + 1
         return true
       else
-        warnings = [ "There can only be one assessment for a Course.",
-                     "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
-                     "Otherwise, please edit the existing assessment for this course." ]
+        warnings = ["There can only be one assessment for a Course.",
+                    "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
+                    "Otherwise, please edit the existing assessment for this course."]
         flash.now[:alert] = warnings.join("<br/>").html_safe
-        render :new and return
+        render :new && return
       end
     end
   end
