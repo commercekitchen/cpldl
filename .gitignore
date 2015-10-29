@@ -45,3 +45,6 @@ config/secrets.yml
 
 # Sublime files
 *.sublime-*
+
+# paperclip uploads attachments
+/public/system
