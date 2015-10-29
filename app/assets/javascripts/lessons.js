@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   sendLessonCompleteEvent = function() {
     // Modal.close();
+    console.log("Sending lesson complete event.")
     $.ajax({
       url: window.location.pathname + "/complete",
       type: "POST",

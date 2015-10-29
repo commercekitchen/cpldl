@@ -66,10 +66,13 @@ feature "User visits course listing page" do
       expect(current_path).to eq(course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.first))
     end
 
-    scenario "page should pop the modal box when a course finishes", js: true do
-      # visit course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.first)
-      # execute_script("alert('hello')");
-      # save_and_open_page
+    scenario "page should pop the modal box when a lesson finishes", js: true do
+      visit course_path(@course_with_lessons)
+      click_link "Start Course"
+      execute_script("sendLessonCompleteEvent()"); # TODO: match with event fired from ASL file
+      sleep(1) # TODO: There has to be a better way?
+      course_progress = @user.course_progresses.where(course_id: @course_with_lessons.id).first
+      expect(course_progress.completed_lessons.first.lesson_id).to eq(@course_with_lessons.lessons.first.id)
     end
 
   end
