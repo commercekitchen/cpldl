@@ -63,6 +63,10 @@ button, input[type="submit"], .btn {
     height: 35px;
     padding: 6px 40px;
   }
+
+  &.btn-grey {
+    background-color: $grey;
+  }
 }
 
 .upload-field {
