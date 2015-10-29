@@ -19,7 +19,7 @@ gem 'rolify'
 gem 'bourbon'
 gem 'neat'
 
-# Redis for Sidekiq (possibly elsewhere too)
+# Redis for Sidekiq
 gem 'redis'
 gem 'redis-namespace'
 
@@ -32,10 +32,7 @@ gem 'sidekiq-failures'
 gem 'honeybadger', '~> 2.0'
 gem 'newrelic_rpm'
 
-# CK's preferred tools (not used in every project)
-# gem 'twilio-ruby', '~> 3.12' # Twilio for SMS
 gem 'paperclip', '~> 4.3' # File uploads
-
 gem 'friendly_id'
 
 group :development do
@@ -54,9 +51,9 @@ group :development, :test do
   # gem 'spring'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
-  # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
   gem 'rspec-rails', '~> 3.0'
   gem 'bullet'
+  # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end
 
 # Capistrano Deployment
@@ -75,6 +72,6 @@ group :test do
   gem 'capybara-webkit'
   gem 'mocha'
   gem 'database_cleaner'
-  # gem 'webmock'
   gem "codeclimate-test-reporter"
+  # gem 'webmock'
 end
