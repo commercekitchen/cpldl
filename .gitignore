@@ -48,3 +48,4 @@ config/secrets.yml
 
 # paperclip uploads attachments
 /public/system
+/public/storylines
