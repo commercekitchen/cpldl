@@ -27,3 +27,9 @@
 </div>
 
 <%= render partial: "shared/modal", locals: { current_lesson: @lesson, next_lesson: @lesson} %>
+
+<script>
+  setTimeout(function() {
+    sendLessonCompleteEvent();
+  }, 1000);
+</script>

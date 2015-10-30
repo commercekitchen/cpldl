@@ -5,13 +5,13 @@
       <div class="modal-close" for="lesson-complete-modal"></div>
       <h1>Congratulations!</h1>
       <p>
-        You've completed Lesson <%= current_lesson.lesson_order %>:<%= current_lesson.title %>
+        You've completed Lesson <%= current_lesson.lesson_order %>: <%= current_lesson.title %>
       </p>
       <h2>Up Next:</h2>
       <h2><%= next_lesson.title %></h2>
       <%= submit_tag "Continue", class: "btn small" %>
       <span class="vertical-bar">&nbsp;</span>
-      <i class="icon-arrow"></i><%= link_to "Repeat Lesson", "#", class: "grey" %>
+      <i class="icon-cw flip-horizontal"></i><%= link_to "Repeat Lesson", "#", class: "grey" %>
     </div>
   </div>
 </div>
