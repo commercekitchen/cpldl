@@ -25,3 +25,5 @@
     <%= render partial: "shared/supplemental_materials" %>
   </div>
 </div>
+
+<%= render partial: "shared/modal", locals: { current_lesson: @lesson, next_lesson: @lesson} %>

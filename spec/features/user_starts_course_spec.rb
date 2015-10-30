@@ -69,8 +69,9 @@ feature "User visits course listing page" do
     scenario "page should pop the modal box when a lesson finishes", js: true do
       visit course_path(@course_with_lessons)
       click_link "Start Course"
-      execute_script("sendLessonCompleteEvent()"); # TODO: match with event fired from ASL file
-      sleep(1) # TODO: There has to be a better way?
+      sleep(1) # TODO: There has to be a better way...
+      execute_script("sendLessonCompleteEvent();"); # TODO: match with event fired from ASL file
+      sleep(2) # TODO: There has to be a better way?
       course_progress = @user.course_progresses.where(course_id: @course_with_lessons.id).first
       expect(course_progress.completed_lessons.first.lesson_id).to eq(@course_with_lessons.lessons.first.id)
     end

@@ -104,7 +104,7 @@ ActiveRecord::Schema.define(version: 20151028205201) do
 
   create_table "lessons", force: :cascade do |t|
     t.integer  "lesson_order"
-    t.string   "title",          limit: 90
+    t.string   "title",                   limit: 90
     t.integer  "duration"
     t.integer  "course_id"
     t.datetime "created_at",                          null: false

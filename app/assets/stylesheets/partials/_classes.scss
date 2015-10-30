@@ -130,3 +130,12 @@
     display: none;
   }
 }
+
+.vertical-bar {
+  display: inline-block;
+  margin-left: 1em;
+  padding-right: .5em;
+  border-left: 1px solid $grey;
+  height: 2em;
+  vertical-align: middle;
+}
