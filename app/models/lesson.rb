@@ -1,5 +1,4 @@
 require "zip"
-# require "fileutils"
 
 class Lesson < ActiveRecord::Base
   extend FriendlyId
@@ -14,8 +13,8 @@ class Lesson < ActiveRecord::Base
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
 
-  # validates :story_line, attachment_presence: true
-  # validates_with AttachmentPresenceValidator, attributes: :story_line
+  validates :story_line, attachment_presence: true
+  validates_with AttachmentPresenceValidator, attributes: :story_line
 
   has_attached_file :story_line, url: "/system/lessons/story_lines/:id/:style/:basename.:extension"
   before_post_process :skip_for_zip

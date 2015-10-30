@@ -25,7 +25,7 @@ module Admin
       @lesson.order    = 1
       @lesson.duration = 90
 
-      validate_assessment || return if @lesson.is_assessment?
+      validate_assessment or return if @lesson.is_assessment?
 
       if @lesson.save
         Unzipper.new(@lesson.story_line)
@@ -98,7 +98,7 @@ module Admin
                     "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
                     "Otherwise, please edit the existing assessment for this course."]
         flash.now[:alert] = warnings.join("<br/>").html_safe
-        render :new && return
+        render :new and return
       end
     end
   end

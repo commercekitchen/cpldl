@@ -49,6 +49,10 @@ describe Admin::LessonsController do
       @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
     end
 
+    after(:each) do
+      FileUtils.remove_dir "#{Rails.root}/public/storylines/3", true
+    end
+
     let(:valid_attributes) do
       { duration: 20,
         title:  "Lesson your load man",
@@ -104,9 +108,7 @@ describe Admin::LessonsController do
       it "renders new if an assessment already exists" do
         post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
         expect(@course1.lessons.count).to eq(3)
-        post :create, { course_id: @course1.to_param,
-                           lesson: assessment_attributes,
-                            title: "something different" }
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes, title: "something different" }
         expect(@course1.lessons.count).to eq(3)
       end
 
@@ -139,10 +141,8 @@ describe Admin::LessonsController do
   describe "POST #update" do
     context "with valid params" do
       it "updates an existing Lesson" do
-        patch :update, { course_id: @course1.to_param,
-                                id: @lesson1.to_param,
-                            lesson: @lesson1.attributes, commit: "Save Lesson" }
-        expect(response).to redirect_to(edit_admin_course_lesson_path)
+        patch :update, { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
+        expect(response).to have_http_status(:success)
       end
     end
   end
