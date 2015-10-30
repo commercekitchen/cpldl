@@ -141,7 +141,8 @@ describe Admin::LessonsController do
   describe "POST #update" do
     context "with valid params" do
       it "updates an existing Lesson" do
-        patch :update, { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
+        patch :update,
+        { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
         expect(response).to have_http_status(:success)
       end
     end

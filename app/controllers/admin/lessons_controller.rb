@@ -26,7 +26,9 @@ module Admin
       @lesson.duration = 90
 
       # => if rubocop complaions about "or" don't change, it will break
-      validate_assessment or return if @lesson.is_assessment?
+      if @lesson.is_assessment?
+        validate_assessment || return
+      end
 
       if @lesson.save
         Unzipper.new(@lesson.story_line)
