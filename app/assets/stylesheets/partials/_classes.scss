@@ -101,9 +101,16 @@
 }
 
 .border-left {
-  border-left: 2px solid $grey;
+  border-left: 1px solid $grey;
   @include media($mobile) {
     border-left: none;
+  }
+}
+
+.border-right {
+  border-right: 1px solid $grey;
+  @include media($mobile) {
+    border-right: none;
   }
 }
 
