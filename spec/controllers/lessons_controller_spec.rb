@@ -31,8 +31,13 @@ describe LessonsController do
 
   describe "GET #show" do
     it "assigns the requested lesson as @lesson" do
-      get :show, course_id: @course1.to_param, id: @lesson2.id
-      expect(assigns(:lesson)).to eq(@lesson2)
+      get :show, course_id: @course1.to_param, id: @lesson1.id
+      expect(assigns(:lesson)).to eq(@lesson1)
+    end
+
+    it "assigns the next lesson as @next_lesson" do
+      get :show, course_id: @course1.to_param, id: @lesson1.id
+      expect(assigns(:next_lesson)).to eq(@lesson2)
     end
 
     it "allows the admin to change the title, and have the old title redirect to the new title" do

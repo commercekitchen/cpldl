@@ -67,6 +67,10 @@ button, input[type="submit"], .btn {
   &.btn-grey {
     background-color: $grey;
   }
+
+  &.btn-blue {
+    background-color: $teal;
+  }
 }
 
 .upload-field {
