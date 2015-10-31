@@ -102,7 +102,7 @@ describe Admin::LessonsController do
       it "assigns a new assessment to the end of the course lessons" do
         post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
         lesson = Lesson.last
-        expect(lesson.order).to be(3)
+        expect(lesson.lesson_order).to be(3)
       end
 
       it "renders new if an assessment already exists" do

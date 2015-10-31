@@ -21,8 +21,8 @@ module Admin
     end
 
     def create
-      @lesson          = @course.lessons.build(lesson_params)
-      @lesson.order    = 1 # TODO: this isn't finished.
+      @lesson = @course.lessons.build(lesson_params)
+      @lesson.lesson_order = 1 # TODO: this isn't finished.
       @lesson.duration = 90 # TODO: this isn't finished.
 
       # => if rubocop complaions about "or" don't change, it will break
@@ -88,7 +88,7 @@ module Admin
 
     def validate_assessment
       if @course.lessons.where(is_assessment: true).blank?
-        @lesson.order = @lesson.course.lessons.count + 1
+        @lesson.lesson_order = @lesson.course.lessons.count + 1
         return true
       else
         warnings = ["There can only be one assessment for a Course.",
