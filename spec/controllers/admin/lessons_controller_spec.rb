@@ -49,6 +49,10 @@ describe Admin::LessonsController do
       @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
     end
 
+    after(:each) do
+      FileUtils.remove_dir "#{Rails.root}/public/storylines/3", true
+    end
+
     let(:valid_attributes) do
       { duration: 20,
         title:  "Lesson your load man",
@@ -56,6 +60,17 @@ describe Admin::LessonsController do
         meta_desc:  "Its good to Meta-Tate",
         summary:  "Sum-tings-smelly",
         is_assessment: false,
+        story_line: @story_line
+      }
+    end
+
+    let(:assessment_attributes) do
+      { duration: 20,
+        title:  "I am an assessment",
+        seo_page_title:  "See | Bee | Mee ",
+        meta_desc:  "is this like inception",
+        summary:  "Sum-tings-smelly",
+        is_assessment: true,
         story_line: @story_line
       }
     end
@@ -76,6 +91,25 @@ describe Admin::LessonsController do
         expect do
           post :create, { course_id: @course1.to_param, lesson: valid_attributes }
         end.to change(Lesson, :count).by(1)
+      end
+
+      it "creates a new assessment" do
+        expect do
+          post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        end.to change(Lesson, :count).by(1)
+      end
+
+      it "assigns a new assessment to the end of the course lessons" do
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        lesson = Lesson.last
+        expect(lesson.order).to be(3)
+      end
+
+      it "renders new if an assessment already exists" do
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        expect(@course1.lessons.count).to eq(3)
+        post :create, { course_id: @course1.to_param, lesson: assessment_attributes, title: "something different" }
+        expect(@course1.lessons.count).to eq(3)
       end
 
       it "assigns a new lesson as @lesson" do

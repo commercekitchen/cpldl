@@ -21,9 +21,15 @@ module Admin
     end
 
     def create
-      @lesson = @course.lessons.build(lesson_params)
-      @lesson.lesson_order = 1 # TODO: this isn't finished.
+      @lesson          = @course.lessons.build(lesson_params)
+      @lesson.order    = 1 # TODO: this isn't finished.
       @lesson.duration = 90 # TODO: this isn't finished.
+
+      # => if rubocop complaions about "or" don't change, it will break
+      if @lesson.is_assessment?
+        validate_assessment || return
+      end
+
       if @lesson.save
         Unzipper.new(@lesson.story_line)
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: "Lesson was successfully created."
@@ -44,14 +50,14 @@ module Admin
       end
     end
 
-    # => not yet implemented <=
+    # TODO: not yet implemented
     # def destroy
     #   if @lesson.destroy
     #     @lesson.story_line.destroy
     #     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
     #     redirect_to admin_dashboard_index_path, notice: "#{@lesson.title} successfully destroyed."
     #   else
-    #     render :edit, notice: "#{@lesson.title} could not be deleted."
+    #     render :edit, alert: "#{@lesson.title} could not be deleted."
     #   end
     # end
 
@@ -78,6 +84,20 @@ module Admin
       @max_summary = Lesson.validators_on(:summary).first.options[:maximum]
       @max_seo_page_title = Lesson.validators_on(:seo_page_title).first.options[:maximum]
       @max_meta_desc = Lesson.validators_on(:meta_desc).first.options[:maximum]
+    end
+
+    def validate_assessment
+      if @course.lessons.where(is_assessment: true).blank?
+        @lesson.order = @lesson.course.lessons.count + 1
+        return true
+      else
+        warnings = ["There can only be one assessment for a Course.",
+                    "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
+                    "Otherwise, please edit the existing assessment for this course."]
+        flash.now[:alert] = warnings.join("<br/>").html_safe
+        # => if rubocop complains about "and" don't change to && it will break
+        render :new and return
+      end
     end
   end
 end

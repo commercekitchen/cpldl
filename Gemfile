@@ -34,7 +34,6 @@ gem 'newrelic_rpm'
 
 gem 'paperclip', '~> 4.3' # File uploads
 gem 'rubyzip' # ASL files
-
 gem 'friendly_id'
 
 group :development do
