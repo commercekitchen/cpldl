@@ -11,7 +11,6 @@ var Modal = (function($) {
       $(".modal-fade-screen, .modal-close").on("click", function() {
         $(".modal-state:checked").prop("checked", false).change();
         $("body").removeClass("modal-open");
-        location.reload();
       });
 
       $(".modal-inner").on("click", function(e) {

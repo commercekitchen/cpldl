@@ -56,6 +56,10 @@
   color: $grey;
 }
 
+[class^="icon-"].orange:before, [class*=" icon-"].orange:before {
+  color: $orange;
+}
+
 .icon-pencil:before { content: '\e800'; } /* '' */
 .icon-clock:before { content: '\e801'; } /* '' */
 .icon-download:before { content: '\e802'; } /* '' */
