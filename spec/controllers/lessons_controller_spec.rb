@@ -40,6 +40,18 @@ describe LessonsController do
       expect(assigns(:next_lesson)).to eq(@lesson2)
     end
 
+    it "creates a course_progress model, if not previously created" do
+      expect(@user.course_progresses.count).to eq(0)
+      get :show, course_id: @course1.to_param, id: @lesson1.id
+      expect(@user.course_progresses.count).to eq(1)
+    end
+
+    it "only creates the course_progress once" do
+      get :show, course_id: @course1.to_param, id: @lesson1.id
+      get :show, course_id: @course1.to_param, id: @lesson1.id
+      expect(@user.course_progresses.count).to eq(1)
+    end
+
     it "allows the admin to change the title, and have the old title redirect to the new title" do
       old_url = @lesson1.friendly_id
       @lesson1.slug = nil # Must set slug to nil for the friendly url to regenerate

@@ -14,7 +14,7 @@ class LessonsController < ApplicationController
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
     @next_lesson = @course.lessons.find(@course.next_lesson_id(@lesson.id))
-    @course_progress = CourseProgress.find_by_user_id_and_course_id(current_user.id, @course.id)
+    @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
 
     respond_to do |format|
       format.html do

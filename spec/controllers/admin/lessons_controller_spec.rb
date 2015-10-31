@@ -143,7 +143,7 @@ describe Admin::LessonsController do
       it "updates an existing Lesson" do
         patch :update,
           { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
-        expect(response).to have_http_status(:success)
+        expect(response).to have_http_status(:redirect)
       end
     end
   end
