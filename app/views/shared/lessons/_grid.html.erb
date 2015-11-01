@@ -1,9 +1,16 @@
+<% if user_signed_in? %>
+  <% lessons_completed = current_user.completed_lesson_ids(course) %>
+<% else %>
+  <% lessons_completed = [] %>
+<% end %>
+
 <%# TODO: This doesn't work when it's not a multiple of 4 %>
 <% course.lessons.each_with_index do |l, index| %>
   <% if index % 4 == 0 %><div class="row"><% end %>
 
   <div class="threecol<% if index % 4 == 3 %> last<% end %>">
-    <%= render partial: "shared/lessons/lesson_block", locals: { course: course, lesson: l }%>
+    <%= render partial: "shared/lessons/lesson_block",
+      locals: { course: course, lesson: l, completed: lessons_completed.include?(l.id) }%>
   </div>
 
   <% if index % 4 == 3 %></div><% end %>

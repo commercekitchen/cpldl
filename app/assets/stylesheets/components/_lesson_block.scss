@@ -8,6 +8,16 @@
   position: relative;
   cursor: pointer;
 
+  &.completed {
+    background-color: $grey;
+    .icon-ok::before {
+      position: absolute;
+      left: 0;
+      color: $orange;
+      font-size: 2em;
+    }
+  }
+
   @include media($tablet) {
     height: 150px;
     width: 150px;
@@ -36,7 +46,6 @@
 
     @include media($tablet) {
       font-size: 1.5em;
-      /*margin-bottom: 1em;*/
     }
 
     @include media($mobile-large) {

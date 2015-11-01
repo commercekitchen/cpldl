@@ -10,4 +10,10 @@ class User < ActiveRecord::Base
   def tracking_course?(course_id)
     course_progresses.where(course_id: course_id, tracked: true).count > 0
   end
+
+  def completed_lesson_ids(course_id)
+    progress = course_progresses.find_by_course_id(course_id)
+    return [] if progress.blank?
+    progress.completed_lessons.collect(&:lesson_id)
+  end
 end

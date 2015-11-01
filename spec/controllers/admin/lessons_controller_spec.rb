@@ -121,7 +121,7 @@ describe Admin::LessonsController do
       it "redirects to the admin edit view of the lesson" do
         post :create, { course_id: @course1.to_param, lesson: valid_attributes }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(edit_admin_course_lesson_path(Course.last, Lesson.last))
+        expect(response).to redirect_to("http://test.host/admin/courses/computer-course/lessons/lesson-your-load-man/edit")
       end
     end
 
