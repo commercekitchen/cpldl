@@ -56,11 +56,14 @@ describe CoursesController do
       before(:each) do
         @user = FactoryGirl.create(:user)
         sign_in @user
+        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true)
+        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: false)
+        @user.course_progresses << [@course_progress1, @course_progress2]
       end
 
-      it "allows the user to view their courses" do
+      it "allows the user to view their tracked courses" do
         get :your
-        expect(assigns(:courses)).to eq([])
+        expect(assigns(:courses)).to eq([@course1])
       end
     end
 
@@ -142,6 +145,36 @@ describe CoursesController do
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)
       end
+    end
+  end
+
+  describe "POST #add" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
+
+    it "marks a course as tracked" do
+      post :add, { course_id: @course1 }
+      progress = @user.course_progresses.find_by_course_id(@course1.id)
+      expect(progress.tracked).to be true
+    end
+  end
+
+  describe "POST #remove" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      sign_in @user
+    end
+
+    it "marks a course as un-tracked" do
+      progress = @user.course_progresses.where(course_id: @course1.id).first_or_create
+      progress.tracked = false
+      progress.save
+
+      post :remove, { course_id: @course1 }
+      progress = @user.course_progresses.find_by_course_id(@course1.id)
+      expect(progress.tracked).to be false
     end
   end
 

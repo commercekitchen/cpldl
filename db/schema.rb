@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101001943) do
+ActiveRecord::Schema.define(version: 20151101002423) do
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "course_id"
@@ -37,8 +37,9 @@ ActiveRecord::Schema.define(version: 20151101001943) do
     t.integer  "course_id"
     t.datetime "started_at"
     t.datetime "completed_at"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.boolean  "tracked",      default: false
   end
 
   create_table "course_topics", force: :cascade do |t|

@@ -8,6 +8,8 @@ describe "courses/show.html.erb" do
     @admin = FactoryGirl.create(:admin_user)
     @admin.add_role(:admin)
     @user = FactoryGirl.create(:user)
+    @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course.id)
+    @user.course_progresses << [@course_progress1]
   end
 
   context "when logged in as an admin" do
@@ -23,6 +25,24 @@ describe "courses/show.html.erb" do
       sign_in @user
       render
       expect(rendered).not_to have_content "Edit Course"
+    end
+
+    it "shows the 'Add to your plan' link if the course is not currently tracked" do
+      sign_in @user
+      @course_progress1.tracked = true
+      @course_progress1.save
+      render
+      expect(rendered).to_not have_link "Add to your plan"
+      expect(rendered).to have_link "Remove from your plan"
+    end
+
+    it "shows the 'Remove from your plan' link if the course is not currently tracked" do
+      sign_in @user
+      @course_progress1.tracked = false
+      @course_progress1.save
+      render
+      expect(rendered).to have_link "Add to your plan"
+      expect(rendered).to_not have_link "Remove from your plan"
     end
   end
 
@@ -53,6 +73,12 @@ describe "courses/show.html.erb" do
       @course.description = "<strong>Should display in bold</strong>"
       render
       expect(rendered).to have_selector("p strong", text: "Should display in bold")
+    end
+
+    it "does not show the 'Add to your plan' or 'Remove from your plan' link" do
+      render
+      expect(rendered).to_not have_link "Add to your plan"
+      expect(rendered).to_not have_link "Remove from your plan"
     end
   end
 end

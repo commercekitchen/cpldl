@@ -1,0 +1,25 @@
+require "feature_helper"
+
+feature "User is able to view the courses in their plan" do
+
+  before(:each) do
+    @user = FactoryGirl.create(:user)
+    @course1 = FactoryGirl.create(:course, title: "Course 1")
+    @course2 = FactoryGirl.create(:course, title: "Course 2")
+    @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true)
+    @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: false)
+    @user.course_progresses << [@course_progress1, @course_progress2]
+    login_as(@user)
+  end
+
+  context "as a logged in user" do
+
+    scenario "can view their added courses" do
+      visit your_courses_path
+      expect(page).to have_content("Course 1")
+      expect(page).to_not have_content("Course 2")
+    end
+
+  end
+
+end

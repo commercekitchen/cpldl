@@ -25,6 +25,28 @@ class CoursesController < ApplicationController
     end
   end
 
+  def add
+    @course = Course.friendly.find(params[:course_id])
+    course_progress = current_user.course_progresses.where(course_id: @course.id).first_or_create
+    course_progress.tracked = true
+    if course_progress.save
+      redirect_to course_path(@course), notice: "Successfully added this course to your plan."
+    else
+      render :show, alert: "Sorry, we were unable to add this course to your plan."
+    end
+  end
+
+  def remove
+    @course = Course.friendly.find(params[:course_id])
+    course_progress = current_user.course_progresses.where(course_id: @course.id).first_or_create
+    course_progress.tracked = false
+    if course_progress.save
+      redirect_to course_path(@course), notice: "Successfully removed this course to your plan."
+    else
+      render :show, alert: "Sorry, we were unable to remove this course to your plan."
+    end
+  end
+
   def start
     @course = Course.friendly.find(params[:course_id])
     course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
@@ -32,7 +54,8 @@ class CoursesController < ApplicationController
   end
 
   def your
-    @courses = []
+    tracked_course_ids = current_user.course_progresses.where(tracked: true).collect(&:course_id)
+    @courses = Course.where(id: tracked_course_ids)
     respond_to do |format|
       format.html { render :your }
       format.json { render json: @courses }
