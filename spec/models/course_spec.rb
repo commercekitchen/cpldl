@@ -169,17 +169,17 @@ describe Course do
 
     it "should return the sum of the lesson durations" do
       @course.lessons << [@lesson1, @lesson2, @lesson3]
-      expect(@course.duration).to eq("7:30")
+      expect(@course.duration).to eq("7 mins")
     end
 
     it "should return the sum of the lesson durations" do
       @course.lessons << [@lesson4]
-      expect(@course.duration).to eq("1:30")
+      expect(@course.duration).to eq("1 min")
     end
 
     it "should return the sum of the lesson durations" do
       @course.lessons << [@lesson5]
-      expect(@course.duration).to eq("0:09")
+      expect(@course.duration).to eq("0 mins")
     end
 
   end

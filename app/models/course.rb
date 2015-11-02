@@ -68,5 +68,4 @@ class Course < ActiveRecord::Base
     Duration.minutes_str(total)
   end
 
-
 end

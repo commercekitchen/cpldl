@@ -17,6 +17,6 @@ class Duration
   def self.duration_str_to_int(str)
     digits_array = str.split(":").map(&:to_i)
     total = digits_array.first * 60
-    return total + digits_array.second
+    total + digits_array.second
   end
 end
