@@ -11,4 +11,9 @@ module CoursesHelper
     when "T" then "Trashed"
     end
   end
+
+  def course_topics(course)
+    topics = course.topics.map(&:title)
+    return topics.join(", ")
+  end
 end
