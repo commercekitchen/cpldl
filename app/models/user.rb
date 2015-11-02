@@ -16,4 +16,10 @@ class User < ActiveRecord::Base
     return [] if progress.blank?
     progress.completed_lessons.collect(&:lesson_id)
   end
+
+  def completed_course_ids
+    progress = course_progresses.where.not(completed_at: nil)
+    return [] if progress.blank?
+    progress.collect(&:course_id)
+  end
 end

@@ -80,6 +80,8 @@ describe LessonsController do
       expect(response).to redirect_to(course_lesson_path(@course1.to_param, @lesson3.id))
     end
 
+    pending "it marks a course as complete if the final lesson was completed"
+
     it "responds to json" do
       post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param, format: :json
       expect(response).to have_http_status(:success)

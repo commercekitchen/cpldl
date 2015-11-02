@@ -1,3 +1,16 @@
-<h1>Your Courses</h1>
+<h1>Your Learning Plan: Click on a course below and get started!</h1>
 
-<%= render "shared/courses/listing" %>
+<p>
+  Purple courses need to be completed.  Gray courses have already been completed.
+  To add more to your plan, <%= link_to "click here to go to the homepage.", root_path %>
+  Have you completed most of the courses? If so, <%= link_to "click here to retake the quiz", "#" %>
+  and we'll suggest even more courses.
+</p>
+
+<% if user_signed_in? %>
+  <% courses_completed = current_user.completed_course_ids %>
+<% else %>
+  <% courses_completed = [] %>
+<% end %>
+
+<%= render partial: "shared/courses/listing", locals: { courses_completed: courses_completed } %>
