@@ -36,6 +36,7 @@ RSpec.configure do |config|
   # => include devise test helpers
   config.include Devise::TestHelpers, type: :controller
   config.include Devise::TestHelpers, type: :view
+  config.include Devise::TestHelpers, type: :helper
 
   # Fixture file upload methods
   include ActionDispatch::TestProcess

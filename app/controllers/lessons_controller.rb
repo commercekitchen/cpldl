@@ -18,7 +18,7 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        # Need to handle the change of course slug, which should 301 redirect.
+        # The change of course slug should 301 redirect.
         if request.path != course_lesson_path(@course, @lesson)
           redirect_to course_lesson_path(@course, @lesson), status: :moved_permanently
         else

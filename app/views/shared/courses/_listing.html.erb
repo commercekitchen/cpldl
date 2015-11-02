@@ -12,10 +12,10 @@
         </header>
         <div class="description">
           <p><%= c.summary %></p>
-          <p class="duration">
-            <i class="icon-clock grey"></i>
-            <%= c.duration %>
-          </p>
+          <div class="percent-complete"><%= percent_complete(c) %></div>
+          <div class="duration">
+            <i class="icon-clock grey"></i><%= c.duration %>
+          </div>
         </div>
       </a>
     </div>
