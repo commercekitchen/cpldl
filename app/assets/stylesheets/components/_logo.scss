@@ -1,0 +1,14 @@
+.logo {
+  .logo-icon {
+    display: inline-block;
+    width: 60px;
+    vertical-align: top;
+  }
+
+  .logo-content {
+    display: inline-block;
+    h1, h2 {
+      margin: 0;
+    }
+  }
+}
