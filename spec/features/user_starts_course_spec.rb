@@ -55,8 +55,10 @@ feature "User visits course listing page" do
   context "as a logged in user" do
 
     before(:each) do
-      @course_with_lessons = FactoryGirl.create(:course_with_lessons)
       @user = FactoryGirl.create(:user)
+      @course_with_lessons = FactoryGirl.create(:course_with_lessons)
+      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course_with_lessons.id)
+      @user.course_progresses << [@course_progress1]
       login_as(@user)
     end
 
@@ -64,6 +66,14 @@ feature "User visits course listing page" do
       visit course_path(@course_with_lessons)
       click_link "Start Course"
       expect(current_path).to eq(course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.first))
+    end
+
+    scenario "can click to start a course and be taken to the first not-completed lesson" do
+      @completed_lesson1 = FactoryGirl.create(:completed_lesson, lesson_id: @course_with_lessons.lessons.first.id)
+      @course_progress1.completed_lessons << @completed_lesson1
+      visit course_path(@course_with_lessons)
+      click_link "Start Course"
+      expect(current_path).to eq(course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.second))
     end
 
     # scenario "page should pop the modal box when a lesson finishes", js: true do
