@@ -35,6 +35,8 @@ class LessonsController < ApplicationController
     # TODO: move to user model?
     course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
     course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
+    course_progress.completed_at = Time.zone.now if lesson.is_assessment
+    course_progress.save
 
     respond_to do |format|
       format.html do
