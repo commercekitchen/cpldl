@@ -8,10 +8,10 @@ class Duration
   end
 
   def self.minutes_str(seconds)
-    return "0 Minutes" if seconds < 0
+    return "0 mins" if seconds < 0
     m = (seconds / 60) % 60
-    return "1 Minute" if m == 1
-    "#{m} Minutes"
+    return "1 min" if m == 1
+    "#{m} mins"
   end
 
   def self.duration_str_to_int(str)

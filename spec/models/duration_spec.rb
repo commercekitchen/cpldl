@@ -11,12 +11,12 @@ describe Duration do
   end
 
   it "returns the rounded minutes" do
-    expect(Duration.minutes_str(90)).to eq("1 Minute")
-    expect(Duration.minutes_str(119)).to eq("1 Minute")
-    expect(Duration.minutes_str(120)).to eq("2 Minutes")
-    expect(Duration.minutes_str(600)).to eq("10 Minutes")
-    expect(Duration.minutes_str(59)).to eq("0 Minutes")
-    expect(Duration.minutes_str(-1)).to eq("0 Minutes")
+    expect(Duration.minutes_str(90)).to eq("1 min")
+    expect(Duration.minutes_str(119)).to eq("1 min")
+    expect(Duration.minutes_str(120)).to eq("2 mins")
+    expect(Duration.minutes_str(600)).to eq("10 mins")
+    expect(Duration.minutes_str(59)).to eq("0 mins")
+    expect(Duration.minutes_str(-1)).to eq("0 mins")
   end
 
   it "converts a duration string to number of seconds" do

@@ -65,7 +65,7 @@ class Course < ActiveRecord::Base
   def duration
     total = 0
     lessons.each { |l| total += l.duration }
-    Duration.duration_str(total)
+    Duration.minutes_str(total)
   end
 
 
