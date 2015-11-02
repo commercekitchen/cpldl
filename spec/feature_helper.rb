@@ -30,3 +30,11 @@ def change_password(password)
   fill_in "user_password_confirmation", with: password
   click_button "Save"
 end
+
+Capybara.javascript_driver = :webkit
+Capybara::Webkit.configure do |config|
+  # TODO: revisit after development
+  config.allow_url("placeholdit.imgix.net")
+  config.allow_url("placehold.it")
+  # config.debug = true
+end
