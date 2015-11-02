@@ -156,4 +156,32 @@ describe Course do
 
   end
 
+  context "duration functions" do
+
+    before :each do
+      @course = FactoryGirl.create(:course)
+      @lesson1 = FactoryGirl.create(:lesson, title: "1", duration: 75)
+      @lesson2 = FactoryGirl.create(:lesson, title: "2", duration: 150)
+      @lesson3 = FactoryGirl.create(:lesson, title: "3", duration: 225)
+      @lesson4 = FactoryGirl.create(:lesson, title: "4", duration: 90)
+      @lesson5 = FactoryGirl.create(:lesson, title: "5", duration: 9)
+    end
+
+    it "should return the sum of the lesson durations" do
+      @course.lessons << [@lesson1, @lesson2, @lesson3]
+      expect(@course.duration).to eq("7:30")
+    end
+
+    it "should return the sum of the lesson durations" do
+      @course.lessons << [@lesson4]
+      expect(@course.duration).to eq("1:30")
+    end
+
+    it "should return the sum of the lesson durations" do
+      @course.lessons << [@lesson5]
+      expect(@course.duration).to eq("0:09")
+    end
+
+  end
+
 end
