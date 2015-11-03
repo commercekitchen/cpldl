@@ -7,11 +7,11 @@ class Duration
     "#{m}:#{s}"
   end
 
-  def self.minutes_str(seconds)
-    return "0 mins" if seconds.to_i < 0
+  def self.minutes_str(seconds, format="mins")
+    return "0 #{format}" if seconds.to_i < 0
     m = (seconds / 60) % 60
-    return "1 min" if m == 1
-    "#{m} minutes"
+    return "1 #{format.chomp('s')}" if m == 1
+    "#{m} #{format}"
   end
 
   def self.duration_str_to_int(str)
