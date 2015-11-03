@@ -62,7 +62,7 @@ class Course < ActiveRecord::Base
     lessons.maximum("lesson_order")
   end
 
-  def duration(format="mins")
+  def duration(format = "mins")
     total = 0
     lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
