@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
 
   # PgSearch gem config
   include PgSearch
-  multisearchable against: [:title, :summary, :description, :topics]
+  multisearchable against: [:title, :summary, :description, :topics_str]
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text
@@ -71,5 +71,4 @@ class Course < ActiveRecord::Base
     lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
-
 end
