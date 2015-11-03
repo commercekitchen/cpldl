@@ -12,13 +12,13 @@
 
 <div class="row">
   <div class="eightcol">
-    <%# TODO: Fill in dynamic info when ready. %>
     <div class="course-details">
       <div><i class="icon-pencil"></i><%= @course.lessons.count %> Lessons</div>
-      <div><i class="icon-clock"></i><%= minutes_str(@course.duration) %></div>
+      <div><i class="icon-clock"></i><%= @course.duration %></div>
       <div><i class="icon-plus"></i><%= @course.level %></div>
     </div>
-    <div><small>Contributed by Leslie James, <%= link_to "Commerce Kitchen", "#" %></small></div>
+    <%# TODO: Fill in dynamic link when ready %>
+    <div><small>Contributed by <%= @course.contributor %>, <%= link_to "Commerce Kitchen", "#" %></small></div>
     <div><small>Topics: <%= course_topics(@course) %></small></div>
   </div>
 
