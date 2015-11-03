@@ -3,7 +3,12 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, only: [:your, :completed, :start]
 
   def index
-    @courses = Course.all
+    @results = PgSearch.multisearch(params[:search]).map(&:searchable)
+    @courses = if @results.empty?
+      Course.all
+    else
+      @results
+    end
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @courses }
