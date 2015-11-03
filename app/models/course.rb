@@ -38,8 +38,8 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def topics_str
-    topics.map(&:title).join(", ")
+  def topics_list
+    topics.pluck(:title).join(", ")
   end
 
   def next_lesson_id(current_lesson_id = 0)

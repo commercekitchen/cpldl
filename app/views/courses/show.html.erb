@@ -19,7 +19,7 @@
     </div>
     <%# TODO: Fill in dynamic link when ready %>
     <div><small>Contributed by <%= @course.contributor %>, <%= link_to "Commerce Kitchen", "#" %></small></div>
-    <div><small>Topics: <%= course_topics(@course) %></small></div>
+    <div><small>Topics: <%= @course.topics_list %></small></div>
   </div>
 
   <div class="fourcol last align-right">

@@ -12,11 +12,6 @@ module CoursesHelper
     end
   end
 
-  def course_topics(course)
-    topics = course.topics.map(&:title)
-    return topics.join(", ")
-  end
-
   def percent_complete(course)
     if user_signed_in?
       course_progress = current_user.course_progresses.find_by_course_id(course.id)
