@@ -2,6 +2,10 @@ class Course < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
+  # PgSearch gem config
+  include PgSearch
+  multisearchable against: [:title, :summary, :description, :topics]
+
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text
 
