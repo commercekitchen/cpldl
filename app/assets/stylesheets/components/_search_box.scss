@@ -1,0 +1,42 @@
+@mixin placeholder {
+  ::-webkit-input-placeholder {@content;}
+  :-moz-placeholder           {@content;}
+  ::-moz-placeholder          {@content;}
+  :-ms-input-placeholder      {@content;}
+}
+
+@include placeholder {
+  color: $grey;
+}
+
+.search-box {
+  margin-top: 1em;
+  width: 100%;
+  height: 3em;
+  vertical-align: middle;
+  white-space: nowrap;
+  position: relative;
+  border: solid;
+  border-color: $grey;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.search-box input#search {
+  width: 94%;
+  height: 3em;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: $grey;
+  padding-left: 5%;
+}
+
+.search-box .icon-search:before {
+  position: absolute;
+  top: 30%;
+  right: 5%;
+  z-index: 1;
+  color: $grey;
+}
