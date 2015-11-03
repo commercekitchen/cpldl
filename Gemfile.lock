@@ -302,7 +302,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    sqlite3 (1.3.10)
     sshkit (1.7.1)
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
@@ -377,7 +376,6 @@ DEPENDENCIES
   sidekiq-failures
   simplecov
   sinatra
-  sqlite3
   sunspot_solr
   uglifier (>= 1.3.0)
   web-console (~> 2.0)
