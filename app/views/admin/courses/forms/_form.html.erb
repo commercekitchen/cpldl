@@ -30,7 +30,7 @@
     <%= f.label :contributor do %>
       Contributor<span class="required"></span>
     <% end %>
-    <%= f.text_field :contributor %>
+    <%= f.text_field :contributor, class: "bottom-margin" %>
   </fieldset>
 
   <fieldset>
@@ -85,7 +85,7 @@
         <%= f.label :language_id do %>
           Course Language<span class="required"></span>
         <% end %>
-        <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: true } ) %>
+        <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
   </div>
@@ -96,7 +96,7 @@
         <%= f.label :level do %>
           Course Level<span class="required"></span>
         <% end %>
-        <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: true } ) %>
+        <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
 
@@ -105,7 +105,7 @@
         <%= f.label :pub_status do %>
           Publication Status<span class="required"></span>
         <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @course.pub_status), { include_blank: true } ) %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @course.pub_status), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
   </div>
