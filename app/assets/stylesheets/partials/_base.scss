@@ -49,10 +49,14 @@ ul {
   li {
     line-height: 1.5em;
   }
-}
 
-ul.marked {
-  list-style-type: disc;
+  &.marked {
+    list-style-type: disc;
+  }
+
+  &.extra-padding{
+    padding-left: 45px;
+  }
 }
 
 i::before {

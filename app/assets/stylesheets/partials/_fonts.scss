@@ -28,7 +28,6 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
   text-align: center;
   color: $teal;
 
@@ -38,10 +37,6 @@
 
   /* fix buttons height, for twitter bootstrap */
   line-height: 1em;
-
-  /* Animation center compensation - margins should be symmetric */
-  /* remove if not needed */
-  margin-left: .2em;
 
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
@@ -58,6 +53,10 @@
 
 [class^="icon-"].orange:before, [class*=" icon-"].orange:before {
   color: $orange;
+}
+
+[class^="icon-"].white:before, [class*=" icon-"].white:before {
+  color: $white;
 }
 
 .icon-pencil:before { content: '\e800'; } /* '' */

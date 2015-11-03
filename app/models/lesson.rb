@@ -33,4 +33,8 @@ class Lesson < ActiveRecord::Base
   def delete_associated_asl_files
     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
   end
+
+  def duration_str
+    Duration.duration_str(duration)
+  end
 end

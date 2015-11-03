@@ -1,10 +1,16 @@
+<% lessons_completed = current_user.completed_lesson_ids(course) %>
+
 <div class="row">
   <div class="sixcol">
   <% course.lessons.order(:lesson_order).each_with_index do |l, index| %>
     <% if index <= course.lessons.count / 2 %>
-      <ul>
+      <ul class="extra-padding">
         <li>
-          <i class="icon-ok orange"></i>
+          <% if lessons_completed.include?(l.id) %>
+            <i class="icon-ok orange"></i>
+          <% else %>
+            <i class="icon-play"></i>
+          <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
           <%= link_to l.title, course_lesson_path(course, l) %>
         </li>
@@ -15,9 +21,13 @@
   <div class="sixcol last">
   <% course.lessons.order(:lesson_order).each_with_index do |l, index| %>
     <% if index > course.lessons.count / 2 %>
-      <ul>
+      <ul class="extra-padding">
         <li>
-          <i class="icon-play"></i>
+          <% if lessons_completed.include?(l.id) %>
+            <i class="icon-ok orange"></i>
+          <% else %>
+            <i class="icon-play"></i>
+          <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
           <%= link_to l.title, course_lesson_path(course, l) %>
         </li>
