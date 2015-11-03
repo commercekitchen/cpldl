@@ -29,6 +29,7 @@ capybara-*.html
 rerun.txt
 pickle-email-*.html
 dump.rdb
+logfile
 
 # Code Climate coverage stats don't belong in the repo.
 /coverage

@@ -6,14 +6,14 @@
     <% end %>
     <div class="lesson-order"><%= lesson.lesson_order %></div>
     <div class="lesson-title"><%= lesson.title %></div>
-    <div class="lesson-duration"><i class="icon-clock"></i><%= lesson.duration %></div>
+    <div class="lesson-duration"><i class="icon-clock"></i><%= Duration.duration_str(lesson.duration) %></div>
   </div>
   <div class="hover-state">
     <i class="icon-arrow"></i>
     <div class="align-left">
       <span class="lesson-order"><%= lesson.lesson_order %></span>
       <i class="icon-clock"></i>
-      <span class="lesson-duration"><%= lesson.duration %>:00</span>
+      <span class="lesson-duration"><%= Duration.duration_str(lesson.duration) %></span>
     </div>
     <h1 class="lesson-title"><%= lesson.title %></h1>
     <p class="lesson-description"><%= lesson.summary %></p>
