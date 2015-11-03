@@ -23,6 +23,13 @@ module Admin
 
     def create
       @course = Course.new(course_params)
+
+      if Course.last.course_order.blank?
+        @course.course_order = 1
+      else
+        @course.course_order = Course.last.course_order + 1
+      end
+
       if @course.save
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
