@@ -14,12 +14,12 @@
   <div class="eightcol">
     <div class="course-details">
       <div><i class="icon-pencil"></i><%= @course.lessons.count %> Lessons</div>
-      <div><i class="icon-clock"></i><%= @course.duration %></div>
+      <div><i class="icon-clock"></i><%= @course.duration("minutes") %></div>
       <div><i class="icon-plus"></i><%= @course.level %></div>
     </div>
     <%# TODO: Fill in dynamic link when ready %>
     <div><small>Contributed by <%= @course.contributor %>, <%= link_to "Commerce Kitchen", "#" %></small></div>
-    <div><small>Topics: <%= @course.topics_list %></small></div>
+    <div><small>Topics: <%= @course.topics_str %></small></div>
   </div>
 
   <div class="fourcol last align-right">

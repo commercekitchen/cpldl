@@ -182,6 +182,10 @@ describe Course do
       expect(@course.duration).to eq("0 mins")
     end
 
+    it "should return duration in format if one is passed" do
+      @course.lessons << [@lesson1, @lesson2, @lesson3]
+      expect(@course.duration("minutes")).to eq("7 minutes")
+    end
   end
 
 end
