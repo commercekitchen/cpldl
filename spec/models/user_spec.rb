@@ -67,9 +67,10 @@ describe User do
     end
 
     it "should return an array of all completed course ids" do
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+      now = Time.zone.now
+      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: now)
       @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
-      @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+      @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: now)
       @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
       expect(@user.completed_course_ids).to eq([@course1.id, @course3.id])
     end

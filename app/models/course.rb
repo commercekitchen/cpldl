@@ -61,4 +61,11 @@ class Course < ActiveRecord::Base
     fail StandardError, "There are no available lessons for this course." if lessons.count == 0
     lessons.maximum("lesson_order")
   end
+
+  def duration
+    total = 0
+    lessons.each { |l| total += l.duration }
+    Duration.minutes_str(total)
+  end
+
 end

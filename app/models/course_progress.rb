@@ -3,9 +3,9 @@ class CourseProgress < ActiveRecord::Base
   belongs_to :course
   has_many :completed_lessons, dependent: :destroy
 
-  def next_lesson_id
-    fail StandardError, "There are no available lessons for this course." if course.lessons.count == 0
-    course.next_lesson_id(last_completed_lesson_id_by_order)
+  def complete?
+    return true if completed_at.present?
+    false
   end
 
   def percent_complete
@@ -18,6 +18,11 @@ class CourseProgress < ActiveRecord::Base
 
   def lessons_completed
     completed_lessons.count
+  end
+
+  def next_lesson_id
+    fail StandardError, "There are no available lessons for this course." if course.lessons.count == 0
+    course.next_lesson_id(last_completed_lesson_id_by_order)
   end
 
   def last_completed_lesson_id_by_order

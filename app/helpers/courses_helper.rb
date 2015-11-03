@@ -16,4 +16,14 @@ module CoursesHelper
     topics = course.topics.map(&:title)
     return topics.join(", ")
   end
+
+  def percent_complete(course)
+    if user_signed_in?
+      course_progress = current_user.course_progresses.find_by_course_id(course.id)
+      if course_progress.present?
+        return "#{course_progress.percent_complete}% complete"
+      end
+    end
+    ""
+  end
 end

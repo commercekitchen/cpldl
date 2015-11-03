@@ -2,6 +2,53 @@ require "rails_helper"
 
 describe CourseProgress do
 
+  context "#complete?" do
+
+    before(:each) do
+      @course_progress = FactoryGirl.create(:course_progress)
+    end
+
+    it "should be false if there is no completed date" do
+      expect(@course_progress.complete?).to be false
+    end
+
+    it "should be 33 when 1 of 3 is completed" do
+      @course_progress.completed_at = Time.zone.now
+      expect(@course_progress.complete?).to be true
+    end
+
+  end
+
+  context "#percent_complete" do
+
+    before(:each) do
+      @course1 = FactoryGirl.create(:course)
+      @lesson1 = FactoryGirl.create(:lesson)
+      @lesson2 = FactoryGirl.create(:lesson)
+      @lesson3 = FactoryGirl.create(:lesson)
+      @course1.lessons << [@lesson1, @lesson2, @lesson3]
+      @course_progress = FactoryGirl.create(:course_progress, course_id: @course1.id)
+      @completed_lesson1 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson1.id)
+      @completed_lesson2 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson2.id)
+      @completed_lesson3 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson3.id)
+    end
+
+    it "should be 0 when not started" do
+      expect(@course_progress.percent_complete).to eq(0)
+    end
+
+    it "should be 33 when 1 of 3 is completed" do
+      @course_progress.completed_lessons << [@completed_lesson1]
+      expect(@course_progress.percent_complete).to eq(33)
+    end
+
+    it "should be 100 when 3 of 3 are completed" do
+      @course_progress.completed_lessons << [@completed_lesson1, @completed_lesson2, @completed_lesson3]
+      expect(@course_progress.percent_complete).to eq(100)
+    end
+
+  end
+
   context "#next_lesson_id" do
 
     before(:each) do
@@ -34,36 +81,6 @@ describe CourseProgress do
     it "should throw an error if a course has no lessons" do
       @course.lessons.destroy_all
       expect { @course_progress.next_lesson_id }.to raise_error(StandardError)
-    end
-
-  end
-
-  context "#percent_complete" do
-
-    before(:each) do
-      @course1 = FactoryGirl.create(:course)
-      @lesson1 = FactoryGirl.create(:lesson)
-      @lesson2 = FactoryGirl.create(:lesson)
-      @lesson3 = FactoryGirl.create(:lesson)
-      @course1.lessons << [@lesson1, @lesson2, @lesson3]
-      @course_progress = FactoryGirl.create(:course_progress, course_id: @course1.id)
-      @completed_lesson1 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson1.id)
-      @completed_lesson2 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson2.id)
-      @completed_lesson3 = FactoryGirl.create(:completed_lesson, lesson_id: @lesson3.id)
-    end
-
-    it "should be 0 when not started" do
-      expect(@course_progress.percent_complete).to eq(0)
-    end
-
-    it "should be 33 when 1 of 3 is completed" do
-      @course_progress.completed_lessons << [@completed_lesson1]
-      expect(@course_progress.percent_complete).to eq(33)
-    end
-
-    it "should be 100 when 3 of 3 are completed" do
-      @course_progress.completed_lessons << [@completed_lesson1, @completed_lesson2, @completed_lesson3]
-      expect(@course_progress.percent_complete).to eq(100)
     end
 
   end
