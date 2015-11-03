@@ -6,23 +6,51 @@
 
   p {
     display: inline;
-    margin-right: 45px;
+    margin-right: 65px;
+  }
+
+  p.last {
+    margin-right: 0;
   }
 
   .first{
+    margin-left: 10px;
     margin-right: 75px;
   }
 }
 
-ul li.objects {
-    padding: ;
-    border-bottom: 1px solid $purple;
+ul.objects {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.objects li {
+  padding: 10px;
+  border-bottom: 1px solid $purple;
+
+  p {
+    display: inline;
   }
 
-ul li:
+  p.first {
+    margin-right: 30px;
+  }
 
-table tr:last-child td {
+  p.second {
+    margin-right: 50px;
+  }
+
+  p.third {
+    margin-right: 125px;
+  }
+}
+
+ul.objects li:last-child {
   border-bottom: none;
+}
+
+ul.reorderable li:hover {
+  cursor: move;
 }
 
 .sortable-placeholder {

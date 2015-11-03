@@ -28,6 +28,8 @@ class Course < ActiveRecord::Base
       message: "%{value} is not a valid level" }
   validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == "1" }
 
+  default_scope { order("course_order ASC") }
+
   def topics_list(topic_list)
     if topic_list.present?
       valid_topics = topic_list.reject(&:blank?)
