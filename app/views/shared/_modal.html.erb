@@ -9,7 +9,8 @@
       </p>
       <h2>Up Next:</h2>
       <h2><%= next_lesson.title %></h2>
-      <%= link_to "Continue", course_lesson_path(course, next_lesson), class: "btn btn-blue small" %>
+      <%= link_to "Continue", course_lesson_path(course, next_lesson),
+        class: "btn btn-blue small", onclick: "Modal.close();" %>
       <span class="vertical-bar">&nbsp;</span>
       <i class="icon-cw flip-horizontal"></i>
       <%= link_to "Repeat Lesson", course_lesson_path(course, current_lesson), class: "grey" %>

@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  sendLessonCompleteEvent = function() {
+  sendLessonCompletedEvent = function() {
     Modal.open("lesson-complete-modal");
     $.ajax({
       url: window.location.pathname + "/complete",
