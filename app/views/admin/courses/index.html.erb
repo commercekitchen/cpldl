@@ -13,6 +13,30 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="list-titles">
+    <p class="first">Course</p>
+    <p>Topic</p>
+    <p>Language</p>
+    <p>Publication Status</p>
+  </div>
+</div>
+
+  <div class="sortable">
+    <ul class="objects">
+      <% @courses.each do |course| %>
+      <li>
+        <%= link_to course.title, edit_admin_course_path(course) %>
+        <%= course.topics_str %>
+        <%= course.language.name %>
+        <%= course.current_pub_status %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+
+
+#######################################
 <table class="reorderable">
   <thead>
     <tr>
@@ -25,7 +49,7 @@
 
   <tbody>
     <% @courses.each do |course| %>
-      <tr  class="sortable">
+      <tr>
         <td class="nowrap"><%= link_to course.title, edit_admin_course_path(course) %></td>
         <td><%= course.topics_str %></td>
         <td><%= course.language.name %></td>

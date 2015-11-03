@@ -1,0 +1,38 @@
+.list-titles {
+  border-width: 2px;
+  color: $teal;
+  font-size: 1.5em;
+  font-weight: 100;
+
+  p {
+    display: inline;
+    margin-right: 45px;
+  }
+
+  .first{
+    margin-right: 75px;
+  }
+}
+
+ul li.objects {
+    padding: ;
+    border-bottom: 1px solid $purple;
+  }
+
+ul li:
+
+table tr:last-child td {
+  border-bottom: none;
+}
+
+.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.sortable {
+  display: tr;
+}
+

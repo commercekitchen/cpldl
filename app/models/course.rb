@@ -42,6 +42,14 @@ class Course < ActiveRecord::Base
     topics.map(&:title).join(", ")
   end
 
+  def current_pub_status
+    case self.pub_status
+    when "D" then "Draft"
+    when "P" then "Published"
+    when "T" then "Trashed"
+    end
+  end
+
   def next_lesson_id(current_lesson_id = 0)
     fail StandardError, "There are no available lessons for this course." if lessons.count == 0
 
