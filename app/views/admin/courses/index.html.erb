@@ -27,7 +27,7 @@
     <% @courses.each do |course| %>
       <tr>
         <td class="nowrap"><%= link_to course.title, edit_admin_course_path(course) %></td>
-        <td><%= course.topics_str %></td>
+        <td><%= course.topics_list %></td>
         <td><%= course.language.name %></td>
         <%# TODO: should this be a helper, or a model method? %>
         <%# TODO: Status also needs a published date. %>
