@@ -42,7 +42,7 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def topics_list
+  def topics_str
     topics.pluck(:title).join(", ")
   end
 
@@ -66,10 +66,10 @@ class Course < ActiveRecord::Base
     lessons.maximum("lesson_order")
   end
 
-  def duration
+  def duration(format="mins")
     total = 0
     lessons.each { |l| total += l.duration }
-    Duration.minutes_str(total)
+    Duration.minutes_str(total, format)
   end
 
 end
