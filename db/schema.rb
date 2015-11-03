@@ -11,7 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151101002423) do
+ActiveRecord::Schema.define(version: 20151103175901) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "pg_trgm"
+  enable_extension "fuzzystrmatch"
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "course_id"
@@ -56,7 +61,7 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.string   "summary",        limit: 156
     t.text     "description"
     t.string   "contributor"
-    t.string   "pub_status",     limit: 2,   default: "D"
+    t.string   "pub_status",                 default: "D"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.integer  "language_id"
@@ -65,8 +70,8 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.string   "slug"
   end
 
-  add_index "courses", ["slug"], name: "index_courses_on_slug"
-  add_index "courses", ["title"], name: "index_courses_on_title", unique: true
+  add_index "courses", ["slug"], name: "index_courses_on_slug", using: :btree
+  add_index "courses", ["title"], name: "index_courses_on_title", unique: true, using: :btree
 
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string   "slug",                      null: false
@@ -76,10 +81,10 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.datetime "created_at"
   end
 
-  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
-  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
-  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "languages", force: :cascade do |t|
     t.string   "name"
@@ -106,7 +111,17 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.datetime "story_line_updated_at"
   end
 
-  add_index "lessons", ["slug"], name: "index_lessons_on_slug"
+  add_index "lessons", ["slug"], name: "index_lessons_on_slug", using: :btree
+
+  create_table "pg_search_documents", force: :cascade do |t|
+    t.text     "content"
+    t.integer  "searchable_id"
+    t.string   "searchable_type"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "pg_search_documents", ["searchable_type", "searchable_id"], name: "index_pg_search_documents_on_searchable_type_and_searchable_id", using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.string   "first_name"
@@ -125,8 +140,8 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id"
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "topics", force: :cascade do |t|
     t.string   "title"
@@ -157,16 +172,16 @@ ActiveRecord::Schema.define(version: 20151101002423) do
     t.integer  "profile_id"
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
   create_table "users_roles", id: false, force: :cascade do |t|
     t.integer "user_id"
     t.integer "role_id"
   end
 
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id"
+  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
 end
