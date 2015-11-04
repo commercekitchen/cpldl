@@ -4,9 +4,7 @@ class CoursesController < ApplicationController
 
   def index
     @results = PgSearch.multisearch(params[:search]).map(&:searchable)
-    @courses = if params.nil?
-      Course.includes(:lessons).all
-    elsif params[:search].nil? || params[:search].empty?
+    @courses = if params[:search].nil? || params[:search].empty?
       Course.includes(:lessons).all
     else
       @results
