@@ -186,3 +186,11 @@ header.lesson-listing {
   background: url("computer.png") no-repeat scroll right 5px transparent;
   background-position-x: 95%;
 }
+
+.clearfix:after {
+  content: ".";
+  visibility: hidden;
+  display: block;
+  height: 0;
+  clear: both;
+}
