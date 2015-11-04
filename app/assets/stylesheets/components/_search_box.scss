@@ -40,3 +40,8 @@
   z-index: 1;
   color: $grey;
 }
+
+.lone-search-box {
+  @include span-columns(4);
+  @include shift(8);
+}
