@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20151104003304) do
     t.string   "summary",        limit: 156
     t.text     "description"
     t.string   "contributor"
-    t.string   "pub_status",     limit: 2,   default: "D"
+    t.string   "pub_status",                 default: "D"
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.integer  "language_id"

@@ -37,4 +37,12 @@ class Lesson < ActiveRecord::Base
   def duration_str
     Duration.duration_str(duration)
   end
+
+  def duration_to_int(duration_param)
+    if duration_param.include?(":")
+      self.duration = Duration.duration_str_to_int(duration_param)
+    else
+      self.duration = duration_param.to_i
+    end
+  end
 end

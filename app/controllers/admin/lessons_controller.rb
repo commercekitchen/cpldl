@@ -22,8 +22,8 @@ module Admin
 
     def create
       @lesson = @course.lessons.build(lesson_params)
+      @lesson.duration_to_int(lesson_params[:duration])
       @lesson.lesson_order = 1 # TODO: this isn't finished.
-      @lesson.duration = 90 # TODO: this isn't finished.
 
       # => if rubocop complaions about "or" don't change, it will break
       if @lesson.is_assessment?
