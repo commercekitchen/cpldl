@@ -43,6 +43,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'quiet_assets'
   gem 'letter_opener'
+  gem 'annotate'
 end
 
 group :development, :test do

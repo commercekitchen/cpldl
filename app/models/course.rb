@@ -1,3 +1,24 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id             :integer          not null, primary key
+#  title          :string(90)
+#  seo_page_title :string(90)
+#  meta_desc      :string(156)
+#  summary        :string(156)
+#  description    :text
+#  contributor    :string
+#  pub_status     :string           default("D")
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  language_id    :integer
+#  level          :string
+#  notes          :text
+#  slug           :string
+#  course_order   :integer
+#
+
 class Course < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
