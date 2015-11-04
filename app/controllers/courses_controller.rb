@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, only: [:your, :completed, :start]
 
   def index
-    @courses = Course.all
+    @courses = Course.includes(:lessons).all
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @courses }
