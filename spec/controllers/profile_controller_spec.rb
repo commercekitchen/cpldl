@@ -32,12 +32,11 @@ describe ProfilesController do
 
       it "allows the user to update their profile information" do
         put :update, id: @user.profile,
-          profile: { first_name: "Robby", last_name: "Rrown", zip_code: "12345" },
+          profile: { first_name: "Robby", zip_code: "12345" },
           authenticity_token: set_authenticity_token
 
         @user.reload
         expect(@user.profile.first_name).to eq("Robby")
-        expect(@user.profile.last_name).to eq("Rrown")
         expect(@user.profile.zip_code).to eq("12345")
       end
 
