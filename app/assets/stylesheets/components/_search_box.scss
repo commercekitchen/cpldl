@@ -21,6 +21,7 @@
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  overflow: hidden;
 }
 
 .search-box input#search {
@@ -33,12 +34,39 @@
   padding-left: 5%;
 }
 
+.search-box input#search:focus {
+  outline: 0;
+}
+
 .search-box .icon-search:before {
   position: absolute;
   top: 30%;
   right: 5%;
   z-index: 1;
   color: $grey;
+}
+
+.search-box-button {
+  min-height: 2.6em;
+}
+
+.search-box input[type="submit"] {
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  border-left: solid;
+  border-width: 1px;
+  border-radius: 0;
+  box-shadow: none;
+  height: 100%;
+  line-height: 3.2em;
+  padding-top: 0;
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  font-weight: normal;
+  min-width: 110%;
+  font-size: 10pt;
 }
 
 .lone-search-box {

@@ -1,6 +1,10 @@
 <div class="search-box">
   <%= form_tag courses_path, method: :get do %>
-    <%= search_field_tag :search, params[:search], placeholder: 'Search courses by keyword' %>
-    <i class="icon-search">&nbsp;</i>
+    <div class="ninecol">
+      <%= search_field_tag :search, params[:search], placeholder: 'Search courses by keyword' %>
+    </div>
+    <div class="threecol search-box-button">
+      <%= submit_tag "Search" %>
+    </div>
   <% end %>
 </div>
