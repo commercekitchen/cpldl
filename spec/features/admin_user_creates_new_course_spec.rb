@@ -3,9 +3,9 @@ require "feature_helper"
 feature "Admin user creates new course and lesson" do
 
   before(:each) do
-    @course = FactoryGirl.create(:course)
+    # @new_course = FactoryGirl.create(:course)
     @topic = FactoryGirl.create(:topic)
-
+    @language = FactoryGirl.create(:language)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 
     @user = FactoryGirl.create(:user)

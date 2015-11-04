@@ -48,8 +48,10 @@ describe Admin::CoursesController do
         description:  "More descriptive that you know!",
         contributor:  "MeMyself&I <a href='here.com'></a>",
         pub_status:  "P",
+        other_topic_text: "Learning",
         language_id: FactoryGirl.create(:language),
-        level: "Advanced" }
+        level: "Advanced",
+        course_order: "" }
     end
 
     let(:invalid_attributes) do
@@ -61,7 +63,9 @@ describe Admin::CoursesController do
         contributor: "",
         pub_status: "",
         language: "",
-        level: "" }
+        level: "",
+        other_topic_text: "",
+        course_order: "" }
     end
 
     context "with valid params" do
@@ -89,7 +93,7 @@ describe Admin::CoursesController do
       it "redirects to the admin edit view of the course" do
         post :create, { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(new_admin_course_lesson_path(Course.last))
+        expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by_title(valid_attributes[:title])))
       end
     end
 

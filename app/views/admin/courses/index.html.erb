@@ -13,26 +13,24 @@
   </div>
 </div>
 
-<table class="reorderable">
-  <thead>
-    <tr>
-      <th>Course</th>
-      <th>Topic</th>
-      <th>Language</th>
-      <th>Publication Status</th>
-    </tr>
-  </thead>
+<div class="row">
+  <div class="list-titles">
+    <p class="first">Course</p>
+    <p>Topic</p>
+    <p>Language</p>
+    <p class="last">Publication Status</p>
+  </div>
+</div>
 
-  <tbody>
+<div>
+  <ul class="objects sortable reorderable">
     <% @courses.each do |course| %>
-      <tr>
-        <td class="nowrap"><%= link_to course.title, edit_admin_course_path(course) %></td>
-        <td><%= course.topics_str %></td>
-        <td><%= course.language.name %></td>
-        <%# TODO: should this be a helper, or a model method? %>
-        <%# TODO: Status also needs a published date. %>
-        <td><%= pub_status_str(course) %> <span class="note">(11/01/2015)</span></td>
-      </tr>
+    <li class="sortable-item" data-id="<%= course.id %>">
+      <p class="first"><%= link_to course.title, edit_admin_course_path(course) %></p>
+      <p class="second"><%= course.topics_str %></p>
+      <p class="third"><%= course.language.name %></p>
+      <p><%= course.current_pub_status %> <span class="note">(11/01/2015)</span></p>
+    </li>
     <% end %>
-  </tbody>
-</table>
+  </ul>
+</div>

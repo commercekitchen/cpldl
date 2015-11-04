@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20151104003304) do
     t.string   "level"
     t.text     "notes"
     t.string   "slug"
+    t.integer  "course_order"
   end
 
   add_index "courses", ["slug"], name: "index_courses_on_slug", using: :btree
