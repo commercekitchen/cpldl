@@ -3,6 +3,7 @@ require "rails_helper"
 describe Duration do
 
   it "returns the seconds in a string format" do
+    expect(Duration.duration_str(45)).to eq("0:45")
     expect(Duration.duration_str(1)).to eq("0:01")
     expect(Duration.duration_str(90)).to eq("1:30")
     expect(Duration.duration_str(120)).to eq("2:00")

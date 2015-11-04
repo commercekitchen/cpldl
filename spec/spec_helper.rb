@@ -98,14 +98,6 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 end
 
-Capybara.javascript_driver = :webkit
-Capybara::Webkit.configure do |config|
-  # TODO: revisit after development
-  config.allow_url("placeholdit.imgix.net")
-  config.allow_url("placehold.it")
-  # config.debug = true
-end
-
 def set_devise_env
   @request.env["devise.mapping"] = Devise.mappings[:user]
 end
