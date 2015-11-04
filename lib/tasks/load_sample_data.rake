@@ -6,7 +6,7 @@ namespace :db do
     # => super user account
     # => CHANGE pwd for production!!!
     super_user = User.create(email: "super@cpl.com", password: "password", confirmed_at: Time.zone.now)
-    super_profile = Profile.create(first_name: "Super", last_name: "User", zip_code: "80206", user_id: super_user.id)
+    super_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: super_user.id)
     super_user.update(profile_id: super_profile.id)
     super_user.add_role(:admin)
 

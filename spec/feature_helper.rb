@@ -13,12 +13,11 @@ def log_out
   click_link "Sign Out"
 end
 
-def sign_up_with(email, password, first_name, last_name, zip_code)
+def sign_up_with(email, password, first_name, zip_code)
   visit login_path
   find("#signup_email").set(email)
   find("#signup_password").set(password)
   find("#user_profile_attributes_first_name").set(first_name)
-  find("#user_profile_attributes_last_name").set(last_name)
   find("#user_profile_attributes_zip_code").set(zip_code)
   fill_in "user_password_confirmation", with: password
   click_button "Sign Up"

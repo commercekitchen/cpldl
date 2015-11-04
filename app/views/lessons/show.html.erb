@@ -1,10 +1,11 @@
 <%= content_for :callout do %>
-  <%= @lesson.title %>
+  <h1><%="#{@lesson.lesson_order}. #{@lesson.title}" %></h1>
+  <small><i class="icon-clock white"></i><%= @lesson.duration %></small>
 <% end %>
 
 <%= content_for :course_progress do %>
   <%= render partial: "shared/courses/course_progress",
-    locals: { course: @course, course_progress: @course_progress } %>
+    locals: { course: @course, lesson: @lesson, course_progress: @course_progress } %>
 <% end %>
 
 <%= asl_iframe(@lesson) %>
@@ -13,13 +14,15 @@
 
 <div class="row">
   <div class="sixcol border-right">
-    <h3><%= @course.title %></h3>
-    <div>
-      <i class="icon-book-open grey"></i>
-      <small><%= @course.lessons.count %> Lessons</small>
-      <i class="icon-clock grey"></i>
-      <small>13 Minutes</small> <%# TODO: make dynamic %>
-    </div>
+    <header class="lesson-listing">
+      <h3><%= @course.title %></h3>
+      <div>
+        <i class="icon-book-open grey"></i>
+        <small class="padding-right"><%= @course.lessons.count %> Lessons</small>
+        <i class="icon-clock grey"></i>
+        <small><%= @course.duration %></small>
+      </div>
+    </header>
     <%= render partial: "shared/lessons/listing", locals: { course: @course } %>
   </div>
 

@@ -6,7 +6,10 @@
   <footer>
     <span class="percent-complete"><%= course_progress.percent_complete %>% Complete</span>
     <span class="next-lesson-link">
-      <%= link_to "Skip to next lesson >>", "#", class: "inverted" %>
+      <% unless lesson.is_assessment %>
+        <%= link_to "Skip to next lesson >>",
+          course_lesson_path(course, course.next_lesson_id(lesson.id)), class: "inverted" %>
+      <% end %>
     </span>
   </footer>
 </div>

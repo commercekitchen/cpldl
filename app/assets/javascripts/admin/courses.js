@@ -7,6 +7,13 @@ $(document).ready(function() {
     }
   });
 
+  // If the user enters text in the topics textbox, mark the checkbox too.
+  $("body").on("change", "#course_other_topic_text", function() {
+    if($(this).val().trim() !== "") {
+      $("#course_other_topic").prop("checked", true);
+    }
+  });
+
   $("#course_title").simplyCountable({
     counter: "#course_title_counter",
     countable: "characters",

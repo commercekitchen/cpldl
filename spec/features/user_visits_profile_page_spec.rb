@@ -29,13 +29,11 @@ feature "Registered user visits account page" do
   scenario "can update their profile information" do
     visit profile_path
     fill_in "First name", with: "Alex"
-    fill_in "Last name", with: "Brinkman"
     fill_in "Zip code", with: "12345"
     click_button "Save"
 
     @user.reload
     expect(@user.profile.first_name).to eq("Alex")
-    expect(@user.profile.last_name).to eq("Brinkman")
     expect(@user.profile.zip_code).to eq("12345")
   end
 

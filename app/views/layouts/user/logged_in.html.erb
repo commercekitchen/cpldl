@@ -14,7 +14,7 @@
     <div class="container row">
       <div class="eightcol">
       <% if content_for?(:callout) %>
-        <h1><%= yield :callout %></h1>
+        <%= yield :callout %>
       <% else %>
         <h1>Connect to the Digital World</h1>
       <% end %>

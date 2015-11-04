@@ -67,15 +67,30 @@
     color: $white;
     font-size: 2em;
     font-weight: 100;
+    margin-bottom: 0;
 
     @include media($desktop) {
       font-size: 3.3em;
     }
   }
+
+  [class^="icon-"]{
+    font-size: 20px;
+    padding-right: 5px;
+  }
+
+  small {
+    font-size: 20px;
+    color: $white;
+  }
 }
 
 .large-top-padding {
   margin-top: 7em;
+}
+
+.bottom-margin {
+  margin-bottom: 10px;
 }
 
 .course-details {
@@ -125,6 +140,10 @@
   }
 }
 
+.padding-right {
+  padding-right: 1em;
+}
+
 .extra-padding-right {
   padding-right: 4em;
   @include media($mobile) {
@@ -150,4 +169,20 @@
 .story_line {
   width: 1024px;
   height: 716px;
+}
+
+header.lesson-listing {
+  padding-left: 66px;
+  background: url("computer.png") no-repeat scroll left -72px transparent;
+  height: 45px;
+
+  h3 {
+    margin-bottom: 5px;
+  }
+
+}
+
+.with-computer-background {
+  background: url("computer.png") no-repeat scroll right 5px transparent;
+  background-position-x: 95%;
 }

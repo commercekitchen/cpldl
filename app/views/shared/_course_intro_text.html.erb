@@ -1,33 +1,31 @@
 <% if user_signed_in? && current_user.is_admin? %>
-  <%= content_for(:callout) { "Hi Admin! Connect to the Digital World." } %>
+  <%= content_for(:callout) { %><h1>Hi Admin! Connect to the Digital World.</h1><% } %>
   <div class="row">
     <h1>
       Edit a course by clicking on a course below, search courses or navigate to the
       <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
     </h1>
   </div>
-
   <div class="row">
     <div class="lone-search-box">
       <%= render partial: "shared/courses/search_box" %>
     </div>
   </div>
-
 <% elsif user_signed_in? %>
-  <%= content_for(:callout) { "Hi #{current_user.profile.first_name}! Connect to the Digital World." } %>
+  <%= content_for(:callout) do %>
+    <h1>Hi <%=current_user.profile.first_name%>! Connect to the Digital World.</h1>
+  <% end %>
   <div class="row">
     <h1>
       Choose a course below to start learning, or visit
       <%= link_to "Your Courses", your_courses_path %> to view your customized learning plan.
     </h1>
   </div>
-
   <div class="row">
     <div class="lone-search-box">
       <%= render partial: "shared/courses/search_box" %>
     </div>
   </div>
-
 <% else %>
   <div class="row">
     <h1>Choose a course below to start learning.</h1>
