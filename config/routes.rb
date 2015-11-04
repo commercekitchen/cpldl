@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
     resources :courses do
+      put :sort, on: :collection
       resources :lessons do
         collection do
           delete :destroy_asl_attachment

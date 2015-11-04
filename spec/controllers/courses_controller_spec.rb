@@ -115,6 +115,7 @@ describe CoursesController do
         post :start, { course_id: @course1 }
         progress = @user.course_progresses.last
         expect(progress.course_id).to eq(@course1.id)
+        expect(progress.tracked).to be true
         expect(response).to redirect_to(course_lesson_path(@course1, @course1.lessons.where(lesson_order: 1).first.id))
       end
 

@@ -73,6 +73,16 @@ button, input[type="submit"], .btn {
   }
 }
 
+select {
+  -webkit-appearance: none;
+  padding: .8em 2.5em .8em .6em;
+  background: url("/assets/select_box_arrows.png") no-repeat 96% 50%;
+  border: 2px solid $grey;
+  font-size: 16px;
+  color: $grey;
+  width: 100%;
+}
+
 .upload-field {
   margin-top: 0;
   border-radius: 5px;

@@ -23,6 +23,7 @@ module Admin
 
     def create
       @course = Course.new(course_params)
+
       if @course.save
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
@@ -49,6 +50,14 @@ module Admin
       end
     end
 
+    def sort
+      params[:order].each do |_k, v|
+        Course.find(v[:id]).update_attribute(:course_order, v[:position])
+      end
+
+      render nothing: true
+    end
+
     def destroy
       @course.destroy
       redirect_to courses_url, notice: "Course was successfully destroyed."
@@ -68,9 +77,25 @@ module Admin
     end
 
     def course_params
-      params.require(:course).permit(:title, :seo_page_title, :meta_desc, :summary, :description, :contributor, :pub_status,
-        :language_id, :level, :topics, :notes, :delete_document, :other_topic, :other_topic_text,
-        attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy])
+      params.require(:course).permit(:title,
+                                     :seo_page_title,
+                                     :meta_desc, :summary,
+                                     :description,
+                                     :contributor,
+                                     :pub_status,
+                                     :language_id,
+                                     :level,
+                                     :topics,
+                                     :notes,
+                                     :delete_document,
+                                     :other_topic,
+                                     :other_topic_text,
+                                     :course_order,
+            attachments_attributes: [:course_id,
+                                     :document,
+                                     :title,
+                                     :doc_type,
+                                     :_destroy])
     end
 
     def build_topics_list(params)

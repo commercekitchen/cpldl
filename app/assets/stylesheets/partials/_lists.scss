@@ -1,0 +1,66 @@
+.list-titles {
+  border-width: 2px;
+  color: $teal;
+  font-size: 1.5em;
+  font-weight: 100;
+
+  p {
+    display: inline;
+    margin-right: 65px;
+  }
+
+  p.last {
+    margin-right: 0;
+  }
+
+  .first{
+    margin-left: 10px;
+    margin-right: 75px;
+  }
+}
+
+ul.objects {
+  list-style: none;
+  padding-left: 0;
+}
+
+ul.objects li {
+  padding: 10px;
+  border-bottom: 1px solid $purple;
+
+  p {
+    display: inline;
+  }
+
+  p.first {
+    margin-right: 30px;
+  }
+
+  p.second {
+    margin-right: 50px;
+  }
+
+  p.third {
+    margin-right: 125px;
+  }
+}
+
+ul.objects li:last-child {
+  border-bottom: none;
+}
+
+ul.reorderable li:hover {
+  cursor: move;
+}
+
+.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 80px;
+  margin-bottom: 10px;
+}
+
+.sortable {
+  display: tr;
+}
+
