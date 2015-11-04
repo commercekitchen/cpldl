@@ -45,7 +45,7 @@ class Course < ActiveRecord::Base
   end
 
   def current_pub_status
-    case self.pub_status
+    case pub_status
     when "D" then "Draft"
     when "P" then "Published"
     when "T" then "Trashed"

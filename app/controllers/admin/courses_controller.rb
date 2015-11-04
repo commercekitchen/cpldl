@@ -24,12 +24,6 @@ module Admin
     def create
       @course = Course.new(course_params)
 
-      if Course.last.course_order.blank?
-        @course.course_order = 1
-      else
-        @course.course_order = Course.last.course_order + 1
-      end
-
       if @course.save
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
@@ -56,8 +50,8 @@ module Admin
       end
     end
 
-    def  sort
-      params[:order].each do |k, v|
+    def sort
+      params[:order].each do |_k, v|
         Course.find(v[:id]).update_attribute(:course_order, v[:position])
       end
 

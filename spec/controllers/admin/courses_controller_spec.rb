@@ -48,7 +48,7 @@ describe Admin::CoursesController do
         description:  "More descriptive that you know!",
         contributor:  "MeMyself&I <a href='here.com'></a>",
         pub_status:  "P",
-        other_topic_text: "Learning" ,
+        other_topic_text: "Learning",
         language_id: FactoryGirl.create(:language),
         level: "Advanced",
         course_order: "" }
