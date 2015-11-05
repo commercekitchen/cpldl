@@ -57,9 +57,9 @@
 
 .eightcol {
   @include span-columns(8);
-  @include media($mobile) {
-    @include span-columns(12);
-  }
+  /*@include media($mobile) {*/
+    /*@include span-columns(12);*/
+  /*}*/
 }
 
 .ninecol {

@@ -1,26 +1,19 @@
+<div class="clearfix">
 <% @courses.each_with_index do |c, index| %>
-  <% if index % 3 == 0 %>
-    <div class="row">
-  <% end %>
-
-    <div class="fourcol<% if index % 3 == 2 %> last<% end %>">
-      <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
-        href="<%= course_path(c) %>">
-        <header>
-          <h3 class="with-computer-background"><%= c.title %></h3>
-        </header>
-        <div class="description">
-          <p><%= c.summary %></p>
-          <div class="percent-complete"><%= percent_complete(c) %></div>
-          <div class="duration">
-            <i class="icon-clock grey"></i><%= c.duration %>
-          </div>
+  <div class="fourcol<% if index % 3 == 2 %> last<% end %>">
+    <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
+      href="<%= course_path(c) %>">
+      <header>
+        <h3 class="with-computer-background"><%= c.title %></h3>
+      </header>
+      <div class="description">
+        <p><%= c.summary %></p>
+        <div class="percent-complete"><%= percent_complete(c) %></div>
+        <div class="duration">
+          <i class="icon-clock grey"></i><%= c.duration %>
         </div>
-      </a>
-    </div>
-
-  <% if index % 3 == 2 %>
-    </div>
-  <% end %>
-
+      </div>
+    </a>
+  </div>
 <% end %>
+</div>

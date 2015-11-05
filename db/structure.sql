@@ -216,7 +216,7 @@ CREATE TABLE courses (
     summary character varying(156),
     description text,
     contributor character varying,
-    pub_status character varying DEFAULT 'D'::character varying,
+    pub_status character varying(2) DEFAULT 'D'::character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     language_id integer,
