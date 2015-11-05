@@ -22,6 +22,7 @@ module Admin
 
     def create
       @lesson = @course.lessons.build(lesson_params)
+      @lesson.duration_to_int(lesson_params[:duration])
       @lesson.lesson_order = 1 # TODO: this isn't finished.
 
       if @lesson.is_assessment?

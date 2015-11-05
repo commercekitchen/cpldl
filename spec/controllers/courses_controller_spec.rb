@@ -5,13 +5,25 @@ describe CoursesController do
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
     @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
-    @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language))
+    @course3 = FactoryGirl.create(:course, title: "Course 3",
+                                        language: FactoryGirl.create(:language),
+                                     description: "Ruby on Rails")
   end
 
   describe "GET #index" do
     it "assigns all courses as @courses" do
       get :index
       expect(assigns(:courses)).to eq([@course1, @course2, @course3])
+    end
+
+    it "assigns all courses as @courses with an empty params" do
+      get :index, {}
+      expect(assigns(:courses)).to eq([@course1, @course2, @course3])
+    end
+
+    it "assigns search results to @results" do
+      get :index, { search: "ruby" }
+      expect(assigns(:results)).to eq([@course3])
     end
 
     it "responds to json" do

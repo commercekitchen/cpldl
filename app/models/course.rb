@@ -17,12 +17,14 @@
 #  notes          :text
 #  slug           :string
 #  course_order   :integer
-#  pub_date       :datetime
-#
 
 class Course < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
+
+  # PgSearch gem config
+  include PgSearch
+  multisearchable against: [:title, :summary, :description, :topics_str]
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text

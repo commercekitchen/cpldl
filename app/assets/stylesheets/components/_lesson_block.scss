@@ -1,59 +1,37 @@
 .lesson-block {
-  height: 200px;
-  width: 200px;
+  height: 222px;
+  width: 222px;
   background-color: $teal;
   color: $white;
-  text-align: center;
-  margin-bottom: 1em;
+  margin: 0 2em 2em 0;
   position: relative;
   cursor: pointer;
+  float: left;
 
   &.completed {
     background-color: $grey;
     .icon-ok::before {
       position: absolute;
-      left: 0;
+      left: 5px;
+      top: 5px;
       color: $orange;
       font-size: 2em;
     }
   }
 
-  @include media($tablet) {
-    height: 150px;
-    width: 150px;
-  }
-
-  @include media($mobile-large) {
-    height: 100px;
-    width: 100px;
-  }
-
   .lesson-order {
     font-size: 4em;
-
-    @include media($tablet) {
-     font-size: 2em;
-    }
-
-    @include media($mobile-large) {
-      font-size: 1.5em;
-    }
   }
 
   .lesson-title {
     font-size: 2em;
-    margin-bottom: 2em;
-
-    @include media($tablet) {
-      font-size: 1.5em;
-    }
-
-    @include media($mobile-large) {
-      font-size: 1em;
-    }
   }
 
   .lesson-duration {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+
     [class^="icon-"]:before, [class*=" icon-"]:before {
       color: $white;
     }
@@ -68,6 +46,7 @@
 
   .default-state {
     display: block;
+    text-align: center;
   }
 
   .hover-state {
@@ -80,15 +59,18 @@
     border: 1px solid $grey;
     border-radius: 5px;
     padding: 5px 15px;
+    text-align: left;
 
     .lesson-order {
-      font-size: 2em;
+      font-size: 2.5em;
+      margin-right: 8px;
     }
 
     .icon-clock::before {
       color: $grey;
       font-size: 1.25em;
       padding-right: 1em;
+      vertical-align: super;
     }
 
     .lesson-title {
@@ -96,22 +78,23 @@
       font-weight: bold;
       color: $dark-grey;
       margin-bottom: 0;
-      text-align: left;
     }
 
     .lesson-duration {
       font-size: 1.25em;
+      position: relative;
+      left: -6px;
+      top: -6px;
     }
 
     .lesson-summary {
       font-size: .8em;
-      text-align: left;
     }
 
     .btn {
       position: absolute;
-      bottom: 5px;
-      left: 5px;
+      bottom: 20px;
+      width: 190px;
     }
 
     .default-state {

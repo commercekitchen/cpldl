@@ -10,6 +10,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 
+# Full text search via PostgreSQL
+gem 'pg_search', '~> 1.0.5'
+
 # Authentication and authorization
 gem 'devise'
 gem 'rolify'
@@ -40,6 +43,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'quiet_assets'
   gem 'letter_opener'
+  gem 'annotate'
 end
 
 group :development, :test do

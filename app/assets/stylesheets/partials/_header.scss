@@ -9,9 +9,9 @@
   z-index: 100;
 
   svg {
-    height: 75%;
-    width: 75%;
     fill: $white;
+    position: relative;
+    top: -20px;
 
     @include media($mobile) {
       height: 8em;
@@ -49,8 +49,8 @@
   }
 
   svg {
-    height: 3.25em;
-    width: 3.25em;
+    height: 5.25em;
+    width: 5.25em;
     fill: $purple;
 
     @include media($mobile) {

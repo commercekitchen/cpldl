@@ -54,7 +54,7 @@ describe Admin::LessonsController do
     end
 
     let(:valid_attributes) do
-      { duration: 20,
+      { duration: "01:20",
         title:  "Lesson your load man",
         seo_page_title:  "Seo | Beo | Meo ",
         meta_desc:  "Its good to Meta-Tate",
@@ -65,7 +65,7 @@ describe Admin::LessonsController do
     end
 
     let(:assessment_attributes) do
-      { duration: 20,
+      { duration: "01:20",
         title:  "I am an assessment",
         seo_page_title:  "See | Bee | Mee ",
         meta_desc:  "is this like inception",
