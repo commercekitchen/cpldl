@@ -216,14 +216,15 @@ CREATE TABLE courses (
     summary character varying(156),
     description text,
     contributor character varying,
-    pub_status character varying(2) DEFAULT 'D'::character varying,
+    pub_status character varying DEFAULT 'D'::character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     language_id integer,
     level character varying,
     notes text,
     slug character varying,
-    course_order integer
+    course_order integer,
+    pub_date timestamp without time zone
 );
 
 
@@ -937,4 +938,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151103175901');
 INSERT INTO schema_migrations (version) VALUES ('20151103215214');
 
 INSERT INTO schema_migrations (version) VALUES ('20151104003304');
+
+INSERT INTO schema_migrations (version) VALUES ('20151105154753');
 
