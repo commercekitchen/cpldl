@@ -47,7 +47,8 @@ puts "#{Language.count} languages created."
     contributor: "John Doe",
     pub_status: "P",
     language_id: Language.first.id,
-    level: "Beginner"
+    level: "Beginner",
+    pub_date: Time.zone.now
   )
 end
 puts "#{Course.count} courses created."

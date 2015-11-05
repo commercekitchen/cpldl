@@ -29,7 +29,7 @@
       <p class="first"><%= link_to course.title, edit_admin_course_path(course) %></p>
       <p class="second"><%= course.topics_str %></p>
       <p class="third"><%= course.language.name %></p>
-      <p><%= course.current_pub_status %> <span class="note">(11/01/2015)</span></p>
+      <p><%= course.current_pub_status %> <span class="note"> (<%= course.pub_date.strftime("%m/%d/%Y") unless course.pub_date.blank? %>)</span></p>
     </li>
     <% end %>
   </ul>
