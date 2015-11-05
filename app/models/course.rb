@@ -105,14 +105,14 @@ class Course < ActiveRecord::Base
   end
 
   def set_pub_date
-    pub_date = DateTime.now.strftime("%m/%d/%Y") if pub_status == "P"
+    self.pub_date = Time.zone.now unless pub_status != "P"
   end
 
   def update_pub_date(new_pub_status)
     if new_pub_status == "P"
-      pub_date = DateTime.now.strftime("%m/%d/%Y")
+      self.pub_date = Time.zone.now
     else
-      pub_date = nil
+      self.pub_date = nil
     end
   end
 end
