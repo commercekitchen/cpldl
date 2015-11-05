@@ -23,6 +23,10 @@ module CPLDigitalLearn
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # This is needed to allow the test DB to load the functions needed for
+    # pg_search from what we've done in the development.
+    config.active_record.schema_format = :sql
+
     config.autoload_paths << Rails.root.join('lib')
   end
 end
