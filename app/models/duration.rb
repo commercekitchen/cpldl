@@ -2,15 +2,10 @@ class Duration
 
   def self.duration_str(seconds)
     seconds = seconds.to_i
-    return "0:00" if seconds < 0
-    m = (seconds / 60) % 60
+    return "00:00" if seconds < 0
+    m = ((seconds / 60) % 60).to_s.rjust(2, "0")
     s = (seconds % 60).to_s.rjust(2, "0")
-
-    if m > 0
-      "#{m}:#{s}"
-    else
-      "0:#{s}"
-    end
+    "#{m}:#{s}"
   end
 
   def self.minutes_str(seconds, format = "mins")
