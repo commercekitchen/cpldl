@@ -26,7 +26,7 @@ class Course < ActiveRecord::Base
 
   # PgSearch gem config
   include PgSearch
-  multisearchable against: [:title, :summary, :description, :topics_str]
+  multisearchable against: [:title, :summary, :description, :topics_str, :level]
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text
