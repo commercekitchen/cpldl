@@ -78,4 +78,15 @@ class Course < ActiveRecord::Base
     Duration.minutes_str(total, format)
   end
 
+  def set_pub_date
+    pub_date = DateTime.now.strftime("%m/%d/%Y") if pub_status == "P"
+  end
+
+  def update_pub_date(new_pub_status)
+    if new_pub_status == "P"
+      pub_date = DateTime.now.strftime("%m/%d/%Y")
+    else
+      pub_date = nil
+    end
+  end
 end

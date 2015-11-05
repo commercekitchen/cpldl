@@ -24,6 +24,10 @@ module Admin
     def create
       @course = Course.new(course_params)
 
+      if params[:course][:pub_status] == "P"
+        @course.set_pub_date
+      end
+
       if @course.save
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
@@ -38,6 +42,11 @@ module Admin
 
     def update
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
+
+      if params[:course][:pub_status] != @course.pub_status
+        @course.update_pub_date(params[:course][:pub_status])
+      end
+
       if @course.update(course_params)
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
@@ -91,6 +100,7 @@ module Admin
                                      :other_topic,
                                      :other_topic_text,
                                      :course_order,
+                                     :pub_date,
             attachments_attributes: [:course_id,
                                      :document,
                                      :title,

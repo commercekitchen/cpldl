@@ -40,6 +40,32 @@ describe Course do
       expect(@course.pub_status).to eq("D")
     end
 
+    it "does not set pub date if status is not Published" do
+      expect(@course.set_pub_date).to be(nil)
+    end
+
+    it "should set pub date on publication" do
+      @course.pub_status = "P"
+      expect(@course.set_pub_date).to eq(DateTime.now.strftime("%m/%d/%Y"))
+    end
+
+    it "should update the pub date with status change" do
+      @course.pub_status = "P"
+      expect(@course.set_pub_date).to_not be(nil)
+      @course.pub_status = "D"
+      expect(@course.update_pub_date(@course.pub_status)).to be(nil)
+      @course.pub_status = "P"
+      expect(@course.update_pub_date(@course.pub_status)).to eq(DateTime.now.strftime("%m/%d/%Y"))
+    end
+
+    it "humanizes publication status" do
+      expect(@course.current_pub_status).to eq("Draft")
+      @course.pub_status = "P"
+      expect(@course.current_pub_status).to eq("Published")
+      @course.pub_status = "T"
+      expect(@course.current_pub_status).to eq("Trashed")
+    end
+
     it "should not require the seo page title" do
       @course.seo_page_title = ""
       expect(@course).to be_valid
@@ -98,6 +124,13 @@ describe Course do
       @course.topics_list(topics)
       @course.reload
       expect(@course.topics.count).to eq(2)
+    end
+
+    it "returns a topic list as a string" do
+      topics = ["Topic 1", "Topic 2"]
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics_str).to eq("Topic 1, Topic 2")
     end
 
     it "skips blank topics when assigning to a course" do
