@@ -24,7 +24,6 @@ module Admin
       @lesson = @course.lessons.build(lesson_params)
       @lesson.lesson_order = 1 # TODO: this isn't finished.
 
-      # => if rubocop complaions about "or" don't change, it will break
       if @lesson.is_assessment?
         validate_assessment || return
       end
