@@ -5,7 +5,9 @@ describe CoursesController do
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
     @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
-    @course3 = FactoryGirl.create(:course, title: "Course 3", language: FactoryGirl.create(:language), description: "Ruby on Rails")
+    @course3 = FactoryGirl.create(:course, title: "Course 3",
+                                        language: FactoryGirl.create(:language),
+                                     description: "Ruby on Rails")
   end
 
   describe "GET #index" do

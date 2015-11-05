@@ -5,10 +5,10 @@ class CoursesController < ApplicationController
   def index
     @results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
     @courses = if params[:search].nil? || params[:search].empty?
-      Course.includes(:lessons).all
-    else
-      @results
-    end
+                 Course.includes(:lessons).all
+               else
+                 @results
+               end
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @courses }
