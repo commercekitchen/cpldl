@@ -1,7 +1,18 @@
 <div class="course-progress">
   <header>Course: <%= course.title %></header>
   <div class="progress-bar">
-    <span class="meter" style="width: <%= course_progress.percent_complete %>%"></span>
+    <span class="meter" style="width: <%= course_progress.percent_complete %>%;"></span>
+    <% lesson_count = course.lessons.count %>
+    <% spacing = 100.0 / lesson_count %>
+    <% arrow_position = lesson.lesson_order * spacing - (spacing / 2) - 6 %>
+    <% lesson_count.times do |i| %>
+      <% if i >= 1 %>
+        <span class="lesson-break" style="left: <%= (i * spacing) - (i-1) %>%;"></span>
+      <% end %>
+    <% end %>
+    <span class="current-lesson"
+      style="left: <%= arrow_position %>%;">
+    </span>
   </div>
   <footer>
     <span class="percent-complete"><%= course_progress.percent_complete %>% Complete</span>
