@@ -28,7 +28,7 @@
   display: inline-block;
   text-decoration: inherit;
   width: 1em;
-  margin-right: .2em;
+  margin-right: 7px;
   text-align: center;
   color: $teal;
 
@@ -60,6 +60,10 @@
   color: $white;
 }
 
+[class^="icon-"].purple:before, [class*=" icon-"].purple:before {
+  color: $purple;
+}
+
 .icon-pencil:before { content: '\e800'; } /* '' */
 .icon-clock:before { content: '\e801'; } /* '' */
 .icon-download:before { content: '\e802'; } /* '' */
@@ -77,3 +81,4 @@
 .icon-book-open:before { content: '\e809'; } /* '' */
 .icon-ok:before { content: '\e80a'; } /* '' */
 .icon-play:before { content: '\e80b'; } /* '' */
+.icon-none:before { content: ''; } /* '' */

@@ -6,10 +6,12 @@
     <% if index <= course.lessons.count / 2 %>
       <ul class="extra-padding">
         <li>
-          <% if lessons_completed.include?(l.id) %>
+          <% if l.id == lesson.id %>
+            <i class="icon-play"></i>
+          <% elsif lessons_completed.include?(l.id) %>
             <i class="icon-ok orange"></i>
           <% else %>
-            <i class="icon-play"></i>
+            <i class="icon-none"></i>
           <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
           <%= link_to l.title, course_lesson_path(course, l) %>
@@ -23,10 +25,12 @@
     <% if index > course.lessons.count / 2 %>
       <ul class="extra-padding">
         <li>
-          <% if lessons_completed.include?(l.id) %>
+          <% if l.id == lesson.id %>
+            <i class="icon-play"></i>
+          <% elsif lessons_completed.include?(l.id) %>
             <i class="icon-ok orange"></i>
           <% else %>
-            <i class="icon-play"></i>
+            <i class="icon-none"></i>
           <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
           <%= link_to l.title, course_lesson_path(course, l) %>

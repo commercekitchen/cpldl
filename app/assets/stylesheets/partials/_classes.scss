@@ -94,6 +94,18 @@
   margin-bottom: 10px;
 }
 
+.extra-bottom-margin {
+  margin-bottom: 3em;
+}
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
+}
+
 .course-details {
   color: $teal;
   font-size: 2em;
@@ -180,12 +192,11 @@ header.lesson-listing {
   h3 {
     margin-bottom: 5px;
   }
-
 }
 
-.with-computer-background {
-  background: url("computer.png") no-repeat scroll right 5px transparent;
-  background-position-x: 95%;
+.cke_contents.cke_reset {
+  border: 2px solid $grey;
+  border-radius: 6px;
 }
 
 .clearfix:after {

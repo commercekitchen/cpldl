@@ -8,11 +8,11 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
 
-  <fieldset>
+  <fieldset class="no-bottom-margin">
     <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "Email *" %>
   </fieldset>
 
-  <p class="small-14 grey">
+  <p class="small-14 grey extra-bottom-margin">
     Don't have an email address? <%= link_to "Click here", "http://digitallearn.org/learn/intro-email", target: "_blank" %> to open a tutorial in a new tab that explains how to set up an email account.
   </p>
 

@@ -54,8 +54,12 @@ ul {
     list-style-type: disc;
   }
 
-  &.extra-padding{
+  &.extra-padding {
     padding-left: 45px;
+  }
+
+  &.sidebar-links {
+    padding-left: 0;
   }
 }
 

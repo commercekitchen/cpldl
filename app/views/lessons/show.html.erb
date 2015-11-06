@@ -23,7 +23,7 @@
         <small><%= @course.duration %></small>
       </div>
     </header>
-    <%= render partial: "shared/lessons/listing", locals: { course: @course } %>
+    <%= render partial: "shared/lessons/listing", locals: { course: @course, lesson: @lesson } %>
   </div>
 
   <div class="sixcol last">

@@ -53,6 +53,7 @@ button, input[type="submit"], .btn {
   padding: 11px 40px;
   text-align: center;
   min-width: 300px;
+  letter-spacing: 1px;
 
   @include media($tablet) {
     min-width: initial;
