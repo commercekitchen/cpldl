@@ -1,57 +1,29 @@
-@mixin placeholder {
-  ::-webkit-input-placeholder {@content;}
-  :-moz-placeholder           {@content;}
-  ::-moz-placeholder          {@content;}
-  :-ms-input-placeholder      {@content;}
-}
-
-@include placeholder {
-  color: $grey;
-}
-
 .search-box {
-  width: 100%;
   height: 3em;
-  vertical-align: middle;
   white-space: nowrap;
-  position: relative;
-  border: solid;
-  border-color: $grey;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
+  border: 2px solid $grey;
   border-radius: 5px;
   overflow: hidden;
-}
 
-.search-box input#search {
-  width: 94%;
-  height: 3em;
-  font-size: 10pt;
-  float: left;
-  color: $grey;
-  padding-left: 5%;
-  border: none;
-}
+  input#search {
+    width: 75%;
+    color: $grey;
+    height: 2em;
+    margin: 5px;
+    border: none;
+  }
 
-.search-box input#search:focus {
-  outline: 0;
-}
+  .icon-search {
+    padding-left: 19px;
+  }
 
-.search-box-button {
-  min-height: 2.6em;
-}
-
-.search-box input[type="submit"] {
-  height: 100%;
-  line-height: 2em;
-  margin: 6% auto;
-  padding-top: 0;
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 0;
-  font-weight: normal;
-  min-width: 100%;
-  font-size: 10pt;
+  input[type="submit"] {
+    display: none;
+    min-width: initial;
+    height: 44px;
+    padding: 6px 3px;
+    letter-spacing: 0px;
+  }
 }
 
 .lone-search-box {
