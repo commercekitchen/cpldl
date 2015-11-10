@@ -6,7 +6,7 @@ class CreateCmsPages < ActiveRecord::Migration
       t.string  :page_type
       t.string  :audience
       t.text    :content
-      t.boolean :published
+      t.string  :pub_status, default: "D"
       t.string  :seo_page_title, limit: 90
       t.string  :meta_desc, limit: 156
 

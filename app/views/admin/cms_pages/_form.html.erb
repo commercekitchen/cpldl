@@ -1,0 +1,109 @@
+<%= javascript_include_tag "/ckeditor/ckeditor.js" %>
+
+<small>Admin >> Pages >> Edit Page</small>
+
+<h1>Page Information</h1>
+
+<%= form_for([:admin, @page], html: { multipart: true } ) do |f| %>
+  <% if @page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+      <% @page.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :title do %>
+      Title<span class="required"></span>
+    <% end %>
+    <%= f.text_field :title %>
+    <div class="note left-or-right">
+      <span id="cms_page_title_counter"></span> out of <%= @max_title %> characters remaining.
+    </div>
+  </fieldset>
+
+  <div class="row">
+    <div class="fourcol">
+      <fieldset>
+        <%= f.label :page_type do %>
+          Page Type<span class="required"></span>
+        <% end %>
+        <%= f.select(:page_type, options_for_select([["Home Page", "H"], ["Contact Page", "C"], ["About Page", "A"], ["Other", "O"]], @page.page_type), { include_blank: "Select..." } ) %>
+      </fieldset>
+    </div>
+
+    <div class="fourcol">
+      <fieldset>
+        <%= f.label :audience do %>
+          Who can view<span class="required"></span>
+        <% end %>
+        <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @page.audience), { include_blank: "Select..."} ) %>
+      </fieldset>
+    </div>
+
+    <div class="fourcol last">
+      <fieldset>
+        <%= f.label :pub_status do %>
+          Publication Status<span class="required"></span>
+        <% end %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @page.pub_status), { include_blank: "Select..." } ) %>
+      </fieldset>
+    </div>
+  </div>
+
+  <fieldset>
+    <%= f.label :author do %>
+      Author<span class="required"></span>
+    <% end %>
+    <%= f.text_field :author, class: "bottom-margin" %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :content do %>
+      Page Content<span class="required"></span>
+    <% end %>
+    <%= f.text_area :content %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "SEO page title" %>
+    <%= f.text_field :seo_page_title %>
+    <div class="note left-or-right">
+      <span id="cms_page_seo_page_title_counter"></span> out of <%= @max_seo %> characters
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "Meta Description" %>
+    <%= f.text_field :meta_desc %>
+    <div class="note left-or-right">
+      <span id="cms_page_meta_desc_counter"></span> out of <%= @max_meta %> characters
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <div class="row">
+      <div class="threecol">
+        <%= link_to "Preview Page", "#", class: "btn btn-grey small" %>
+      </div>
+      <div class="threecol">
+        <%= f.submit "Save Page", params: { commit: "Save Page" }, class: "btn-grey small" %>
+      </div>
+      <div class="fourcol">
+        <%= f.submit "Save and Edit Spanish", class: "small" %>
+      </div>
+      <div class="twocol last">
+        <%= link_to "Delete", "#", class: "btn btn-grey small" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script>
+  CKEDITOR.replace("cms_page_content");
+</script>
+

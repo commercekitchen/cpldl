@@ -116,11 +116,12 @@ CREATE TABLE cms_pages (
     page_type character varying,
     audience character varying,
     content text,
-    published boolean,
+    pub_status character varying DEFAULT 'D'::character varying,
     seo_page_title character varying(90),
     meta_desc character varying(156),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying
 );
 
 
@@ -801,6 +802,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_cms_pages_on_slug ON cms_pages USING btree (slug);
+
+
+--
 -- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -995,4 +1003,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151104003304');
 INSERT INTO schema_migrations (version) VALUES ('20151105154753');
 
 INSERT INTO schema_migrations (version) VALUES ('20151109220449');
+
+INSERT INTO schema_migrations (version) VALUES ('20151110194610');
 

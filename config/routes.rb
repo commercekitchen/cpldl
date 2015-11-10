@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
+    resources :cms_pages
     resources :courses do
       put :sort, on: :collection
       resources :lessons do
