@@ -70,18 +70,25 @@
   }
 
   .with-computer-background {
-    background: url("computer.png") no-repeat scroll right 0px transparent;
-    background-position-x: 95%;
+    position:relative;
   }
+  .with-computer-background:before {
+    content: "\e80c";
+    font-family: "fontello";
+    font-size: 1.5em;
+    right: 15px;
+    position:absolute;
+    top: 5px;
+    color: $dark-purple;
+   }
 
   &.completed header {
     background-color: $grey;
     background: linear-gradient(to bottom, $grey 0%, $dark-grey 100%);
   }
 
-  &.completed .with-computer-background {
-    background: url("computer.png") no-repeat scroll right -72px transparent;
-    background-position-x: 95%;
+  &.completed .with-computer-background:before {
+    color: $dark-grey;
   }
 
 }
