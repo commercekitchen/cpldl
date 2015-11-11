@@ -1,6 +1,5 @@
-<div class="clearfix">
+<div class="course-widget-container">
 <% @courses.each_with_index do |c, index| %>
-  <div class="fourcol<% if index % 3 == 2 %> last<% end %>">
     <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
       href="<%= course_path(c) %>">
       <header>
@@ -14,6 +13,5 @@
         </div>
       </div>
     </a>
-  </div>
 <% end %>
 </div>
