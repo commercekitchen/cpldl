@@ -1,5 +1,5 @@
 <div class="course-widget-container">
-<% @courses.each_with_index do |c, index| %>
+<% @courses.each do |c| %>
     <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
       href="<%= course_path(c) %>">
       <header>

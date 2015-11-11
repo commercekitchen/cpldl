@@ -65,7 +65,7 @@ class CoursesController < ApplicationController
   end
 
   def your
-    tracked_course_ids = current_user.course_progresses.where(tracked: true).collect(&:course_id)
+    tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
     @courses = Course.where(id: tracked_course_ids)
     respond_to do |format|
       format.html { render :your }
@@ -74,7 +74,9 @@ class CoursesController < ApplicationController
   end
 
   def completed
-    @courses = []
+    completed_ids = current_user.course_progresses.completed.collect(&:course_id)
+    @courses = Course.where(id: completed_ids)
+
     respond_to do |format|
       format.html { render :completed }
       format.json { render json: @courses }

@@ -92,12 +92,16 @@ describe CoursesController do
     context "when logged in" do
       before(:each) do
         @user = FactoryGirl.create(:user)
+        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
+        @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+        @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
         sign_in @user
       end
 
       it "allows the user to view their completed courses" do
         get :completed
-        expect(assigns(:courses)).to eq([])
+        expect(assigns(:courses)).to include(@course1, @course3)
       end
     end
 

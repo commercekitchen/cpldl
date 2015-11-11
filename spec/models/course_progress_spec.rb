@@ -26,9 +26,28 @@ describe CourseProgress do
       expect(@course_progress.complete?).to be false
     end
 
-    it "should be 33 when 1 of 3 is completed" do
+    it "should be true when a completed_at time is present" do
       @course_progress.completed_at = Time.zone.now
       expect(@course_progress.complete?).to be true
+    end
+
+  end
+
+  context "scope completed" do
+
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @course1 = FactoryGirl.create(:course, title: "Course 1")
+      @course2 = FactoryGirl.create(:course, title: "Course 2")
+      @course3 = FactoryGirl.create(:course, title: "Course 3")
+      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+      @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
+      @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+      @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
+    end
+
+    it "should be false if there is no completed date" do
+      expect(@user.course_progresses.completed).to include(@course_progress1, @course_progress3)
     end
 
   end

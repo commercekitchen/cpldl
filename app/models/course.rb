@@ -115,4 +115,5 @@ class Course < ActiveRecord::Base
       self.pub_date = nil
     end
   end
+
 end
