@@ -208,6 +208,22 @@ header.lesson-listing:before {
   border-radius: 6px;
 }
 
+.right-third {
+  @include media($desktop) {
+    @include span-columns(4);
+    @include shift(8);
+  }
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.left-two-thirds {
+  max-width: 676px;
+  float: left;
+  margin-right: 19px;
+}
+
 .clearfix:after {
   content: ".";
   visibility: hidden;

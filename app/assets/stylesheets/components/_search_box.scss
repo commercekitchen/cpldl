@@ -6,6 +6,7 @@
   overflow: hidden;
   position: relative;
   width: 329px;
+  margin-bottom: 2em;
 
   input#search {
     width: 70%;
@@ -31,15 +32,5 @@
     padding: 6px 3px;
     letter-spacing: 0px;
   }
-}
 
-.lone-search-box {
-
-  @include media($desktop) {
-    @include span-columns(4);
-    @include shift(8);
-  }
-  @include media($mobile) {
-    @include span-columns(12);
-  }
 }

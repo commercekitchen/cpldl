@@ -1,11 +1,11 @@
 <% if user_signed_in? && current_user.is_admin? %>
   <%= content_for(:callout) { %><h1>Hi Admin! Connect to the Digital World.</h1><% } %>
-    <h1>
-      Edit a course by clicking on a course below, search courses or navigate to the
-      <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
-    </h1>
-  <div class="row">
-    <div class="lone-search-box">
+  <h1>
+    Edit a course by clicking on a course below, search courses or navigate to the
+    <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
+  </h1>
+  <div class="row no-bottom-margin">
+    <div class="right-third">
       <%= render partial: "shared/courses/search_box" %>
     </div>
   </div>
@@ -13,25 +13,22 @@
   <%= content_for(:callout) do %>
     <h1>Hi <%=current_user.profile.first_name%>! Connect to the Digital World.</h1>
   <% end %>
-    <h1>
-      Choose a course below to start learning, or visit
-      <%= link_to "Your Courses", your_courses_path %> to view your customized learning plan.
-    </h1>
-  <div class="row">
-    <div class="lone-search-box">
+  <h1>
+    Choose a course below to start learning, or visit
+    <%= link_to "Your Courses", your_courses_path %> to view your customized learning plan.
+  </h1>
+
+  <div class="row no-bottom-margin">
+    <div class="right-thrid">
       <%= render partial: "shared/courses/search_box" %>
     </div>
   </div>
 <% else %>
   <h1>Choose a course below to start learning.</h1>
 
-  <div class="row">
-    <div class="eightcol">
-      <p class="no-top-margin">If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
-    </div>
+  <div class="clearfix">
+    <p class="no-top-margin left-two-thirds">If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
 
-    <div class="fourcol">
-      <%= render partial: "shared/courses/search_box" %>
-    </div>
+    <%= render partial: "shared/courses/search_box" %>
   </div>
 <% end %>
