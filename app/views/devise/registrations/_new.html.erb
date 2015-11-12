@@ -28,13 +28,27 @@
   <% end %>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password *" %>
+    <%= f.password_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password *" %>
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
+  </fieldset>
+
+  <fieldset>
+    <%= check_box_tag('hide_signup_pass', false, true) %>
+    <%= label_tag('hide_signup_pass', 'Show password', class: 'plain') %>
   </fieldset>
 
   <%= f.submit "Sign Up" %>
 
 <% end %>
+
+<script type="text/javascript">
+  $('#signup_password').hideShowPassword(true);
+  $('#user_password_confirmation').hideShowPassword(true);
+  $('#hide_signup_pass').change(function(){
+    $('#signup_password').hideShowPassword($(this).prop('checked'));
+    $('#user_password_confirmation').hideShowPassword($(this).prop('checked'));
+  });
+</script>
