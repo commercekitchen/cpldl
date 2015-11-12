@@ -2,9 +2,12 @@ class CmsPage < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
+  has_many :contents, inverse_of: :cms_page
+  accepts_nested_attributes_for :contents, allow_destroy: true
+  attr_accessor :contents_attributes
+
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
   validates :seo_page_title, length: { maximum: 90 }
-  validates :content, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :pub_status, presence: true,
     inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
@@ -14,7 +17,15 @@ class CmsPage < ActiveRecord::Base
   validates :audience, presence: true,
     inclusion: { in: %w(Unauth Auth Admin All), message: "%{value} in not a valid audience" }
 
-  private
+  default_scope { order("cms_page_order ASC") }
+
+  def current_pub_status
+    case pub_status
+    when "D" then "Draft"
+    when "P" then "Published"
+    when "T" then "Trashed"
+    end
+  end
 
   def set_pub_date
     self.pub_date = Time.zone.now unless pub_status != "P"
@@ -27,5 +38,4 @@ class CmsPage < ActiveRecord::Base
       self.pub_date = nil
     end
   end
-
 end

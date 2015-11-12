@@ -82,6 +82,12 @@ select {
   font-size: 16px;
   color: $grey;
   width: 100%;
+
+  &.small {
+    min-width: initial;
+    height: 35px;
+    padding: 6px 40px;
+  }
 }
 
 .upload-field {

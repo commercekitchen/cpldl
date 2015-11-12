@@ -2,9 +2,19 @@
 
 <small>Admin >> Pages >> Edit Page</small>
 
-<h1>Page Information</h1>
+<% if params[:commit] == "Preview Page" %>
+  <h1>Page Preview</h1>
+<% else %>
+  <h1>Page Information</h1>
+<% end %>
 
 <%= form_for([:admin, @page], html: { multipart: true } ) do |f| %>
+  <% if params[:commit] == "Preview Page" %>
+    <div id="preview">
+      <%= render "preview" %>
+    </div>
+  <% end %>
+
   <% if @page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@page.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -62,12 +72,9 @@
     <%= f.text_field :author, class: "bottom-margin" %>
   </fieldset>
 
-  <fieldset>
-    <%= f.label :content do %>
-      Page Content<span class="required"></span>
+    <%= f.fields_for :contents, @page.contents.build do |content_builder| %>
+      <%= render "admin/cms_pages/content_fields", f: content_builder %>
     <% end %>
-    <%= f.text_area :content %>
-  </fieldset>
 
   <fieldset>
     <%= f.label "SEO page title" %>
@@ -87,23 +94,13 @@
 
   <div class="actions">
     <div class="row">
-      <div class="threecol">
-        <%= link_to "Preview Page", "#", class: "btn btn-grey small" %>
-      </div>
-      <div class="threecol">
-        <%= f.submit "Save Page", params: { commit: "Save Page" }, class: "btn-grey small" %>
-      </div>
-      <div class="fourcol">
-        <%= f.submit "Save and Edit Spanish", class: "small" %>
-      </div>
-      <div class="twocol last">
-        <%= link_to "Delete", "#", class: "btn btn-grey small" %>
-      </div>
+      <% if params[:action] == "edit" %>
+        <%= render "edit_actions", f: f %>
+      <% else %>
+        <%= render "new_actions", f: f %>
+      <% end %>
     </div>
   </div>
-<% end %>
 
-<script>
-  CKEDITOR.replace("cms_page_content");
-</script>
+<% end %>
 

@@ -45,12 +45,21 @@ puts "#{Language.count} languages created."
     summary: "Summary for Sample Course #{i + 1}",
     description: description,
     contributor: "John Doe",
-    pub_status: "P",
+    pub_status: %w(P D T).sample,pub_status: "P",
     language_id: Language.first.id,
     level: "Beginner",
     pub_date: Time.zone.now
   )
 end
+
+courses = Course.all
+courses.each do |c|
+  if c.pub_status == "P"
+    c.pub_date = Time.zone.now
+    c.save
+  end
+end
+
 puts "#{Course.count} courses created."
 
 Course.all.each do |c|
@@ -61,3 +70,41 @@ Course.all.each do |c|
   c.lessons << Lesson.create(title: "Lesson 4", summary: "Lesson D summary", duration: 40, lesson_order: 4)
   c.save
 end
+
+# => Temporary CMS pages for development
+6.times do |i|
+  CmsPage.create!(
+    title: "Sample Page #{i + 1}",
+    page_type: %w(H C A O).sample,
+    audience: %w(Unauth Auth Admin All).sample,
+    pub_status: %w(P D T).sample,
+    author: "Zombie Zach",
+    seo_page_title: "Sample Page #{i + 1}",
+    meta_desc: "Meta description for sample page #{i + 1}"
+  )
+end
+
+CmsPage.all.each do |p|
+
+  content = <<-CONTENT
+    Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. \
+    De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo \
+    vel maleficia? De apocalypsi gorger omero undead survivor dictum mauris. \
+    Hi mindless mortuis soulless creaturas, imo evil stalking monstra adventus \
+    resi dentevil vultus comedat cerebella viventium. Qui animated corpse, \
+    cricket bat max brucks terribilem incessu zomby. The voodoo sacerdos \
+    flesh eater, suscitat mortuos comedere carnem virus. Zonbi tattered for \
+    solum oculi eorum defunctis go lum cerebro. Nescio brains an Undead zombies. \
+    Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead...
+  CONTENT
+
+  p.contents << Content.create(body: content)
+end
+
+CmsPage.all.each do |p|
+  if p.pub_status == "P"
+    p.pub_date = Time.zone.now
+    p.save
+  end
+end
+puts "#{CmsPage.count} pages created"
