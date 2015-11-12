@@ -12,6 +12,12 @@ admin_profile = Profile.create(first_name: "Alex", zip_code: "80209", user_id: r
 regular_user.update(profile_id: admin_profile.id)
 puts "Regular User Created - Username: #{regular_user.email}, Password: asdfasdf"
 
+dev_user = User.create(email: "dev@nowhere.com", password: "password", confirmed_at: Time.zone.now)
+admin_profile = Profile.create(first_name: "Developer", zip_code: "80209", user_id: dev_user.id)
+dev_user.update(profile_id: admin_profile.id)
+dev_user.add_role(:admin)
+puts "Regular User Created - Username: #{dev_user.email}, Password: password"
+
 Topic.create(title: "Computers")
 Topic.create(title: "Internet")
 puts "#{Topic.count} topics created."

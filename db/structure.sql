@@ -184,10 +184,13 @@ ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
 CREATE TABLE contents (
     id integer NOT NULL,
     body text,
-    lanugage_id integer,
+    summary character varying,
+    language_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    cms_page_id integer
+    cms_page_id integer,
+    course_id integer,
+    lesson_id integer
 );
 
 

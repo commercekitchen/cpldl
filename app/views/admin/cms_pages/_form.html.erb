@@ -26,6 +26,16 @@
     </div>
   <% end %>
 
+  <div class="tencol">
+    <p class="emphasis no-top-margin">Edit your English-language page content below. Toggle to alternate language versions using the <br> drop down menu.</p>
+  </div>
+
+  <fieldset class="twocol last">
+      <%= f.fields_for :content do |content| %>
+        <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
+      <% end %>
+  </fieldset>
+
   <fieldset>
     <%= f.label :title do %>
       Title<span class="required"></span>
@@ -72,9 +82,15 @@
     <%= f.text_field :author, class: "bottom-margin" %>
   </fieldset>
 
-    <%= f.fields_for :contents, @page.contents.build do |content_builder| %>
-      <%= render "admin/cms_pages/content_fields", f: content_builder %>
+  <fieldset>
+    <%= f.fields_for :content do |content| %>
+      <%= content.hidden_field :_destroy, class: "removable" %>
+      <%= content.label :body do %>
+        Page Content<span class="required"></span>
+      <% end %>
+      <%= content.cktext_area :body %>
     <% end %>
+  </fieldset>
 
   <fieldset>
     <%= f.label "SEO page title" %>

@@ -38,6 +38,8 @@ gem 'paperclip', '~> 4.3' # File uploads
 gem 'rubyzip' # ASL files
 gem 'friendly_id'
 
+gem 'ckeditor'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false

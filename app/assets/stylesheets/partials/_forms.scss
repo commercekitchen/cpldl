@@ -100,3 +100,10 @@ select {
   width: 100%;
 }
 
+.right {
+  float: right;
+
+  &.cf {
+    clear: left;
+  }
+}

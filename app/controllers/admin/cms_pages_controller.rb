@@ -12,6 +12,7 @@ module Admin
 
     def new
       @page = CmsPage.new
+      @page.build_content
     end
 
     def create
@@ -96,7 +97,7 @@ module Admin
                                        :pub_date,
                                        :seo_page_title,
                                        :seo_meta_desc,
-                 contents_attributes: [:cms_page_id,
+                  content_attributes: [:cms_page_id,
                                        :body,
                                        :language_id,
                                        :_destroy])
