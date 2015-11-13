@@ -47,8 +47,4 @@
 <%= render partial: "shared/lessons/grid", locals: { course: @course } %>
 <hr>
 
-<h2>Supplemental Materials</h2>
-
-<%= link_to "#" do %>
-  <i class="icon-download purple"></i>This is a PDF of the Course
-<% end %>
+<%= render partial: "shared/supplemental_materials", locals: { course: @course } %>

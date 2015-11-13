@@ -31,6 +31,8 @@
   </div>
 </div>
 
+<%= hidden_field_tag :is_assessment, @lesson.is_assessment %>
+
 <%= render partial: "shared/modal",
   locals: { course: @course, current_lesson: @lesson, next_lesson: @next_lesson}
 %>

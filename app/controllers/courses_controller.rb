@@ -64,6 +64,11 @@ class CoursesController < ApplicationController
     end
   end
 
+  def complete
+    # TODO: Do we want to ensure that the assessment was completed to get here?
+    @course = Course.friendly.find(params[:course_id])
+  end
+
   def your
     tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
     @courses = Course.where(id: tracked_course_ids)

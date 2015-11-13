@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post 'start'
     post 'add'
     post 'remove'
+    get 'complete'
     resources :lessons, only: [:index, :show] do
       post 'complete'
     end
