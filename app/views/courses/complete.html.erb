@@ -20,7 +20,11 @@
 <div class="row">
   <div class="sixcol border-right">
     <h2>Notes and Partner Resources</h2>
-    <div><%= simple_format @course.notes %></div>
+    <% if @course.notes.present? %>
+      <div><%= simple_format @course.notes %></div>
+    <% else %>
+      <p class="note">There are no notes or partner resources for this course.</p>
+    <% end %>
   </div>
 
   <div class="sixcol last">

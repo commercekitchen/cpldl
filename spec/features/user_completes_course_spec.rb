@@ -24,9 +24,11 @@ feature "User visits course complete page" do
     end
 
     scenario "can view the supplemental materials link" do
+      file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
+      @course.attachments.create(document: file, doc_type: "post-course")
       visit course_complete_path(@course)
       expect(page).to have_content("Post-Course Supplemental Materials")
-      expect(page).to have_content("This is a PDF of the Course")
+      expect(page).to have_content("testfile.pdf")
     end
 
   end

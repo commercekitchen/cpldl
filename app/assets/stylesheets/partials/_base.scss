@@ -61,6 +61,10 @@ ul {
   &.sidebar-links {
     padding-left: 0;
   }
+
+  &.no-padding {
+    padding-left: 0;
+  }
 }
 
 i::before {

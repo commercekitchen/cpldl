@@ -2,9 +2,9 @@ require "rails_helper"
 
 describe Admin::CoursesController do
   before(:each) do
-    @course1 = FactoryGirl.create(:course, title: "Course1", language: FactoryGirl.create(:language))
-    @course2 = FactoryGirl.create(:course, title: "Course2", language: FactoryGirl.create(:language))
-    @course3 = FactoryGirl.create(:course, title: "Course3", language: FactoryGirl.create(:language))
+    @course1 = FactoryGirl.create(:course, title: "Course1", course_order: 1)
+    @course2 = FactoryGirl.create(:course, title: "Course2", course_order: 2)
+    @course3 = FactoryGirl.create(:course, title: "Course3", course_order: 3)
 
     @admin = FactoryGirl.create(:admin_user)
     @admin.add_role(:admin)
@@ -95,6 +95,7 @@ describe Admin::CoursesController do
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by_title(valid_attributes[:title])))
       end
+
     end
 
     context "with invalid params" do

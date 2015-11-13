@@ -27,7 +27,7 @@ describe Course do
   context "verify validations" do
 
     before(:each) do
-      @course = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
+      @course = FactoryGirl.build(:course)
     end
 
     it "is initially valid" do
@@ -36,7 +36,7 @@ describe Course do
 
     it "should not allow two courses with the same title" do
       @course.save
-      @course2 = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
+      @course2 = FactoryGirl.build(:course)
       expect(@course2).to_not be_valid
       expect(@course2.errors.full_messages.first).to eq("Title has already been taken")
     end
@@ -137,7 +137,7 @@ describe Course do
   context "#topics_list" do
 
     before(:each) do
-      @course = FactoryGirl.create(:course, language: FactoryGirl.create(:language))
+      @course = FactoryGirl.create(:course)
       @topic = FactoryGirl.create(:topic, title: "Existing Topic")
     end
 

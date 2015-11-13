@@ -3,9 +3,9 @@ require "feature_helper"
 feature "User visits course listing page" do
 
   before(:each) do
-    @course1 = FactoryGirl.create(:course, title: "Title 1", language: FactoryGirl.create(:language))
-    @course2 = FactoryGirl.create(:course, title: "Title 2", language: FactoryGirl.create(:language))
-    @course3 = FactoryGirl.create(:course, title: "Title 3", language: FactoryGirl.create(:language))
+    @course1 = FactoryGirl.create(:course, title: "Title 1", course_order: 1)
+    @course2 = FactoryGirl.create(:course, title: "Title 2", course_order: 2)
+    @course3 = FactoryGirl.create(:course, title: "Title 3", course_order: 3)
   end
 
   context "as an anonymous user" do
