@@ -74,19 +74,31 @@
     content: "\e80c";
     font-family: "fontello";
     font-size: 1.5em;
-    right: 15px;
+    right: 10px;
     position:absolute;
     top: 5px;
     color: $dark-purple;
    }
 
   &.completed header {
-    background-color: $grey;
     background: linear-gradient(to bottom, $grey 0%, $dark-grey 100%);
   }
 
   &.completed .with-computer-background:before {
     color: $dark-grey;
+  }
+
+  &.retake-quiz header {
+    background: linear-gradient(to bottom, $teal 0%, $teal 100%);
+  }
+
+  &.retake-quiz .with-computer-background:before {
+    color: $teal;
+    color: tint($teal, 20%);
+  }
+
+  &.retake-quiz button {
+    float: right;
   }
 
 }
