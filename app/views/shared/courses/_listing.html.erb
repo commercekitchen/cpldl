@@ -1,4 +1,4 @@
-<div class="course-widget-container">
+<div class="container">
 <% @courses.each do |c| %>
     <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
       href="<%= course_path(c) %>">

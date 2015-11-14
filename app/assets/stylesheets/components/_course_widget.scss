@@ -1,21 +1,19 @@
-.course-widget-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  @include media($tablet) {
-    justify-content: flex-start;
-  }
-}
-
 .course-widget {
   display: block;
   width: 329px;
   border: 1px solid $medium-grey;
   margin-bottom: 2em;
+  margin-right: 1.15em;
   height: 175px;
   overflow: hidden;
   border-top-left-radius: 20px;
   float: left;
+
+  @include media($desktop) {
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
 
   @include media($tablet) {
     margin-right: 2em;

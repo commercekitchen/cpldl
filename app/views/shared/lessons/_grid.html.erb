@@ -4,7 +4,7 @@
   <% lessons_completed = [] %>
 <% end %>
 
-<div class="lesson-block-container">
+<div class="container">
 <% course.lessons.each do |l| %>
   <%= render partial: "shared/lessons/lesson_block",
     locals: { course: course, lesson: l, completed: lessons_completed.include?(l.id) }%>
