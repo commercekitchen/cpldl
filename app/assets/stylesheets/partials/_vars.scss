@@ -26,5 +26,6 @@ $font-secondary: 'Roboto', sans-serif;
 /* Breakpoints */
 $mobile: new-breakpoint(max-width 500px 12);
 $mobile-large: new-breakpoint(max-width 700px 12);
-$tablet: new-breakpoint(max-width 1024px 12);
-$desktop: new-breakpoint(min-width 1024px 12);
+$mobile-xlarge: new-breakpoint(max-width 830px 12);
+$tablet: new-breakpoint(max-width 1044px 12);
+$desktop: new-breakpoint(min-width 1044px 12);

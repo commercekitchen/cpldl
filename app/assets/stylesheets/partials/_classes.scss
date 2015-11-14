@@ -87,7 +87,10 @@
 }
 
 .large-top-padding {
-  margin-top: 159px;
+  margin-top: 140px;
+  @include media($mobile-xlarge) {
+    margin-top: 157px;
+  }
 }
 
 .bottom-margin {
