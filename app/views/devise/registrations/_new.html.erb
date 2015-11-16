@@ -35,6 +35,11 @@
     <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
   </fieldset>
 
+  <fieldset>
+    <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
+    <%= label_tag('hide_signup_pass', 'Hide password', class: 'plain') %>
+  </fieldset>
+
   <%= f.submit "Sign Up" %>
 
 <% end %>
