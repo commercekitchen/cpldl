@@ -32,13 +32,13 @@ module Admin
     end
 
     def update
+      @pub_status = params[:cms_page][:pub_status]
+
       @cms_page.slug = nil # slug must be set to nil for friendly ID to update
       if params[:commit] == "Preview Page"
         render :new
       else
-        if params[:cms_page][:pub_status] != @cms_page.pub_status
-          @cms_page.update_pub_date(params[:cms_page][:pub_status])
-        end
+        @cms_page.update_pub_date(@pub_status) unless @pub_status == @cms_page.pub_status
 
         if @cms_page.update(cms_page_params)
           redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully updated."
