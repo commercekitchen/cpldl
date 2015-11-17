@@ -84,7 +84,7 @@ class CoursesController < ApplicationController
     @courses = Course.where(id: completed_ids)
 
     respond_to do |format|
-      format.html { render :completed }
+      format.html { render "completed_list", layout: "user/logged_in_with_sidebar" }
       format.json { render json: @courses }
     end
   end
