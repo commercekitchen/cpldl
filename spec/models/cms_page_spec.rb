@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: cms_pages
+#
+#  id             :integer          not null, primary key
+#  title          :string(90)
+#  author         :string
+#  page_type      :string
+#  audience       :string
+#  pub_status     :string           default("D")
+#  pub_date       :datetime
+#  seo_page_title :string(90)
+#  meta_desc      :string(156)
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  slug           :string
+#  cms_page_order :integer
+#
+
 require "rails_helper"
 
 describe CmsPage do
