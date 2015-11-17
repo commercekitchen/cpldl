@@ -95,7 +95,7 @@ module Admin
                     "Otherwise, please edit the existing assessment for this course."]
         flash.now[:alert] = warnings.join("<br/>").html_safe
         # => if rubocop complains about "and" don't change to && it will break
-        render :new and return
+        render :new && return
       end
     end
   end
