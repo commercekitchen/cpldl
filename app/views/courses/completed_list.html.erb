@@ -1,0 +1,45 @@
+<h1>Your Completed Courses</h1>
+
+<div class="row no-margin">
+  <div class="one-third">
+    <h2>Course</h2>
+  </div>
+  <div class="one-third">
+    <h2>Date Completed</h2>
+  </div>
+  <div class="one-third">
+    <h2>Certificate of Completion</h2>
+  </div>
+</div>
+
+
+<% @courses.each do |course| %>
+  <div class="row">
+    <div class="one-third">
+      <%= course.title %>
+    </div>
+    <div class="one-third">
+      <%= course.course_progress.created_at %>
+    </div>
+    <div class="one-third">
+      <%= link_to "Download Certificate", "#" %>
+    </div>
+  </div>
+<% end %>
+
+<hr>
+
+<h1>Update Course Recommendations</h1>
+<p class="shorty">
+  When you signed up for an account, you took a quiz that helped us recommend courses for you to take.
+</p>
+<p class="shorty">
+  Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses.
+</p>
+<div class="row">
+  <div>
+    <%= link_to "#" do %>
+      <%= button_tag("Retake the Quiz", type: "button") %>
+    <% end %>
+  </div>
+</div>
