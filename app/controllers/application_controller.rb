@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_language
-    @language = 1 || Language.find_by(id: 1).id
+    @language = Language.find_by(id: 1) unless Language.all.blank?
   end
 
   def set_cms_footer_pages
