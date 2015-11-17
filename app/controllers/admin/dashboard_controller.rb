@@ -7,7 +7,7 @@ module Admin
     end
 
     def pages_index
-      @pages = CmsPage.all
+      @cms_pages = CmsPage.all
       render "admin/cms_pages/index", layout: "admin/base_with_sidebar"
     end
   end

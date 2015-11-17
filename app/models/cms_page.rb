@@ -2,8 +2,8 @@ class CmsPage < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
-  has_one :content, dependent: :destroy
-  accepts_nested_attributes_for :content, allow_destroy: true
+  has_many :contents, dependent: :destroy
+  accepts_nested_attributes_for :contents, allow_destroy: true
 
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
   validates :seo_page_title, length: { maximum: 90 }

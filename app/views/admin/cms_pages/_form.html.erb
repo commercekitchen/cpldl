@@ -4,26 +4,30 @@
 
 <% if params[:commit] == "Preview Page" %>
   <h1>Page Preview</h1>
-<% else %>
-  <h1>Page Information</h1>
 <% end %>
 
-<%= form_for([:admin, @page], html: { multipart: true } ) do |f| %>
+<%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
   <% if params[:commit] == "Preview Page" %>
     <div id="preview">
       <%= render "preview" %>
     </div>
   <% end %>
 
-  <% if @page.errors.any? %>
+  <% if @cms_page.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@page.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <h2><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h2>
       <ul>
-      <% @page.errors.full_messages.each do |message| %>
+      <% @cms_page.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
     </div>
+  <% end %>
+
+  <% if params[:commit] == "Preview Page" %>
+    <h2>Page Information</h2>
+  <% else %>
+    <h1>Page Information</h1>
   <% end %>
 
   <div class="tencol">
@@ -31,9 +35,8 @@
   </div>
 
   <fieldset class="twocol last">
-      <%= f.fields_for :content do |content| %>
-        <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
-      <% end %>
+    <%= f.fields_for :contents do |content| %>
+      <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
   </fieldset>
 
   <fieldset>
@@ -52,7 +55,7 @@
         <%= f.label :page_type do %>
           Page Type<span class="required"></span>
         <% end %>
-        <%= f.select(:page_type, options_for_select([["Home Page", "H"], ["Contact Page", "C"], ["About Page", "A"], ["Other", "O"]], @page.page_type), { include_blank: "Select..." } ) %>
+        <%= f.select(:page_type, options_for_select([["Home Page", "H"], ["Contact Page", "C"], ["About Page", "A"], ["Other", "O"]], @cms_page.page_type), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
 
@@ -61,7 +64,7 @@
         <%= f.label :audience do %>
           Who can view<span class="required"></span>
         <% end %>
-        <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @page.audience), { include_blank: "Select..."} ) %>
+        <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @cms_page.audience), { include_blank: "Select..."} ) %>
       </fieldset>
     </div>
 
@@ -70,7 +73,7 @@
         <%= f.label :pub_status do %>
           Publication Status<span class="required"></span>
         <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @page.pub_status), { include_blank: "Select..." } ) %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
   </div>
@@ -83,7 +86,6 @@
   </fieldset>
 
   <fieldset>
-    <%= f.fields_for :content do |content| %>
       <%= content.hidden_field :_destroy, class: "removable" %>
       <%= content.label :body do %>
         Page Content<span class="required"></span>
@@ -117,6 +119,5 @@
       <% end %>
     </div>
   </div>
-
 <% end %>
 

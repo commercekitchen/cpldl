@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  before_action :set_language
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? ? "user/logged_in" : "application" }
@@ -16,11 +17,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_language
+    @language = 1 || Language.find_by(id: 1).id
+  end
+
   private
 
   def first_admin_login?(user)
     return true if user.sign_in_count == 1 && (user.is_super? || user.is_admin?)
     false
   end
-
 end

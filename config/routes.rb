@@ -25,7 +25,6 @@ Rails.application.routes.draw do
     resources :cms_pages do
       put :sort, on: :collection
     end
-    # resources :contents, only: [:new, :create, :edit, :update, :destroy]
     resources :courses do
       put :sort, on: :collection
       resources :lessons do

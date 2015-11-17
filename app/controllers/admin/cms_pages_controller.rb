@@ -3,36 +3,25 @@ module Admin
     before_action :set_page, only: [:show, :edit, :update, :destroy]
     before_action :set_maximums, only: [:new, :edit]
 
-    def index
-      @pages = CmsPage.all
-    end
-
     def show
     end
 
     def new
-      @page = CmsPage.new
-      @page.build_content
+      @cms_page = CmsPage.new
+      @cms_page.contents.build
     end
 
     def create
-      @page = CmsPage.new(cms_page_params)
-      binding.pry
+      @cms_page = CmsPage.new(cms_page_params)
       if params[:commit] == "Preview Page"
         render :new
       elsif params[:commit] == "Save Page"
         if params[:cms_page][:pub_status] == "P"
-          @page.set_pub_date
+          @cms_page.set_pub_date
         end
 
-        if @page.save
-          redirect_to edit_admin_cms_page_path(@page), notice: "Page was successfully created."
-        else
-          render :new
-        end
-      else
-        if @page.save
-          redirect_to edit_admin_cms_page_path(@page), notice: "Page was successfully created, now edit the Spanish version."
+        if @cms_page.save
+          redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully created."
         else
           render :new
         end
@@ -43,20 +32,19 @@ module Admin
     end
 
     def update
-      @page.slug = nil #slug must be set to nil for friendly ID to update
-
-      if params[:cms_page][:pub_status] != @page.pub_status
-        @page.update_pub_date(params[:cms_page][:pub_status])
-      end
-
-      if @page.update(cms_page_params)
-        if params[:commit] == "Save Page"
-          redirect_to edit_admin_cms_page_path(@page), notice: "Page was successfully updated."
-        else
-          redirect_to new_admin_cms_page_path, notice: "Page was successfully updated."
-        end
+      @cms_page.slug = nil # slug must be set to nil for friendly ID to update
+      if params[:commit] == "Preview Page"
+        render :new
       else
-        render :edit
+        if params[:cms_page][:pub_status] != @cms_page.pub_status
+          @cms_page.update_pub_date(params[:cms_page][:pub_status])
+        end
+
+        if @cms_page.update(cms_page_params)
+          redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully updated."
+        else
+          render :edit
+        end
       end
     end
 
@@ -69,17 +57,17 @@ module Admin
     end
 
     def destroy
-      if @page.destroy
+      if @cms_page.destroy
         redirect_to admin_dashboard_index_path, notice: "Page was successfully deleted."
       else
         render :edit
       end
     end
 
-  private
+    private
 
     def set_page
-      @page = CmsPage.friendly.find(params[:id])
+      @cms_page = CmsPage.friendly.find(params[:id])
     end
 
     def set_maximums
@@ -97,10 +85,10 @@ module Admin
                                        :pub_date,
                                        :seo_page_title,
                                        :seo_meta_desc,
-                  content_attributes: [:cms_page_id,
-                                       :body,
-                                       :language_id,
-                                       :_destroy])
+                 contents_attributes: [:id, [:cms_page_id,
+                                             :body,
+                                             :language_id,
+                                             :_destroy]])
     end
   end
 end
