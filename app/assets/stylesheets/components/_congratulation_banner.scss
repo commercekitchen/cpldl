@@ -1,0 +1,58 @@
+.congrats-banner {
+  margin-top: 2em;
+  background-color: $teal;
+  text-align: center;
+  border: solid;
+  border-color: $grey;
+  border-width: 0.3em;
+  padding: 5em;
+  @include media($mobile) {
+    padding: 2em;
+  }
+
+  .center-button {
+    @include span-columns(6);
+    @include shift(3);
+    @include media($mobile) {
+      @include span-columns(12);
+      @include shift(0);
+    }
+  }
+  .lower-button {
+    @include span-columns(6);
+    @include media($mobile) {
+      @include span-columns(12);
+      @include shift(0);
+    }
+  }
+
+  .congrats-last-row {
+    @include media($mobile) {
+      margin: 0;
+    }
+  }
+
+  p {
+    color: $white;
+    font-size: 2em;
+    margin: 0 0 1em 0;
+    @include media($mobile) {
+      font-size: 1.5em;
+    }
+  }
+
+  button {
+    margin: 0.3em 1em;
+    width: 90%;
+    padding: 0.7em 0.5em;
+    @include media($mobile) {
+      font-size: 0.8em;
+    }
+    @include media($mobile-xlarge) {
+      font-size: 0.8em;
+    }
+    @include media($desktop) {
+      font-size: 1em;
+    }
+  }
+}

@@ -11,8 +11,32 @@
 
 <div><small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small></div>
 
-<div>
-  <img src="http://placehold.it/1024x400?text=Congratulations+Sara">
+<div class="row">
+  <div class="twelvecol congrats-banner">
+    <div class="row">
+      <%= content_tag :p, "Congratulations, #{current_user.profile.first_name}." %>
+      <%= content_tag :p, "You've successfully completed #{@course.title}!" %>
+    </div>
+    <div class="row">
+      <div class="center-button">
+        <%= link_to "#" do %>
+          <%= button_tag("Download Your Certificate", type: "button") %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row congrats-last-row">
+      <div class="sixcol lower-button">
+        <%= link_to your_courses_path do %>
+          <%= button_tag("Return to Your Courses", type: "button", class: "btn-grey") %>
+        <% end %>
+      </div>
+      <div class="sixcol lower-button">
+        <%= link_to courses_path do %>
+          <%= button_tag("View All Courses", type: "button", class: "btn-grey") %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
 
 <hr />
