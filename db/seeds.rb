@@ -78,7 +78,7 @@ Course.all.each do |c|
 end
 
 # => Temporary CMS pages for development
-6.times do |i|
+4.times do |i|
   CmsPage.create!(
     title: "Sample Page #{i + 1}",
     page_type: %w(H C A O).sample,

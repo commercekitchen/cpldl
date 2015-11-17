@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   before_action :set_language
+  before_action :set_cms_footer_pages
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? ? "user/logged_in" : "application" }
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
 
   def set_language
     @language = 1 || Language.find_by(id: 1).id
+  end
+
+  def set_cms_footer_pages
+    @footer_pages = CmsPage.all
   end
 
   private

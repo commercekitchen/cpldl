@@ -6,3 +6,23 @@
   color: $white;
   text-align: center;
 }
+
+ul strong {
+  margin-bottom: 5px;
+}
+
+.medium-logo {
+  max-width: 85%;
+  max-height: 75%;
+}
+
+.large-logo {
+  padding-top: 10%;
+  width: 75%;
+  height: 75%;
+}
+
+.license {
+  padding-top: 5px;
+  padding-left: 20px;
+}

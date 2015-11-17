@@ -1,4 +1,21 @@
 <footer class="footer-primary">
   <div class="container">
+    <div class="row">
+      <div class="threecol left">
+        <% if @footer_pages %>
+          <ul>
+            <strong>LEARN MORE</strong>
+            <% @footer_pages.each do |page| %>
+              <li><%= link_to page.title, "#" %></li>
+            <% end %>
+          </ul>
+        <% else %>
+        <% end %>
+      </div>
+      <%= render "shared/logo_footer" %>
+      <div class="ninecol license">
+      This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
+      </div>
+    </div>
   </div>
 </footer>
