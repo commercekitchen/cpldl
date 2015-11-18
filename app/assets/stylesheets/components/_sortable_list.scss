@@ -3,19 +3,13 @@
   color: $teal;
   font-size: 1.5em;
   font-weight: 100;
+}
 
-  p {
-    display: inline;
-    margin-right: 65px;
-  }
-
-  p.last {
-    margin-right: 0;
-  }
-
-  .first{
-    margin-left: 10px;
-    margin-right: 75px;
+.cell {
+  display: table-cell;
+  width: 15%;
+  @include media($mobile-large) {
+    display: block;
   }
 }
 
@@ -25,24 +19,8 @@ ul.objects {
 }
 
 ul.objects li {
-  padding: 10px;
+  padding: 10px 10px 10px 0;
   border-bottom: 1px solid $purple;
-
-  p {
-    display: inline;
-  }
-
-  p.first {
-    margin-right: 30px;
-  }
-
-  p.second {
-    margin-right: 50px;
-  }
-
-  p.third {
-    margin-right: 125px;
-  }
 }
 
 ul.objects li:last-child {
@@ -56,11 +34,6 @@ ul.reorderable li:hover {
 .sortable-placeholder {
   border: 1px dashed #CCC;
   background-color: #f9f9f9;
-  height: 80px;
+  height: 50px;
   margin-bottom: 10px;
 }
-
-.sortable {
-  display: tr;
-}
-

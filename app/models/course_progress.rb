@@ -17,6 +17,9 @@ class CourseProgress < ActiveRecord::Base
   belongs_to :course
   has_many :completed_lessons, dependent: :destroy
 
+  scope :completed, -> { where("completed_at IS NOT NULL") }
+  scope :tracked, -> { where(tracked: true) }
+
   def complete?
     return true if completed_at.present?
     false

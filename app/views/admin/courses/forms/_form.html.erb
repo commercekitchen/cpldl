@@ -45,7 +45,7 @@
     <%= f.label :description do %>
       Course Description<span class="required"></span>
     <% end %>
-    <%= f.text_area :description %>
+    <%= f.cktext_area :description %>
   </fieldset>
 
   <div class="row">
@@ -57,7 +57,7 @@
   <div>
     <fieldset>
       <%= f.label :notes, "Post-Course Completion Notes and Partner Resources" %>
-      <%= f.text_area :notes %>
+      <%= f.cktext_area :notes %>
     </fieldset>
   </div>
 
@@ -119,7 +119,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label "Meta description" %>
+    <%= f.label "Meta Description" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
       <span id="course_meta_desc_counter"></span> out of <%= @max_meta %> characters
@@ -138,9 +138,3 @@
     </div>
   </div>
 <% end %>
-
-<script>
-  CKEDITOR.replace("course_description");
-  CKEDITOR.replace("course_notes");
-</script>
-

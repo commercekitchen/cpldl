@@ -17,6 +17,7 @@
 #  notes          :text
 #  slug           :string
 #  course_order   :integer
+#  pub_date       :datetime
 #
 
 class Course < ActiveRecord::Base
@@ -25,7 +26,7 @@ class Course < ActiveRecord::Base
 
   # PgSearch gem config
   include PgSearch
-  multisearchable against: [:title, :summary, :description, :topics_str]
+  multisearchable against: [:title, :summary, :description, :topics_str, :level]
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text
@@ -102,4 +103,17 @@ class Course < ActiveRecord::Base
     lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
+
+  def set_pub_date
+    self.pub_date = Time.zone.now unless pub_status != "P"
+  end
+
+  def update_pub_date(new_pub_status)
+    if new_pub_status == "P"
+      self.pub_date = Time.zone.now
+    else
+      self.pub_date = nil
+    end
+  end
+
 end

@@ -25,13 +25,13 @@
   }
 
   .progress-bar {
-    $base-border-color: gainsboro !default;
+    $base-border-color: $white !default;
     $base-border-radius: 15px !default;
-    $base-background-color: $white !default;
+    $base-background-color: $grey !default;
     $base-line-height: 1.5em !default;
     $action-color: $orange !default;
     $progress-border-color: $base-border-color;
-    $progress-border: 1px solid $progress-border-color;
+    $progress-border: 2px solid $progress-border-color;
     $progress-meter-border-color: $action-color;
     $progress-meter-border: 1px solid darken($progress-meter-border-color, 15%);
     $progress-meter-color: $progress-meter-border-color;
@@ -46,19 +46,38 @@
     margin: 0 auto;
     width: 100%;
     height: 20px;
+    overflow: hidden;
 
     > span.meter {
       @include box-sizing(border-box);
       background-color: $progress-meter-color;
       background-repeat: repeat-x;
       background-size: 40px 40px;
-      border-bottom-right-radius: 0;
       border-radius: $base-border-radius /1.5;
+      border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       border: $progress-meter-border;
       display: block;
       height: 100%;
       width: 60%;
+    }
+
+    > span.lesson-break {
+      border-left: 2px solid $white;
+      height: 100%;
+      width: 0px;
+      position: relative;
+      top: -18px;
+    }
+
+    .current-lesson {
+      width: 0;
+      height: 0;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid $white;
+      position: relative;
+      top: -9px;
     }
   }
 }

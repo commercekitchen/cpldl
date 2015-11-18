@@ -1,0 +1,10 @@
+<h2>Post-Course Supplemental Materials</h2>
+
+<ul class="no-padding">
+<%# TODO: make this a model method %>
+<% course.attachments.where(doc_type: "post-course").each do |a| %>
+  <%= link_to course_attachment_path(course, a), target: "_blank" do %>
+    <li><i class="icon-download purple"></i><%= a.document_file_name %></li>
+  <% end %>
+<% end %>
+</ul>

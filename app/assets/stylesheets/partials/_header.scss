@@ -3,32 +3,61 @@
 
 .header-logged-out {
   margin-bottom: 2em;
-  padding: 3em 0 1em 0;
+  padding: 1em 0 1em 0;
   min-height: 236px;
   background-color: $teal;
   z-index: 100;
 
-  svg {
-    fill: $white;
-    position: relative;
-    top: -20px;
+  .language-links {
+    color: $white;
+    padding-bottom: 1em;
+    a {
+      color: $white;
+    }
+  }
 
-    @include media($mobile) {
-      height: 8em;
-      width: 8em;
+  .logo {
+    display: inline-block;
+    float: left;
+    .logo-icon {
+      width: 155px;
+
+      /* The given svg file isn't cropped to the edge, so ... */
+      position: relative;
+      top: -7px;
+      left: -8px;
     }
   }
 
   h1 {
     font-family: $font-secondary;
     color: $white;
-    font-size: 2em;
+    font-size: 3.5em;
     font-weight: 100;
     margin-top: -9px;
     text-transform: uppercase;
+    max-width: 500px;
+    display: inline-block;
+    float: left;
 
-    @include media($desktop) {
-      font-size: 3.5em;
+    @include media($mobile-large) {
+      float: left;
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    @include media($mobile-xlarge) {
+      font-size: 2.5em;
+      max-width: 400px;
+    }
+  }
+
+  .btn {
+    float: right;
+    @include media($mobile-large) {
+      float: left;
+      display: block;
     }
   }
 
@@ -45,26 +74,50 @@
 
   .language-links {
     color: $purple;
-    font-size: .8em;
-  }
-
-  svg {
-    height: 5.25em;
-    width: 5.25em;
-    fill: $purple;
-
-    @include media($mobile) {
-      height: 50px;
-      width: 50px;
+    padding-bottom: 1em;
+    a {
+      color: $purple;
     }
   }
 
-  h1 {
-    font-family: $font-secondary;
-    color: $purple;
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-top: 0;
+  .logo {
+    display: inline-block;
+    float: left;
+    .logo-icon {
+      display: inline-block;
+      width: 90px;
+
+      /* The given svg file isn't cropped to the edge, so ... */
+      position: relative;
+      top: -4px;
+      left: -5px;
+    }
+
+    .logo-content {
+      display: inline-block;
+      position: relative;
+      top: -36px;
+      h1 {
+        margin: 0;
+        color: $purple;
+      }
+      @include media($mobile) {
+        h1 {
+          font-size: 20px;
+          position: relative;
+          top: -2px;
+        }
+      }
+    }
+  }
+
+  nav {
+    float: right;
+    @include media($mobile-xlarge) {
+      float: left;
+      display: block;
+      width: 100%;
+    }
   }
 
 }

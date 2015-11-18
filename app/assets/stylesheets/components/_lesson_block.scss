@@ -3,10 +3,21 @@
   width: 222px;
   background-color: $teal;
   color: $white;
-  margin: 0 2em 2em 0;
+  margin-bottom: 2em;
+  margin-right: 2.8em;
   position: relative;
   cursor: pointer;
   float: left;
+
+  @include media($desktop) {
+    &:nth-child(4n) {
+      margin-right: 0;
+    }
+  }
+
+  @include media($tablet) {
+    margin-right: 2em;
+  }
 
   &.completed {
     background-color: $grey;
@@ -14,7 +25,7 @@
       position: absolute;
       left: 5px;
       top: 5px;
-      color: $orange;
+      color: $purple;
       font-size: 2em;
     }
   }
@@ -94,7 +105,6 @@
     .btn {
       position: absolute;
       bottom: 20px;
-      width: 190px;
     }
 
     .default-state {

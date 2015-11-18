@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
 
-  before_action :authenticate_user!, only: [:your, :completed, :start]
+  # before_action :authenticate_user!, only: [:your, :completed, :start]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
     @results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
@@ -9,6 +10,7 @@ class CoursesController < ApplicationController
                else
                  @results
                end
+
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @courses }
@@ -63,8 +65,13 @@ class CoursesController < ApplicationController
     end
   end
 
+  def complete
+    # TODO: Do we want to ensure that the assessment was completed to get here?
+    @course = Course.friendly.find(params[:course_id])
+  end
+
   def your
-    tracked_course_ids = current_user.course_progresses.where(tracked: true).collect(&:course_id)
+    tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
     @courses = Course.where(id: tracked_course_ids)
     respond_to do |format|
       format.html { render :your }
@@ -73,11 +80,19 @@ class CoursesController < ApplicationController
   end
 
   def completed
-    @courses = []
+    completed_ids = current_user.course_progresses.completed.collect(&:course_id)
+    @courses = Course.where(id: completed_ids)
+
     respond_to do |format|
       format.html { render :completed }
       format.json { render json: @courses }
     end
+  end
+
+  def view_attachment
+    @course = Course.friendly.find(params[:course_id])
+    pdf_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
+    send_file @course.attachments.find(params[:attachment_id]).document.path, pdf_options
   end
 
 end

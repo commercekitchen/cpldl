@@ -53,6 +53,7 @@ button, input[type="submit"], .btn {
   padding: 11px 40px;
   text-align: center;
   min-width: 300px;
+  letter-spacing: 1px;
 
   @include media($tablet) {
     min-width: initial;
@@ -81,6 +82,12 @@ select {
   font-size: 16px;
   color: $grey;
   width: 100%;
+
+  &.small {
+    min-width: initial;
+    height: 35px;
+    padding: 6px 40px;
+  }
 }
 
 .upload-field {
@@ -91,4 +98,8 @@ select {
   padding-bottom: 11.5px;
   padding-left: 10px;
   width: 100%;
+}
+
+.center {
+  text-align: center;
 }

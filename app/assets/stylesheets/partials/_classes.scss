@@ -87,11 +87,26 @@
 }
 
 .large-top-padding {
-  margin-top: 159px;
+  margin-top: 140px;
+  @include media($mobile-xlarge) {
+    margin-top: 157px;
+  }
 }
 
 .bottom-margin {
   margin-bottom: 10px;
+}
+
+.extra-bottom-margin {
+  margin-bottom: 3em;
+}
+
+.no-top-margin {
+  margin-top: 0;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0;
 }
 
 .course-details {
@@ -174,18 +189,42 @@
 
 header.lesson-listing {
   padding-left: 66px;
-  background: url("computer.png") no-repeat scroll left -72px transparent;
   height: 45px;
+  position: relative;
 
   h3 {
     margin-bottom: 5px;
   }
-
 }
 
-.with-computer-background {
-  background: url("computer.png") no-repeat scroll right 5px transparent;
-  background-position-x: 95%;
+header.lesson-listing:before {
+  content: "\e80c";
+  font-family: "fontello";
+  font-size: 2.5em;
+  left: 0;
+  position:absolute;
+  color: $grey;
+ }
+
+.cke_contents.cke_reset {
+  border: 2px solid $grey;
+  border-radius: 6px;
+}
+
+.right-third {
+  @include media($desktop) {
+    @include span-columns(4);
+    @include shift(8);
+  }
+  @include media($mobile) {
+    @include span-columns(12);
+  }
+}
+
+.left-two-thirds {
+  max-width: 676px;
+  float: left;
+  margin-right: 19px;
 }
 
 .clearfix:after {

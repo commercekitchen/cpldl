@@ -1,0 +1,9 @@
+<div class="fourcol center">
+  <%= f.submit "Preview Page", params: { commit: "Preview" }, class: "btn-grey" %>
+</div>
+<div class="fourcol center">
+  <%= f.submit "Save Page", params: { commit: "Save Page" } %>
+</div>
+<div class="fourcol center last">
+  <%= link_to "Delete Page", admin_cms_page_path(@cms_page), method: :delete, data: { confirm: "Are you sure you want to delete this page?" }, class: "btn btn-grey" %>
+</div>

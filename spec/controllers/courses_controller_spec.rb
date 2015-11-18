@@ -6,8 +6,8 @@ describe CoursesController do
     @course1 = FactoryGirl.create(:course, title: "Course 1", language: FactoryGirl.create(:language))
     @course2 = FactoryGirl.create(:course, title: "Course 2", language: FactoryGirl.create(:language))
     @course3 = FactoryGirl.create(:course, title: "Course 3",
-                                        language: FactoryGirl.create(:language),
-                                     description: "Ruby on Rails")
+                                           language: FactoryGirl.create(:language),
+                                           description: "Ruby on Rails")
   end
 
   describe "GET #index" do
@@ -92,18 +92,44 @@ describe CoursesController do
     context "when logged in" do
       before(:each) do
         @user = FactoryGirl.create(:user)
+        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
+        @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+        @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
         sign_in @user
       end
 
       it "allows the user to view their completed courses" do
         get :completed
-        expect(assigns(:courses)).to eq([])
+        expect(assigns(:courses)).to include(@course1, @course3)
       end
     end
 
     context "when logged out" do
       it "should redirect to login page" do
         get :completed
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
+    end
+  end
+
+  describe "GET #complete" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        sign_in @user
+      end
+
+      it "allows the user to view the complete view" do
+        get :complete, { course_id: @course1 }
+        expect(assigns(:course)).to eq(@course1)
+      end
+    end
+
+    context "when logged out" do
+      it "should redirect to login page" do
+        get :complete, { course_id: @course1 }
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)
       end
@@ -188,6 +214,31 @@ describe CoursesController do
       post :remove, { course_id: @course1 }
       progress = @user.course_progresses.find_by_course_id(@course1.id)
       expect(progress.tracked).to be false
+    end
+  end
+
+  describe "GET #view_attachment" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        @attachment = FactoryGirl.create(:attachment)
+        sign_in @user
+      end
+
+      it "allows the user to view an uploaded file" do
+        file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
+        @course1.attachments.create(document: file, doc_type: "post-course")
+        get :view_attachment, { course_id: @course1, attachment_id: @course1.attachments.first.id }
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context "when logged out" do
+      it "should redirect to login page" do
+        get :view_attachment, { course_id: @course1, attachment_id: 1 }
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
     end
   end
 

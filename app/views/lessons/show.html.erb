@@ -1,6 +1,6 @@
 <%= content_for :callout do %>
   <h1><%="#{@lesson.lesson_order}. #{@lesson.title}" %></h1>
-  <small><i class="icon-clock white"></i><%= @lesson.duration %></small>
+  <small><i class="icon-clock white"></i><%= @lesson.duration_str %></small>
 <% end %>
 
 <%= content_for :course_progress do %>
@@ -23,13 +23,15 @@
         <small><%= @course.duration %></small>
       </div>
     </header>
-    <%= render partial: "shared/lessons/listing", locals: { course: @course } %>
+    <%= render partial: "shared/lessons/listing", locals: { course: @course, lesson: @lesson } %>
   </div>
 
   <div class="sixcol last">
-    <%= render partial: "shared/supplemental_materials" %>
+    <%= render partial: "shared/supplemental_materials", locals: { course: @course } %>
   </div>
 </div>
+
+<%= hidden_field_tag :is_assessment, @lesson.is_assessment %>
 
 <%= render partial: "shared/modal",
   locals: { course: @course, current_lesson: @lesson, next_lesson: @next_lesson}

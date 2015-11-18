@@ -40,9 +40,19 @@ class LessonsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        redirect_to course_lesson_path(@course, @course.next_lesson_id(lesson.id))
+        if lesson.is_assessment
+          redirect_to course_complete_path(@course)
+        else
+          redirect_to course_lesson_path(@course, @course.next_lesson_id(lesson.id))
+        end
       end
-      format.json { render status: :ok, json: { next_lesson: course_lesson_path(@course, @course.next_lesson_id(lesson.id)) } }
+      format.json do
+        if lesson.is_assessment
+          render status: :ok, json: { complete: course_complete_path(@course) }
+        else
+          render status: :ok, json: { next_lesson: course_lesson_path(@course, @course.next_lesson_id(lesson.id)) }
+        end
+      end
     end
   end
 

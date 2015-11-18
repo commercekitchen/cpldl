@@ -17,6 +17,7 @@
 #  notes          :text
 #  slug           :string
 #  course_order   :integer
+#  pub_date       :datetime
 #
 
 require "rails_helper"
@@ -26,7 +27,7 @@ describe Course do
   context "verify validations" do
 
     before(:each) do
-      @course = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
+      @course = FactoryGirl.build(:course)
     end
 
     it "is initially valid" do
@@ -35,7 +36,7 @@ describe Course do
 
     it "should not allow two courses with the same title" do
       @course.save
-      @course2 = FactoryGirl.build(:course, language: FactoryGirl.create(:language))
+      @course2 = FactoryGirl.build(:course)
       expect(@course2).to_not be_valid
       expect(@course2.errors.full_messages.first).to eq("Title has already been taken")
     end
@@ -59,6 +60,32 @@ describe Course do
 
     it "should initially be set to draft status" do
       expect(@course.pub_status).to eq("D")
+    end
+
+    it "does not set pub date if status is not Published" do
+      expect(@course.set_pub_date).to be(nil)
+    end
+
+    it "should set pub date on publication" do
+      @course.pub_status = "P"
+      expect(@course.set_pub_date.to_i).to eq(Time.zone.now.to_i)
+    end
+
+    it "should update the pub date with status change" do
+      @course.pub_status = "P"
+      expect(@course.set_pub_date).to_not be(nil)
+      @course.pub_status = "D"
+      expect(@course.update_pub_date(@course.pub_status)).to be(nil)
+      @course.pub_status = "P"
+      expect(@course.update_pub_date(@course.pub_status).to_i).to be(Time.zone.now.to_i)
+    end
+
+    it "humanizes publication status" do
+      expect(@course.current_pub_status).to eq("Draft")
+      @course.pub_status = "P"
+      expect(@course.current_pub_status).to eq("Published")
+      @course.pub_status = "T"
+      expect(@course.current_pub_status).to eq("Trashed")
     end
 
     it "should not require the seo page title" do
@@ -110,7 +137,7 @@ describe Course do
   context "#topics_list" do
 
     before(:each) do
-      @course = FactoryGirl.create(:course, language: FactoryGirl.create(:language))
+      @course = FactoryGirl.create(:course)
       @topic = FactoryGirl.create(:topic, title: "Existing Topic")
     end
 
@@ -119,6 +146,13 @@ describe Course do
       @course.topics_list(topics)
       @course.reload
       expect(@course.topics.count).to eq(2)
+    end
+
+    it "returns a topic list as a string" do
+      topics = ["Topic 1", "Topic 2"]
+      @course.topics_list(topics)
+      @course.reload
+      expect(@course.topics_str).to eq("Topic 1, Topic 2")
     end
 
     it "skips blank topics when assigning to a course" do

@@ -17,6 +17,7 @@
 #  notes          :text
 #  slug           :string
 #  course_order   :integer
+#  pub_date       :datetime
 #
 
 FactoryGirl.define do

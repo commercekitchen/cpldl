@@ -32,6 +32,8 @@ feature "Admin user creates new course and lesson" do
     expect(current_path).to eq(edit_admin_course_path(Course.last))
   end
 
+  pending "Admin should be able to add both course supl materials and post-course supl materials"
+
   # FIXME: need to mock file upload
   # scenario "adds a lesson" do
   #   visit edit_admin_course_path(course_id: @course, id: 1)

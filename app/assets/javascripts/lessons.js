@@ -1,16 +1,21 @@
 $(document).ready(function() {
 
+  // NOTE: this method name should not be changed, it must
+  // match the event from the ASL file:
+  // window.parent.sendLessonCompletedEvent();
   sendLessonCompletedEvent = function() {
-    Modal.open("lesson-complete-modal");
+    var is_assessment = $("#is_assessment").val() == "true";
+    if (!is_assessment) {
+      Modal.open("lesson-complete-modal");
+    }
     $.ajax({
       url: window.location.pathname + "/complete",
       type: "POST",
       dataType: "json"
-    }).done(function(data) {
-      // TODO: what to do here?
-    }).fail(function(data) {
-      // TODO: what to do here?
-      console.log(data);
+    }).always(function(data) {
+      if (data.complete) {
+        window.location = data.complete;
+      }
     });
   };
 

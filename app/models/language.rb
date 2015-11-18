@@ -10,6 +10,7 @@
 
 class Language < ActiveRecord::Base
   has_many :courses
+  has_many :contents
 
   validates :name, presence: true
 end

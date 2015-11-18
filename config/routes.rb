@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
   get 'login/new', as: :login
@@ -12,6 +13,8 @@ Rails.application.routes.draw do
     post 'start'
     post 'add'
     post 'remove'
+    get 'complete'
+    get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     resources :lessons, only: [:index, :show] do
       post 'complete'
     end
@@ -20,6 +23,10 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
+      get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
+    resources :cms_pages do
+      put :sort, on: :collection
+    end
     resources :courses do
       put :sort, on: :collection
       resources :lessons do

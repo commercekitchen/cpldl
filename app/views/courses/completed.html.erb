@@ -1,1 +1,8 @@
 <h1>Completed Courses</h1>
+
+<% courses_completed = current_user.completed_course_ids %>
+<% if courses_completed.count > 0 %>
+  <%= render partial: "shared/courses/listing", locals: { courses_completed: courses_completed } %>
+<% else %>
+  <p> You have not yet completed any courses.</p>
+<% end %>

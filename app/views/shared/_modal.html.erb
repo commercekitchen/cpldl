@@ -8,7 +8,7 @@
         You've completed Lesson <%= current_lesson.lesson_order %>: <%= current_lesson.title %>
       </p>
       <h2>Up Next:</h2>
-      <h2><%= next_lesson.title %></h2>
+      <h2><%="#{next_lesson.title} - Lesson #{next_lesson.lesson_order}"%></h2>
       <%= link_to "Continue", course_lesson_path(course, next_lesson),
         class: "btn btn-blue small", onclick: "Modal.close();" %>
       <span class="vertical-bar">&nbsp;</span>
