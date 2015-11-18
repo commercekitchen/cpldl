@@ -10,6 +10,45 @@
     padding: 2em;
   }
 
+  .cert-preview {
+    height: 20em;
+    width: 54%;
+    margin: 0 23%;
+    padding: 3%;
+    background-color: $white;
+    .cert-inner {
+      height: 100%;
+      border: solid;
+      border-color: $teal;
+      h1 {
+        color: $dark-grey;
+        font-size: 1.8em;
+        margin-bottom: 0.9em;
+      }
+      p {
+        color: $dark-grey;
+        font-size: 0.8em;
+        margin-bottom: 0;
+      }
+      h2 {
+        font-weight: lighter;
+        margin: 0.3em 0;
+        &.name {
+          color: $purple;
+        }
+        &.course {
+          color: $teal;
+        }
+      }
+      img {
+        position: relative;
+        left: -8em;
+        bottom: -1.5em;
+        width: 30%;
+      }
+    }
+  }
+
   .center-button {
     @include span-columns(6);
     @include shift(3);
@@ -38,6 +77,9 @@
     margin: 0 0 1em 0;
     @include media($mobile) {
       font-size: 1.5em;
+    }
+    &.small-margin {
+      margin-bottom: 0;
     }
   }
 

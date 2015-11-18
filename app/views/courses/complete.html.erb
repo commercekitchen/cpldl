@@ -15,7 +15,28 @@
   <div class="twelvecol congrats-banner">
     <div class="row">
       <%= content_tag :p, "Congratulations, #{current_user.profile.first_name}." %>
-      <%= content_tag :p, "You've successfully completed #{@course.title}!" %>
+      <%= content_tag :p, "You've successfully completed #{@course.title}!", class: "small-margin" %>
+    </div>
+    <div class="row">
+      <div class="cert-preview hide-on-tablet">
+        <div class="cert-inner">
+          <div>
+            <h1>Certificate of Completion</h1>
+            <p>
+              This award certifies that
+            </p>
+            <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
+            <p>
+              has completed the Digital Learning Center Class:
+            </p>
+            <%= content_tag :h2, "#{@course.title}", class: "course" %>
+            <p>
+              as of <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
+            </p>
+            <%= image_tag "dl_logo.png" %>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row">
       <div class="center-button">
