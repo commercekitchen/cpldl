@@ -15,7 +15,8 @@ describe Admin::CoursesController do
   describe "GET #index" do
     it "assigns all courses as @courses" do
       get :index
-      expect(assigns(:courses)).to eq([@course1, @course2, @course3])
+      expect(assigns(:courses)).to include(@course1, @course2, @course3)
+      expect(assigns(:courses).count).to eq(3)
     end
   end
 
