@@ -19,7 +19,7 @@
     </div>
     <div class="row">
       <div class="center-button">
-        <%= link_to "#" do %>
+        <%= link_to course_complete_path(@course, format: 'pdf') do %>
           <%= button_tag("Download Your Certificate", type: "button") %>
         <% end %>
       </div>

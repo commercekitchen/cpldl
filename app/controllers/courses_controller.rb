@@ -68,6 +68,17 @@ class CoursesController < ApplicationController
   def complete
     # TODO: Do we want to ensure that the assessment was completed to get here?
     @course = Course.friendly.find(params[:course_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render :pdf => "file_name",
+               template: 'courses/complete.pdf.erb',
+               layout: 'pdf.html.erb',
+               orientation: 'Landscape',
+               page_size: 'Letter',
+               show_as_html: params[:debug].present?
+      end
+    end
   end
 
   def your
