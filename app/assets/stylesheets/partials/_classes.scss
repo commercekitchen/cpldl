@@ -173,6 +173,12 @@
   }
 }
 
+.hide-on-tablet {
+  @include media($tablet) {
+    display: none;
+  }
+}
+
 .vertical-bar {
   display: inline-block;
   margin-left: 1em;
