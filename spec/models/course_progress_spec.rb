@@ -40,9 +40,14 @@ describe CourseProgress do
       @course1 = FactoryGirl.create(:course, title: "Course 1")
       @course2 = FactoryGirl.create(:course, title: "Course 2")
       @course3 = FactoryGirl.create(:course, title: "Course 3")
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
-      @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id,
+                                                               tracked: true,
+                                                               completed_at: Time.zone.now)
+      @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id,
+                                                               tracked: true)
+      @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id,
+                                                               tracked: true,
+                                                               completed_at: Time.zone.now)
       @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
     end
 
