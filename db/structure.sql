@@ -474,7 +474,8 @@ CREATE TABLE profiles (
     zip_code character varying,
     user_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    language_id integer
 );
 
 
@@ -1065,4 +1066,8 @@ INSERT INTO schema_migrations (version) VALUES ('20151111210450');
 INSERT INTO schema_migrations (version) VALUES ('20151111211038');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111214208');
+
+INSERT INTO schema_migrations (version) VALUES ('20151118174539');
+
+INSERT INTO schema_migrations (version) VALUES ('20151118192418');
 

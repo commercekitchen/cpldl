@@ -4,12 +4,8 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
-    @courses = if params[:search].nil? || params[:search].empty?
-                 Course.includes(:lessons).all
-               else
-                 @results
-               end
+    results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
+    @courses = params[:search].blank? ? Course.includes(:lessons).all : results
 
     respond_to do |format|
       format.html { render :index }
@@ -94,5 +90,4 @@ class CoursesController < ApplicationController
     pdf_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
     send_file @course.attachments.find(params[:attachment_id]).document.path, pdf_options
   end
-
 end

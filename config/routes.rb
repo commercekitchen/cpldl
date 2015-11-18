@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update]
 
-  get 'courses/your' =>'courses#your', as: :your_courses
-  get 'courses/completed' =>'courses#completed', as: :completed_courses
+  get 'courses/your', to: 'courses#your', as: :your_courses
+  get 'courses/completed', to: 'courses#completed', as: :completed_courses
   resources :courses, only: [:index, :show] do
     post 'start'
     post 'add'
@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
       get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
+      get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
     resources :cms_pages do
       put :sort, on: :collection
     end
