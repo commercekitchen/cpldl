@@ -40,6 +40,13 @@ gem 'friendly_id'
 
 gem 'ckeditor'
 
+# PDF generation for completion certificate
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
+
+# Local time helper library
+gem 'local_time'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
