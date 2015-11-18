@@ -4,7 +4,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
+    results  = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
     @courses = params[:search].blank? ? Course.includes(:lessons).all : results
 
     respond_to do |format|
