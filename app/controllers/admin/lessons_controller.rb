@@ -94,8 +94,7 @@ module Admin
                     "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
                     "Otherwise, please edit the existing assessment for this course."]
         flash.now[:alert] = warnings.join("<br/>").html_safe
-        # => if rubocop complains about "and" don't change to && it will break
-        render :new and return
+        render :new and return # rubocop:disable Style/AndOr
       end
     end
   end

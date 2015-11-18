@@ -50,7 +50,7 @@ class Lesson < ActiveRecord::Base
   default_scope { order("lesson_order") }
 
   def skip_for_zip
-    ! %w(application/zip application/x-zip).include?(story_line_content_type)
+    %w(application/zip application/x-zip).include?(story_line_content_type)
   end
 
   def delete_associated_asl_files

@@ -1,0 +1,35 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h1>CMS Pages</h1>
+
+<div class="row">
+  <div class="sixcol">
+    <p class="emphasis no-top-margin">
+      Re-order pages by clicking on the arrow icon to drag and drop courses. Edit by clicking the appropriate page title below.
+    </p>
+  </div>
+  <div class="sixcol last left-or-right">
+    <%= link_to "Add a New CMS Page", new_admin_cms_page_path, class: "btn" %>
+  </div>
+</div>
+
+<div class="sortable-list"  data-page="cms_pages" >
+  <div class="list-titles">
+    <div class="cell">Page Title</div>
+    <div class="cell">Author</div>
+    <div class="cell">Publication Status</div>
+  </div>
+  <ul class="objects sortable reorderable">
+    <% @cms_pages.each do |page| %>
+      <li class="sortable-item" data-id="<%= page.id %>">
+        <div class="cell"><%= link_to page.title, edit_admin_cms_page_path(page) %></div>
+        <div class="cell"><%= page.author %></div>
+        <div class="cell"><%= page.current_pub_status %>
+          <% unless page.pub_date.blank? %>
+            <span class="note">(<%= page.pub_date.strftime("%m/%d/%Y") %>)</span>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

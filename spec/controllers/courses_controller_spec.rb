@@ -3,9 +3,13 @@ require "rails_helper"
 describe CoursesController do
 
   before(:each) do
-    @course1 = FactoryGirl.create(:course, title: "Course 1", course_order: 1)
-    @course2 = FactoryGirl.create(:course, title: "Course 2", course_order: 2)
-    @course3 = FactoryGirl.create(:course, title: "Course 3", course_order: 3, description: "Ruby on Rails")
+    @course1 = FactoryGirl.create(:course, title: "Course 1",
+                                           language: FactoryGirl.create(:language))
+    @course2 = FactoryGirl.create(:course, title: "Course 2",
+                                           language: FactoryGirl.create(:language))
+    @course3 = FactoryGirl.create(:course, title: "Course 3",
+                                           language: FactoryGirl.create(:language),
+                                           description: "Ruby on Rails")
   end
 
   describe "GET #index" do
@@ -90,9 +94,14 @@ describe CoursesController do
     context "when logged in" do
       before(:each) do
         @user = FactoryGirl.create(:user)
-        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
-        @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: Time.zone.now)
+        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id,
+                                                                 tracked: true,
+                                                                 completed_at: Time.zone.now)
+        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id,
+                                                                 tracked: true)
+        @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id,
+                                                                 tracked: true,
+                                                                 completed_at: Time.zone.now)
         @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
         sign_in @user
       end

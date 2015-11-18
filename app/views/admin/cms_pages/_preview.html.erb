@@ -1,0 +1,12 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<div>
+  <p  class="emphasis no-top-margin">This is a preview of your page, scroll down to continue editing.</p>
+  <hr>
+  <h2><%= @cms_page.title %></h2>
+  <div><%= raw(page_contents_for_language.body) %></div>
+</div>
+<div>
+  <p class="emphasis no-top-margin">Continue editing this Page below &darr; </p>
+  <hr>
+</div>

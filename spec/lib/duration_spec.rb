@@ -1,6 +1,8 @@
+require "spec_helper"
+require "unzipper"
 require "rails_helper"
 
-describe Duration do
+RSpec.describe Duration do
 
   it "returns the seconds in a string format" do
     expect(Duration.duration_str(45)).to eq("00:45")
