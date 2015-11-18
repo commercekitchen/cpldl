@@ -16,9 +16,7 @@ module Admin
       if params[:commit] == "Preview Page"
         render :new
       elsif params[:commit] == "Save Page"
-        if params[:cms_page][:pub_status] == "P"
-          @cms_page.set_pub_date
-        end
+        @cms_page.set_pub_date if params[:cms_page][:pub_status] == "P"
 
         if @cms_page.save
           redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully created."
