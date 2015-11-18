@@ -1,0 +1,123 @@
+<%= javascript_include_tag "/ckeditor/ckeditor.js" %>
+
+<small>Admin >> Pages >> Edit Page</small>
+
+<% if params[:commit] == "Preview Page" %>
+  <h1>Page Preview</h1>
+<% end %>
+
+<%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
+  <% if params[:commit] == "Preview Page" %>
+    <div id="preview">
+      <%= render "preview" %>
+    </div>
+  <% end %>
+
+  <% if @cms_page.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+      <% @cms_page.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if params[:commit] == "Preview Page" %>
+    <h2>Page Information</h2>
+  <% else %>
+    <h1>Page Information</h1>
+  <% end %>
+
+  <div class="tencol">
+    <p class="emphasis no-top-margin">Edit your English-language page content below. Toggle to alternate language versions using the <br> drop down menu.</p>
+  </div>
+
+  <fieldset class="twocol last">
+    <%= f.fields_for :contents do |content| %>
+      <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :title do %>
+      Title<span class="required"></span>
+    <% end %>
+    <%= f.text_field :title %>
+    <div class="note left-or-right">
+      <span id="cms_page_title_counter"></span> out of <%= @max_title %> characters remaining.
+    </div>
+  </fieldset>
+
+  <div class="row">
+    <div class="fourcol">
+      <fieldset>
+        <%= f.label :page_type do %>
+          Page Type<span class="required"></span>
+        <% end %>
+        <%= f.select(:page_type, options_for_select([["Home Page", "H"], ["Contact Page", "C"], ["About Page", "A"], ["Other", "O"]], @cms_page.page_type), { include_blank: "Select..." } ) %>
+      </fieldset>
+    </div>
+
+    <div class="fourcol">
+      <fieldset>
+        <%= f.label :audience do %>
+          Who can view<span class="required"></span>
+        <% end %>
+        <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @cms_page.audience), { include_blank: "Select..."} ) %>
+      </fieldset>
+    </div>
+
+    <div class="fourcol last">
+      <fieldset>
+        <%= f.label :pub_status do %>
+          Publication Status<span class="required"></span>
+        <% end %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
+      </fieldset>
+    </div>
+  </div>
+
+  <fieldset>
+    <%= f.label :author do %>
+      Author<span class="required"></span>
+    <% end %>
+    <%= f.text_field :author, class: "bottom-margin" %>
+  </fieldset>
+
+  <fieldset>
+      <%= content.hidden_field :_destroy, class: "removable" %>
+      <%= content.label :body do %>
+        Page Content<span class="required"></span>
+      <% end %>
+      <%= content.cktext_area :body %>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "SEO page title" %>
+    <%= f.text_field :seo_page_title %>
+    <div class="note left-or-right">
+      <span id="cms_page_seo_page_title_counter"></span> out of <%= @max_seo %> characters
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label "Meta Description" %>
+    <%= f.text_field :meta_desc %>
+    <div class="note left-or-right">
+      <span id="cms_page_meta_desc_counter"></span> out of <%= @max_meta %> characters
+    </div>
+  </fieldset>
+
+  <div class="actions">
+    <div class="row">
+      <% if params[:action] == "edit" %>
+        <%= render "edit_actions", f: f %>
+      <% else %>
+        <%= render "new_actions", f: f %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+

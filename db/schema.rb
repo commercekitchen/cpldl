@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105154753) do
+ActiveRecord::Schema.define(version: 20151109220449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(version: 20151105154753) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.string   "doc_type"
+  end
+
+  create_table "cms_pages", force: :cascade do |t|
+    t.string   "title",          limit: 90
+    t.string   "author"
+    t.string   "page_type"
+    t.string   "audience"
+    t.text     "content"
+    t.boolean  "published"
+    t.string   "seo_page_title", limit: 90
+    t.string   "meta_desc",      limit: 156
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "completed_lessons", force: :cascade do |t|

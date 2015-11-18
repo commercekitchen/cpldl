@@ -106,6 +106,46 @@ ALTER SEQUENCE attachments_id_seq OWNED BY attachments.id;
 
 
 --
+-- Name: cms_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE cms_pages (
+    id integer NOT NULL,
+    title character varying(90),
+    author character varying,
+    page_type character varying,
+    audience character varying,
+    pub_status character varying DEFAULT 'D'::character varying,
+    pub_date timestamp without time zone,
+    seo_page_title character varying(90),
+    meta_desc character varying(156),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying,
+    cms_page_order integer
+);
+
+
+--
+-- Name: cms_pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE cms_pages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: cms_pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE cms_pages_id_seq OWNED BY cms_pages.id;
+
+
+--
 -- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -135,6 +175,42 @@ CREATE SEQUENCE completed_lessons_id_seq
 --
 
 ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
+
+
+--
+-- Name: contents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contents (
+    id integer NOT NULL,
+    body text,
+    summary character varying,
+    language_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    cms_page_id integer,
+    course_id integer,
+    lesson_id integer
+);
+
+
+--
+-- Name: contents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE contents_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE contents_id_seq OWNED BY contents.id;
 
 
 --
@@ -563,7 +639,21 @@ ALTER TABLE ONLY attachments ALTER COLUMN id SET DEFAULT nextval('attachments_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY cms_pages ALTER COLUMN id SET DEFAULT nextval('cms_pages_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY completed_lessons ALTER COLUMN id SET DEFAULT nextval('completed_lessons_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY contents ALTER COLUMN id SET DEFAULT nextval('contents_id_seq'::regclass);
 
 
 --
@@ -652,11 +742,27 @@ ALTER TABLE ONLY attachments
 
 
 --
+-- Name: cms_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY cms_pages
+    ADD CONSTRAINT cms_pages_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY completed_lessons
     ADD CONSTRAINT completed_lessons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY contents
+    ADD CONSTRAINT contents_pkey PRIMARY KEY (id);
 
 
 --
@@ -745,6 +851,13 @@ ALTER TABLE ONLY topics
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_cms_pages_on_slug ON cms_pages USING btree (slug);
 
 
 --
@@ -940,4 +1053,16 @@ INSERT INTO schema_migrations (version) VALUES ('20151103215214');
 INSERT INTO schema_migrations (version) VALUES ('20151104003304');
 
 INSERT INTO schema_migrations (version) VALUES ('20151105154753');
+
+INSERT INTO schema_migrations (version) VALUES ('20151109220449');
+
+INSERT INTO schema_migrations (version) VALUES ('20151110194610');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111165405');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111210450');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111211038');
+
+INSERT INTO schema_migrations (version) VALUES ('20151111214208');
 

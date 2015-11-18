@@ -3,7 +3,6 @@ require "rails_helper"
 describe Admin::DashboardController do
 
   describe "#authorize_admin" do
-
     before(:each) do
       @user = FactoryGirl.create(:user)
       sign_in @user
