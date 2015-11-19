@@ -27,14 +27,18 @@ feature "Registered user visits account page" do
   end
 
   scenario "can update their profile information" do
+    FactoryGirl.create(:language)
+
     visit profile_path
     fill_in "First name", with: "Alex"
     fill_in "Zip code", with: "12345"
+    select("English", from: "profile_language_id")
     click_button "Save"
 
     @user.reload
     expect(@user.profile.first_name).to eq("Alex")
     expect(@user.profile.zip_code).to eq("12345")
+    expect(@user.profile.language.name).to eq("English")
   end
 
   scenario "can view completed courses" do

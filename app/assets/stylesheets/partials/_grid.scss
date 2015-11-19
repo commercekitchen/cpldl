@@ -88,6 +88,12 @@
   @include media($mobile) {
     @include span-columns(12);
   }
+  .two-of-twelve {
+    @include span-columns(2 of 12);
+  }
+  .four-of-twelve {
+    @include span-columns(4 of 12);
+  }
 }
 
 .last {

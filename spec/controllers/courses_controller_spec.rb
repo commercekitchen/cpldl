@@ -23,9 +23,9 @@ describe CoursesController do
       expect(assigns(:courses)).to eq([@course1, @course2, @course3])
     end
 
-    it "assigns search results to @results" do
+    it "assigns search results to @courses" do
       get :index, { search: "ruby" }
-      expect(assigns(:results)).to eq([@course3])
+      expect(assigns(:courses)).to eq([@course3])
     end
 
     it "responds to json" do

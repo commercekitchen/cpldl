@@ -22,9 +22,7 @@ describe ProfilesController do
   end
 
   describe "#update" do
-
     context "when logged in" do
-
       before(:each) do
         @user = FactoryGirl.create(:user)
         sign_in @user
@@ -32,14 +30,14 @@ describe ProfilesController do
 
       it "allows the user to update their profile information" do
         put :update, id: @user.profile,
-          profile: { first_name: "Robby", zip_code: "12345" },
+          profile: { first_name: "Robby", zip_code: "12345", language_id: FactoryGirl.create(:language) },
           authenticity_token: set_authenticity_token
 
         @user.reload
         expect(@user.profile.first_name).to eq("Robby")
         expect(@user.profile.zip_code).to eq("12345")
+        expect(@user.profile.language.name).to eq("English")
       end
-
     end
 
     context "when logged out" do
@@ -49,7 +47,5 @@ describe ProfilesController do
         expect(response).to redirect_to(user_session_path)
       end
     end
-
   end
-
 end

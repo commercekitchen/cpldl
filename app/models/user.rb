@@ -26,6 +26,15 @@
 #
 
 class User < ActiveRecord::Base
+  include PgSearch
+  # TODO: determine lockable? functionality and add to search
+  pg_search_scope :search_users, against: [:email],
+                      associated_against: { profile: [:first_name],
+                                              roles: [:name] },
+                                              using: { tsearch: { prefix: true },
+                                                    dmetaphone: { any_word: true },
+                                                       trigram: { threshold: 0.1 } }
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   rolify
@@ -48,5 +57,14 @@ class User < ActiveRecord::Base
     progress = course_progresses.where.not(completed_at: nil)
     return [] if progress.blank?
     progress.collect(&:course_id)
+  end
+
+  def current_roles
+    roles.pluck(:name).join(", ")
+  end
+
+  def preferred_language
+    language = profile.language
+    language.blank? ? "English" : language.name
   end
 end
