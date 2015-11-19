@@ -113,7 +113,6 @@ CREATE TABLE cms_pages (
     id integer NOT NULL,
     title character varying(90),
     author character varying,
-    page_type character varying,
     audience character varying,
     pub_status character varying DEFAULT 'D'::character varying,
     pub_date timestamp without time zone,
@@ -1022,4 +1021,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151119191647');
 INSERT INTO schema_migrations (version) VALUES ('20151119191906');
 
 INSERT INTO schema_migrations (version) VALUES ('20151119192048');
+
+INSERT INTO schema_migrations (version) VALUES ('20151119202029');
 

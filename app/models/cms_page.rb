@@ -30,9 +30,7 @@ class CmsPage < ActiveRecord::Base
   validates :meta_desc, length: { maximum: 156 }
   validates :author, presence: true
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
-  validates :page_type, presence: true,
-    inclusion: { in: %w(H C A O), message: "%{value} is not a valid page type" }
+    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
   validates :audience, presence: true,
     inclusion: { in: %w(Unauth Auth Admin All), message: "%{value} in not a valid audience" }
 
@@ -42,7 +40,7 @@ class CmsPage < ActiveRecord::Base
     case pub_status
     when "D" then "Draft"
     when "P" then "Published"
-    when "T" then "Trashed"
+    when "A" then "Archived"
     end
   end
 

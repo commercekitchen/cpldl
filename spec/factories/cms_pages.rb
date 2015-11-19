@@ -22,7 +22,6 @@ FactoryGirl.define do
     title "A New Page"
     body "Damn what a body!"
     language_id 1
-    page_type "O"
     author "CK Dev"
     audience "Auth"
     pub_status "D"

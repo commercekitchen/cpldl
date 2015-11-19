@@ -39,7 +39,6 @@ describe Admin::CmsPagesController do
       { title: "This old page",
         body: "Would you hold it against me?",
         language_id: 1,
-        page_type: "O",
         author: "Bob Snob",
         audience: "Auth",
         pub_status: "D",
@@ -51,7 +50,6 @@ describe Admin::CmsPagesController do
 
     let(:invalid_attributes) do
       { title: "",
-        page_type: "",
         author: "",
         audience: "",
         pub_status: "",

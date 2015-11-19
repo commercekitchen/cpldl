@@ -93,7 +93,6 @@ languages = Language.all.pluck(:id)
   CONTENT
   CmsPage.create!(
     title: "Sample Page #{i + 1}",
-    page_type: %w(H C A O).sample,
     audience: %w(Unauth Auth Admin All).sample,
     body: content,
     language_id: languages.sample,
