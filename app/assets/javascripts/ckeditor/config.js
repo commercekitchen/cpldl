@@ -92,9 +92,6 @@ CKEDITOR.editorConfig = function( config )
     }
   });
 
-  // Language configuration
-  config.language_list = [ 'en:English', 'es:Spanish' ];
-
   // Toolbar groups configuration.
 
     config.toolbar = [

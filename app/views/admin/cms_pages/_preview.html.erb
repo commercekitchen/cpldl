@@ -4,7 +4,7 @@
   <p  class="emphasis no-top-margin">This is a preview of your page, scroll down to continue editing.</p>
   <hr>
   <h2><%= @cms_page.title %></h2>
-  <div><%= raw(page_contents_for_language.body) %></div>
+  <div><%= raw(@cms_page.body) %></div>
 </div>
 <div>
   <p class="emphasis no-top-margin">Continue editing this Page below &darr; </p>

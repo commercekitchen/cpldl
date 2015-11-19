@@ -8,7 +8,6 @@ module Admin
 
     def new
       @cms_page = CmsPage.new
-      @cms_page.contents.build
     end
 
     def create
@@ -76,17 +75,15 @@ module Admin
 
     def cms_page_params
       params.require(:cms_page).permit(:title,
+                                       :language_id,
+                                       :body,
                                        :page_type,
                                        :audience,
                                        :author,
                                        :pub_status,
                                        :pub_date,
                                        :seo_page_title,
-                                       :seo_meta_desc,
-                 contents_attributes: [:id, [:cms_page_id,
-                                             :body,
-                                             :language_id,
-                                             :_destroy]])
+                                       :seo_meta_desc)
     end
   end
 end

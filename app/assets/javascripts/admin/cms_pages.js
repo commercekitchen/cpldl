@@ -31,4 +31,5 @@ $(document).ready(function() {
     strictMax: true,
     countDirection: "down"
   });
+
 });

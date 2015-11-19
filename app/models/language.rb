@@ -10,7 +10,7 @@
 
 class Language < ActiveRecord::Base
   has_many :courses
-  has_many :contents
+  has_many :cms_pages
 
   validates :name, presence: true
 end

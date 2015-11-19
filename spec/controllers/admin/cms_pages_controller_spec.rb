@@ -6,9 +6,6 @@ describe Admin::CmsPagesController do
     @page1   = FactoryGirl.create(:cms_page, title: "Page1")
     @page2   = FactoryGirl.create(:cms_page, title: "Page2")
     @page3   = FactoryGirl.create(:cms_page, title: "Page3")
-    @content = Content.create(body: "What a body!", language_id: 1)
-
-    CmsPage.all.each { |p| p.contents << @content }
 
     @admin = FactoryGirl.create(:admin_user)
     @admin.add_role(:admin)
@@ -40,6 +37,8 @@ describe Admin::CmsPagesController do
   describe "POST #create" do
     let(:valid_attributes) do
       { title: "This old page",
+        body: "Would you hold it against me?",
+        language_id: 1,
         page_type: "O",
         author: "Bob Snob",
         audience: "Auth",

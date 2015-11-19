@@ -25,7 +25,6 @@ describe CmsPage do
 
     before(:each) do
       @page = FactoryGirl.build(:cms_page)
-      @page.contents << FactoryGirl.create(:content)
     end
 
     it "is initially valid" do

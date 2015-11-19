@@ -122,7 +122,9 @@ CREATE TABLE cms_pages (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     slug character varying,
-    cms_page_order integer
+    cms_page_order integer,
+    language_id integer,
+    body text
 );
 
 
@@ -175,42 +177,6 @@ CREATE SEQUENCE completed_lessons_id_seq
 --
 
 ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
-
-
---
--- Name: contents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE contents (
-    id integer NOT NULL,
-    body text,
-    summary character varying,
-    language_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    cms_page_id integer,
-    course_id integer,
-    lesson_id integer
-);
-
-
---
--- Name: contents_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE contents_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: contents_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE contents_id_seq OWNED BY contents.id;
 
 
 --
@@ -474,8 +440,7 @@ CREATE TABLE profiles (
     zip_code character varying,
     user_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    language_id integer
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -654,13 +619,6 @@ ALTER TABLE ONLY completed_lessons ALTER COLUMN id SET DEFAULT nextval('complete
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY contents ALTER COLUMN id SET DEFAULT nextval('contents_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY course_progresses ALTER COLUMN id SET DEFAULT nextval('course_progresses_id_seq'::regclass);
 
 
@@ -756,14 +714,6 @@ ALTER TABLE ONLY cms_pages
 
 ALTER TABLE ONLY completed_lessons
     ADD CONSTRAINT completed_lessons_pkey PRIMARY KEY (id);
-
-
---
--- Name: contents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY contents
-    ADD CONSTRAINT contents_pkey PRIMARY KEY (id);
 
 
 --
@@ -1067,7 +1017,9 @@ INSERT INTO schema_migrations (version) VALUES ('20151111211038');
 
 INSERT INTO schema_migrations (version) VALUES ('20151111214208');
 
-INSERT INTO schema_migrations (version) VALUES ('20151118174539');
+INSERT INTO schema_migrations (version) VALUES ('20151119191647');
 
-INSERT INTO schema_migrations (version) VALUES ('20151118192418');
+INSERT INTO schema_migrations (version) VALUES ('20151119191906');
+
+INSERT INTO schema_migrations (version) VALUES ('20151119192048');
 

@@ -21,15 +21,16 @@ class CmsPage < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
-  has_many :contents, dependent: :destroy
-  accepts_nested_attributes_for :contents, allow_destroy: true
+  belongs_to :language
 
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
+  validates :body, presence: true
+  validates :language_id, presence: true, numericality: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
+  validates :author, presence: true
   validates :pub_status, presence: true,
     inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
-  validates :author, presence: true
   validates :page_type, presence: true,
     inclusion: { in: %w(H C A O), message: "%{value} is not a valid page type" }
   validates :audience, presence: true,

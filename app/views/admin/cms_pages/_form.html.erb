@@ -35,8 +35,7 @@
   </div>
 
   <fieldset class="twocol last">
-    <%= f.fields_for :contents do |content| %>
-      <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
+      <%= f.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
   </fieldset>
 
   <fieldset>
@@ -86,12 +85,10 @@
   </fieldset>
 
   <fieldset>
-      <%= content.hidden_field :_destroy, class: "removable" %>
-      <%= content.label :body do %>
-        Page Content<span class="required"></span>
-      <% end %>
-      <%= content.cktext_area :body %>
+    <%= f.label :body do %>
+      Page Content<span class="required"></span>
     <% end %>
+    <%= f.cktext_area :body %>
   </fieldset>
 
   <fieldset>
