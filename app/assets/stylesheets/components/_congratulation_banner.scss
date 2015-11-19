@@ -10,6 +10,10 @@
     padding: 2em;
   }
 
+  .extra-margin {
+    margin-bottom: 2em;
+  }
+
   .congrats-button {
     @include media($mobile) {
       @include span-columns(12);
