@@ -132,6 +132,11 @@ describe CoursesController do
         get :complete, { course_id: @course1 }
         expect(assigns(:course)).to eq(@course1)
       end
+
+      it "generates a PDF when send as format pdf" do
+        get :complete, { course_id: @course1, format: 'pdf'}
+        expect(assigns(:pdf)).not_to be_empty
+      end
     end
 
     context "when logged out" do
