@@ -22,7 +22,7 @@
       <%= course.course_progress.created_at %>
     </div>
     <div class="one-third">
-      <%= link_to "Download Certificate", "#" %>
+      <%= link_to "Download Certificate", course_complete_path(course, format: 'pdf')  %>
     </div>
   </div>
 <% end %>
