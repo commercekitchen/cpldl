@@ -71,13 +71,15 @@ class CoursesController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        @pdf = render_to_string :pdf => "file_name",
-               template: 'courses/complete.pdf.erb',
-               layout: 'pdf.html.erb',
-               orientation: 'Landscape',
-               page_size: 'Letter',
+        @pdf = render_to_string pdf: "file_name",
+               template: "courses/complete.pdf.erb",
+               layout: "pdf.html.erb",
+               orientation: "Landscape",
+               page_size: "Letter",
                show_as_html: params[:debug].present?
-        send_data(@pdf, filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf", :type=>"application/pdf")
+        send_data(@pdf,
+                  filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
+                  type: "application/pdf")
       end
     end
   end

@@ -134,7 +134,7 @@ describe CoursesController do
       end
 
       it "generates a PDF when send as format pdf" do
-        get :complete, { course_id: @course1, format: 'pdf'}
+        get :complete, { course_id: @course1, format: "pdf" }
         expect(assigns(:pdf)).not_to be_empty
       end
     end
