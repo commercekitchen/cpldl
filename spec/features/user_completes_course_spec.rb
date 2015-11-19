@@ -11,6 +11,7 @@ feature "User visits course complete page" do
     before(:each) do
       @user = FactoryGirl.create(:user)
       @course = FactoryGirl.create(:course)
+      @course_progress = FactoryGirl.create(:course_progress, user_id: @user.id, course_id: @course.id, completed_at: Time.now)
       login_as(@user)
     end
 
