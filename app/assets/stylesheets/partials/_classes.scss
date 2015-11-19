@@ -234,3 +234,10 @@ header.lesson-listing:before {
   height: 0;
   clear: both;
 }
+
+.underlined {
+  border-bottom: solid;
+  border-color: $purple;
+  border-width: 1px;
+  padding-bottom: 1em;
+}

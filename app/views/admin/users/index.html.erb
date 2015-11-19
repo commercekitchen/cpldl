@@ -10,24 +10,40 @@
   <% end %>
 </div>
 
-<div>
-  <div class="list-titles">
-    <div class="cell">First Name</div>
-    <div class="cell">Email</div>
-    <div class="cell">Preferred Language</div>
-    <div class="cell">User Role</div>
-    <div class="cell">Locked?</div>
+<div class="row twelvecol underlined">
+  <div class="two-of-twelve">
+    <h2>Name</h2>
   </div>
-  <ul class="objects">
-    <% @users.each do |user| %>
-      <li>
-        <div class="cell"><%= user.profile.first_name %></div>
-        <div class="cell"><%= user.email %></div>
-        <div class="cell"><%= user.preferred_language %></div>
-        <div class="cell"><%= user.current_roles %></div>
-        <% # TODO: implement this if needed %>
-        <div class="cell"><%= %w(Yes No).sample %></div>
-      </li>
-    <% end %>
-  </ul>
+  <div class="four-of-twelve">
+    <h2>Email</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>Language</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>User Role</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>Locked?</h2>
+  </div>
 </div>
+
+<% @users.each do |user| %>
+  <div class="row twelvecol underlined">
+    <div class="two-of-twelve">
+      <%= user.profile.first_name %>
+    </div>
+    <div class="four-of-twelve">
+      <%= user.email %>
+    </div>
+    <div class="two-of-twelve">
+      <%= user.preferred_language %>
+    </div>
+    <div class="two-of-twelve">
+      <%= user.current_roles.empty? ? "user" : user.current_roles %>
+    </div>
+    <div class="two-of-twelve">
+      <%= %w(Yes No).sample %>
+    </div>
+  </div>
+<% end %>
