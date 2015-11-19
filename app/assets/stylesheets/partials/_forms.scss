@@ -88,6 +88,12 @@ select {
     height: 35px;
     padding: 6px 40px;
   }
+
+  &.narrow {
+    max-width: 100px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
 }
 
 .upload-field {

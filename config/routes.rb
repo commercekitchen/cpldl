@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
     resources :cms_pages do
       put :sort, on: :collection
+      patch 'update_pub_status'
     end
     resources :courses do
       put :sort, on: :collection

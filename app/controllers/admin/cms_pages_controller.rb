@@ -28,6 +28,18 @@ module Admin
     def edit
     end
 
+    def update_pub_status
+      cms_page            = CmsPage.find(params[:cms_page_id])
+      cms_page.pub_status = params[:value]
+      cms_page.update_pub_date(params[:value])
+
+      if cms_page.save
+        render status: 200, json: "#{cms_page.pub_status}"
+      else
+        render status: :unprocessable_entity, json: "post failed to update"
+      end
+    end
+
     def update
       @pub_status = params[:cms_page][:pub_status]
 
