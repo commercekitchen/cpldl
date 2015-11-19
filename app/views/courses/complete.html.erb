@@ -39,23 +39,23 @@
       </div>
     </div>
     <div class="row">
-      <div class="center-button">
-        <%= link_to course_complete_path(@course, format: 'pdf') do %>
-          <%= button_tag("Download Your Certificate", type: "button") %>
+      <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
+        <%= button_tag(type: 'button', class: 'congrats-button') do %>
+          Download Your Certificate
         <% end %>
-      </div>
+      <% end %>
     </div>
-    <div class="row congrats-last-row">
-      <div class="sixcol lower-button">
-        <%= link_to your_courses_path do %>
-          <%= button_tag("Return to Your Courses", type: "button", class: "btn-grey") %>
+    <div class="row">
+      <%= link_to(your_courses_path) do %>
+        <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
+          Return to Your Courses
         <% end %>
-      </div>
-      <div class="sixcol lower-button">
-        <%= link_to courses_path do %>
-          <%= button_tag("View All Courses", type: "button", class: "btn-grey") %>
+      <% end %>
+      <%= link_to(courses_path) do %>
+        <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
+          View All Courses
         <% end %>
-      </div>
+      <% end %>
     </div>
   </div>
 </div>
