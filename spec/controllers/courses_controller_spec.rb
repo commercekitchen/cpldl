@@ -23,9 +23,9 @@ describe CoursesController do
       expect(assigns(:courses)).to eq([@course1, @course2, @course3])
     end
 
-    it "assigns search results to @results" do
+    it "assigns search results to @courses" do
       get :index, { search: "ruby" }
-      expect(assigns(:results)).to eq([@course3])
+      expect(assigns(:courses)).to eq([@course3])
     end
 
     it "responds to json" do
@@ -131,6 +131,11 @@ describe CoursesController do
       it "allows the user to view the complete view" do
         get :complete, { course_id: @course1 }
         expect(assigns(:course)).to eq(@course1)
+      end
+
+      it "generates a PDF when send as format pdf" do
+        get :complete, { course_id: @course1, format: "pdf" }
+        expect(assigns(:pdf)).not_to be_empty
       end
     end
 

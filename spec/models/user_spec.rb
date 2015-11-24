@@ -85,7 +85,6 @@ describe User do
   end
 
   context "#completed_course_ids" do
-
     before(:each) do
       @user = FactoryGirl.create(:user)
       @course1 = FactoryGirl.create(:course, title: "Course 1")
@@ -105,7 +104,22 @@ describe User do
     it "should return an empty array if the user has not completed any lessons" do
       expect(@user.completed_course_ids).to eq([])
     end
+  end
 
+  context "user information" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+    end
+
+    it "returns current_roles" do
+      @user.add_role(:admin)
+      expect(@user.current_roles).to eq("admin")
+    end
+
+    it "returns preferred language" do
+      @user.profile = FactoryGirl.create(:profile, language: FactoryGirl.create(:language))
+      expect(@user.preferred_language).to eq("English")
+    end
   end
 
 end

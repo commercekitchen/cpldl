@@ -10,7 +10,7 @@
     <%= render "shared/logo_purple" %>
 
     <nav>
-      <%= link_to "Hi User!", profile_path %> |
+      <%= link_to "Hi #{current_user.profile.first_name}!", profile_path %> |
       <%= link_to "Your Account", account_path %> |
       <%= link_to "Your Courses", your_courses_path %> |
       <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>

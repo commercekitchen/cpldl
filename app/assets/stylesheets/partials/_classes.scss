@@ -173,6 +173,12 @@
   }
 }
 
+.hide-on-tablet {
+  @include media($tablet) {
+    display: none;
+  }
+}
+
 .vertical-bar {
   display: inline-block;
   margin-left: 1em;
@@ -233,4 +239,11 @@ header.lesson-listing:before {
   display: block;
   height: 0;
   clear: both;
+}
+
+.underlined {
+  border-bottom: solid;
+  border-color: $purple;
+  border-width: 1px;
+  padding-bottom: 1em;
 }

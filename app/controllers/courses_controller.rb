@@ -4,12 +4,8 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
-    @courses = if params[:search].nil? || params[:search].empty?
-                 Course.includes(:lessons).all
-               else
-                 @results
-               end
+    results  = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
+    @courses = params[:search].blank? ? Course.includes(:lessons).all : results
 
     respond_to do |format|
       format.html { render :index }
@@ -68,6 +64,20 @@ class CoursesController < ApplicationController
   def complete
     # TODO: Do we want to ensure that the assessment was completed to get here?
     @course = Course.friendly.find(params[:course_id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        @pdf = render_to_string pdf: "file_name",
+               template: "courses/complete.pdf.erb",
+               layout: "pdf.html.erb",
+               orientation: "Landscape",
+               page_size: "Letter",
+               show_as_html: params[:debug].present?
+        send_data(@pdf,
+                  filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
+                  type: "application/pdf")
+      end
+    end
   end
 
   def your
@@ -84,7 +94,7 @@ class CoursesController < ApplicationController
     @courses = Course.where(id: completed_ids)
 
     respond_to do |format|
-      format.html { render :completed }
+      format.html { render "completed_list", layout: "user/logged_in_with_sidebar" }
       format.json { render json: @courses }
     end
   end
@@ -94,5 +104,4 @@ class CoursesController < ApplicationController
     pdf_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
     send_file @course.attachments.find(params[:attachment_id]).document.path, pdf_options
   end
-
 end

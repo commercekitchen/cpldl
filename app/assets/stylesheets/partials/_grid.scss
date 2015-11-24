@@ -4,6 +4,9 @@
 .row {
   @include row();
   margin-bottom: 1em;
+  .no-margin {
+    margin: 0em;
+  }
 }
 
 .onecol {
@@ -67,6 +70,9 @@
   @include media($mobile) {
     @include span-columns(12);
   }
+  .one-third {
+    @include span-columns(3 of 9);
+  }
 }
 
 .tencol {
@@ -87,6 +93,12 @@
   @include span-columns(12);
   @include media($mobile) {
     @include span-columns(12);
+  }
+  .two-of-twelve {
+    @include span-columns(2 of 12);
+  }
+  .four-of-twelve {
+    @include span-columns(4 of 12);
   }
 }
 

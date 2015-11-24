@@ -10,7 +10,7 @@ feature "User clicks through each page" do
   scenario "can visit each link in the header" do
     visit root_path
     within(:css, ".header-logged-in") do
-      click_link "Hi User!"
+      click_link "Hi #{@user.profile.first_name}!"
     end
     expect(current_path).to eq(profile_path)
 

@@ -1,0 +1,84 @@
+.congrats-banner {
+  margin-top: 2em;
+  background-color: $teal;
+  text-align: center;
+  border: solid;
+  border-color: $grey;
+  border-width: 0.3em;
+  padding: 5em;
+  @include media($mobile) {
+    padding: 2em;
+  }
+
+  .extra-margin {
+    margin-bottom: 2em;
+  }
+
+  .congrats-button {
+    @include media($mobile) {
+      @include span-columns(12);
+      padding: 0.25em;
+    }
+
+  }
+
+  .bottom-button {
+    @include media($mobile) {
+      margin-bottom: 0.5em;
+    }
+    @include media($tablet) {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  p {
+    color: $white;
+    font-size: 2em;
+    margin: 0 0 1em 0;
+    @include media($mobile) {
+      font-size: 1.5em;
+    }
+    &.small-margin {
+      margin-bottom: 0;
+    }
+  }
+
+  .cert-preview {
+    height: 20em;
+    width: 54%;
+    margin: 0 23%;
+    padding: 3%;
+    background-color: $white;
+    .cert-inner {
+      height: 100%;
+      border: solid;
+      border-color: $teal;
+      h1 {
+        color: $dark-grey;
+        font-size: 1.8em;
+        margin-bottom: 0.9em;
+      }
+      p {
+        color: $dark-grey;
+        font-size: 0.8em;
+        margin-bottom: 0;
+      }
+      h2 {
+        font-weight: lighter;
+        margin: 0.3em 0;
+        &.name {
+          color: $purple;
+        }
+        &.course {
+          color: $teal;
+        }
+      }
+      img {
+        position: relative;
+        left: -8em;
+        bottom: -1.5em;
+        width: 30%;
+      }
+    }
+  }
+}

@@ -32,6 +32,7 @@ class Course < ActiveRecord::Base
   attr_accessor :other_topic, :other_topic_text
 
   # has_one :assessment
+  has_one :course_progress
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons

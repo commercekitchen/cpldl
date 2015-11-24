@@ -14,6 +14,13 @@
   <% end %>
 
   <fieldset>
+    <%= f.label :language_id do %>
+      Preferred Language<span class="required"></span>
+    <% end %>
+    <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
+  </fieldset>
+
+  <fieldset>
     <%= f.label :first_name %>
     <%= f.text_field :first_name %>
   </fieldset>
