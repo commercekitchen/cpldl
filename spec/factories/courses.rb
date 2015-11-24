@@ -29,6 +29,7 @@ FactoryGirl.define do
     description "Description"
     contributor "John Doe"
     level "Beginner"
+    format "D"
     language
   end
 
@@ -39,6 +40,7 @@ FactoryGirl.define do
     description "Description"
     contributor "John Doe"
     level "Beginner"
+    format "D"
     language
 
     after(:create) do |course|

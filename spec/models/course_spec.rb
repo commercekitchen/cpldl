@@ -58,6 +58,23 @@ describe Course do
       expect(@course).to_not be_valid
     end
 
+    it "can only have listed formats" do
+      allowed_formats = %w(D M)
+      allowed_formats.each do |format|
+        @course.format = format
+        expect(@course).to be_valid
+      end
+
+      @course.format = ""
+      expect(@course).to_not be_valid
+
+      @course.format = nil
+      expect(@course).to_not be_valid
+
+      @course.format = "Y"
+      expect(@course).to_not be_valid
+    end
+
     it "should initially be set to draft status" do
       expect(@course.pub_status).to eq("D")
     end

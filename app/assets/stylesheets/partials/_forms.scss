@@ -28,6 +28,11 @@ input[type="text"], input[type="email"], input[type="password"], input[type="url
   padding: 0.8rem;
   border: 2px solid $grey;
   border-radius: 5px;
+
+  &.topic-box {
+    width: 60%;
+    font-size: 14px;
+  }
 }
 
 textarea {
@@ -102,9 +107,4 @@ select {
 
 .center {
   text-align: center;
-}
-
-.topic-box {
-  width: 60% !important;
-  font-size: 10px;
 }
