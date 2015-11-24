@@ -6,7 +6,7 @@
           <strong>LEARN MORE</strong>
           <% if @footer_pages %>
             <% @footer_pages.each do |page| %>
-              <li><%= link_to page.title, "#" %></li>
+              <li><%= link_to page.title, cms_page_path(page) %></li>
             <% end %>
           <% end %>
         </ul>

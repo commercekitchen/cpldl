@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resources 'cms_pages', only: [:show]
+
   namespace :admin do
     root 'dashboard#index'
     resources :dashboard, only: [:index]
