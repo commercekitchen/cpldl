@@ -78,20 +78,8 @@ Course.all.each do |c|
 end
 
 # => Temporary CMS pages for development
+languages = Language.all.pluck(:id)
 4.times do |i|
-  CmsPage.create!(
-    title: "Sample Page #{i + 1}",
-    page_type: %w(H C A O).sample,
-    audience: %w(Unauth Auth Admin All).sample,
-    pub_status: %w(P D T).sample,
-    author: "Zombie Zach",
-    seo_page_title: "Sample Page #{i + 1}",
-    meta_desc: "Meta description for sample page #{i + 1}"
-  )
-end
-
-CmsPage.all.each do |p|
-
   content = <<-CONTENT
     Zombie ipsum reversus ab viral inferno, nam rick grimes malum cerebro. \
     De carne lumbering animata corpora quaeritis. Summus brains sit​​, morbo \
@@ -103,8 +91,16 @@ CmsPage.all.each do |p|
     solum oculi eorum defunctis go lum cerebro. Nescio brains an Undead zombies. \
     Sicut malus putrid voodoo horror. Nigh tofth eliv ingdead...
   CONTENT
-
-  p.contents << Content.create(body: content)
+  CmsPage.create!(
+    title: "Sample Page #{i + 1}",
+    audience: %w(Unauth Auth Admin All).sample,
+    body: content,
+    language_id: languages.sample,
+    pub_status: %w(P D T).sample,
+    author: "Zombie Zach",
+    seo_page_title: "Sample Page #{i + 1}",
+    meta_desc: "Meta description for sample page #{i + 1}"
+  )
 end
 
 CmsPage.all.each do |p|

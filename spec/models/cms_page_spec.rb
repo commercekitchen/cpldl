@@ -25,7 +25,6 @@ describe CmsPage do
 
     before(:each) do
       @page = FactoryGirl.build(:cms_page)
-      @page.contents << FactoryGirl.create(:content)
     end
 
     it "is initially valid" do
@@ -39,8 +38,58 @@ describe CmsPage do
       expect(@page2.errors.full_messages.first).to eq("Title has already been taken")
     end
 
+    it "should require a title" do
+      @page.title = nil
+      @page.save
+      expect(@page).to_not be_valid
+
+      @page.title = "a valid title"
+      @page.save
+      expect(@page).to be_valid
+    end
+
+    it "should require a body" do
+      @page.body = nil
+      @page.save
+      expect(@page).to_not be_valid
+
+      @page.body = "What a great body"
+      @page.save
+      expect(@page).to be_valid
+    end
+
+    it "should require a language id" do
+      @page.language_id = nil
+      @page.save
+      expect(@page).to_not be_valid
+
+      @page.language_id = 1
+      @page.save
+      expect(@page).to be_valid
+    end
+
+    it "should require language id to numerical" do
+      @page.language_id = "N"
+      @page.save
+      expect(@page).to_not be_valid
+
+      @page.language_id = 1
+      @page.save
+      expect(@page).to be_valid
+    end
+
+    it "should require an author" do
+      @page.author = nil
+      @page.save
+      expect(@page).to_not be_valid
+
+      @page.author = 1
+      @page.save
+      expect(@page).to be_valid
+    end
+
     it "can only have listed statuses" do
-      allowed_statuses = %w(P D T)
+      allowed_statuses = %w(P D A)
       allowed_statuses.each do |status|
         @page.pub_status = status
         expect(@page).to be_valid
@@ -82,8 +131,8 @@ describe CmsPage do
       expect(@page.current_pub_status).to eq("Draft")
       @page.pub_status = "P"
       expect(@page.current_pub_status).to eq("Published")
-      @page.pub_status = "T"
-      expect(@page.current_pub_status).to eq("Trashed")
+      @page.pub_status = "A"
+      expect(@page.current_pub_status).to eq("Archived")
     end
 
     it "should not require the seo page title" do

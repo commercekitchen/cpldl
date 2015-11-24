@@ -20,7 +20,8 @@
 FactoryGirl.define do
   factory :cms_page do
     title "A New Page"
-    page_type "O"
+    body "Damn what a body!"
+    language_id 1
     author "CK Dev"
     audience "Auth"
     pub_status "D"

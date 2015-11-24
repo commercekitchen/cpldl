@@ -35,8 +35,7 @@
   </div>
 
   <fieldset class="twocol last">
-    <%= f.fields_for :contents do |content| %>
-      <%= content.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
+      <%= f.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
   </fieldset>
 
   <fieldset>
@@ -50,16 +49,7 @@
   </fieldset>
 
   <div class="row">
-    <div class="fourcol">
-      <fieldset>
-        <%= f.label :page_type do %>
-          Page Type<span class="required"></span>
-        <% end %>
-        <%= f.select(:page_type, options_for_select([["Home Page", "H"], ["Contact Page", "C"], ["About Page", "A"], ["Other", "O"]], @cms_page.page_type), { include_blank: "Select..." } ) %>
-      </fieldset>
-    </div>
-
-    <div class="fourcol">
+    <div class="sixcol">
       <fieldset>
         <%= f.label :audience do %>
           Who can view<span class="required"></span>
@@ -68,12 +58,12 @@
       </fieldset>
     </div>
 
-    <div class="fourcol last">
+    <div class="sixcol last">
       <fieldset>
         <%= f.label :pub_status do %>
           Publication Status<span class="required"></span>
         <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archive", "A"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
   </div>
@@ -86,12 +76,10 @@
   </fieldset>
 
   <fieldset>
-      <%= content.hidden_field :_destroy, class: "removable" %>
-      <%= content.label :body do %>
-        Page Content<span class="required"></span>
-      <% end %>
-      <%= content.cktext_area :body %>
+    <%= f.label :body do %>
+      Page Content<span class="required"></span>
     <% end %>
+    <%= f.cktext_area :body %>
   </fieldset>
 
   <fieldset>

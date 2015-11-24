@@ -21,17 +21,16 @@ class CmsPage < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: [:slugged, :history]
 
-  has_many :contents, dependent: :destroy
-  accepts_nested_attributes_for :contents, allow_destroy: true
+  belongs_to :language
 
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
+  validates :body, presence: true
+  validates :language_id, presence: true, numericality: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
-  validates :pub_status, presence: true,
-    inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
   validates :author, presence: true
-  validates :page_type, presence: true,
-    inclusion: { in: %w(H C A O), message: "%{value} is not a valid page type" }
+  validates :pub_status, presence: true,
+    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
   validates :audience, presence: true,
     inclusion: { in: %w(Unauth Auth Admin All), message: "%{value} in not a valid audience" }
 
@@ -41,7 +40,7 @@ class CmsPage < ActiveRecord::Base
     case pub_status
     when "D" then "Draft"
     when "P" then "Published"
-    when "T" then "Trashed"
+    when "A" then "Archived"
     end
   end
 

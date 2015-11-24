@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
     resources :cms_pages do
       put :sort, on: :collection
+      patch 'update_pub_status'
     end
     resources :courses do
       put :sort, on: :collection

@@ -8,7 +8,6 @@ module Admin
 
     def new
       @cms_page = CmsPage.new
-      @cms_page.contents.build
     end
 
     def create
@@ -27,6 +26,18 @@ module Admin
     end
 
     def edit
+    end
+
+    def update_pub_status
+      cms_page            = CmsPage.find(params[:cms_page_id])
+      cms_page.pub_status = params[:value]
+      cms_page.update_pub_date(params[:value])
+
+      if cms_page.save
+        render status: 200, json: "#{cms_page.pub_status}"
+      else
+        render status: :unprocessable_entity, json: "post failed to update"
+      end
     end
 
     def update
@@ -76,17 +87,15 @@ module Admin
 
     def cms_page_params
       params.require(:cms_page).permit(:title,
+                                       :language_id,
+                                       :body,
                                        :page_type,
                                        :audience,
                                        :author,
                                        :pub_status,
                                        :pub_date,
                                        :seo_page_title,
-                                       :seo_meta_desc,
-                 contents_attributes: [:id, [:cms_page_id,
-                                             :body,
-                                             :language_id,
-                                             :_destroy]])
+                                       :seo_meta_desc)
     end
   end
 end

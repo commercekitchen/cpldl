@@ -31,4 +31,16 @@ $(document).ready(function() {
     strictMax: true,
     countDirection: "down"
   });
+
+  $(".page_pub").on("change", function(){ //listen for a change on the given selector(id)
+    var pageId = $(this).data("pageId");
+    var value = $(this).val();
+    $.ajax({
+      url: "/admin/cms_pages/" + pageId + "/update_pub_status/",
+      data: { "value": value },
+      dataType: "json",
+      type: "PATCH"
+    });
+  });
+
 });
