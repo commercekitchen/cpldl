@@ -16,7 +16,6 @@ feature "User visits account page" do
     click_link "A New Page"
 
     expect(current_path).to eq(cms_page_path(@cms_page))
-    # TODO: how to check password changed?
   end
 
   scenario "can see title and body of cms page" do
