@@ -101,6 +101,7 @@ module Admin
                                      :other_topic_text,
                                      :course_order,
                                      :pub_date,
+                                     :format,
             attachments_attributes: [:course_id,
                                      :document,
                                      :title,
