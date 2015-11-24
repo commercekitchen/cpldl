@@ -2,7 +2,7 @@
   <%= @cms_page.seo_page_title.present? ? @cms_page.seo_page_title : @cms_page.title  %>
 <% end %>
 <% content_for :meta_description do %>
-  <%= @cms_page.meta_desc.present? ? @cms_page.meta_desc : @cms_page.summary %>
+  <%= @cms_page.meta_desc if @cms_page.meta_desc.present? end %>
 <% end %>
 <% content_for :callout do %>
   <h1><%= @cms_page.title %></h1>
