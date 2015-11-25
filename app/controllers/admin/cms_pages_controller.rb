@@ -13,6 +13,7 @@ module Admin
     def create
       @cms_page = CmsPage.new(cms_page_params)
       if params[:commit] == "Preview Page"
+        @cms_page_body = @cms_page.body.html_safe
         render :new
       elsif params[:commit] == "Save Page"
         @cms_page.set_pub_date if params[:cms_page][:pub_status] == "P"

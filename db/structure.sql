@@ -265,7 +265,8 @@ CREATE TABLE courses (
     notes text,
     slug character varying,
     course_order integer,
-    pub_date timestamp without time zone
+    pub_date timestamp without time zone,
+    format character varying
 );
 
 
@@ -1028,4 +1029,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151119191906');
 INSERT INTO schema_migrations (version) VALUES ('20151119192048');
 
 INSERT INTO schema_migrations (version) VALUES ('20151119202029');
+
+INSERT INTO schema_migrations (version) VALUES ('20151124211721');
 
