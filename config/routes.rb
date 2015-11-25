@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     resources :dashboard, only: [:index]
       get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
       get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
+      put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
     resources :cms_pages do
       put :sort, on: :collection
       patch 'update_pub_status'
