@@ -53,6 +53,8 @@ group :development do
   gem 'quiet_assets'
   gem 'letter_opener'
   gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development, :test do

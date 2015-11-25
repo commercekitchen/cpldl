@@ -6,13 +6,13 @@
   <h1>Page Preview</h1>
 <% end %>
 
-<%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
-  <% if params[:commit] == "Preview Page" %>
-    <div id="preview">
-      <%= render "preview" %>
-    </div>
-  <% end %>
+<% if params[:commit] == "Preview Page" %>
+  <div id="preview">
+    <%= render "preview" %>
+  </div>
+<% end %>
 
+<%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
   <% if @cms_page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h2>
