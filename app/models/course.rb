@@ -48,6 +48,8 @@ class Course < ActiveRecord::Base
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 156 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
+  validates :format, presence: true,
+    inclusion: { in: %w(M D), message: "%{value} is not a valid format" }
   validates :pub_status, presence: true,
     inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
   validates :level, presence: true,

@@ -62,7 +62,7 @@
   </div>
 
   <div class="row">
-    <div class="sixcol">
+    <div class="fourcol">
       <fieldset>
         <%= f.label :topics do %>
           Course Topics<span class="required"></span>
@@ -75,18 +75,27 @@
         <div>
           <%= f.check_box :other_topic %>
           <%= f.label :other_topic, "Other Topic", class: "plain" %>
-          <%= f.text_field :other_topic_text, style: "width: 60%", placeholder: "(Enter to create new topic)" %>
+          <%= f.text_field :other_topic_text, placeholder: "(Enter to create new topic)", class: "topic-box" %>
         </div>
       </fieldset>
     </div>
 
-    <div class="sixcol last">
+    <div class="fourcol">
       <fieldset>
         <%= f.label :language_id do %>
           Course Language<span class="required"></span>
         <% end %>
         <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
       </fieldset>
+    </div>
+
+    <div class="fourcol last">
+    <fieldset>
+      <%= f.label :format do %>
+        Course Format<span class="required"></span>
+      <% end %>
+      <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." } ) %>
+    </fieldset>
     </div>
   </div>
 

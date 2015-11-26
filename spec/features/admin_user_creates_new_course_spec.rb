@@ -24,6 +24,7 @@ feature "Admin user creates new course and lesson" do
       check "Topic A"
       check "Other Topic"
       fill_in :course_other_topic_text, with: "Some New Topic"
+      select("Desktop", from: "course_format")
       select("English", from: "course_language_id")
       select("Beginner", from: "course_level")
       select("Published", from: "course_pub_status")
