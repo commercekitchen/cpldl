@@ -5,7 +5,6 @@
 #  id             :integer          not null, primary key
 #  title          :string(90)
 #  author         :string
-#  page_type      :string
 #  audience       :string
 #  pub_status     :string           default("D")
 #  pub_date       :datetime
@@ -15,13 +14,15 @@
 #  updated_at     :datetime         not null
 #  slug           :string
 #  cms_page_order :integer
+#  language_id    :integer
+#  body           :text
 #
 
 FactoryGirl.define do
   factory :cms_page do
     title "A New Page"
-    body "Damn what a body!"
     language_id 1
+    body "Look at that body!"
     author "CK Dev"
     audience "Auth"
     pub_status "D"
