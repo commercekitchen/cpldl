@@ -96,7 +96,7 @@ languages = Language.all.pluck(:id)
     audience: %w(Unauth Auth Admin All).sample,
     body: content,
     language_id: languages.sample,
-    pub_status: %w(P D T).sample,
+    pub_status: %w(P D A).sample,
     author: "Zombie Zach",
     seo_page_title: "Sample Page #{i + 1}",
     meta_desc: "Meta description for sample page #{i + 1}"

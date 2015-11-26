@@ -17,5 +17,10 @@ module Admin
 
       render "admin/users/index", layout: "admin/base_with_sidebar"
     end
+
+    def manually_confirm_user
+      User.find(params[:user_id]).confirm if current_user.has_role? :admin
+      redirect_to admin_users_index_path
+    end
   end
 end
