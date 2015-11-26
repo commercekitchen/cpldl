@@ -24,7 +24,7 @@ describe CmsPagesController do
 
       get :show, id: old_url
       expect(assigns(:cms_page)).to eq(@cms_page)
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:success)
 
       get :show, id: @cms_page.friendly_id
       expect(assigns(:cms_page)).to eq(@cms_page)
