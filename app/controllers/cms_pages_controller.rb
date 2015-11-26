@@ -1,5 +1,5 @@
 class CmsPagesController < ApplicationController
-  before_filter :find_cms_page
+  before_action :find_cms_page
 
   def show
     @cms_page_body = @cms_page.body.html_safe
