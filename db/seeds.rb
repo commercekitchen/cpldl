@@ -54,7 +54,8 @@ puts "#{Language.count} languages created."
     pub_status: %w(P D T).sample,
     language_id: Language.first.id,
     level: "Beginner",
-    pub_date: Time.zone.now
+    pub_date: Time.zone.now,
+    format: %w(M D).sample
   )
 end
 
@@ -110,3 +111,5 @@ CmsPage.all.each do |p|
   end
 end
 puts "#{CmsPage.count} pages created"
+
+Organization.create(name: "Chicago Public Library", subdomain: "chipublib")
