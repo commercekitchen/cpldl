@@ -48,11 +48,40 @@
     <%= f.cktext_area :description %>
   </fieldset>
 
-  <div class="row">
-    <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
-      <%= render "admin/courses/forms/supplemental_attachment_fields", f: attachment_builder %>
-    <% end %>
-  </div>
+  <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
+    <div class="row">
+      <%= render "admin/courses/forms/attachment_fields", f: attachment_builder %>
+      <%= link_to_add_fields "Add Another Attachment", f , :attachments %>
+    </div>
+    <div class="row">
+      ======== TRY: pulling the file fields into one row and the title fields into this view, it might have a little distance, but you can CSS that shit and only get fields to show up!!!! ===========
+  <% end %>
+
+
+  <% if @course.attachments.exists? %>
+    <div class="row">
+      <fieldset>
+        <%= f.label :document, "Current Supplemental Attachments" %>
+        <ul>
+          <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
+            <li>
+            <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+      <fieldset>
+        <%= f.label :document, "Current Post-Course Attachments" %>
+        <ul>
+          <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+            <li>
+              <%= a.document_file_name %> -- <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+    </div>
+  <% end %>
 
   <div>
     <fieldset>

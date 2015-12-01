@@ -46,3 +46,20 @@ $(document).ready(function() {
     countDirection: "down"
   });
 });
+
+  // remove attachment fields in Course form
+  $(function () {
+    $(document).delegate('.remove_child','click', function() {
+      $(this).parent().children('.removable')[0].value = 1;
+      $(this).parent().slideUp();
+      // $(this).parent().hide();
+      return false;
+    });
+   });
+
+  // add attachment fields in Course form
+  function add_fields(association, content) {
+    var new_id = new Date().getTime();
+    var regexp = new RegExp("new_" + association, "g")
+    $("#add-attachment").parent().before(content.replace(regexp, new_id));
+  };

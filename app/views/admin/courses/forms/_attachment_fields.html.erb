@@ -1,0 +1,23 @@
+<%# Fields for Pre/Supplemental Course Materials %>
+<div class="sixcol">
+  <fieldset>
+    <%= f.hidden_field :_destroy, class: "removable" %>
+    <%= f.hidden_field :doc_type, value: "supplemental" %>
+    <%= f.label :document, "Course Supplemental Materials" %>
+    <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
+    <%= f.file_field :document, class: "upload-field" %>
+    <%= link_to_remove_child "remove field" %>
+  </fieldset>
+</div>
+
+<%# Fields for Post Course Materials %>
+<div class="sixcol last">
+  <fieldset>
+    <%= f.hidden_field :_destroy, class: "removable" %>
+    <%= f.hidden_field :doc_type, value: "post-course" %>
+    <%= f.label :document, "Post-Course Supplemental Materials" %>
+    <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
+    <%= f.file_field :document, class: "upload-field" %>
+    <%= link_to_remove_child "remove field" %>
+  </fieldset>
+</div>
