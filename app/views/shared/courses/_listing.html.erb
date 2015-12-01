@@ -7,7 +7,7 @@
 <div class="container">
 <% @courses.each do |c| %>
     <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
-      href="<%= course_path(c) %>">
+      href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
       <header>
         <h3 class="with-computer-background"><%= c.title %></h3>
       </header>

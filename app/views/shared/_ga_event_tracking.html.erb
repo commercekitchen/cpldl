@@ -1,0 +1,59 @@
+<script>
+$(document).ready(function() {
+
+  $("body").on("click", "*[data-cpl-ga-event='on']", function() {
+    var cpl_ga_value = $(this).data("cpl-ga-value");
+    var pathname = window.location.pathname;
+
+    // if (cc_ga_value === "contact-us") {
+    //   ga("send", "event", "contact form", "click", '"' + pathname + '"');
+    // }
+
+    if (cpl_ga_value === "user-open-course") {
+      ga("send", "event", "user open course", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value === "user-start-course") {
+      ga("send", "event", "user start course", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value == "add-course-to-plan") {
+      ga("send", "event", "user add course to plan", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value === "remove-course-from-plan") {
+      ga("send", "event", "user remove course from plan", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value === "user-start-lesson") {
+      ga("send", "event", "user click start lesson", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value === "user-click-lesson") {
+      ga("send", "event", "user click lesson tile", "click", '"' + pathname + '"');
+    }
+
+    if (cpl_ga_value === "supplemental-material-download") {
+      var documentName = $(this).data("document-name");
+      ga("send", "event", "user download supplemental material: " + '"' + documentName + '"', "click", '"' + pathname + '"');
+    }
+
+  });
+
+  // $("footer").on("click", ".icon-facebook", function() {
+  //   ga("send", "event", "social", "click", "Facebook");
+  // });
+
+  $("footer").on("click", ".link-cpl", function() {
+    ga("send", "event", "exernal link", "click", "Chicago Public Library");
+  });
+
+  $("footer").on("click", ".link-pla", function() {
+    ga("send", "event", "exernal link", "click", "Public Library Association");
+  });
+
+});
+</script>
+
+
+<!-- data: { cc_ga_event: "on", cc_ga_value: "client-new-estimate" } -->

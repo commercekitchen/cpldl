@@ -14,7 +14,7 @@
             <i class="icon-none"></i>
           <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
-          <%= link_to l.title, course_lesson_path(course, l) %>
+          <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
         </li>
       </ul>
     <% end %>
@@ -33,7 +33,7 @@
             <i class="icon-none"></i>
           <% end %>
           <span class="grey"><%= l.lesson_order %>.</span>
-          <%= link_to l.title, course_lesson_path(course, l) %>
+          <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
         </li>
       </ul>
     <% end %>

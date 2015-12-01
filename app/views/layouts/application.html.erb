@@ -3,7 +3,7 @@
 <head>
   <%= render "shared/meta_tags" %>
 </head>
-<body>
+<body class="<%= "#{controller_name}-#{action_name}" %>">
   <%= render "shared/header" %>
 
   <main class="container">
