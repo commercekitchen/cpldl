@@ -7,10 +7,4 @@
   and we'll suggest even more courses.
 </p>
 
-<% if user_signed_in? %>
-  <% courses_completed = current_user.completed_course_ids %>
-<% else %>
-  <% courses_completed = [] %>
-<% end %>
-
-<%= render partial: "shared/courses/listing", locals: { courses_completed: courses_completed } %>
+<%= render partial: "shared/courses/listing" %>
