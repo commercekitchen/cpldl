@@ -17,6 +17,7 @@
   <div class="list-titles">
     <div class="cell">Page Title</div>
     <div class="cell">Author</div>
+    <div class="cell">Language</div>
     <div class="cell">Publication Status</div>
   </div>
   <ul class="objects sortable reorderable">
@@ -24,6 +25,7 @@
       <li class="sortable-item" data-id="<%= page.id %>">
         <div class="cell"><%= link_to page.title, edit_admin_cms_page_path(page) %></div>
         <div class="cell"><%= page.author %></div>
+        <div class="cell"><%= page.language.name %></div>
         <div class="cell"><%= select_tag "page_#{page.id}", options_for_select([["Publish", "P"], ["Draft", "D"], ["Archive", "A"]], page.pub_status), data: { page_id: page.id }, class:"page_pub small narrow", method: :patch %>
           <% unless page.pub_date.blank? %>
             <span class="note">(<%= page.pub_date.strftime("%m/%d/%Y") %>)</span>
