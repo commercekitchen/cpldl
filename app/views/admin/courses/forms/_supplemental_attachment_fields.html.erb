@@ -7,6 +7,20 @@
     <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
     <%= f.file_field :document, class: "upload-field" %>
   </fieldset>
+  <%= link_to "Add Another Supplemental Attachment", "#" %>
+
+  <% if @course.attachments.where(doc_type: "supplemental").exists? %>
+    <fieldset>
+      <%= f.label :document, "Current Supplemental Attachments" %>
+      <ul>
+        <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
+          <li>
+          <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+          </li>
+        <% end %>
+      </ul>
+    </fieldset>
+  <% end %>
 </div>
 
 <%# Fields for Post Course Materials %>
@@ -18,4 +32,18 @@
     <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
     <%= f.file_field :document, class: "upload-field" %>
   </fieldset>
+  <%= link_to "Add Another Post Course Attachment", "#" %>
+
+  <% if @course.attachments.where(doc_type: "post-course").exists? %>
+    <fieldset>
+      <%= f.label :document, "Current Post-Course Attachments" %>
+      <ul>
+        <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+          <li>
+          <%= a.document_file_name %> -- <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+          </li>
+        <% end %>
+      </ul>
+    </fieldset>
+  <% end %>
 </div>
