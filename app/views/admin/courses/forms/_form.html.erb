@@ -48,19 +48,49 @@
     <%= f.cktext_area :description %>
   </fieldset>
 
-  <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
-    <div class="row">
-      <%= render "admin/courses/forms/attachment_fields", f: attachment_builder %>
-      <%= link_to_add_fields "Add Another Attachment", f , :attachments %>
+  <div class="row">
+    <div class="sixcol">
+      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+        <fieldset>
+          <%= a.label :document, "Course Supplemental Materials" %>
+          <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
+        </fieldset>
+        <fieldset>
+          <%= f.hidden_field :_destroy, class: "removable" %>
+          <%= f.hidden_field :doc_type, value: "supplemental" %>
+          <%= f.file_field :document, class: "upload-field" %>
+        </fieldset>
+      <% end %>
     </div>
-    <div class="row">
-      ======== TRY: pulling the file fields into one row and the title fields into this view, it might have a little distance, but you can CSS that shit and only get fields to show up!!!! ===========
-  <% end %>
 
+    <div class="sixcol last">
+      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+        <fieldset>
+          <%= a.label :document, "Post-Course Supplemental Materials" %>
+          <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
+        </fieldset>
+        <fieldset>
+          <%= f.hidden_field :doc_type, value: "post-course" %>
+          <%= f.hidden_field :_destroy, class: "removable" %>
+          <%= f.file_field :document, class: "upload-field" %>
+        </fieldset>
+
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="sixcol">
+      <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup_" %>
+    </div>
+    <div class="sixcol last clearfix">
+      <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post_" %>
+    </div>
+  </div>
 
   <% if @course.attachments.exists? %>
     <div class="row">
-      <fieldset>
+      <fieldset class="sixcol">
         <%= f.label :document, "Current Supplemental Attachments" %>
         <ul>
           <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
@@ -70,7 +100,7 @@
           <% end %>
         </ul>
       </fieldset>
-      <fieldset>
+      <fieldset class="sixcol last">
         <%= f.label :document, "Current Post-Course Attachments" %>
         <ul>
           <% @course.attachments.where(doc_type: "post-course").each do |a| %>

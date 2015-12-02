@@ -32,16 +32,15 @@ class Course < ActiveRecord::Base
   attr_accessor :other_topic, :other_topic_text
 
   # has_one :assessment
-  has_one :course_progress
+  has_one  :course_progress
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
   has_many :attachments, dependent: :destroy
-
-  belongs_to :language
-
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
+
+  belongs_to :language
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true

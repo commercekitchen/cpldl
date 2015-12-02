@@ -1,0 +1,8 @@
+<%# Fields for Post Course Materials %>
+
+  <div class="sixcol last right">
+      <%= f.hidden_field :doc_type, value: "post-course" %>
+      <%= f.hidden_field :_destroy, class: "removable" %>
+      <%= f.file_field :document, class: "upload-field" %>
+      <%= link_to_remove_child "remove field" %>
+  </div>
