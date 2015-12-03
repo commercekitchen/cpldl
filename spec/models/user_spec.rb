@@ -98,7 +98,8 @@ describe User do
       @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: true)
       @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id, tracked: true, completed_at: now)
       @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
-      expect(@user.completed_course_ids).to eq([@course1.id, @course3.id])
+      expect(@user.completed_course_ids).to include(@course1.id, @course3.id)
+      expect(@user.completed_course_ids.count).to be(2)
     end
 
     it "should return an empty array if the user has not completed any lessons" do

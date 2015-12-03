@@ -18,6 +18,7 @@
 #  slug           :string
 #  course_order   :integer
 #  pub_date       :datetime
+#  format         :string
 #
 
 class Course < ActiveRecord::Base
@@ -37,6 +38,8 @@ class Course < ActiveRecord::Base
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
+  has_many :organization_courses
+  has_many :organizations, through: :organization_courses
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true

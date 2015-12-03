@@ -27,15 +27,15 @@
       <p><small><%= link_to "Edit Course >>", edit_admin_course_path(@course) %></small></p>
     <% elsif user_signed_in? && current_user.tracking_course?(@course.id) %>
       <p><small>
-        <%= link_to "- Remove from your plan", course_remove_path(@course), method: :post %>
+        <%= link_to "- Remove from your plan", course_remove_path(@course), method: :post, data: { cpl_ga_event: "on", cpl_ga_value: "remove-course-from-plan" } %>
       </small></p>
     <% elsif user_signed_in? %>
       <p><small>
-        <%= link_to "+ Add to your plan", course_add_path(@course), method: :post %>
+        <%= link_to "+ Add to your plan", course_add_path(@course), method: :post, data: { cpl_ga_event: "on", cpl_ga_value: "add-course-to-plan" } %>
       </small></p>
     <% end %>
 
-    <%= link_to "Start Course", course_start_path(@course), method: :post, class: "btn" %>
+    <%= link_to "Start Course", course_start_path(@course), method: :post, class: "btn", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
   </div>
 </div>
 

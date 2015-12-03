@@ -9,7 +9,9 @@ feature "Admin user creates new course and lesson" do
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 
     @user = FactoryGirl.create(:user)
+    @organization = FactoryGirl.create(:organization)
     @user.add_role(:admin)
+    @user.add_role(:admin, @organization)
     log_in_with @user.email, @user.password
   end
 
