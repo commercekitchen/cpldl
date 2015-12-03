@@ -20,7 +20,7 @@ describe CoursesController do
 
     it "assigns all courses as @courses with an empty params" do
       get :index, {}
-      expect(assigns(:courses)).to eq([@course1, @course2, @course3])
+      expect(assigns(:courses)).to include(@course1, @course2, @course3)
     end
 
     it "assigns search results to @courses" do
