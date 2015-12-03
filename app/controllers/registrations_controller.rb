@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  after_filter :create_organization_user_entry
+  after_action :create_organization_user_entry
 
   protected
 
