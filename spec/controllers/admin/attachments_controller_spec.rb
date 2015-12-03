@@ -9,7 +9,7 @@ describe Admin::AttachmentsController do
     @admin.add_role(:admin)
     sign_in @admin
 
-    @request.env['HTTP_REFERER'] = 'http://test.com/admin/courses/new'
+    @request.env["HTTP_REFERER"] = "http://test.com/admin/courses/new"
   end
 
   describe "DELETE #destroy" do
