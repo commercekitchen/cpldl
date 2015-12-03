@@ -59,9 +59,9 @@ $(document).ready(function() {
    });
 
   // add attachment fields in Course form
-  function add_fields(association, content) {
+  function add_fields(association, content, prefix) {
     var new_id = new Date().getTime();
     var regexp = new RegExp("new_" + association, "g")
-    $("#add-attachment").parent().before(content.replace(regexp, new_id));
+    $("#add-attachment-" + prefix).before(content.replace(regexp, new_id));
 
   };

@@ -61,6 +61,7 @@
           <%= f.file_field :document, class: "upload-field" %>
         </fieldset>
       <% end %>
+      <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup" %>
     </div>
 
     <div class="sixcol last">
@@ -74,17 +75,8 @@
           <%= f.hidden_field :_destroy, class: "removable" %>
           <%= f.file_field :document, class: "upload-field" %>
         </fieldset>
-
       <% end %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="sixcol">
-      <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup_" %>
-    </div>
-    <div class="sixcol last clearfix">
-      <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post_" %>
+      <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>
     </div>
   </div>
 
