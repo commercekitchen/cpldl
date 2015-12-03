@@ -4,7 +4,8 @@ describe CoursesController do
 
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Course 1",
-                                           language: FactoryGirl.create(:language))
+                                           language: FactoryGirl.create(:language),
+                                           description: "Mocha Java Scripta")
     @course2 = FactoryGirl.create(:course, title: "Course 2",
                                            language: FactoryGirl.create(:language))
     @course3 = FactoryGirl.create(:course, title: "Course 3",
@@ -77,6 +78,16 @@ describe CoursesController do
 
       it "allows the user to view their tracked courses" do
         get :your
+        expect(assigns(:courses)).to eq([@course1])
+      end
+
+      it "assigns @results if search params exist" do
+        get :your, { search: "java" }
+        expect(assigns(:results)).to eq([@course1])
+      end
+
+      it "assigns search results to @courses" do
+        get :your, { search: "java" }
         expect(assigns(:courses)).to eq([@course1])
       end
     end
