@@ -23,7 +23,6 @@ module Admin
 
     def create
       @course = Course.new(course_params)
-
       if params[:course][:pub_status] == "P"
         @course.set_pub_date
       end
@@ -44,7 +43,6 @@ module Admin
 
     def update
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
-
       if params[:course][:pub_status] != @course.pub_status
         @course.update_pub_date(params[:course][:pub_status])
       end
@@ -90,7 +88,8 @@ module Admin
     def course_params
       params.require(:course).permit(:title,
                                      :seo_page_title,
-                                     :meta_desc, :summary,
+                                     :meta_desc,
+                                     :summary,
                                      :description,
                                      :contributor,
                                      :pub_status,

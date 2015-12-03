@@ -49,10 +49,61 @@
   </fieldset>
 
   <div class="row">
-    <%= f.fields_for :attachments, @course.attachments.build do |attachment_builder| %>
-      <%= render "admin/courses/forms/supplemental_attachment_fields", f: attachment_builder %>
-    <% end %>
+    <div class="sixcol">
+      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+        <fieldset>
+          <%= a.label :document, "Course Supplemental Materials" %>
+          <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
+        </fieldset>
+        <fieldset>
+          <%= a.hidden_field :_destroy, class: "removable" %>
+          <%= a.hidden_field :doc_type, value: "supplemental" %>
+          <%= a.file_field :document, class: "upload-field" %>
+        </fieldset>
+      <% end %>
+      <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup" %>
+    </div>
+
+    <div class="sixcol last">
+      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+        <fieldset>
+          <%= a.label :document, "Post-Course Supplemental Materials" %>
+          <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
+        </fieldset>
+        <fieldset>
+          <%= a.hidden_field :doc_type, value: "post-course" %>
+          <%= a.hidden_field :_destroy, class: "removable" %>
+          <%= a.file_field :document, class: "upload-field" %>
+        </fieldset>
+      <% end %>
+      <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>
+    </div>
   </div>
+
+  <% if @course.attachments.exists? %>
+    <div class="row">
+      <fieldset class="sixcol">
+        <%= f.label :document, "Current Supplemental Attachments" %>
+        <ul>
+          <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
+            <li>
+            <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+      <fieldset class="sixcol last">
+        <%= f.label :document, "Current Post-Course Attachments" %>
+        <ul>
+          <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+            <li>
+              <%= a.document_file_name %> -- <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+            </li>
+          <% end %>
+        </ul>
+      </fieldset>
+    </div>
+  <% end %>
 
   <div>
     <fieldset>

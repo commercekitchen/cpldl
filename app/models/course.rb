@@ -34,17 +34,17 @@ class Course < ActiveRecord::Base
 
   # has_one :assessment
   has_one :course_progress
+
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  has_many :attachments, dependent: :destroy
   has_many :organization_courses
   has_many :organizations, through: :organization_courses
-
-  belongs_to :language
-
+  has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
+
+  belongs_to :language
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true

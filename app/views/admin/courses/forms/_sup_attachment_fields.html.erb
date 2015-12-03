@@ -1,0 +1,7 @@
+<%# Fields for Pre/Supplemental Course Materials %>
+  <fieldset>
+      <%= f.hidden_field :_destroy, class: "removable" %>
+      <%= f.hidden_field :doc_type, value: "supplemental" %>
+      <%= f.file_field :document, class: "upload-field" %>
+      <%= link_to_remove_child "remove field" %>
+  </fieldset>
