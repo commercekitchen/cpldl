@@ -111,3 +111,5 @@ CmsPage.all.each do |p|
   end
 end
 puts "#{CmsPage.count} pages created"
+
+Organization.create(name: "Chicago Public Library", subdomain: "chipublib")

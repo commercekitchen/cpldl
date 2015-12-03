@@ -8,7 +8,9 @@ describe Admin::CoursesController do
     @course3 = FactoryGirl.create(:course, title: "Course3", course_order: 3)
 
     @admin = FactoryGirl.create(:admin_user)
+    @organization = FactoryGirl.create(:organization)
     @admin.add_role(:admin)
+    @admin.add_role(:admin, @organization)
     sign_in @admin
   end
 

@@ -29,6 +29,8 @@ module Admin
       end
 
       if @course.save
+        OrganizationCourse.create(organization_id: current_user.organization_id,
+                                  course_id: @course.id)
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
           redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
