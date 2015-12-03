@@ -56,9 +56,9 @@
           <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
         </fieldset>
         <fieldset>
-          <%= f.hidden_field :_destroy, class: "removable" %>
-          <%= f.hidden_field :doc_type, value: "supplemental" %>
-          <%= f.file_field :document, class: "upload-field" %>
+          <%= a.hidden_field :_destroy, class: "removable" %>
+          <%= a.hidden_field :doc_type, value: "supplemental" %>
+          <%= a.file_field :document, class: "upload-field" %>
         </fieldset>
       <% end %>
       <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup" %>
@@ -71,9 +71,9 @@
           <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
         </fieldset>
         <fieldset>
-          <%= f.hidden_field :doc_type, value: "post-course" %>
-          <%= f.hidden_field :_destroy, class: "removable" %>
-          <%= f.file_field :document, class: "upload-field" %>
+          <%= a.hidden_field :doc_type, value: "post-course" %>
+          <%= a.hidden_field :_destroy, class: "removable" %>
+          <%= a.file_field :document, class: "upload-field" %>
         </fieldset>
       <% end %>
       <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>

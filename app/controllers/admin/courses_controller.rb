@@ -23,7 +23,6 @@ module Admin
 
     def create
       @course = Course.new(course_params)
-      binding.pry
       if params[:course][:pub_status] == "P"
         @course.set_pub_date
       end
@@ -44,7 +43,6 @@ module Admin
 
     def update
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
-      binding.pry
       if params[:course][:pub_status] != @course.pub_status
         @course.update_pub_date(params[:course][:pub_status])
       end
@@ -106,10 +104,10 @@ module Admin
                                      :pub_date,
                                      :format,
             attachments_attributes: [:course_id,
-                                          :document,
-                                          :title,
-                                          :doc_type,
-                                          :_destroy])
+                                     :document,
+                                     :title,
+                                     :doc_type,
+                                     :_destroy])
     end
 
     def build_topics_list(params)
