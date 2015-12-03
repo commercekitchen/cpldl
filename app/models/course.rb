@@ -38,6 +38,8 @@ class Course < ActiveRecord::Base
   has_many :topics, through: :course_topics
   has_many :lessons
   has_many :attachments, dependent: :destroy
+  has_many :organization_courses
+  has_many :organizations, through: :organization_courses
 
   belongs_to :language
 
