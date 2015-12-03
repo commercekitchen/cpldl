@@ -6,5 +6,20 @@
   Have you completed most of the courses? If so, <%= link_to "click here to retake the quiz", "#" %>
   and we'll suggest even more courses.
 </p>
+  <div class="row no-bottom-margin">
+    <div class="right-third">
+      <div class="search-box">
+        <%= form_tag your_courses_path, method: :get do %>
+          <%= search_field_tag :search, params[:search], placeholder: "Search courses by keyword" %>
+          <i class="icon-search grey"></i>
+          <%= submit_tag "Search", id: "search_btn" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<%= render partial: "shared/courses/listing" %>
+  <%= render partial: "shared/courses/listing" %>
+
+  <% if @results && @results.blank? %>
+    <p>No courses match your search. <%= link_to "View all your courses", your_courses_path %></p>
+  <% end %>
