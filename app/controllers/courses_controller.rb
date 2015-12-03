@@ -82,7 +82,11 @@ class CoursesController < ApplicationController
 
   def your
     tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
-    @courses = Course.where(id: tracked_course_ids)
+    unless params[:search].blank?
+      @results = PgSearch.multisearch(params[:search]).includes(:searchable).where(id: tracked_course_ids).map(&:searchable)
+    end
+
+    @courses = params[:search].blank? ? Course.where(id: tracked_course_ids) : @results
     respond_to do |format|
       format.html { render :your }
       format.json { render json: @courses }
