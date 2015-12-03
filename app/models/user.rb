@@ -43,6 +43,10 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   validates_associated :profile
 
+  def organization_id
+    roles.where(resource_type: "Organization").first.resource_id
+  end
+
   def tracking_course?(course_id)
     course_progresses.where(course_id: course_id, tracked: true).count > 0
   end
