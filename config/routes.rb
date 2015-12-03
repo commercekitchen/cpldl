@@ -41,7 +41,7 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :attachments, only: [:destroy]
+    resources :attachments, only: [:create, :update, :destroy]
   end
 
   devise_for :users , controllers: { registrations: 'registrations' }
