@@ -43,7 +43,7 @@ describe Course do
     end
 
     it "can only have listed statuses" do
-      allowed_statuses = %w(P D T)
+      allowed_statuses = %w(P D A)
       allowed_statuses.each do |status|
         @course.pub_status = status
         expect(@course).to be_valid
