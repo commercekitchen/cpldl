@@ -12,14 +12,6 @@ describe Admin::CmsPagesController do
     sign_in @admin
   end
 
-  # TODO: Not yet implemented
-  # describe "GET #show" do
-  #   it "assigns the requested page as @page" do
-  #     get :show, id: @page1.to_param
-  #     expect(assigns(:page)).to eq(@page1)
-  #   end
-  # end
-
   describe "GET #new" do
     it "assigns a new page as @page" do
       get :new
@@ -34,21 +26,23 @@ describe Admin::CmsPagesController do
     end
   end
 
-  # FIXME: Rspec will not find the route, not sure why, but can confirm via QA on front end
-  # describe "PATCH #update_pub_status" do
-  #   it "updates the status" do
-  #     patch :update_pub_status, cms_page: { id: @page1.id, value: "P" }
-  #     expect(@page1.pub_status).to eq("A")
-  #   end
+  describe "PATCH #update_pub_status" do
+    it "updates the status" do
+      patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "P" }
+      @page1.reload
+      expect(@page1.pub_status).to eq("P")
+    end
 
-  #   it "updates the pub_date if status is published" do
-  #     patch :update_pub_status, { id: @page1.to_param, value: "A" }
-  #     expect(@page1.pub_date).to be(nil)
+    it "updates the pub_date if status is published" do
+      patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "A" }
+      @page1.reload
+      expect(@page1.pub_date).to be(nil)
 
-  #     patch :update_pub_status, { id: @page1.to_param, value: "A" }
-  #     expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
-  #   end
-  # end
+      patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "P" }
+      @page1.reload
+      expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
+    end
+  end
 
   describe "POST #create" do
     let(:valid_attributes) do

@@ -41,6 +41,18 @@ module Admin
       end
     end
 
+    def update_pub_status
+      course            = Course.find(params[:course_id])
+      course.pub_status = params[:value]
+      course.update_pub_date(params[:value])
+
+      if course.save
+        render status: 200, json: "#{course.pub_status}"
+      else
+        render status: :unprocessable_entity, json: "post failed to update"
+      end
+    end
+
     def update
       @course.slug = nil # The slug must be set to nil for the friendly_id to update
       if params[:course][:pub_status] != @course.pub_status
