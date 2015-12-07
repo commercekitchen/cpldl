@@ -33,6 +33,14 @@
   </div>
 </div>
 
-<div>
-  <%= link_to  "Return To Courses", admin_dashboard_index_path, class: "btn-grey" %>
-</div>
+<%= link_to new_admin_course_lesson_path, class: "transparent" do %>
+  <div class="btn">
+    Add Another Lesson
+  </div>
+<% end %>
+
+<%= link_to edit_admin_course_path(@course), class: "transparent" do %>
+  <div class="btn btn-grey">
+    Return To Course Edit Page
+  </div>
+<% end %>
