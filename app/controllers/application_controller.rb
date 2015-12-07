@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   before_action :set_language
   before_action :set_cms_footer_pages
+  before_action :redirect_chicago
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? ? "user/logged_in" : "application" }
@@ -24,6 +25,13 @@ class ApplicationController < ActionController::Base
 
   def set_cms_footer_pages
     @footer_pages = CmsPage.all
+  end
+
+  def redirect_chicago
+    case request.subdomain
+    when "chicago"
+      redirect_to root_url(subdomain: "chipublib")
+    end
   end
 
   private
