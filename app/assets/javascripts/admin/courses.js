@@ -45,6 +45,17 @@ $(document).ready(function() {
     strictMax: true,
     countDirection: "down"
   });
+
+    $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
+    var courseId = $(this).data("courseId");
+    var value = $(this).val();
+    $.ajax({
+      url: "/admin/courses/" + courseId + "/update_pub_status/",
+      data: { "value": value },
+      dataType: "json",
+      type: "PATCH"
+    });
+  });
 });
 
   // remove attachment fields in Course form

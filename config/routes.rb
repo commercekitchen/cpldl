@@ -34,6 +34,7 @@ Rails.application.routes.draw do
     end
     resources :courses do
       put :sort, on: :collection
+      patch 'update_pub_status'
       resources :lessons do
         collection do
           delete :destroy_asl_attachment

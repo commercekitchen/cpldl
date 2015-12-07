@@ -36,6 +36,25 @@ describe Admin::CoursesController do
     end
   end
 
+  describe "PATCH #update_pub_status" do
+    it "updates the status" do
+      patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
+      @course1.reload
+      expect(@course1.pub_status).to eq("P")
+    end
+
+    it "updates the pub_date if status is published" do
+      patch :update_pub_status, { course_id: @course1.id.to_param, value: "A" }
+      @course1.reload
+      expect(@course1.pub_date).to be(nil)
+
+      patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
+      @course1.reload
+      expect(@course1.pub_date.to_i).to eq(Time.zone.now.to_i)
+    end
+  end
+
+
   describe "GET #edit" do
     it "assigns the requested course as @course" do
       get :edit, { id: @course1.to_param }

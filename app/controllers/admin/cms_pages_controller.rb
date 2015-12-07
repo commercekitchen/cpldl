@@ -30,6 +30,7 @@ module Admin
     end
 
     def update_pub_status
+      # binding.pry
       cms_page            = CmsPage.find(params[:cms_page_id])
       cms_page.pub_status = params[:value]
       cms_page.update_pub_date(params[:value])

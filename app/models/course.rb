@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
   validates :format, presence: true,
     inclusion: { in: %w(M D), message: "%{value} is not a valid format" }
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D T), message: "%{value} is not a valid status" }
+    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
   validates :level, presence: true,
     inclusion: { in: %w(Beginner Intermediate Advanced),
       message: "%{value} is not a valid level" }

@@ -165,7 +165,7 @@
         <%= f.label :pub_status do %>
           Publication Status<span class="required"></span>
         <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Trashed", "T"]], @course.pub_status), { include_blank: "Select..." } ) %>
+        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
   </div>
