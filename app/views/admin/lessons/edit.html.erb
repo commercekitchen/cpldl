@@ -8,7 +8,6 @@
   Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
 </p>
 <div>
-
   <div class="container">
     <% @course.lessons.each do |lesson| %>
       <%= link_to edit_admin_course_lesson_path(@course, lesson), class: "transparent" do %>
