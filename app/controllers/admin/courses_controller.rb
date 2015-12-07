@@ -61,8 +61,11 @@ module Admin
 
       if @course.update(course_params)
         @course.topics_list(build_topics_list(params))
-        if params[:commit] == "Save Course"
+        case params[:commit]
+        when "Save Course"
           redirect_to edit_admin_course_path(@course), notice: "Course was successfully updated."
+        when "Save Course and Edit Lessons"
+          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: "Course was successfully updated."
         else
           redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully updated."
         end
