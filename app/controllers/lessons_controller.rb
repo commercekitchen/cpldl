@@ -15,6 +15,7 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.friendly.find(params[:id])
     @next_lesson = @course.lessons.find(@course.next_lesson_id(@lesson.id))
     @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
+    @course_progress.update_attribute(:tracked, true)
 
     respond_to do |format|
       format.html do
