@@ -51,7 +51,7 @@ puts "#{Language.count} languages created."
     summary: "Summary for Sample Course #{i + 1}",
     description: description,
     contributor: "John Doe",
-    pub_status: %w(P D T).sample,
+    pub_status: %w(P D A).sample,
     language_id: Language.first.id,
     level: "Beginner",
     pub_date: Time.zone.now,
