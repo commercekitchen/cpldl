@@ -192,7 +192,11 @@
         <%= f.submit "Save Course", params: { commit: "Save Course" } %>
       </div>
       <div class="fourcol">
-        <%= f.submit "Save Course and Edit Lessons" %>
+        <% if @course.lessons.blank? %>
+          <%= f.submit "Save Course and Add Lessons" %>
+        <% else %>
+          <%= f.submit "Save Course and Edit Lessons" %>
+        <% end %>
       </div>
       <div class="fourcol last"></div>
     </div>
