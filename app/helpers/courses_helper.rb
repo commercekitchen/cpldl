@@ -17,6 +17,8 @@ module CoursesHelper
       course_progress = current_user.course_progresses.find_by_course_id(course.id)
       if course_progress.present?
         return "#{course_progress.percent_complete}% complete"
+      else
+        return "0% complete"
       end
     end
     ""
