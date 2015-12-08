@@ -116,6 +116,15 @@
   font-weight: 200;
 }
 
+.unauth-start-course-button {
+  margin-top: 2em;
+}
+
+.course-edit-add-remove {
+  margin-bottom: 0px;
+  margin-top: 0.4em;
+}
+
 .left-or-right {
   text-align: right;
   @include media($mobile) {
