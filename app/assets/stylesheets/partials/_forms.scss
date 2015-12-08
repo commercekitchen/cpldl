@@ -44,6 +44,12 @@ textarea {
   background: $white;
 }
 
+// This is for applying to a link_to that wraps a button div. Use this class or
+// the link path text is visible from behind the button where the drop shadow is
+.transparent {
+  color: transparent;
+}
+
 button, input[type="submit"], .btn {
   display: inline-block;
   background-color: $purple;

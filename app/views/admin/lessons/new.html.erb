@@ -1,1 +1,25 @@
 <%= render "form" %>
+
+<% unless @course.lessons.blank? %>
+  <hr>
+
+  <h1>Lessons</h1>
+
+  <p class="emphasis">
+    Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
+  </p>
+  <div>
+    <div class="container">
+      <% @course.lessons.each do |lesson| %>
+        <%= render partial: "shared/lessons/admin_lesson_grid",
+                    locals: { course: @course, lesson: lesson }%>
+      <% end %>
+    </div>
+  </div>
+
+  <%= link_to edit_admin_course_path(@course), class: "transparent" do %>
+    <div class="btn btn-grey">
+      Return To Course Edit Page
+    </div>
+  <% end %>
+<% end %>
