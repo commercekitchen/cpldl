@@ -12,18 +12,28 @@
 
   <div class="banner large-top-padding">
     <div class="container row">
-      <div class="eightcol">
-      <% if content_for?(:callout) %>
-        <%= yield :callout %>
-      <% else %>
-        <h1>Connect to the Digital World</h1>
-      <% end %>
-      </div>
-      <div class="fourcol last">
       <% if content_for?(:course_progress) %>
-        <%= yield :course_progress %>
+        <div class="eightcol">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <h1>Connect to the Digital World</h1>
+        <% end %>
+        </div>
+        <div class="fourcol last">
+        <% if content_for?(:course_progress) %>
+          <%= yield :course_progress %>
+        <% end %>
+        </div>
+      <% else %>
+        <div class="twelvecol">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <h1>Connect to the Digital World</h1>
+        <% end %>
+        </div>
       <% end %>
-      </div>
     </div>
   </div>
 

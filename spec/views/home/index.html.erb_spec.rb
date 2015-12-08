@@ -32,7 +32,7 @@ describe "home/index.html.erb" do
   context "when not logged in" do
     it "displays the default message" do
       render
-      expect(rendered).not_to have_content("Choose a course below to start learning or search courses.")
+      expect(rendered).to have_content("Choose a course below to start learning or search courses.")
     end
   end
 

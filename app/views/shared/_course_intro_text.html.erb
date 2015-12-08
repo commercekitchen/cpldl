@@ -14,17 +14,17 @@
     <h1>Hi <%=current_user.profile.first_name%>! Connect to the Digital World.</h1>
   <% end %>
   <h1>
-    Choose a course below to start learning, or visit
+    Choose a course below to start learning, search courses, or visit
     <%= link_to "My Courses", your_courses_path %> to view your customized learning plan.
   </h1>
 
   <div class="row no-bottom-margin">
-    <div class="right-thrid">
+    <div class="right-third">
       <%= render partial: "shared/courses/search_box" %>
     </div>
   </div>
 <% else %>
-  <h1>Choose a course below to start learning.</h1>
+  <h1>Choose a course below to start learning or search courses.</h1>
 
   <div class="clearfix">
     <p class="no-top-margin left-two-thirds">If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
