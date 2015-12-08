@@ -14,21 +14,24 @@ ul strong {
 .medium-logo {
   max-width: 85%;
   max-height: 75%;
+  text-align: right;
 }
 
 .large-logo {
-  padding-top: 10%;
-  width: 75%;
-  height: 75%;
+  padding-top: 2em;
+  width: 90%;
+  text-align: right;
 }
 
 .license {
   padding-top: 5px;
   padding-left: 20px;
+  text-align: right;
 }
 
 .cms_nav {
   padding-left: 0px;
+  text-align: left;
   a {
     color: $white;
   }
