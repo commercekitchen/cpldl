@@ -24,8 +24,7 @@ describe "home/index.html.erb" do
     it "displays the user message" do
       sign_in @user
       render
-      expect(rendered).to have_content("Choose a course below to start learning,
-        or visit My Courses to view your customized learning plan.")
+      expect(rendered).to have_content("Choose a course below to start learning, search courses, or visit My Courses to view your customized learning plan.")
     end
   end
 
