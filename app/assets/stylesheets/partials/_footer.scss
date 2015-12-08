@@ -26,3 +26,10 @@ ul strong {
   padding-top: 5px;
   padding-left: 20px;
 }
+
+.cms_nav {
+  padding-left: 0px;
+  a {
+    color: $white;
+  }
+}
