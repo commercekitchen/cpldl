@@ -27,7 +27,7 @@
             </p>
             <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
             <p>
-              has completed the Digital Learning Center Class:
+              has completed:
             </p>
             <%= content_tag :h2, "#{@course.title}", class: "course" %>
             <p>
@@ -41,14 +41,14 @@
     <div class="row">
       <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
         <%= button_tag(type: 'button', class: 'congrats-button') do %>
-          Download Your Certificate
+          Download My Certificate
         <% end %>
       <% end %>
     </div>
     <div class="row">
       <%= link_to(your_courses_path) do %>
         <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
-          Return to Your Courses
+          Return to My Courses
         <% end %>
       <% end %>
       <%= link_to(courses_path) do %>
