@@ -96,7 +96,7 @@
     .logo-content {
       display: inline-block;
       position: relative;
-      top: -36px;
+      bottom: 2.5em;
       h1 {
         margin: 0;
         color: $purple;
@@ -113,6 +113,8 @@
 
   nav {
     float: right;
+    position: relative;
+    top: 1.8em;
     @include media($mobile-xlarge) {
       float: left;
       display: block;
