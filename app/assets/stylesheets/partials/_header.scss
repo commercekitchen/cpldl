@@ -4,7 +4,7 @@
 .header-logged-out {
   margin-bottom: 2em;
   padding: 1em 0 1em 0;
-  min-height: 236px;
+  min-height: 100px;
   background-color: $teal;
   z-index: 100;
 
@@ -67,6 +67,7 @@
   position: fixed;
   top: 0;
   width: 100%;
+  min-height: 140px;
   padding: .5em 0;
   background-color: $white;
   border-bottom: 1px solid $grey;

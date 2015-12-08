@@ -1,8 +1,17 @@
 <div class="logo">
   <div class="logo-icon">
     <div class="fourcol right-logo">
-      <%= link_to "http://www.chipublib.org/", target: "_blank" do %>
-        <%= image_tag "cpl_logo_white", class: "medium-logo link-cpl" %>
+      <% case request.subdomain %>
+      <% when "chipublib" %>
+        <%= link_to "http://www.chipublib.org/", target: "_blank" do %>
+          <%= image_tag "cpl_logo_white", class: "medium-logo link-cpl" %>
+        <% end %>
+      <% when "admin" %>
+        <%= link_to "http://digitallearn.org/", target: "_blank" do %>
+          <%= image_tag "dl_logo", class: "large-logo dl-logo" %>
+        <% end %>
+      <% else %>
+        &nbsp;
       <% end %>
     </div>
     <div class="fivecol last right-logo">

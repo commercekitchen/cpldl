@@ -1,7 +1,12 @@
 <% if content_for?(:meta_title) %>
   <title><%= content_for(:meta_title).strip %></title>
 <% else %>
-  <title>Chicago Public Library - Digital Learn</title>
+  <% case request.subdomain %>
+  <% when "admin" %>
+    <title>Digital Learn</title>
+  <% else %>
+    <title>Chicago Public Library - Digital Learn</title>
+  <% end %>
 <% end %>
 
 <meta name="robots" content="noindex">
