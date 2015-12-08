@@ -1,10 +1,17 @@
 <%= link_to root_path do %>
   <div class="logo">
     <div class="logo-icon">
-      <%= image_tag "seal_white_on_black" %>
+      <% case request.subdomain %>
+      <% when "admin" %>
+        <%= image_tag "dl_logo" %>
+      <% else %>
+        <%= image_tag "seal_white_on_black" %>
+      <% end %>
     </div>
-    <div class="logo-content">
-      <h1>Chicago DigitalLearn.org</h1>
-    </div>
+    <% unless request.subdomain == "admin" %>
+      <div class="logo-content">
+        <h1>Chicago DigitalLearn.org</h1>
+      </div>
+    <% end %>
   </div>
 <% end %>

@@ -5,12 +5,16 @@
     </div>
     <%= link_to root_url(subdomain: request.subdomain) do %>
       <div>
-        <%= render "shared/logo_white" %>
-
-        <% if content_for?(:callout) %>
-          <%= yield :callout %>
+        <% case request.subdomain %>
+        <% when "admin" %>
+          <%= render "shared/logo_white" %>
         <% else %>
-          <h1>Connect to the Digital World</h1>
+          <%= render "shared/logo_white" %>
+          <% if content_for?(:callout) %>
+            <%= yield :callout %>
+          <% else %>
+            <h1>Connect to the Digital World</h1>
+          <% end %>
         <% end %>
       </div>
     <% end %>
