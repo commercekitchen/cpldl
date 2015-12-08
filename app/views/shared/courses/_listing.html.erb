@@ -9,7 +9,7 @@
     <a class="course-widget <% if courses_completed.include?(c.id) %>completed<% end %>"
       href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
       <header>
-        <h3 class="with-computer-background"><%= c.title %></h3>
+        <h3><%= c.title %></h3>
       </header>
       <div class="description">
         <p><%= c.summary %></p>
