@@ -22,7 +22,7 @@ feature "User clicks through each page" do
 
     visit root_path
     within(:css, ".header-logged-in") do
-      click_link "Your Courses"
+      click_link "My Courses"
     end
     expect(current_path).to eq(your_courses_path)
 
@@ -49,7 +49,7 @@ feature "User clicks through each page" do
 
     visit profile_path
     within(:css, ".sidebar") do
-      click_link "Your Completed Courses"
+      click_link "My Completed Courses"
     end
     expect(current_path).to eq(completed_courses_path)
   end

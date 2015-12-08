@@ -11,7 +11,7 @@ feature "Registered user visits account page" do
     visit account_path
     expect(page).to have_content("Change Login Information")
     expect(page).to have_content("Update Profile")
-    expect(page).to have_content("Your Completed Courses")
+    expect(page).to have_content("My Completed Courses")
   end
 
   scenario "can change login information" do
