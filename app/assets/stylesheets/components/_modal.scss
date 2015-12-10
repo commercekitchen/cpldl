@@ -96,14 +96,31 @@
     position: relative;
     width: 95%;
 
-    @include media($medium-screen) {
-      padding: $modal-padding;
-      width: 60%;
+    &.quiz-modal-inner {
+      ol {
+        padding-left: 1.5em;
+      }
+      @include media($medium-screen) {
+        padding: $modal-padding;
+        width: 90%;
+      }
+
+      @include media($desktop) {
+        width: 70%;
+      }
     }
 
-    @include media($desktop) {
-      width: 50%;
+    &.lesson-modal-inner {
+      @include media($medium-screen) {
+        padding: $modal-padding;
+        width: 60%;
+      }
+
+      @include media($desktop) {
+        width: 50%;
+      }
     }
+
 
     h1 {
       margin-bottom: 0 0 0.6em 0;

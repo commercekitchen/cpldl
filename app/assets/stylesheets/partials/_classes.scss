@@ -256,3 +256,20 @@ header.lesson-listing:before {
   border-width: 1px;
   padding-bottom: 1em;
 }
+
+label.inline-label {
+  display: inline;
+  color: black;
+  font-size: 1.1em;
+  margin-left: 0.5em;
+}
+
+ol {
+  li.margin-v  {
+    margin: 1em auto;
+  }
+}
+
+ul.less-padding {
+  padding-left: 0.3em;
+}
