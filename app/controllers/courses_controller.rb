@@ -108,4 +108,8 @@ class CoursesController < ApplicationController
     pdf_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
     send_file @course.attachments.find(params[:attachment_id]).document.path, pdf_options
   end
+
+  def quiz
+
+  end
 end
