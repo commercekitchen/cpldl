@@ -1,4 +1,4 @@
 <%= render "shared/course_intro_text" %>
 <%= render partial: "shared/courses/listing", locals: { courses_completed: [] } %>
 
-<%= render partial: "shared/quiz_modal" %>
+<%= render partial: "shared/quiz_modal" if current_user %>
