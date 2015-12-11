@@ -1,27 +1,31 @@
-<strong><li class="margin-v">What would you like to do with a computer? Choose your top goal.</li></strong>
-<ul class="less-padding">
-  <li>
-    <%= radio_button_tag(:set_three, "1") %>
-    <%= label_tag(:set_three_1, "Search for information.", class: "inline-label") %>
-  </li>
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">3. What would you like to do with a computer? Choose your top goal.</p></strong>
+  <ul class="less-padding">
+    <li>
+      <%= radio_button_tag(:set_three, "1") %>
+      <%= label_tag(:set_three_1, "Search for information.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_three, "2") %>
-    <%= label_tag(:set_three_2, "Communicate with friends and family through email and video.", class: "inline-label") %>
-  </li>
+    <li>
+      <%= radio_button_tag(:set_three, "2") %>
+      <%= label_tag(:set_three_2, "Communicate with friends and family through email and video.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_three, "3") %>
-    <%= label_tag(:set_three_3, "Be more productive at work.", class: "inline-label") %>
-  </li>
+    <li>
+      <%= radio_button_tag(:set_three, "3") %>
+      <%= label_tag(:set_three_3, "Be more productive at work.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_three, "4") %>
-    <%= label_tag(:set_three_4, "Search for a job.", class: "inline-label") %>
-  </li>
+    <li>
+      <%= radio_button_tag(:set_three, "4") %>
+      <%= label_tag(:set_three_4, "Search for a job.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_three, "5") %>
-    <%= label_tag(:set_three_5, "Learn specific software or apps such as Microsoft Word.", class: "inline-label") %>
-  </li>
-</ul>
+    <li>
+      <%= radio_button_tag(:set_three, "5") %>
+      <%= label_tag(:set_three_5, "Learn specific software or apps such as Microsoft Word.", class: "inline-label") %>
+    </li>
+  </ul>
+  <%= button_tag "Previous", class: "btn small previous-button", type: "button", name: "previous" %>
+  <%= button_tag "Submit", class: "btn small" %>
+<% end %>

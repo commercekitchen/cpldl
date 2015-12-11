@@ -1,22 +1,26 @@
-<strong><li class="margin-v">How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one.</li></strong>
-<ul class="less-padding">
-  <li>
-    <%= radio_button_tag(:set_two, "1") %>
-    <%= label_tag(:set_two_1, "This is my first time using a one.", class: "inline-label") %>
-  </li>
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">2. How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one.</p></strong>
+  <ul class="less-padding">
+    <li>
+      <%= radio_button_tag(:set_two, "1") %>
+      <%= label_tag(:set_two_1, "This is my first time using a one.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_two, "2") %>
-    <%= label_tag(:set_two_2, "I can use one, but I'm not comfortable beyond that.", class: "inline-label") %>
-  </li>
+    <li>
+      <%= radio_button_tag(:set_two, "2") %>
+      <%= label_tag(:set_two_2, "I can use one, but I'm not comfortable beyond that.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_two, "3") %>
-    <%= label_tag(:set_two_3, "I can use a one, but I'd like to learn more.", class: "inline-label") %>
-  </li>
+    <li>
+      <%= radio_button_tag(:set_two, "3") %>
+      <%= label_tag(:set_two_3, "I can use a one, but I'd like to learn more.", class: "inline-label") %>
+    </li>
 
-  <li>
-    <%= radio_button_tag(:set_two, "4") %>
-    <%= label_tag(:set_two_4, "I'm very comfortable with one, but I would like to learn more on a specific topic.", class: "inline-label") %>
-  </li>
-</ul>
+    <li>
+      <%= radio_button_tag(:set_two, "4") %>
+      <%= label_tag(:set_two_4, "I'm very comfortable with one, but I would like to learn more on a specific topic.", class: "inline-label") %>
+    </li>
+  </ul>
+  <%= button_tag "Previous", class: "btn small previous-button", type: "button", name: "previous" %>
+  <%= button_tag "Next", class: "btn small next-button", type: "button", name: "next" %>
+<% end %>
