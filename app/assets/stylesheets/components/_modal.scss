@@ -102,6 +102,7 @@
     }
 
     &.quiz-modal-inner {
+      min-height: 28em;
       ol {
         padding-left: 1.5em;
       }
@@ -155,7 +156,6 @@
 }
 
 #msform {
-  min-height: 12em;
 	position: relative;
 }
 
@@ -164,6 +164,16 @@
 
 	/*stacking fieldsets above each other*/
 	position: absolute;
+
+  button.next-button {
+    float: right;
+  }
+  button.previous-button {
+    float: left;
+  }
+  input.submit-button {
+    float: right;
+  }
 }
 
 #msform fieldset:not(:first-of-type) {
