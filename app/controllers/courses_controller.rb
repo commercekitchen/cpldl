@@ -110,6 +110,10 @@ class CoursesController < ApplicationController
   end
 
   def quiz
+  end
 
+  def quiz_submit
+    # TODO: Logic for quiz submission.
+    redirect_to your_courses_path
   end
 end
