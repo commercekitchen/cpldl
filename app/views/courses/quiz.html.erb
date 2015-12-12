@@ -4,8 +4,8 @@
 
 <h2>Answer three questions and we'll recommend which courses to take.</h2>
 
-<ol>
+<%= form_tag courses_quiz_path do %>
   <%= render "shared/quiz_section_one" %>
   <%= render "shared/quiz_section_two" %>
   <%= render "shared/quiz_section_three" %>
-</ol>
+<% end %>
