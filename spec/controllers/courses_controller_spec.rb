@@ -265,4 +265,19 @@ describe CoursesController do
     end
   end
 
+  describe "GET #quiz" do
+    context "when logged in" do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        sign_in @user
+      end
+
+      it "should have a valid route and template" do
+        get :quiz
+        expect(response).to have_http_status(:success)
+        expect(response).to render_template(:quiz)
+      end
+    end
+  end
+
 end

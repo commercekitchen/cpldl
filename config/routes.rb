@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'courses/your', to: 'courses#your', as: :your_courses
   get 'courses/completed', to: 'courses#completed', as: :completed_courses
+  get 'courses/quiz', to: 'courses#quiz'
+  post 'courses/quiz', to: 'courses#quiz_submit'
   resources :courses, only: [:index, :show] do
     post 'start'
     post 'add'

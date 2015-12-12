@@ -96,14 +96,37 @@
     position: relative;
     width: 95%;
 
-    @include media($medium-screen) {
-      padding: $modal-padding;
-      width: 60%;
+    .black-modal-text {
+      color: black;
+      margin-top: 0px;
     }
 
-    @include media($desktop) {
-      width: 50%;
+    &.quiz-modal-inner {
+      min-height: 28em;
+      ol {
+        padding-left: 1.5em;
+      }
+      @include media($medium-screen) {
+        padding: $modal-padding;
+        width: 90%;
+      }
+
+      @include media($desktop) {
+        width: 70%;
+      }
     }
+
+    &.lesson-modal-inner {
+      @include media($medium-screen) {
+        padding: $modal-padding;
+        width: 60%;
+      }
+
+      @include media($desktop) {
+        width: 50%;
+      }
+    }
+
 
     h1 {
       margin-bottom: 0 0 0.6em 0;
@@ -130,4 +153,29 @@
 
 .modal-open {
   overflow: hidden;
+}
+
+#msform {
+	position: relative;
+}
+
+#msform fieldset {
+	box-sizing: border-box;
+
+	/*stacking fieldsets above each other*/
+	position: absolute;
+
+  button.next-button {
+    float: right;
+  }
+  button.previous-button {
+    float: left;
+  }
+  input.submit-button {
+    float: right;
+  }
+}
+
+#msform fieldset:not(:first-of-type) {
+	display: none;
 }
