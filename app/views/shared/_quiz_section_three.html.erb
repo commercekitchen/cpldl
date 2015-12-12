@@ -1,4 +1,4 @@
-<%= field_set_tag do %>
+<%= field_set_tag legend = nil, style: "width: 100%;" do %>
   <strong><p class="black-modal-text">3. What would you like to do with a computer? Choose your top goal.</p></strong>
   <ul class="less-padding">
     <li>
@@ -26,6 +26,8 @@
       <%= label_tag(:set_three_5, "Learn specific software or apps such as Microsoft Word.", class: "inline-label") %>
     </li>
   </ul>
-  <%= button_tag "Previous", class: "btn small previous-button", type: "button", name: "previous" %>
-  <%= button_tag "Submit", class: "btn small" %>
+  <% if current_page?(root_url) %>
+    <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
+    <%= submit_tag "Submit", class: "btn small submit-button" %>
+  <% end %>
 <% end %>

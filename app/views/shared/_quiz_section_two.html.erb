@@ -1,4 +1,4 @@
-<%= field_set_tag do %>
+<%= field_set_tag legend = nil, style: "width: 100%;" do %>
   <strong><p class="black-modal-text">2. How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one.</p></strong>
   <ul class="less-padding">
     <li>
@@ -20,7 +20,12 @@
       <%= radio_button_tag(:set_two, "4") %>
       <%= label_tag(:set_two_4, "I'm very comfortable with one, but I would like to learn more on a specific topic.", class: "inline-label") %>
     </li>
+    <% if current_page?(root_url) %>
+      <li>&nbsp;</li>
+    <% end %>
   </ul>
-  <%= button_tag "Previous", class: "btn small previous-button", type: "button", name: "previous" %>
-  <%= button_tag "Next", class: "btn small next-button", type: "button", name: "next" %>
+  <% if current_page?(root_url) %>
+    <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
+    <%= button_tag "Next", class: "btn small next-button", type: "button", name: "next" %>
+  <% end %>
 <% end %>
