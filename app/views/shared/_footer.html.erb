@@ -2,14 +2,16 @@
   <div class="container">
     <div class="row">
       <div class="threecol">
-        <ul class="cms_nav">
-          <strong>LEARN MORE</strong>
-          <% if @footer_pages %>
-            <% @footer_pages.each do |page| %>
-              <li><%= link_to page.title, cms_page_path(page) %></li>
+        <nav role="navigation">
+          <ul class="cms_nav" role="menubar">
+            <strong>LEARN MORE</strong>
+            <% if @footer_pages %>
+              <% @footer_pages.each do |page| %>
+                <li role="presentation"><%= link_to page.title, cms_page_path(page), {"role" => "menuitem"} %></li>
+              <% end %>
             <% end %>
-          <% end %>
-        </ul>
+          </ul>
+       </nav> 
       </div>
       <%= render "shared/logo_footer" %>
       <div class="ninecol license">
