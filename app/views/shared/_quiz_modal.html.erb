@@ -3,7 +3,7 @@
   <div class="modal-fade-screen">
     <div class="modal-inner quiz-modal-inner">
       <div class="modal-close" for="quiz-start-modal"></div>
-      <h1><%= current_user.profile.first_name %>, what would you like to learn?</h1>
+      <h2><%= current_user.profile.first_name %>, what would you like to learn?</h2>
       <h2>Answer three questions and we'll recommend which courses to take.</h2>
       <div>
         <%= form_tag courses_quiz_path, id: "msform" do %>

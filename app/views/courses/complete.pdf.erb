@@ -1,14 +1,14 @@
 <div class="twelvecol">
   <div class="cert-box">
-    <h1>Certificate of Completion</h1>
+    <h2>Certificate of Completion</h2>
     <p>
       This award certifies that
     </p>
-    <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
+    <%= content_tag :h3, "#{current_user.profile.first_name}", class: "name" %>
     <p>
       has completed:
     </p>
-    <%= content_tag :h2, "#{@course.title}", class: "course" %>
+    <%= content_tag :h3, "#{@course.title}", class: "course" %>
     <p>
       as of <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
     </p>

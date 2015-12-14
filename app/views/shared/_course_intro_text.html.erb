@@ -1,9 +1,9 @@
 <% if user_signed_in? && current_user.is_admin? %>
-  <%= content_for(:callout) { %><h1>Hi Admin! Connect to the Digital World.</h1><% } %>
-  <h1>
+  <%= content_for(:callout) { %><h2>Hi Admin! Connect to the Digital World.</h2><% } %>
+  <h2>
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
-  </h1>
+  </h2>
   <div class="row no-bottom-margin">
     <div class="right-third">
       <%= render partial: "shared/courses/search_box" %>
@@ -11,12 +11,12 @@
   </div>
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1>Hi <%=current_user.profile.first_name%>! Connect to the Digital World.</h1>
+    <h2>Hi <%=current_user.profile.first_name%>! Connect to the Digital World.</h2>
   <% end %>
-  <h1>
+  <h2>
     Choose a course below to start learning, search courses, or visit
     <%= link_to "My Courses", your_courses_path %> to view your customized learning plan.
-  </h1>
+  </h2>
 
   <div class="row no-bottom-margin">
     <div class="right-third">
@@ -24,7 +24,7 @@
     </div>
   </div>
 <% else %>
-  <h1>Choose a course below to start learning or search courses.</h1>
+  <h2>Choose a course below to start learning or search courses.</h2>
 
   <div class="clearfix">
     <p class="no-top-margin left-two-thirds">If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>

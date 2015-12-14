@@ -6,7 +6,7 @@
   <%= @course.meta_desc.present? ? @course.meta_desc : @course.summary %>
 <% end %>
 <% content_for :callout do %>
-  <h1><%= @course.title %></h1>
+  <h2><%= @course.title %></h2>
 <% end %>
 
 <div><small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small></div>
@@ -21,15 +21,15 @@
       <div class="cert-preview hide-on-tablet">
         <div class="cert-inner">
           <div>
-            <h1>Certificate of Completion</h1>
+            <h3>Certificate of Completion</h3>
             <p>
               This award certifies that
             </p>
-            <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
+            <%= content_tag :h3, "#{current_user.profile.first_name}", class: "name" %>
             <p>
               has completed:
             </p>
-            <%= content_tag :h2, "#{@course.title}", class: "course" %>
+            <%= content_tag :h3, "#{@course.title}", class: "course" %>
             <p>
               as of <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
             </p>
