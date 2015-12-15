@@ -1,7 +1,7 @@
 module Admin
   class LessonsController < BaseController
 
-    before_action :set_course
+    before_action :set_course, except: [:sort]
     before_action :set_maximums, only: [:new, :edit]
 
     def index
@@ -65,6 +65,14 @@ module Admin
       @lesson.story_line.destroy
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
       render :edit, notice: "Story Line successfully removed, please upload a new story line .zip file."
+    end
+
+    def sort
+      params[:order].each do |_k, v|
+        Lesson.find(v["id"]).update_attribute(:lesson_order, v["position"])
+      end
+
+      render nothing: true
     end
 
     private
