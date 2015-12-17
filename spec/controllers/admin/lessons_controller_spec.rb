@@ -145,6 +145,14 @@ describe Admin::LessonsController do
           { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
         expect(response).to have_http_status(:redirect)
       end
+
+      it "updates with duration as a string" do
+        @lesson_attributes = @lesson1.attributes
+        @lesson_attributes["duration"] = "1:00"
+        patch :update,
+          { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson_attributes, commit: "Save Lesson" }
+        expect(response).to have_http_status(:redirect)
+      end
     end
   end
 
