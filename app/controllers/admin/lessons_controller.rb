@@ -39,9 +39,10 @@ module Admin
 
     def update
       @lesson ||= @course.lessons.friendly.find(params[:id])
+      @lesson_params = lesson_params
+      @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
       asl_is_new = @lesson.story_line.nil?
-
-      if @lesson.update(lesson_params)
+      if @lesson.update(@lesson_params)
         Unzipper.new(@lesson.story_line) if asl_is_new
         redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated."
       else
