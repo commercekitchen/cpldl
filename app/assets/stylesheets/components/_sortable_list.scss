@@ -31,9 +31,22 @@ ul.reorderable li:hover {
   cursor: move;
 }
 
-.sortable-placeholder {
+li.sortable-placeholder {
   border: 1px dashed #CCC;
   background-color: #f9f9f9;
   height: 50px;
   margin-bottom: 10px;
+}
+
+div.sortable-placeholder {
+  border: 1px dashed #CCC;
+  background-color: #f9f9f9;
+  height: 222px;
+  width: 222px;
+  color: $white;
+  margin-bottom: 2em;
+  margin-right: 2.8em;
+  position: relative;
+  cursor: pointer;
+  float: left;
 }
