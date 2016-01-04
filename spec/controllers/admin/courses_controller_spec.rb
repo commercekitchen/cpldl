@@ -54,7 +54,6 @@ describe Admin::CoursesController do
     end
   end
 
-
   describe "GET #edit" do
     it "assigns the requested course as @course" do
       get :edit, { id: @course1.to_param }

@@ -8,7 +8,9 @@ feature "User logs in" do
     expect(current_path).to eq(root_path)
     expect(page).to_not have_content("Signed in successfully.")
     expect(page).to have_content("Hi Jane! Connect to the Digital World.")
-    expect(page).to have_content("Choose a course below to start learning, search courses, or visit My Courses to view your customized learning plan.")
+    expect(page).to have_content(
+      "Choose a course below to start learning, search courses, or visit My Courses to view your customized learning plan."
+    )
   end
 
   scenario "with invalid or blank email" do
