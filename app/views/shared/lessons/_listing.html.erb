@@ -6,15 +6,23 @@
     <% if index <= course.lessons.count / 2 %>
       <ul class="extra-padding">
         <li>
-          <% if l.id == lesson.id %>
-            <i class="icon-play"></i>
-          <% elsif lessons_completed.include?(l.id) %>
-            <i class="icon-ok orange"></i>
-          <% else %>
-            <i class="icon-none"></i>
-          <% end %>
-          <span class="grey"><%= l.lesson_order %>.</span>
-          <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
+          <div class="row">
+            <div class="onecol">
+              <% if l.id == lesson.id %>
+                <i class="icon-play"></i>
+              <% elsif lessons_completed.include?(l.id) %>
+                <i class="icon-ok orange"></i>
+              <% else %>
+                <i class="icon-none"></i>
+              <% end %>
+            </div>
+            <div class="grey onecol">
+              <%= l.lesson_order %>.
+            </div>
+            <div class="tencol">
+              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
+            </div>
+          </div>
         </li>
       </ul>
     <% end %>
@@ -25,15 +33,23 @@
     <% if index > course.lessons.count / 2 %>
       <ul class="extra-padding">
         <li>
-          <% if l.id == lesson.id %>
-            <i class="icon-play"></i>
-          <% elsif lessons_completed.include?(l.id) %>
-            <i class="icon-ok orange"></i>
-          <% else %>
-            <i class="icon-none"></i>
-          <% end %>
-          <span class="grey"><%= l.lesson_order %>.</span>
-          <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
+          <div class="row">
+            <div class="onecol">
+              <% if l.id == lesson.id %>
+                <i class="icon-play"></i>
+              <% elsif lessons_completed.include?(l.id) %>
+                <i class="icon-ok orange"></i>
+              <% else %>
+                <i class="icon-none"></i>
+              <% end %>
+            </div>
+            <div class="grey onecol">
+              <%= l.lesson_order %>.
+            </div>
+            <div class="tencol">
+              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" } %>
+            </div>
+          </div>
         </li>
       </ul>
     <% end %>

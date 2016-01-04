@@ -36,6 +36,10 @@
 
   .lesson-title {
     font-size: 2em;
+  }
+
+  .lesson-title-admin {
+    font-size: 2em;
     margin-top: 2em;
   }
 
@@ -86,6 +90,13 @@
     }
 
     .lesson-title {
+      font-size: 1em;
+      font-weight: bold;
+      color: $dark-grey;
+      margin-bottom: 0;
+    }
+
+    .lesson-title-admin {
       font-size: 1em;
       font-weight: bold;
       color: $dark-grey;
