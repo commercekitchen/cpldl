@@ -44,7 +44,7 @@ class User < ActiveRecord::Base
   validates_associated :profile
 
   def organization_id
-    roles.where(resource_type: "Organization").first.resource_id
+    User.first.roles.find_by_resource_type("Organization").resource_id
   end
 
   def tracking_course?(course_id)
