@@ -2,7 +2,7 @@
   <%= link_to edit_admin_course_lesson_path(course, lesson), class: "transparent" do %>
     <div class="lesson-block">
       <div class="default-state">
-        <div class="lesson-title"><%= lesson.title %></div>
+        <div class="lesson-title-admin"><%= lesson.title %></div>
       </div>
       <div class="hover-state">
         <i class="icon-arrow"></i>
@@ -10,7 +10,7 @@
           <i class="icon-clock"></i>
           <span class="lesson-duration"><%= Duration.duration_str(lesson.duration) %></span>
         </div>
-        <h1 class="lesson-title"><%= lesson.title %></h1>
+        <h1 class="lesson-title-admin"><%= lesson.title %></h1>
         <p class="lesson-summary"><%= lesson.summary %></p>
       </div>
     </div>
