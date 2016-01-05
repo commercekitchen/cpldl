@@ -33,7 +33,7 @@ $(document).ready(function() {
   $("#course_summary").simplyCountable({
     counter: "#course_summary_counter",
     countable: "characters",
-    maxCount: 156,
+    maxCount: 80,
     strictMax: true,
     countDirection: "down"
   });
