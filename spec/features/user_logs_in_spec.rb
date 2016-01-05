@@ -7,7 +7,7 @@ feature "User logs in" do
     log_in_with user.email, user.password
     expect(current_path).to eq(root_path)
     expect(page).to_not have_content("Signed in successfully.")
-    expect(page).to have_content("Hi Jane! Connect to the Digital World.")
+    expect(page).to have_content("Hi Jane! Use a computer to do almost anything.")
     expect(page).to have_content(
       "Choose a course below to start learning, search courses, or visit My Courses to view your customized learning plan."
     )

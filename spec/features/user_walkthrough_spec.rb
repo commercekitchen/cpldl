@@ -16,7 +16,7 @@ feature "User clicks through each page" do
 
     visit root_path
     within(:css, ".header-logged-in") do
-      click_link "Your Account"
+      click_link "My Account"
     end
     expect(current_path).to eq(account_path)
 

@@ -11,7 +11,7 @@
 
     <nav>
       <%= link_to "Hi #{current_user.profile.first_name}!", profile_path %> |
-      <%= link_to "Your Account", account_path %> |
+      <%= link_to "My Account", account_path %> |
       <%= link_to "My Courses", your_courses_path %> |
       <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
     </nav>
