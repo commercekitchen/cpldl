@@ -41,7 +41,7 @@ module Admin
       @lesson ||= @course.lessons.friendly.find(params[:id])
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
-      asl_is_new = @lesson.story_line.nil?
+      asl_is_new = @lesson.story_line_updated_at.nil?
       if @lesson.update(@lesson_params)
         Unzipper.new(@lesson.story_line) if asl_is_new
         redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated."
@@ -63,7 +63,8 @@ module Admin
 
     def destroy_asl_attachment
       @lesson = @course.lessons.friendly.find(params[:format])
-      @lesson.story_line.destroy
+      @lesson.story_line = nil
+      @lesson.save
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
       render :edit, notice: "Story Line successfully removed, please upload a new story line .zip file."
     end
