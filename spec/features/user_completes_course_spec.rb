@@ -21,7 +21,7 @@ feature "User visits course complete page" do
       @course.notes = "<strong>Post-Course completion notes...</strong>"
       @course.save
       visit course_complete_path(@course)
-      expect(page).to have_content("Notes and Partner Resources")
+      expect(page).to have_content("Practice and use your new skills! (click each link below)")
       expect(page).to have_content("Post-Course completion notes...")
       expect(page).to_not have_content("<strong>")
     end
