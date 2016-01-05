@@ -17,7 +17,7 @@ $(document).ready(function() {
   $("#course_title").simplyCountable({
     counter: "#course_title_counter",
     countable: "characters",
-    maxCount: 90,
+    maxCount: 40,
     strictMax: true,
     countDirection: "down"
   });

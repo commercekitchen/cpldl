@@ -47,7 +47,7 @@ class Course < ActiveRecord::Base
   belongs_to :language
 
   validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
+  validates :title, length: { maximum: 40 }, presence: true, uniqueness: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 156 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
