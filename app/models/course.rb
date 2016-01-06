@@ -49,7 +49,7 @@ class Course < ActiveRecord::Base
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 40 }, presence: true, uniqueness: true
   validates :seo_page_title, length: { maximum: 90 }
-  validates :summary, length: { maximum: 80 }, presence: true
+  validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
     inclusion: { in: %w(M D), message: "%{value} is not a valid format" }
