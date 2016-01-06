@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    @footer_pages = CmsPage.all
+    @footer_pages = CmsPage.where(pub_status: "P")
   end
 
   def redirect_chicago

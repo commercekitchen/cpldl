@@ -4,6 +4,7 @@ feature "User visits account page" do
 
   before(:each) do
     @cms_page = FactoryGirl.create(:cms_page)
+    @cms_page.update_attribute(:pub_status, "P")
   end
 
   scenario "sees cms pages in the footer" do
