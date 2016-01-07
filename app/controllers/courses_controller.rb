@@ -5,7 +5,7 @@ class CoursesController < ApplicationController
 
   def index
     results  = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
-    @courses = params[:search].blank? ? Course.includes(:lessons).all : results
+    @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P") : results
 
     respond_to do |format|
       format.html { render :index }
