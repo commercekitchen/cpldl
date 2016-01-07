@@ -100,9 +100,9 @@ describe Course do
     end
 
     it "humanizes publication status" do
-      expect(@course.current_pub_status).to eq("Draft")
-      @course.pub_status = "P"
       expect(@course.current_pub_status).to eq("Published")
+      @course.pub_status = "D"
+      expect(@course.current_pub_status).to eq("Draft")
       @course.pub_status = "T"
       expect(@course.current_pub_status).to eq("Trashed")
     end
