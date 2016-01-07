@@ -29,6 +29,7 @@ describe Course do
 
     before(:each) do
       @course = FactoryGirl.build(:course)
+      @draft_course = FactoryGirl.create(:draft_course)
     end
 
     it "is initially valid" do
@@ -76,12 +77,12 @@ describe Course do
       expect(@course).to_not be_valid
     end
 
-    it "should initially be set to draft status" do
-      expect(@course.pub_status).to eq("D")
+    it "should initially be set to published status" do
+      expect(@draft_course.pub_status).to eq("D")
     end
 
     it "does not set pub date if status is not Published" do
-      expect(@course.set_pub_date).to be(nil)
+      expect(@draft_course.set_pub_date).to be(nil)
     end
 
     it "should set pub date on publication" do
