@@ -4,11 +4,13 @@
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'rails', '4.2.4'
+gem 'rails', '4.2.5'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
+
+gem 'sprockets-rails', '2.3.3'
 
 # Full text search via PostgreSQL
 gem 'pg_search', '~> 1.0.5'
