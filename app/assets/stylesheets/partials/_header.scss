@@ -8,11 +8,16 @@
   background-color: $teal;
   z-index: 100;
 
+  @include media($mobile-large) {
+    margin-bottom: 1em;
+  }  
   .language-links {
     color: $white;
     padding-bottom: 1em;
+  @include clearfix;
     a {
       color: $white;
+      display: inline-block;
     }
   }
 
@@ -22,11 +27,16 @@
     .logo-icon {
       width: 155px;
 
+  //   @include media($mobile-large) {
+  //     width: 70px;
+  //     float: left;
+  // }
       /* The given svg file isn't cropped to the edge, so ... */
       position: relative;
-      top: -7px;
-      left: -8px;
+      // top: -7px;
+      // left: -8px;
     }
+
   }
 
   h1 {
@@ -41,16 +51,19 @@
     float: left;
 
     @include media($mobile-large) {
+      font-size: 1.4rem;
       float: left;
       display: block;
-      width: 100%;
+      width: 69%;
       max-width: 100%;
+      margin-top: 10px;
+
     }
 
-    @include media($mobile-xlarge) {
-      font-size: 2.5em;
-      max-width: 400px;
-    }
+    // @include media($mobile-xlarge) {
+    //   font-size: 2em;
+    //   max-width: 400px;
+    // }
   }
 
   .btn {
@@ -65,6 +78,13 @@
 
 .header-logged-in {
   position: fixed;
+
+  @include media($mobile-large) {
+      position: static;
+      min-height: 0;
+      border-bottom: none;
+}
+
   top: 0;
   width: 100%;
   min-height: 140px;
@@ -88,6 +108,13 @@
       display: inline-block;
       width: 90px;
 
+    @include media($mobile-large) {
+      width: 70px;
+      float: left;
+      top: -3px;
+      left: -4px;
+  }
+
       /* The given svg file isn't cropped to the edge, so ... */
       position: relative;
       top: -4px;
@@ -103,6 +130,7 @@
         color: $purple;
       }
       @include media($mobile) {
+        position: static;
         h1 {
           font-size: 20px;
           position: relative;
@@ -121,6 +149,25 @@
       display: block;
       width: 100%;
     }
+    @include media($mobile-large) {
+     top: 1em;
+   }
   }
 
+}
+
+.logo-link {
+  display: block;
+  overflow: hidden; 
+}
+
+.logo-link-container
+{
+  a {
+    display: block;
+    overflow: hidden;
+  }
+
+  display: block;
+  @include clearfix;
 }

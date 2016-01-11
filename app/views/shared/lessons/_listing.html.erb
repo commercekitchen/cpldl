@@ -1,12 +1,12 @@
 <% lessons_completed = current_user.completed_lesson_ids(course) %>
 
-<div class="row">
+<div class="row lesson-listing">
   <div class="sixcol">
   <% course.lessons.order(:lesson_order).each_with_index do |l, index| %>
     <% if index <= course.lessons.count / 2 %>
       <ul class="extra-padding">
         <li>
-          <div class="row">
+          <div class="row lesson-listing lesson-listing-first-row">
             <div class="onecol">
               <% if l.id == lesson.id %>
                 <i class="icon-play"></i>

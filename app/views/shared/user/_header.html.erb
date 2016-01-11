@@ -3,13 +3,13 @@
 
     <div class="language-links">
       <small>
-        <%= link_to "English", "#" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#" %>
+        <%= link_to "English", "#",  class: "lang-link" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#",  class: "lang-link" %>
       </small>
     </div>
-
-    <%= render "shared/logo_purple" %>
-
-    <nav>
+    <div class="logo-link-container">
+      <%= render "shared/logo_purple" %>
+    </div>
+    <nav class="header-top-nav">
       <%= link_to "Hi #{current_user.profile.first_name}!", profile_path %> |
       <%= link_to "My Account", account_path %> |
       <%= link_to "My Courses", your_courses_path %> |

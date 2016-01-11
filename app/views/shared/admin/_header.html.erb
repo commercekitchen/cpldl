@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <small>
-        <%= link_to "English", "#" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#" %>
+        <%= link_to "English", "#",  class: "lang-link" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#", class: "lang-link" %>
       </small>
     </div>
     <div class="row">
@@ -10,7 +10,7 @@
         <%= render "shared/logo_purple" %>
       </div>
       <div class="fivecol last">
-        <nav class="left-or-right">
+        <nav class="left-or-right header-top-nav">
           Hi Admin! |
           <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>

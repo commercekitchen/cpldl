@@ -1,6 +1,6 @@
 <h1>Log In</h1>
 
-<p>Already have an account? Log in using your email address and password below.</p>
+<p>Already have an account? Log in using your email address and password below!</p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
@@ -9,7 +9,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "Password *" %>
+    <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false", id: "login_password", placeholder: "Password *" } %>
   </fieldset>
 
   <% if devise_mapping.rememberable? -%>

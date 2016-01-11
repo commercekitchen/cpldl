@@ -28,11 +28,11 @@
   <% end %>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password *" %>
+    <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password", placeholder: "Your Password *" } %>
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
+    <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "Re-enter Your Password *" } %>
   </fieldset>
 
   <fieldset>

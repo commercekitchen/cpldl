@@ -8,8 +8,17 @@
   width: 329px;
   margin-bottom: 2em;
 
+    @include media($mobile-large) {
+
+      width: 250px;
+  }
+
   input#search {
     width: 70%;
+    @include media($mobile-large) {
+      width: 59%;
+}
+
     color: $grey;
     height: 2em;
     margin: 5px;
@@ -28,6 +37,11 @@
     display: none;
     min-width: initial;
     width: 80px;
+      @include media($mobile-large) {
+        width: 70px;
+        font-size: 16px;
+      }
+
     height: 44px;
     padding: 6px 3px;
     letter-spacing: 0px;
