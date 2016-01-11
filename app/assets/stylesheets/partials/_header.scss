@@ -148,10 +148,16 @@
       float: left;
       display: block;
       width: 100%;
+      top: 0;
     }
     @include media($mobile-large) {
      top: 1em;
    }
+
+    @include media($tablet) {
+      top: 0;
+    }
+
   }
 
 }
