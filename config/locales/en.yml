@@ -83,19 +83,19 @@ en:
     ready_to_learn_more: "Ready to Learn More?"
     find_new_courses_retake_quiz: "Find new courses when you retake the quiz"
   course_page:
-    add_to_your_plan:
-    activites:
-    minutes:
-    contributed_by:
-    basic:
-    intermediate:
-    advanced:
-    topics:
-    start_course:
-    click_here_for_text_copy_course:
-    activities_in_this_course:
-    start_activity:
-    activity:
+    add_to_your_plan: "Add to your plan"
+    lessons: "Lessons"
+    minutes: "Minutes"
+    contributed_by: "Contributed by"
+    beginner: "Beginner"
+    intermediate: "Intermediate"
+    advanced: "Advanced"
+    topics: "Topics"
+    start_course: "Start Course"
+    click_here_for_text_copy_course: "Click here for a text copy of the course."
+    lessons_in_this_course: "Lessons in This Course"
+    start_lesson: "Start Lesson"
+    lesson: "Lesson"
   lesson_page:
     percent_complete:
     skip_to_next_activity:

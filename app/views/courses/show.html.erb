@@ -13,13 +13,13 @@
 <div class="row">
   <div class="eightcol">
     <div class="course-details">
-      <div><i class="icon-pencil"></i><%= @course.lessons.count %> Lessons</div>
-      <div><i class="icon-clock"></i><%= @course.duration("Minutes") %></div>
-      <div><i class="icon-plus"></i><%= @course.level %></div>
+      <div><i class="icon-pencil"></i><%= @course.lessons.count %> <%= t('course_page.lessons') %></div>
+      <div><i class="icon-clock"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
+      <div><i class="icon-plus"></i><%= t("course_page.#{@course.level.downcase}") %></div>
     </div>
     <%# TODO: Fill in dynamic link when ready %>
-    <div><small>Contributed by <%= @course.contributor %></small></div>
-    <div><small>Topics: <%= @course.topics_str %></small></div>
+    <div><small><%= t('course_page.contributed_by') %> <%= @course.contributor %></small></div>
+    <div><small><%= t('course_page.topics') %>: <%= @course.topics_str %></small></div>
   </div>
 
   <div class="fourcol last align-right">
@@ -32,13 +32,13 @@
         </small></p>
       <% else%>
         <p class="course-edit-add-remove"><small>
-          <%= link_to "+ Add to your plan", course_add_path(@course), method: :post, data: { cpl_ga_event: "on", cpl_ga_value: "add-course-to-plan" } %>
+          <%= link_to "+ #{t('course_page.add_to_your_plan')}", course_add_path(@course), method: :post, data: { cpl_ga_event: "on", cpl_ga_value: "add-course-to-plan" } %>
         </small></p>
       <% end %>
 
-      <%= link_to "Start Course", course_start_path(@course), method: :post, class: "btn", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
+      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
     <% else %>
-      <%= link_to "Start Course", course_start_path(@course), method: :post, class: "btn unauth-start-course-button", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
+      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn unauth-start-course-button", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
     <% end %>
   </div>
 </div>
@@ -47,7 +47,7 @@
 
 <hr>
 
-<h2>Lessons in This Course</h2>
+<h2><%= t('course_page.lessons_in_this_course') %></h2>
 <%= render partial: "shared/lessons/grid", locals: { course: @course } %>
 <hr>
 
