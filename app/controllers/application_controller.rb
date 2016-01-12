@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
+  before_action :set_locale
   before_action :set_language
   before_action :set_cms_footer_pages
   before_action :redirect_chicago
@@ -32,6 +33,10 @@ class ApplicationController < ActionController::Base
     when "chicago"
       redirect_to root_url(subdomain: "chipublib")
     end
+  end
+
+  def set_locale
+    I18n.locale = session["locale"] || :en
   end
 
   private
