@@ -11,7 +11,7 @@
   </div>
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1>Hi <%=current_user.profile.first_name%>! Use a computer to do almost anything.</h1>
+    <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>! Use a computer to do almost anything.</h1>
   <% end %>
   <h1>
     Choose a course below to start learning, search courses, or visit

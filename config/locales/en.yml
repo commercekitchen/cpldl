@@ -49,7 +49,7 @@ en:
     confirm_your_account_through_link: "You can confirm your account email through the link below:"
     confirm_my_account: "Confirm my account"
   logged_in_user:
-    hi_logo_banner:
+    hi: Hi
     choose_a_course:
     hi_name:
     my_account:
