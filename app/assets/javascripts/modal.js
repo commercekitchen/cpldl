@@ -7,7 +7,7 @@ var Modal = (function($) {
       $("#" + modal_id).prop("checked", true).change();
       $("body").addClass("modal-open");
 
-      $(".modal-fade-screen, .modal-close").on("click", function() {
+      $(".modal-fade-screen, .modal-close, .modal-skip-button").on("click", function() {
         $(".modal-state:checked").prop("checked", false).change();
         $("body").removeClass("modal-open");
       });
