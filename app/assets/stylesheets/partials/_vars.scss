@@ -2,7 +2,9 @@ $white: #fff;
 $lightish-grey: #efefef;
 $light-grey: #eee;
 $medium-grey: #ddd;
-$grey: #A7A5A6;
+
+//Old gray was not ADA/WAI compliant on white
+$grey: #797677;
 $dark-grey: #666;
 $black: #000;
 

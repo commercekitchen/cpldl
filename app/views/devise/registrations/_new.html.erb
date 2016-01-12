@@ -1,4 +1,4 @@
-<h1>Sign Up</h1>
+<h2>Sign Up</h2>
 
 <p>
   Want to take a course, but don't have an account yet? It's easy to set one up.
@@ -9,29 +9,34 @@
   <%= devise_error_messages! %>
 
   <fieldset class="no-bottom-margin">
+    <%= f.label :email, "Email *", for: 'signup_email' %>
     <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "Email *" %>
   </fieldset>
 
   <p class="small-14 grey extra-bottom-margin">
-    Don't have an email address? <%= link_to "Click here", "http://digitallearn.org/learn/intro-email", target: "_blank" %> to open a tutorial in a new tab that explains how to set up an email account.
+    Don't have an email address? <%= link_to "Open a tutorial", "http://digitallearn.org/learn/intro-email", target: "_blank" %> in a new tab that explains how to set up an email account.
   </p>
 
   <% resource.build_profile %>
   <%= f.fields_for :profile do |p| %>
     <fieldset>
+      <%= f.label :first_name, "First Name *", for: 'user_profile_attributes_first_name' %>
       <%= p.text_field :first_name, placeholder: "First Name *" %>
     </fieldset>
 
     <fieldset>
+      <%= f.label :zip_code, "Zip Code *", for: 'user_profile_attributes_zip_code' %>
       <%= p.text_field :zip_code, placeholder: "Zip Code" %>
     </fieldset>
   <% end %>
 
   <fieldset>
+    <%= f.label :password, "Password *", for: 'signup_password' %>
     <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "Your Password *" %>
   </fieldset>
 
   <fieldset>
+    <%= f.label :password_confirmation, "Password Confirmation *", for: 'user_password_confirmation' %>
     <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "Re-enter Your Password *" %>
   </fieldset>
 

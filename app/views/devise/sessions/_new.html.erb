@@ -1,14 +1,16 @@
-<h1>Log In</h1>
+<h2>Log In</h2>
 
 <p>Already have an account? Log in using your email address and password below.</p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
   <fieldset>
+    <%= f.label :email, "Email *", for: 'login_email' %>
     <%= f.email_field :email, autofocus: true, id: "login_email", placeholder: "Email *" %>
   </fieldset>
 
   <fieldset>
+    <%= f.label :email, "Password *", for: 'login_password' %>
     <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "Password *" %>
   </fieldset>
 
