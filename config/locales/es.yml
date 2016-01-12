@@ -44,7 +44,9 @@ es:
     zip_code: "Código Postal"
     your_password: "Contraseña"
     re_enter_password: "Re-escriba su contraseña"
+  confirmation_email:
     welcome:
+    confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
     confirm_my_account:
   logged_in_user:
     hi_logo_banner:
