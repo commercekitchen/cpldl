@@ -1,4 +1,14 @@
 <%= render "shared/course_intro_text" %>
 <%= render partial: "shared/courses/listing", locals: { courses_completed: [] } %>
 
-<%= render partial: "shared/quiz_modal" if current_user %>
+<% if current_user && current_user.quiz_modal_complete == false %>
+  <%= render partial: "shared/quiz_modal" %>
+
+  <%= javascript_tag do %>
+    $(document).ready(function() {
+      Modal.open("quiz-start-modal");
+    });
+  <% end %>
+  
+  <% current_user.update_attribute(:quiz_modal_complete, true) %>
+<% end %>
