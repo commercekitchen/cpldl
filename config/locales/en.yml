@@ -57,11 +57,11 @@ en:
     my_courses: "My Courses"
     sign_out: "Sign Out"
   profile_page:
-    preferred_language:
-    save:
-    change_login_information:
-    update_profile:
-    my_completed_courses:
+    preferred_language: "Preferred Language"
+    save: "Save"
+    change_login_information: "Change Login Information"
+    update_profile: "Update Profile"
+    my_completed_courses: "My Completed Courses"
   change_login_page:
     leave_blank_to_not_change_password:
     password_confirmation:
