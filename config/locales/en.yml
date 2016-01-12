@@ -63,8 +63,8 @@ en:
     update_profile: "Update Profile"
     my_completed_courses: "My Completed Courses"
   change_login_page:
-    leave_blank_to_not_change_password:
-    password_confirmation:
+    leave_blank_to_not_change_password: "(Leave blank to not change. Passwords should be at least 8 characters long.)"
+    password_confirmation: "Password confirmation"
   completed_courses_page:
     course:
     date_completed:

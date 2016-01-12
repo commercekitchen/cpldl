@@ -63,8 +63,8 @@ es:
     update_profile: "Actualizar Perfil"
     my_completed_courses: "Mis Cursos Terminados"
   change_login_page:
-    leave_blank_to_not_change_password:
-    password_confirmation:
+    leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
+    password_confirmation: "Confirmar contraseña"
   completed_courses_page:
     course:
     date_completed:
