@@ -34,7 +34,7 @@ es:
     password: "Contraseña"
     keep_me_logged_in: "No cerrar sesión"
     hide_password: "Ocultar contraseña"
-    access_courses:
+    access_courses: "Accesar Cursos"
     forgot_password:
     want_to_take_a_course:
     dont_have_email:
