@@ -50,8 +50,9 @@ en:
     confirm_my_account: "Confirm my account"
   logged_in_user:
     hi: Hi
-    choose_a_course:
-    hi_name:
+    choose_a_course: "Choose a course below to start learning, search courses, or visit"
+    my_courses_link: "My Courses"
+    view_your_customized_plan: "to view your customized learning plan."
     my_account:
     my_courses:
     sign_out:
