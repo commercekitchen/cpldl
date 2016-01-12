@@ -4,7 +4,7 @@ fieldset {
 
 label {
   color: $teal;
-  font-size: 1.5em;
+  font-size: 1em;
   margin-bottom: .5em;
   display: block;
 }
@@ -83,6 +83,10 @@ button, input[type="submit"], .btn {
   &.btn-blue {
     background-color: $teal;
   }
+}
+
+.btn-signup-link {
+  color: $white;
 }
 
 select {

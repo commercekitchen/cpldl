@@ -3,7 +3,7 @@
 <small>Admin >> Pages >> Edit Page</small>
 
 <% if params[:commit] == "Preview Page" %>
-  <h1>Page Preview</h1>
+  <h2>Page Preview</h2>
 <% end %>
 
 <% if params[:commit] == "Preview Page" %>
@@ -15,7 +15,7 @@
 <%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
   <% if @cms_page.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <h3><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h3>
       <ul>
       <% @cms_page.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -25,9 +25,9 @@
   <% end %>
 
   <% if params[:commit] == "Preview Page" %>
-    <h2>Page Information</h2>
+    <h3>Page Information</h3>
   <% else %>
-    <h1>Page Information</h1>
+    <h3>Page Information</h3>
   <% end %>
 
   <div class="tencol">

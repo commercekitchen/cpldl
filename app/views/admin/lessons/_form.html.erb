@@ -1,6 +1,6 @@
 <small>Admin >> Courses >> Course Title >> Lessons</small>
 
-<h1>Edit Lesson</h1>
+<h2>Edit Lesson</h2>
 
 <%= form_for( [:admin, @course, @lesson], html: { multipart: true } ) do |f| %>
   <% if @lesson.errors.any? %>
