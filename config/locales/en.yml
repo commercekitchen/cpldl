@@ -31,7 +31,7 @@ en:
   login_signup:
     already_have_an_account: "Already have an account? Log in using your email address and password below."
     email: "Email"
-    password:
+    password: "Password"
     keep_me_logged_in:
     hide_password:
     access_courses:

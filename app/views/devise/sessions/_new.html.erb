@@ -9,7 +9,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "Password *" %>
+    <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
   </fieldset>
 
   <% if devise_mapping.rememberable? -%>

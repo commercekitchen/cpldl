@@ -24,7 +24,7 @@
 
   <fieldset>
     <%= f.label :password do %>
-      Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
+      <%= t('login_signup.password') %> <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
     <% end %>
     <%= f.text_field :password, autocomplete: "off", class: "strength" %>
     <span class="password-indicator"></span>
