@@ -41,7 +41,7 @@ es:
     click_here: "De clic aquí"
     open_a_tutorial: "para ver un video que le enseñará cómo crear una."
     first_name: "Nombre"
-    zip_code:
+    zip_code: "Código Postal"
     your_password:
     re_enter_password:
   site_messages:

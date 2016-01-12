@@ -41,7 +41,7 @@ en:
     click_here: "Click here"
     open_a_tutorial: "to open a tutorial in a new tab that explains how to set up an email account."
     first_name: "First Name"
-    zip_code:
+    zip_code: "Zip Code"
     your_password:
     re_enter_password:
   site_messages:
