@@ -37,7 +37,9 @@ en:
     access_courses: "Access Courses"
     forgot_password: "Forgot your password?"
     want_to_take_a_course: "Want to take a course, but don't have an account yet? It's easy to set one up. Just fill out the fields below."
-    dont_have_email:
+    dont_have_email: "Don't have an email address?"
+    click_here: "Click here"
+    open_a_tutorial: "to open a tutorial in a new tab that explains how to set up an email account."
     first_name:
     zip_code:
     your_password:

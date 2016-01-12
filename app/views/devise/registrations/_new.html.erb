@@ -12,7 +12,7 @@
   </fieldset>
 
   <p class="small-14 grey extra-bottom-margin">
-    Don't have an email address? <%= link_to "Click here", "http://digitallearn.org/learn/intro-email", target: "_blank" %> to open a tutorial in a new tab that explains how to set up an email account.
+    <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "http://digitallearn.org/learn/intro-email", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
   </p>
 
   <% resource.build_profile %>

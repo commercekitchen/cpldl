@@ -37,7 +37,9 @@ es:
     access_courses: "Accesar Cursos"
     forgot_password: "¿Olvidó su contraseña?"
     want_to_take_a_course: "¿Quiere tomar un curso, pero no tiene una cuenta con nosotros? Es fácil crearla. Sólo llene los espacios indicados abajo."
-    dont_have_email:
+    dont_have_email: "¿No tiene una cuenta de correo electrónico?"
+    click_here: "De clic aquí"
+    open_a_tutorial: "para ver un video que le enseñará cómo crear una."
     first_name:
     zip_code:
     your_password:
