@@ -107,3 +107,7 @@ es:
     view_all_courses: "Ver todos los cursos"
     download_certificate: "Descargar Mi Certificado"
     restart_this_course: "Repetir este curso"
+  certificate:
+    this_award: "Este diploma certifica que"
+    has_completed: "ha culminado la clase de"
+    as_of: "en el mes de"

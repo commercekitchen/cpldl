@@ -21,17 +21,17 @@
       <div class="cert-preview hide-on-tablet">
         <div class="cert-inner">
           <div>
-            <h1>Certificate of Completion</h1>
+            <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
             <p>
-              This award certifies that
+              <%= t('certificate.this_award') %>
             </p>
             <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
             <p>
-              has completed:
+              <%= t('certificate.has_completed') %>
             </p>
             <%= content_tag :h2, "#{@course.title}", class: "course" %>
             <p>
-              as of <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
+              <%= t('certificate.as_of') %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
             </p>
             <%= image_tag "dl_logo.png" %>
           </div>
