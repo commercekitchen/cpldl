@@ -1,4 +1,4 @@
-<h1>Sign Up</h1>
+<h1><%= t('home.signup') %></h1>
 
 <p>
   Want to take a course, but don't have an account yet? It's easy to set one up.
@@ -40,6 +40,6 @@
     <%= label_tag('hide_signup_pass', 'Hide password', class: 'plain') %>
   </fieldset>
 
-  <%= f.submit "Sign Up" %>
+  <%= f.submit "#{t('home.signup')}" %>
 
 <% end %>
