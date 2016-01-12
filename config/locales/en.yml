@@ -24,8 +24,8 @@ en:
     logo_banner: "Use a computer to do almost anything!"
     login: "Log In"
     signup: "Sign Up"
-    choose_a_course: Choose a course below to start learning or search courses.
-    new_to_computers:
+    choose_a_course: "Choose a course below to start learning or search courses."
+    new_to_computers: "If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed."
     search_courses:
     mins_abbr:
   login_signup:

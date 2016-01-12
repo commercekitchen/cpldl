@@ -25,7 +25,7 @@ es:
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     choose_a_course:
-    new_to_computers:
+    new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses:
     mins_abbr:
   login_signup:
