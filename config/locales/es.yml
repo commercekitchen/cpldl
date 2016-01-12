@@ -97,15 +97,13 @@ es:
     start_lesson: "Empezar la actividad"
     lesson: "Actividad"
   lesson_page:
-    percent_complete:
-    skip_to_next_activity:
-    click_here_for_text_copy_activity:
-    course:
-    share_this_course:
+    percent_complete: "% Avance"
+    skip_to_next_lesson: "Pasar a la siguiente actividad >>"
   course_completion_page:
-    practice_new_skills:
-    you_successfully_completed:
-    return_to_my_courses:
-    view_all_courses:
-    download_certificate:
-    restart_this_course:
+    practice_new_skills: "¡Practica y usa tus nuevas habilidades! (Da clic en cada liga abajo)"
+    congratulations: "Felicitaciones"
+    you_successfully_completed: "Ha completado la Actividad"
+    return_to_my_courses: "Regresar a Mis Cursos"
+    view_all_courses: "Ver todos los cursos"
+    download_certificate: "Descargar Mi Certificado"
+    restart_this_course: "Repetir este curso"
