@@ -22,8 +22,8 @@
 es:
   home:
     logo_banner: "Use la computadora para hacer casi todo!"
-    login:
-    signup:
+    login: "Iniciar sesión"
+    signup: "Crear una cuenta"
     choose_a_class:
     new_to_computers:
     search_courses:

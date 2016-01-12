@@ -22,8 +22,8 @@
 en:
   home:
     logo_banner: "Use a computer to do almost anything!"
-    login:
-    signup:
+    login: "Log In"
+    signup: "Sign Up"
     choose_a_class:
     new_to_computers:
     search_courses:
