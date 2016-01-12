@@ -19,9 +19,9 @@
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
 
-en:
+es:
   home:
-    logo_banner: "Use a computer to do almost anything!"
+    logo_banner: "Use la computadora para hacer casi todo!"
     login:
     signup:
     choose_a_class:
