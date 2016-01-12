@@ -630,7 +630,8 @@ CREATE TABLE users (
     locked_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    profile_id integer
+    profile_id integer,
+    quiz_modal_complete boolean DEFAULT false
 );
 
 
@@ -1133,4 +1134,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151124211721');
 INSERT INTO schema_migrations (version) VALUES ('20151201005018');
 
 INSERT INTO schema_migrations (version) VALUES ('20151203004228');
+
+INSERT INTO schema_migrations (version) VALUES ('20160112013224');
 

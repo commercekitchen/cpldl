@@ -1,3 +1,26 @@
+# == Schema Information
+#
+# Table name: courses
+#
+#  id             :integer          not null, primary key
+#  title          :string(90)
+#  seo_page_title :string(90)
+#  meta_desc      :string(156)
+#  summary        :string(156)
+#  description    :text
+#  contributor    :string
+#  pub_status     :string           default("D")
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  language_id    :integer
+#  level          :string
+#  notes          :text
+#  slug           :string
+#  course_order   :integer
+#  pub_date       :datetime
+#  format         :string
+#
+
 class CoursesController < ApplicationController
 
   # before_action :authenticate_user!, only: [:your, :completed, :start]
@@ -113,7 +136,40 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
-    # TODO: Logic for quiz submission.
+    # Finds and bulk adds relevant core desktop topics
+    case params["set_one"]
+    when "1"
+      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Beginner", pub_status: "P"))
+    when "2"
+      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Intermediate", pub_status: "P"))
+    end
+
+    # Finds and bulk adds relevant core mobile topics
+    case params["set_two"]
+    when "1"
+      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Beginner", pub_status: "P"))
+    when "2"
+      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Intermediate", pub_status: "P"))
+    end
+
+    # Finds and bulk adds topic_specific courses
+    set_three_topics = { 1 => "Information Searching",
+                         2 => "Communication Social Media",
+                         3 => "Productivity",
+                         4 => "Job Search",
+                         5 => "Software Apps" }
+
+    bulk_add_courses(Course.topic_search(set_three_topics[params["set_three"].to_i]).where(pub_status: "P"))
+
+    # Send them back to "My Courses" page
     redirect_to your_courses_path
+  end
+
+  def bulk_add_courses(course_collection)
+    course_collection.each do |course|
+      course_progress = current_user.course_progresses.where(course_id: course.id).first_or_create
+      course_progress.tracked = true
+      course_progress.save
+    end
   end
 end

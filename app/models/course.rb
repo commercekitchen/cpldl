@@ -29,6 +29,11 @@ class Course < ActiveRecord::Base
   include PgSearch
   multisearchable against: [:title, :summary, :description, :topics_str, :level]
 
+  pg_search_scope :topic_search, associated_against: { topics: :title },
+                                 using: {
+                                   tsearch: { any_word: true }
+                                 }
+
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text
 
