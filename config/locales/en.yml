@@ -29,7 +29,7 @@ en:
     search_courses: "Search Courses by Keyword"
     mins_abbr: "mins"
   login_signup:
-    already_have_an_account:
+    already_have_an_account: "Already have an account? Log in using your email address and password below."
     email:
     password:
     keep_me_logged_in:
