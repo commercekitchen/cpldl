@@ -33,7 +33,7 @@ en:
     email: "Email"
     password: "Password"
     keep_me_logged_in: "Keep me logged in"
-    hide_password:
+    hide_password: "Hide password"
     access_courses:
     forgot_password:
     want_to_take_a_course:

@@ -33,7 +33,7 @@ es:
     email: "Correo electrónico"
     password: "Contraseña"
     keep_me_logged_in: "No cerrar sesión"
-    hide_password:
+    hide_password: "Ocultar contraseña"
     access_courses:
     forgot_password:
     want_to_take_a_course:
