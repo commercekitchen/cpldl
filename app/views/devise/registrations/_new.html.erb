@@ -36,7 +36,7 @@
 
   <fieldset>
     <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
-    <%= label_tag('hide_signup_pass', 'Hide password', class: 'plain') %>
+    <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
   </fieldset>
 
   <%= f.submit "#{t('home.signup')}" %>
