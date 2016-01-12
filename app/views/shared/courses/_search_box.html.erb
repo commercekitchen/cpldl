@@ -1,6 +1,6 @@
 <div class="search-box">
   <%= form_tag courses_path, method: :get do %>
-    <%= search_field_tag :search, params[:search], placeholder: "Search courses by keyword" %>
+    <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
     <i class="icon-search grey"></i>
     <%= submit_tag "Search", id: "search_btn" %>
   <% end %>
