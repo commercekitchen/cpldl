@@ -33,11 +33,11 @@ describe CoursesHelper do
     end
 
     it "returns an empty string if the user doesnt have a course progress for the course" do
-      expect(helper.percent_complete(@course2)).to eq("0% complete")
+      expect(helper.percent_complete(@course2)).to eq("0% Complete")
     end
 
     it "returns the course progress" do
-      expect(helper.percent_complete(@course)).to eq("0% complete")
+      expect(helper.percent_complete(@course)).to eq("0% Complete")
     end
   end
 end

@@ -22,9 +22,9 @@ feature "User is able to view the courses in their plan" do
 
     scenario "should always have the option to learn more" do
       visit your_courses_path
-      expect(page).to have_content("Ready to learn more?")
+      expect(page).to have_content("Ready to Learn More?")
       expect(page).to have_content("Find new courses when you retake the quiz")
-      expect(page).to have_link("Retake the quiz")
+      expect(page).to have_link("Retake the Quiz")
     end
 
   end
