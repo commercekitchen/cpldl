@@ -74,10 +74,14 @@ en:
     have_you_completed_most_courses: "Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses."
     retake_the_quiz: "Retake the Quiz"
   my_courses_page:
-    my_plan_click_to_start:
-    purple_and_grey_courses:
-    ready_to_learn_more:
-    find_new_courses_retake_quiz:
+    my_plan_click_to_start: "My Plan: Click on a course below and get started!"
+    purple_and_gray_courses: "Purple courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+    click_here_to_homepage: "click here to go to the homepage."
+    completed_most_courses: "Have you completed most of the courses? If so,"
+    click_here_to_quiz: "click here to retake the quiz"
+    well_suggest_more_courses: "and we'll suggest even more courses."
+    ready_to_learn_more: "Ready to Learn More?"
+    find_new_courses_retake_quiz: "Find new courses when you retake the quiz"
   course_page:
     add_to_your_plan:
     activites:

@@ -74,10 +74,14 @@ es:
     have_you_completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones, responda las preguntas otra vez y le sugeriremos más cursos."
     retake_the_quiz: "Volver a Responder el Cuestionario"
   my_courses_page:
-    my_plan_click_to_start:
-    purple_and_grey_courses:
-    ready_to_learn_more:
-    find_new_courses_retake_quiz:
+    my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
+    purple_and_gray_courses: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    click_here_to_homepage: "de clic aquí para regresar a la página principal."
+    completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
+    click_here_to_quiz: "responda el questionario otra vez"
+    well_suggest_more_courses: "y le sugeriremos más cursos."
+    ready_to_learn_more: "¿Listo para aprender más?"
+    find_new_courses_retake_quiz: "Encuntre cursos nuevos respondiendo el questionario otra vez."
   course_page:
     add_to_your_plan:
     activites:
