@@ -43,12 +43,6 @@ es:
     first_name: "Nombre"
     zip_code: "Código Postal"
     your_password: "Contraseña"
-  site_messages:
-    confirmation_link:
-    confirm_email_first:
-    invalid_email_or_password:
-    email_confirmation_success:
-    signed_out_successfully:
     re_enter_password: "Re-escriba su contraseña"
     welcome:
     confirm_my_account:

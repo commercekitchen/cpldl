@@ -44,12 +44,6 @@ en:
     zip_code: "Zip Code"
     your_password: "Your Password"
     re_enter_password: "Re-enter Your Password"
-  site_messages:
-    confirmation_link:
-    confirm_email_first:
-    invalid_email_or_password:
-    email_confirmation_success:
-    signed_out_successfully:
     welcome:
     confirm_my_account:
   logged_in_user:
