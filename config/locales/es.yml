@@ -30,7 +30,7 @@ es:
     mins_abbr: "min"
   login_signup:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
-    email:
+    email: "Correo electrónico"
     password:
     keep_me_logged_in:
     hide_password:
