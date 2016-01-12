@@ -13,7 +13,7 @@
       <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path %> |
       <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
       <%= link_to "#{t('logged_in_user.my_courses')}", your_courses_path %> |
-      <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
+      <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
     </nav>
   </div>
 </header>
