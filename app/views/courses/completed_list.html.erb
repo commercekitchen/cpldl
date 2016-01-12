@@ -1,14 +1,14 @@
-<h1>My Completed Courses</h1>
+<h1><%= t('profile_page.my_completed_courses') %></h1>
 
 <div class="row no-margin">
   <div class="one-third">
-    <h2>Course</h2>
+    <h2><%= t('completed_courses_page.course') %></h2>
   </div>
   <div class="one-third">
-    <h2>Date Completed</h2>
+    <h2><%= t('completed_courses_page.date_completed') %></h2>
   </div>
   <div class="one-third">
-    <h2>Certificate of Completion</h2>
+    <h2><%= t('completed_courses_page.certificate_of_completion') %></h2>
   </div>
 </div>
 
@@ -27,17 +27,17 @@
   </div>
 <% end %>
 
-<h1>Update Course Recommendations</h1>
+<h1><%= t('completed_courses_page.update_course_recommendations') %></h1>
 <p class="shorty">
-  When you signed up for an account, you took a quiz that helped us recommend courses for you to take.
+  <%= t('completed_courses_page.when_you_signed_up_quiz') %>
 </p>
 <p class="shorty">
-  Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses.
+  <%= t('completed_courses_page.have_you_completed_most_courses') %>
 </p>
 <div class="row">
   <div>
-    <%= link_to "#" do %>
-      <%= button_tag("Retake the Quiz", type: "button") %>
+    <%= link_to courses_quiz_path do %>
+      <%= button_tag("#{t('completed_courses_page.retake_the_quiz')}", type: "button") %>
     <% end %>
   </div>
 </div>

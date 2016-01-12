@@ -66,13 +66,13 @@ en:
     leave_blank_to_not_change_password: "(Leave blank to not change. Passwords should be at least 8 characters long.)"
     password_confirmation: "Password confirmation"
   completed_courses_page:
-    course:
-    date_completed:
-    certificate_of_completion:
-    update_course_recommendations:
-    when_you_signed_up_quiz:
-    have_you_completed_most_courses:
-    retake_the_quiz:
+    course: "Course"
+    date_completed: "Date Completed"
+    certificate_of_completion: "Certificate of Completion"
+    update_course_recommendations: "Update Course Recommendations"
+    when_you_signed_up_quiz: "When you signed up for an account, you took a quiz that helped us recommend courses for you to take."
+    have_you_completed_most_courses: "Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses."
+    retake_the_quiz: "Retake the Quiz"
   my_courses_page:
     my_plan_click_to_start:
     purple_and_grey_courses:

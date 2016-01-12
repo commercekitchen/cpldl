@@ -66,13 +66,13 @@ es:
     leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
     password_confirmation: "Confirmar contraseña"
   completed_courses_page:
-    course:
-    date_completed:
-    certificate_of_completion:
-    update_course_recommendations:
-    when_you_signed_up_quiz:
-    have_you_completed_most_courses:
-    retake_the_quiz:
+    course: "Curso"
+    date_completed: "Fecha de terminación"
+    certificate_of_completion: "Certificado de Culminación"
+    update_course_recommendations: "Actualizar Cursos Recomendados"
+    when_you_signed_up_quiz: "Cuando creó su cuenta, respondió un questionario que nos ayudó a recomendarle cursos útiles para usted."
+    have_you_completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones, responda las preguntas otra vez y le sugeriremos más cursos."
+    retake_the_quiz: "Volver a Responder el Cuestionario"
   my_courses_page:
     my_plan_click_to_start:
     purple_and_grey_courses:
