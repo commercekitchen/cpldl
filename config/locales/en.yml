@@ -45,7 +45,7 @@ en:
     your_password: "Your Password"
     re_enter_password: "Re-enter Your Password"
   confirmation_email:
-    welcome:
+    welcome: "Welcome"
     confirm_your_account_through_link: "You can confirm your account email through the link below:"
     confirm_my_account:
   logged_in_user:

@@ -45,7 +45,7 @@ es:
     your_password: "Contraseña"
     re_enter_password: "Re-escriba su contraseña"
   confirmation_email:
-    welcome:
+    welcome: "Bienvenido"
     confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
     confirm_my_account:
   logged_in_user:
