@@ -32,7 +32,7 @@ es:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
     email: "Correo electrónico"
     password: "Contraseña"
-    keep_me_logged_in:
+    keep_me_logged_in: "No cerrar sesión"
     hide_password:
     access_courses:
     forgot_password:

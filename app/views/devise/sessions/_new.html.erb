@@ -15,7 +15,7 @@
   <% if devise_mapping.rememberable? -%>
     <fieldset>
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "Keep me logged in", class: "plain" %>
+      <%= f.label :remember_me, "#{t('login_signup.keep_me_logged_in')}", class: "plain" %>
       <%= check_box_tag('hide_signin_pass', '1', false, onchange: 'hide_login_password(this);') %>
       <%= label_tag('hide_signin_pass', 'Hide password', class: 'plain') %>
     </fieldset>

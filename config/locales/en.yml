@@ -32,7 +32,7 @@ en:
     already_have_an_account: "Already have an account? Log in using your email address and password below."
     email: "Email"
     password: "Password"
-    keep_me_logged_in:
+    keep_me_logged_in: "Keep me logged in"
     hide_password:
     access_courses:
     forgot_password:
