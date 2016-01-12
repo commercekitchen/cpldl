@@ -40,7 +40,7 @@ es:
     dont_have_email: "¿No tiene una cuenta de correo electrónico?"
     click_here: "De clic aquí"
     open_a_tutorial: "para ver un video que le enseñará cómo crear una."
-    first_name:
+    first_name: "Nombre"
     zip_code:
     your_password:
     re_enter_password:

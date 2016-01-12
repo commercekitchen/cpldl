@@ -18,7 +18,7 @@
   <% resource.build_profile %>
   <%= f.fields_for :profile do |p| %>
     <fieldset>
-      <%= p.text_field :first_name, placeholder: "First Name *" %>
+      <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
     </fieldset>
 
     <fieldset>
