@@ -1,5 +1,5 @@
 <% if user_signed_in? && current_user.is_admin? %>
-  <%= content_for(:callout) { %><h2>Hi Admin! Use a computer to do almost anything!</h2><% } %>
+  <%= content_for(:callout) { %><h1>Hi Admin! Use a computer to do almost anything!</h1><% } %>
   <h2>
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
@@ -11,7 +11,7 @@
   </div>
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h2>Hi <%=current_user.profile.first_name%>! Use a computer to do almost anything.</h2>
+    <h1>Hi <%=current_user.profile.first_name%>! Use a computer to do almost anything.</h1>
   <% end %>
   <h2>
     Choose a course below to start learning, search courses, or visit
