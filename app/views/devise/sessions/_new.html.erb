@@ -1,29 +1,29 @@
-<h1>Log In</h1>
+<h1><%= t('home.login') %></h1>
 
-<p>Already have an account? Log in using your email address and password below.</p>
+<p><%= t('login_signup.already_have_an_account') %></p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
   <fieldset>
-    <%= f.email_field :email, autofocus: true, id: "login_email", placeholder: "Email *" %>
+    <%= f.email_field :email, autofocus: true, id: "login_email", placeholder: "#{t('login_signup.email')} *" %>
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "Password *" %>
+    <%= f.text_field :password, autocomplete: "off", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
   </fieldset>
 
   <% if devise_mapping.rememberable? -%>
     <fieldset>
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, "Keep me logged in", class: "plain" %>
+      <%= f.label :remember_me, "#{t('login_signup.keep_me_logged_in')}", class: "plain" %>
       <%= check_box_tag('hide_signin_pass', '1', false, onchange: 'hide_login_password(this);') %>
-      <%= label_tag('hide_signin_pass', 'Hide password', class: 'plain') %>
+      <%= label_tag('hide_signin_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
     </fieldset>
   <% end -%>
 
-  <%= f.submit "Access Courses" %>
+  <%= f.submit "#{t('login_signup.access_courses')}" %>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <p><%= link_to "Forgot your password?", new_password_path(resource_name) %></p>
+  <p><%= link_to "#{t('login_signup.forgot_password')}", new_password_path(resource_name) %></p>
 <% end -%>

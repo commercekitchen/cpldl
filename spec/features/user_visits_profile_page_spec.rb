@@ -30,8 +30,8 @@ feature "Registered user visits account page" do
     FactoryGirl.create(:language)
 
     visit profile_path
-    fill_in "First name", with: "Alex"
-    fill_in "Zip code", with: "12345"
+    fill_in "First Name", with: "Alex"
+    fill_in "Zip Code", with: "12345"
     select("English", from: "profile_language_id")
     click_button "Save"
 

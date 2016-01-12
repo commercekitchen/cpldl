@@ -1,5 +1,5 @@
 <% if user_signed_in? && current_user.is_admin? %>
-  <%= content_for(:callout) { %><h1>Hi Admin! Use a computer to do almost anything!</h1><% } %>
+  <%= content_for(:callout) { %><h1>Hi Admin! <%= t('home.logo_banner') %></h1><% } %>
   <h1>
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
@@ -11,11 +11,11 @@
   </div>
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1>Hi <%=current_user.profile.first_name%>! Use a computer to do almost anything.</h1>
+    <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>! <%= t("home.logo_banner") %></h1>
   <% end %>
   <h1>
-    Choose a course below to start learning, search courses, or visit
-    <%= link_to "My Courses", your_courses_path %> to view your customized learning plan.
+    <%= t('logged_in_user.choose_a_course') %>
+    <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
 
   <div class="row no-bottom-margin">
@@ -24,10 +24,10 @@
     </div>
   </div>
 <% else %>
-  <h1>Choose a course below to start learning or search courses.</h1>
+  <h1><%= t('home.choose_a_course') %></h1>
 
   <div class="clearfix">
-    <p class="no-top-margin left-two-thirds">If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed.</p>
+    <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
 
     <%= render partial: "shared/courses/search_box" %>
   </div>

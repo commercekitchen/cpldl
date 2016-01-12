@@ -39,9 +39,9 @@ module CoursesHelper
     if user_signed_in?
       course_progress = current_user.course_progresses.find_by_course_id(course.id)
       if course_progress.present?
-        return "#{course_progress.percent_complete}% complete"
+        return "#{course_progress.percent_complete}#{I18n.t 'lesson_page.percent_complete'}"
       else
-        return "0% complete"
+        return "0#{I18n.t 'lesson_page.percent_complete'}"
       end
     end
     ""

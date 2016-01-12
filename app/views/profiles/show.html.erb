@@ -15,23 +15,27 @@
 
   <fieldset>
     <%= f.label :language_id do %>
-      Preferred Language<span class="required"></span>
+      <%= t('profile_page.preferred_language') %><span class="required"></span>
     <% end %>
     <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :first_name %>
+    <%= f.label :first_name do %>
+      <%= t('login_signup.first_name') %>
+    <% end %>
     <%= f.text_field :first_name %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :zip_code %>
+    <%= f.label :zip_code do %>
+      <%= t('login_signup.zip_code') %>
+    <% end %>
     <%= f.text_field :zip_code %>
   </fieldset>
 
   <fieldset>
-    <%= f.submit "Save" %>
+    <%= f.submit "#{t('profile_page.save')}" %>
   </fieldset>
 
 <% end %>

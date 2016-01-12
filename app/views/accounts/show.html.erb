@@ -1,4 +1,4 @@
-<h1>My Account</h1>
+<h1><%= t('logged_in_user.my_account') %></h1>
 
 <%= form_for @user, url: account_path, method: :put do |f| %>
 
@@ -14,7 +14,9 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :email %>
+    <%= f.label :email do %>
+      <%= t('login_signup.email') %>
+    <% end %>
     <%= f.email_field :email, autofocus: true %>
   </fieldset>
 
@@ -24,14 +26,16 @@
 
   <fieldset>
     <%= f.label :password do %>
-      Password <i class="note">(Leave blank to not change. Passwords should be at least 8 characters long.)</i>
+      <%= t('login_signup.password') %> <i class="note"><%= t('change_login_page.leave_blank_to_not_change_password') %></i>
     <% end %>
     <%= f.text_field :password, autocomplete: "off", class: "strength" %>
     <span class="password-indicator"></span>
   </fieldset>
 
   <fieldset>
-    <%= f.label :password_confirmation %>
+    <%= f.label :password_confirmation do %>
+      <%= t('change_login_page.password_confirmation') %>
+    <% end %>
     <%= f.text_field :password_confirmation %>
   </fieldset>
 

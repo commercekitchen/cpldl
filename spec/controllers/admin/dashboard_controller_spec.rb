@@ -60,7 +60,7 @@ describe Admin::DashboardController do
 
     it "assigns all users as @users with an empty params" do
       get :users_index, {}
-      expect(assigns(:users)).to eq([@user, @user1, @user2, @user3])
+      expect(assigns(:users)).to include(@user, @user1, @user2, @user3)
     end
 
     it "assigns search results to @users" do

@@ -14,7 +14,7 @@
 
   <fieldset>
     <%= f.label :password do %>
-      Password <i class="note">(leave blank if you don't want to change it)</i>
+      <%= t('login_signup.password') %> <i class="note">(leave blank if you don't want to change it)</i>
     <% end %>
     <%= f.text_field :password, autocomplete: "off" %>
   </fieldset>

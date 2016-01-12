@@ -1,0 +1,113 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+es:
+  home:
+    logo_banner: "Use la computadora para hacer casi todo!"
+    login: "Iniciar sesión"
+    signup: "Crear una cuenta"
+    choose_a_course:
+    new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
+    search_courses: "¿Qué le gustaría aprender hoy?"
+    mins_abbr: "min"
+  login_signup:
+    already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
+    email: "Correo electrónico"
+    password: "Contraseña"
+    keep_me_logged_in: "No cerrar sesión"
+    hide_password: "Ocultar contraseña"
+    access_courses: "Accesar Cursos"
+    forgot_password: "¿Olvidó su contraseña?"
+    want_to_take_a_course: "¿Quiere tomar un curso, pero no tiene una cuenta con nosotros? Es fácil crearla. Sólo llene los espacios indicados abajo."
+    dont_have_email: "¿No tiene una cuenta de correo electrónico?"
+    click_here: "De clic aquí"
+    open_a_tutorial: "para ver un video que le enseñará cómo crear una."
+    first_name: "Nombre"
+    zip_code: "Código Postal"
+    your_password: "Contraseña"
+    re_enter_password: "Re-escriba su contraseña"
+  confirmation_email:
+    welcome: "Bienvenido"
+    confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+    confirm_my_account: "Confirmar mi cuenta"
+  logged_in_user:
+    hi: "Hola"
+    choose_a_course:
+    my_courses_link:
+    view_your_customized_plan:
+    my_account: "Mi Cuenta"
+    my_courses: "Mis Cursos"
+    sign_out: "Salir"
+  profile_page:
+    preferred_language: "Idioma de preferencia"
+    save: "Guardar"
+    change_login_information: "Cambiar Información de Ingreso"
+    update_profile: "Actualizar Perfil"
+    my_completed_courses: "Mis Cursos Terminados"
+  change_login_page:
+    leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
+    password_confirmation: "Confirmar contraseña"
+  completed_courses_page:
+    course: "Curso"
+    date_completed: "Fecha de terminación"
+    certificate_of_completion: "Certificado de Culminación"
+    update_course_recommendations: "Actualizar Cursos Recomendados"
+    when_you_signed_up_quiz: "Cuando creó su cuenta, respondió un questionario que nos ayudó a recomendarle cursos útiles para usted."
+    have_you_completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones, responda las preguntas otra vez y le sugeriremos más cursos."
+    retake_the_quiz: "Volver a Responder el Cuestionario"
+  my_courses_page:
+    my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
+    purple_and_gray_courses: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    click_here_to_homepage: "de clic aquí para regresar a la página principal."
+    completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
+    click_here_to_quiz: "responda el questionario otra vez"
+    well_suggest_more_courses: "y le sugeriremos más cursos."
+    ready_to_learn_more: "¿Listo para aprender más?"
+    find_new_courses_retake_quiz: "Encuntre cursos nuevos respondiendo el questionario otra vez."
+  course_page:
+    add_to_your_plan: "Agregar a Mi Plan Personal"
+    lessons: "Actividades"
+    minutes: "Minutos"
+    contributed_by: "Creado por"
+    beginner: "Básico"
+    intermediate: "Intermedio"
+    advanced: "Avanzado"
+    topics: "Temas"
+    start_course: "Empezar el Curso"
+    click_here_for_text_copy_course: "Da click aquí para abrir la version de texto del curso."
+    lessons_in_this_course: "Actividades en este curso"
+    start_lesson: "Empezar la actividad"
+    lesson: "Actividad"
+  lesson_page:
+    percent_complete: "% Avance"
+    skip_to_next_lesson: "Pasar a la siguiente actividad >>"
+  course_completion_page:
+    practice_new_skills: "¡Practica y usa tus nuevas habilidades! (Da clic en cada liga abajo)"
+    congratulations: "Felicitaciones"
+    you_successfully_completed: "Ha completado la Actividad"
+    return_to_my_courses: "Regresar a Mis Cursos"
+    view_all_courses: "Ver todos los cursos"
+    download_certificate: "Descargar Mi Certificado"
+    restart_this_course: "Repetir este curso"
+  certificate:
+    this_award: "Este diploma certifica que"
+    has_completed: "ha culminado la clase de"
+    as_of: "en el mes de"

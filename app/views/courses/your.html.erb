@@ -1,16 +1,15 @@
-<h1>My Plan: Click on a course below and get started!</h1>
+<h1><%= t('my_courses_page.my_plan_click_to_start') %></h1>
 
 <p>
-  Purple courses need to be completed.  Gray courses have already been completed.
-  To add more to your plan, <%= link_to "click here to go to the homepage.", root_path %>
-  Have you completed most of the courses? If so, <%= link_to "click here to retake the quiz", "#" %>
-  and we'll suggest even more courses.
+  <%= t('my_courses_page.purple_and_gray_courses') %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path %>
+  <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path %>
+  <%= t('my_courses_page.well_suggest_more_courses') %>
 </p>
   <div class="row no-bottom-margin">
     <div class="right-third">
       <div class="search-box">
         <%= form_tag your_courses_path, method: :get do %>
-          <%= search_field_tag :search, params[:search], placeholder: "Search courses by keyword" %>
+          <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
           <i class="icon-search grey"></i>
           <%= submit_tag "Search", id: "search_btn" %>
         <% end %>

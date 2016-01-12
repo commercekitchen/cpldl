@@ -1,5 +1,5 @@
 <div class="course-progress">
-  <header>Course: <%= course.title %></header>
+  <header><%= t('completed_courses_page.course') %>: <%= course.title %></header>
   <div class="progress-bar">
     <span class="meter" style="width: <%= course_progress.percent_complete %>%;"></span>
     <% lesson_count = course.lessons.count %>
@@ -15,10 +15,10 @@
     </span>
   </div>
   <footer>
-    <span class="percent-complete"><%= course_progress.percent_complete %>% Complete</span>
+    <span class="percent-complete"><%= course_progress.percent_complete %><%= t('lesson_page.percent_complete') %></span>
     <span class="next-lesson-link">
       <% unless lesson.is_assessment %>
-        <%= link_to "Skip to next lesson >>",
+        <%= link_to "#{t('lesson_page.skip_to_next_lesson')}",
           course_lesson_path(course, course.next_lesson_id(lesson.id)), class: "inverted" %>
       <% end %>
     </span>

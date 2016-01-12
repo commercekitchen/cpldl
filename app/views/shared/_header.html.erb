@@ -13,11 +13,11 @@
           <% if content_for?(:callout) %>
             <%= yield :callout %>
           <% else %>
-            <h1>Use a computer to do almost anything!</h1>
+            <h1><%= t('home.logo_banner') %></h1>
           <% end %>
         <% end %>
       </div>
     <% end %>
-    <%= link_to "Sign Up / Log In", login_path, class: "btn" %>
+    <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
   </div>
 </header>

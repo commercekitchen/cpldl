@@ -14,24 +14,24 @@
 <div class="row">
   <div class="twelvecol congrats-banner">
     <div class="row">
-      <%= content_tag :p, "Congratulations, #{current_user.profile.first_name}." %>
-      <%= content_tag :p, "You've successfully completed #{@course.title}!", class: "small-margin" %>
+      <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.profile.first_name}." %>
+      <%= content_tag :p, "#{t('course_completion_page.you_successfully_completed')} #{@course.title}!", class: "small-margin" %>
     </div>
     <div class="row extra-margin">
       <div class="cert-preview hide-on-tablet">
         <div class="cert-inner">
           <div>
-            <h1>Certificate of Completion</h1>
+            <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
             <p>
-              This award certifies that
+              <%= t('certificate.this_award') %>
             </p>
             <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
             <p>
-              has completed:
+              <%= t('certificate.has_completed') %>
             </p>
             <%= content_tag :h2, "#{@course.title}", class: "course" %>
             <p>
-              as of <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
+              <%= t('certificate.as_of') %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
             </p>
             <%= image_tag "dl_logo.png" %>
           </div>
@@ -41,24 +41,24 @@
     <div class="row">
       <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
         <%= button_tag(type: 'button', class: 'congrats-button') do %>
-          Download My Certificate
+          <%= t('course_completion_page.download_certificate') %>
         <% end %>
       <% end %>
     </div>
     <div class="row">
       <%= link_to(your_courses_path) do %>
         <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
-          Return to My Courses
+          <%= t('course_completion_page.return_to_my_courses') %>
         <% end %>
       <% end %>
       <%= link_to(courses_path) do %>
         <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
-          View All Courses
+          <%= t('course_completion_page.view_all_courses') %>
         <% end %>
       <% end %>
     </div>
     <div class="row">
-      <%= link_to "Restart this course" ,course_path(@course) %>
+      <%= link_to "#{t('course_completion_page.restart_this_course')}" ,course_path(@course) %>
     </div>
   </div>
 </div>
@@ -67,7 +67,7 @@
 
 <div class="row">
   <div class="sixcol border-right">
-    <h2>Practice and use your new skills! (click each link below)</h2>
+    <h2><%= t('course_completion_page.practice_new_skills') %></h2>
     <% if @course.notes.present? %>
       <div><%= simple_format @course.notes %></div>
     <% else %>

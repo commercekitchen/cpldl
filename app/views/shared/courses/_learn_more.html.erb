@@ -2,11 +2,11 @@
 <% if current_page?(controller: "courses", action: "your") %>
   <a class="course-widget retake-quiz" href="/courses/quiz">
     <header>
-      <h3>Ready to learn more?</h3>
+      <h3><%= t('my_courses_page.ready_to_learn_more') %></h3>
     </header>
     <div class="description">
-      <p>Find new courses when you retake the quiz</p>
-      <%= button_tag "Retake the quiz", class: "btn small" %>
+      <p><%= t('my_courses_page.find_new_courses_retake_quiz') %></p>
+      <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small" %>
     </div>
   </a>
 <% end %>
