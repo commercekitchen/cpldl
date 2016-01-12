@@ -35,8 +35,8 @@ en:
     keep_me_logged_in: "Keep me logged in"
     hide_password: "Hide password"
     access_courses: "Access Courses"
-    want_to_take_a_course:
     forgot_password: "Forgot your password?"
+    want_to_take_a_course: "Want to take a course, but don't have an account yet? It's easy to set one up. Just fill out the fields below."
     dont_have_email:
     first_name:
     zip_code:
