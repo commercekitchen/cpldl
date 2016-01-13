@@ -3,6 +3,8 @@ require "feature_helper"
 feature "User clicks through each page" do
 
   before(:each) do
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = FactoryGirl.create(:language)
     @user = FactoryGirl.create(:user)
     log_in_with @user.email, @user.password
   end

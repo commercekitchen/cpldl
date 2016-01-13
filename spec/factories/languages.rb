@@ -9,7 +9,11 @@
 #
 
 FactoryGirl.define do
-  factory(:language) do
+  factory :language do
     name "English"
+  end
+
+  factory :spanish_lang , class: Language do
+    name "Spanish"
   end
 end
