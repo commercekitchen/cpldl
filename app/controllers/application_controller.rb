@@ -36,7 +36,16 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    I18n.locale = session["locale"] || :en
+    if current_user && current_user.profile && current_user.profile.language
+      case current_user.profile.language.name
+      when "English"
+        I18n.locale = :en
+      when "Spanish"
+        I18n.locale = :es
+      end
+    else
+      I18n.locale = session["locale"] || :en
+    end
   end
 
   private

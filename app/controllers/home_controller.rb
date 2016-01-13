@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def language_toggle
-    session[:locale] = params["format"]
+    session[:locale] = params["lang"]
     redirect_to :back
   end
 
