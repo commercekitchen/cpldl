@@ -2,6 +2,11 @@ require "feature_helper"
 
 feature "User signs up" do
 
+  before(:each) do
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = FactoryGirl.create(:language)
+  end
+
   scenario "with valid email, password, first name, last name, zip code" do
     sign_up_with "valid@example.com", "password", "Alejandro", "12345"
     expect(page).to have_content("A message with a confirmation link has been sent \

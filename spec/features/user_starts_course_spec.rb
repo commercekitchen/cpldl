@@ -6,6 +6,12 @@ feature "User visits course listing page" do
     @course1 = FactoryGirl.create(:course, title: "Title 1", course_order: 1)
     @course2 = FactoryGirl.create(:course, title: "Title 2", course_order: 2)
     @course3 = FactoryGirl.create(:course, title: "Title 3", course_order: 3)
+    Language.all.each(&:destroy)
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @course1.update_attribute(:language_id, @english.id)
+    @course2.update_attribute(:language_id, @english.id)
+    @course3.update_attribute(:language_id, @english.id)
   end
 
   context "as an anonymous user" do

@@ -3,6 +3,8 @@ require "feature_helper"
 feature "Admin user clicks through each page" do
 
   before(:each) do
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = FactoryGirl.create(:language)
     @course = FactoryGirl.create(:course_with_lessons)
     @user = FactoryGirl.create(:user)
     @user.add_role(:admin)

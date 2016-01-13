@@ -2,6 +2,11 @@ require "feature_helper"
 
 feature "User logs in" do
 
+  before(:each) do
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = FactoryGirl.create(:language)
+  end
+
   scenario "with valid email and password" do
     user = FactoryGirl.create(:user)
     log_in_with user.email, user.password
