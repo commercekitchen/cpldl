@@ -104,7 +104,7 @@ module Admin
       params.require(:course).permit(:title,        :seo_page_title,  :meta_desc,   :summary,           :description,
                                      :contributor,  :pub_status,      :language_id, :level,             :topics,
                                      :notes,        :delete_document, :other_topic, :other_topic_text,  :course_order,
-                                     :pub_date,     :format,
+                                     :pub_date,     :format,          :subsite_course,
             attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy])
     end
 

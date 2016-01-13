@@ -16,7 +16,7 @@ Style/StringLiterals:
     - single_quotes
     - double_quotes
 
-Style/CyclomaticComplexity:
+Metrics/CyclomaticComplexity:
   Max: 10
 
 Metrics/PerceivedComplexity:
