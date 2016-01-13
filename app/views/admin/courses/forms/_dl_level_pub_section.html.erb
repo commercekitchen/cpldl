@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="fourcol">
+    <fieldset>
+      <%= f.label :level do %>
+        Course Level<span class="required"></span>
+      <% end %>
+      <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." } ) %>
+    </fieldset>
+  </div>
+
+  <div class="fourcol">
+    <fieldset>
+      <%= f.label :pub_status do %>
+        Publication Status<span class="required"></span>
+      <% end %>
+      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), { include_blank: "Select..." } ) %>
+    </fieldset>
+  </div>
+
+  <div class="fourcol last">
+    <fieldset>
+      <%= f.label :subsite_course do %>
+        Course for Subsites?
+      <% end %>
+      <div class="onecol">
+        <%= f.check_box :subsite_course %>
+      </div>
+      <div class="elevencol">
+        <span>This course is intended for subsites of Digital Learn to use.</span>
+      </div>
+    </fieldset>
+  </div>
+</div>

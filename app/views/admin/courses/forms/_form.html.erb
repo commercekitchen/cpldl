@@ -150,25 +150,11 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="sixcol">
-      <fieldset>
-        <%= f.label :level do %>
-          Course Level<span class="required"></span>
-        <% end %>
-        <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." } ) %>
-      </fieldset>
-    </div>
-
-    <div class="sixcol last">
-      <fieldset>
-        <%= f.label :pub_status do %>
-          Publication Status<span class="required"></span>
-        <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), { include_blank: "Select..." } ) %>
-      </fieldset>
-    </div>
-  </div>
+  <% if request.subdomain == "admin" %>
+    <%= render("admin/courses/forms/dl_level_pub_section", f: f) %>
+  <% else %>
+    <%= render("admin/courses/forms/level_pub_section", f: f) %>
+  <% end %>
 
   <fieldset>
     <%= f.label "SEO page title" %>
