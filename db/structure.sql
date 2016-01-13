@@ -270,7 +270,8 @@ CREATE TABLE courses (
     slug character varying,
     course_order integer,
     pub_date timestamp without time zone,
-    format character varying
+    format character varying,
+    subsite_course boolean DEFAULT false
 );
 
 
@@ -1136,4 +1137,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151201005018');
 INSERT INTO schema_migrations (version) VALUES ('20151203004228');
 
 INSERT INTO schema_migrations (version) VALUES ('20160112013224');
+
+INSERT INTO schema_migrations (version) VALUES ('20160113033555');
 

@@ -19,6 +19,7 @@
 #  course_order   :integer
 #  pub_date       :datetime
 #  format         :string
+#  subsite_course :boolean          default(FALSE)
 #
 
 class Course < ActiveRecord::Base
