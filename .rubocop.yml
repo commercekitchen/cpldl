@@ -16,6 +16,12 @@ Style/StringLiterals:
     - single_quotes
     - double_quotes
 
+Style/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
 Metrics/LineLength:
   Max: 128
 
@@ -23,7 +29,7 @@ Metrics/MethodLength:
   Max: 32
 
 Metrics/ClassLength:
-  Max: 125
+  Max: 150
 
 Metrics/AbcSize:
   Max: 40

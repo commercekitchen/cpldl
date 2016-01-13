@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    results  = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
+    results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
     published_results = []
 
     results.each do |result|
@@ -35,7 +35,11 @@ class CoursesController < ApplicationController
     end
 
     if user_signed_in? && current_user.profile.language_id
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id) : published_results
+      if params[:search].blank?
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id)
+      else
+        published_results
+      end
     else
       @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P") : published_results
     end
