@@ -69,6 +69,10 @@ module Admin
         new_topic.course_id = new_course.id
         new_topic.save
       end
+
+      # Create OrganizationCourse Entry
+      OrganizationCourse.create(organization_id: current_user.organization_id,
+                                course_id: new_course.id)
       redirect_to edit_admin_course_path(new_course)
     end
   end
