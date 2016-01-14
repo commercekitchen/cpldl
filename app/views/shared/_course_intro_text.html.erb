@@ -1,4 +1,4 @@
-<% if user_signed_in? && current_user.is_admin? %>
+<% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
   <%= content_for(:callout) { %><h1>Hi Admin! <%= t('home.logo_banner') %></h1><% } %>
   <h1>
     Edit a course by clicking on a course below, search courses or navigate to the
