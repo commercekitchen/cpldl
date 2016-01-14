@@ -28,8 +28,13 @@ module Admin
       end
 
       if @course.save
-        OrganizationCourse.create(organization_id: current_user.organization_id,
-                                  course_id: @course.id)
+        if current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "1"
+          OrganizationCourse.create(organization_id: current_user.organization_id,
+                                    course_id: @course.id)
+        elsif current_user.organization.subdomain != "admin"
+          OrganizationCourse.create(organization_id: current_user.organization_id,
+                                    course_id: @course.id)
+        end
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
           redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
@@ -60,6 +65,14 @@ module Admin
       end
 
       if @course.update(course_params)
+        if current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "0"
+          @course.organization_course.destroy if @course.organization_course
+        elsif current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "1"
+          OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
+            org_course.organization_id = current_user.organization_id
+            org_course.course_id = @course.id
+          end
+        end
         @course.topics_list(build_topics_list(params))
         case params[:commit]
         when "Save Course"
@@ -101,10 +114,10 @@ module Admin
     end
 
     def course_params
-      params.require(:course).permit(:title,        :seo_page_title,  :meta_desc,   :summary,           :description,
-                                     :contributor,  :pub_status,      :language_id, :level,             :topics,
-                                     :notes,        :delete_document, :other_topic, :other_topic_text,  :course_order,
-                                     :pub_date,     :format,          :subsite_course,
+      params.require(:course).permit(:title,        :seo_page_title,  :meta_desc,       :summary,           :description,
+                                     :contributor,  :pub_status,      :language_id,     :level,             :topics,
+                                     :notes,        :delete_document, :other_topic,     :other_topic_text,  :course_order,
+                                     :pub_date,     :format,          :subsite_course,  :display_on_dl,
             attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy])
     end
 
