@@ -2,6 +2,9 @@
   <li><%= link_to "Change Login Information", account_path %></li>
   <li><%= link_to "Update Profile", profile_path %></li>
   <li><%= link_to "Courses", admin_root_path %></li>
+  <% unless request.subdomain == "admin" %>
+    <li><%= link_to "Import Digital Learn Courses", admin_import_courses_path %></li>
+  <% end %>
   <li><%= link_to "User Accounts", admin_users_index_path %></li>
   <li><%= link_to "CMS Pages", admin_pages_index_path %></li>
 </ul>
