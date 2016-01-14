@@ -272,7 +272,8 @@ CREATE TABLE courses (
     pub_date timestamp without time zone,
     format character varying,
     subsite_course boolean DEFAULT false,
-    parent_id integer
+    parent_id integer,
+    display_on_dl boolean DEFAULT false
 );
 
 
@@ -1144,4 +1145,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160113033555');
 INSERT INTO schema_migrations (version) VALUES ('20160114060850');
 
 INSERT INTO schema_migrations (version) VALUES ('20160114061700');
+
+INSERT INTO schema_migrations (version) VALUES ('20160114085838');
 
