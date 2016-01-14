@@ -36,6 +36,7 @@ module Admin
     end
 
     def add_imported_course
+      # Create the course
       course_to_import = Course.find(params["course_id"].to_i)
       new_course = course_to_import.dup
       new_course.parent_id = course_to_import.id
@@ -44,6 +45,7 @@ module Admin
       new_course.pub_status = "D"
       new_course.save
 
+      # Create copies of the lessons and ASLs
       course_to_import.lessons.each do |imported_lesson|
         new_lesson = imported_lesson.dup
         new_lesson.course_id = new_course.id
@@ -51,6 +53,21 @@ module Admin
         new_lesson.story_line = imported_lesson.story_line
         new_lesson.save
         Unzipper.new(new_lesson.story_line)
+      end
+
+      # Create copies of the attachments
+      course_to_import.attachments.each do |attachment|
+        new_attachment = attachment.dup
+        new_attachment.document = attachment.document
+        new_attachment.course_id = new_course.id
+        new_attachment.save
+      end
+
+      # Create copies of the topics
+      course_to_import.course_topics.each do |course_topic|
+        new_topic = course_topic.dup
+        new_topic.course_id = new_course.id
+        new_topic.save
       end
       redirect_to edit_admin_course_path(new_course)
     end
