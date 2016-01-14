@@ -20,6 +20,8 @@
 #  pub_date       :datetime
 #  format         :string
 #  subsite_course :boolean          default(FALSE)
+#  parent_id      :integer
+#  display_on_dl  :boolean          default(FALSE)
 #
 
 class Course < ActiveRecord::Base
@@ -44,8 +46,8 @@ class Course < ActiveRecord::Base
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  has_many :organization_courses
-  has_many :organizations, through: :organization_courses
+  has_one :organization_course
+  has_one :organization, through: :organization_course
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
