@@ -27,8 +27,7 @@
         <div class="cell"><%= course.topics_str %></div>
         <div class="cell"><%= course.language.name %></div>
         <div class="cell">
-          <%= link_to("AUniqueName", admin_dashboard_add_imported_course_path(course_id: course.id), remote: true, method: :patch) %>
-          <%= button_to("AUniqueName", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
+          <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
         </div>
       </li>
     <% end %>
