@@ -20,6 +20,8 @@
 #  pub_date       :datetime
 #  format         :string
 #  subsite_course :boolean          default(FALSE)
+#  parent_id      :integer
+#  display_on_dl  :boolean          default(FALSE)
 #
 
 require "rails_helper"
@@ -37,11 +39,10 @@ describe Course do
       expect(@course).to be_valid
     end
 
-    it "should not allow two courses with the same title" do
+    it "should allow two courses with the same title" do
       @course.save
       @course2 = FactoryGirl.build(:course)
-      expect(@course2).to_not be_valid
-      expect(@course2.errors.full_messages.first).to eq("Title has already been taken")
+      expect(@course2).to be_valid
     end
 
     it "can only have listed statuses" do

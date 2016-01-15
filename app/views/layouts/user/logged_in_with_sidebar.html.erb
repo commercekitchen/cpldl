@@ -4,7 +4,7 @@
   <%= render "shared/meta_tags" %>
 </head>
 <body>
-  <% if current_user.is_admin? %>
+  <% if current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
     <%= render "shared/admin/header" %>
   <% else %>
     <%= render "shared/user/header" %>

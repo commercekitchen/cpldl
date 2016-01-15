@@ -271,7 +271,9 @@ CREATE TABLE courses (
     course_order integer,
     pub_date timestamp without time zone,
     format character varying,
-    subsite_course boolean DEFAULT false
+    subsite_course boolean DEFAULT false,
+    parent_id integer,
+    display_on_dl boolean DEFAULT false
 );
 
 
@@ -923,7 +925,7 @@ CREATE INDEX index_courses_on_slug ON courses USING btree (slug);
 -- Name: index_courses_on_title; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_courses_on_title ON courses USING btree (title);
+CREATE INDEX index_courses_on_title ON courses USING btree (title);
 
 
 --
@@ -1139,4 +1141,10 @@ INSERT INTO schema_migrations (version) VALUES ('20151203004228');
 INSERT INTO schema_migrations (version) VALUES ('20160112013224');
 
 INSERT INTO schema_migrations (version) VALUES ('20160113033555');
+
+INSERT INTO schema_migrations (version) VALUES ('20160114060850');
+
+INSERT INTO schema_migrations (version) VALUES ('20160114061700');
+
+INSERT INTO schema_migrations (version) VALUES ('20160114085838');
 

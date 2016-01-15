@@ -1,0 +1,35 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h1>Digital Learn Courses</h1>
+
+<div class="row">
+  <div class="sixcol">
+    <p class="emphasis no-top-margin">
+      These courses are offered by Digital Learn for you to import into your organization's courses.
+    </p>
+  </div>
+  <div class="sixcol last left-or-right">
+    <%= link_to "Add a New Course", new_admin_course_path, class: "btn" %>
+  </div>
+</div>
+
+<div class="sortable-list" data-page="courses">
+  <div class="list-titles">
+    <div class="cell">Course</div>
+    <div class="cell">Topic</div>
+    <div class="cell">Language</div>
+    <div class="cell">Import</div>
+  </div>
+  <ul class="objects">
+    <% @importable_courses.each do |course| %>
+      <li>
+        <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
+        <div class="cell"><%= course.topics_str %></div>
+        <div class="cell"><%= course.language.name %></div>
+        <div class="cell">
+          <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

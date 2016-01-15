@@ -45,7 +45,11 @@ class User < ActiveRecord::Base
   validates_associated :profile
 
   def organization_id
-    User.first.roles.find_by_resource_type("Organization").resource_id
+    roles.find_by_resource_type("Organization").resource_id
+  end
+
+  def organization
+    Organization.find(organization_id)
   end
 
   def tracking_course?(course_id)

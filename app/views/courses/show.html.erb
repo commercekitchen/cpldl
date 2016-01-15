@@ -24,7 +24,7 @@
 
   <div class="fourcol last align-right">
     <% if user_signed_in? %>
-      <% if current_user.present? && current_user.is_admin? %>
+      <% if current_user.present? && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
         <p class="course-edit-add-remove"><small><%= link_to "Edit Course >>", edit_admin_course_path(@course) %></small></p>
       <% elsif current_user.tracking_course?(@course.id) %>
         <p class="course-edit-add-remove"><small>

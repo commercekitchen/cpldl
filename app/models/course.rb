@@ -20,6 +20,8 @@
 #  pub_date       :datetime
 #  format         :string
 #  subsite_course :boolean          default(FALSE)
+#  parent_id      :integer
+#  display_on_dl  :boolean          default(FALSE)
 #
 
 class Course < ActiveRecord::Base
@@ -44,8 +46,8 @@ class Course < ActiveRecord::Base
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  has_many :organization_courses
-  has_many :organizations, through: :organization_courses
+  has_one :organization_course
+  has_one :organization, through: :organization_course
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
@@ -53,7 +55,7 @@ class Course < ActiveRecord::Base
   belongs_to :language
 
   validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 40 }, presence: true, uniqueness: true
+  validates :title, length: { maximum: 40 }, presence: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }

@@ -20,6 +20,8 @@
 #  pub_date       :datetime
 #  format         :string
 #  subsite_course :boolean          default(FALSE)
+#  parent_id      :integer
+#  display_on_dl  :boolean          default(FALSE)
 #
 
 class CoursesController < ApplicationController
@@ -37,12 +39,12 @@ class CoursesController < ApplicationController
 
     if user_signed_in? && current_user.profile.language_id
       if params[:search].blank?
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id).where_exists(:organization, subdomain: request.subdomain)
       else
         published_results
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P") : published_results
+      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) : published_results
     end
 
     respond_to do |format|

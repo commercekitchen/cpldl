@@ -20,6 +20,8 @@
 #  pub_date       :datetime
 #  format         :string
 #  subsite_course :boolean          default(FALSE)
+#  parent_id      :integer
+#  display_on_dl  :boolean          default(FALSE)
 #
 
 module CoursesHelper
