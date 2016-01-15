@@ -57,11 +57,21 @@
       font-size: 1.2rem;
       float: left;
       display: block;
-      width: 69%;
+      width: 39%;
+      max-width: 100%;
+      margin-top: 10px;
+    }
+
+
+     @include media($tablet) {
+      font-size: 1.3rem;
+      float: left;
+      display: block;
+      width: 67%;
       max-width: 100%;
       margin-top: 10px;
 
-    }
+    }  
 
     // @include media($mobile-xlarge) {
     //   font-size: 2em;
