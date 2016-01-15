@@ -4,22 +4,29 @@
       <small><%= link_to "English", "#",  class: "lang-link" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#", class: "lang-link" %></small>
     </div>
     <div class="logo-link-container">
+    <div class="html5-link">
     <%= link_to root_url(subdomain: request.subdomain), class: 'logo-link' do %>
-    </div>
-      <div>
-        <% case request.subdomain %>
-        <% when "admin" %>
-          <%= render "shared/logo_white" %>
-        <% else %>
-          <%= render "shared/logo_white" %>
-          <% if content_for?(:callout) %>
-            <%= yield :callout %>
+
+        <div class="link-box">
+          <% case request.subdomain %>
+          <% when "admin" %>
+            <%= render "shared/logo_white" %>
           <% else %>
-            <h1 class-="header-blurb">Use a computer to do almost anything!</h1>
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
-    <%= link_to "Sign Up / Log In", login_path, class: "btn" %>
+            <%= render "shared/logo_white" %>
+            <% if content_for?(:callout) %>
+              <%= yield :callout %>
+            <% else %>
+              <h1 class-="header-blurb">Use a computer to do almost anything!</h1>
+            <% end %>
+          <% end %> <%# End case end %>
+
+        </div>  
+      <% end %> <%# End big old link %>
+    </div>
+
+      <div class="signup-box">
+      <%= link_to "Sign Up / Log In", login_path, class: "btn" %>    
+    </div>
+   </div> 
   </div>
 </header>

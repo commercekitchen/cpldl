@@ -18,6 +18,9 @@
     a {
       color: $white;
       display: inline-block;
+        @include media($mobile-large) {
+          font-size: .9rem;
+        }  
     }
   }
 
@@ -27,10 +30,10 @@
     .logo-icon {
       width: 155px;
 
-  //   @include media($mobile-large) {
-  //     width: 70px;
-  //     float: left;
-  // }
+    @include media($mobile-large) {
+      width: 70px;
+      float: left;
+  }
       /* The given svg file isn't cropped to the edge, so ... */
       position: relative;
       // top: -7px;
@@ -44,14 +47,14 @@
     color: $white;
     font-size: 3.5em;
     font-weight: 100;
-    margin-top: -9px;
+    margin-top: 0;
     text-transform: uppercase;
     max-width: 500px;
     display: inline-block;
     float: left;
 
     @include media($mobile-large) {
-      font-size: 1.4rem;
+      font-size: 1.2rem;
       float: left;
       display: block;
       width: 69%;
@@ -98,6 +101,9 @@
     padding-bottom: 1em;
     a {
       color: $purple;
+    @include media($mobile-large) {
+      font-size: .9rem;
+      }
     }
   }
 
@@ -143,7 +149,6 @@
   nav {
     float: right;
     position: relative;
-    top: 1.8em;
     @include media($mobile-xlarge) {
       float: left;
       display: block;
@@ -162,17 +167,32 @@
 
 }
 
-.logo-link {
-  display: block;
-  overflow: hidden; 
+
+.actual-logo {
+  overflow: hidden;
 }
 
-.logo-link-container
-{
-  a {
-    display: block;
-    overflow: hidden;
+.signup-box {
+  float: left;
+}
+
+.link-box {
+  float: left;
+  width: 65%;
+
+      @include media($mobile-large) {
+      width: 100%;
+      float: left;
   }
+}
+
+.html5-link {
+  display: block;
+}
+
+.logo-link-container {
+    vertical-align: top;
+    overflow: hidden;
 
   display: block;
   @include clearfix;
