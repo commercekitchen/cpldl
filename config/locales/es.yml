@@ -24,7 +24,7 @@ es:
     logo_banner: "Use la computadora para hacer casi todo!"
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
-    choose_a_course:
+    choose_a_course: "Seleccione un curso de los que aparecen a continuación para comenzar."
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses: "¿Qué le gustaría aprender hoy?"
     mins_abbr: "min"
@@ -50,9 +50,9 @@ es:
     confirm_my_account: "Confirmar mi cuenta"
   logged_in_user:
     hi: "Hola"
-    choose_a_course:
-    my_courses_link:
-    view_your_customized_plan:
+    choose_a_course: "Escoja un curso para empezar; o visite la sección"
+    my_courses_link: "Mis Cursos"
+    view_your_customized_plan: "para revisar los cursos en su plan personal."
     my_account: "Mi Cuenta"
     my_courses: "Mis Cursos"
     sign_out: "Salir"
