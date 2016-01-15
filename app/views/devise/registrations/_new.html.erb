@@ -27,11 +27,11 @@
   <% end %>
 
   <fieldset>
-    <%= f.text_field :password, autocomplete: "off", id: "signup_password", placeholder: "#{t('login_signup.your_password')} *" %>
+    <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
   </fieldset>
 
   <fieldset>
-    <%= f.text_field :password_confirmation, autocomplete: "off", placeholder: "#{t('login_signup.re_enter_password')} *" %>
+    <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
   </fieldset>
 
   <fieldset>

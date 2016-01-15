@@ -1,126 +1,185 @@
 @import "bourbon";
 @import "neat";
-
 .header-logged-out {
-  margin-bottom: 2em;
-  padding: 1em 0 1em 0;
-  min-height: 100px;
-  background-color: $teal;
-  z-index: 100;
-
-  .language-links {
-    color: $white;
-    padding-bottom: 1em;
-    a {
-      color: $white;
-    }
-  }
-
-  .logo {
-    display: inline-block;
-    float: left;
-    .logo-icon {
-      width: 155px;
-
-      /* The given svg file isn't cropped to the edge, so ... */
-      position: relative;
-      top: -7px;
-      left: -8px;
-    }
-  }
-
-  h1 {
-    font-family: $font-secondary;
-    color: $white;
-    font-size: 3.5em;
-    font-weight: 100;
-    margin-top: -9px;
-    text-transform: uppercase;
-    max-width: 500px;
-    display: inline-block;
-    float: left;
-
+    margin-bottom: 2em;
+    padding: 1em 0 1em 0;
+    min-height: 100px;
+    background-color: $teal;
+    z-index: 100;
     @include media($mobile-large) {
-      float: left;
-      display: block;
-      width: 100%;
-      max-width: 100%;
+        margin-bottom: 1em;
     }
-
-    @include media($mobile-xlarge) {
-      font-size: 2.5em;
-      max-width: 400px;
+    .language-links {
+        color: $white;
+        padding-bottom: 1em;
+        @include clearfix;
+        a {
+            color: $white;
+            display: inline-block;
+            @include media($mobile-large) {
+                font-size: .9rem;
+            }
+        }
     }
-  }
-
-  .btn {
-    float: right;
-    @include media($mobile-large) {
-      float: left;
-      display: block;
+    .logo {
+        display: inline-block;
+        float: left;
+        .logo-icon {
+            width: 155px;
+            @include media($mobile-large) {
+                width: 70px;
+                float: left;
+            }
+            /* The given svg file isn't cropped to the edge, so ... */
+            position: relative;
+            // top: -7px;
+            // left: -8px;
+        }
     }
-  }
-
+    h1 {
+        font-family: $font-secondary;
+        color: $white;
+        font-size: 3.5em;
+        font-weight: 100;
+        margin-top: 0;
+        text-transform: uppercase;
+        max-width: 500px;
+        display: inline-block;
+        float: left;
+        @include media($mobile-large) {
+            font-size: 1.2rem;
+            float: left;
+            display: block;
+            width: 39%;
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        @include media($tablet) {
+            font-size: 1.3rem;
+            float: left;
+            display: block;
+            width: 67%;
+            max-width: 100%;
+            margin-top: 10px;
+        }
+        // @include media($mobile-xlarge) {
+        //   font-size: 2em;
+        //   max-width: 400px;
+        // }
+    }
+    .btn {
+        float: right;
+        @include media($mobile-large) {
+            float: left;
+            display: block;
+        }
+    }
 }
 
 .header-logged-in {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  min-height: 140px;
-  padding: .5em 0;
-  background-color: $white;
-  border-bottom: 1px solid $grey;
-  z-index: 100;
-
-  .language-links {
-    color: $purple;
-    padding-bottom: 1em;
-    a {
-      color: $purple;
+    position: fixed;
+    @include media($mobile-large) {
+        position: static;
+        min-height: 0;
+        border-bottom: none;
     }
-  }
-
-  .logo {
-    display: inline-block;
-    float: left;
-    .logo-icon {
-      display: inline-block;
-      width: 90px;
-
-      /* The given svg file isn't cropped to the edge, so ... */
-      position: relative;
-      top: -4px;
-      left: -5px;
-    }
-
-    .logo-content {
-      display: inline-block;
-      position: relative;
-      bottom: 2.5em;
-      h1 {
-        margin: 0;
+    top: 0;
+    width: 100%;
+    min-height: 140px;
+    padding: .5em 0;
+    background-color: $white;
+    border-bottom: 1px solid $grey;
+    z-index: 100;
+    .language-links {
         color: $purple;
-      }
-      @include media($mobile) {
-        h1 {
-          font-size: 20px;
-          position: relative;
-          top: -2px;
+        padding-bottom: 1em;
+        a {
+            color: $purple;
+            @include media($mobile-large) {
+                font-size: .9rem;
+            }
         }
-      }
     }
-  }
+    .logo {
+        display: inline-block;
+        float: left;
+        .logo-icon {
+            display: inline-block;
+            width: 90px;
+            @include media($mobile-large) {
+                width: 70px;
+                float: left;
+                top: -3px;
+                left: -4px;
+            }
+            /* The given svg file isn't cropped to the edge, so ... */
+            position: relative;
+            top: -4px;
+            left: -5px;
+        }
+        .logo-content {
+            display: inline-block;
+            position: relative;
+            bottom: 2.5em;
+            h1 {
+                margin: 0;
+                color: $purple;
+            }
+            @include media($mobile) {
+                position: static;
+                h1 {
+                    font-size: 20px;
+                    position: relative;
+                    top: -2px;
+                }
+            }
+        }
+    }
+    nav {
+        float: right;
+        position: relative;
+        @include media($mobile-xlarge) {
+            float: left;
+            display: block;
+            width: 100%;
+            top: 0;
+        }
+        @include media($mobile-large) {
+            top: 1em;
+        }
+        @include media($tablet) {
+            top: 0;
+        }
+    }
+}
 
-  nav {
+.actual-logo {
+    overflow: hidden;
+}
+
+.signup-box {
     float: right;
-    position: relative;
-    top: 1.8em;
-    @include media($mobile-xlarge) {
-      float: left;
-      display: block;
-      width: 100%;
+    @include media($mobile-large) {
+      float: none;
     }
-  }
+}
 
+.link-box {
+    float: left;
+    width: 65%;
+    @include media($mobile-large) {
+        width: 100%;
+        float: left;
+    }
+}
+
+.html5-link {
+    display: block;
+}
+
+.logo-link-container {
+    vertical-align: top;
+    overflow: hidden;
+    display: block;
+    @include clearfix;
 }
