@@ -29,20 +29,26 @@ require "rails_helper"
 describe CoursesController do
 
   before(:each) do
+    request.host = "chipublib.example.com"
+    @language = FactoryGirl.create(:language)
+    @organization = FactoryGirl.create(:organization)
     @course1 = FactoryGirl.create(:course, title: "Course 1",
-                                           language: FactoryGirl.create(:language),
-                                           description: "Mocha Java Scripta")
+                                           language: @language,
+                                           description: "Mocha Java Scripta",
+                                           organization: @organization)
     @course2 = FactoryGirl.create(:course, title: "Course 2",
-                                           language: FactoryGirl.create(:language))
+                                           language: @language,
+                                           organization: @organization)
     @course3 = FactoryGirl.create(:course, title: "Course 3",
-                                           language: FactoryGirl.create(:language),
-                                           description: "Ruby on Rails")
+                                           language: @language,
+                                           description: "Ruby on Rails",
+                                           organization: @organization)
   end
 
   describe "GET #index" do
     it "assigns all courses as @courses" do
       get :index
-      expect(assigns(:courses)).to eq([@course1, @course2, @course3])
+      expect(assigns(:courses)).to include(@course1, @course2, @course3)
     end
 
     it "assigns all courses as @courses with an empty params" do
