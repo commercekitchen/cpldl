@@ -3,14 +3,15 @@ require "rails_helper"
 describe Admin::CmsPagesController do
 
   before(:each) do
+    request.host = "chipublib.example.com"
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     @page1   = FactoryGirl.create(:cms_page, title: "Page1")
     @page2   = FactoryGirl.create(:cms_page, title: "Page2")
     @page3   = FactoryGirl.create(:cms_page, title: "Page3")
-
+    @organization = FactoryGirl.create(:organization)
     @admin = FactoryGirl.create(:admin_user)
-    @admin.add_role(:admin)
+    @admin.add_role(:admin, @organization)
     sign_in @admin
   end
 
