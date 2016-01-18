@@ -3,6 +3,8 @@ require "rails_helper"
 describe Admin::CmsPagesController do
 
   before(:each) do
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @page1   = FactoryGirl.create(:cms_page, title: "Page1")
     @page2   = FactoryGirl.create(:cms_page, title: "Page2")
     @page3   = FactoryGirl.create(:cms_page, title: "Page3")

@@ -31,6 +31,7 @@ describe CoursesController do
   before(:each) do
     request.host = "chipublib.example.com"
     @language = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @organization = FactoryGirl.create(:organization)
     @course1 = FactoryGirl.create(:course, title: "Course 1",
                                            language: @language,

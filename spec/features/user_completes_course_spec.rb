@@ -4,6 +4,8 @@ feature "User visits course complete page" do
 
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Title 1")
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
   end
 
   context "as a logged in user" do

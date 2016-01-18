@@ -6,6 +6,8 @@ feature "Admin user logs in" do
 
     before(:each) do
       @user = FactoryGirl.create(:user)
+      @english = FactoryGirl.create(:language)
+      @spanish = FactoryGirl.create(:spanish_lang)
       @user.add_role(:admin)
     end
 

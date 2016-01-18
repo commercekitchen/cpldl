@@ -26,6 +26,8 @@ require "rails_helper"
 describe LessonsController do
 
   before(:each) do
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @course1 = FactoryGirl.create(:course)
     @lesson1 = FactoryGirl.create(:lesson, title: "Lesson1", lesson_order: 1)
     @lesson2 = FactoryGirl.create(:lesson, title: "Lesson2", lesson_order: 2)

@@ -3,6 +3,8 @@ require "feature_helper"
 feature "User is able to view the courses in their plan" do
 
   before(:each) do
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @user = FactoryGirl.create(:user)
     @course1 = FactoryGirl.create(:course, title: "Course 1")
     @course2 = FactoryGirl.create(:course, title: "Course 2")
