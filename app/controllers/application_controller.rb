@@ -25,7 +25,15 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    @footer_pages = CmsPage.where(pub_status: "P")
+    english_id = Language.find_by_name("English").id || 1
+    spanish_id = Language.find_by_name("Spanish").id || 2
+    org_id = Organization.find_by_subdomain(request.subdomain)
+    case I18n.locale
+    when :es
+      @footer_pages = CmsPage.where(pub_status: "P", language_id: spanish_id, organization_id: org_id)
+    else
+      @footer_pages = CmsPage.where(pub_status: "P", language_id: english_id, organization_id: org_id)
+    end
   end
 
   def redirect_chicago

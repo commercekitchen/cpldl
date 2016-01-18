@@ -4,6 +4,8 @@ feature "User is able to add and remove a course from their plan" do
 
   before(:each) do
     @course1 = FactoryGirl.create(:course, title: "Title 1")
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @user = FactoryGirl.create(:user)
     login_as(@user)
   end

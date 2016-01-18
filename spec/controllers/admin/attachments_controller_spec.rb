@@ -4,7 +4,8 @@ describe Admin::AttachmentsController do
 
   before(:each) do
     @attachment = FactoryGirl.create(:attachment)
-
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @admin = FactoryGirl.create(:admin_user)
     @admin.add_role(:admin)
     sign_in @admin

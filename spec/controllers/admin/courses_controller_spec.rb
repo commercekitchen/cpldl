@@ -3,6 +3,8 @@ require "rails_helper"
 describe Admin::CoursesController do
 
   before(:each) do
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @course1 = FactoryGirl.create(:course, title: "Course1", course_order: 1)
     @course2 = FactoryGirl.create(:course, title: "Course2", course_order: 2)
     @course3 = FactoryGirl.create(:course, title: "Course3", course_order: 3)

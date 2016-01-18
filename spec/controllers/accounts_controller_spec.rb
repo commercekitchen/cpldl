@@ -2,6 +2,11 @@ require "rails_helper"
 
 describe AccountsController do
 
+  before(:each) do
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
+  end
+
   describe "#show" do
     context "when logged in" do
       it "should show the user's account information" do

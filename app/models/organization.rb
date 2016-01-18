@@ -11,4 +11,5 @@
 
 class Organization < ActiveRecord::Base
   resourcify
+  has_many :cms_pages
 end

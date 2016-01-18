@@ -4,6 +4,9 @@ feature "Registered user visits account page" do
 
   before(:each) do
     @user = FactoryGirl.create(:user)
+    Language.all.each(&:destroy)
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
     login_as(@user)
   end
 
@@ -27,8 +30,6 @@ feature "Registered user visits account page" do
   end
 
   scenario "can update their profile information" do
-    FactoryGirl.create(:language)
-
     visit profile_path
     fill_in "First Name", with: "Alex"
     fill_in "Zip Code", with: "12345"
