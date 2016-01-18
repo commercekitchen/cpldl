@@ -14,7 +14,7 @@ feature "User logs in" do
     expect(page).to_not have_content("Signed in successfully.")
     expect(page).to have_content("Hi Jane! Use a computer to do almost anything!")
     expect(page).to have_content(
-      "Choose a course below to start learning, search courses, or visit My Courses to view your customized learning plan."
+      "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
     )
   end
 
