@@ -28,12 +28,9 @@ module Admin
       end
 
       if @course.save
-        if current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "1"
-          OrganizationCourse.create(organization_id: current_user.organization_id,
-                                    course_id: @course.id)
-        elsif current_user.organization.subdomain != "admin"
-          OrganizationCourse.create(organization_id: current_user.organization_id,
-                                    course_id: @course.id)
+        OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
+          org_course.organization_id = current_user.organization_id
+          org_course.course_id = @course.id
         end
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
@@ -65,13 +62,9 @@ module Admin
       end
 
       if @course.update(course_params)
-        if current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "0"
-          @course.organization_course.destroy if @course.organization_course
-        elsif current_user.organization.subdomain == "admin" && course_params["display_on_dl"] == "1"
-          OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
-            org_course.organization_id = current_user.organization_id
-            org_course.course_id = @course.id
-          end
+        OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
+          org_course.organization_id = current_user.organization_id
+          org_course.course_id = @course.id
         end
         @course.topics_list(build_topics_list(params))
         case params[:commit]
