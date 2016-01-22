@@ -2,7 +2,7 @@
 
 login = Rails.application.secrets.sendgrid_login
 password = Rails.application.secrets.sendgrid_password
-domain = Rails.application.secrets.sendgrid_domain || "digitallearn.org"
+domain = Rails.application.secrets.sendgrid_domain || "chipublib.digitallearn.org"
 
 if login.nil? and password.nil?
   abort('Please ensure the sendgrid_login and sendgrid_password are defined in secrets.yml')
