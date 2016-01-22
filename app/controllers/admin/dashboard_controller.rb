@@ -2,7 +2,7 @@ module Admin
   class DashboardController < BaseController
 
     def index
-      @courses = Course.includes(:language).all
+      @courses = Course.includes(:language).where_exists(:organization_course, organization_id: current_user.organization_id)
       render "admin/courses/index", layout: "admin/base_with_sidebar"
     end
 

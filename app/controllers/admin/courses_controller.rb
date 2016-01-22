@@ -5,7 +5,7 @@ module Admin
     before_action :set_maximums, only: [:new, :edit]
 
     def index
-      @courses = Course.includes(:language).all
+      @courses = Course.includes(:language).where_exists(:organization_course, organization_id: current_user.organization_id)
       render layout: "admin/base_with_sidebar"
     end
 
