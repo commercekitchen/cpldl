@@ -3,7 +3,7 @@
 Devise.setup do |config|
 
   config.mailer.class_eval do
-    helper :subdomain 
+    helper :subdomain
   end
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
@@ -16,7 +16,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'registration@cpl.digital_learn.org' # => this might change
+  config.mailer_sender = 'registration@admin.digitallearn.org' # => this might change
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
