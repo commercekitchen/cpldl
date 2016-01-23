@@ -15,5 +15,4 @@
 //= require html.sortable
 //= require ckeditor/init
 //= require local_time
-//= require admin/courses
 //= require_tree .
