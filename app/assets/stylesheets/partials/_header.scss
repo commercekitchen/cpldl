@@ -28,7 +28,6 @@
           img {
             max-width: 100%;
             height: auto;
-            margin-top: 0.2em;
           }
           width: 155px;
           @include media($mobile-large) {
@@ -49,9 +48,10 @@
     h1 {
         font-family: $font-secondary;
         color: $white;
-        font-size: 3.5em;
+        font-size: 1.7em;
         font-weight: 100;
-        margin-top: 0;
+        margin-top: 0.2em;
+        line-height: 1.05em;
         text-transform: uppercase;
         max-width: 500px;
         display: inline-block;
