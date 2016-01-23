@@ -25,15 +25,19 @@
         display: inline-block;
         float: left;
         .logo-icon {
-            width: 155px;
-            @include media($mobile-large) {
-                width: 70px;
-                float: left;
-            }
-            /* The given svg file isn't cropped to the edge, so ... */
-            position: relative;
-            // top: -7px;
-            // left: -8px;
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+          width: 155px;
+          @include media($mobile-large) {
+              width: 70px;
+              float: left;
+          }
+          /* The given svg file isn't cropped to the edge, so ... */
+          position: relative;
+          // top: -7px;
+          // left: -8px;
         }
     }
     h1 {
