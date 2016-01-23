@@ -15,6 +15,5 @@
 //= require html.sortable
 //= require ckeditor/init
 //= require local_time
-//= require_tree .
 //= require admin/courses
-//= require jquery.simplyCountable
+//= require_tree .
