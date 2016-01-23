@@ -11,5 +11,11 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 Rails.application.config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.svg)
 Rails.application.config.assets.paths << "#{Rails.root}/app/assets/fonts"
-Rails.application.config.assets.paths << "#{Rails.root}/app/assets/images"
+Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|
+  Rails.application.config.assets.paths << path
+end
+
+Dir.glob("#{Rails.root}/app/assets/javascripts/**/").each do |path|
+  Rails.application.config.assets.paths << path
+end
 # Rails.application.config.assets.paths << Rails.root.join("app", "assets", "images")
