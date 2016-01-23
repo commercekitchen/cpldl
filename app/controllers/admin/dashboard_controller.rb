@@ -13,7 +13,11 @@ module Admin
 
     def users_index
       results = User.search_users(params[:search])
-      @users  = params[:search].blank? ? User.all : results
+      if params[:search].blank?
+        @users = User.with_any_role({name: :user, resource: current_user.organization}, {name: :admin, resource: current_user.organization})
+      else
+        @users = results & User.with_any_role({name: :user, resource: current_user.organization}, {name: :admin, resource: current_user.organization})
+      end
 
       render "admin/users/index", layout: "admin/base_with_sidebar"
     end
