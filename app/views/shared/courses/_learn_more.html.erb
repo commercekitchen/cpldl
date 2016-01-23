@@ -6,7 +6,6 @@
     </header>
     <div class="description">
       <p><%= t('my_courses_page.find_new_courses_retake_quiz') %></p>
-      <% binding.pry %>
       <% if I18n.locale == :es %>
         <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small spanish-small" %>
       <% else %>
