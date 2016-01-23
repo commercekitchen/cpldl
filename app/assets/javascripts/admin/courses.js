@@ -46,7 +46,7 @@ $(document).ready(function() {
     countDirection: "down"
   });
 
-    $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
+  $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
     var courseId = $(this).data("courseId");
     var value = $(this).val();
     $.ajax({
