@@ -19,6 +19,10 @@
     </div>
     <h1 class="lesson-title"><%= lesson.title %></h1>
     <p class="lesson-summary"><%= lesson.summary %></p>
-    <%= link_to "#{t('course_page.start_lesson')}", course_lesson_path(course, lesson), class: "btn small", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } %>
+    <%= link_to course_lesson_path(course, lesson), data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } do %>
+      <div class="btn small-lesson-button">
+        <%= t('course_page.start_lesson') %>
+      </div>
+    <% end %>
   </div>
 </div>

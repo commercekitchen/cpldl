@@ -76,6 +76,14 @@ button, input[type="submit"], .btn {
     padding: 6px 40px;
   }
 
+  &.small-lesson-button {
+    min-width: initial;
+    height: 35px;
+    padding: 6px 40px;
+    position: relative;
+    left: 0.6em;
+  }
+
   &.btn-grey {
     background-color: $grey;
   }
