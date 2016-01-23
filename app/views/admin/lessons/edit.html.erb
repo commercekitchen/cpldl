@@ -33,7 +33,7 @@
 <% end %>
 
 <%= javascript_tag do %>
-  $(document).ready(function() {
+  $(document).ready(function(){
     var set_positions = function(){
       // loop through and give each task a data-pos
       // attribute that holds its position in the DOM
@@ -66,4 +66,5 @@
           data: { order: updated_order }
       });
     });
+  });
 <% end %>
