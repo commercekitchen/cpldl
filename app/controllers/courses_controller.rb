@@ -153,20 +153,22 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
+    @org_id = Organization.find_by_subdomain(request.subdomain).id
+    @org_courses = Course.where_exists(:organization_course, organization_id: @org_id)
     # Finds and bulk adds relevant core desktop topics
     case params["set_one"]
     when "1"
-      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Beginner", pub_status: "P"))
+      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Beginner", pub_status: "P") & @org_courses)
     when "2"
-      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Intermediate", pub_status: "P"))
+      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Intermediate", pub_status: "P") & @org_courses)
     end
 
     # Finds and bulk adds relevant core mobile topics
     case params["set_two"]
     when "1"
-      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Beginner", pub_status: "P"))
+      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Beginner", pub_status: "P") & @org_courses)
     when "2"
-      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Intermediate", pub_status: "P"))
+      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Intermediate", pub_status: "P") & @org_courses)
     end
 
     # Finds and bulk adds topic_specific courses
@@ -176,7 +178,7 @@ class CoursesController < ApplicationController
                          4 => "Job Search",
                          5 => "Software Apps" }
 
-    bulk_add_courses(Course.topic_search(set_three_topics[params["set_three"].to_i]).where(pub_status: "P"))
+    bulk_add_courses(Course.topic_search(set_three_topics[params["set_three"].to_i]).where(pub_status: "P") & @org_courses)
 
     # Send them back to "My Courses" page
     redirect_to your_courses_path
