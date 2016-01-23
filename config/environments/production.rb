@@ -64,8 +64,6 @@ Rails.application.configure do
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'https://chipublib.digitallearn.org'
-  config.assets.paths << "#{Rails.root}/app/assets/fonts"
-  config.assets.precompile += %w( .svg .eot .woff .ttf )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
