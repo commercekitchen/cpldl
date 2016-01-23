@@ -28,6 +28,7 @@
           img {
             max-width: 100%;
             height: auto;
+            margin-top: 0.2em;
           }
           width: 155px;
           @include media($mobile-large) {
@@ -39,6 +40,11 @@
           // top: -7px;
           // left: -8px;
         }
+
+    }
+    .dark-logo {
+      width: 55px;
+      height: auto;
     }
     h1 {
         font-family: $font-secondary;
@@ -110,6 +116,11 @@
         .logo-icon {
             display: inline-block;
             width: 90px;
+            .dark-logo {
+              max-width: 100%;
+              height: auto;
+              margin: 0.2em;
+            }
             @include media($mobile-large) {
                 width: 70px;
                 float: left;
