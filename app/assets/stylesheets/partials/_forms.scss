@@ -84,6 +84,10 @@ button, input[type="submit"], .btn {
     left: 0.6em;
   }
 
+  &.spanish-small {
+    font-size: 10px;
+  }
+
   &.btn-grey {
     background-color: $grey;
   }
