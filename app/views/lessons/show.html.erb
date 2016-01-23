@@ -38,6 +38,35 @@
 %>
 
 <%= javascript_tag do %>
+  var Modal = (function($) {
+
+    return {
+
+      open : function(modal_id) {
+        $(".modal-state:checked").prop("checked", false).change();
+        $("#" + modal_id).prop("checked", true).change();
+        $("body").addClass("modal-open");
+
+        $(".modal-fade-screen, .modal-close, .modal-skip-button").on("click", function() {
+          $(".modal-state:checked").prop("checked", false).change();
+          $("body").removeClass("modal-open");
+        });
+
+        $(".modal-inner").on("click", function(e) {
+          e.stopPropagation();
+        });
+      },
+
+      close : function() {
+        $(".modal-state:checked").prop("checked", false).change();
+        $("body").removeClass("modal-open");
+      }
+    }
+
+  })(jQuery);
+<% end %>
+
+<%= javascript_tag do %>
   $(document).ready(function() {
 
     // NOTE: this method name should not be changed, it must
