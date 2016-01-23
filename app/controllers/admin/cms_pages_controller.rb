@@ -48,6 +48,7 @@ module Admin
 
       @cms_page.slug = nil # slug must be set to nil for friendly ID to update
       if params[:commit] == "Preview Page"
+        @cms_page_body = @cms_page.body.html_safe
         render :new
       else
         @cms_page.update_pub_date(@pub_status) unless @pub_status == @cms_page.pub_status
