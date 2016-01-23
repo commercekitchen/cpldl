@@ -5,7 +5,7 @@
       <% when "admin" %>
         <%= image_tag "dl_logo" %>
       <% else %>
-        <%= image_tag "seal_white_on_black" %>
+        <%= image_tag "seal_white_on_black", class: "dark-logo" %>
       <% end %>
     </div>
     <% unless request.subdomain == "admin" %>
