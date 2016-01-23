@@ -16,4 +16,5 @@
 //= require ckeditor/init
 //= require local_time
 //= require_tree .
-//= require_tree ./admin
+//= require admin/courses
+//= require jquery.simplyCountable
