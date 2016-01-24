@@ -93,6 +93,7 @@ en:
     topics: "Topics"
     start_course: "Start Course"
     click_here_for_text_copy_course: "Click here for a text copy of the course."
+    there_is_no_text_copy_of_course: "There is no text copy for this course"
     lessons_in_this_course: "Activities in This Course"
     start_lesson: "Start Activity"
     lesson: "Activity"
