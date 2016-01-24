@@ -9,7 +9,8 @@ Rails.application.config.assets.version = '1.0'
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
-Rails.application.config.assets.precompile += %w( courses.js jquery.simplyCountable.js )
+Rails.application.config.assets.precompile += %w( jquery.simplyCountable.js )
+Rails.application.config.assets.precompile += %w( admin/courses.js )
 Rails.application.config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif *.svg)
 Rails.application.config.assets.paths << "#{Rails.root}/app/assets/fonts"
 Dir.glob("#{Rails.root}/app/assets/images/**/").each do |path|

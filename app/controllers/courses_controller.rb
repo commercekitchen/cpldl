@@ -154,7 +154,12 @@ class CoursesController < ApplicationController
 
   def quiz_submit
     @org_id = Organization.find_by_subdomain(request.subdomain).id
-    @org_courses = Course.where_exists(:organization_course, organization_id: @org_id)
+    case I18n.locale
+    when :es
+      @org_courses = Course.where_exists(:organization_course, organization_id: @org_id).where(language_id: Language.find_by_name("Spanish").id)
+    when :en
+      @org_courses = Course.where_exists(:organization_course, organization_id: @org_id).where(language_id: Language.find_by_name("English").id)
+    end
     # Finds and bulk adds relevant core desktop topics
     case params["set_one"]
     when "1"
