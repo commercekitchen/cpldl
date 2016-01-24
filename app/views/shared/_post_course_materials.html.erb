@@ -1,8 +1,8 @@
-<%= if @course.attachments.count == 0 %>
+<% if @course.attachments.count == 0 %>
   <h2><%= t('course_page.there_is_no_text_copy_of_course') %></h2>
-<%= else %>
+<% else %>
   <h2><%= t('course_page.click_here_for_text_copy_course') %></h2>
-<%= end %>
+<% end %>
 
 <ul class="no-padding">
 <%# TODO: make this a model method %>
