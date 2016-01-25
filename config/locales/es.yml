@@ -101,13 +101,14 @@ es:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"
   course_completion_page:
-    practice_new_skills: "Additional Resources"
+    practice_new_skills: "¡Practica y usa tus nuevas habilidades! (Da clic en cada liga abajo)"
     congratulations: "Felicitaciones"
     you_successfully_completed: "Ha completado la Actividad"
     return_to_my_courses: "Regresar a Mis Cursos"
     view_all_courses: "Ver todos los cursos"
     download_certificate: "Descargar Mi Certificado"
     restart_this_course: "Repetir este curso"
+    additional_resources: "Additional Resources"
   certificate:
     this_award: "Este diploma certifica que"
     has_completed: "ha culminado la clase de"
