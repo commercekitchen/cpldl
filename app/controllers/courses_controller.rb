@@ -41,10 +41,10 @@ class CoursesController < ApplicationController
       if params[:search].blank?
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id).where_exists(:organization, subdomain: request.subdomain)
       else
-        published_results
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id).where_exists(:organization, subdomain: request.subdomain) & published_results
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) : published_results
+      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) & published_results
     end
 
     respond_to do |format|
