@@ -2,6 +2,8 @@
 <html>
 <head>
   <%= render "shared/meta_tags" %>
+  <%= render "shared/ga" if Rails.env.production? %>
+  <%= render "shared/ga_event_tracking" if Rails.env.production? %>
 </head>
 <body class="<%= "#{controller_name}-#{action_name}" %>">
   <%= render "shared/header" %>
