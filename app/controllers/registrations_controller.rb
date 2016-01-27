@@ -8,7 +8,11 @@ class RegistrationsController < Devise::RegistrationsController
     # Not be hardcoded to "chipublib". We will need to pull it in with
     # request.subdomain
     if resource.persisted?
-      resource.add_role :user, Organization.find_by_subdomain("chipublib")
+      if request.subdomain == "admin"
+        resource.add_role :user, Organization.find_by_subdomain(request.subdomain)
+      else
+        resource.add_role :user, Organization.find_by_subdomain("chipublib")
+      end
     end
   end
 
