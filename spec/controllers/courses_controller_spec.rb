@@ -184,10 +184,10 @@ describe CoursesController do
     end
 
     context "when logged out" do
-      it "should redirect to login page" do
+      it "should allow completion" do
         get :complete, { course_id: @course1 }
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(user_session_path)
+        expect(response).to have_http_status(:success)
+        expect(assigns(:course)).to eq(@course1)
       end
     end
   end
@@ -236,9 +236,16 @@ describe CoursesController do
 
     context "when logged out" do
       it "should redirect to login page" do
+        @lesson1 = FactoryGirl.create(:lesson, lesson_order: 1)
+        @lesson2 = FactoryGirl.create(:lesson, lesson_order: 2)
+        @lesson3 = FactoryGirl.create(:lesson, lesson_order: 3)
+        @lesson4 = FactoryGirl.create(:lesson)
+        @course1.lessons << [@lesson1, @lesson2, @lesson3]
+        @course2.lessons << [@lesson4]
+
         post :start, { course_id: @course1 }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(user_session_path)
+        expect(response).to redirect_to(course_lesson_path(@course1, @lesson1.id))
       end
     end
   end
@@ -290,10 +297,11 @@ describe CoursesController do
     end
 
     context "when logged out" do
-      it "should redirect to login page" do
-        get :view_attachment, { course_id: @course1, attachment_id: 1 }
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(user_session_path)
+      it "should all view" do
+        file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
+        @course1.attachments.create(document: file, doc_type: "post-course")
+        get :view_attachment, { course_id: @course1, attachment_id: @course1.attachments.first.id }
+        expect(response).to have_http_status(:success)
       end
     end
   end

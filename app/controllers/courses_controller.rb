@@ -26,8 +26,9 @@
 
 class CoursesController < ApplicationController
 
-  # before_action :authenticate_user!, only: [:your, :completed, :start]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses]
+
+  # before_action :authenticate_user!, except: [:index, :show]
 
   def index
     results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
@@ -92,12 +93,16 @@ class CoursesController < ApplicationController
 
   def start
     @course = Course.friendly.find(params[:course_id])
-    course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
-    course_progress.tracked = true
-    if course_progress.save
-      redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
+    if current_user
+      course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
+      course_progress.tracked = true
+      if course_progress.save
+        redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
+      else
+        render :show, alert: "Sorry, we were unable to add this course to your plan."
+      end
     else
-      render :show, alert: "Sorry, we were unable to add this course to your plan."
+      redirect_to course_lesson_path(@course, @course.next_lesson_id)
     end
   end
 
@@ -113,9 +118,15 @@ class CoursesController < ApplicationController
                orientation: "Landscape",
                page_size: "Letter",
                show_as_html: params[:debug].present?
-        send_data(@pdf,
-                  filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
-                  type: "application/pdf")
+        if current_user
+          send_data(@pdf,
+                    filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
+                    type: "application/pdf")
+        else
+          send_data(@pdf,
+                    filename: "#{@course.title} completion certificate.pdf",
+                    type: "application/pdf")
+        end
       end
     end
   end

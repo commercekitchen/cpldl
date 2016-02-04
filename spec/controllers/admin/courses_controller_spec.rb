@@ -8,17 +8,23 @@ describe Admin::CoursesController do
     @course1 = FactoryGirl.create(:course, title: "Course1", course_order: 1)
     @course2 = FactoryGirl.create(:course, title: "Course2", course_order: 2)
     @course3 = FactoryGirl.create(:course, title: "Course3", course_order: 3)
-
     @admin = FactoryGirl.create(:admin_user)
     @organization = FactoryGirl.create(:organization)
     @admin.add_role(:admin)
     @admin.add_role(:admin, @organization)
+
+    @org_course1 = OrganizationCourse.create(organization_id: @organization.id,
+                                             course_id: @course1.id)
+    @org_course2 = OrganizationCourse.create(organization_id: @organization.id,
+                                             course_id: @course2.id)
+    @org_course3 = OrganizationCourse.create(organization_id: @organization.id,
+                                             course_id: @course3.id)
     sign_in @admin
   end
 
   describe "GET #index" do
     it "assigns all courses as @courses" do
-      get :index
+      get :index, subdomain: "chipublib"
       expect(assigns(:courses)).to include(@course1, @course2, @course3)
       expect(assigns(:courses).count).to eq(3)
     end

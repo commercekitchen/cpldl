@@ -111,5 +111,7 @@ es:
     additional_resources: "Additional Resources"
   certificate:
     this_award: "Este diploma certifica que"
+    name_fill: "_____________________"
+    name_fill_long: "_________________________________________"
     has_completed: "ha culminado la clase de"
     as_of: "en el mes de"

@@ -8,11 +8,13 @@ feature "Admin user clicks through each page" do
     @course = FactoryGirl.create(:course_with_lessons)
     @user = FactoryGirl.create(:user)
     @user.add_role(:admin)
+    @organization = FactoryGirl.create(:organization)
+    @user.add_role(:admin, @organization)
     log_in_with @user.email, @user.password
   end
 
   scenario "can visit each link in the header" do
-    visit admin_dashboard_index_path
+    visit admin_dashboard_index_path(subdomain: "chipublib")
     expect(page).to have_content("Hi Admin!")
 
     visit admin_dashboard_index_path

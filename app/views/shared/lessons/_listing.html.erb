@@ -1,4 +1,8 @@
-<% lessons_completed = current_user.completed_lesson_ids(course) %>
+<% if current_user %>
+  <% lessons_completed = current_user.completed_lesson_ids(course) %>
+<% else %>
+  <% lessons_completed = session[:lessons_done] %>
+<% end %>
 
 <div class="row lesson-listing">
   <div class="sixcol">
