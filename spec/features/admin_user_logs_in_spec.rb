@@ -8,10 +8,11 @@ feature "Admin user logs in" do
       @user = FactoryGirl.create(:user)
       @english = FactoryGirl.create(:language)
       @spanish = FactoryGirl.create(:spanish_lang)
-      @user.add_role(:admin)
+      @org = FactoryGirl.create(:organization)
     end
 
     scenario "is prompted to change password on first time" do
+      @user.add_role(:admin)
       expect(@user.sign_in_count).to eq(0)
       log_in_with @user.email, @user.password
       expect(current_path).to eq(profile_path)

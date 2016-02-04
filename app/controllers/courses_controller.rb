@@ -26,12 +26,9 @@
 
 class CoursesController < ApplicationController
 
-  # before_action :authenticate_user!, only: [:your, :completed, :start]
+  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses]
 
   # before_action :authenticate_user!, except: [:index, :show]
-
-  # :start, :complete,
-  # :view_attachment, :quiz, :quiz_submit
 
   def index
     results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)

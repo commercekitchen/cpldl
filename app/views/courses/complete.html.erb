@@ -53,7 +53,7 @@
     </div>
     <div class="row">
       <% if current_user %>
-        <%= link_to_if(your_courses_path) do %>
+        <%= link_to(your_courses_path) do %>
           <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
             <%= t('course_completion_page.return_to_my_courses') %>
           <% end %>

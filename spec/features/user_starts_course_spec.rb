@@ -38,10 +38,10 @@ feature "User visits course listing page" do
         expect(current_path).to eq(course_path(@course1))
       end
 
-      scenario "can click to start a course and be required to login" do
+      scenario "can click to start a course and is not required to sign in" do
         visit course_path(@course1)
         click_link "Start Course"
-        expect(current_path).to eq(new_user_session_path)
+        expect(current_path).to eq(course_start_path(@course1))
       end
 
     end
