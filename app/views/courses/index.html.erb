@@ -1,5 +1,6 @@
 <%= render "shared/course_intro_text" %>
-<% if @courses.count > 0 %>
+
+<% if current_user && @courses.count > 0 %>
   <%= render partial: "shared/courses/listing", locals: { courses_completed: [] } %>
 <% else %>
   <p>No courses match your search. <%= link_to "View all courses", courses_path %></p>

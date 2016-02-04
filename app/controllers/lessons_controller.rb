@@ -23,7 +23,7 @@
 
 class LessonsController < ApplicationController
 
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_course
 
   def index
@@ -36,9 +36,21 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
+
+    unless current_user
+      session[:lessons_done] = [] if session[:lessons_done].blank?
+      session[:lessons_done] << @lesson.id unless session[:lessons_done].include?(@lesson.id)
+    end
+
     @next_lesson = @course.lessons.find(@course.next_lesson_id(@lesson.id))
-    @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
-    @course_progress.update_attribute(:tracked, true)
+
+    if current_user
+      @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
+      @course_progress.update_attribute(:tracked, true)
+    else
+      session[:course_id] = @course.id if session[:course_id].blank?
+      @course_progress = CourseProgress.new(course_id: session[:course_id], tracked: true)
+    end
 
     respond_to do |format|
       format.html do
@@ -57,10 +69,12 @@ class LessonsController < ApplicationController
     lesson = @course.lessons.friendly.find(params[:lesson_id])
 
     # TODO: move to user model?
-    course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
-    course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
-    course_progress.completed_at = Time.zone.now if lesson.is_assessment
-    course_progress.save
+    if current_user
+      course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
+      course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
+      course_progress.completed_at = Time.zone.now if lesson.is_assessment
+      course_progress.save
+    end
 
     respond_to do |format|
       format.html do
