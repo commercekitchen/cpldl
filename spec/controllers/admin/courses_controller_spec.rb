@@ -25,7 +25,6 @@ describe Admin::CoursesController do
   describe "GET #index" do
     it "assigns all courses as @courses" do
       get :index, subdomain: "chipublib"
-      binding.pry
       expect(assigns(:courses)).to include(@course1, @course2, @course3)
       expect(assigns(:courses).count).to eq(3)
     end
