@@ -3,6 +3,8 @@ require "rails_helper"
 describe Admin::DashboardController do
   before(:each) do
     @user = FactoryGirl.create(:user)
+    @org = FactoryGirl.create(:organization)
+    @user.add_role(:admin, @org)
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     sign_in @user
@@ -51,6 +53,9 @@ describe Admin::DashboardController do
       @user1 = FactoryGirl.create(:user, email: "one@example.com")
       @user2 = FactoryGirl.create(:user, email: "two@example.com")
       @user3 = FactoryGirl.create(:user, email: "three@example.com")
+      @user1.add_role(:user, @org)
+      @user2.add_role(:user, @org)
+      @user3.add_role(:user, @org)
     end
 
     it "assigns all users as @users" do

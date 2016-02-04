@@ -14,7 +14,9 @@
 <div class="row">
   <div class="twelvecol congrats-banner">
     <div class="row">
-      <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.profile.first_name}." %>
+      <% if current_user %>
+        <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.profile.first_name}." %>
+      <% end %>
       <%= content_tag :p, "#{t('course_completion_page.you_successfully_completed')} #{@course.title}!", class: "small-margin" %>
     </div>
     <div class="row extra-margin">
@@ -25,13 +27,17 @@
             <p>
               <%= t('certificate.this_award') %>
             </p>
-            <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
+              <% if current_user %>
+                <%= content_tag :h2, "#{current_user.profile.first_name}", class: "name" %>
+              <% else %>
+                <%= t('certificate.name_fill') %>
+              <% end %>
             <p>
               <%= t('certificate.has_completed') %>
             </p>
             <%= content_tag :h2, "#{@course.title}", class: "course" %>
             <p>
-              <%= t('certificate.as_of') %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %>
+              <%= t('certificate.as_of') %>  <% if current_user %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %> <% else %> <%= local_time(Time.zone.now, '%B %e, %Y') %> <% end %>
             </p>
             <%= image_tag "dl_logo.png" %>
           </div>
@@ -46,9 +52,11 @@
       <% end %>
     </div>
     <div class="row">
-      <%= link_to(your_courses_path) do %>
-        <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
-          <%= t('course_completion_page.return_to_my_courses') %>
+      <% if current_user %>
+        <%= link_to(your_courses_path) do %>
+          <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
+            <%= t('course_completion_page.return_to_my_courses') %>
+          <% end %>
         <% end %>
       <% end %>
       <%= link_to(courses_path) do %>

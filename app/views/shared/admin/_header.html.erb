@@ -6,13 +6,14 @@
       </small>
     </div>
     <div class="row">
-      <div class="sevencol">
+      <div class="sixcol">
         <%= render "shared/logo_purple" %>
       </div>
-      <div class="fivecol last">
+      <div class="sixcol last">
         <nav class="left-or-right header-top-nav">
           Hi Admin! |
           <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
+          <%= link_to "Community Of Practice", "#" %> |
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
         </nav>
       </div>

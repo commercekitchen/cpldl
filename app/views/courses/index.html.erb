@@ -1,4 +1,5 @@
 <%= render "shared/course_intro_text" %>
+
 <% if @courses.count > 0 %>
   <%= render partial: "shared/courses/listing", locals: { courses_completed: [] } %>
 <% else %>

@@ -111,5 +111,7 @@ en:
     additional_resources: "Additional Resources"
   certificate:
     this_award: "This award certifies that"
+    name_fill: "_____________________"
+    name_fill_long: "_________________________________________"
     has_completed: "has completed:"
     as_of: "as of"
