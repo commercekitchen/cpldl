@@ -5,14 +5,15 @@ feature "Admin user logs in" do
   context "test forced password changing" do
 
     before(:each) do
+      Capybara.default_host = "http://chipublib.example.com"
       @user = FactoryGirl.create(:user)
       @english = FactoryGirl.create(:language)
       @spanish = FactoryGirl.create(:spanish_lang)
       @org = FactoryGirl.create(:organization)
+      @user.add_role(:admin, @org)
     end
 
     scenario "is prompted to change password on first time" do
-      @user.add_role(:admin)
       expect(@user.sign_in_count).to eq(0)
       log_in_with @user.email, @user.password
       expect(current_path).to eq(profile_path)
