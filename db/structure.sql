@@ -631,7 +631,15 @@ CREATE TABLE users (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     profile_id integer,
-    quiz_modal_complete boolean DEFAULT false
+    quiz_modal_complete boolean DEFAULT false,
+    invitation_token character varying,
+    invitation_created_at timestamp without time zone,
+    invitation_sent_at timestamp without time zone,
+    invitation_accepted_at timestamp without time zone,
+    invitation_limit integer,
+    invited_by_id integer,
+    invited_by_type character varying,
+    invitations_count integer DEFAULT 0
 );
 
 
@@ -996,6 +1004,27 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
+-- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_invitation_token ON users USING btree (invitation_token);
+
+
+--
+-- Name: index_users_on_invitations_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_invitations_count ON users USING btree (invitations_count);
+
+
+--
+-- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_users_on_invited_by_id ON users USING btree (invited_by_id);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1146,4 +1175,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160114061700');
 INSERT INTO schema_migrations (version) VALUES ('20160114085838');
 
 INSERT INTO schema_migrations (version) VALUES ('20160118182316');
+
+INSERT INTO schema_migrations (version) VALUES ('20160209173722');
 

@@ -11,6 +11,10 @@ module Admin
       render "admin/cms_pages/index", layout: "admin/base_with_sidebar"
     end
 
+    def invites_index
+      render "admin/invites/new", layout: "admin/base_with_sidebar"
+    end
+
     def users_index
       results = User.search_users(params[:search])
       if params[:search].blank?
