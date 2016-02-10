@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
                                                     dmetaphone: { any_word: true },
                                                        trigram: { threshold: 0.1 } }
 
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   rolify
   has_one :profile, dependent: :destroy

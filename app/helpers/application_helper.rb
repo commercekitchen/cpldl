@@ -7,6 +7,10 @@ module ApplicationHelper
     @resource ||= User.new
   end
 
+  def subdomain
+    @subdomain = request.subdomain
+  end
+
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end

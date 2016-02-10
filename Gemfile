@@ -20,6 +20,7 @@ gem 'where_exists'
 
 # Authentication and authorization
 gem 'devise'
+gem 'devise_invitable'
 gem 'rolify'
 
 # Bourbon for sass mixins, and neat for the grid framework
