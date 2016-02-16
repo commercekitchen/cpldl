@@ -22,7 +22,7 @@
 #
 
 class LessonsController < ApplicationController
-  before_filter :dl_subdomain
+  before_filter :auth_subsites
   before_action :set_course
 
   def index
@@ -100,7 +100,7 @@ class LessonsController < ApplicationController
   end
 
 
-  def dl_subdomain
+  def auth_subsites
     if request.subdomain != "admin"
       authenticate_user!
     end
