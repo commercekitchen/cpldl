@@ -6,10 +6,12 @@
   <%= render "shared/ga_event_tracking" if Rails.env.production? %>
 </head>
 <body>
-  <% if current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
+  <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
     <%= render "shared/admin/header" %>
-  <% else %>
+  <% elsif current_user %>
     <%= render "shared/user/header" %>
+  <% else %>
+    <%= render "shared/header" %>
   <% end %>
 
   <div class="banner large-top-padding">

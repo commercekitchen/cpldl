@@ -73,7 +73,7 @@ class User < ActiveRecord::Base
   end
 
   def preferred_language
-    language = profile.language
+    profile.blank? ? language = nil : language = profile.language
     language.blank? ? "English" : language.name
   end
 end

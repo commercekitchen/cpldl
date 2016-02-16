@@ -85,6 +85,7 @@ group :development, :deployment do
   gem 'capistrano-faster-assets', '~> 1.0', require: false
   gem 'capistrano-db-tasks', '~> 0.4', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'colorize'
 end
 
 group :test do

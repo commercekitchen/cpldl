@@ -25,10 +25,8 @@
 #
 
 class CoursesController < ApplicationController
-
-  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses]
-
-  # before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses] if :dl_subdomain
+  before_action :authenticate_user!, except: [:index, :show] unless :dl_subdomain
 
   def index
     results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
@@ -206,5 +204,11 @@ class CoursesController < ApplicationController
       course_progress.tracked = true
       course_progress.save
     end
+  end
+
+  private
+
+  def dl_subdomain
+    request.subdomain == "admin"
   end
 end

@@ -36,6 +36,7 @@ en:
     hide_password: "Hide password"
     access_courses: "Access Courses"
     forgot_password: "Forgot your password?"
+    want_to_track_a_course: "Create an account to track your course progress and access personalized certificates. It’s easy to set up, just fill out the fields below."
     want_to_take_a_course: "Want to take a course, but don't have an account yet? It's easy to set one up. Just fill out the fields below."
     dont_have_email: "Don't have an email address?"
     click_here: "Click here"
