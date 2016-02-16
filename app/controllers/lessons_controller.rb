@@ -22,8 +22,7 @@
 #
 
 class LessonsController < ApplicationController
-
-  # before_action :authenticate_user!
+  before_filter :dl_subdomain
   before_action :set_course
 
   def index
@@ -100,4 +99,10 @@ class LessonsController < ApplicationController
     @course = Course.friendly.find(params[:course_id])
   end
 
+
+  def dl_subdomain
+    if request.subdomain != "admin" || request.subdomain != "www"
+      authenticate_user!
+    end
+  end
 end
