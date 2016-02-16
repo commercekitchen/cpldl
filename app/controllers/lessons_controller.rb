@@ -101,7 +101,7 @@ class LessonsController < ApplicationController
 
 
   def dl_subdomain
-    if request.subdomain != "admin" || request.subdomain != "www"
+    if request.subdomain != "admin"
       authenticate_user!
     end
   end

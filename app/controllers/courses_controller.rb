@@ -209,6 +209,6 @@ class CoursesController < ApplicationController
   private
 
   def dl_subdomain
-    request.subdomain == "admin" || request.subdomain == "www"
+    request.subdomain == "admin"
   end
 end

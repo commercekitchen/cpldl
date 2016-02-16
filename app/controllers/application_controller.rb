@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :redirect_chicago
   protect_from_forgery with: :exception
 
-  layout proc { user_signed_in? ? "user/logged_in" : "application" }
+  layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
 
   def after_sign_in_path_for(user)
     if first_admin_login? user
@@ -57,6 +57,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def dl_subdomain
+    request.subdomain == "admin"
+  end
 
   def first_admin_login?(user)
     return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)))
