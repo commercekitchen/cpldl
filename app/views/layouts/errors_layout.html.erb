@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%= render "shared/meta_tags" %>
+
+</head>
+<body class="<%= "#{controller_name}-#{action_name}" %>">
+  <%= render "shared/header" %>
+
+  <main class="container">
+    <%= render "shared/flashes" %>
+    <%= yield %>
+  </main>
+
+  <%= render "shared/footer" %>
+</body>
+</html>
