@@ -10,6 +10,8 @@
     <%= render "shared/admin/header" %>
   <% elsif current_user %>
     <%= render "shared/user/header" %>
+  <% elsif request.subdomain == "admin" %>
+    <%= render "shared/dl_header" %>
   <% else %>
     <%= render "shared/header" %>
   <% end %>
