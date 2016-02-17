@@ -1,9 +1,11 @@
 <header class="header-logged-in">
   <div class="container">
     <div class="row">
-      <small>
-        <%= link_to "English", "#",  class: "lang-link" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#", class: "lang-link" %>
-      </small>
+      <% unless current_user %>
+        <small>
+          <%= link_to "English", "#",  class: "lang-link" %> | <%= link_to "Espa&ntilde;ol".html_safe, "#", class: "lang-link" %>
+        </small>
+      <% end %>
     </div>
     <div class="row">
       <div class="sixcol">
