@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    english_id = Language.find_by_name("English").id || 1
-    spanish_id = Language.find_by_name("Spanish").id || 2
+    english_id = Language.find_by_name("English").try(:id) || 1
+    spanish_id = Language.find_by_name("Spanish").try(:id) || 2
     org_id = Organization.find_by_subdomain(request.subdomain)
     case I18n.locale
     when :es
