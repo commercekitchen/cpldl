@@ -5,6 +5,9 @@
       <small>
         <%= link_to "English", home_language_toggle_path(lang: "en") %> | <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
       </small>
+      <small>
+        <%= link_to "Help Learners", "http://community.digitallearn.org", class: "practice-link" %>
+      </small>
     </div>
     <div class="logo-link-container">
       <%= render "shared/logo_purple" %>
