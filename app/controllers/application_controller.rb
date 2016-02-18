@@ -43,7 +43,9 @@ class ApplicationController < ActionController::Base
     when "admin"
       redirect_to root_url(subdomain: "www")
     when ""
-      redirect_to root_url(subdomain: "www")
+      relative_path = request.original_fullpath
+      relative_path[0] = ""
+      redirect_to root_url(subdomain: "www") + relative_path
     end
   end
 
