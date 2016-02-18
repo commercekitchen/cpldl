@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
   private
 
   def dl_subdomain
-    request.subdomain == "admin"
+    request.subdomain == "www"
   end
 
   def first_admin_login?(user)

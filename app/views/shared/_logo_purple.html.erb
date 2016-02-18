@@ -2,13 +2,13 @@
   <div class="logo">
     <div class="logo-icon">
       <% case request.subdomain %>
-      <% when "admin" %>
+      <% when "www" %>
         <%= image_tag "dl_logo" %>
       <% else %>
         <%= image_tag "seal_white_on_black", class: "dark-logo" %>
       <% end %>
     </div>
-    <% unless request.subdomain == "admin" %>
+    <% unless request.subdomain == "www" %>
       <div class="logo-content">
         <h1>Chicago DigitalLearn.org</h1>
       </div>

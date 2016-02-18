@@ -8,7 +8,7 @@ admin_user.add_role(:admin)
 admin_user.add_role(:admin, Organization.first)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
-Organization.create(name: "Admin", subdomain: "admin")
+Organization.create(name: "Admin", subdomain: "www")
 admin_user = User.create(email: "admin2@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)

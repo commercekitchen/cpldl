@@ -152,7 +152,7 @@
     </div>
   </div>
 
-  <% if request.subdomain == "admin" %>
+  <% if request.subdomain == "www" %>
     <%= render("admin/courses/forms/dl_level_pub_section", f: f) %>
   <% else %>
     <%= render("admin/courses/forms/level_pub_section", f: f) %>
