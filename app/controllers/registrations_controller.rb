@@ -8,11 +8,7 @@ class RegistrationsController < Devise::RegistrationsController
     # Not be hardcoded to "chipublib". We will need to pull it in with
     # request.subdomain
     if resource.persisted?
-      if request.subdomain == "www"
-        resource.add_role :user, Organization.find_by_subdomain(request.subdomain)
-      else
-        resource.add_role :user, Organization.find_by_subdomain(subdomain)
-      end
+      resource.add_role :user, Organization.find_by_subdomain(@user.subdomain)
     end
   end
 
@@ -20,6 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     params.require(:user).permit(:email, :password, :password_confirmation,
-      profile_attributes: [:first_name, :zip_code])
+      :subdomain, profile_attributes: [:first_name, :zip_code])
   end
 end

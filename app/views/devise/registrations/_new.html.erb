@@ -43,6 +43,10 @@
     <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
   </fieldset>
 
+  <fieldset>
+    <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
+  </fieldset>
+
   <%= f.submit "#{t('home.signup')}" %>
 
 <% end %>
