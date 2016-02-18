@@ -125,13 +125,9 @@
             @include media($mobile-large) {
                 width: 70px;
                 float: left;
-                top: -3px;
-                left: -4px;
             }
             /* The given svg file isn't cropped to the edge, so ... */
             position: relative;
-            top: -4px;
-            left: -5px;
         }
         .logo-content {
             display: inline-block;
