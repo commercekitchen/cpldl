@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_language
   before_action :set_cms_footer_pages
-  before_action :redirect_chicago
+  before_action :redirect_orgs
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
@@ -36,10 +36,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def redirect_chicago
+  def redirect_orgs
     case request.subdomain
     when "chicago"
       redirect_to root_url(subdomain: "chipublib")
+    when "admin"
+      redirect_to root_url(subdomain: "www")
+    when ""
+      redirect_to root_url(subdomain: "www")
     end
   end
 
