@@ -2,7 +2,11 @@
 <html>
 <head>
   <%= render "shared/meta_tags" %>
-  <%= render "shared/ga" if Rails.env.production? %>
+  <% begin %>
+    <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
+  <% rescue %>
+    <%= render "shared/ga_www" if Rails.env.production? %>
+  <% end %>
   <%= render "shared/ga_event_tracking" if Rails.env.production? %>
 </head>
 <body class="<%= "#{controller_name}-#{action_name}" %>">
