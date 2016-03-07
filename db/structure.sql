@@ -2,16 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.0
--- Dumped by pg_dump version 9.5.0
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -73,7 +69,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: attachments; Type: TABLE; Schema: public; Owner: -
+-- Name: attachments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE attachments (
@@ -110,7 +106,7 @@ ALTER SEQUENCE attachments_id_seq OWNED BY attachments.id;
 
 
 --
--- Name: cms_pages; Type: TABLE; Schema: public; Owner: -
+-- Name: cms_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE cms_pages (
@@ -152,7 +148,7 @@ ALTER SEQUENCE cms_pages_id_seq OWNED BY cms_pages.id;
 
 
 --
--- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -
+-- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE completed_lessons (
@@ -184,7 +180,7 @@ ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
 
 
 --
--- Name: course_progresses; Type: TABLE; Schema: public; Owner: -
+-- Name: course_progresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE course_progresses (
@@ -219,7 +215,7 @@ ALTER SEQUENCE course_progresses_id_seq OWNED BY course_progresses.id;
 
 
 --
--- Name: course_topics; Type: TABLE; Schema: public; Owner: -
+-- Name: course_topics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE course_topics (
@@ -251,7 +247,7 @@ ALTER SEQUENCE course_topics_id_seq OWNED BY course_topics.id;
 
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: -
+-- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE courses (
@@ -298,7 +294,7 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
--- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
+-- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE friendly_id_slugs (
@@ -331,7 +327,7 @@ ALTER SEQUENCE friendly_id_slugs_id_seq OWNED BY friendly_id_slugs.id;
 
 
 --
--- Name: languages; Type: TABLE; Schema: public; Owner: -
+-- Name: languages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE languages (
@@ -362,7 +358,7 @@ ALTER SEQUENCE languages_id_seq OWNED BY languages.id;
 
 
 --
--- Name: lessons; Type: TABLE; Schema: public; Owner: -
+-- Name: lessons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE lessons (
@@ -406,7 +402,7 @@ ALTER SEQUENCE lessons_id_seq OWNED BY lessons.id;
 
 
 --
--- Name: organization_courses; Type: TABLE; Schema: public; Owner: -
+-- Name: organization_courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE organization_courses (
@@ -438,7 +434,7 @@ ALTER SEQUENCE organization_courses_id_seq OWNED BY organization_courses.id;
 
 
 --
--- Name: organizations; Type: TABLE; Schema: public; Owner: -
+-- Name: organizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE organizations (
@@ -470,7 +466,7 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 
 --
--- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -
+-- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE pg_search_documents (
@@ -503,7 +499,7 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
--- Name: profiles; Type: TABLE; Schema: public; Owner: -
+-- Name: profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE profiles (
@@ -537,7 +533,7 @@ ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -
+-- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE roles (
@@ -570,7 +566,7 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE schema_migrations (
@@ -579,7 +575,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: topics; Type: TABLE; Schema: public; Owner: -
+-- Name: topics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE topics (
@@ -610,7 +606,7 @@ ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users (
@@ -668,7 +664,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: users_roles; Type: TABLE; Schema: public; Owner: -
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE TABLE users_roles (
@@ -790,7 +786,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY attachments
@@ -798,7 +794,7 @@ ALTER TABLE ONLY attachments
 
 
 --
--- Name: cms_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: cms_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY cms_pages
@@ -806,7 +802,7 @@ ALTER TABLE ONLY cms_pages
 
 
 --
--- Name: completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY completed_lessons
@@ -814,7 +810,7 @@ ALTER TABLE ONLY completed_lessons
 
 
 --
--- Name: course_progresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: course_progresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY course_progresses
@@ -822,7 +818,7 @@ ALTER TABLE ONLY course_progresses
 
 
 --
--- Name: course_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: course_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY course_topics
@@ -830,7 +826,7 @@ ALTER TABLE ONLY course_topics
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY courses
@@ -838,7 +834,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY friendly_id_slugs
@@ -846,7 +842,7 @@ ALTER TABLE ONLY friendly_id_slugs
 
 
 --
--- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY languages
@@ -854,7 +850,7 @@ ALTER TABLE ONLY languages
 
 
 --
--- Name: lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY lessons
@@ -862,7 +858,7 @@ ALTER TABLE ONLY lessons
 
 
 --
--- Name: organization_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: organization_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY organization_courses
@@ -870,7 +866,7 @@ ALTER TABLE ONLY organization_courses
 
 
 --
--- Name: organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY organizations
@@ -878,7 +874,7 @@ ALTER TABLE ONLY organizations
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -886,7 +882,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY profiles
@@ -894,7 +890,7 @@ ALTER TABLE ONLY profiles
 
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY roles
@@ -902,7 +898,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY topics
@@ -910,7 +906,7 @@ ALTER TABLE ONLY topics
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
 ALTER TABLE ONLY users
@@ -918,140 +914,140 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_cms_pages_on_slug ON cms_pages USING btree (slug);
 
 
 --
--- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_courses_on_slug ON courses USING btree (slug);
 
 
 --
--- Name: index_courses_on_title; Type: INDEX; Schema: public; Owner: -
+-- Name: index_courses_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_courses_on_title ON courses USING btree (title);
 
 
 --
--- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type ON friendly_id_slugs USING btree (slug, sluggable_type);
 
 
 --
--- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: -
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope ON friendly_id_slugs USING btree (slug, sluggable_type, scope);
 
 
 --
--- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON friendly_id_slugs USING btree (sluggable_id);
 
 
 --
--- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: -
+-- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USING btree (sluggable_type);
 
 
 --
--- Name: index_lessons_on_slug; Type: INDEX; Schema: public; Owner: -
+-- Name: index_lessons_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_lessons_on_slug ON lessons USING btree (slug);
 
 
 --
--- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON pg_search_documents USING btree (searchable_type, searchable_id);
 
 
 --
--- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_name ON roles USING btree (name);
 
 
 --
--- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON roles USING btree (name, resource_type, resource_id);
 
 
 --
--- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_invitation_token ON users USING btree (invitation_token);
 
 
 --
--- Name: index_users_on_invitations_count; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_invitations_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_invitations_count ON users USING btree (invitations_count);
 
 
 --
--- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_on_invited_by_id ON users USING btree (invited_by_id);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX index_users_on_unlock_token ON users USING btree (unlock_token);
 
 
 --
--- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree (user_id, role_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -1061,7 +1057,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user", public;
+SET search_path TO "$user",public;
 
 INSERT INTO schema_migrations (version) VALUES ('20151006221749');
 
