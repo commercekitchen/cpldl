@@ -89,7 +89,8 @@ module Admin
     end
 
     def destroy
-      @course.destroy
+      if @course.destroy
+        
       redirect_to courses_url, notice: "Course was successfully destroyed."
     end
 

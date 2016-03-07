@@ -46,6 +46,7 @@ class Lesson < ActiveRecord::Base
                                                       message: ", Please provide a .zip Articulate StoryLine File."
 
   before_destroy :delete_associated_asl_files
+  before_destroy :delete_associated_user_completeions
 
   default_scope { order("lesson_order") }
 
@@ -55,6 +56,11 @@ class Lesson < ActiveRecord::Base
 
   def delete_associated_asl_files
     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
+  end
+
+  def delete_associated_user_completions
+    completions = CompletedLesson.where(lesson_id: self.id)
+    completions.each(&:destroy)
   end
 
   def duration_str

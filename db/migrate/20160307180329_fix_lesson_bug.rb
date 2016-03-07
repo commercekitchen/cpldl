@@ -13,7 +13,6 @@ class FixLessonBug < ActiveRecord::Migration
         next
       else
         bad_apple.destroy
-        puts "#{u.email} had a bad apple, it was cleaned up."
       end
     end
   end
