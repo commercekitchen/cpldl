@@ -59,7 +59,7 @@ class Lesson < ActiveRecord::Base
   end
 
   def delete_associated_user_completions
-    completions = CompletedLesson.where(lesson_id: self.id)
+    completions = CompletedLesson.where(lesson_id: id)
     completions.each(&:destroy)
   end
 
