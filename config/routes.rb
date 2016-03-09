@@ -25,6 +25,12 @@ Rails.application.routes.draw do
 
   resources 'cms_pages', only: [:show]
 
+  namespace :trainer do
+    root 'home#index'
+    resources :dashboard, only: [:index]
+      # get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
+  end
+
   namespace :admin do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
