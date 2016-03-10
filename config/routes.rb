@@ -25,6 +25,12 @@ Rails.application.routes.draw do
 
   resources 'cms_pages', only: [:show]
 
+  namespace :trainer do
+    root 'home#index'
+    resources :dashboard, only: [:index]
+      # get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
+  end
+
   namespace :admin do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
@@ -39,6 +45,9 @@ Rails.application.routes.draw do
       put :sort, on: :collection
       patch 'update_pub_status'
     end
+
+      put 'users/:id/change_user_roles', to: 'users#change_user_roles', as: :change_user_roles
+
     resources :courses do
       put :sort, on: :collection
       patch 'update_pub_status'

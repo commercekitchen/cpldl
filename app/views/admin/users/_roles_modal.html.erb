@@ -1,0 +1,25 @@
+<input class="modal-state" id="modal-1" type="checkbox" />
+<div class="modal-fade-screen">
+  <div class="modal-inner narrow">
+    <div class="modal-close" for="modal-1"></div>
+    <h1>Change User Roles</h1>
+    <p class="modal-intro">Select which roles this user should have.</p>
+    <p class="modal-content">
+      <%= form_tag "/admin/users/#{user.id}/change_user_roles", method: :put do |f| %>
+        <div>
+          <fieldset>
+            <% User::ROLES.each do |role| %>
+              <%= check_box_tag "roles_names[]", role.to_sym, user.has_role?(role.to_sym), { style: "display:inline-block;" } %>
+              <%= label_tag role.titleize, nil, class:"standard-text" %>
+            <% end %>
+          </fieldset>
+        </div>
+        <div>
+          <fieldset>
+            <%= submit_tag "Update User" %>
+          </fieldset>
+        </div>
+      <% end %>
+    </p>
+  </div>
+</div>
