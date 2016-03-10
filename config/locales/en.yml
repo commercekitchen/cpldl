@@ -59,6 +59,7 @@ en:
     sign_out: "Sign Out"
   profile_page:
     preferred_language: "Preferred Language"
+    library_location: "What is your library called?"
     save: "Save"
     change_login_information: "Change Login Information"
     update_profile: "Update Profile"

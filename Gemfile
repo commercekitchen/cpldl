@@ -53,6 +53,9 @@ gem 'wkhtmltopdf-binary'
 # Local time helper library
 gem 'local_time'
 
+# integrate chosen library
+gem 'select2-rails'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false

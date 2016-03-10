@@ -14,6 +14,7 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
   belongs_to :language
+  belongs_to :library_location
 
   validates :first_name, presence: true
   validates :zip_code, format: { with: /\A\d{5}-\d{4}|\A\d{5}\z/, message: "should be ##### or #####-####" },
