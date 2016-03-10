@@ -57,6 +57,14 @@
   font-size: 14px;
 }
 
+.standard-text {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  display: inline-block;
+  padding-right: 10px;
+}
+
 .banner {
   background-color: $teal;
   margin-bottom: 2em;
@@ -302,6 +310,13 @@ ul.less-padding {
 
   .mobile-tweak.align-right {
     text-align: left;
-  } 
+  }
 }
 
+.inline-heading {
+  display: inline-block;
+}
+
+.padded {
+  padding-left: 5px;
+}
