@@ -46,7 +46,7 @@ Rails.application.routes.draw do
       patch 'update_pub_status'
     end
 
-      put 'users/:id/change_admin_status', to: 'users#change_admin_status', as: :change_admin_status
+      put 'users/:id/change_user_roles', to: 'users#change_user_roles', as: :change_user_roles
 
     resources :courses do
       put :sort, on: :collection

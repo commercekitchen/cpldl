@@ -5,7 +5,7 @@
     <h1>Change User Roles</h1>
     <p class="modal-intro">Select which roles this user should have.</p>
     <p class="modal-content">
-      <%= form_tag "/admin/users/#{user.id}/change_admin_status", method: :put do |f| %>
+      <%= form_tag "/admin/users/#{user.id}/change_user_roles", method: :put do |f| %>
         <div>
           <fieldset>
             <% User::ROLES.each do |role| %>

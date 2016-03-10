@@ -1,6 +1,7 @@
 module Admin
   class UsersController < BaseController
-    def change_admin_status
+    def change_user_roles
+      binding.pry
       @user = User.find(params[:id])
       if params[:roles_names].nil?
         User::ROLES.each do |role|
