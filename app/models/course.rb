@@ -38,7 +38,7 @@ class Course < ActiveRecord::Base
                                  }
 
   # Attributes not saved to db, but still needed for validation
-  attr_accessor :other_topic, :other_topic_text
+  attr_accessor :other_topic, :other_topic_text, :org_id
 
   # has_one :assessment
   has_one :course_progress
@@ -69,6 +69,12 @@ class Course < ActiveRecord::Base
   validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == "1" }
 
   default_scope { order("course_order ASC") }
+
+  def validate_has_unique_title
+    if Course.where(title: self.title).where_exists(:organization_course, organization_id: org_id).count > 0
+      errors.add(:title, "must be unique. There is already a course with that title, please select a different title and try again.")
+    end
+  end
 
   def topics_list(topic_list)
     if topic_list.present?

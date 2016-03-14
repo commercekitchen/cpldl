@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
+
     resources :dashboard, only: [:index]
       get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index
       get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
@@ -41,6 +42,7 @@ Rails.application.routes.draw do
       get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
       post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
       put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
+
     resources :cms_pages do
       put :sort, on: :collection
       patch 'update_pub_status'
@@ -51,12 +53,15 @@ Rails.application.routes.draw do
     resources :courses do
       put :sort, on: :collection
       patch 'update_pub_status'
+
       resources :lessons do
         collection do
           delete :destroy_asl_attachment
         end
       end
     end
+
+    get 'export_completions', to: 'exports#completions', as: :export_completions
 
     resources :attachments, only: [:destroy]
   end
