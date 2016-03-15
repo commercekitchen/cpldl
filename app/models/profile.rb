@@ -2,13 +2,14 @@
 #
 # Table name: profiles
 #
-#  id          :integer          not null, primary key
-#  first_name  :string
-#  zip_code    :string
-#  user_id     :integer
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  language_id :integer
+#  id                  :integer          not null, primary key
+#  first_name          :string
+#  zip_code            :string
+#  user_id             :integer
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  language_id         :integer
+#  library_location_id :integer
 #
 
 class Profile < ActiveRecord::Base

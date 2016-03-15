@@ -5,7 +5,10 @@ module Admin
     before_action :set_maximums, only: [:new, :edit]
 
     def index
-      @courses = Course.includes(:language).where_exists(:organization_course, organization_id: current_user.organization_id)
+      binding.pry
+      @courses = Course.includes(:language)
+                       .where_exists(:organization_course, organization_id: current_user.organization_id)
+                       .where.not(pub_status: "A")
       render layout: "admin/base_with_sidebar"
     end
 
@@ -47,6 +50,7 @@ module Admin
       course            = Course.find(params[:course_id])
       course.pub_status = params[:value]
       course.update_pub_date(params[:value])
+      course.update_lesson_pub_stats(params[:value])
 
       if course.save
         render status: 200, json: "#{course.pub_status}"
