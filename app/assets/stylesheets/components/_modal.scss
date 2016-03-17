@@ -37,6 +37,12 @@
     padding: 0.8em 1em;
   }
 
+  .modal-trigger-text {
+    font-size: 16px;
+    color: #8945a1;
+    text-decoration: underline;
+  }
+
   .modal-fade-screen {
     @include transition(opacity 0.25s ease);
     @include position(fixed, 0px 0px 0px 0px);
@@ -101,6 +107,10 @@
       margin-top: 0px;
     }
 
+    &.narrow {
+      width: 30%
+    }
+
     &.quiz-modal-inner {
       min-height: 28em;
       ol {
@@ -131,7 +141,6 @@
     h1 {
       margin-bottom: 0 0 0.6em 0;
       text-align: left;
-      text-transform: capitalize;
     }
 
     p {

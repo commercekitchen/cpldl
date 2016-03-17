@@ -81,7 +81,7 @@ describe CoursesController do
 
     it "allows the admin to change the title, and have the old title redirect to the new title" do
       old_url = @course1.friendly_id
-      @course1.slug = nil # Must set slug to nil for the friendly url to regenerate
+      # @course1.slug = nil # Must set slug to nil for the friendly url to regenerate
       @course1.title = "New Title"
       @course1.save
 

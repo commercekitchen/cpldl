@@ -54,7 +54,7 @@
     <div class="sixcol">
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
-          <%= a.label :document, "Course Supplemental Materials" %>
+          <%= a.label :document, "Text copies of the course" %>
           <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
         </fieldset>
         <fieldset>
@@ -69,7 +69,7 @@
     <div class="sixcol last">
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
-          <%= a.label :document, "Post-Course Supplemental Materials" %>
+          <%= a.label :document, "Additional Resources (for after course completion)" %>
           <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
         </fieldset>
         <fieldset>
@@ -109,7 +109,7 @@
 
   <div>
     <fieldset>
-      <%= f.label :notes, "Post-Course Completion Notes and Partner Resources" %>
+      <%= f.label :notes, "Info to help learners practice and use their new skills (post completion)" %>
       <%= f.cktext_area :notes %>
     </fieldset>
   </div>
@@ -173,6 +173,8 @@
       <span id="course_meta_desc_counter"></span> out of <%= @max_meta %> characters
     </div>
   </fieldset>
+
+  <%= f.hidden_field :subdomain, value: request.subdomain %>
 
   <div class="actions">
     <div class="row">

@@ -112,5 +112,7 @@
     </fieldset>
   </div>
 
+  <%= f.hidden_field :subdomain, value: request.subdomain %>
+
   <%= f.submit "Save Lesson" %>
 <% end %>

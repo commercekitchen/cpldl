@@ -39,6 +39,8 @@ module Admin
 
     def update
       @lesson ||= @course.lessons.friendly.find(params[:id])
+      # set slug to nil to regenerate if title changes
+      @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
       asl_is_new = @lesson.story_line_updated_at.nil?
@@ -49,17 +51,6 @@ module Admin
         render :edit, notice: "Lesson failed to update."
       end
     end
-
-    # TODO: not yet implemented
-    # def destroy
-    #   if @lesson.destroy
-    #     @lesson.story_line.destroy
-    #     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
-    #     redirect_to admin_dashboard_index_path, notice: "#{@lesson.title} successfully destroyed."
-    #   else
-    #     render :edit, alert: "#{@lesson.title} could not be deleted."
-    #   end
-    # end
 
     def destroy_asl_attachment
       @lesson = @course.lessons.friendly.find(params[:format])
@@ -84,8 +75,16 @@ module Admin
     end
 
     def lesson_params
-      params.require(:lesson).permit(:title, :summary, :duration, :story_line,
-       :seo_page_title, :meta_desc, :is_assessment, :lesson_order, :pub_status)
+      params.require(:lesson).permit(:title,
+                                     :summary,
+                                     :duration,
+                                     :story_line,
+                                     :seo_page_title,
+                                     :meta_desc,
+                                     :is_assessment,
+                                     :lesson_order,
+                                     :pub_status,
+                                     :subdomain)
     end
 
     def set_maximums

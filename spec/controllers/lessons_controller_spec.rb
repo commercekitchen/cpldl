@@ -80,7 +80,7 @@ describe LessonsController do
 
     it "allows the admin to change the title, and have the old title redirect to the new title" do
       old_url = @lesson1.friendly_id
-      @lesson1.slug = nil # Must set slug to nil for the friendly url to regenerate
+      # @lesson1.slug = nil # Must set slug to nil for the friendly url to regenerate
       @lesson1.title = "New Lesson Title"
       @lesson1.save
 

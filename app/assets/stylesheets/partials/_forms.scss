@@ -133,3 +133,22 @@ select {
   text-align: center;
   display:block;
 }
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  color: $grey;
+}
+
+.select2-container--default .select2-selection--single {
+    padding: .5em 2.5em .7em .4em;
+    border: 2px solid $grey;
+    height: 48px;
+    width: 100%;
+    font-size: 1em;
+    position: relative;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  background: url("/assets/select_box_arrows.png") no-repeat 96% 50%;
+  padding: 1.2em 25em;
+  position: absolute;
+}

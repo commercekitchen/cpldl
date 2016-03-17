@@ -3,7 +3,7 @@
 <h1>Users</h1>
 
 <div class="search-box">
-  <%= form_tag admin_users_index_path, method: :get do %>
+  <%= form_tag trainer_dashboard_index_path, method: :get do %>
     <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
     <i class="icon-search grey"></i>
     <%= submit_tag "Search", id: "search_btn" %>
@@ -15,7 +15,7 @@
     <h2>Name</h2>
   </div>
   <div class="four-of-twelve">
-    <h2 class="inline-heading"><%= t('login_signup.email') %><h5 class="inline-heading padded">(Click to change user roles)</h5></h2>
+    <h2><%= t('login_signup.email') %></h2>
   </div>
   <div class="two-of-twelve">
     <h2>Language</h2>
@@ -34,12 +34,7 @@
       <%= user.profile.try(:first_name) %>
     </div>
     <div class="four-of-twelve">
-      <div class="modal">
-        <label for="modal-1">
-          <div class="modal-trigger-text"><%= user.email %></div>
-        </label>
-        <%= render "admin/users/roles_modal", user: user %>
-      </div>
+      <%= user.email %>
     </div>
     <div class="two-of-twelve">
       <%= user.preferred_language %>
@@ -51,10 +46,8 @@
       <% if user.confirmed? %>
         Yes
       <% else %>
-        <%= link_to "Click to Confirm", admin_dashboard_manually_confirm_user_path(user_id: user.id), method: :put %>
+        <%= link_to "Click to Confirm", trainer_dashboard_manually_confirm_user_path(user_id: user.id), method: :put %>
       <% end %>
     </div>
   </div>
 <% end %>
-
-

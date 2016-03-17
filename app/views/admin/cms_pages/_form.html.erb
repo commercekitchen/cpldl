@@ -98,6 +98,8 @@
     </div>
   </fieldset>
 
+  <%= f.hidden_field :subdomain, value: request.subdomain %>
+
   <div class="actions">
     <div class="row">
       <% if params[:action] == "edit" %>

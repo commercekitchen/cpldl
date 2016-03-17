@@ -23,7 +23,7 @@
 #
 
 class LessonsController < ApplicationController
-  before_filter :auth_subsites
+  before_action :auth_subsites
   before_action :set_course
 
   def index
@@ -108,7 +108,6 @@ class LessonsController < ApplicationController
   def set_course
     @course = Course.friendly.find(params[:course_id])
   end
-
 
   def auth_subsites
     if request.subdomain != "www"

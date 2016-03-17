@@ -30,7 +30,11 @@ module Admin
         @course.set_pub_date
       end
 
-      if @course.save
+      @course.org_id = current_user.organization_id
+      @course.validate_has_unique_title
+      if @course.errors.any?
+        render :new
+      elsif @course.save
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
           org_course.organization_id = current_user.organization_id
           org_course.course_id = @course.id
@@ -60,10 +64,10 @@ module Admin
     end
 
     def update
-      @course.slug = nil # The slug must be set to nil for the friendly_id to update
-      if params[:course][:pub_status] != @course.pub_status
-        @course.update_pub_date(params[:course][:pub_status])
-      end
+      # The slug must be set to nil for the friendly_id to update on title change
+      @course.slug = nil if @course.title != params[:course][:title]
+
+      @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
       if @course.update(course_params)
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
@@ -114,7 +118,7 @@ module Admin
       params.require(:course).permit(:title,        :seo_page_title,  :meta_desc,       :summary,           :description,
                                      :contributor,  :pub_status,      :language_id,     :level,             :topics,
                                      :notes,        :delete_document, :other_topic,     :other_topic_text,  :course_order,
-                                     :pub_date,     :format,          :subsite_course,  :display_on_dl,
+                                     :pub_date,     :format,          :subsite_course,  :display_on_dl,     :subdomain,
             attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy])
     end
 

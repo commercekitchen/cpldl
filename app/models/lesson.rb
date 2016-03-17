@@ -26,7 +26,20 @@ require "zip"
 
 class Lesson < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :title, use: [:slugged, :history]
+  friendly_id :slug_candidates, use: [:slugged, :history]
+
+  def slug_candidates
+    [
+      :title,
+      [:title, :subdomain_for_slug]
+    ]
+  end
+
+  def subdomain_for_slug
+    subdomain
+  end
+
+  attr_accessor :subdomain
 
   belongs_to :course
 
