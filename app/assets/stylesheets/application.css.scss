@@ -11,11 +11,13 @@
  * file per style scope.
  *
  *= require_self
+
  */
 
 @import "bourbon";
 @import "partials/grid_settings";
 @import "neat";
+@import "select2";
 
 @import "partials/vars";
 @import "partials/normalize";

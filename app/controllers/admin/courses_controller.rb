@@ -27,7 +27,11 @@ module Admin
         @course.set_pub_date
       end
 
-      if @course.save
+      @course.org_id = current_user.organization_id
+      @course.validate_has_unique_title
+      if @course.errors.any?
+        render :new
+      elsif @course.save
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
           org_course.organization_id = current_user.organization_id
           org_course.course_id = @course.id

@@ -53,6 +53,8 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   validates_associated :profile
 
+  ROLES = %w(admin trainer)
+
   def organization_id
     roles.find_by_resource_type("Organization").resource_id
   end

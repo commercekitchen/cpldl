@@ -440,6 +440,38 @@ ALTER SEQUENCE lessons_id_seq OWNED BY lessons.id;
 
 
 --
+-- Name: library_locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE library_locations (
+    id integer NOT NULL,
+    name character varying,
+    zipcode integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: library_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE library_locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: library_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE library_locations_id_seq OWNED BY library_locations.id;
+
+
+--
 -- Name: organization_courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -547,7 +579,8 @@ CREATE TABLE profiles (
     user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    language_id integer
+    language_id integer,
+    library_location_id integer
 );
 
 
@@ -785,6 +818,13 @@ ALTER TABLE ONLY lessons ALTER COLUMN id SET DEFAULT nextval('lessons_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY library_locations ALTER COLUMN id SET DEFAULT nextval('library_locations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY organization_courses ALTER COLUMN id SET DEFAULT nextval('organization_courses_id_seq'::regclass);
 
 
@@ -908,6 +948,14 @@ ALTER TABLE ONLY languages
 
 ALTER TABLE ONLY lessons
     ADD CONSTRAINT lessons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: library_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY library_locations
+    ADD CONSTRAINT library_locations_pkey PRIMARY KEY (id);
 
 
 --
@@ -1251,4 +1299,10 @@ INSERT INTO schema_migrations (version) VALUES ('20160218191705');
 INSERT INTO schema_migrations (version) VALUES ('20160307180329');
 
 INSERT INTO schema_migrations (version) VALUES ('20160309170154');
+
+INSERT INTO schema_migrations (version) VALUES ('20160310210749');
+
+INSERT INTO schema_migrations (version) VALUES ('20160310210918');
+
+INSERT INTO schema_migrations (version) VALUES ('20160310212508');
 

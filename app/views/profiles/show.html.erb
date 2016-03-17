@@ -21,6 +21,13 @@
   </fieldset>
 
   <fieldset>
+    <%= f.label :library_location_id do %>
+      <%= t('profile_page.library_location') %>
+    <% end %>
+    <%= f.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "Select..."}, class: "select-large", id: "chzn" ) %>
+  </fieldset>
+
+  <fieldset>
     <%= f.label :first_name do %>
       <%= t('login_signup.first_name') %>
     <% end %>

@@ -23,5 +23,4 @@ class HomeController < ApplicationController
     session[:locale] = params["lang"]
     redirect_to :back
   end
-
 end
