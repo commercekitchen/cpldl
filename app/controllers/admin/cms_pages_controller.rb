@@ -45,7 +45,8 @@ module Admin
     def update
       @pub_status = params[:cms_page][:pub_status]
 
-      @cms_page.slug = nil # slug must be set to nil for friendly ID to update
+      # slug must be set to nil for friendly ID to update
+      @cms_page.slug = nil if @cms_page.title != params[:cms_page][:title]
       if params[:commit] == "Preview Page"
         @cms_page_body = @cms_page.body.html_safe
         render :new
@@ -98,7 +99,8 @@ module Admin
                                        :pub_status,
                                        :pub_date,
                                        :seo_page_title,
-                                       :seo_meta_desc)
+                                       :seo_meta_desc,
+                                       :subdomain)
     end
   end
 end

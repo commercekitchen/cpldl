@@ -99,5 +99,7 @@
     <%= f.label :is_assessment_no, "No", class: "plain" %>
   </fieldset>
 
+  <%= f.hidden_field :subdomain, value: request.subdomain %>
+
   <%= f.submit "Save Lesson" %>
 <% end %>
