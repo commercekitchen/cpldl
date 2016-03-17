@@ -18,8 +18,17 @@
         <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
         <%= link_to "#{t('logged_in_user.my_courses')}", your_courses_path %> |
         <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
+
+        <% unless course_urls.include?(request.fullpath.split("?")[0]) %>
+          <div class="search-box header-search">
+            <%= form_tag courses_path, method: :get do %>
+              <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+              <i class="icon-search grey"></i>
+              <%= submit_tag "Search", id: "search_btn" %>
+            <% end %>
+          </div>
+        <% end %>
       </nav>
     </div>
   </div>
 </header>
-
