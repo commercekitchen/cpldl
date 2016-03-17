@@ -28,7 +28,6 @@ Rails.application.routes.draw do
   namespace :trainer do
     root 'home#index'
     resources :dashboard, only: [:index]
-      # get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
   end
 
   namespace :admin do
