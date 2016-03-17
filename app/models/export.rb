@@ -3,9 +3,8 @@ require "csv"
 class Export < ActiveRecord::Base
   def self.to_csv_for_completion_report(data)
     CSV.generate do |csv|
-      csv << ["Zip Code", "Sign-Ups(total)", "Course Title", "Completions", ]
+      csv << ["Zip Code", "Sign-Ups(total)", "Course Title", "Completions"]
       data.each do |zip_code, info|
-        # binding.pry
         zip_code = zip_code
         sign_ups = info[:sign_ups]
 
@@ -13,7 +12,6 @@ class Export < ActiveRecord::Base
         csv.add_row values
 
         info[:completions].each do |k, v|
-          course = []
           course_title = k
           completions = v
           more_values = ["", "", course_title, completions]

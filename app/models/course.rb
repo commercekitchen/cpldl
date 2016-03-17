@@ -71,7 +71,7 @@ class Course < ActiveRecord::Base
   default_scope { order("course_order ASC") }
 
   def validate_has_unique_title
-    if Course.where(title: self.title).where_exists(:organization_course, organization_id: org_id).count > 0
+    if Course.where(title: title).where_exists(:organization_course, organization_id: org_id).count > 0
       errors.add(:title, "must be unique. There is already a course with that title, please select a different title and try again.")
     end
   end

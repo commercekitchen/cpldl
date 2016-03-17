@@ -20,7 +20,7 @@ module Admin
       if params[:search].blank?
         @users = User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :admin, resource: current_user.organization })
       else
-        @users = results & User.includes(profile: [:language]).({ name: :user, resource: current_user.organization }, { name: :admin, resource: current_user.organization })
+        @users = results & User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :admin, resource: current_user.organization })
       end
 
       render "admin/users/index", layout: "admin/base_with_sidebar"

@@ -11,16 +11,15 @@ module Admin
     def data_for_completions_report
       grouped = {}
       current_site = Organization.find_by(subdomain: request.subdomain)
-      zip_codes = CourseProgress.where.not(completed_at: nil).joins(:user).merge(User.with_role(:user, current_site))
-                                                             .map { |p| p.user.profile.zip_code }
-      zip_codes.uniq! unless zip_codes.count <= 1
+      course_progs = CourseProgress.completed_with_profile
+      zip_codes = course_progs.merge(User.with_role(:user, current_site)).pluck(:zip_code).uniq
 
       zip_codes.each do |z|
-        progress_by_zip = CourseProgress.where.not(completed_at: nil).joins(:user).merge(User.with_role(:user, current_site)
-                                                                                  .joins(:profile).merge(Profile.where(zip_code: z)))
+        progress_by_zip = course_progs.merge(User.with_role(:user, current_site)
+                                      .joins(:profile).merge(Profile.where(zip_code: z)))
         progresses = {}
         progress_by_zip.each do |p|
-          if progresses.has_key?(p.course.title)
+          if progresses.key?(p.course.title)
             progresses.replace(p.course.title => progresses[:p.course.title] + 1)
           else
             progresses.merge!(p.course.title => progress_by_zip.where(course_id: p.id).count)
@@ -34,9 +33,7 @@ module Admin
         grouped.merge!(z => data)
       end
 
-      return grouped
+      grouped
     end
   end
 end
-
-

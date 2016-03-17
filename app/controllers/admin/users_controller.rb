@@ -1,7 +1,6 @@
 module Admin
   class UsersController < BaseController
     def change_user_roles
-      binding.pry
       @user = User.find(params[:id])
       if params[:roles_names].nil?
         User::ROLES.each do |role|
@@ -10,10 +9,10 @@ module Admin
       else
         User::ROLES.each do |role|
           case
-            when params[:roles_names].include?(role) == false && @user.has_role?(role.to_sym)
-              @user.remove_role(role.to_sym)
-            when params[:roles_names].include?(role) && @user.has_role?(role.to_sym) == false
-              @user.add_role(role.to_sym)
+          when params[:roles_names].include?(role) == false && @user.has_role?(role.to_sym)
+            @user.remove_role(role.to_sym)
+          when params[:roles_names].include?(role) && @user.has_role?(role.to_sym) == false
+            @user.add_role(role.to_sym)
           end
         end
       end
