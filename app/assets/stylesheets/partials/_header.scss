@@ -57,6 +57,7 @@
         max-width: 500px;
         display: inline-block;
         float: left;
+        text-align: center;
         @include media($mobile-large) {
             font-size: 1.2rem;
             float: left;
