@@ -39,6 +39,8 @@ module Admin
 
     def update
       @lesson ||= @course.lessons.friendly.find(params[:id])
+      # set slug to nil to regenerate if title changes
+      @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
       asl_is_new = @lesson.story_line_updated_at.nil?

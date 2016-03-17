@@ -26,7 +26,18 @@
 
 class Course < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :title, use: [:slugged, :history]
+  friendly_id :slug_candidates, use: [:slugged, :history]
+
+  def slug_candidates
+    [
+      :title,
+      [:title, :subdomain_for_slug]
+    ]
+  end
+
+  def subdomain_for_slug
+    subdomain
+  end
 
   # PgSearch gem config
   include PgSearch
@@ -38,7 +49,7 @@ class Course < ActiveRecord::Base
                                  }
 
   # Attributes not saved to db, but still needed for validation
-  attr_accessor :other_topic, :other_topic_text, :org_id
+  attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
 
   # has_one :assessment
   has_one :course_progress
