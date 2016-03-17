@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get 'complete'
     get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     resources :lessons, only: [:index, :show] do
+      get 'lesson_complete'
       post 'complete'
     end
   end
