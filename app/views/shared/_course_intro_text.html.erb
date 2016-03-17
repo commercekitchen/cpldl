@@ -17,18 +17,10 @@
     <%= t('logged_in_user.choose_a_course') %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
-
-  <div class="row no-bottom-margin">
-    <div class="right-third">
-      <%= render partial: "shared/courses/search_box" %>
-    </div>
-  </div>
 <% else %>
   <h1><%= t('home.choose_a_course') %></h1>
 
   <div class="clearfix">
     <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
-
-    <%= render partial: "shared/courses/search_box" %>
   </div>
 <% end %>

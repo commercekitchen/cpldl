@@ -14,4 +14,8 @@ module ApplicationHelper
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
+
+  def course_urls
+    %w(/ /courses /courses/your)
+  end
 end

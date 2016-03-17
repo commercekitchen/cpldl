@@ -1,23 +1,91 @@
 .search-box {
   height: 3em;
   white-space: nowrap;
-  border: 2px solid $grey;
+  border: 3px solid white;
   border-radius: 5px;
   overflow: hidden;
   position: relative;
-  width: 329px;
+  width: 300px;
   margin-bottom: 2em;
+  margin-top: .5em;
+  color: white;
+  float: right;
+  @include media($mobile-large) {
+    float: none;
+  }
 
-    @include media($mobile-large) {
-
-      width: 250px;
+  ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+      color:    white;
+  }
+  :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+     color:    white;
+     opacity:  1;
+  }
+  ::-moz-placeholder { /* Mozilla Firefox 19+ */
+     color:    white;
+     opacity:  1;
+  }
+  :-ms-input-placeholder { /* Internet Explorer 10-11 */
+     color:    white;
+  }
+  :placeholder-shown { /* Standard (https://drafts.csswg.org/selectors-4/#placeholder) */
+    color:    white;
   }
 
   input#search {
     width: 70%;
     @include media($mobile-large) {
       width: 59%;
+    }
+
+    color: white;
+    height: 2em;
+    margin: 5px;
+    border: none;
+    background-color: $teal;
+  }
+
+  .icon-search {
+    padding-left: 19px;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    font-size: 1.5em;
+  }
+
+  #search_btn {
+    display: none;
+    min-width: initial;
+    width: 70px;
+      @include media($mobile-large) {
+        width: 60px;
+        font-size: 16px;
+      }
+
+    height: 35px;
+    padding: 6px 3px;
+    letter-spacing: 0px;
+  }
+
 }
+
+
+.logged-in-search-box {
+  height: 3em;
+  white-space: nowrap;
+  border: 3px solid $grey;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  width: 329px;
+  margin-bottom: 2em;
+  margin-top: .5em;
+
+  input#search {
+    width: 70%;
+    @include media($mobile-large) {
+      width: 59%;
+    }
 
     color: $grey;
     height: 2em;
