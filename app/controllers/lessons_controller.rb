@@ -64,6 +64,11 @@ class LessonsController < ApplicationController
     end
   end
 
+  def lesson_complete
+    @current_lesson = @course.lessons.friendly.find(params[:lesson_id])
+    @next_lesson = @course.lessons.find(@course.next_lesson_id(@current_lesson.id))
+  end
+
   def complete
     lesson = @course.lessons.friendly.find(params[:lesson_id])
 

@@ -6,7 +6,7 @@ $(document).ready(function() {
   sendLessonCompletedEvent = function() {
     var is_assessment = $("#is_assessment").val() == "true";
     if (!is_assessment) {
-      Modal.open("lesson-complete-modal");
+      window.location = (window.location.pathname + "/lesson_complete")
     }
     $.ajax({
       url: window.location.pathname + "/complete",
