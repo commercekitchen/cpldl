@@ -5,7 +5,6 @@ module Admin
     before_action :set_maximums, only: [:new, :edit]
 
     def index
-      binding.pry
       @courses = Course.includes(:language)
                        .where_exists(:organization_course, organization_id: current_user.organization_id)
                        .where.not(pub_status: "A")
