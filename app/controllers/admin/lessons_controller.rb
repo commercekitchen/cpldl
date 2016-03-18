@@ -75,8 +75,16 @@ module Admin
     end
 
     def lesson_params
-      params.require(:lesson).permit(:title, :summary, :duration, :story_line,
-       :seo_page_title, :meta_desc, :is_assessment, :lesson_order, :subdomain)
+      params.require(:lesson).permit(:title,
+                                     :summary,
+                                     :duration,
+                                     :story_line,
+                                     :seo_page_title,
+                                     :meta_desc,
+                                     :is_assessment,
+                                     :lesson_order,
+                                     :pub_status,
+                                     :subdomain)
     end
 
     def set_maximums

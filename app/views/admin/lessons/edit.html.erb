@@ -3,14 +3,13 @@
 <hr>
 
 <h1>Lessons</h1>
-
 <p class="emphasis">
   Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
 </p>
 <div class="clearfix">
   <div class="sortable-list" data-page="lessons">
     <div class="objects sortable grid reorderable">
-      <% @course.lessons.each do |lesson| %>
+      <% @course.lessons.where.not(pub_status: "A").each do |lesson| %>
         <div class="sortable-item" data-id="<%= lesson.id %>">
           <%= render partial: "shared/lessons/admin_lesson_grid",
                       locals: { course: @course, lesson: lesson }%>

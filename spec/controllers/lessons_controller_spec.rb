@@ -19,6 +19,7 @@
 #  story_line_content_type :string
 #  story_line_file_size    :integer
 #  story_line_updated_at   :datetime
+#  pub_status              :string
 #
 
 require "rails_helper"

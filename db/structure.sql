@@ -416,7 +416,8 @@ CREATE TABLE lessons (
     story_line_file_name character varying,
     story_line_content_type character varying,
     story_line_file_size integer,
-    story_line_updated_at timestamp without time zone
+    story_line_updated_at timestamp without time zone,
+    pub_status character varying
 );
 
 
@@ -1305,4 +1306,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160310210749');
 INSERT INTO schema_migrations (version) VALUES ('20160310210918');
 
 INSERT INTO schema_migrations (version) VALUES ('20160310212508');
+
+INSERT INTO schema_migrations (version) VALUES ('20160315204732');
 

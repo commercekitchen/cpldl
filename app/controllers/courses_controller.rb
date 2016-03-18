@@ -54,16 +54,26 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.friendly.find(params[:id])
-    respond_to do |format|
-      format.html do
-        # Need to handle the change of course slug, which should 301 redirect.
-        if request.path != course_path(@course)
-          redirect_to @course, status: :moved_permanently
-        else
-          render :show
+
+    case @course.pub_status
+    when "D"
+      flash[:notice] = "That course is not avaliable at this time."
+      redirect_to root_path
+    when "A"
+      flash[:notice] = "That course is no longer avaliable."
+      redirect_to root_path
+    when "P"
+      respond_to do |format|
+        format.html do
+          # Need to handle the change of course slug, which should 301 redirect.
+          if request.path != course_path(@course)
+            redirect_to @course, status: :moved_permanently
+          else
+            render :show
+          end
         end
+        format.json { render json: @course }
       end
-      format.json { render json: @course }
     end
   end
 

@@ -147,4 +147,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def update_lesson_pub_stats(new_pub_status)
+    lessons.each do |l|
+      l.pub_status = new_pub_status
+      l.save
+    end
+  end
 end

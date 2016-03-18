@@ -19,6 +19,7 @@
 #  story_line_content_type :string
 #  story_line_file_size    :integer
 #  story_line_updated_at   :datetime
+#  pub_status              :string
 #
 
 require "zip"
@@ -49,6 +50,8 @@ class Lesson < ActiveRecord::Base
   validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
+  validates :pub_status, presence: true,
+    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
 
   # validates :story_line, attachment_presence: true
   # validates_with AttachmentPresenceValidator, attributes: :story_line

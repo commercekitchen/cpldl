@@ -10,7 +10,7 @@
   </p>
   <div>
     <div class="container">
-      <% @course.lessons.each do |lesson| %>
+      <% @course.lessons.where.not(pub_status: "A").each do |lesson| %>
         <%= render partial: "shared/lessons/admin_lesson_grid",
                     locals: { course: @course, lesson: lesson }%>
       <% end %>

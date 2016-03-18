@@ -90,14 +90,27 @@
     </div>
   </fieldset>
 
-  <fieldset>
-    <%= f.label "Assessment" %>
-    <p class="note">Is this lesson the final assessment for the course?</p>
-    <%=  f.radio_button :is_assessment, true %>
-    <%= f.label :is_assessment_yes, "Yes", class: "plain" %>
-    <%= f.radio_button :is_assessment, false %>
-    <%= f.label :is_assessment_no, "No", class: "plain" %>
-  </fieldset>
+  <div class="sixcol">
+    <fieldset>
+      <%= f.label :pub_status do %>
+        Publication Status<span class="required"></span>
+      <% end %>
+      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @lesson.pub_status), { include_blank: "Select..." } ) %>
+    </fieldset>
+  </div>
+
+  <div class="sixcol last">
+    <fieldset>
+      <%= f.label :is_assessment do %>
+        Assessment<span class="required"></span>
+      <% end %>
+      <p class="note">Is this lesson the final assessment for the course?</p>
+      <%=  f.radio_button :is_assessment, true %>
+      <%= f.label :is_assessment_yes, "Yes", class: "plain" %>
+      <%= f.radio_button :is_assessment, false %>
+      <%= f.label :is_assessment_no, "No", class: "plain" %>
+    </fieldset>
+  </div>
 
   <%= f.hidden_field :subdomain, value: request.subdomain %>
 
