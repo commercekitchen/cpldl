@@ -22,7 +22,6 @@ module Admin
     end
 
     def create
-      binding.pry
       @course = Course.new(course_params)
       if params[:course][:pub_status] == "P"
         @course.set_pub_date
