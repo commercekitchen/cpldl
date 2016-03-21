@@ -13,7 +13,28 @@
       <%= f.label :pub_status do %>
         Publication Status<span class="required"></span>
       <% end %>
-      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), { include_blank: "Select..." }) %>
+      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), { include_blank: "Select..." }, data: { status: @course.pub_status }) %>
     </fieldset>
   </div>
 </div>
+
+
+<%= javascript_tag do %>
+  $(document).ready(function(){
+    $("#course_pub_status").on("change", function(){
+      var value = $(this).val();
+      var currentStatus = $(this).data("status")
+
+      if(value == "D"){
+        var rconfirm = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+      }
+
+      if(rconfirm == false){
+        $("#course_pub_status").val(currentStatus);
+      } else {
+        confirm.stopPropagation();
+        $("#course_pub_status").val(value);
+      }
+    });
+  });
+<% end %>

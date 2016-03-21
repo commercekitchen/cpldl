@@ -46,6 +46,9 @@ $(document).ready(function() {
     countDirection: "down"
   });
 
+///////////////////////////// moved to view ////////////////////////////////////
+///////////////// due to asset pipeline bug in production //////////////////////
+
   // $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
   //   var courseId = $(this).data("courseId");
   //   var value = $(this).val();
@@ -66,6 +69,24 @@ $(document).ready(function() {
   //     location.reload(true);
   //   }
   // });
+
+  // $("#course_pub_status").on("change", function(){
+  //   var value = $(this).val();
+  //   var currentStatus = $(this).data("status")
+
+  //   if(value == "D"){
+  //     var rconfirm = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+  //   }
+
+  //   if(rconfirm == false){
+  //     $("#course_pub_status").val(currentStatus);
+  //   } else {
+  //     confirm.stopPropagation();
+  //     $("#course_pub_status").val(value);
+  //   }
+  // });
+
+////////////////////////////////////////////////////////////////////////////////
 });
 
   // remove attachment fields in Course form
