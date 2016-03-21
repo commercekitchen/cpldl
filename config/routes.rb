@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   namespace :trainer do
     root 'home#index'
     resources :dashboard, only: [:index]
+      put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
   end
 
   namespace :admin do

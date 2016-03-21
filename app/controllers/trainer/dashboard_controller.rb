@@ -13,7 +13,7 @@ module Trainer
 
     def manually_confirm_user
       User.find(params[:user_id]).confirm if current_user.has_role?(:trainer, Organization.find_by_subdomain(request.subdomain))
-      redirect_to trainer_users_index_path
+      redirect_to trainer_dashboard_index_path
     end
   end
 end
