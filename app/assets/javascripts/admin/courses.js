@@ -46,16 +46,47 @@ $(document).ready(function() {
     countDirection: "down"
   });
 
-  $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
-    var courseId = $(this).data("courseId");
-    var value = $(this).val();
-    $.ajax({
-      url: "/admin/courses/" + courseId + "/update_pub_status/",
-      data: { "value": value },
-      dataType: "json",
-      type: "PATCH"
-    });
-  });
+///////////////////////////// moved to view ////////////////////////////////////
+///////////////// due to asset pipeline bug in production //////////////////////
+
+  // $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
+  //   var courseId = $(this).data("courseId");
+  //   var value = $(this).val();
+  //   if(value == "A"){
+  //     var r = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+  //   } else {
+  //     var r = true
+  //   }
+
+  //   if(r == true){
+  //     $.ajax({
+  //       url: "/admin/courses/" + courseId + "/update_pub_status/",
+  //       data: { "value": value },
+  //       dataType: "json",
+  //       type: "PATCH"
+  //     });
+  //   } else {
+  //     location.reload(true);
+  //   }
+  // });
+
+  // $("#course_pub_status").on("change", function(){
+  //   var value = $(this).val();
+  //   var currentStatus = $(this).data("status")
+
+  //   if(value == "A"){
+  //     var rconfirm = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+  //   }
+
+  //   if(rconfirm == false){
+  //     $("#course_pub_status").val(currentStatus);
+  //   } else {
+  //     confirm.stopPropagation();
+  //     $("#course_pub_status").val(value);
+  //   }
+  // });
+
+////////////////////////////////////////////////////////////////////////////////
 });
 
   // remove attachment fields in Course form
