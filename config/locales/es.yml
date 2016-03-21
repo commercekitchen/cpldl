@@ -26,7 +26,7 @@ es:
     signup: "Crear una cuenta"
     choose_a_course: "Seleccione un curso de los que aparecen a continuación para comenzar."
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
-    search_courses: "¿Qué le gustaría aprender hoy?"
+    search_courses: "¿Qué le gustaría aprender?"
     mins_abbr: "min"
   login_signup:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
