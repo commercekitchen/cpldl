@@ -1,4 +1,4 @@
-# == Schema Information
+o# == Schema Information
 #
 # Table name: courses
 #

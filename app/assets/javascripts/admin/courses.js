@@ -46,16 +46,26 @@ $(document).ready(function() {
     countDirection: "down"
   });
 
-  $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
-    var courseId = $(this).data("courseId");
-    var value = $(this).val();
-    $.ajax({
-      url: "/admin/courses/" + courseId + "/update_pub_status/",
-      data: { "value": value },
-      dataType: "json",
-      type: "PATCH"
-    });
-  });
+  // $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
+  //   var courseId = $(this).data("courseId");
+  //   var value = $(this).val();
+  //   if(value == "A"){
+  //     var r = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+  //   } else {
+  //     var r = true
+  //   }
+
+  //   if(r == true){
+  //     $.ajax({
+  //       url: "/admin/courses/" + courseId + "/update_pub_status/",
+  //       data: { "value": value },
+  //       dataType: "json",
+  //       type: "PATCH"
+  //     });
+  //   } else {
+  //     location.reload(true);
+  //   }
+  // });
 });
 
   // remove attachment fields in Course form
