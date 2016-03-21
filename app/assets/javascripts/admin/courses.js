@@ -74,7 +74,7 @@ $(document).ready(function() {
   //   var value = $(this).val();
   //   var currentStatus = $(this).data("status")
 
-  //   if(value == "D"){
+  //   if(value == "A"){
   //     var rconfirm = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
   //   }
 
