@@ -50,6 +50,12 @@
           <%= t('course_completion_page.download_certificate') %>
         <% end %>
       <% end %>
+
+      <%= link_to(course_skills_path(@course.id)) do %>
+        <%= button_tag(type: 'button', class: 'congrats-button') do %>
+            <%= t('course_completion_page.practice_skills') %>
+        <% end %>
+      <% end %>
     </div>
     <div class="row">
       <% if current_user %>

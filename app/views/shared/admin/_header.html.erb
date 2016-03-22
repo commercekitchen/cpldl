@@ -19,8 +19,16 @@
             <%= link_to "Community Of Practice", "http://community.digitallearn.org", target: "_blank" %> |
           <% end %>
           <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
-        </nav>
 
+
+          <div class="admin-search-box">
+            <%= form_tag courses_path, method: :get do %>
+              <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+              <i class="icon-search grey"></i>
+              <%= submit_tag "Search", id: "search_btn" %>
+            <% end %>
+          </div>
+        </nav>
       </div>
     </div>
   </div>

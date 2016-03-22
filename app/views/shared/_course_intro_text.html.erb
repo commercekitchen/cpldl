@@ -4,11 +4,7 @@
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
   </h1>
-  <div class="row no-bottom-margin">
-    <div class="right-third">
-      <%= render partial: "shared/courses/search_box" %>
-    </div>
-  </div>
+
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
     <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>! <%= t("home.logo_banner") %></h1>
