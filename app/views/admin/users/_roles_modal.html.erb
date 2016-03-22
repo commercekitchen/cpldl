@@ -1,7 +1,7 @@
-<input class="modal-state" id="modal-1" type="checkbox" />
+<input class="modal-state" id="modal-<%= user.id %>" type="checkbox" data-id="<%= user.id %>" />
 <div class="modal-fade-screen">
   <div class="modal-inner narrow">
-    <div class="modal-close" for="modal-1"></div>
+    <div class="modal-close" for="modal-<%= user.id %>"></div>
     <h1>Change User Roles</h1>
     <p class="modal-intro">Select which roles this user should have.</p>
     <p class="modal-content">
@@ -9,7 +9,7 @@
         <div>
           <fieldset>
             <% User::ROLES.each do |role| %>
-              <%= check_box_tag "roles_names[]", role.to_sym, user.has_role?(role.to_sym), { style: "display:inline-block;" } %>
+              <%= check_box_tag "roles_names[]", role.to_sym, user.has_role?(role.to_sym, user.organization), { style: "display:inline-block;" } %>
               <%= label_tag role.titleize, nil, class:"standard-text" %>
             <% end %>
           </fieldset>
