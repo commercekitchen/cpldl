@@ -1,0 +1,36 @@
+<% content_for :meta_title do %>
+  <%= @course.seo_page_title.present? ? @course.seo_page_title : @course.title  %>
+<% end %>
+<% content_for :meta_description do %>
+  <%= @course.meta_desc.present? ? @course.meta_desc : @course.summary %>
+<% end %>
+<% content_for :callout do %>
+  <h1><%= @course.title %></h1>
+<% end %>
+
+<small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
+
+<div class="container">
+  <div class="row">
+    <div class="sixcol">
+      <h2><%= t('course_page.practice_and_use_your_skills') %></h2>
+      <%= raw(@course.notes) %>
+    </div>
+    <div class="sixcol">
+      <% if @course.attachments.count == 0 %>
+        <h2><%= t('course_page.there_are_no_additional_resources') %></h2>
+      <% else %>
+        <h2><%= t('course_page.additional_resources') %></h2>
+      <% end %>
+      <ul class="no-padding">
+      <%# TODO: make this a model method %>
+      <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+        <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
+          <li><i class="icon-download purple"></i><%= a.document_file_name %></li>
+        <% end %>
+      <% end %>
+      </ul>
+
+    </div>
+  </div>
+</div>

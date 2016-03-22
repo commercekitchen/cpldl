@@ -224,6 +224,10 @@ class CoursesController < ApplicationController
     end
   end
 
+  def skills
+    @course = Course.friendly.find(params[:course_id])
+  end
+
   private
 
   def dl_subdomain
