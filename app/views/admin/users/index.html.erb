@@ -35,7 +35,7 @@
     </div>
     <div class="four-of-twelve">
       <div class="modal">
-        <label for="modal-1">
+        <label for="modal-<%= user.id %>">
           <div class="modal-trigger-text"><%= user.email %></div>
         </label>
         <%= render "admin/users/roles_modal", user: user %>
@@ -56,5 +56,3 @@
     </div>
   </div>
 <% end %>
-
-
