@@ -97,7 +97,7 @@ CKEDITOR.editorConfig = function( config )
     config.toolbar = [
         { name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
         { name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
-        { name: 'links' },
+        { name: 'links',        items: [ 'Link', 'Unlink' ] },
         { name: 'insert',                                                               items: [ 'Image', 'Table', 'HorizontalRule', 'SpecialChar' ] },
         { name: 'forms' },
         { name: 'tools' },
