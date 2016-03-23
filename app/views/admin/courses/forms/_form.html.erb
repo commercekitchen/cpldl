@@ -55,7 +55,7 @@
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
           <%= a.label :document, "Text copies of the course" %>
-          <p><i>Upload any supporting documentation or supplemental materials needed during the course in <strong>PDF format only.</strong></i></p>
+          <p><i>Upload any supporting documentation or supplemental materials needed during the course.</i></p>
         </fieldset>
         <fieldset>
           <%= a.hidden_field :_destroy, class: "removable" %>
@@ -69,8 +69,8 @@
     <div class="sixcol last">
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
-          <%= a.label :document, "Additional Resources (for after course completion)" %>
-          <p><i>Upload any supporting documentation or supplemental materials needed after the course in <strong>PDF format only.</strong></i></p>
+          <%= a.label :document, "Additional Resources (post-completion)" %>
+          <p><i>Upload any supporting documentation or supplemental materials needed after the course.</i></p>
         </fieldset>
         <fieldset>
           <%= a.hidden_field :doc_type, value: "post-course" %>
