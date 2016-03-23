@@ -18,9 +18,10 @@ module Admin
         progress_by_zip = course_progs.merge(User.with_role(:user, current_site)
                                       .joins(:profile).merge(Profile.where(zip_code: z)))
         progresses = {}
+
         progress_by_zip.each do |p|
           if progresses.key?(p.course.title)
-            progresses.replace(p.course.title => progresses[:p.course.title] + 1)
+            progresses.replace(p.course.title => progresses[p.course.title] + 1)
           else
             progresses.merge!(p.course.title => progress_by_zip.where(course_id: p.id).count)
           end
