@@ -51,7 +51,7 @@
         <% end %>
       <% end %>
 
-      <% if request.subdomain == "chipublib" %>
+      <% if request.subdomain == "chipublib" || request.subdomain == "chipublib-stage" %>
         <%= link_to(course_skills_path(@course.id)) do %>
           <%= button_tag(type: 'button', class: 'congrats-button') do %>
               <%= t('course_completion_page.practice_skills') %>
