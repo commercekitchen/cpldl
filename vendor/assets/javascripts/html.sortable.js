@@ -1,3 +1,12 @@
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('jquery'));
+  } else {
+    root.sortable = factory(root.jQuery);
+  }
+}(this, function($) {
 /*
  * HTML5 Sortable jQuery Plugin
  * https://github.com/voidberg/html5sortable
@@ -415,19 +424,6 @@ sortable.disable = function(sortable) {
 $.fn.sortable = function(options) {
   return sortable(this, options);
 };
-/* start-testing */
-sortable.__testing = {
-  // add internal methods here for testing purposes
-  _removeSortableEvents: _removeSortableEvents,
-  _removeItemEvents: _removeItemEvents,
-  _removeItemData: _removeItemData,
-  _removeSortableData: _removeSortableData,
-  _listsConnected: _listsConnected,
-  _getOptions: _getOptions,
-  _attachGhost: _attachGhost,
-  _addGhostPos: _addGhostPos,
-  _getGhost: _getGhost,
-  _makeGhost: _makeGhost
-};
-module.exports = sortable;
-/* end-testing */
+
+return sortable;
+}));
