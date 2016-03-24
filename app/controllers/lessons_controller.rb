@@ -27,7 +27,7 @@ class LessonsController < ApplicationController
   before_action :set_course
 
   def index
-    @lessons = @course.lessons.all.where.not(pub_status: "D", pub_status: "A")
+    @lessons = @course.lessons.all.where(pub_status: "P")
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @lessons }
