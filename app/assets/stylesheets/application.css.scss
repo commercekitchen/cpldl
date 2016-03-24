@@ -18,7 +18,6 @@
 @import "partials/grid_settings";
 @import "neat";
 @import "select2";
-
 @import "partials/vars";
 @import "partials/normalize";
 @import "partials/base";
@@ -35,6 +34,6 @@
 @import "components/course_progress";
 @import "components/lesson_block";
 @import "components/search_box";
-@import "components/sortable_list";
 @import "components/congratulation_banner";
 @import "scaffolds";
+@import "components/sortable_list";
