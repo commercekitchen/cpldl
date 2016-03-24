@@ -16,4 +16,3 @@
 //= require ckeditor/init
 //= require local_time
 //= require_tree .
-// = require html.sortable
