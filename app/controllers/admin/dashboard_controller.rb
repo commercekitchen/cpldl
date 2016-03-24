@@ -9,7 +9,7 @@ module Admin
     end
 
     def pages_index
-      @cms_pages = CmsPage.where(organization_id: Organization.find_by_subdomain(request.subdomain).id)
+      @cms_pages = CmsPage.where(organization_id: Organization.find_by_subdomain(request.subdomain).try(:id))
       render "admin/cms_pages/index", layout: "admin/base_with_sidebar"
     end
 
