@@ -4,6 +4,7 @@ $(document).ready(function() {
   // match the event from the ASL file:
   // window.parent.sendLessonCompletedEvent();
   sendLessonCompletedEvent = function() {
+    console.log("It is working????")
     var is_assessment = $("#is_assessment").val() == "true";
     if (!is_assessment) {
       window.location = (window.location.pathname + "/lesson_complete")
