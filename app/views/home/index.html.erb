@@ -1,35 +1,6 @@
 <%= render "shared/course_intro_text" %>
 <%= render partial: "shared/courses/listing", locals: { courses_completed: [] } %>
 
-<%= javascript_tag do %>
-  var Modal = (function($) {
-
-    return {
-
-      open : function(modal_id) {
-        $(".modal-state:checked").prop("checked", false).change();
-        $("#" + modal_id).prop("checked", true).change();
-        $("body").addClass("modal-open");
-
-        $(".modal-fade-screen, .modal-close, .modal-skip-button").on("click", function() {
-          $(".modal-state:checked").prop("checked", false).change();
-          $("body").removeClass("modal-open");
-        });
-
-        $(".modal-inner").on("click", function(e) {
-          e.stopPropagation();
-        });
-      },
-
-      close : function() {
-        $(".modal-state:checked").prop("checked", false).change();
-        $("body").removeClass("modal-open");
-      }
-    }
-
-  })(jQuery);
-<% end %>
-
 <% if current_user && current_user.quiz_modal_complete == false %>
   <%= render partial: "shared/quiz_modal" %>
 
