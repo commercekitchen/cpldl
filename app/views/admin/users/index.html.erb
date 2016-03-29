@@ -15,7 +15,7 @@
     <h2>Name</h2>
   </div>
   <div class="four-of-twelve">
-    <h2 class="inline-heading"><%= t('login_signup.email') %><h5 class="inline-heading padded">(Click to change user roles)</h5></h2>
+    <h2 class="inline-heading"><%= t('login_signup.email') %></h2>
   </div>
   <div class="two-of-twelve">
     <h2>Language</h2>
@@ -28,24 +28,20 @@
   </div>
 </div>
 
+
 <% @users.each do |user| %>
   <div class="row twelvecol underlined">
     <div class="two-of-twelve">
       <%= user.profile.try(:first_name) %>
     </div>
     <div class="four-of-twelve">
-      <div class="modal">
-        <label for="modal-<%= user.id %>">
-          <div class="modal-trigger-text"><%= user.email %></div>
-        </label>
-        <%= render "admin/users/roles_modal", user: user %>
-      </div>
+      <%= user.email %>
     </div>
     <div class="two-of-twelve">
       <%= user.preferred_language %>
     </div>
     <div class="two-of-twelve">
-      <%= user.current_roles.empty? ? "user" : user.current_roles %>
+      <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
     </div>
     <div class="two-of-twelve">
       <% if user.confirmed? %>
