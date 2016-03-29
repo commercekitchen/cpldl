@@ -4,12 +4,19 @@ describe Admin::UsersController do
   before(:each) do
     @admin = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
-    @admin.add_role(:admin)
+    org = FactoryGirl.create(:organization)
+    @user.add_role(:user, org)
+    @admin.add_role(:admin, org)
     sign_in @admin
   end
 
-  xit "changes a users roles" do
-    put :change_user_roles, { id: @user.id, roles_names: [:trainer] }
-    expect(@user.has_role?(:trainer)).to be(true)
+  describe "PATCH #change_user_roles" do
+    xit "updates the role" do
+      patch :change_user_roles, { id: @user.id.to_param, value: "Trainer" }
+      expect(@user.current_roles).to eq("trainer")
+
+      patch :change_user_roles, { id: @user.id.to_param, value: "Admin" }
+      expect(@user.current_roles).to eq("admin")
+    end
   end
 end

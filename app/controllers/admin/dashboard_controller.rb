@@ -23,10 +23,12 @@ module Admin
         @users = User.includes(profile: [:language])
                      .with_any_role({ name: :user, resource: current_user.organization },
                                     { name: :admin, resource: current_user.organization },
-                                    { name: :trainer, resource: current_user.organization })
-                     .sort!
+                                    { name: :trainer, resource: current_user.organization }).sort!
       else
-        @users = results & User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :admin, resource: current_user.organization }, { name: :trainer, resource: current_user.organization })
+        @users = results & User.includes(profile: [:language])
+                               .with_any_role({ name: :user, resource: current_user.organization },
+                                              { name: :admin, resource: current_user.organization },
+                                              { name: :trainer, resource: current_user.organization }).sort!
       end
 
       render "admin/users/index", layout: "admin/base_with_sidebar"

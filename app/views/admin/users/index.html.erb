@@ -41,8 +41,7 @@
       <%= user.preferred_language %>
     </div>
     <div class="two-of-twelve">
-
-      <%= select_tag "user_#{user.id}", options_for_select(["Admin", "Trainer", "User"], user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
+      <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
     </div>
     <div class="two-of-twelve">
       <% if user.confirmed? %>
