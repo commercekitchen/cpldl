@@ -5,17 +5,6 @@
   <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path %>
   <%= t('my_courses_page.well_suggest_more_courses') %>
 </p>
-  <div class="row no-bottom-margin">
-    <div class="right-third">
-      <div class="search-box">
-        <%= form_tag your_courses_path, method: :get do %>
-          <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-          <i class="icon-search grey"></i>
-          <%= submit_tag "Search", id: "search_btn" %>
-        <% end %>
-      </div>
-    </div>
-  </div>
 
   <%= render partial: "shared/courses/listing" %>
 
