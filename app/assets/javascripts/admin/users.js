@@ -1,5 +1,4 @@
 $(function() {
-  // debugger
   $("#modal").on("change", function() {
     if ($(this).is(":checked")) {
       $("body").addClass("modal-open");
