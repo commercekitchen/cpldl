@@ -12,7 +12,7 @@ Redis
 * Run `bundle install`
 * Run `rake db:migrate`
 
-## Replace this README with application specific information below.
+## Up and Running.
 
 * Ruby version
   ruby 2.2.3
