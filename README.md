@@ -24,4 +24,3 @@ Redis
   - `rspec`    : testing suite
   - `rubocop`  : for syntax and code smells
   - `brakeman` : for security smells
-
