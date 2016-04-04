@@ -10,10 +10,7 @@ Redis
 * Clone this project from Github
 * Create a new gemset with 'rvm gemset create cpldl' (assumes rvm is installed)
 * Run `bundle install`
-* Configure Devise - TODO:
-* Configure Redis - TODO:
-* Configure Sidekiq - TODO:
-* Vagrant setup - TODO:
+* Run `rake db:migrate`
 
 ## Replace this README with application specific information below.
 
