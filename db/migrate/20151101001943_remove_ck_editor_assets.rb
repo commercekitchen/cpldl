@@ -1,5 +1,7 @@
 class RemoveCkEditorAssets < ActiveRecord::Migration
   def change
-    drop_table :ckeditor_assets
+    if ActiveRecord::Base.connection.table_exists? "ckeditor_assets"
+      drop_table :ckeditor_assets
+    end
   end
 end

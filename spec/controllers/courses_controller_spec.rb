@@ -87,7 +87,7 @@ describe CoursesController do
 
       get :show, id: old_url
       expect(assigns(:course)).to eq(@course1)
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:success)
 
       get :show, id: @course1.friendly_id
       expect(assigns(:course)).to eq(@course1)

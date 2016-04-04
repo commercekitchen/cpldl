@@ -5,6 +5,7 @@ describe AccountsController do
   before(:each) do
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
+    @request.host = "www.test.host"
   end
 
   describe "#show" do

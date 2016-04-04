@@ -1,8 +1,9 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Admin::AttachmentsController do
 
   before(:each) do
+    @request.host = "www.test.host"
     @attachment = FactoryGirl.create(:attachment)
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
