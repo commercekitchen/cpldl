@@ -15,16 +15,17 @@ Redis
 ## Replace this README with application specific information below.
 
 * Ruby version
-
-* System dependencies
-
-* Configuration
+  #ruby 2.2.3
 
 * Database creation
+  - `rake db:create db:migrate`
 
 * Database initialization
 
 * How to run the test suite
+  - `rspec`    : testing suite
+  - `rubocop`  : for syntax and code smells
+  - `brakeman` : for security smells
 
 * Services (job queues, cache servers, search engines, etc.)
 
