@@ -62,7 +62,7 @@ class Lesson < ActiveRecord::Base
                                                       message: ", Please provide a .zip Articulate StoryLine File."
 
   before_destroy :delete_associated_asl_files
-  before_destroy :delete_associated_user_completeions
+  before_destroy :delete_associated_user_completions
 
   default_scope { order("lesson_order") }
 

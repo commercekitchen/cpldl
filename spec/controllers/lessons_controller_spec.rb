@@ -27,6 +27,7 @@ require "rails_helper"
 describe LessonsController do
 
   before(:each) do
+    @request.host = "www.test.host"
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     @course1 = FactoryGirl.create(:course)
@@ -86,7 +87,7 @@ describe LessonsController do
 
       get :show, course_id: @course1.to_param, id: old_url
       expect(assigns(:lesson)).to eq(@lesson1)
-      expect(response).to have_http_status(:redirect)
+      expect(response).to have_http_status(:success)
 
       get :show, course_id: @course1.to_param, id: @lesson1.friendly_id
       expect(assigns(:lesson)).to eq(@lesson1)

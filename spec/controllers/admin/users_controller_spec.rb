@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Admin::UsersController do
   before(:each) do
+    @request.host = "www.test.host"
     @admin = FactoryGirl.create(:admin_user)
     @user = FactoryGirl.create(:user)
     org = FactoryGirl.create(:organization)

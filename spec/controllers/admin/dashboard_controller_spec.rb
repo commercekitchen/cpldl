@@ -2,6 +2,7 @@ require "rails_helper"
 
 describe Admin::DashboardController do
   before(:each) do
+    @request.host = "www.test.host"
     @user = FactoryGirl.create(:user)
     @org = FactoryGirl.create(:organization)
     @user.add_role(:admin, @org)

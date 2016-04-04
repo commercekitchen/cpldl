@@ -3,6 +3,7 @@ require "rails_helper"
 describe LoginController do
 
   before(:each) do
+    @request.host = "www.test.host"
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
   end

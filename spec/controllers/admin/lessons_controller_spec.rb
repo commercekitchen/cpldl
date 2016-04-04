@@ -3,6 +3,7 @@ require "rails_helper"
 describe Admin::LessonsController do
 
   before(:each) do
+    @request.host = "www.test.host"
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     @course1 = FactoryGirl.create(:course)
@@ -62,7 +63,8 @@ describe Admin::LessonsController do
         meta_desc:  "Its good to Meta-Tate",
         summary:  "Sum-tings-smelly",
         is_assessment: false,
-        story_line: @story_line
+        story_line: @story_line,
+        pub_status: "P"
       }
     end
 
@@ -73,7 +75,8 @@ describe Admin::LessonsController do
         meta_desc:  "is this like inception",
         summary:  "Sum-tings-smelly",
         is_assessment: true,
-        story_line: @story_line
+        story_line: @story_line,
+        pub_status: "P"
       }
     end
 
@@ -84,7 +87,8 @@ describe Admin::LessonsController do
         meta_desc:  "",
         summary:  "",
         is_assessment: "",
-        story_line: nil
+        story_line: nil,
+        pub_status: nil
       }
     end
 
@@ -123,7 +127,7 @@ describe Admin::LessonsController do
       it "redirects to the admin edit view of the lesson" do
         post :create, { course_id: @course1.to_param, lesson: valid_attributes }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to("http://test.host/admin/courses/computer-course/lessons/lesson-your-load-man/edit")
+        expect(response).to redirect_to("http://www.test.host/admin/courses/computer-course/lessons/lesson-your-load-man/edit")
       end
     end
 
