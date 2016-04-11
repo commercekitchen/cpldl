@@ -2,6 +2,7 @@ require "csv"
 
 class Export < ActiveRecord::Base
   def self.to_csv_for_completion_report(data)
+    binding.pry
     CSV.generate do |csv|
       csv << ["Zip Code", "Sign-Ups(total)", "Course Title", "Completions"]
       data.each do |zip_code, info|
