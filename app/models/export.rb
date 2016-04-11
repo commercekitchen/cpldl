@@ -15,7 +15,6 @@ class Export < ActiveRecord::Base
     CSV.generate do |csv|
       csv << ["Zip Code", "Sign-Ups(total)", "Course Title", "Completions"]
       @data.each do |zip_code, info|
-        zip_code = zip_code
         sign_ups = info[:sign_ups]
 
         values = [zip_code, sign_ups]
@@ -36,12 +35,7 @@ class Export < ActiveRecord::Base
     CSV.generate do |csv|
       csv << ["Library", "Sign-Ups(total)", "Course Title", "Completions"]
       @data.each do |library, info|
-        if library.nil?
-          library = "Unknown"
-        else
-          library = library
-        end
-
+        library ||= "Unknown"
         sign_ups = info[:sign_ups]
 
         values = [library, sign_ups]
