@@ -16,6 +16,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
     params.require(:user).permit(:email, :password, :password_confirmation,
-      :subdomain, profile_attributes: [:first_name, :zip_code])
+      :subdomain, profile_attributes: [:first_name, :zip_code, :library_location_id])
   end
 end
