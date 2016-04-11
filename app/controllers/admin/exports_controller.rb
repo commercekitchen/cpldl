@@ -9,7 +9,7 @@ module Admin
     end
 
     def data_for_completions_report_by_zip
-      grouped = {}
+      grouped = { version: "zip" }
       current_site = Organization.find_by(subdomain: request.subdomain)
       course_progs = CourseProgress.completed_with_profile
       zip_codes = course_progs.merge(User.with_role(:user, current_site)).pluck(:zip_code).uniq
@@ -38,7 +38,7 @@ module Admin
     end
 
     def data_for_completions_report_by_lib
-      grouped = {}
+      grouped = { version: "lib" }
       current_site = Organization.find_by(subdomain: request.subdomain)
       course_progs = CourseProgress.completed_with_profile
       lib_ids = course_progs.merge(User.with_role(:user, current_site)).pluck(:library_location_id).uniq
@@ -60,7 +60,7 @@ module Admin
 
         data = { sign_ups: users_by_lib, completions: progresses }
 
-        grouped.merge!(l_id => data)
+        grouped.merge!(version: "lib",l_id => data)
       end
 
       grouped
