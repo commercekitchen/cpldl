@@ -36,6 +36,7 @@
 #
 
 class User < ActiveRecord::Base
+  require "securerandom"
   include PgSearch
   # TODO: determine lockable? functionality and add to search
   pg_search_scope :search_users, against: [:email],
@@ -52,6 +53,7 @@ class User < ActiveRecord::Base
   has_many :course_progresses, dependent: :destroy
   accepts_nested_attributes_for :profile
   validates_associated :profile
+  before_create :add_token_to_user
 
   ROLES = %w(Admin Trainer User)
 
@@ -86,5 +88,9 @@ class User < ActiveRecord::Base
   def preferred_language
     profile.blank? ? language = nil : language = profile.language
     language.blank? ? "English" : language.name
+  end
+
+  def add_token_to_user
+    self.token = SecureRandom.uuid if self.token.blank?
   end
 end

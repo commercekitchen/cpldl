@@ -133,4 +133,13 @@ describe User do
     end
   end
 
+  context "#add_user_token" do
+    it "assigns a random user token" do
+      @user = FactoryGirl.create(:user)
+      expect(@user.token).to_not be(nil)
+
+      @user2 = FactoryGirl.create(:user, email: "random@nowhere.com")
+      expect(@user.token).to_not eq(@user2.token)
+    end
+  end
 end
