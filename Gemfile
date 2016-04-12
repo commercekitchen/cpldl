@@ -54,7 +54,7 @@ gem 'wkhtmltopdf-binary'
 gem 'local_time'
 
 # integrate chosen library
-gem 'select2-rails'
+# gem 'select2-rails'
 
 group :development do
   gem 'rubocop', require: false

@@ -12,7 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require select2
+//= require select2.full
 //= require html.sortable
 //= require ckeditor/init
 //= require local_time

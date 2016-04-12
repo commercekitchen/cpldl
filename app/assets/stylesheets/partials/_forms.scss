@@ -152,3 +152,9 @@ select {
   padding: 1.2em 25em;
   position: absolute;
 }
+
+
+//Fine for accessiblity since the textbook you type in has an outline
+
+.select2-container .select2-selection--single{ outline: 0 }
+
