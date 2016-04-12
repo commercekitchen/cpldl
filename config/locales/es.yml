@@ -113,7 +113,8 @@ es:
     view_all_courses: "Ver todos los cursos"
     download_certificate: "Descargar Mi Certificado"
     restart_this_course: "Repetir este curso"
-    additional_resources: "Additional Resources"
+    additional_resources: "Recursos adicionales"
+    practice_skills: "Ahora usar mis habilidades"
   certificate:
     this_award: "Este diploma certifica que"
     name_fill: "_____________________"

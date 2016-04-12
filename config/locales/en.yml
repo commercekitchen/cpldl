@@ -114,6 +114,7 @@ en:
     download_certificate: "Download My Certificate"
     restart_this_course: "Restart this course"
     additional_resources: "Additional Resources"
+    practice_skills: "Use My Skills Now"
   certificate:
     this_award: "This award certifies that"
     name_fill: "_____________________"
