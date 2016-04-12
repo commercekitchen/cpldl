@@ -29,9 +29,11 @@
       <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
     </fieldset>
 
-    <fieldset>
-      <%= p.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "What's your library called?"}, class: "select-large", id: "chzn" ) %>
-    </fieldset>
+    <% if request.subdomain == "chipublib" %>
+      <fieldset>
+        <%= p.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "What's your library called?"}, class: "select-large", id: "chzn" ) %>
+      </fieldset>
+    <% end %>
   <% end %>
 
   <fieldset>
