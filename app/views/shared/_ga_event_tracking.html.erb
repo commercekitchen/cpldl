@@ -2,6 +2,7 @@
 $(document).ready(function() {
 
   $("body").on("click", "*[data-cpl-ga-event='on']", function() {
+    var userToken = '<%= escape_javascript( current_user ? current_user.token : "guest") %>';
     var cpl_ga_value = $(this).data("cpl-ga-value");
     var pathname = window.location.pathname;
 
@@ -10,32 +11,32 @@ $(document).ready(function() {
     // }
 
     if (cpl_ga_value === "user-open-course") {
-      ga("send", "event", "user open course", "click", '"' + pathname + '"');
+      ga("send", "event", "user open course", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value === "user-start-course") {
-      ga("send", "event", "user start course", "click", '"' + pathname + '"');
+      ga("send", "event", "user start course", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value == "add-course-to-plan") {
-      ga("send", "event", "user add course to plan", "click", '"' + pathname + '"');
+      ga("send", "event", "user add course to plan", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value === "remove-course-from-plan") {
-      ga("send", "event", "user remove course from plan", "click", '"' + pathname + '"');
+      ga("send", "event", "user remove course from plan", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value === "user-start-lesson") {
-      ga("send", "event", "user click start lesson", "click", '"' + pathname + '"');
+      ga("send", "event", "user click start lesson", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value === "user-click-lesson") {
-      ga("send", "event", "user click lesson tile", "click", '"' + pathname + '"');
+      ga("send", "event", "user click lesson tile", "click", '"' + pathname + '"' + userToken);
     }
 
     if (cpl_ga_value === "supplemental-material-download") {
       var documentName = $(this).data("document-name");
-      ga("send", "event", "user download supplemental material: " + '"' + documentName + '"', "click", '"' + pathname + '"');
+      ga("send", "event", "user download supplemental material: " + '"' + documentName + '"', "click", '"' + pathname + '"' + userToken);
     }
 
   });
@@ -54,6 +55,3 @@ $(document).ready(function() {
 
 });
 </script>
-
-
-<!-- data: { cc_ga_event: "on", cc_ga_value: "client-new-estimate" } -->

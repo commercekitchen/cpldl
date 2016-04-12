@@ -7,7 +7,8 @@
   <% rescue %>
     <%= render "shared/ga_www" if Rails.env.production? %>
   <% end %>
-  <%= render "shared/ga_event_tracking" if Rails.env.production? %>
+  <%= render "shared/ga_event_tracking" %>
+  
 </head>
 <body class="<%= "#{controller_name}-#{action_name}" %>">
   <%= render "shared/header" %>
