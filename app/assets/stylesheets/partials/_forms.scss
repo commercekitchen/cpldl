@@ -67,17 +67,17 @@ button, input[type="submit"], .btn {
   letter-spacing: 1px;
 
   @include media($tablet) {
-    min-width: initial;
+    min-width: 0;
   }
 
   &.small{
-    min-width: initial;
+    min-width: 0;
     height: 35px;
     padding: 6px 40px;
   }
 
   &.small-lesson-button {
-    min-width: initial;
+    min-width: 0;
     height: 35px;
     padding: 6px 40px;
     position: relative;
