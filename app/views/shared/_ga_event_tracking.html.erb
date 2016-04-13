@@ -53,8 +53,8 @@ $(document).ready(function() {
   });
 
   $(".cms_page a").on("click", function() {
-    var hrefValue = $(this).attr("href")
-    ga("send", "event", "exernal cms link", "click", hrefValue)
+    var hrefValue = $(this).attr("href");
+    ga("send", "event", "exernal cms link", "click", '"' + hrefValue + '"');
   })
 
 });
