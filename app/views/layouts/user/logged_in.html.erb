@@ -3,8 +3,7 @@
 <head>
   <%= render "shared/meta_tags" %>
   <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
-  <%= render "shared/ga_event_tracking" %>
-  
+  <%= render "shared/ga_event_tracking" if Rails.env.production? %>
 </head>
 <body>
   <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
