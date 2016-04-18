@@ -136,7 +136,12 @@ select {
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
   color: $grey;
+
 }
+
+// #chzn .select2-default {
+//   color: $grey !important;
+// }
 
 .select2-container--default .select2-selection--single {
     padding: .5em 2.5em .7em .4em;
@@ -149,10 +154,9 @@ select {
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   background: url("/assets/select_box_arrows.png") no-repeat 96% 50%;
-  padding: 1.2em 25em;
+  padding: 1.2em 10em;
   position: absolute;
 }
-
 
 //Fine for accessiblity since the textbook you type in has an outline
 
