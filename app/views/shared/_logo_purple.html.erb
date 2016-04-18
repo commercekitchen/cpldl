@@ -5,13 +5,8 @@
       <% when "www" %>
         <%= image_tag "dl_logo" %>
       <% else %>
-        <%= image_tag "seal_white_on_black", class: "dark-logo" %>
+        <%= image_tag "chipub_logo_black", class: "dark-logo" %>
       <% end %>
     </div>
-    <% unless request.subdomain == "www" %>
-      <div class="logo-content">
-        <h1>Chicago DigitalLearn.org</h1>
-      </div>
-    <% end %>
   </div>
 <% end %>
