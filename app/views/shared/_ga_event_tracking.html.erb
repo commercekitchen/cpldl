@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
   $("body").on("click", "*[data-cpl-ga-event='on']", function() {
-    // var userToken = '<%= escape_javascript( current_user ? current_user.token : "guest") %>';
     var cpl_ga_value = $(this).data("cpl-ga-value");
     var pathname = window.location.pathname;
 
