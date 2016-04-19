@@ -11,12 +11,22 @@ class ApplicationController < ActionController::Base
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
 
   def after_sign_in_path_for(user)
+    check_user_subdomain(user)
     if first_admin_login? user
       flash[:notice] = "This is the first time you have logged in, please change your password."
       profile_path
     elsif user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain))
       admin_dashboard_index_path
     else
+      root_path
+    end
+  end
+
+  def check_user_subdomain(user)
+    user_subdomain = user.organization.subdomain
+    if user_subdomain != request.subdomain
+      sign_out user
+      flash[:alert] = %Q[You are not registered with this subdomain, please sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
       root_path
     end
   end
