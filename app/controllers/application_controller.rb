@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_language
   before_action :set_cms_footer_pages
   before_action :redirect_orgs
+  before_action :set_user_token
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
@@ -63,6 +64,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_user_token
+    session[:user_token] = current_user ? current_user.token : "guest"
+  end
 
   def dl_subdomain
     request.subdomain == "www"
