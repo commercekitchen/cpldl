@@ -51,3 +51,4 @@ config/secrets.yml
 # paperclip uploads attachments
 /public/system
 /public/storylines
+/public/ckeditor_assets
