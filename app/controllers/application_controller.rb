@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     user_subdomain = user.organization.subdomain
     if user_subdomain != request.subdomain
       sign_out user
-      flash[:alert] = %Q[You are not registered with this subdomain, please sign in at <a href="#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
+      flash[:alert] = %Q[You are not registered with this subdomain, please sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
       root_path
     end
   end
