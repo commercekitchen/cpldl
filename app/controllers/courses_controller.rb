@@ -208,7 +208,8 @@ class CoursesController < ApplicationController
                          2 => "Communication Social Media",
                          3 => "Productivity",
                          4 => "Job Search",
-                         5 => "Software Apps" }
+                         5 => "Software Apps",
+                         6 => "Security" }
 
     bulk_add_courses(Course.topic_search(set_three_topics[params["set_three"].to_i]).where(pub_status: "P") & @org_courses)
 
