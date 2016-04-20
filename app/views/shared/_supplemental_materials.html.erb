@@ -1,8 +1,6 @@
 <div class="container">
   <div class="row">
     <div class="sixcol">
-
-
       <h2><%= t('course_page.click_here_for_text_copy_course') %></h2>
       <% if @course.attachments.count == 0 %>
         <div class="note"><%= t('course_page.there_is_no_text_copy_of_course') %></div>
@@ -17,8 +15,6 @@
         </ul>
       <% end %>
     </div>
-
-
     <div class="sixcol">
       <h2><%= t('course_page.additional_resources') %></h2>
       <% if @course.attachments.count == 0 %>
