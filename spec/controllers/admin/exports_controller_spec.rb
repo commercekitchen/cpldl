@@ -2,9 +2,10 @@ require "rails_helper"
 
 describe Admin::ExportsController do
   before(:each) do
-    @request.host = "www.test.host"
+    @request.host = "chipublib.test.host"
     @admin = FactoryGirl.create(:admin_user)
-    @admin.add_role(:admin)
+    @organization = FactoryGirl.create(:organization)
+    @admin.add_role(:admin, @organization)
     sign_in @admin
     @zip_csv = { format: "csv", version: "zip" }
   end
@@ -21,9 +22,8 @@ describe Admin::ExportsController do
   describe "#data_for_completions_report_by_zip" do
     before(:each) do
       @user = FactoryGirl.create(:user)
-      @organization = FactoryGirl.create(:organization)
       @user.add_role(:user, @organization)
-      sign_in @user
+      @user.profile = FactoryGirl.create(:profile)
       @language = FactoryGirl.create(:language)
       @course1 = FactoryGirl.create(:course, title: "Course 1",
                                              language: @language,
@@ -32,13 +32,17 @@ describe Admin::ExportsController do
       @course2 = FactoryGirl.create(:course, title: "Course 2",
                                              language: @language,
                                              organization: @organization)
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true)
-      @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: false)
-      @user.course_progresses << [@course_progress1, @course_progress2]
+      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+      @user.course_progresses << [@course_progress1]
     end
     it "return completions by zip" do
-      get :completions, @zip_csv
-      binding.pry
+      returned = controller.data_for_completions_report_by_zip
+      expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
+    end
+
+    it "return completions by lib" do
+      returned = controller.data_for_completions_report_by_lib
+      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
     end
   end
 end
