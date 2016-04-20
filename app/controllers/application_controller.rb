@@ -24,7 +24,6 @@ class ApplicationController < ActionController::Base
 
   def check_user_subdomain(user)
     user_subdomain = user.organization.subdomain
-    binding.pry
     if user_subdomain != request.subdomain
       user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
       sign_out user
