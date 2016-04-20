@@ -10,7 +10,17 @@
   <%= render "shared/ga_event_tracking" if Rails.env.production? %>
 </head>
 <body class="<%= "#{controller_name}-#{action_name}" %>">
-  <%= render "shared/header" %>
+  <%= render "shared/alternate_cpl_header" %>
+
+  <div class="banner">
+    <div class="container">
+      <% if content_for?(:callout) %>
+        <%= yield :callout %>
+      <% else %>
+        <h1><%= t('home.logo_banner') %></h1>
+      <% end %>
+    </div>
+  </div>
 
   <main class="container">
     <%= render "shared/flashes" %>
