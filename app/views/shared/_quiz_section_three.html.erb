@@ -25,6 +25,11 @@
       <%= radio_button_tag(:set_three, "5") %>
       <%= label_tag(:set_three_5, "Learn specific software or apps such as Microsoft Word.", class: "inline-label") %>
     </li>
+
+    <li>
+      <%= radio_button_tag(:set_three, "6") %>
+      <%= label_tag(:set_three_6, "Be more safe and secure when using the Internet.", class: "inline-label") %>
+    </li>
   </ul>
   <% if current_page?(root_url) %>
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
