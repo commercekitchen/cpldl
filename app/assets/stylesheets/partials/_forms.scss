@@ -129,6 +129,16 @@ select {
   width: 100%;
 }
 
+.text-field {
+  margin-top: 0.5em;
+}
+
+.form-2-col {
+  -webkit-column-count: 1; /* Chrome, Safari, Opera */
+  -moz-column-count: 1; /* Firefox */
+  column-count: 1;
+}
+
 .center {
   text-align: center;
   display:block;
