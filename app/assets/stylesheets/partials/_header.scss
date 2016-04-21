@@ -93,6 +93,7 @@
 }
 
 .alternate-header-logged-out {
+
   position: relative;
   @include media($mobile-large) {
     position: static;
