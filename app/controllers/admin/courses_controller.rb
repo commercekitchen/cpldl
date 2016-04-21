@@ -118,7 +118,7 @@ module Admin
                                      :contributor,  :pub_status,      :language_id,     :level,             :topics,
                                      :notes,        :delete_document, :other_topic,     :other_topic_text,  :course_order,
                                      :pub_date,     :format,          :subsite_course,  :display_on_dl,     :subdomain,
-            attachments_attributes: [:course_id, :document, :title, :doc_type, :_destroy, :file_description])
+            attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy])
     end
 
     def build_topics_list(params)
