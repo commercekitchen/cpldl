@@ -57,6 +57,7 @@
           <%= a.hidden_field :_destroy, class: "removable" %>
           <%= a.hidden_field :doc_type, value: "supplemental" %>
           <%= a.file_field :document, class: "upload-field" %>
+          <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this attachment..." %>
         </fieldset>
       <% end %>
       <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup" %>
@@ -72,6 +73,7 @@
           <%= a.hidden_field :doc_type, value: "post-course" %>
           <%= a.hidden_field :_destroy, class: "removable" %>
           <%= a.file_field :document, class: "upload-field" %>
+          <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this resource..." %>
         </fieldset>
       <% end %>
       <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>
@@ -118,9 +120,13 @@
         <% end %>
 
         <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
-          <%= b.check_box(checked: current_topics(@course, b.object)) %>
-          <%= b.label class: "plain" %>
+          <div class="form-1-col">
+            <%= b.check_box(checked: current_topics(@course, b.object)) %>
+            <%= b.label class: "plain" %>
+          </div>
         <% end %>
+
+
         <div>
           <%= f.check_box :other_topic %>
           <%= f.label :other_topic, "Other Topic", class: "plain" %>
