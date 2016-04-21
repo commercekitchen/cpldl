@@ -9,7 +9,9 @@
         <%# TODO: make this a model method %>
         <% course.attachments.where(doc_type: "supplemental").each do |a| %>
           <%= link_to course_attachment_path(course, a), target: "_blank" do %>
-            <li data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'><i class="icon-download purple"></i><%= a.document_file_name %></li>
+            <li data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'><i class="icon-download purple"></i><%= a.document_file_name %>
+              <p class="note file-description"><%= a.file_description %></p>
+            </li>
           <% end %>
         <% end %>
         </ul>
@@ -24,7 +26,10 @@
         <%# TODO: make this a model method %>
         <% @course.attachments.where(doc_type: "post-course").each do |a| %>
           <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
-            <li><i class="icon-download purple"></i><%= a.document_file_name %></li>
+            <li>
+              <i class="icon-download purple"></i><%= a.document_file_name %>
+              <p class="note file-description"><%= a.file_description %></p>
+            </li>
           <% end %>
         <% end %>
         </ul>

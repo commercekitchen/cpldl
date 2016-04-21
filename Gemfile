@@ -44,8 +44,6 @@ gem 'paperclip', '~> 4.3' # File uploads
 gem 'rubyzip' # ASL files
 gem 'friendly_id'
 
-gem 'in_columns'
-
 gem 'ckeditor'
 
 # PDF generation for completion certificate
