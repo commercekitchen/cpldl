@@ -82,7 +82,7 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
 # DB / Asset Sync Options
 set :db_local_clean, true
 set :db_remote_clean, true
-set :assets_dir, %w(public/system) # be careful, this is passed to rsync
+set :assets_dir, %w(public/system public/storylines) # be careful, this is passed to rsync
 set :local_assets_dir, "public/" # be careful, this is passed to rsync
 set :disallow_pushing, true # safety switch
 
