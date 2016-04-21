@@ -82,7 +82,8 @@ CREATE TABLE attachments (
     document_content_type character varying,
     document_file_size integer,
     document_updated_at timestamp without time zone,
-    doc_type character varying
+    doc_type character varying,
+    file_description character varying
 );
 
 
@@ -1311,4 +1312,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160310212508');
 INSERT INTO schema_migrations (version) VALUES ('20160315204732');
 
 INSERT INTO schema_migrations (version) VALUES ('20160412193744');
+
+INSERT INTO schema_migrations (version) VALUES ('20160421153406');
 
