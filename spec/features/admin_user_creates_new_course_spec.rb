@@ -13,6 +13,7 @@ feature "Admin user creates new course and lesson" do
     @organization = FactoryGirl.create(:organization)
     @user.add_role(:admin)
     @user.add_role(:admin, @organization)
+    switch_to_subdomain("chipublib")
     log_in_with @user.email, @user.password
   end
 

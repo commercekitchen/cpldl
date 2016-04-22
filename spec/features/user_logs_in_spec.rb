@@ -5,11 +5,13 @@ feature "User logs in" do
   before(:each) do
     @spanish = FactoryGirl.create(:spanish_lang)
     @english = FactoryGirl.create(:language)
+    switch_to_subdomain("chipublib")
   end
 
   scenario "with valid email and password" do
     user = FactoryGirl.create(:user)
-    log_in_with user.email, user.password
+    user.add_role(:user, FactoryGirl.create(:organization))
+    log_in_with(user.email, user.password)
     expect(current_path).to eq(root_path)
     expect(page).to_not have_content("Signed in successfully.")
     expect(page).to have_content("Hi Jane! Use a computer to do almost anything!")
