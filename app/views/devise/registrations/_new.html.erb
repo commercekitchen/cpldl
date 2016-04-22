@@ -1,58 +1,62 @@
-<h1><%= t('home.signup') %></h1>
+<% if request.subdomain == "www" %>
+  <h1><%= t('home.signup_notice') %></h1>
 
-<p>
-  <% if request.subdomain == "www" %>
-    <%= t('login_signup.want_to_track_a_course') %>
-  <% else %>
+  <p>
+    <%= t('login_signup.notice_to_users') %>
+  </p>
+<% else %>
+  <h1><%= t('home.signup') %></h1>
+
+  <p>
     <%= t('login_signup.want_to_take_a_course') %>
-  <% end %>
-</p>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= devise_error_messages! %>
-
-  <fieldset class="no-bottom-margin">
-    <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "#{t('login_signup.email')} *" %>
-  </fieldset>
-
-  <p class="small-14 grey extra-bottom-margin">
-    <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "http://digitallearn.org/learn/intro-email", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
   </p>
 
-  <% resource.build_profile %>
-  <%= f.fields_for :profile do |p| %>
-    <fieldset>
-      <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= devise_error_messages! %>
+
+    <fieldset class="no-bottom-margin">
+      <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "#{t('login_signup.email')} *" %>
     </fieldset>
 
-    <fieldset>
-      <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
-    </fieldset>
+    <p class="small-14 grey extra-bottom-margin">
+      <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "http://digitallearn.org/learn/intro-email", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
+    </p>
 
-    <% if request.subdomain == "chipublib" %>
+    <% resource.build_profile %>
+    <%= f.fields_for :profile do |p| %>
       <fieldset>
-        <%= p.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "What's your library called?"}, class: "select-large", id: "chzn" ) %>
+        <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
       </fieldset>
+
+      <fieldset>
+        <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
+      </fieldset>
+
+      <% if request.subdomain == "chipublib" %>
+        <fieldset>
+          <%= p.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "What's your library called?"}, class: "select-large", id: "chzn" ) %>
+        </fieldset>
+      <% end %>
     <% end %>
+
+    <fieldset>
+      <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
+    </fieldset>
+
+    <fieldset>
+      <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
+    </fieldset>
+
+    <fieldset>
+      <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
+      <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
+    </fieldset>
+
+    <fieldset>
+      <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
+    </fieldset>
+
+    <%= f.submit "#{t('home.signup')}" %>
+
   <% end %>
-
-  <fieldset>
-    <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
-  </fieldset>
-
-  <fieldset>
-    <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
-  </fieldset>
-
-  <fieldset>
-    <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
-    <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
-  </fieldset>
-
-  <fieldset>
-    <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
-  </fieldset>
-
-  <%= f.submit "#{t('home.signup')}" %>
-
 <% end %>

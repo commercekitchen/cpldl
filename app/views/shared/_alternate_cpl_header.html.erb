@@ -1,4 +1,4 @@
-<header class="header-logged-in <%= "lesson-header" if request.path.include?("/lessons/")%>">
+<header class="alternate-header-logged-out <%= "lesson-header" if request.path.include?("/lessons/")%>">
   <div class="container">
 
     <div class="language-links">
@@ -12,8 +12,16 @@
     <div class="logo-link-container">
       <%= render "shared/logo_purple" %>
       <div class="signup-box">
-        <%= link_to "#{t('home.login')}", login_path, class: "btn" %>
+        <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
+      </div>
+      <div class="alternate-search-box">
+        <%= form_tag courses_path, method: :get do %>
+          <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+          <i class="icon-search grey"></i>
+          <%= submit_tag "Search", id: "search_btn" %>
+        <% end %>
       </div>
     </div>
   </div>
 </header>
+

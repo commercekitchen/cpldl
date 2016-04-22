@@ -91,8 +91,8 @@ $(document).ready(function() {
     $(document).delegate('.remove_child','click', function() {
       $(this).parent().children('.removable')[0].value = 1;
       $(this).prev().slideUp();
+      $(this).parent().slideUp();
       $(this).slideUp();
-
       return false;
     });
    });

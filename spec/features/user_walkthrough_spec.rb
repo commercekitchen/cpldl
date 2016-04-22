@@ -6,7 +6,9 @@ feature "User clicks through each page" do
     @spanish = FactoryGirl.create(:spanish_lang)
     @english = FactoryGirl.create(:language)
     @user = FactoryGirl.create(:user)
-    log_in_with @user.email, @user.password
+    @org = FactoryGirl.create(:organization)
+    @user.add_role(:user, @org)
+    login_as(@user, :scope => :user)
   end
 
   scenario "can visit each link in the header" do

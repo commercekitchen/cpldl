@@ -3,7 +3,6 @@ require "feature_helper"
 feature "User visits course listing page" do
 
   before(:each) do
-    Capybara.default_host = "http://chipublib.example.com"
     @language = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     @organization = FactoryGirl.create(:organization)
@@ -19,6 +18,7 @@ feature "User visits course listing page" do
                                            course_order: 3,
                                            language: @language,
                                            organization: @organization)
+    switch_to_subdomain("chipublib")
   end
 
   context "as an anonymous user" do

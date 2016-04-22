@@ -67,17 +67,17 @@ button, input[type="submit"], .btn {
   letter-spacing: 1px;
 
   @include media($tablet) {
-    min-width: initial;
+    min-width: 0;
   }
 
   &.small{
-    min-width: initial;
+    min-width: 0;
     height: 35px;
     padding: 6px 40px;
   }
 
   &.small-lesson-button {
-    min-width: initial;
+    min-width: 0;
     height: 35px;
     padding: 6px 40px;
     position: relative;
@@ -129,13 +129,24 @@ select {
   width: 100%;
 }
 
+.text-field {
+  margin-top: 0.5em;
+}
+
+.form-2-col {
+  -webkit-column-count: 1; /* Chrome, Safari, Opera */
+  -moz-column-count: 1; /* Firefox */
+  column-count: 1;
+}
+
 .center {
   text-align: center;
   display:block;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-  color: $grey;
+.select2-container--default .select2-selection--single .select2-selection__rendered, #profile_language_id {
+  color: $black;
+
 }
 
 .select2-container--default .select2-selection--single {
@@ -149,10 +160,9 @@ select {
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
   background: url("/assets/select_box_arrows.png") no-repeat 96% 50%;
-  padding: 1.2em 25em;
+  padding: 1.2em 10em;
   position: absolute;
 }
-
 
 //Fine for accessiblity since the textbook you type in has an outline
 

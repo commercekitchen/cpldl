@@ -52,8 +52,10 @@ $(document).ready(function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });
 
+  $(".cms_page a").on("click", function() {
+    var hrefValue = $(this).attr("href");
+    ga("send", "event", "exernal cms link", "click", '"' + hrefValue + '"');
+  })
+
 });
 </script>
-
-
-<!-- data: { cc_ga_event: "on", cc_ga_value: "client-new-estimate" } -->

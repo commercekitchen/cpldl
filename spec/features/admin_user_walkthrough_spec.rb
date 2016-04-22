@@ -10,6 +10,7 @@ feature "Admin user clicks through each page" do
     @user.add_role(:admin)
     @organization = FactoryGirl.create(:organization)
     @user.add_role(:admin, @organization)
+    switch_to_subdomain("chipublib")
     log_in_with @user.email, @user.password
   end
 

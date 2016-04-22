@@ -321,8 +321,14 @@ ul.less-padding {
   padding-left: 5px;
 }
 
-.cms_page {
+.show_with_bullets {
   ul {
     list-style: initial;
   }
+}
+
+.file-description {
+  margin-top: 1px;
+  margin-bottom: 5px;
+  padding-left: 2em;
 }

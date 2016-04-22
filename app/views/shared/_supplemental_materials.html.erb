@@ -1,12 +1,40 @@
-<% if @course.attachments.count > 0 %>
-  <h2><%= t('course_page.click_here_for_text_copy_course') %></h2>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="sixcol">
+      <h2><%= t('course_page.click_here_for_text_copy_course') %></h2>
+      <% if @course.attachments.count == 0 %>
+        <div class="note"><%= t('course_page.there_is_no_text_copy_of_course') %></div>
+      <% else %>
+        <ul class="no-padding">
+        <%# TODO: make this a model method %>
+        <% course.attachments.where(doc_type: "supplemental").each do |a| %>
+          <%= link_to course_attachment_path(course, a), target: "_blank" do %>
+            <li data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'><i class="icon-download purple"></i><%= a.document_file_name %>
+              <p class="note file-description"><%= a.file_description %></p>
+            </li>
+          <% end %>
+        <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class="sixcol">
+      <h2><%= t('course_page.additional_resources') %></h2>
+      <% if @course.attachments.count == 0 %>
+        <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
+      <% else %>
+        <ul class="no-padding">
+        <%# TODO: make this a model method %>
+        <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+          <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
+            <li>
+              <i class="icon-download purple"></i><%= a.document_file_name %>
+              <p class="note file-description"><%= a.file_description %></p>
+            </li>
+          <% end %>
+        <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<ul class="no-padding">
-<%# TODO: make this a model method %>
-<% course.attachments.where(doc_type: "supplemental").each do |a| %>
-  <%= link_to course_attachment_path(course, a), target: "_blank" do %>
-    <li data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'><i class="icon-download purple"></i><%= a.document_file_name %></li>
-  <% end %>
-<% end %>
-</ul>

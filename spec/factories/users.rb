@@ -33,6 +33,7 @@
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
 #  subdomain              :string
+#  token                  :string
 #
 
 FactoryGirl.define do

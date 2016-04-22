@@ -5,6 +5,7 @@ feature "User signs up" do
   before(:each) do
     @spanish = FactoryGirl.create(:spanish_lang)
     @english = FactoryGirl.create(:language)
+    switch_to_subdomain("chipublib")
   end
 
   scenario "with valid email, password, first name, last name, zip code" do

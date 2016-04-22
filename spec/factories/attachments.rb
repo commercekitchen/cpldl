@@ -12,6 +12,7 @@
 #  document_file_size    :integer
 #  document_updated_at   :datetime
 #  doc_type              :string
+#  file_description      :string
 #
 
 FactoryGirl.define do

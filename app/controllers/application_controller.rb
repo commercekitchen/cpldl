@@ -5,17 +5,29 @@ class ApplicationController < ActionController::Base
   before_action :set_language
   before_action :set_cms_footer_pages
   before_action :redirect_orgs
+  before_action :set_user_token
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
 
   def after_sign_in_path_for(user)
+    check_user_subdomain(user)
     if first_admin_login? user
       flash[:notice] = "This is the first time you have logged in, please change your password."
       profile_path
     elsif user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain))
       admin_dashboard_index_path
     else
+      root_path
+    end
+  end
+
+  def check_user_subdomain(user)
+    user_subdomain = user.organization.subdomain
+    if user_subdomain != request.subdomain
+      user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
+      sign_out user
+      flash[:alert] = %Q[You are not registered with this subdomain, please sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
       root_path
     end
   end
@@ -63,6 +75,10 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def set_user_token
+    session[:user_token] = current_user ? current_user.token : "guest"
+  end
 
   def dl_subdomain
     request.subdomain == "www"
