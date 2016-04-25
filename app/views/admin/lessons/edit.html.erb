@@ -20,7 +20,7 @@
 </div>
 
 <%= link_to new_admin_course_lesson_path, class: "transparent" do %>
-  <div class="btn">
+  <div class="btn <%= request.subdomain == 'chipublib' ? 'btn-mustard' : '' %>"  >
     Add Another Lesson
   </div>
 <% end %>

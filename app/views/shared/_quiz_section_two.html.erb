@@ -26,6 +26,8 @@
   </ul>
   <% if current_page?(root_url) %>
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
-    <%= button_tag "Next", class: "btn small next-button", type: "button", name: "next" %>
+
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= button_tag "Next", class: "btn small next-button #{css_class}", type: "button", name: "next" %>
   <% end %>
 <% end %>

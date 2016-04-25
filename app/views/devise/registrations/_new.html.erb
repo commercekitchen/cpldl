@@ -56,7 +56,8 @@
       <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
     </fieldset>
 
-    <%= f.submit "#{t('home.signup')}" %>
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= f.submit "#{t('home.signup')}", class: css_class %>
 
   <% end %>
 <% end %>

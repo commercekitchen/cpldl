@@ -9,7 +9,8 @@
     </p>
   </div>
   <div class="sixcol last left-or-right">
-    <%= link_to "Add a New CMS Page", new_admin_cms_page_path, class: "btn" %>
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= link_to "Add a New CMS Page", new_admin_cms_page_path, class: "btn #{css_class}" %>
   </div>
 </div>
 

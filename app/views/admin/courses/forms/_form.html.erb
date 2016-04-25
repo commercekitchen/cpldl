@@ -178,15 +178,16 @@
   <%= f.hidden_field :subdomain, value: request.subdomain %>
 
   <div class="actions">
+  <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
     <div class="row">
       <div class="fourcol">
-        <%= f.submit "Save Course", params: { commit: "Save Course" } %>
+        <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "#{css_class}" %>
       </div>
       <div class="fourcol">
         <% if @course.lessons.blank? %>
-          <%= f.submit "Save Course and Add Lessons" %>
+          <%= f.submit "Save Course and Add Lessons", class: "#{css_class}" %>
         <% else %>
-          <%= f.submit "Save Course and Edit Lessons" %>
+          <%= f.submit "Save Course and Edit Lessons", class: "#{css_class}" %>
         <% end %>
       </div>
       <div class="fourcol last"></div>

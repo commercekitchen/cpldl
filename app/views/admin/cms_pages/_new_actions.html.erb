@@ -2,5 +2,6 @@
     <%= f.submit "Preview Page", params: { commit: "Preview" }, class: "btn-grey" %>
   </div>
   <div class="sixcol center last">
-    <%= f.submit "Save Page", params: { commit: "Save Page" } %>
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= f.submit "Save Page", params: { commit: "Save Page" }, class: "#{css_class}" %>
   </div>

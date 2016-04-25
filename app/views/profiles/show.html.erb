@@ -42,7 +42,8 @@
   </fieldset>
 
   <fieldset>
-    <%= f.submit "#{t('profile_page.save')}" %>
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= f.submit "#{t('profile_page.save')}", class: "#{css_class}" %>
   </fieldset>
 
 <% end %>

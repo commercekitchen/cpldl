@@ -40,7 +40,8 @@
   </fieldset>
 
   <fieldset>
-    <%= f.submit "Save" %>
+    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
+    <%= f.submit "Save", class: "#{css_class}" %>
   </fieldset>
 
 <% end %>
