@@ -1,5 +1,28 @@
-<p><%= t('confirmation_email.welcome') %> <%= @email %>!</p>
+<% if @resource.subdomain == "chipublib" %>
+  <p><%= t('confirmation_email.cpl_subject') %></p>
 
-<p><%= t('confirmation_email.confirm_your_account_through_link') %></p>
+  <p><%= t('confirmation_email.greeting') %> <%= @user.profile.first_name %>,</p>
 
-<p><%= link_to "#{t('confirmation_email.confirm_my_account')}", confirmation_url(@resource, confirmation_token: @token, subdomain: @resource.subdomain) %></p>
+  <p><%= t('confirmation_email.cpl_welcome') %></p>
+
+  <p><%= link_to "#{t('confirmation_email.confirm_my_account')}", confirmation_url(@resource, confirmation_token: @token, subdomain: @resource.subdomain) %></p>
+
+
+  <p>
+    <%= t('confirmation_email.signature_line_1') %>
+    <ul>
+      <li><%= t('confirmation_email.signature_line_2') %></li>
+      <li><%= t('confirmation_email.signature_line_3') %></li>
+      <li><<%= t('confirmation_email.signature_line_4') %></li>
+    </ul>
+  </p>
+
+  <p><%= t('confirmation_email.have_questions_a') %> <%= link_to "#{t('confirmation_email.have_questions_link_text')}", "https://chipublib.bibliocommons.com/locations/list/?_ga=1.46846951.1119167552.1454774219" %> <%= t('confirmation_email.have_questions_b') %></p>
+
+<% else %>
+  <p><%= t('confirmation_email.welcome') %> <%= @email %>!</p>
+
+  <p><%= t('confirmation_email.confirm_your_account_through_link') %></p>
+
+  <p><%= link_to "#{t('confirmation_email.confirm_my_account')}", confirmation_url(@resource, confirmation_token: @token, subdomain: @resource.subdomain) %></p>
+<% end %>
