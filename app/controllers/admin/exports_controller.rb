@@ -15,6 +15,7 @@ module Admin
       zip_codes = course_progs.merge(User.with_role(:user, current_site)).pluck(:zip_code).uniq
 
       zip_codes.each do |z|
+
         progress_by_zip = course_progs.merge(User.with_role(:user, current_site)
                                       .joins(:profile).merge(Profile.where(zip_code: z)))
         progresses = {}
