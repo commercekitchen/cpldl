@@ -114,6 +114,5 @@
 
   <%= f.hidden_field :subdomain, value: request.subdomain %>
 
-  <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
-  <%= f.submit "Save Lesson", class: "#{css_class}" %>
+  <%= f.submit "Save Lesson", class: button_color %>
 <% end %>

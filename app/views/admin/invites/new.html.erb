@@ -9,7 +9,6 @@
 <% end -%>
 
   <p>
-    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
-    <%= f.submit t("devise.invitations.new.submit_button"), class: css_class %>
+    <%= f.submit t("devise.invitations.new.submit_button"), class: button_color %>
   </p>
 <% end %>

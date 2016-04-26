@@ -36,9 +36,8 @@
 </p>
 <div class="row">
   <div>
-    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
     <%= link_to courses_quiz_path do %>
-      <%= button_tag("#{t('completed_courses_page.retake_the_quiz')}", type: "button", class: css_class) %>
+      <%= button_tag("#{t('completed_courses_page.retake_the_quiz')}", type: "button", class: button_color) %>
     <% end %>
   </div>
 </div>

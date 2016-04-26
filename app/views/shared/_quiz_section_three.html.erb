@@ -35,6 +35,5 @@
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
   <% end %>
 
-  <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
-  <%= submit_tag "Submit", class: "btn small submit-button #{css_class}" %>
+  <%= submit_tag "Submit", class: "btn small submit-button #{button_color}" %>
 <% end %>

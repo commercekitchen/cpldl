@@ -44,17 +44,16 @@
         </div>
       </div>
     </div>
-    <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
     <div class="row">
       <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
-        <%= button_tag(type: 'button', class: "congrats-button #{css_class}") do %>
+        <%= button_tag(type: 'button', class: "congrats-button #{button_color}") do %>
           <%= t('course_completion_page.download_certificate') %>
         <% end %>
       <% end %>
 
       <% if request.subdomain == "chipublib" || request.subdomain == "chipublib-stage" %>
         <%= link_to(course_skills_path(@course.id)) do %>
-          <%= button_tag(type: 'button', class: "congrats-button #{css_class}") do %>
+          <%= button_tag(type: 'button', class: "congrats-button #{button_color}") do %>
               <%= t('course_completion_page.practice_skills') %>
           <% end %>
         <% end %>

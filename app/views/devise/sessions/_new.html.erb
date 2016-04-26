@@ -21,8 +21,7 @@
     </fieldset>
   <% end -%>
 
-  <% css_class = request.subdomain == "chipublib" ? "btn-mustard" : "" %>
-  <%= f.submit "#{t('login_signup.access_courses')}", class: css_class %>
+  <%= f.submit "#{t('login_signup.access_courses')}", class: button_color %>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
