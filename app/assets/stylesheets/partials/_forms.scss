@@ -92,6 +92,10 @@ button, input[type="submit"], .btn {
     background-color: $grey;
   }
 
+  &.btn-mustard {
+    background-color: $blind-man-mustard;
+  }
+
   &.btn-blue {
     background-color: $teal;
   }

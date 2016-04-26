@@ -180,13 +180,13 @@
   <div class="actions">
     <div class="row">
       <div class="fourcol">
-        <%= f.submit "Save Course", params: { commit: "Save Course" } %>
+        <%= f.submit "Save Course", params: { commit: "Save Course" }, class: button_color %>
       </div>
       <div class="fourcol">
         <% if @course.lessons.blank? %>
-          <%= f.submit "Save Course and Add Lessons" %>
+          <%= f.submit "Save Course and Add Lessons", class: button_color %>
         <% else %>
-          <%= f.submit "Save Course and Edit Lessons" %>
+          <%= f.submit "Save Course and Edit Lessons", class: button_color %>
         <% end %>
       </div>
       <div class="fourcol last"></div>

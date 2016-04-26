@@ -24,8 +24,10 @@
       <li>&nbsp;</li>
     <% end %>
   </ul>
+
   <% if current_page?(root_url) %>
     <%= button_tag "Skip Quiz", class: "btn small modal-skip-button btn-grey", type: "button", name: "skip_quiz" %>
-    <%= button_tag "Next", class: "btn small next-button", type: "button", name: "next" %>
+
+    <%= button_tag "Next", class: "btn small next-button #{button_color}", type: "button", name: "next" %>
   <% end %>
 <% end %>

@@ -35,10 +35,9 @@
           <%= link_to "+ #{t('course_page.add_to_your_plan')}", course_add_path(@course), method: :post, data: { cpl_ga_event: "on", cpl_ga_value: "add-course-to-plan" } %>
         </small></p>
       <% end %>
-
-      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
+      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn #{button_color}", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
     <% else %>
-      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn unauth-start-course-button", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
+      <%= link_to "#{t('course_page.start_course')}", course_start_path(@course), method: :post, class: "btn unauth-start-course-button #{button_color}", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
     <% end %>
   </div>
 </div>

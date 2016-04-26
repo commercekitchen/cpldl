@@ -56,7 +56,7 @@
       <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
     </fieldset>
 
-    <%= f.submit "#{t('home.signup')}" %>
+    <%= f.submit "#{t('home.signup')}", class: button_color %>
 
   <% end %>
 <% end %>

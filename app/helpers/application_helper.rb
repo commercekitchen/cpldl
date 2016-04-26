@@ -18,4 +18,8 @@ module ApplicationHelper
   def course_urls
     %w(/ /courses /courses/your)
   end
+
+  def button_color
+    request.subdomain == "chipublib" ? "btn-mustard" : ""
+  end
 end

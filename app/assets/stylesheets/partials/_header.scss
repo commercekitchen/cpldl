@@ -173,8 +173,19 @@
         top: 0;
     }
   }
+  .btn {
+    background: $blind-man-mustard;
+    // text-align: right;
+    // float: right
+    // margin-right: .5em;
+    @include media($mobile-large) {
+      margin-right: .5em;
+      margin-bottom: .5em;
+      float: left;
+      display: block;
+    }
+  }
 }
-
 
 
 
@@ -269,6 +280,8 @@
 .actual-logo {
   overflow: hidden;
 }
+
+
 
 .signup-box {
   text-align: right;
