@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
     if user_subdomain != request.subdomain
       user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
       sign_out user
-      flash[:alert] = %Q[You are not registered with this subdomain, please sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
+      flash[:alert] = %Q[Oops! You’re a member of Chicago Digital Learn. Sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
       root_path
     end
   end
