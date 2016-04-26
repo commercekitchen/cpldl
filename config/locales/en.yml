@@ -48,9 +48,19 @@ en:
     your_password: "Your Password"
     re_enter_password: "Re-enter Your Password"
   confirmation_email:
+    cpl_subject: "Get Started with Chicago Digital Learn"
+    greeting: "Hello"
+    cpl_welcome: "Welcome to Chicago Digital Learn. Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
     welcome: "Welcome"
     confirm_your_account_through_link: "You can confirm your account email through the link below:"
     confirm_my_account: "Confirm my account"
+    signature_line_1: "Chicago Digital Learn offers:"
+    signature_line_2: "Videos that explain how computers work you can watch at your own pace"
+    signature_line_3: "Chicago educational and employment resources"
+    signature_line_4: "Links to other helpful online resources"
+    have_questions_a: "Have questions?"
+    have_questions_link_text: "Visit or call a Chicago Public Library"
+    have_questions_b: "location near you."
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"
