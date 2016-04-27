@@ -26,7 +26,8 @@
   </ul>
 
   <% if current_page?(root_url) %>
-    <%= button_tag "Skip Quiz", class: "btn small modal-skip-button btn-grey", type: "button", name: "skip_quiz" %>
+    <%# TODO: fix bug with skip button, and add %= back into ERB tag %>
+    <% button_tag "Skip Quiz", class: "btn small modal-skip-button btn-grey", type: "button", name: "skip_quiz" %>
 
     <%= button_tag "Next", class: "btn small next-button #{button_color}", type: "button", name: "next" %>
   <% end %>
