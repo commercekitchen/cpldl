@@ -1,4 +1,4 @@
-<div class="lesson-block <% if completed %>completed<% end %>"
+<div class="lesson-block <%= hover_color_class %> <% if completed %>completed<% end %>"
   onclick="window.location='<%= course_lesson_path(course, lesson) %>'" data-cpl-ga-event="on" data-cpl-ga-value="user-click-lesson">
   <div class="default-state">
     <% if completed %>

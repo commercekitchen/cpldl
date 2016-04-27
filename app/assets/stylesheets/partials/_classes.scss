@@ -70,6 +70,7 @@
   margin-bottom: 2em;
   padding: 1em 0 2em 0;
   min-height: 2em;
+
   h1 {
     font-family: $font-secondary;
     color: $white;
@@ -187,6 +188,10 @@ small {
 
 .grey {
   color: $grey;
+}
+
+.white {
+  color: white;
 }
 
 .extra-padding-left {
@@ -331,4 +336,17 @@ ul.less-padding {
   margin-top: 1px;
   margin-bottom: 5px;
   padding-left: 2em;
+}
+
+.cpl-blue-block {
+  background-color: $cpl-blue !important;
+}
+
+.cpl-blue-text {
+  color: $cpl-blue;
+}
+
+.cpl-purple-text {
+  color: $cpl-purple;
+  a { color: $cpl-purple; }
 }

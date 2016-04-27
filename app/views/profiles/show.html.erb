@@ -1,4 +1,4 @@
-<h1>Your Profile</h1>
+<h1 class="<%= text_color_class %>">Your Profile</h1>
 
 <%= form_for @profile, url: profile_path, method: :put do |f| %>
 
@@ -14,28 +14,28 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :language_id do %>
-      <%= t('profile_page.preferred_language') %><span class="required"></span>
+    <%= f.label :language_id, class: text_color_class do %>
+      <%= t('profile_page.preferred_language') %><span class="required <%= text_color_class %>"></span>
     <% end %>
     <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :library_location_id do %>
+    <%= f.label :library_location_id, class: text_color_class do %>
       <%= t('profile_page.library_location') %>
     <% end %>
     <%= f.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "Select..."}, class: "select-large", id: "chzn" ) %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :first_name do %>
+    <%= f.label :first_name, class: text_color_class do %>
       <%= t('login_signup.first_name') %>
     <% end %>
     <%= f.text_field :first_name %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :zip_code do %>
+    <%= f.label :zip_code, class: text_color_class do %>
       <%= t('login_signup.zip_code') %>
     <% end %>
     <%= f.text_field :zip_code %>

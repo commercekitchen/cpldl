@@ -9,7 +9,7 @@
     </div>
     <div class="logo-link-container">
       <%= render "shared/logo_purple" %>
-      <nav class="header-top-nav">
+      <nav class="header-top-nav <%= link_color_class %>">
         <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path %> |
         <% if current_user.has_role?(:trainer, Organization.find_by_subdomain(request.subdomain)) %>
           <%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %> |

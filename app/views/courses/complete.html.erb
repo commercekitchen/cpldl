@@ -12,7 +12,7 @@
 <div><small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small></div>
 
 <div class="row">
-  <div class="twelvecol congrats-banner">
+  <div class="twelvecol congrats-banner <%= color_class %>">
     <div class="row">
       <% if current_user %>
         <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.profile.first_name}." %>
@@ -21,7 +21,7 @@
     </div>
     <div class="row extra-margin">
       <div class="cert-preview hide-on-tablet">
-        <div class="cert-inner">
+        <div class="cert-inner <%= cert_color_class %>">
           <div>
             <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
             <p>
@@ -74,7 +74,7 @@
       <% end %>
     </div>
     <div class="row">
-      <%= link_to "#{t('course_completion_page.restart_this_course')}", course_path(@course), class: "grey" %>
+      <%= link_to "#{t('course_completion_page.restart_this_course')}", course_path(@course), class: "white" %>
     </div>
   </div>
 </div>
@@ -83,7 +83,7 @@
 
 <div class="row">
   <div class="sixcol border-right">
-    <h2><%= t('course_completion_page.practice_new_skills') %></h2>
+    <h2 class="<%= text_color_class %>"><%= t('course_completion_page.practice_new_skills') %></h2>
     <% if @course.notes.present? %>
       <div class="show_with_bullets"><%= sanitize(@course.notes) %></div>
     <% else %>
