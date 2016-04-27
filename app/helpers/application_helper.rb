@@ -50,4 +50,8 @@ module ApplicationHelper
   def cert_color_class
     request.subdomain == "chipublib" ? "cpl-blue" : ""
   end
+
+  def ck_color_class
+    request.subdomain == "chipublib" ? "ck-chipublib" : ""
+  end
 end
