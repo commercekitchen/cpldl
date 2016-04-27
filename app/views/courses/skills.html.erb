@@ -22,7 +22,7 @@
     </div>
     <div class="sixcol">
       <h2><%= t('course_page.additional_resources') %></h2>
-      <% if @course.has_post_course_materials? %>
+      <% if @course.post_course_attachments.count > 0 %>
         <ul class="no-padding">
           <% @course.post_course_attachments.each do |a| %>
             <%= link_to course_attachment_path(@course, a), target: "_blank" do %>

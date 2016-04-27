@@ -154,11 +154,11 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def has_post_course_materials?
-    self.attachments.where(doc_type: "post-course").count > 0
-  end
-
   def post_course_attachments
     self.attachments.where(doc_type: "post-course")
+  end
+
+  def supplemental_attachments
+    self.attachments.where(doc_type: "supplemental")
   end
 end
