@@ -17,7 +17,7 @@
       <% if @course.notes.blank? %>
         <div class="note"><%= t('course_page.there_are_no_notes_for_course') %></div>
       <% else %>
-        <div class="show_with_bullets"><%= simple_format @course.notes %></div>
+        <div class="show_with_bullets"><%= sanitize(@course.notes) %></div>
       <% end %>
     </div>
     <div class="sixcol">

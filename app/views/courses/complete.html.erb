@@ -85,7 +85,7 @@
   <div class="sixcol border-right">
     <h2><%= t('course_completion_page.practice_new_skills') %></h2>
     <% if @course.notes.present? %>
-      <div class="show_with_bullets"><%= simple_format @course.notes %></div>
+      <div class="show_with_bullets"><%= sanitize(@course.notes) %></div>
     <% else %>
       <p class="note">There are no notes or partner resources for this course.</p>
     <% end %>
