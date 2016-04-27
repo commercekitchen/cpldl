@@ -153,4 +153,12 @@ class Course < ActiveRecord::Base
       l.save
     end
   end
+
+  def has_post_course_materials?
+    self.attachments.where(doc_type: "post-course").count > 0
+  end
+
+  def post_course_attachments
+    self.attachments.where(doc_type: "post-course")
+  end
 end
