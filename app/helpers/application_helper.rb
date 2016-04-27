@@ -20,7 +20,12 @@ module ApplicationHelper
   end
 
   def button_color
-    request.subdomain == "chipublib" ? "btn-mustard" : ""
+    case request.subdomain
+    when "www" then "btn-blue"
+    when "chipublib" then "btn-mustard"
+    end
+    # request.subdomain == "www" ? "btn-blue" : ""
+    # request.subdomain == "chipublib" ? "btn-mustard" : ""
   end
 
   def hover_color_class
