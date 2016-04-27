@@ -62,13 +62,13 @@
     <div class="row">
       <% if current_user %>
         <%= link_to(your_courses_path) do %>
-          <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
+          <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button #{button_color}" ) do %>
             <%= t('course_completion_page.return_to_my_courses') %>
           <% end %>
         <% end %>
       <% end %>
       <%= link_to(courses_path) do %>
-        <%= button_tag(type: 'button', class: 'btn-grey bottom-button congrats-button') do %>
+        <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button #{button_color}") do %>
           <%= t('course_completion_page.view_all_courses') %>
         <% end %>
       <% end %>
