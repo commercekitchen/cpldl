@@ -153,4 +153,12 @@ class Course < ActiveRecord::Base
       l.save
     end
   end
+
+  def post_course_attachments
+    self.attachments.where(doc_type: "post-course")
+  end
+
+  def supplemental_attachments
+    self.attachments.where(doc_type: "supplemental")
+  end
 end

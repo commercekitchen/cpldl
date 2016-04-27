@@ -22,20 +22,19 @@
     </div>
     <div class="sixcol">
       <h2><%= t('course_page.additional_resources') %></h2>
-      <% if @course.attachments.count == 0 %>
-        <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
-      <% else %>
+      <% if @course.post_course_attachments.count > 0 %>
         <ul class="no-padding">
-        <%# TODO: make this a model method %>
-        <% @course.attachments.where(doc_type: "post-course").each do |a| %>
-          <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
-            <li>
-              <i class="icon-download purple"></i><%= a.document_file_name %>
-              <p class="note file-description"><%= a.file_description %></p>
-            </li>
+          <% @course.post_course_attachments.each do |a| %>
+            <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
+              <li>
+                <i class="icon-download purple"></i><%= a.document_file_name %>
+                <p class="note file-description"><%= a.file_description %></p>
+              </li>
+            <% end %>
           <% end %>
-        <% end %>
         </ul>
+      <% else %>
+        <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
       <% end %>
     </div>
   </div>
