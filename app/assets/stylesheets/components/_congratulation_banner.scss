@@ -53,6 +53,9 @@
       height: 100%;
       border: solid;
       border-color: $teal;
+      &.cpl-blue {
+        border-color: $cpl-blue;
+      }
       h1 {
         color: $dark-grey;
         font-size: 1.8em;

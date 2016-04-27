@@ -1,20 +1,20 @@
 <% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
   <%= content_for(:callout) { %><h1>Hi Admin! <%= t('home.logo_banner') %></h1><% } %>
-  <h1>
+  <h1 class="<%= text_color_class %>">
     Edit a course by clicking on a course below, search courses or navigate to the
-    <%= link_to "Admin Dashboard", admin_dashboard_index_path %>.
+    <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: link_color_class %>.
   </h1>
 
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
     <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>! <%= t("home.logo_banner") %></h1>
   <% end %>
-  <h1>
+  <h1 class="<%= text_color_class %>">
     <%= t('logged_in_user.choose_a_course') %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
 <% else %>
-  <h1 class="centered"><%= t('home.choose_a_course') %></h1>
+  <h1 class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
 
   <% if request.subdomain == "www" %>
     <div class="clearfix">

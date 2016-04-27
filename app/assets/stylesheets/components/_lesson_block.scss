@@ -19,6 +19,10 @@
     margin-right: 2em;
   }
 
+  &.cpl-blue {
+    background-color: $cpl-blue;
+  }
+
   &.completed {
     background-color: $grey;
     .icon-ok::before {

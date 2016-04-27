@@ -13,7 +13,7 @@
 <div class="container">
   <div class="row">
     <div class="sixcol">
-      <h2><%= t('course_page.practice_and_use_your_skills') %></h2>
+      <h2 class="<%= text_color_class %>"><%= t('course_page.practice_and_use_your_skills') %></h2>
       <% if @course.notes.blank? %>
         <div class="note"><%= t('course_page.there_are_no_notes_for_course') %></div>
       <% else %>
@@ -21,13 +21,13 @@
       <% end %>
     </div>
     <div class="sixcol">
-      <h2><%= t('course_page.additional_resources') %></h2>
+      <h2 class="<%= text_color_class %>"><%= t('course_page.additional_resources') %></h2>
       <% if @course.post_course_attachments.count > 0 %>
         <ul class="no-padding">
           <% @course.post_course_attachments.each do |a| %>
             <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
-              <li>
-                <i class="icon-download purple"></i><%= a.document_file_name %>
+              <li class="<%= link_color_class %>">
+                <i class="icon-download <%= download_color_class %>"></i><%= a.document_file_name %>
                 <p class="note file-description"><%= a.file_description %></p>
               </li>
             <% end %>

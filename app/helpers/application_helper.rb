@@ -22,4 +22,32 @@ module ApplicationHelper
   def button_color
     request.subdomain == "chipublib" ? "btn-mustard" : ""
   end
+
+  def hover_color_class
+    request.subdomain == "chipublib" ? "cpl-blue" : ""
+  end
+
+  def color_class
+    request.subdomain == "chipublib" ? "cpl-blue-block" : ""
+  end
+
+  def text_color_class
+    request.subdomain == "chipublib" ? "cpl-blue-text" : ""
+  end
+
+  def link_color_class
+    request.subdomain == "chipublib" ? "cpl-purple-text" : ""
+  end
+
+  def icon_color_class
+    request.subdomain == "chipublib" ? "cpl-blue" : ""
+  end
+
+  def download_color_class
+    request.subdomain == "chipublib" ? "cpl-purple" : ""
+  end
+
+  def cert_color_class
+    request.subdomain == "chipublib" ? "cpl-blue" : ""
+  end
 end

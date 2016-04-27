@@ -12,7 +12,7 @@
 <body class="<%= "#{controller_name}-#{action_name}" %>">
   <%= render "shared/alternate_cpl_header" %>
 
-  <div class="banner">
+  <div class="banner <%= color_class %>">
     <div class="container">
       <% if content_for?(:callout) %>
         <%= yield :callout %>
