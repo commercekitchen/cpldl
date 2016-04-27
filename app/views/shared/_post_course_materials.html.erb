@@ -4,7 +4,7 @@
 <%# TODO: make this a model method %>
 <% course.attachments.where(doc_type: "post-course").each do |a| %>
   <%= link_to course_attachment_path(course, a), target: "_blank" do %>
-    <li class="<%= link_color_class %>"><i class="icon-download download_color_class"></i><%= a.document_file_name %></li>
+    <li class="<%= link_color_class %>"><i class="icon-download <%= download_color_class %>"></i><%= a.document_file_name %></li>
   <% end %>
 <% end %>
 </ul>
