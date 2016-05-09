@@ -79,6 +79,13 @@ en:
   change_login_page:
     leave_blank_to_not_change_password: "(Leave blank to not change. Passwords should be at least 8 characters long.)"
     password_confirmation: "Password confirmation"
+  completed_lesson_page:
+    congratulations: "Congratulations!"
+    youve_completed_activity: "You've completed Activity"
+    up_next: "Up Next"
+    activity: "Activity"
+    continue: "Continue"
+    repeat_activity: "Repeat Activity"
   completed_courses_page:
     course: "Course"
     date_completed: "Date Completed"
