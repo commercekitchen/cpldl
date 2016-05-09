@@ -1,13 +1,13 @@
 <div>
-  <h1 class="<%= text_color_class %>">Congratulations!</h1>
+  <h1 class="<%= text_color_class %>"><%= t('completed_lesson_page.congratulations') %></h1>
   <p>
-    You've completed Activity <%= @current_lesson.lesson_order %>: <%= @current_lesson.title %>
+    <%= t('completed_lesson_page.youve_completed_activity') %> <%= @current_lesson.lesson_order %>: <%= @current_lesson.title %>
   </p>
-  <h2 class="<%= text_color_class %>">Up Next:</h2>
-  <h2 class="<%= text_color_class %>"><%="#{@next_lesson.title} - Activity #{@next_lesson.lesson_order}"%></h2>
-  <%= link_to "Continue", course_lesson_path(@course, @next_lesson),
+  <h2 class="<%= text_color_class %>"><%= t('completed_lesson_page.up_next') %>:</h2>
+  <h2 class="<%= text_color_class %>"><%="#{@next_lesson.title} - " %><%=  t('completed_lesson_page.activity') %><%= " #{@next_lesson.lesson_order}"%></h2>
+  <%= link_to t('completed_lesson_page.continue'), course_lesson_path(@course, @next_lesson),
     class: "btn small #{button_color}" %>
   <span class="vertical-bar">&nbsp;</span>
   <i class="icon-cw <%= icon_color_class %> flip-horizontal"></i>
-  <%= link_to "Repeat Activity", course_lesson_path(@course, @current_lesson), class: "grey" %>
+  <%= link_to t('completed_lesson_page.repeat_activity'), course_lesson_path(@course, @current_lesson), class: "grey" %>
 </div>

@@ -79,6 +79,13 @@ es:
   change_login_page:
     leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
     password_confirmation: "Confirmar contraseña"
+  completed_lesson_page:
+    congratulations: "¡Felicitaciones!"
+    youve_completed_activity: "Usted ha completado la actividad"
+    up_next: "Hasta la próxima"
+    activity: "Actividad"
+    continue: "Continuar"
+    repeat_activity: "Repita la actividad"
   completed_courses_page:
     course: "Curso"
     date_completed: "Fecha de terminación"
