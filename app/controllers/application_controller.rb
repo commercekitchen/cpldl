@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
         I18n.locale = :es
       end
     else
-      I18n.locale = session["locale"] || :en
+      I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
     end
   end
 
