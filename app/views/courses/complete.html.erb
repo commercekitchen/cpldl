@@ -87,7 +87,7 @@
     <% if @course.notes.present? %>
       <div class="show_with_bullets <%= ck_color_class %>"><%= sanitize(@course.notes) %></div>
     <% else %>
-      <p class="note">There are no notes or partner resources for this course.</p>
+      <p class="note"><%= t('course_completion_page.there_are_no_notes_for_course') %></p>
     <% end %>
   </div>
 
