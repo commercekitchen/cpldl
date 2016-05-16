@@ -78,20 +78,6 @@
   &.retake-quiz button {
     float: right;
   }
-
-}
-
-a.course-widget {
-  text-decoration: none;
-
-  header {
-    background: $blind-man-mustard;
-    background: linear-gradient(to bottom, $blind-man-mustard 0%, #795b05 100%);
-  }
-
-  &:hover {
-    box-shadow: 0 0 10px $grey;
-  }
 }
 
 a.course-widget {
@@ -191,7 +177,7 @@ div.course-widget {
   }
 
   &.retake-quiz header {
-    background: linear-gradient(to bottom, $teal 0%, $teal 100%);
+    background: linear-gradient(to bottom, $blind-man-mustard 0%, $blind-man-mustard 100%);
   }
 
   &.retake-quiz button {

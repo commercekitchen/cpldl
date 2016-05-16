@@ -59,4 +59,8 @@ module ApplicationHelper
   def ck_color_class
     request.subdomain == "chipublib" ? "ck-chipublib" : ""
   end
+
+  def widget_color_class
+    request.subdomain == "chipublib" ? "course-widget-cpl" : "course-widget"
+  end
 end

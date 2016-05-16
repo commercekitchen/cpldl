@@ -1,8 +1,8 @@
-<h1><%= t('my_courses_page.my_plan_click_to_start') %></h1>
+<h1 class=<%= text_color_class %>><%= t('my_courses_page.my_plan_click_to_start') %></h1>
 
 <p>
-  <%= t('my_courses_page.purple_and_gray_courses') %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path %>
-  <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path %>
+  <%= subdomain == "chipublib" ? t('my_courses_page.yellow_and_gray_courses') : t('my_courses_page.purple_and_gray_courses') %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path, class: "#{link_color_class}" %>
+  <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path, class: "#{link_color_class}" %>
   <%= t('my_courses_page.well_suggest_more_courses') %>
 </p>
 

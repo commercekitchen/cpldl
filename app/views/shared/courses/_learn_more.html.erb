@@ -1,15 +1,15 @@
 <%# TODO: Fill in when we have the quiz path, both for the a href, and the button click %>
 <% if current_page?(controller: "courses", action: "your") %>
-  <a class="course-widget retake-quiz" href="/courses/quiz">
+  <a class="<%= widget_color_class %> retake-quiz" href="/courses/quiz">
     <header>
       <h3><%= t('my_courses_page.ready_to_learn_more') %></h3>
     </header>
     <div class="description">
       <p><%= t('my_courses_page.find_new_courses_retake_quiz') %></p>
       <% if I18n.locale == :es %>
-        <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small spanish-small" %>
+        <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small spanish-small #{button-color}" %>
       <% else %>
-        <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small" %>
+        <%= button_tag "#{t('completed_courses_page.retake_the_quiz')}", class: "btn small #{button_color}" %>
       <% end %>
     </div>
   </a>
