@@ -59,4 +59,8 @@ module ApplicationHelper
   def ck_color_class
     request.subdomain == "chipublib" ? "ck-chipublib" : ""
   end
+
+  def quiz_color_class
+    request.subdomain == "chipublib" ? "retake-quiz-cpl" : "retake-quiz"
+  end
 end

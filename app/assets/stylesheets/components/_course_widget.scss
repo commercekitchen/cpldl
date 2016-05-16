@@ -79,20 +79,27 @@
     float: right;
   }
 
-}
-
-a.course-widget {
-  text-decoration: none;
-
-  header {
-    background: $blind-man-mustard;
-    background: linear-gradient(to bottom, $blind-man-mustard 0%, #795b05 100%);
+  &.retake-quiz-cpl header {
+    background: linear-gradient(to bottom, $blind-man-mustard 0%, $blind-man-mustard 100%);
   }
 
-  &:hover {
-    box-shadow: 0 0 10px $grey;
+  &.retake-quiz-cpl button {
+    float: right;
   }
 }
+
+// a.course-widget {
+//   text-decoration: none;
+
+//   header {
+//     background: $blind-man-mustard;
+//     background: linear-gradient(to bottom, $blind-man-mustard 0%, #795b05 100%);
+//   }
+
+//   &:hover {
+//     box-shadow: 0 0 10px $grey;
+//   }
+// }
 
 a.course-widget {
   text-decoration: none;
