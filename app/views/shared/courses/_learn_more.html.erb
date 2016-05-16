@@ -1,6 +1,6 @@
 <%# TODO: Fill in when we have the quiz path, both for the a href, and the button click %>
 <% if current_page?(controller: "courses", action: "your") %>
-  <a class="course-widget <%= quiz_color_class %>" href="/courses/quiz">
+  <a class="<%= widget_color_class %> retake-quiz" href="/courses/quiz">
     <header>
       <h3><%= t('my_courses_page.ready_to_learn_more') %></h3>
     </header>

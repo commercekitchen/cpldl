@@ -60,7 +60,7 @@ module ApplicationHelper
     request.subdomain == "chipublib" ? "ck-chipublib" : ""
   end
 
-  def quiz_color_class
-    request.subdomain == "chipublib" ? "retake-quiz-cpl" : "retake-quiz"
+  def widget_color_class
+    request.subdomain == "chipublib" ? "course-widget-cpl" : "course-widget"
   end
 end
