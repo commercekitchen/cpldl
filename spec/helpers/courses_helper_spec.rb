@@ -39,5 +39,9 @@ describe CoursesHelper do
     it "returns the course progress" do
       expect(helper.percent_complete(@course)).to eq("0% Complete")
     end
+
+    it "returns the course progress without a user" do
+      expect(helper.percent_complete_without_user(@course, 1)).to eq(0)
+    end
   end
 end

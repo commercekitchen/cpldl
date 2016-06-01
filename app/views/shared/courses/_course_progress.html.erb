@@ -1,7 +1,11 @@
 <div class="course-progress">
   <header><%= t('completed_courses_page.course') %>: <%= course.title %></header>
   <div class="progress-bar">
+  <% if current_user %>
     <span class="meter" style="width: <%= course_progress.percent_complete %>%;"></span>
+  <% else %>
+    <span class="meter" style="width: <%= percent_complete_without_user(course, lesson.id) %>%;"></span>
+  <% end %>
     <% lesson_count = course.lessons.count %>
     <% spacing = 100.0 / lesson_count %>
     <% arrow_position = lesson.lesson_order * spacing - (spacing / 2) - 6 %>
@@ -15,7 +19,11 @@
     </span>
   </div>
   <footer>
-    <span class="percent-complete"><%= course_progress.percent_complete %><%= t('lesson_page.percent_complete') %></span>
+    <% if current_user %>
+      <span class="percent-complete"><%= course_progress.percent_complete %><%= t('lesson_page.percent_complete') %></span>
+    <% else %>
+      <span class="percent-complete"><%= percent_complete_without_user(course, lesson.id) %><%= t('lesson_page.percent_complete') %></span>
+    <% end %>
     <span class="next-lesson-link">
       <% unless lesson.is_assessment %>
         <%= link_to "#{t('lesson_page.skip_to_next_lesson')}",
