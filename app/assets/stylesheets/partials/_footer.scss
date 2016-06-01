@@ -12,9 +12,8 @@ ul strong {
 }
 
 .medium-logo {
-  max-width: 50%;
-  max-height: 40%;
-  text-align: right;
+  width: 105px;
+  height: auto;
 }
 
 .right-logo {
@@ -31,8 +30,6 @@ ul strong {
 }
 
 .license {
-  padding-top: 5px;
-  padding-left: 20px;
   text-align: right;
 }
 
@@ -42,4 +39,8 @@ ul strong {
   a {
     color: $white;
   }
+}
+
+.link-cpl {
+  padding-right: 1em;
 }

@@ -39,12 +39,13 @@
       // top: -7px;
       // left: -8px;
     }
-
   }
+
   .dark-logo {
     width: 55px;
     height: auto;
   }
+
   h1 {
     font-family: $font-secondary;
     color: $white;
@@ -123,7 +124,7 @@
     float: left;
     .logo-icon {
       display: inline-block;
-      width: 90px;
+      width: 135px;
       .dark-logo {
         max-width: 100%;
         height: auto;
@@ -221,7 +222,7 @@
     float: left;
     .logo-icon {
       display: inline-block;
-      width: 90px;
+      width: 135px;
       .dark-logo {
         max-width: 100%;
         height: auto;
@@ -312,4 +313,9 @@
 
 .practice-link {
   float: right;
+}
+
+.fifty-percent-larger {
+  height: 1em;
+  width: 1em;
 }

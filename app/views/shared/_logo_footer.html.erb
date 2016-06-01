@@ -1,6 +1,6 @@
 <div class="logo">
   <div class="logo-icon">
-    <div class="fourcol right-logo">
+    <div class="ninecol right-logo">
       <% case request.subdomain %>
       <% when "chipublib" %>
         <%= link_to "http://www.chipublib.org/", target: "_blank" do %>
@@ -13,11 +13,15 @@
       <% else %>
         &nbsp;
       <% end %>
-    </div>
-    <div class="fivecol last right-logo">
+
+
       <%= link_to "http://www.ala.org/pla/", target: "_blank" do %>
-        <%= image_tag "pla_logo", class: "large-logo link-pla" %>
+        <%= image_tag "pla_logo_square_white", class: "medium-logo link-pla" %>
       <% end %>
+
+      <div class="license">
+        This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
+      </div>
     </div>
   </div>
 </div>
