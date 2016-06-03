@@ -110,6 +110,7 @@ class CoursesController < ApplicationController
         render :show, alert: "Sorry, we were unable to add this course to your plan."
       end
     else
+      session[:completed_lessons] = []
       redirect_to course_lesson_path(@course, @course.next_lesson_id)
     end
   end
