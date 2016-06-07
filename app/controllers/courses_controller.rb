@@ -38,9 +38,8 @@ class CoursesController < ApplicationController
 
 
     if user_signed_in? && current_user.profile.language_id
-      user_language_id = Language.find(current_user.profile.language_id)
-      user_land_abbrv2 = user_language_id == 1 ? "en" : "es"
-      language_id = session[:locale] != user_land_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
+      user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
+      language_id = session[:locale] != user_lang_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
 
       if params[:search].blank?
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: request.subdomain)

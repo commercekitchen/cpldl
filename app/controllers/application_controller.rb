@@ -63,11 +63,15 @@ class ApplicationController < ActionController::Base
 
   def set_locale
     if current_user && current_user.profile && current_user.profile.language
-      case current_user.profile.language.name
-      when "English"
-        I18n.locale = :en
-      when "Spanish"
-        I18n.locale = :es
+      if user_language_override?
+        I18n.locale = session[:locale].to_sym
+      else
+        case current_user.profile.language.name
+        when "English"
+          I18n.locale = :en
+        when "Spanish"
+          I18n.locale = :es
+        end
       end
     else
       I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
@@ -75,6 +79,16 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def user_language_override?
+    user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
+
+    if session[:locale] != user_lang_abbrv2
+      true
+    else
+      false
+    end
+  end
 
   def set_user_token
     session[:user_ga_id] = current_user ? current_user.token : "guest"
