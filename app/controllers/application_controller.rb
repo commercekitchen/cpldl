@@ -81,12 +81,11 @@ class ApplicationController < ActionController::Base
   private
 
   def user_language_override?
-    user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
-
-    if session[:locale] != user_lang_abbrv2
-      true
+    if current_user.profile.language.blank? == false
+      user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
+      return true if session[:locale] != user_lang_abbrv2
     else
-      false
+      return false
     end
   end
 
