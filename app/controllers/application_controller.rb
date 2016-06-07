@@ -62,9 +62,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if current_user && current_user.profile && current_user.profile.language
-      if user_language_override?
-        I18n.locale = session[:locale].to_sym
+    if current_user && current_user.profile && current_user.profile.language.blank? == false
+      if user_language_override? == true
+        I18n.locale = session[:locale].to_sym unless session[:locale].blank?
       else
         case current_user.profile.language.name
         when "English"
