@@ -36,11 +36,16 @@ class CoursesController < ApplicationController
       published_results << result if result.pub_status == "P"
     end
 
+
     if user_signed_in? && current_user.profile.language_id
+      user_language_id = Language.find(current_user.profile.language_id)
+      user_land_abbrv2 = user_language_id == 1 ? "en" : "es"
+      language_id = session[:locale] != user_land_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
+
       if params[:search].blank?
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: request.subdomain)
       else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: current_user.profile.language_id).where_exists(:organization, subdomain: request.subdomain) & published_results
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: request.subdomain) & published_results
       end
     else
       @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) & published_results
@@ -231,6 +236,15 @@ class CoursesController < ApplicationController
   end
 
   private
+
+  def find_language_id_by_session
+    case session[:locale]
+    when "en"
+      1
+    when "es"
+      2
+    end
+  end
 
   def dl_subdomain
     request.subdomain == "www"
