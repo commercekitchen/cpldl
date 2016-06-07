@@ -108,15 +108,15 @@ small {
 }
 
 .large-top-padding {
-  margin-top: 140px;
+  margin-top: 185px;
   @include media($mobile-xlarge) {
-    margin-top: 157px;
+    margin-top: 202px;
+    // 157px
   }
   @include media($mobile-large) {
-    margin-top: 35px;
+    margin-top: 80px;
+    // 35px
   }
-
-
 }
 
 .bottom-margin {
