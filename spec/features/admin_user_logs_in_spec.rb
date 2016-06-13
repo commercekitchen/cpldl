@@ -11,6 +11,7 @@ feature "Admin user logs in" do
       @spanish = FactoryGirl.create(:spanish_lang)
       @org = FactoryGirl.create(:organization)
       @user.add_role(:admin, @org)
+      switch_to_subdomain("chipublib")
     end
 
     scenario "is prompted to change password on first time" do

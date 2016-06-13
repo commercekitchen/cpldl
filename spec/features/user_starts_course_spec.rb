@@ -34,7 +34,7 @@ feature "User visits course listing page" do
 
       scenario "can click on a course to be taken to the course page" do
         visit courses_path
-        first(:css, ".course-widget").click
+        first(:css, ".course-widget-cpl").click
         expect(current_path).to eq(course_path(@course1))
       end
 
@@ -57,7 +57,7 @@ feature "User visits course listing page" do
 
       scenario "can click on a course to be taken to the course page" do
         visit root_path
-        first(:css, ".course-widget").click
+        first(:css, ".course-widget-cpl").click
         expect(current_path).to eq(course_path(@course1))
       end
 

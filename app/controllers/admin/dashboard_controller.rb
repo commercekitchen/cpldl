@@ -17,7 +17,7 @@ module Admin
       render "admin/invites/new", layout: "admin/base_with_sidebar"
     end
 
-    def users_indexs
+    def users_index
       results = User.search_users(params[:search])
       if params[:search].blank?
         @users = User.includes(profile: [:language])

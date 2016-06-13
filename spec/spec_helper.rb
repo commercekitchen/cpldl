@@ -106,3 +106,8 @@ end
 def set_authenticity_token
   session[:_csrf_token] = SecureRandom.base64(32)
 end
+
+def save_and_open_rspec_page
+  File.open('/tmp/test.html','w'){|file| file.write(rendered)}; `open '/tmp/test.html'`
+end
+
