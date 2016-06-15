@@ -89,9 +89,20 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_user_token
-    session[:user_ga_id] = current_user ? current_user.token : "guest"
-  end
+  # TODO: determine if we need to set the client_ID or if we can use googles
+  # def save_google_analytics_client_id
+  #   if current_user && cookies["_ga"]
+  #     client_id = cookies["_ga"].split(".").last(2).join(".")
+  #     if current_user.google_analytics_client_id != client_id
+  #       current_user.google_analytics_client_id = client_id
+  #       current_user.save
+  #     end
+  #   end
+  # end
+
+  # def set_user_token
+  #   session[:user_ga_id] = current_user ? current_user.token : "guest"
+  # end
 
   def dl_subdomain
     request.subdomain == "www"
