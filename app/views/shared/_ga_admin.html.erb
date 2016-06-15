@@ -5,10 +5,10 @@
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   ga('create', 'UA-37972615-1', 'auto');
   // pass the correct UA code in based on subdomain
+  ga('send', 'pageview');
   ga(function(tracker) {
     var clientId = tracker.get('clientId');
     ga('send', clientId)
   });
 
-  ga('send', 'pageview');
 </script>

@@ -100,9 +100,9 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
-  # def set_user_token
-  #   session[:user_ga_id] = current_user ? current_user.token : "guest"
-  # end
+  def set_user_token
+    session[:user_ga_id] = current_user ? current_user.token : "guest"
+  end
 
   def dl_subdomain
     request.subdomain == "www"
