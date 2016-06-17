@@ -4,8 +4,13 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
   // pass the correct UA code in based on subdomain
-  ga('create', 'UA-37972615-1', 'auto');
-  ga('send', 'pageview');
   var userId = $("#user_ga_id").val();
-  ga('set', 'userId', userId);
+  ga('create', 'UA-37972615-1', 'auto', {
+    userId: userGaId
+  });
+  // ga('create', 'UA-37972615-1', 'auto');
+  ga('send', 'pageview');
+  // ga('set', 'userId', userId);
 </script>
+
+
