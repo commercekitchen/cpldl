@@ -110,4 +110,3 @@ end
 def save_and_open_rspec_page
   File.open('/tmp/test.html','w'){|file| file.write(rendered)}; `open '/tmp/test.html'`
 end
-
