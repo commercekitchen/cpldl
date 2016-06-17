@@ -6,9 +6,5 @@
   ga('create', 'UA-37972615-2', 'auto');
   // pass the correct UA code in based on subdomain
   ga('send', 'pageview');
-  ga(function(tracker) {
-    var clientId = tracker.get('clientId');
-    ga('send', clientId)
-  });
-
+  ga('set', 'userId', $("#user_ga_id").val(););
 </script>
