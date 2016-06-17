@@ -18,3 +18,5 @@
 <% if content_for?(:meta_description) %>
   <meta name="description" content="<%=content_for(:meta_description).strip%>">
 <% end %>
+
+<%= hidden_field_tag :user_ga_id, session[:user_ga_id] %>
