@@ -3,7 +3,8 @@ namespace :demo do
   task add_courses: :environment do
     courses = Course.where_exists(:organization, subdomain: "chipublib")
     courses.each do |cpl_course|
-      @new_course = Course.create( title: cpl_course.title,
+      @new_course = Course.create(title: cpl_course.title,
+                                  course_order: cpl_course.course_order,
                                   seo_page_title: cpl_course.seo_page_title,
                                   meta_desc: cpl_course.meta_desc,
                                   summary: cpl_course.summary,
@@ -15,7 +16,8 @@ namespace :demo do
                                   notes: cpl_course.notes,
                                   format: cpl_course.format,
                                   subsite_course: true,
-                                  display_on_dl: false )
+                                  pub_date: cpl_course.pub_status == "P" ? Time.zone.today : nil,
+                                  display_on_dl: false)
 
       @new_course.organization = (Organization.find(3))
 
@@ -23,20 +25,26 @@ namespace :demo do
         @new_course.topics << topic
       end
 
+      cpl_course.attachments.each do |attachment|
+        new_attachment = attachment.dup
+        @new_course.attachments << new_attachment
+      end
+
       cpl_course.lessons.each do |cpl_lesson|
         new_lesson = Lesson.create(title: cpl_lesson.title,
-                      duration: cpl_lesson.duration,
-                      course_id: @new_course.id,
-                      summary: cpl_lesson.summary,
-                      # story_line: cpl_lesson.story_line,
-                      seo_page_title: cpl_lesson.seo_page_title,
-                      meta_desc: cpl_lesson.meta_desc,
-                      is_assessment: cpl_lesson.is_assessment,
-                      story_line_file_name: cpl_lesson.story_line_file_name,
-                      story_line_content_type: cpl_lesson.story_line_content_type,
-                      story_line_file_size: cpl_lesson.story_line_file_size,
-                      story_line_updated_at: cpl_lesson.story_line_updated_at,
-                      pub_status: cpl_lesson.pub_status)
+                                   duration: cpl_lesson.duration,
+                                   course_id: @new_course.id,
+                                   lesson_order: cpl_lesson.lesson_order,
+                                   summary: cpl_lesson.summary,
+                                   story_line: cpl_lesson.story_line,
+                                   seo_page_title: cpl_lesson.seo_page_title,
+                                   meta_desc: cpl_lesson.meta_desc,
+                                   is_assessment: cpl_lesson.is_assessment,
+                                   story_line_file_name: cpl_lesson.story_line_file_name,
+                                   story_line_content_type: cpl_lesson.story_line_content_type,
+                                   story_line_file_size: cpl_lesson.story_line_file_size,
+                                   story_line_updated_at: cpl_lesson.story_line_updated_at,
+                                   pub_status: cpl_lesson.pub_status)
 
         @new_course.lessons << new_lesson
       end
