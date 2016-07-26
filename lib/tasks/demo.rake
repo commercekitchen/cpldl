@@ -44,11 +44,23 @@ namespace :demo do
                                    story_line_content_type: cpl_lesson.story_line_content_type,
                                    story_line_file_size: cpl_lesson.story_line_file_size,
                                    story_line_updated_at: cpl_lesson.story_line_updated_at,
-                                   pub_status: cpl_lesson.pub_status)
+                                   pub_status: cpl_lesson.pub_status,
+                                   parent_lesson_id: cpl_lesson.id)
 
         @new_course.lessons << new_lesson
       end
     end
   end
 
+
+  desc "duplicate courses so that they show up on the demo site"
+  task remove_courses: :environment do
+    courses = Course.where_exists(:organization, subdomain: "demo")
+    courses.each do |course|
+      course.lessons.each do |lesson|
+        lesson.destroy
+      end
+      course.destroy
+    end
+  end
 end
