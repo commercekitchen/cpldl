@@ -70,6 +70,7 @@ group :development, :test do
   gem 'faker'
   gem 'pry'
   gem 'pry-nav'
+  gem 'pry-rails'
   gem 'byebug'
   gem 'web-console', '~> 2.0'
   gem 'sunspot_solr'
