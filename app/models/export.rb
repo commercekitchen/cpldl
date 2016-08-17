@@ -35,10 +35,11 @@ class Export < ActiveRecord::Base
     CSV.generate do |csv|
       csv << ["Library", "Sign-Ups(total)", "Course Title", "Completions"]
       @data.each do |library, info|
-        library ||= "Unknown"
+        library_name ||= "Unknown"
+        library_name = LibraryLocation.find(library).name
         sign_ups = info[:sign_ups]
 
-        values = [library, sign_ups]
+        values = [library_name, sign_ups]
         csv.add_row values
 
         info[:completions].each do |k, v|
