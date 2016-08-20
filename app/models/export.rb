@@ -1,6 +1,6 @@
 require "csv"
 
-class Export < ActiveRecord::Base
+class Export
   def self.to_csv_for_completion_report(data)
     @data = data
     if @data[:version] == "zip"
@@ -35,8 +35,12 @@ class Export < ActiveRecord::Base
     CSV.generate do |csv|
       csv << ["Library", "Sign-Ups(total)", "Course Title", "Completions"]
       @data.each do |library, info|
-        library_name ||= "Unknown"
-        library_name = LibraryLocation.find(library).name
+        if library.present?
+          library_name = LibraryLocation.find(library).name
+        else
+          library_name = "Unknown"
+        end
+
         sign_ups = info[:sign_ups]
 
         values = [library_name, sign_ups]

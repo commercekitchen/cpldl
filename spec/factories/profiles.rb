@@ -18,4 +18,5 @@ FactoryGirl.define do
     zip_code "90210"
     language_id 1
   end
+
 end
