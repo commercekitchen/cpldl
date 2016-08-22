@@ -42,7 +42,8 @@ describe Admin::ExportsController do
 
     it "return completions by lib" do
       returned = controller.data_for_completions_report_by_lib
-      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
+      # 1 is sample library Back of the Exports
+      expect(returned).to eq({:version=>"lib", 1=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
     end
   end
 end
