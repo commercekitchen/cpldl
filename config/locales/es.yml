@@ -22,6 +22,9 @@
 es:
   home:
     logo_banner_html: "Chicgo DigitalLearn<br>Use la computadora para hacer casi todo!"
+    # Used on course intro text partial
+    logo_banner_partial: "Chicgo DigitalLearn"
+    logo_banner_partial_2: Use la computadora para hacer casi todo!
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
