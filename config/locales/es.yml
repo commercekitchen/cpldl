@@ -21,7 +21,7 @@
 
 es:
   home:
-    logo_banner: "Use la computadora para hacer casi todo!"
+    logo_banner_html: "Chicgo DigitalLearn<br>Use la computadora para hacer casi todo!"
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
@@ -45,7 +45,7 @@ es:
     open_a_tutorial: "para ver un video que le enseñará cómo crear una."
     first_name: "Nombre"
     zip_code: "Código Postal"
-    your_password: "Contraseña"
+    your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"
   confirmation_email:
     cpl_subject: "Empieza con Chicago Digital Aprende"
