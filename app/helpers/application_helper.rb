@@ -19,48 +19,58 @@ module ApplicationHelper
     %w(/ /courses /courses/your)
   end
 
+  def chicago
+    Rails.application.config.chicago == true
+  end
+
   def button_color
-    case request.subdomain
-    when "www" then "btn-blue"
-    when "chipublib" then "btn-mustard"
+    if chicago
+      "btn-mustard"
+    else
+      "btn-blue"
     end
+
+    # case request.subdomain
+    # when "www" then "btn-blue"
+    # when "chipublib" then "btn-mustard"
+    # end
     # request.subdomain == "www" ? "btn-blue" : ""
     # request.subdomain == "chipublib" ? "btn-mustard" : ""
   end
 
   def hover_color_class
-    request.subdomain == "chipublib" ? "cpl-blue" : ""
+    chicago = true ? "cpl-blue" : ""
   end
 
   def color_class
-    request.subdomain == "chipublib" ? "cpl-blue-block" : ""
+    chicago = true ? "cpl-blue-block" : ""
   end
 
   def text_color_class
-    request.subdomain == "chipublib" ? "cpl-blue-text" : ""
+    chicago = true ? "cpl-blue-text" : ""
   end
 
   def link_color_class
-    request.subdomain == "chipublib" ? "cpl-purple-text" : ""
+    chicago = true ? "cpl-purple-text" : ""
   end
 
   def icon_color_class
-    request.subdomain == "chipublib" ? "cpl-blue" : ""
+    chicago = true ? "cpl-blue" : ""
   end
 
   def download_color_class
-    request.subdomain == "chipublib" ? "cpl-purple" : ""
+    chicago = true ? "cpl-purple" : ""
   end
 
   def cert_color_class
-    request.subdomain == "chipublib" ? "cpl-blue" : ""
+    chicago = true ? "cpl-blue" : ""
   end
 
   def ck_color_class
-    request.subdomain == "chipublib" ? "ck-chipublib" : ""
+    chicago = true ? "ck-chipublib" : ""
   end
 
   def widget_color_class
-    request.subdomain == "chipublib" ? "course-widget-cpl" : "course-widget"
+    chicago = true ? "course-widget-cpl" : "course-widget"
   end
 end

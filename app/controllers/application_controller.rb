@@ -6,9 +6,22 @@ class ApplicationController < ActionController::Base
   before_action :set_cms_footer_pages
   before_action :redirect_orgs
   before_action :set_user_token
+  before_action :subdomain_helper
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
+
+  def subdomain_helper
+    if request.subdomain != "www" # default
+      if ( request.subdomain == 'chipublib' ||  request.subdomain ==  'chipublib-stage' )
+        Rails.application.config.chicago = true
+      else
+         Rails.application.config.chicago = false
+      end
+      Rails.application.config.subdomain_site = request.subdomain
+    end
+  end
+
 
   def after_sign_in_path_for(user)
     check_user_subdomain(user)

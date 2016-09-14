@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+ class RegistrationsController < Devise::RegistrationsController
   after_action :create_organization_user_entry
 
   protected
