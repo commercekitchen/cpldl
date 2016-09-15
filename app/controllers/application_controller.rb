@@ -19,6 +19,10 @@ class ApplicationController < ActionController::Base
          Rails.application.config.chicago = false
       end
       Rails.application.config.subdomain_site = request.subdomain
+      #Map this to a standard, live, value.
+      if request.subdomain == 'chipublib-stage'
+        Rails.application.config.subdomain_site = 'chipublib'
+      end
     end
   end
 
