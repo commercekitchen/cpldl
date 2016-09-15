@@ -40,7 +40,6 @@
     <% end %>
 
     <fieldset>
-      <%= f.label :password, t('login_signup.your_password'), class: 'signup-password-label' %>
       <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
     </fieldset>
 
