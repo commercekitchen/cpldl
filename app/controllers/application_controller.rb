@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       if ( request.subdomain == 'chipublib' ||  request.subdomain ==  'chipublib-stage' )
         Rails.application.config.chicago = true
       else
-         Rails.application.config.chicago = false
+        Rails.application.config.chicago = false
       end
       Rails.application.config.subdomain_site = request.subdomain
       #Map this to a standard, live, value.

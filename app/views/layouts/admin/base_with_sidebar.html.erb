@@ -1,38 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= render "shared/meta_tags" %>
-</head>
-<body>
-  <%= render "shared/admin/header" %>
-
-  <div class="banner <%= color_class %> large-top-padding">
-    <div class="container">
-      <% if content_for?(:callout) %>
-        <%= yield :callout %>
-      <% else %>
-
-                <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
-                  <%= t('home.logo_banner_html') %>
-                  <% else %>
-                  <%= t('home.logo_banner_partial_2') %>
-                <% end %>
-                </h1>      <% end %>
-    </div>
-  </div>
-
-  <main class="container">
-    <%= render "shared/flashes" %>
-    <div class="row">
-      <div class="threecol sidebar">
-        <%= render "shared/admin/sidebar" %>
-      </div>
-      <div class="ninecol last">
-        <%= yield %>
+  <head>
+    <%= render "shared/meta_tags" %>
+  </head>
+  <body>
+    <%= render "shared/admin/header" %>
+    <div class="banner <%= color_class %> large-top-padding">
+      <div class="container">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+              <%= t('home.logo_banner_html') %>
+            <% else %>
+              <%= t('home.logo_banner_partial_2') %>
+            <% end %>
+          </h1>
+        <% end %>
       </div>
     </div>
-  </main>
-
-  <%= render "shared/footer" %>
-</body>
+    <main class="container">
+      <%= render "shared/flashes" %>
+      <div class="row">
+        <div class="threecol sidebar">
+          <%= render "shared/admin/sidebar" %>
+        </div>
+        <div class="ninecol last">
+          <%= yield %>
+        </div>
+      </div>
+    </main>
+    <%= render "shared/footer" %>
+  </body>
 </html>

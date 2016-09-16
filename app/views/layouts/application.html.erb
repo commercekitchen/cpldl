@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= render "shared/meta_tags" %>
-  <% begin %>
-    <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
-  <% rescue %>
-    <%= render "shared/ga_www" if Rails.env.production? %>
-  <% end %>
-  <%= render "shared/ga_event_tracking" if Rails.env.production? %>
-</head>
-<body class="<%= "#{controller_name}-#{action_name}" %>">
-  <%= render "shared/alternate_cpl_header" %>
-  <div class="banner <%= color_class %>">
-    <div class="container">
-      <% if content_for?(:callout) %>
-        <%= yield :callout %>
-      <% else %>
-
-        <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
-          <%= t('home.logo_banner_html') %>
-          <% else %>
-          <%= t('home.logo_banner_partial_2') %>
+  <head>
+    <%= render "shared/meta_tags" %>
+    <% begin %>
+      <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
+      <% rescue %>
+      <%= render "shared/ga_www" if Rails.env.production? %>
+    <% end %>
+    <%= render "shared/ga_event_tracking" if Rails.env.production? %>
+  </head>
+  <body class="<%= "#{controller_name}-#{action_name}" %>">
+    <%= render "shared/alternate_cpl_header" %>
+    <div class="banner <%= color_class %>">
+      <div class="container">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+              <%= t('home.logo_banner_html') %>
+            <% else %>
+              <%= t('home.logo_banner_partial_2') %>
+            <% end %>
+          </h1>
         <% end %>
-        </h1>
-      <% end %>
+      </div>
     </div>
-  </div>
-  <main class="container">
-    <%= render "shared/flashes" %>
-    <%= yield %>
-  </main>
-
-  <%= render "shared/footer" %>
-</body>
+    <main class="container">
+      <%= render "shared/flashes" %>
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
+  </body>
 </html>

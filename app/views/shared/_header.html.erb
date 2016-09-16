@@ -6,31 +6,25 @@
     <div class="logo-link-container">
       <div class="html5-link">
         <%= link_to root_url(subdomain: request.subdomain), class: 'logo-link' do %>
-
           <div class="link-box">
             <% case request.subdomain %>
             <% when "www" %>
-              <%= render "shared/logo_white" %>
+            <%= render "shared/logo_white" %>
+          <% else %>
+            <%= render "shared/logo_white" %>
+            <% if content_for?(:callout) %>
+              <%= yield :callout %>
             <% else %>
-              <%= render "shared/logo_white" %>
-              <% if content_for?(:callout) %>
-                <%= yield :callout %>
-              <% else %>
-
-                <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+              <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
                   <%= t('home.logo_banner_html') %>
-                  <% else %>
+                <% else %>
                   <%= t('home.logo_banner_partial_2') %>
                 <% end %>
-                </h1>
-
+              </h1>
             <% end %> <%# End case end %>
-
           </div>
-
         <% end %> <%# End big old link %>
       </div>
-
       <div class="signup-box">
         <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
       </div>
