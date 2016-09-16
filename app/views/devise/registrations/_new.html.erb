@@ -1,4 +1,4 @@
-<% if request.subdomain == "www" %>
+<% if  Rails.application.config.subdomain_site == "www" %>
   <h1 class="<%= text_color_class %>"><%= t('home.signup_notice') %></h1>
 
   <p>
@@ -53,7 +53,7 @@
     </fieldset>
 
     <fieldset>
-      <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
+      <%= hidden_field(:user, :subdomain, value:  Rails.application.config.subdomain_site) %>
     </fieldset>
 
     <%= f.submit "#{t('home.signup')}", class: button_color %>

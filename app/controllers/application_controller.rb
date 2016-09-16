@@ -139,7 +139,7 @@ class ApplicationController < ActionController::Base
   end
 
   def first_admin_login?(user)
-    return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)))
+    return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)))
     false
   end
 end

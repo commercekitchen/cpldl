@@ -8,7 +8,7 @@ module ApplicationHelper
   end
 
   def subdomain
-    @subdomain = request.subdomain
+    @subdomain =  Rails.application.config.subdomain_site
   end
 
   def devise_mapping
@@ -30,12 +30,6 @@ module ApplicationHelper
       "btn-blue"
     end
 
-    # case request.subdomain
-    # when "www" then "btn-blue"
-    # when "chipublib" then "btn-mustard"
-    # end
-    # request.subdomain == "www" ? "btn-blue" : ""
-    # request.subdomain == "chipublib" ? "btn-mustard" : ""
   end
 
   def hover_color_class

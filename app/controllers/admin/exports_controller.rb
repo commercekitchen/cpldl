@@ -10,7 +10,7 @@ module Admin
 
     def data_for_completions_report_by_zip
       grouped = { version: "zip" }
-      current_site = Organization.find_by(subdomain: request.subdomain)
+      current_site = Organization.find_by(subdomain:  Rails.application.config.subdomain_site)
       course_progs = CourseProgress.completed_with_profile
       zip_codes = course_progs.merge(User.with_role(:user, current_site)).pluck(:zip_code).uniq
 
@@ -40,7 +40,7 @@ module Admin
 
     def data_for_completions_report_by_lib
       grouped = { version: "lib" }
-      current_site = Organization.find_by(subdomain: request.subdomain)
+      current_site = Organization.find_by(subdomain:  Rails.application.config.subdomain_site)
       course_progs = CourseProgress.completed_with_profile
       lib_ids = course_progs.merge(User.with_role(:user, current_site)).pluck(:library_location_id).uniq
 

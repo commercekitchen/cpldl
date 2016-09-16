@@ -9,7 +9,7 @@ module Admin
     end
 
     def pages_index
-      @cms_pages = CmsPage.where(organization_id: Organization.find_by_subdomain(request.subdomain).try(:id))
+      @cms_pages = CmsPage.where(organization_id: Organization.find_by_subdomain( Rails.application.config.subdomain_site).try(:id))
       render "admin/cms_pages/index", layout: "admin/base_with_sidebar"
     end
 
@@ -35,7 +35,7 @@ module Admin
     end
 
     def manually_confirm_user
-      User.find(params[:user_id]).confirm if current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain))
+      User.find(params[:user_id]).confirm if current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site))
       redirect_to admin_users_index_path
     end
 

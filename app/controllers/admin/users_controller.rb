@@ -2,7 +2,7 @@ module Admin
   class UsersController < BaseController
     def change_user_roles
       user     = User.find(params[:id])
-      org      = user.roles.find_by_resource_type("Organization").nil? ? Organization.find_by_subdomain(request.subdomain) : user.organization
+      org      = user.roles.find_by_resource_type("Organization").nil? ? Organization.find_by_subdomain( Rails.application.config.subdomain_site) : user.organization
       new_role = params[:value].downcase.to_sym
 
       user.roles = []

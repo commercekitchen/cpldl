@@ -115,7 +115,7 @@ class LessonsController < ApplicationController
   end
 
   def auth_subsites
-    if request.subdomain != "www"
+    if  Rails.application.config.subdomain_site != "www"
       authenticate_user!
     end
   end
