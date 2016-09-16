@@ -25,8 +25,12 @@
         <% if content_for?(:callout) %>
           <%= yield :callout %>
         <% else %>
-          <h1><%= t('home.logo_banner_html') %></h1>
-        <% end %>
+                <h1> <% if request.subdomain != 'www' %>
+                  <%= t('home.logo_banner_html') %>
+                  <% else %>
+                  <%= t('home.logo_banner_partial_2') %>
+                <% end %>
+                </h1>        <% end %>
         </div>
         <div class="fourcol last">
         <% if content_for?(:course_progress) %>
@@ -38,8 +42,12 @@
         <% if content_for?(:callout) %>
           <%= yield :callout %>
         <% else %>
-          <h1><%= t('home.logo_banner_html') %></h1>
-        <% end %>
+                <h1> <% if request.subdomain != 'www' %>
+                  <%= t('home.logo_banner_html') %>
+                  <% else %>
+                  <%= t('home.logo_banner_partial_2') %>
+                <% end %>
+                </h1>        <% end %>
         </div>
       <% end %>
     </div>
