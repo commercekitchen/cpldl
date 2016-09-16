@@ -6,15 +6,15 @@ class HomeController < ApplicationController
     case I18n.locale
     when :es
       if request.subdomain == "www"
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: spanish_id, display_on_dl: true).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: spanish_id, display_on_dl: true).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
       else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: spanish_id).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: spanish_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
       end
     else
       if request.subdomain == "www"
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: english_id, display_on_dl: true).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: english_id, display_on_dl: true).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
       else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: english_id).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: english_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
       end
     end
   end
