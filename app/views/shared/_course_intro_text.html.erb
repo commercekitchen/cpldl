@@ -1,4 +1,4 @@
-<% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
+<% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
   <%= content_for(:callout) { %>
   <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
       <%= t('home.logo_banner_partial') %><br>
@@ -29,7 +29,7 @@
   </h1>
 <% else %>
   <h1 class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
-  <% if request.subdomain == "www" %>
+  <% if  Rails.application.config.subdomain_site == "www" %>
     <div class="clearfix">
       <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
     </div>

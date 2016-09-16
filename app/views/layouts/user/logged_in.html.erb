@@ -2,17 +2,17 @@
 <html>
   <head>
     <%= render "shared/meta_tags" %>
-    <% unless request.subdomain == "demo" %>
-      <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
+    <% unless  Rails.application.config.subdomain_site == "demo" %>
+      <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
       <%= render "shared/ga_event_tracking" if Rails.env.production? %>
     <% end %>
   </head>
   <body>
-    <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
+    <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
       <%= render "shared/admin/header" %>
     <% elsif current_user %>
       <%= render "shared/user/header" %>
-    <% elsif request.subdomain == "www" %>
+    <% elsif  Rails.application.config.subdomain_site == "www" %>
       <%= render "shared/dl_header" %>
     <% else %>
       <%= render "shared/header" %>

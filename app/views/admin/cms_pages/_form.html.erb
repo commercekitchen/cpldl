@@ -98,7 +98,7 @@
     </div>
   </fieldset>
 
-  <%= f.hidden_field :subdomain, value: request.subdomain %>
+  <%= f.hidden_field :subdomain, value:  Rails.application.config.subdomain_site %>
 
   <div class="actions">
     <div class="row">

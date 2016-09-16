@@ -5,9 +5,9 @@
     </div>
     <div class="logo-link-container">
       <div class="html5-link">
-        <%= link_to root_url(subdomain: request.subdomain), class: 'logo-link' do %>
+        <%= link_to root_url(subdomain:  Rails.application.config.subdomain_site), class: 'logo-link' do %>
           <div class="link-box">
-            <% case request.subdomain %>
+            <% case  Rails.application.config.subdomain_site %>
             <% when "www" %>
             <%= render "shared/logo_white" %>
           <% else %>

@@ -1,7 +1,7 @@
 <% if content_for?(:meta_title) %>
   <title><%= content_for(:meta_title).strip %></title>
 <% else %>
-  <% case request.subdomain %>
+  <% case  Rails.application.config.subdomain_site %>
   <% when "www" %>
     <title>Digital Learn</title>
   <% else %>

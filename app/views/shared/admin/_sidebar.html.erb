@@ -2,11 +2,11 @@
   <li><%= link_to "Change Login Information", account_path %></li>
   <li><%= link_to "Update Profile", profile_path %></li>
   <li><%= link_to "Courses", admin_root_path %></li>
-  <% unless request.subdomain == "www" %>
+  <% unless  Rails.application.config.subdomain_site == "www" %>
     <li><%= link_to "Import Digital Learn Courses", admin_import_courses_path %></li>
   <% end %>
   <li><%= link_to "Completions Report (by Zipcode)", admin_export_completions_path(format: "csv", version: "zip") %></li>
-  <% unless request.subdomain == "www" %>
+  <% unless  Rails.application.config.subdomain_site == "www" %>
     <li>
       <%= link_to "Completions Report (by Library)", admin_export_completions_path(format: "csv", version: "lib") %>
     </li>

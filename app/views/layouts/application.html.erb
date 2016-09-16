@@ -3,7 +3,7 @@
   <head>
     <%= render "shared/meta_tags" %>
     <% begin %>
-      <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
+      <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
       <% rescue %>
       <%= render "shared/ga_www" if Rails.env.production? %>
     <% end %>
