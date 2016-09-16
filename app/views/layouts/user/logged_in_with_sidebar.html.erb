@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= render "shared/meta_tags" %>
-</head>
-<body>
-  <% if current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
-    <%= render "shared/admin/header" %>
-  <% else %>
-    <%= render "shared/user/header" %>
-  <% end %>
-
-  <div class="banner <%= color_class %> large-top-padding">
-    <div class="container">
-      <% if content_for?(:callout) %>
-        <%= yield :callout %>
-      <% else %>
-        <h1><%= t('home.logo_banner') %></h1>
+  <head>
+    <%= render "shared/meta_tags" %>
+  </head>
+  <body>
+    <% if current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
+      <%= render "shared/admin/header" %>
+    <% else %>
+      <%= render "shared/user/header" %>
+    <% end %>
+    <div class="banner <%= color_class %> large-top-padding">
+      <div class="container">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <% if Rails.application.config.subdomain_site == 'chipublib' %>
+            <%= t('home.logo_banner_html') %>
+          <% else %>
+            <%= t('home.logo_banner_partial_2') %>
+          <% end %>
+        </h1>
       <% end %>
     </div>
   </div>
-
   <main class="container">
     <%= render "shared/flashes" %>
     <div class="row">
@@ -31,7 +34,6 @@
       </div>
     </div>
   </main>
-
   <%= render "shared/footer" %>
 </body>
 </html>

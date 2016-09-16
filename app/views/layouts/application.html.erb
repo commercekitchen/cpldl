@@ -16,7 +16,13 @@
       <% if content_for?(:callout) %>
         <%= yield :callout %>
       <% else %>
-        <h1><%= t('home.logo_banner') %></h1>
+
+        <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+          <%= t('home.logo_banner_html') %>
+          <% else %>
+          <%= t('home.logo_banner_partial_2') %>
+        <% end %>
+        </h1>
       <% end %>
     </div>
   </div>

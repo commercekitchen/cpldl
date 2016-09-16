@@ -1,13 +1,27 @@
 <% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
-  <%= content_for(:callout) { %><h1>Hi Admin! <%= t('home.logo_banner') %></h1><% } %>
+  <%= content_for(:callout) { %>
+  <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+      <%= t('home.logo_banner_partial') %><br>
+       Hi Admin!<br>
+      <%= t('home.logo_banner_partial_2') %>
+    <% else %>
+      <%= t('home.logo_banner_partial_2') %>
+    <% end %>
+  </h1>
+  <% } %>
   <h1 class="<%= text_color_class %>">
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: link_color_class %>.
   </h1>
-
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>! <%= t("home.logo_banner") %></h1>
+    <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
+    <% if Rails.application.config.subdomain_site == 'chipublib' %>
+        <%= t('home.logo_banner_html') %>
+      <% else %>
+        <%= t('home.logo_banner_partial_2') %>
+      <% end %>
+    </h1>
   <% end %>
   <h1 class="<%= text_color_class %>">
     <%= t('logged_in_user.choose_a_course') %>
@@ -15,7 +29,6 @@
   </h1>
 <% else %>
   <h1 class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
-
   <% if request.subdomain == "www" %>
     <div class="clearfix">
       <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>

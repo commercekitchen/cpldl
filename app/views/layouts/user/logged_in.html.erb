@@ -1,55 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%= render "shared/meta_tags" %>
-  <% unless request.subdomain == "demo" %>
-    <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
-    <%= render "shared/ga_event_tracking" if Rails.env.production? %>
-  <% end %>
-</head>
-<body>
-  <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
-    <%= render "shared/admin/header" %>
-  <% elsif current_user %>
-    <%= render "shared/user/header" %>
-  <% elsif request.subdomain == "www" %>
-    <%= render "shared/dl_header" %>
-  <% else %>
-    <%= render "shared/header" %>
-  <% end %>
-
-  <div class="banner <%= color_class %> large-top-padding">
-    <div class="container row">
-      <% if content_for?(:course_progress) %>
-        <div class="eightcol">
-        <% if content_for?(:callout) %>
-          <%= yield :callout %>
-        <% else %>
-          <h1><%= t('home.logo_banner') %></h1>
-        <% end %>
-        </div>
-        <div class="fourcol last">
+  <head>
+    <%= render "shared/meta_tags" %>
+    <% unless request.subdomain == "demo" %>
+      <%= render "shared/ga_#{request.subdomain}" if Rails.env.production? %>
+      <%= render "shared/ga_event_tracking" if Rails.env.production? %>
+    <% end %>
+  </head>
+  <body>
+    <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)) %>
+      <%= render "shared/admin/header" %>
+    <% elsif current_user %>
+      <%= render "shared/user/header" %>
+    <% elsif request.subdomain == "www" %>
+      <%= render "shared/dl_header" %>
+    <% else %>
+      <%= render "shared/header" %>
+    <% end %>
+    <div class="banner <%= color_class %> large-top-padding">
+      <div class="container row">
         <% if content_for?(:course_progress) %>
-          <%= yield :course_progress %>
-        <% end %>
-        </div>
-      <% else %>
-        <div class="twelvecol">
-        <% if content_for?(:callout) %>
-          <%= yield :callout %>
+          <div class="eightcol">
+            <% if content_for?(:callout) %>
+              <%= yield :callout %>
+            <% else %>
+              <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+                  <%= t('home.logo_banner_html') %>
+                <% else %>
+                  <%= t('home.logo_banner_partial_2') %>
+                <% end %>
+              </h1>
+            <% end %>
+          </div>
+          <div class="fourcol last">
+            <% if content_for?(:course_progress) %>
+              <%= yield :course_progress %>
+            <% end %>
+          </div>
         <% else %>
-          <h1><%= t('home.logo_banner') %></h1>
+          <div class="twelvecol">
+            <% if content_for?(:callout) %>
+              <%= yield :callout %>
+            <% else %>
+              <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+                  <%= t('home.logo_banner_html') %>
+                <% else %>
+                  <%= t('home.logo_banner_partial_2') %>
+                <% end %>
+              </h1>
+            <% end %>
+          </div>
         <% end %>
-        </div>
-      <% end %>
+      </div>
     </div>
-  </div>
-
-  <main class="container">
-    <%= render "shared/flashes" %>
-    <%= yield %>
-  </main>
-
-  <%= render "shared/footer" %>
-</body>
+    <main class="container">
+      <%= render "shared/flashes" %>
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
+  </body>
 </html>

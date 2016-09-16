@@ -21,7 +21,10 @@
 
 en:
   home:
-    logo_banner: Use a computer to do almost anything!
+    logo_banner: "Use a computer to do almost anything!"
+    logo_banner_html: "Chicago DigitalLearn<br>Use a computer to do almost anything!"
+    logo_banner_partial: "Chicago DigitalLearn"
+    logo_banner_partial_2: Use a computer to do almost anything!
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
@@ -45,7 +48,7 @@ en:
     open_a_tutorial: "to open a tutorial in a new tab that explains how to set up an email account."
     first_name: "First Name"
     zip_code: "Zip Code"
-    your_password: "Your Password"
+    your_password: "Your Password (must be at least 8 characters)"
     re_enter_password: "Re-enter Your Password"
   confirmation_email:
     cpl_subject: "Get Started with Chicago Digital Learn"
@@ -58,9 +61,7 @@ en:
     signature_line_2: "Videos that explain how computers work you can watch at your own pace"
     signature_line_3: "Chicago educational and employment resources"
     signature_line_4: "Links to other helpful online resources"
-    have_questions_a: "Have questions?"
-    have_questions_link_text: "Visit or call a Chicago Public Library"
-    have_questions_b: "location near you."
+    have_questions_link_html: "Have questions? <a href='https://chipublib.bibliocommons.com/locations/list/?_ga=1.46846951.1119167552.1454774219'>Visit or call a Chicago Public Library</a> location near you."
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"
