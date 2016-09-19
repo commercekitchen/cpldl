@@ -1,4 +1,4 @@
-<% if Rails.application.config.chicago == true %>
+<% if Rails.application.config.subdomain_site == "chipublib" %>
   <p><%= t('confirmation_email.cpl_subject') %></p>
 
   <p><%= t('confirmation_email.greeting') %> <%= @user.profile.first_name %>,</p>

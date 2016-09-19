@@ -13,15 +13,13 @@ class ApplicationController < ActionController::Base
 
   def subdomain_helper
     if request.subdomain != "www" # default
-      if ( request.subdomain == 'chipublib' ||  request.subdomain ==  'chipublib-stage' )
-        Rails.application.config.chicago = true
-      else
-        Rails.application.config.chicago = false
-      end
       Rails.application.config.subdomain_site = request.subdomain
       #Map this to a standard, live, value.
       if request.subdomain == 'chipublib-stage'
         Rails.application.config.subdomain_site = 'chipublib'
+      end
+       if request.subdomain == 'www-stage'
+        Rails.application.config.subdomain_site = 'www'
       end
     end
   end
@@ -43,7 +41,7 @@ class ApplicationController < ActionController::Base
     user_subdomain = user.try(:organization).subdomain
     self.subdomain_helper
 
-    if Rails.application.config.chicago == true
+    if Rails.application.config.subdomain_site == 'chipublib'
       return
     end
     if user_subdomain != request.subdomain

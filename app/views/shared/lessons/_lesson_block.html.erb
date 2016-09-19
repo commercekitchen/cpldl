@@ -21,11 +21,11 @@
     <p class="lesson-summary"><%= lesson.summary %></p>
     <%= link_to course_lesson_path(course, lesson), data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } do %>
       <% if I18n.locale == :es %>
-        <div class="btn small-lesson-button spanish-small <%= chicago == true ? 'btn-mustard' : '' %>">
+        <div class="btn small-lesson-button spanish-small <%= chicago_subsite == true ? 'btn-mustard' : '' %>">
           <%= t('course_page.start_lesson') %>
         </div>
       <% else %>
-        <div class="btn small-lesson-button <%= chicago == true ? 'btn-mustard' : '' %>">
+        <div class="btn small-lesson-button <%= chicago_subsite == true ? 'btn-mustard' : '' %>">
           <%= t('course_page.start_lesson') %>
         </div>
       <% end %>
