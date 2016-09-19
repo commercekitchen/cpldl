@@ -44,38 +44,38 @@ module ApplicationHelper
   end
 
   def hover_color_class
-    chicago_subsite = true ? "cpl-blue" : ""
+    chicago_subsite == true ? "cpl-blue" : ""
   end
 
   def color_class
-    chicago_subsite = true ? "cpl-blue-block" : ""
+    chicago_subsite == true ? "cpl-blue-block" : ""
   end
 
   def text_color_class
-    chicago_subsite = true ? "cpl-blue-text" : ""
+    chicago_subsite == true ? "cpl-blue-text" : ""
   end
 
   def link_color_class
-    chicago_subsite = true ? "cpl-purple-text" : ""
+    chicago_subsite == true ? "cpl-purple-text" : ""
   end
 
   def icon_color_class
-    chicago_subsite = true ? "cpl-blue" : ""
+    chicago_subsite == true ? "cpl-blue" : ""
   end
 
   def download_color_class
-    chicago_subsite = true ? "cpl-purple" : ""
+    chicago_subsite == true ? "cpl-purple" : ""
   end
 
   def cert_color_class
-    chicago_subsite = true ? "cpl-blue" : ""
+    chicago_subsite == true ? "cpl-blue" : ""
   end
 
   def ck_color_class
-    chicago_subsite = true ? "ck-chipublib" : ""
+    chicago_subsite == true ? "ck-chipublib" : ""
   end
 
   def widget_color_class
-    chicago_subsite = true ? "course-widget-cpl" : "course-widget"
+    chicago_subsite == true ? "course-widget-cpl" : "course-widget"
   end
 end
