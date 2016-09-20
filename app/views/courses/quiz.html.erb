@@ -1,11 +1,12 @@
 <%= content_for(:callout) do %>
-  <h1><%= current_user.profile.first_name %>, what would you like to learn?</h1>
+  <h1><%= current_user.profile.first_name %>, <%= t('quiz.intro_text') %> </h1>
 <% end %>
 
-<h2 class=<%= text_color_class %>>Answer three questions and we'll recommend which courses to take.</h2>
+<h2 class=<%= text_color_class %>><%= t('quiz.answer_3_questions') %> </h2>
 
 <%= form_tag courses_quiz_path do %>
   <%= render "shared/quiz_section_one" %>
   <%= render "shared/quiz_section_two" %>
   <%= render "shared/quiz_section_three" %>
 <% end %>
+

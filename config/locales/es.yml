@@ -146,3 +146,7 @@ es:
     name_fill_long: "_________________________________________"
     has_completed: "ha culminado la clase de"
     as_of: "en el mes de"
+  quiz:
+    intro_text: " ¿qué le gustaría aprender?"
+    answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
+    question_1: "Qué tanto ha usado una computadora o una laptop? Seleccione una opción."

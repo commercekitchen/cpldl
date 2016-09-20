@@ -145,3 +145,7 @@ en:
     name_fill_long: "_________________________________________"
     has_completed: "has completed:"
     as_of: "as of"
+  quiz:
+    intro_text: " what would you like to learn?"
+    answer_3_questions: "Answer three questions and we'll recommend which courses to take."
+    question_1: "How comfortable are you with desktop or laptop computers? Select one."
