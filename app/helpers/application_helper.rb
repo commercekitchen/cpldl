@@ -16,6 +16,26 @@ module ApplicationHelper
   end
 
 
+#ToDo: Figure out a less hacky way of getting rspec to STFU
+if Rails.env.test?
+
+  # Is is the Chicago subdomain?
+  def chicago_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
+   end
+
+  # Is is the Chicago subdomain?
+  def dl_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
+   end
+
+  def subdomain
+    @subdomain =  Rails.application.config.subdomain_site
+  end
+
+end
+
+
   def button_color
     if chicago_subdomain
       "btn-mustard"

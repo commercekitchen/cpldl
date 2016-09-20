@@ -115,6 +115,32 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+  # Is is the Chicago subdomain?
+  def chicago_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
+   end
+
+   # Is is the demo subdomain? Used for a couple of hacks, hence the original request.subdomain. For all other stuff, act like chipublib
+  def demo_subdomain
+    if request.subdomain == 'demo' || request.subdomain == 'demo-stage'
+      true
+    else
+      false
+    end
+  end
+
+   # Is is the demo subdomain?
+  def dl_subdomain
+    Rails.application.config.subdomain_site == "www"
+  end
+
+
+  def subdomain
+    @subdomain =  Rails.application.config.subdomain_site
+  end
+
+
   private
 
   def user_language_override?
@@ -153,31 +179,6 @@ class ApplicationController < ActionController::Base
   def first_admin_login?(user)
     return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)))
     false
-  end
-
-
-  # Is is the Chicago subdomain?
-  def chicago_subdomain
-    Rails.application.config.subdomain_site == 'chipublib'
-   end
-
-   # Is is the demo subdomain? Used for a couple of hacks, hence the original request.subdomain. For all other stuff, act like chipublib
-  def demo_subdomain
-    if request.subdomain == 'demo' || request.subdomain == 'demo-stage'
-      true
-    else
-      false
-    end
-  end
-
-   # Is is the demo subdomain?
-  def dl_subdomain
-    Rails.application.config.subdomain_site == "www"
-  end
-
-
-  def subdomain
-    @subdomain =  Rails.application.config.subdomain_site
   end
 
 
