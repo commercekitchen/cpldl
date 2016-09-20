@@ -2,7 +2,7 @@
 <html>
   <head>
     <%= render "shared/meta_tags" %>
-    <% unless  Rails.application.config.subdomain_site == "demo" %>
+    <% unless  demo_subdomain %>
       <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
       <%= render "shared/ga_event_tracking" if Rails.env.production? %>
     <% end %>

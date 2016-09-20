@@ -34,6 +34,9 @@ class ApplicationController < ActionController::Base
        if request.subdomain == 'www-stage'
         Rails.application.config.subdomain_site = 'www'
       end
+       if request.subdomain == 'demo-stage' || request.subdomain == 'demo'
+        Rails.application.config.subdomain_site = 'chipublib'
+      end
     end
   end
 
@@ -158,10 +161,14 @@ class ApplicationController < ActionController::Base
     Rails.application.config.subdomain_site == 'chipublib'
    end
 
-   # Is is the demo subdomain?
+   # Is is the demo subdomain? Used for a couple of hacks, hence the original request.subdomain. For all other stuff, act like chipublib
   def demo_subdomain
-    Rails.application.config.subdomain_site == 'demo'
-   end
+    if request.subdomain == 'demo' || request.subdomain == 'demo-stage'
+      true
+    else
+      false
+    end
+  end
 
    # Is is the demo subdomain?
   def dl_subdomain
