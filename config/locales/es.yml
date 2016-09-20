@@ -21,7 +21,10 @@
 
 es:
   home:
-    logo_banner: "Use la computadora para hacer casi todo!"
+    logo_banner_html: "Chicago DigitalLearn<br>Use la computadora para hacer casi todo!"
+    # Used on course intro text partial
+    logo_banner_partial: "Chicago DigitalLearn"
+    logo_banner_partial_2: Use la computadora para hacer casi todo!
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
@@ -45,7 +48,7 @@ es:
     open_a_tutorial: "para ver un video que le enseñará cómo crear una."
     first_name: "Nombre"
     zip_code: "Código Postal"
-    your_password: "Contraseña"
+    your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"
   confirmation_email:
     cpl_subject: "Empieza con Chicago Digital Aprende"
@@ -58,9 +61,7 @@ es:
     signature_line_2: "Los vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo"
     signature_line_3: "Chicago educativo y recursos de empleo"
     signature_line_4: "Los enlaces a otros recursos útiles en línea"
-    have_questions_a: "¿Tener preguntas?"
-    have_questions_link_text: "Visitar o llamar a una biblioteca pública de Chicago"
-    have_questions_b: "ubicación cerca de usted ."
+    have_questions_link_html: "¿Tener preguntas? <a href='http://www.chipublib.org/spanish/'>Visitar o llamar a una biblioteca pública de Chicago</a> ubicación cerca de usted."
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
