@@ -2,7 +2,7 @@
 <html>
   <head>
     <%= render "shared/meta_tags" %>
-    <% unless  Rails.application.config.subdomain_site == "demo" %>
+    <% unless  demo_subdomain %>
       <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
       <%= render "shared/ga_event_tracking" if Rails.env.production? %>
     <% end %>
@@ -12,7 +12,7 @@
       <%= render "shared/admin/header" %>
     <% elsif current_user %>
       <%= render "shared/user/header" %>
-    <% elsif  Rails.application.config.subdomain_site == "www" %>
+    <% elsif dl_subdomain %>
       <%= render "shared/dl_header" %>
     <% else %>
       <%= render "shared/header" %>
@@ -24,7 +24,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+              <h1> <% if chicago_subdomain %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>
                   <%= t('home.logo_banner_partial_2') %>
@@ -42,7 +42,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1> <% if Rails.application.config.subdomain_site == 'chipublib' %>
+              <h1> <% if chicago_subdomain %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>
                   <%= t('home.logo_banner_partial_2') %>

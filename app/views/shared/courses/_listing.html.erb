@@ -6,7 +6,7 @@
 
 <div class="container">
 <% @courses.each do |c| %>
-    <a class="course-widget<% if chicago_subsite %>-cpl<% end %><% if courses_completed.include?(c.id) %> completed<% end %>"
+    <a class="course-widget<% if chicago_subdomain %>-cpl<% end %><% if courses_completed.include?(c.id) %> completed<% end %>"
       href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
       <header>
         <h3><%= c.title %></h3>

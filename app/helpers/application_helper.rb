@@ -7,10 +7,6 @@ module ApplicationHelper
     @resource ||= User.new
   end
 
-  def subdomain
-    @subdomain =  Rails.application.config.subdomain_site
-  end
-
   def devise_mapping
     @devise_mapping ||= Devise.mappings[:user]
   end
@@ -19,23 +15,29 @@ module ApplicationHelper
     %w(/ /courses /courses/your)
   end
 
-  # Is it a subsite? Could be used for *all* subsites or in conjunction with site-specific functions
-  def subsite
-      Rails.application.config.subdomain_site != 'www'
-  end
 
-  # Is is the Chicago subsite?
-  def chicago_subsite
+#ToDo: Figure out a less hacky way of getting rspec to STFU
+if Rails.env.test?
+
+  # Is is the Chicago subdomain?
+  def chicago_subdomain
     Rails.application.config.subdomain_site == 'chipublib'
    end
 
-   # Is is the demo subsite?
-  def demo_subsite
-    Rails.application.config.subdomain_site == 'demo'
+  # Is is the Chicago subdomain?
+  def dl_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
    end
 
+  def subdomain
+    @subdomain =  Rails.application.config.subdomain_site
+  end
+
+end
+
+
   def button_color
-    if chicago_subsite
+    if chicago_subdomain
       "btn-mustard"
     else
       "btn-blue"
@@ -44,38 +46,38 @@ module ApplicationHelper
   end
 
   def hover_color_class
-    chicago_subsite == true ? "cpl-blue" : ""
+    chicago_subdomain == true ? "cpl-blue" : ""
   end
 
   def color_class
-    chicago_subsite == true ? "cpl-blue-block" : ""
+    chicago_subdomain == true ? "cpl-blue-block" : ""
   end
 
   def text_color_class
-    chicago_subsite == true ? "cpl-blue-text" : ""
+    chicago_subdomain == true ? "cpl-blue-text" : ""
   end
 
   def link_color_class
-    chicago_subsite == true ? "cpl-purple-text" : ""
+    chicago_subdomain == true ? "cpl-purple-text" : ""
   end
 
   def icon_color_class
-    chicago_subsite == true ? "cpl-blue" : ""
+    chicago_subdomain == true ? "cpl-blue" : ""
   end
 
   def download_color_class
-    chicago_subsite == true ? "cpl-purple" : ""
+    chicago_subdomain == true ? "cpl-purple" : ""
   end
 
   def cert_color_class
-    chicago_subsite == true ? "cpl-blue" : ""
+    chicago_subdomain == true ? "cpl-blue" : ""
   end
 
   def ck_color_class
-    chicago_subsite == true ? "ck-chipublib" : ""
+    chicago_subdomain == true ? "ck-chipublib" : ""
   end
 
   def widget_color_class
-    chicago_subsite == true ? "course-widget-cpl" : "course-widget"
+    chicago_subdomain == true ? "course-widget-cpl" : "course-widget"
   end
 end
