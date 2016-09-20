@@ -133,7 +133,7 @@ class ApplicationController < ActionController::Base
   end
 
   def dl_subdomain
-    request.subdomain == "www"
+    Rails.application.config.subdomain_site == "www"
   end
 
   def first_admin_login?(user)
