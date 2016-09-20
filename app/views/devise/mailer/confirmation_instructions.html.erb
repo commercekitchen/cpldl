@@ -1,3 +1,4 @@
+<%# Rails, in its infinite wisdom, does *not* use the application_controller methods here, even with helper_method set %>
 <% if Rails.application.config.subdomain_site == "chipublib" %>
   <p><%= t('confirmation_email.cpl_subject') %></p>
 

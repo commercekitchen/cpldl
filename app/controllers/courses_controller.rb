@@ -243,7 +243,4 @@ class CoursesController < ApplicationController
     end
   end
 
-  def dl_subdomain
-    Rails.application.config.subdomain_site == "www"
-  end
 end

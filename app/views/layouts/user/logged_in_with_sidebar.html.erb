@@ -15,7 +15,7 @@
           <%= yield :callout %>
         <% else %>
           <h1>
-            <% if Rails.application.config.subdomain_site == 'chipublib' %>
+            <% if chicago_subdomain %>
               <%= t('home.logo_banner_html') %>
             <% else %>
               <%= t('home.logo_banner_partial_2') %>

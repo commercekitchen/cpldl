@@ -7,6 +7,19 @@ class ApplicationController < ActionController::Base
   before_action :redirect_orgs
   before_action :set_user_token
   before_action :subdomain_helper
+  before_action :subdomain
+  before_action :chicago_subdomain
+  before_action :demo_subdomain
+  before_action :dl_subdomain
+
+  # This should be default don't you think?
+  helper_method :subdomain
+  helper_method :chicago_subdomain
+  helper_method :demo_subdomain
+  helper_method :dl_subdomain
+
+
+
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
@@ -42,9 +55,10 @@ class ApplicationController < ActionController::Base
     self.subdomain_helper
 
     if Rails.application.config.subdomain_site == 'chipublib'
-      return
+      root_path
     end
-    if user_subdomain != request.subdomain
+
+    if user_subdomain !=  Rails.application.config.subdomain_site
       user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
       sign_out user
       flash[:alert] = %Q[Oops! You’re a member of Chicago Digital Learn. Sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
@@ -132,12 +146,33 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def dl_subdomain
-    Rails.application.config.subdomain_site == "www"
-  end
 
   def first_admin_login?(user)
     return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)))
     false
   end
+
+
+  # Is is the Chicago subdomain?
+  def chicago_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
+   end
+
+   # Is is the demo subdomain?
+  def demo_subdomain
+    Rails.application.config.subdomain_site == 'demo'
+   end
+
+   # Is is the demo subdomain?
+  def dl_subdomain
+    Rails.application.config.subdomain_site == "www"
+  end
+
+
+  def subdomain
+    @subdomain =  Rails.application.config.subdomain_site
+  end
+
+
+
 end
