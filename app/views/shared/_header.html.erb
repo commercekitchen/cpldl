@@ -7,7 +7,7 @@
       <div class="html5-link">
         <%= link_to root_url(subdomain:  Rails.application.config.subdomain_site), class: 'logo-link' do %>
           <div class="link-box">
-            <% case  subdomain %>
+            <% case subdomain %>
             <% when "www" %>
             <%= render "shared/logo_purple" %>
           <% else %>
@@ -15,7 +15,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1>
+              <h1  <% if chicago_subdomain %>class="cpl-slogan" %> <% end %> >
                 <% if chicago_subdomain %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>

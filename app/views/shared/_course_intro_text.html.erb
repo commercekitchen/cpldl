@@ -1,6 +1,7 @@
 <% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
   <%= content_for(:callout) { %>
-  <h1> <% if chicago_subdomain %>
+  <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> >
+   <% if chicago_subdomain %>
       <%= t('home.logo_banner_partial') %><br>
       Hi Admin!<br>
       <%= t('home.logo_banner_partial_2') %>
@@ -15,7 +16,7 @@
   </h1>
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1><%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
+    <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> > <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
       <% if chicago_subdomain %>
         <%= t('home.logo_banner_html') %>
       <% else %>
@@ -23,12 +24,12 @@
       <% end %>
     </h1>
   <% end %>
-  <h1 class="<%= text_color_class %>">
+ <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %>  class="<%= text_color_class %>">
     <%= t('logged_in_user.choose_a_course') %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
 <% else %>
-  <h1 class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
+ <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
   <% if dl_subdomain %>
     <div class="clearfix">
       <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
