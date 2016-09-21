@@ -1,35 +1,36 @@
 <%= field_set_tag legend = nil, style: "width: 100%;" do %>
-  <strong><p class="black-modal-text">3. What would you like to do with a computer? Choose your top goal.</p></strong>
+  <strong><p class="black-modal-text">3. <%= t('quiz.question_3') %></p></strong>
   <ul class="less-padding">
     <li>
       <%= radio_button_tag(:set_three, "1") %>
-      <%= label_tag(:set_three_1, "Search for information.", class: "inline-label") %>
+      <%= label_tag(:set_three_1, "#{t('quiz.set_three_1')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_three, "2") %>
-      <%= label_tag(:set_three_2, "Communicate with friends and family through email and video.", class: "inline-label") %>
+      <%= label_tag(:set_three_2, "#{t('quiz.set_three_2')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_three, "3") %>
-      <%= label_tag(:set_three_3, "Be more productive at work.", class: "inline-label") %>
+      <%= label_tag(:set_three_3, "#{t('quiz.set_three_3')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_three, "4") %>
-      <%= label_tag(:set_three_4, "Search for a job.", class: "inline-label") %>
+      <%= label_tag(:set_three_4, "#{t('quiz.set_three_4')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_three, "5") %>
-      <%= label_tag(:set_three_5, "Learn specific software or apps such as Microsoft Word.", class: "inline-label") %>
+      <%= label_tag(:set_three_5, "#{t('quiz.set_three_5')}", class: "inline-label") %>
     </li>
 
-    <li>
+      <li>
       <%= radio_button_tag(:set_three, "6") %>
-      <%= label_tag(:set_three_6, "Be more safe and secure when using the Internet.", class: "inline-label") %>
+      <%= label_tag(:set_three_6, "#{t('quiz.set_three_6')}", class: "inline-label") %>
     </li>
+
   </ul>
   <% if current_page?(root_url) %>
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
