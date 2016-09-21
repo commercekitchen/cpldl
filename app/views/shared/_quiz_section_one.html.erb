@@ -3,23 +3,24 @@
   <ul class="less-padding">
     <li>
       <%= radio_button_tag(:set_one, "1") %>
-      <%= label_tag(:set_one_1, "This is my first time using a computer.", class: "inline-label") %>
+      <%= label_tag(:set_one_1, "#{t('quiz.set_one_1')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_one, "2") %>
-      <%= label_tag(:set_one_2, "I can use a keyboard and mouse, but I'm not comfortable beyond that.", class: "inline-label") %>
+      <%= label_tag(:set_one_2, "#{t('quiz.set_one_2')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_one, "3") %>
-      <%= label_tag(:set_one_3, "I can use a computer, but I'd like to learn more.", class: "inline-label") %>
+      <%= label_tag(:set_one_3, "#{t('quiz.set_one_3')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_one, "4") %>
-      <%= label_tag(:set_one_4, "I'm very comfortable with a computer, but I would like to learn more on a specific topic.", class: "inline-label") %>
+      <%= label_tag(:set_one_4, "#{t('quiz.set_one_4')}", class: "inline-label") %>
     </li>
+
     <% if current_page?(root_url) %>
       <li>&nbsp;</li>
     <% end %>
@@ -32,3 +33,6 @@
     <%= button_tag "Next", class: "btn small next-button #{button_color}", type: "button", name: "next" %>
   <% end %>
 <% end %>
+
+
+
