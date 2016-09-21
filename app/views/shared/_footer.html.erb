@@ -1,4 +1,4 @@
-<footer class="footer-primary <%= color_class %>">
+\<footer class="footer-primary <%= color_class %>">
   <div class="container">
     <div class="row">
       <div class="threecol">
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-<% if Rails.env == "stage" ||  Rails.env == "development"
+<% if Rails.env == "staging" ||  Rails.env == "development"
   server_name = subdomain + "-stage" %>
   <% if request.subdomain == 'demo-stage' || request.subdomain == 'demo'
     server_name = request.subdomain %>
