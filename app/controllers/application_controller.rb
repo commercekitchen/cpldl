@@ -37,6 +37,8 @@ class ApplicationController < ActionController::Base
        if request.subdomain == 'demo-stage' || request.subdomain == 'demo'
         Rails.application.config.subdomain_site = 'chipublib'
       end
+    else
+      Rails.application.config.subdomain_site = 'www'
     end
   end
 
