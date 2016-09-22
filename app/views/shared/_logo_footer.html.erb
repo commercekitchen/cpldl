@@ -1,12 +1,12 @@
 <div class="logo">
   <div class="logo-icon">
     <div class="ninecol right-logo">
-      <% case request.subdomain %>
-      <% when "chipublib" %>
+      <% case subdomain %>
+      <% when 'chipublib' %>
         <%= link_to "http://www.chipublib.org/", target: "_blank" do %>
           <%= image_tag "seal_white_on_transparent", class: "medium-logo link-cpl" %>
         <% end %>
-      <% when "www" %>
+      <% when 'www' %>
         <%= link_to "http://digitallearn.org/", target: "_blank" do %>
           <%= image_tag "imls_logo_white", class: "imls-logo-large" %>
         <% end %>

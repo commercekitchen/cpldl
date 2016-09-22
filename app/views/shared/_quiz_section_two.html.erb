@@ -1,24 +1,24 @@
 <%= field_set_tag legend = nil, style: "width: 100%;" do %>
-  <strong><p class="black-modal-text">2. How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one.</p></strong>
+  <strong><p class="black-modal-text">2.  <%= t('quiz.question_2') %></p></strong>
   <ul class="less-padding">
     <li>
       <%= radio_button_tag(:set_two, "1") %>
-      <%= label_tag(:set_two_1, "This is my first time using a one.", class: "inline-label") %>
+      <%= label_tag(:set_two_1, "#{t('quiz.set_two_1')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_two, "2") %>
-      <%= label_tag(:set_two_2, "I can use one, but I'm not comfortable beyond that.", class: "inline-label") %>
+      <%= label_tag(:set_two_2, "#{t('quiz.set_two_2')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_two, "3") %>
-      <%= label_tag(:set_two_3, "I can use one, but I'd like to learn more.", class: "inline-label") %>
+      <%= label_tag(:set_two_3, "#{t('quiz.set_two_3')}", class: "inline-label") %>
     </li>
 
     <li>
       <%= radio_button_tag(:set_two, "4") %>
-      <%= label_tag(:set_two_4, "I'm very comfortable with one, but I would like to learn more on a specific topic.", class: "inline-label") %>
+      <%= label_tag(:set_two_4, "#{t('quiz.set_one_4')}", class: "inline-label") %>
     </li>
     <% if current_page?(root_url) %>
       <li>&nbsp;</li>

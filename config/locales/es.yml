@@ -21,6 +21,7 @@
 
 es:
   home:
+    logo_banner: "Use la computadora para hacer casi todo!"
     logo_banner_html: "Chicago DigitalLearn<br>Use la computadora para hacer casi todo!"
     # Used on course intro text partial
     logo_banner_partial: "Chicago DigitalLearn"
@@ -53,11 +54,11 @@ es:
   confirmation_email:
     cpl_subject: "Empieza con Chicago Digital Aprende"
     greeting: "Hola"
-    cpl_welcome: "Bienvenido a Chicago Digital aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa . Haga clic en el siguiente enlace para activar su cuenta , y usted estará listo para funcionar."
+    cpl_welcome: "Bienvenido a Chicago Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
     welcome: "Bienvenido"
     confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
     confirm_my_account: "Confirmar mi cuenta"
-    signature_line_1: "Chicago Digital Más ofertas :"
+    signature_line_1: "Chicago Digital Más ofertas:"
     signature_line_2: "Los vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo"
     signature_line_3: "Chicago educativo y recursos de empleo"
     signature_line_4: "Los enlaces a otros recursos útiles en línea"
@@ -145,3 +146,24 @@ es:
     name_fill_long: "_________________________________________"
     has_completed: "ha culminado la clase de"
     as_of: "en el mes de"
+  quiz:
+    intro_text: " ¿qué le gustaría aprender?"
+    answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
+    question_1: "Qué tanto ha usado una computadora o una laptop? Seleccione una opción."
+    set_one_1: "Esta es la primera vez que uso una computadora."
+    set_one_2: "Puedo usar el ratón y el teclado, pero no sé mucho más."
+    set_one_3: "Sé usar una computadora más o menos bien, pero me gustaría aprender más."
+    set_one_4: "Soy muy bueno con la computadora, pero me gustaría aprender más sobre un tema específico."
+    question_2: "¿Qué tanto ha usado un teléfono móvil, una tableta, o un iPad para navegar en Internet? Seleccione una opción."
+    set_two_1: "Esta es la primera vez que uso un dispositivo móvil."
+    set_two_2: "Puedo usar un dispositivo móvil, pero muy poco."
+    set_two_3: "Sé usar un dispositivo móvil, pero me gustaría aprender más."
+    set_two_4: "Soy muy bueno con dispositivos móviles, pero me gustaría aprender más sobre un tema específico."
+    question_3: "¿Qué le gustaría hacer con la computadora? Seleccione solo la opción que más le interese."
+    set_three_1: "Usar Internet para encontrar información."
+    set_three_2: "Comunicarse con amigos y familiares por correo electrónico y video."
+    set_three_3: "Ser más productivo en el trabajo."
+    set_three_4: "Buscar empleo."
+    set_three_5: "Aprender una aplicación específica como Microsoft Word."
+    set_three_6: "Usar internet de manera más segura."
+

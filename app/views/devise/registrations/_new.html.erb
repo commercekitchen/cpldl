@@ -1,4 +1,4 @@
-<% if request.subdomain == "www" %>
+<% if  dl_subdomain %>
   <h1 class="<%= text_color_class %>"><%= t('home.signup_notice') %></h1>
 
   <p>
@@ -32,7 +32,7 @@
         <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
       </fieldset>
 
-      <% if request.subdomain == "chipublib" %>
+      <% if chicago_subdomain == true %>
         <fieldset>
           <%= p.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "What's your library called?"}, class: "select-large", id: "chzn" ) %>
         </fieldset>
@@ -40,6 +40,7 @@
     <% end %>
 
     <fieldset>
+      <%= f.label :password, t('login_signup.your_password'), class: 'signup-password-label' %>
       <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
     </fieldset>
 
@@ -53,7 +54,7 @@
     </fieldset>
 
     <fieldset>
-      <%= hidden_field(:user, :subdomain, value: request.subdomain) %>
+      <%= hidden_field(:user, :subdomain, value:  Rails.application.config.subdomain_site) %>
     </fieldset>
 
     <%= f.submit "#{t('home.signup')}", class: button_color %>

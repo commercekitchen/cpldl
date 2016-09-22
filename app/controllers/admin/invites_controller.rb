@@ -5,7 +5,7 @@ module Admin
     def invite_resource
       User.invite!({ email: params[:user][:email] }, current_user) do |u|
         u.skip_invitation = true
-        u.add_role(:admin, Organization.find_by_subdomain(request.subdomain))
+        u.add_role(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site))
         u.deliver_invitation
       end
     end

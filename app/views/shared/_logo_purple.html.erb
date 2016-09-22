@@ -1,7 +1,7 @@
 <%= link_to root_path do %>
   <div class="logo">
     <div class="logo-icon">
-      <% case request.subdomain %>
+      <% case  Rails.application.config.subdomain_site %>
       <% when "www" %>
         <%= image_tag "dl_logo" %>
       <% else %>

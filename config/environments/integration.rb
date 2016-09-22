@@ -15,10 +15,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # => to send email from local host
-  config.action_mailer.default_url_options = { host: "cpldl-integapp-01.do.lark-it.com" }
+  config.action_mailer.default_url_options = { host: "cpldl-integ.digitallearn.org" }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.asset_host = "http://cpldl-integapp-01.do.lark-it.com"
+  config.action_mailer.asset_host = "https://cpldl-integ.digitallearn.org"
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

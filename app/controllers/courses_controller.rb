@@ -36,18 +36,16 @@ class CoursesController < ApplicationController
       published_results << result if result.pub_status == "P"
     end
 
-
     if user_signed_in? && current_user.profile.language_id
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
       language_id = session[:locale] != user_lang_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
-
       if params[:search].blank?
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: request.subdomain)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
       else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: request.subdomain) & published_results
+         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site) & published_results
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: request.subdomain) & published_results
+      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: Rails.application.config.subdomain_site) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: Rails.application.config.subdomain_site) & published_results
     end
 
     respond_to do |format|
@@ -185,7 +183,7 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
-    @org_id = Organization.find_by_subdomain(request.subdomain).id
+    @org_id = Organization.find_by_subdomain(Rails.application.config.subdomain_site).id
     case I18n.locale
     when :es
       @org_courses = Course.where_exists(:organization_course, organization_id: @org_id).where(language_id: Language.find_by_name("Spanish").id)
@@ -245,7 +243,4 @@ class CoursesController < ApplicationController
     end
   end
 
-  def dl_subdomain
-    request.subdomain == "www"
-  end
 end

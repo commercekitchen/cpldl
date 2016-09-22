@@ -115,7 +115,7 @@ class LessonsController < ApplicationController
   end
 
   def auth_subsites
-    if request.subdomain != "www"
+    if  !dl_subdomain
       authenticate_user!
     end
   end

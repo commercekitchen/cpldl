@@ -5,7 +5,7 @@ module Trainer
     layout "trainer/base"
 
     def authorize_trainer
-      unless current_user.present? && current_user.has_role?(:trainer, Organization.find_by_subdomain(request.subdomain))
+      unless current_user.present? && current_user.has_role?(:trainer, Organization.find_by_subdomain( Rails.application.config.subdomain_site ) )
         redirect_to root_path, alert: "Access denied."
       end
     end

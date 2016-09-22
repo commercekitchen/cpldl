@@ -5,41 +5,38 @@
     </div>
     <div class="logo-link-container">
       <div class="html5-link">
-        <%= link_to root_url(subdomain: request.subdomain), class: 'logo-link' do %>
-
+        <%= link_to root_url(subdomain:  Rails.application.config.subdomain_site), class: 'logo-link' do %>
           <div class="link-box">
-            <% case request.subdomain %>
+            <% case subdomain %>
             <% when "www" %>
-              <%= render "shared/logo_white" %>
+            <%= render "shared/logo_purple" %>
+          <% else %>
+            <%= render "shared/logo_white" %>
+            <% if content_for?(:callout) %>
+              <%= yield :callout %>
             <% else %>
-              <%= render "shared/logo_white" %>
-              <% if content_for?(:callout) %>
-                <%= yield :callout %>
-              <% else %>
-                <h1> <% if request.subdomain != 'www' %>
+              <h1  <% if chicago_subdomain %>class="cpl-slogan" %> <% end %> >
+                <% if chicago_subdomain %>
                   <%= t('home.logo_banner_html') %>
-                  <% else %>
+                <% else %>
                   <%= t('home.logo_banner_partial_2') %>
                 <% end %>
-                </h1>
-                      <% end %>
-            <% end %> <%# End case end %>
-
-          </div>
-
-        <% end %> <%# End big old link %>
-      </div>
-
-      <div class="signup-box">
-        <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
-      </div>
-      <div class="search-box">
-        <%= form_tag courses_path, method: :get do %>
-          <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-          <i class="icon-search white"></i>
-          <%= submit_tag "Search", id: "search_btn" %>
-        <% end %>
-      </div>
+              </h1>
+            <% end %> <%# End callout if %>
+          <% end %> <%# End case end %>
+        </div>
+      <% end %> <%# End big old link %>
+    </div>
+    <div class="signup-box">
+      <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
+    </div>
+    <div class="search-box">
+      <%= form_tag courses_path, method: :get do %>
+        <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+        <i class="icon-search white"></i>
+        <%= submit_tag "Search", id: "search_btn" %>
+      <% end %>
     </div>
   </div>
+</div>
 </header>

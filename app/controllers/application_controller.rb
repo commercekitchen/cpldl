@@ -6,9 +6,40 @@ class ApplicationController < ActionController::Base
   before_action :set_cms_footer_pages
   before_action :redirect_orgs
   before_action :set_user_token
+  before_action :subdomain_helper
+  before_action :subdomain
+  before_action :chicago_subdomain
+  before_action :demo_subdomain
+  before_action :dl_subdomain
+
+  # This should be default don't you think?
+  helper_method :subdomain
+  helper_method :chicago_subdomain
+  helper_method :demo_subdomain
+  helper_method :dl_subdomain
+
+
+
   protect_from_forgery with: :exception
 
   layout proc { user_signed_in? || dl_subdomain ? "user/logged_in" : "application" }
+
+  def subdomain_helper
+    if request.subdomain != "www" # default
+      Rails.application.config.subdomain_site = request.subdomain
+      #Map this to a standard, live, value.
+      if request.subdomain == 'chipublib-stage'
+        Rails.application.config.subdomain_site = 'chipublib'
+      end
+       if request.subdomain == 'www-stage'
+        Rails.application.config.subdomain_site = 'www'
+      end
+       if request.subdomain == 'demo-stage' || request.subdomain == 'demo'
+        Rails.application.config.subdomain_site = 'chipublib'
+      end
+    end
+  end
+
 
   def after_sign_in_path_for(user)
     check_user_subdomain(user)
@@ -24,7 +55,13 @@ class ApplicationController < ActionController::Base
 
   def check_user_subdomain(user)
     user_subdomain = user.try(:organization).subdomain
-    if user_subdomain != request.subdomain
+    self.subdomain_helper
+
+    if Rails.application.config.subdomain_site == 'chipublib'
+      root_path
+    end
+
+    if user_subdomain !=  Rails.application.config.subdomain_site
       user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
       sign_out user
       flash[:alert] = %Q[Oops! You’re a member of Chicago Digital Learn. Sign in at <a href="http://#{user_subdomain}.digitallearn.org">#{user_subdomain}.digitallearn.org</a>]
@@ -78,6 +115,32 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
+  # Is is the Chicago subdomain?
+  def chicago_subdomain
+    Rails.application.config.subdomain_site == 'chipublib'
+   end
+
+   # Is is the demo subdomain? Used for a couple of hacks, hence the original request.subdomain. For all other stuff, act like chipublib
+  def demo_subdomain
+    if request.subdomain == 'demo' || request.subdomain == 'demo-stage'
+      true
+    else
+      false
+    end
+  end
+
+   # Is is the demo subdomain?
+  def dl_subdomain
+    Rails.application.config.subdomain_site == "www"
+  end
+
+
+  def subdomain
+    @subdomain =  Rails.application.config.subdomain_site
+  end
+
+
   private
 
   def user_language_override?
@@ -112,12 +175,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def dl_subdomain
-    request.subdomain == "www"
-  end
 
   def first_admin_login?(user)
-    return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain(request.subdomain)))
+    return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)))
     false
   end
+
+
+
 end
