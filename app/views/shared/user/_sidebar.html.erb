@@ -1,5 +1,5 @@
 <ul class="sidebar-links">
-  <% if current_user.has_role? (:trainer) %>
+  <% if current_user.has_role?(:trainer, current_organization) %>
     <li><%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path, class: link_color_class %></li>
   <% end %>
   <li><%= link_to "#{t('profile_page.change_login_information')}", account_path, class: link_color_class %></li>

@@ -37,7 +37,7 @@ class CmsPage < ActiveRecord::Base
   attr_accessor :subdomain
 
   belongs_to :language
-  belongs_to :organzation
+  belongs_to :organization
 
   validates :title, length: { maximum: 90 }, presence: true, uniqueness: true
   validates :body, presence: true

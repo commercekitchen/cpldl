@@ -2,9 +2,9 @@ require "rails_helper"
 
 describe Admin::ExportsController do
   before(:each) do
+    @organization = create(:organization)
     @request.host = "chipublib.test.host"
-    @admin = FactoryGirl.create(:admin_user)
-    @organization = FactoryGirl.create(:organization)
+    @admin = create(:admin_user, organization: @organization)
     @admin.add_role(:admin, @organization)
     sign_in @admin
     @zip_csv = { format: "csv", version: "zip" }
@@ -21,18 +21,18 @@ describe Admin::ExportsController do
 
   describe "#data_for_completions_report_by_zip" do
     before(:each) do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       @user.add_role(:user, @organization)
-      @user.profile = FactoryGirl.create(:profile)
-      @language = FactoryGirl.create(:language)
-      @course1 = FactoryGirl.create(:course, title: "Course 1",
+      @user.profile = create(:profile)
+      @language = create(:language)
+      @course1 = create(:course, title: "Course 1",
                                              language: @language,
                                              description: "Mocha Java Scripta",
                                              organization: @organization)
-      @course2 = FactoryGirl.create(:course, title: "Course 2",
+      @course2 = create(:course, title: "Course 2",
                                              language: @language,
                                              organization: @organization)
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
       @user.course_progresses << [@course_progress1]
     end
     it "return completions by zip" do

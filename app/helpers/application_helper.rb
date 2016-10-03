@@ -15,69 +15,55 @@ module ApplicationHelper
     %w(/ /courses /courses/your)
   end
 
-
-#ToDo: Figure out a less hacky way of getting rspec to STFU
-if Rails.env.test?
-
-  # Is is the Chicago subdomain?
-  def chicago_subdomain
-    Rails.application.config.subdomain_site == 'chipublib'
-   end
-
-  # Is is the Chicago subdomain?
-  def dl_subdomain
-    Rails.application.config.subdomain_site == 'chipublib'
-   end
-
-  def subdomain
-    @subdomain =  Rails.application.config.subdomain_site
-  end
-
-end
-
-
   def button_color
-    if chicago_subdomain
+    if current_organization.subdomain == 'chipublib'
       "btn-mustard"
     else
       "btn-blue"
     end
+  end
 
+  def button_class
+    current_organization.subdomain == 'chipublib' ? "btn-mustard" : ""
+  end
+
+  def slogan_class
+    current_organization.subdomain == 'chipublib' ? "cpl-slogan" : ""
   end
 
   def hover_color_class
-    chicago_subdomain == true ? "cpl-blue" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-blue" : ""
   end
 
   def color_class
-    chicago_subdomain == true ? "cpl-blue-block" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-blue-block" : ""
   end
 
   def text_color_class
-    chicago_subdomain == true ? "cpl-blue-text" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-blue-text" : ""
   end
 
   def link_color_class
-    chicago_subdomain == true ? "cpl-purple-text" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-purple-text" : ""
   end
 
   def icon_color_class
-    chicago_subdomain == true ? "cpl-blue" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-blue" : ""
   end
 
   def download_color_class
-    chicago_subdomain == true ? "cpl-purple" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-purple" : ""
   end
 
   def cert_color_class
-    chicago_subdomain == true ? "cpl-blue" : ""
+    current_organization.subdomain == 'chipublib' ? "cpl-blue" : ""
   end
 
   def ck_color_class
-    chicago_subdomain == true ? "ck-chipublib" : ""
+    current_organization.subdomain == 'chipublib' ? "ck-chipublib" : ""
   end
 
   def widget_color_class
-    chicago_subdomain == true ? "course-widget-cpl" : "course-widget"
+    current_organization.subdomain == 'chipublib' ? "course-widget-#{current_organization.subdomain}" : "course-widget"
   end
 end

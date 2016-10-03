@@ -103,7 +103,7 @@ div.course-widget {
 
 /// CSS for CPL custom colors ///
 
-.course-widget-cpl {
+.course-widget-chipublib {
   display: block;
   width: 329px;
   border: 1px solid $medium-grey;
@@ -186,7 +186,7 @@ div.course-widget {
 
 }
 
-a.course-widget-cpl {
+a.course-widget-chipublib {
   text-decoration: none;
 
   header {
@@ -199,7 +199,7 @@ a.course-widget-cpl {
   }
 }
 
-div.course-widget-cpl {
+div.course-widget-chipublib {
   header {
     background-color: #E9E9E9;
     background: linear-gradient(to bottom,#f4f4f4 0%,#c2c2c2 100%);

@@ -3,11 +3,12 @@ require "rails_helper"
 describe Admin::AttachmentsController do
 
   before(:each) do
+    @organization = create(:organization, subdomain: "www")
     @request.host = "www.test.host"
-    @attachment = FactoryGirl.create(:attachment)
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @admin = FactoryGirl.create(:admin_user)
+    @attachment = create(:attachment)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+    @admin = create(:admin_user)
     @admin.add_role(:admin)
     sign_in @admin
 

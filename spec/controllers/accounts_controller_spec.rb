@@ -3,15 +3,16 @@ require "rails_helper"
 describe AccountsController do
 
   before(:each) do
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
+    create(:organization, subdomain: "www")
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
     @request.host = "www.test.host"
   end
 
   describe "#show" do
     context "when logged in" do
       it "should show the user's account information" do
-        user = FactoryGirl.create(:user)
+        user = create(:user)
         sign_in user
         get :show
         expect(response).to have_http_status(:success)
@@ -32,7 +33,7 @@ describe AccountsController do
     context "when logged in" do
 
       before(:each) do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user)
         sign_in @user
       end
 

@@ -3,15 +3,16 @@ require "rails_helper"
 describe ProfilesController do
 
   before(:each) do
+    create(:organization, subdomain: "www")
     @request.host = "www.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
   end
 
   describe "#show" do
     context "when logged in" do
       it "should show the user's profile information" do
-        user = FactoryGirl.create(:user)
+        user = create(:user)
         sign_in user
         get :show
         expect(response).to have_http_status(:success)
@@ -30,13 +31,13 @@ describe ProfilesController do
   describe "#update" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user)
         sign_in @user
       end
 
       it "allows the user to update their profile information" do
         put :update, id: @user.profile,
-          profile: { first_name: "Robby", zip_code: "12345", language_id: FactoryGirl.create(:language) },
+          profile: { first_name: "Robby", zip_code: "12345", language_id: create(:language) },
           authenticity_token: set_authenticity_token
 
         @user.reload

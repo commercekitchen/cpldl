@@ -3,9 +3,7 @@
   <head>
     <%= render "shared/meta_tags" %>
     <% begin %>
-      <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
-      <% rescue %>
-      <%= render "shared/ga_www" if Rails.env.production? %>
+      <%= render "shared/ga_#{current_organization.subdomain}" if Rails.env.production? %>
     <% end %>
     <%= render "shared/ga_event_tracking" if Rails.env.production? %>
   </head>
@@ -16,8 +14,8 @@
         <% if content_for?(:callout) %>
           <%= yield :callout %>
         <% else %>
-          <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> >
-            <% if chicago_subdomain %>
+          <h1 class="<%= slogan_class %>" >
+            <% if subdomain? %>
               <%= t('home.logo_banner_html') %>
             <% else %>
               <%= t('home.logo_banner_partial_2') %>

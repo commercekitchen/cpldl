@@ -25,8 +25,8 @@
 #
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses] if :dl_subdomain
-  before_action :authenticate_user!, except: [:index, :show] unless :dl_subdomain
+  before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses] if :top_level_domain?
+  before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment] if :subdomain?
 
   def index
     results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
@@ -40,12 +40,12 @@ class CoursesController < ApplicationController
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
       language_id = session[:locale] != user_lang_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
       if params[:search].blank?
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site)
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain)
       else
-         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: Rails.application.config.subdomain_site) & published_results
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain) & published_results
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: Rails.application.config.subdomain_site) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: Rails.application.config.subdomain_site) & published_results
+      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) & published_results
     end
 
     respond_to do |format|
@@ -183,12 +183,11 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
-    @org_id = Organization.find_by_subdomain(Rails.application.config.subdomain_site).id
     case I18n.locale
     when :es
-      @org_courses = Course.where_exists(:organization_course, organization_id: @org_id).where(language_id: Language.find_by_name("Spanish").id)
+      @org_courses = Course.where_exists(:organization_course, organization_id: current_organization.id).where(language_id: Language.find_by_name("Spanish").id)
     when :en
-      @org_courses = Course.where_exists(:organization_course, organization_id: @org_id).where(language_id: Language.find_by_name("English").id)
+      @org_courses = Course.where_exists(:organization_course, organization_id: current_organization.id).where(language_id: Language.find_by_name("English").id)
     end
     # Finds and bulk adds relevant core desktop topics
     case params["set_one"]
@@ -242,5 +241,4 @@ class CoursesController < ApplicationController
       2
     end
   end
-
 end

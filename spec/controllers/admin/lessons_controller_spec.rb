@@ -4,15 +4,16 @@ describe Admin::LessonsController do
 
   before(:each) do
     @request.host = "www.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @course1 = FactoryGirl.create(:course)
-    @lesson1 = FactoryGirl.create(:lesson, title: "Lesson1")
-    @lesson2 = FactoryGirl.create(:lesson, title: "Lesson2")
+    create(:organization, subdomain: "www")
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+    @course1 = create(:course)
+    @lesson1 = create(:lesson, title: "Lesson1")
+    @lesson2 = create(:lesson, title: "Lesson2")
     @course1.lessons << [@lesson1, @lesson2]
     @course1.save
 
-    @admin = FactoryGirl.create(:admin_user)
+    @admin = create(:admin_user)
     @admin.add_role(:admin)
     sign_in @admin
   end

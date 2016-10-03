@@ -3,12 +3,16 @@ require "rails_helper"
 describe "home/index.html.erb" do
 
   before(:each) do
-    @course = FactoryGirl.create(:course)
+    @org = create(:organization, subdomain: "www")
+    allow(view).to receive(:current_organization).and_return(@org)
+    allow(view).to receive(:subdomain?).and_return(false)
+    allow(view).to receive(:top_level_domain?).and_return(true)
+    @course = create(:course)
     @courses = [@course]
     assign(:course, @course)
-    @admin = FactoryGirl.create(:admin_user)
+    @admin = create(:admin_user)
     @admin.add_role(:admin)
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
   end
 
   context "when logged in as an admin" do

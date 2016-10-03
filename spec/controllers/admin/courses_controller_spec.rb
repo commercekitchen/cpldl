@@ -3,15 +3,14 @@ require "rails_helper"
 describe Admin::CoursesController do
 
   before(:each) do
+    @organization = create(:organization)
     @request.host = "chipublib.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @course1 = FactoryGirl.create(:course, title: "Course1", course_order: 1)
-    @course2 = FactoryGirl.create(:course, title: "Course2", course_order: 2)
-    @course3 = FactoryGirl.create(:course, title: "Course3", course_order: 3)
-    @admin = FactoryGirl.create(:admin_user)
-    @organization = FactoryGirl.create(:organization)
-    @admin.add_role(:admin)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+    @course1 = create(:course, title: "Course1", course_order: 1)
+    @course2 = create(:course, title: "Course2", course_order: 2)
+    @course3 = create(:course, title: "Course3", course_order: 3)
+    @admin = create(:admin_user, organization: @organization)
     @admin.add_role(:admin, @organization)
 
     @org_course1 = OrganizationCourse.create(organization_id: @organization.id,
@@ -81,7 +80,7 @@ describe Admin::CoursesController do
         pub_status:  "P",
         format: "D",
         other_topic_text: "Learning",
-        language_id: FactoryGirl.create(:language),
+        language_id: create(:language),
         level: "Advanced",
         course_order: "" }
     end

@@ -2,17 +2,15 @@
 <html>
   <head>
     <%= render "shared/meta_tags" %>
-    <% unless  demo_subdomain %>
-      <%= render "shared/ga_#{ Rails.application.config.subdomain_site}" if Rails.env.production? %>
-      <%= render "shared/ga_event_tracking" if Rails.env.production? %>
-    <% end %>
+    <%= render "shared/ga_#{current_organization.subdomain}" if Rails.env.production? %>
+    <%= render "shared/ga_event_tracking" if Rails.env.production? %>
   </head>
   <body>
-    <% if current_user && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
+    <% if current_user && current_user.has_role?(:admin, current_organization) %>
       <%= render "shared/admin/header" %>
     <% elsif current_user %>
       <%= render "shared/user/header" %>
-    <% elsif dl_subdomain %>
+    <% elsif !subdomain? %>
       <%= render "shared/dl_header" %>
     <% else %>
       <%= render "shared/header" %>
@@ -24,8 +22,8 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> >
-                <% if chicago_subdomain %>
+              <h1 class="<%= slogan_class %>">
+                <% if subdomain? %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>
                   <%= t('home.logo_banner_partial_2') %>
@@ -43,7 +41,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1> <% if chicago_subdomain %>
+              <h1> <% if subdomain? %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>
                   <%= t('home.logo_banner_partial_2') %>

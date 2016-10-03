@@ -5,18 +5,18 @@
     </div>
     <div class="logo-link-container">
       <div class="html5-link">
-        <%= link_to root_url(subdomain:  Rails.application.config.subdomain_site), class: 'logo-link' do %>
+        <%= link_to root_url(subdomain: current_organization.subdomain), class: 'logo-link' do %>
           <div class="link-box">
-            <% case subdomain %>
+            <% case current_organization.subdomain %>
             <% when "www" %>
-            <%= render "shared/logo_purple" %>
-          <% else %>
-            <%= render "shared/logo_white" %>
+              <%= render "shared/logo_purple" %>
+            <% else %>
+              <%= render "shared/logo_white" %>
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1  <% if chicago_subdomain %>class="cpl-slogan" %> <% end %> >
-                <% if chicago_subdomain %>
+              <h1 class="<%= slogan_class %>">
+                <% if subdomain? %>
                   <%= t('home.logo_banner_html') %>
                 <% else %>
                   <%= t('home.logo_banner_partial_2') %>

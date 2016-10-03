@@ -3,10 +3,12 @@ require "feature_helper"
 feature "Registered user visits account page" do
 
   before(:each) do
-    @user = FactoryGirl.create(:user)
+    switch_to_subdomain("chipublib")
+    @organization = create(:organization)
+    @user = create(:user, organization: @organization)
     Language.all.each(&:destroy)
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
     login_as(@user)
   end
 

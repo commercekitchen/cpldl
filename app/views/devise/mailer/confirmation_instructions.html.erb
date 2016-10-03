@@ -1,40 +1,12 @@
-<% mail_subdomain = @resource.subdomain %>
-<% if Rails.application.config.subdomain_site == "chipublib" %>
-  <p><%= t('confirmation_email.cpl_subject') %></p>
+<p><%= t("confirmation_email.#{@resource.subdomain}.subject") %></p>
 
-  <p><%= t('confirmation_email.greeting') %> <%= @user.profile.first_name %>,</p>
+<p><%= t("confirmation_email.#{@resource.subdomain}.greeting") %> <%= @user.profile.first_name %>,</p>
 
-  <p><%= t('confirmation_email.cpl_welcome') %></p>
+<p><%= t("confirmation_email.#{@resource.subdomain}.welcome") %></p>
 
-<%# Devise uses the same setting for host link as for emailer %>
-<% if Rails.env == "staging"
-    if Rails.application.config.subdomain_site == 'chipublib'
-      mail_subdomain = 'chipublib-stage'
-    elsif Rails.application.config.subdomain_site == 'demo'
-      mail_subdomain = 'demo-stage'
-    else
-      mail_subdomain = "www-stage" # They all map to stage, needed for email to work???
-    end
-  end %>
+<p><%= t("confirmation_email.#{@resource.subdomain}.confirm_your_account_through_link") %></p>
 
-  <p><%= link_to "#{t('confirmation_email.confirm_my_account')}", confirmation_url(@resource, confirmation_token: @token, subdomain: mail_subdomain) %></p>
+<p><%= link_to "#{t("confirmation_email.#{@resource.subdomain}.confirm_my_account")}", confirmation_url(@user, confirmation_token: @token) %></p>
 
+<%= raw t("confirmation_email.#{@resource.subdomain}.signature") %>
 
-  <p>
-    <%= t('confirmation_email.signature_line_1') %>
-    <ul>
-      <li><%= t('confirmation_email.signature_line_2') %></li>
-      <li><%= t('confirmation_email.signature_line_3') %></li>
-      <li><%= t('confirmation_email.signature_line_4') %></li>
-    </ul>
-  </p>
-
-  <p><%= t('confirmation_email.have_questions_link_html') %></p>
-
-<% else %>
-  <p><%= t('confirmation_email.welcome') %> <%= @email %>!</p>
-
-  <p><%= t('confirmation_email.confirm_your_account_through_link') %></p>
-
-  <p><%= link_to "#{t('confirmation_email.confirm_my_account')}", confirmation_url(@resource, confirmation_token: @token, subdomain: @resource.subdomain) %></p>
-<% end %>

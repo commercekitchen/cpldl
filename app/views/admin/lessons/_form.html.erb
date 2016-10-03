@@ -112,7 +112,7 @@
     </fieldset>
   </div>
 
-  <%= f.hidden_field :subdomain, value:  Rails.application.config.subdomain_site %>
+  <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 
   <%= f.submit "Save Lesson", class: button_color %>
 <% end %>

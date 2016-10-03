@@ -22,10 +22,10 @@ Rails.application.configure do
 
   # => to send email from local host
   #https://chipublib.digitallearn.org/
-  config.action_mailer.default_url_options = { host: "cpldl-stage.digitallearn.org" }
+  config.action_mailer.default_url_options = { host: "stage.digitallearn.org" }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.asset_host = "https://cpldl-stage.digitallearn.org"
+  config.action_mailer.asset_host = "https://stage.digitallearn.org"
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log

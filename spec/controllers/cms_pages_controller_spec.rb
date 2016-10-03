@@ -23,6 +23,7 @@ require "rails_helper"
 
 describe CmsPagesController do
   before(:each) do
+    create(:organization, subdomain: "www")
     @request.host = "www.test.host"
     @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)

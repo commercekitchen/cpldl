@@ -11,15 +11,14 @@
       <% if content_for?(:callout) %>
         <%= yield :callout %>
       <% else %>
-
-          <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> >
-            <% if chicago_subdomain %>
-          <%= t('home.logo_banner_html') %>
+        <h1 class="<%= slogan_class %>">
+          <% if subdomain? %>
+            <%= t('home.logo_banner_html') %>
           <% else %>
-          <%= t('home.logo_banner_partial_2') %>
-        <% end %>
+            <%= t('home.logo_banner_partial_2') %>
+          <% end %>
         </h1>
-              <% end %>
+      <% end %>
     </div>
   </div>
 

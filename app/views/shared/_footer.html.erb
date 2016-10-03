@@ -14,13 +14,4 @@
       <%= render "shared/logo_footer" %>
     </div>
   </div>
-
-<% if Rails.env == "staging" ||  Rails.env == "development"
-  server_name = subdomain + "-stage" %>
-  <% if request.subdomain == 'demo-stage' || request.subdomain == 'demo'
-    server_name = request.subdomain %>
-  <% end %>
-  <%= Rails.env + " server: " + server_name   %>
-<% end %>
-
 </footer>

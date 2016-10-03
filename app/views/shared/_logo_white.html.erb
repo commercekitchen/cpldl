@@ -1,6 +1,6 @@
 <div class="logo">
   <div class="logo-icon">
-    <% case  Rails.application.config.subdomain_site %>
+    <% case current_organization.subdomain %>
     <% when "www" %>
       <%= image_tag "DL_Logo_White" %>
     <% else %>

@@ -27,17 +27,18 @@ require "rails_helper"
 describe LessonsController do
 
   before(:each) do
+    create(:organization, subdomain: "www")
     @request.host = "www.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @course1 = FactoryGirl.create(:course)
-    @lesson1 = FactoryGirl.create(:lesson, title: "Lesson1", lesson_order: 1)
-    @lesson2 = FactoryGirl.create(:lesson, title: "Lesson2", lesson_order: 2)
-    @lesson3 = FactoryGirl.create(:lesson, title: "Lesson3", lesson_order: 3)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+    @course1 = create(:course)
+    @lesson1 = create(:lesson, title: "Lesson1", lesson_order: 1)
+    @lesson2 = create(:lesson, title: "Lesson2", lesson_order: 2)
+    @lesson3 = create(:lesson, title: "Lesson3", lesson_order: 3)
     @course1.lessons << [@lesson1, @lesson2, @lesson3]
     @course1.save
 
-    @user = FactoryGirl.create(:user)
+    @user = create(:user)
     sign_in @user
   end
 

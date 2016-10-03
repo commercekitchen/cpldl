@@ -3,10 +3,11 @@ require "feature_helper"
 feature "User clicks through each page" do
 
   before(:each) do
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @english = FactoryGirl.create(:language)
-    @user = FactoryGirl.create(:user)
-    @org = FactoryGirl.create(:organization)
+    create(:organization, subdomain: "www")
+    @org = create(:organization)
+    @spanish = create(:spanish_lang)
+    @english = create(:language)
+    @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
     login_as(@user, :scope => :user)
   end

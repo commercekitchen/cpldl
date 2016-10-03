@@ -3,14 +3,15 @@ require "feature_helper"
 feature "User logs in" do
 
   before(:each) do
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @english = FactoryGirl.create(:language)
+    @org = create(:organization)
+    @spanish = create(:spanish_lang)
+    @english = create(:language)
     switch_to_subdomain("chipublib")
   end
 
   scenario "with valid email and password" do
-    user = FactoryGirl.create(:user)
-    user.add_role(:user, FactoryGirl.create(:organization))
+    user = create(:user)
+    user.add_role(:user, create(:organization))
     log_in_with(user.email, user.password)
     expect(current_path).to eq(root_path)
     expect(page).to_not have_content("Signed in successfully.")
@@ -36,9 +37,8 @@ feature "User logs in" do
     expect(page).to have_content("Invalid email or password.")
   end
 
-  #Works on click test, error is about first_name field
-  pending "with unconfirmed email" do
-    user = FactoryGirl.create(:unconfirmed_user)
+  scenario "with unconfirmed email" do
+    user = create(:unconfirmed_user)
     log_in_with user.email, user.password
     expect(page).to have_content("You have to confirm your email address before continuing.")
   end

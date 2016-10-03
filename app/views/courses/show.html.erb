@@ -24,7 +24,7 @@
 
   <div class="fourcol last align-right mobile-tweak">
     <% if user_signed_in? %>
-      <% if current_user.present? && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
+      <% if current_user.present? && current_user.has_role?(:admin, current_organization) %>
         <p class="course-edit-add-remove"><small><%= link_to "Edit Course >>", edit_admin_course_path(@course), class: link_color_class %></small></p>
       <% elsif current_user.tracking_course?(@course.id) %>
         <p class="course-edit-add-remove"><small>

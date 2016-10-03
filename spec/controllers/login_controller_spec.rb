@@ -3,9 +3,10 @@ require "rails_helper"
 describe LoginController do
 
   before(:each) do
+    create(:organization, subdomain: "www")
     @request.host = "www.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
   end
 
   describe "GET #new" do

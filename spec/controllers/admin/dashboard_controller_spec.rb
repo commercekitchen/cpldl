@@ -2,24 +2,22 @@ require "rails_helper"
 
 describe Admin::DashboardController do
   before(:each) do
+    @org = create(:organization, subdomain: "www")
     @request.host = "www.test.host"
-    @user = FactoryGirl.create(:user)
-    @org = FactoryGirl.create(:organization)
-    @user.add_role(:admin, @org)
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
+    @user = create(:user, organization: @org)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
     sign_in @user
   end
 
   describe "#authorize_admin" do
-    # randomly fails, but click test works
-    xit "redirects non admin users to the root of the site" do
+    it "redirects non admin users to the root of the site" do
       get :index
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(root_path)
     end
 
-    xit "redirects nil users to the root of the site" do
+    it "redirects nil users to the root of the site" do
       @user = nil
       get :index
       expect(response).to have_http_status(:redirect)
@@ -27,7 +25,7 @@ describe Admin::DashboardController do
     end
 
     it "allows admin users" do
-      @user.add_role(:admin)
+      @user.add_role(:admin, @org)
       get :index
       expect(response).to have_http_status(:success)
     end
@@ -35,13 +33,13 @@ describe Admin::DashboardController do
 
   describe "get#pages_index" do
     before(:each) do
-      @user.add_role(:admin)
-      @page1 = FactoryGirl.create(:cms_page, title: "Page 1")
-      @page2 = FactoryGirl.create(:cms_page, title: "Page 2")
-      @page3 = FactoryGirl.create(:cms_page, title: "Page 3")
+      @user.add_role(:admin, @org)
+      @page1 = create(:cms_page, title: "Page 1", organization: @org)
+      @page2 = create(:cms_page, title: "Page 2", organization: @org)
+      @page3 = create(:cms_page, title: "Page 3", organization: @org)
     end
-    # For some reason, works when this file is run, but not all files. Grr.
-    xit "assigns all cms_pages to @cms_pages" do
+
+    it "assigns all cms_pages to @cms_pages" do
       get :pages_index
       expect(response).to have_http_status(:success)
       expect(assigns(:cms_pages)).to include(@page1, @page2, @page3)
@@ -51,10 +49,10 @@ describe Admin::DashboardController do
 
   describe "get#users_index" do
     before(:each) do
-      @user.add_role(:admin)
-      @user1 = FactoryGirl.create(:user, email: "one@example.com")
-      @user2 = FactoryGirl.create(:user, email: "two@example.com")
-      @user3 = FactoryGirl.create(:user, email: "three@example.com")
+      @user.add_role(:admin, @org)
+      @user1 = create(:user, email: "one@example.com", organization: @org)
+      @user2 = create(:user, email: "two@example.com", organization: @org)
+      @user3 = create(:user, email: "three@example.com", organization: @org)
       @user1.add_role(:user, @org)
       @user2.add_role(:user, @org)
       @user3.add_role(:user, @org)
@@ -80,8 +78,8 @@ describe Admin::DashboardController do
 
   describe "put#admin_dashboard_manually_confirm_user" do
     before(:each) do
-      @user.add_role(:admin)
-      @user1 = FactoryGirl.create(:user, email: "one@example.com", confirmed_at: nil)
+      @user.add_role(:admin, @org)
+      @user1 = create(:user, email: "one@example.com", confirmed_at: nil)
     end
 
     it "should manually confirm user" do

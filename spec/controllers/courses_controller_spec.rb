@@ -30,20 +30,20 @@ describe CoursesController do
 
   before(:each) do
     request.host = "chipublib.example.com"
-    @language = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @organization = FactoryGirl.create(:organization)
-    @course1 = FactoryGirl.create(:course, title: "Course 1",
-                                           language: @language,
-                                           description: "Mocha Java Scripta",
-                                           organization: @organization)
-    @course2 = FactoryGirl.create(:course, title: "Course 2",
-                                           language: @language,
-                                           organization: @organization)
-    @course3 = FactoryGirl.create(:course, title: "Course 3",
-                                           language: @language,
-                                           description: "Ruby on Rails",
-                                           organization: @organization)
+    @language = create(:language)
+    @spanish = create(:spanish_lang)
+    @organization = create(:organization)
+    @course1 = create(:course, title: "Course 1",
+                               language: @language,
+                               description: "Mocha Java Scripta",
+                               organization: @organization)
+    @course2 = create(:course, title: "Course 2",
+                               language: @language,
+                               organization: @organization)
+    @course3 = create(:course, title: "Course 3",
+                               language: @language,
+                               description: "Ruby on Rails",
+                               organization: @organization)
   end
 
   describe "GET #index" do
@@ -102,10 +102,10 @@ describe CoursesController do
   describe "GET #your" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user, organization: @organization)
         sign_in @user
-        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true)
-        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: false)
+        @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
+        @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
         @user.course_progresses << [@course_progress1, @course_progress2]
       end
 
@@ -137,15 +137,15 @@ describe CoursesController do
   describe "GET #completed" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
-        @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id,
-                                                                 tracked: true,
-                                                                 completed_at: Time.zone.now)
-        @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id,
-                                                                 tracked: true)
-        @course_progress3 = FactoryGirl.create(:course_progress, course_id: @course3.id,
-                                                                 tracked: true,
-                                                                 completed_at: Time.zone.now)
+        @user = create(:user, organization: @organization)
+        @course_progress1 = create(:course_progress, course_id: @course1.id,
+                                                     tracked: true,
+                                                     completed_at: Time.zone.now)
+        @course_progress2 = create(:course_progress, course_id: @course2.id,
+                                                     tracked: true)
+        @course_progress3 = create(:course_progress, course_id: @course3.id,
+                                                     tracked: true,
+                                                     completed_at: Time.zone.now)
         @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
         sign_in @user
       end
@@ -168,7 +168,7 @@ describe CoursesController do
   describe "GET #complete" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user, organization: @organization)
         sign_in @user
       end
 
@@ -178,6 +178,7 @@ describe CoursesController do
       end
 
       it "generates a PDF when send as format pdf" do
+        # the send on this opens a term window on run
         get :complete, { course_id: @course1, format: "pdf" }
         expect(assigns(:pdf)).not_to be_empty
       end
@@ -195,11 +196,11 @@ describe CoursesController do
   describe "POST #start" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
-        @lesson1 = FactoryGirl.create(:lesson, lesson_order: 1)
-        @lesson2 = FactoryGirl.create(:lesson, lesson_order: 2)
-        @lesson3 = FactoryGirl.create(:lesson, lesson_order: 3)
-        @lesson4 = FactoryGirl.create(:lesson)
+        @user = create(:user)
+        @lesson1 = create(:lesson, lesson_order: 1)
+        @lesson2 = create(:lesson, lesson_order: 2)
+        @lesson3 = create(:lesson, lesson_order: 3)
+        @lesson4 = create(:lesson)
         @course1.lessons << [@lesson1, @lesson2, @lesson3]
         @course2.lessons << [@lesson4]
         sign_in @user
@@ -236,10 +237,10 @@ describe CoursesController do
 
     context "when logged out" do
       it "should redirect to login page" do
-        @lesson1 = FactoryGirl.create(:lesson, lesson_order: 1)
-        @lesson2 = FactoryGirl.create(:lesson, lesson_order: 2)
-        @lesson3 = FactoryGirl.create(:lesson, lesson_order: 3)
-        @lesson4 = FactoryGirl.create(:lesson)
+        @lesson1 = create(:lesson, lesson_order: 1)
+        @lesson2 = create(:lesson, lesson_order: 2)
+        @lesson3 = create(:lesson, lesson_order: 3)
+        @lesson4 = create(:lesson)
         @course1.lessons << [@lesson1, @lesson2, @lesson3]
         @course2.lessons << [@lesson4]
 
@@ -252,7 +253,7 @@ describe CoursesController do
 
   describe "POST #add" do
     before(:each) do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       sign_in @user
     end
 
@@ -265,7 +266,7 @@ describe CoursesController do
 
   describe "POST #remove" do
     before(:each) do
-      @user = FactoryGirl.create(:user)
+      @user = create(:user)
       sign_in @user
     end
 
@@ -283,8 +284,8 @@ describe CoursesController do
   describe "GET #view_attachment" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
-        @attachment = FactoryGirl.create(:attachment)
+        @user = create(:user)
+        @attachment = create(:attachment)
         sign_in @user
       end
 
@@ -309,7 +310,7 @@ describe CoursesController do
   describe "GET #quiz" do
     context "when logged in" do
       before(:each) do
-        @user = FactoryGirl.create(:user)
+        @user = create(:user)
         sign_in @user
       end
 

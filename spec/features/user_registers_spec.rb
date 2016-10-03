@@ -3,8 +3,9 @@ require "feature_helper"
 feature "User signs up" do
 
   before(:each) do
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @english = FactoryGirl.create(:language)
+    create(:organization)
+    @spanish = create(:spanish_lang)
+    @english = create(:language)
     switch_to_subdomain("chipublib")
   end
 

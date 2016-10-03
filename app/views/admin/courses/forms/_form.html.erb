@@ -153,10 +153,10 @@
     </div>
   </div>
 
-  <% if  dl_subdomain %>
-    <%= render("admin/courses/forms/dl_level_pub_section", f: f) %>
-  <% else %>
+  <% if subdomain? %>
     <%= render("admin/courses/forms/level_pub_section", f: f) %>
+  <% else %>
+    <%= render("admin/courses/forms/dl_level_pub_section", f: f) %>
   <% end %>
 
   <fieldset>
@@ -175,7 +175,7 @@
     </div>
   </fieldset>
 
-  <%= f.hidden_field :subdomain, value:  Rails.application.config.subdomain_site %>
+  <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 
   <div class="actions">
     <div class="row">

@@ -21,6 +21,7 @@
 
 FactoryGirl.define do
   factory :cms_page do
+    organization
     title "A New Page"
     language_id 1
     body "Look at that body!"

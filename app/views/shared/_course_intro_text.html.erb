@@ -1,7 +1,7 @@
-<% if user_signed_in? && current_user.has_role?(:admin, Organization.find_by_subdomain( Rails.application.config.subdomain_site)) %>
+<% if user_signed_in? && current_user.has_role?(:admin, current_organization) %>
   <%= content_for(:callout) { %>
-  <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> >
-   <% if chicago_subdomain %>
+    <h1 class="<%= slogan_class %>" >
+   <% if subdomain? %>
       <%= t('home.logo_banner_partial') %><br>
       Hi Admin!<br>
       <%= t('home.logo_banner_partial_2') %>
@@ -14,23 +14,26 @@
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: link_color_class %>.
   </h1>
+
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> > <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
-      <% if chicago_subdomain %>
+    <h1 class="<%= slogan_class %>" >
+    <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
+      <% if subdomain? %>
         <%= t('home.logo_banner_html') %>
       <% else %>
         <%= t('home.logo_banner_partial_2') %>
       <% end %>
     </h1>
   <% end %>
- <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %>  class="<%= text_color_class %>">
+  <h1 class="<%= slogan_class %> <%= text_color_class %>" >
     <%= t('logged_in_user.choose_a_course') %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
+
 <% else %>
- <h1  <% if chicago_subdomain %>class="cpl-slogan"  <% end %> class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
-  <% if dl_subdomain %>
+  <h1 <% if subdomain? %>class="<%= slogan_class %>  <% end %> class="centered <%= text_color_class %>"><%= t('home.choose_a_course') %></h1>
+  <% if top_level_domain? %>
     <div class="clearfix">
       <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
     </div>

@@ -3,12 +3,15 @@ require "rails_helper"
 describe "courses/show.html.erb" do
 
   before(:each) do
-    @course = FactoryGirl.create(:course, meta_desc: "Meta description.", seo_page_title: "SEO Title")
+    @org = create(:organization, subdomain: "www")
+    allow(view).to receive(:current_organization).and_return(@org)
+    allow(view).to receive(:subdomain?).and_return(false)
+    @course = create(:course, meta_desc: "Meta description.", seo_page_title: "SEO Title")
     assign(:course, @course)
-    @admin = FactoryGirl.create(:admin_user)
-    @admin.add_role(:admin)
-    @user = FactoryGirl.create(:user)
-    @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course.id)
+    @admin = create(:admin_user)
+    @admin.add_role(:admin, @org)
+    @user = create(:user, organization: @org )
+    @course_progress1 = create(:course_progress, course_id: @course.id)
     @user.course_progresses << [@course_progress1]
   end
 

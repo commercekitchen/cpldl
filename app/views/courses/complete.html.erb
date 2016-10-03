@@ -51,7 +51,7 @@
         <% end %>
       <% end %>
 
-      <% if chicago_subdomain %>
+      <% if subdomain? %>
         <%= link_to(course_skills_path(@course.id)) do %>
           <%= button_tag(type: 'button', class: "congrats-button #{button_color}") do %>
               <%= t('course_completion_page.practice_skills') %>

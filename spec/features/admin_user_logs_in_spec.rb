@@ -5,11 +5,11 @@ feature "Admin user logs in" do
   context "test forced password changing" do
 
     before(:each) do
+      @org = create(:organization)
       Capybara.default_host = "http://chipublib.example.com"
-      @user = FactoryGirl.create(:user)
-      @english = FactoryGirl.create(:language)
-      @spanish = FactoryGirl.create(:spanish_lang)
-      @org = FactoryGirl.create(:organization)
+      @user = create(:user, organization: @org)
+      @english = create(:language)
+      @spanish = create(:spanish_lang)
       @user.add_role(:admin, @org)
       switch_to_subdomain("chipublib")
     end

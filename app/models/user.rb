@@ -50,20 +50,18 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   rolify
+  belongs_to :organization
   has_one :profile, dependent: :destroy
   has_many :course_progresses, dependent: :destroy
   accepts_nested_attributes_for :profile
   validates_associated :profile
   before_create :add_token_to_user
+  before_create :add_subdomain
 
   ROLES = %w(Admin Trainer User)
 
-  def organization_id
+  def organization_id_to_be_deleted
     roles.find_by_resource_type("Organization").resource_id
-  end
-
-  def organization
-    Organization.find(organization_id)
   end
 
   def tracking_course?(course_id)
@@ -91,7 +89,13 @@ class User < ActiveRecord::Base
     language.blank? ? "English" : language.name
   end
 
-  def add_token_to_user
-    self.token = SecureRandom.uuid if self.token.blank?
-  end
+  private
+
+    def add_token_to_user
+      self.token = SecureRandom.uuid if self.token.blank?
+    end
+
+    def add_subdomain
+      self.subdomain = organization.subdomain
+    end
 end

@@ -41,6 +41,7 @@ FactoryGirl.define do
     email "user@example.com"
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
+    organization
     profile
   end
 
@@ -48,12 +49,15 @@ FactoryGirl.define do
     email "unconfirmed@example.com"
     password "abcd1234"
     confirmed_at nil
+    organization
+    profile
   end
 
   factory :admin_user, class: User do
     email "admin@example.com"
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
+    organization
     profile
   end
 

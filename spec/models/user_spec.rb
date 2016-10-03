@@ -39,15 +39,16 @@
 require "rails_helper"
 
 describe User do
+  it { should belong_to(:organization) }
 
   context "#tracking_course?" do
 
     before(:each) do
-      @user = FactoryGirl.create(:user)
-      @course1 = FactoryGirl.create(:course, title: "Course 1")
-      @course2 = FactoryGirl.create(:course, title: "Course 2")
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course1.id, tracked: true)
-      @course_progress2 = FactoryGirl.create(:course_progress, course_id: @course2.id, tracked: false)
+      @user = create(:user)
+      @course1 = create(:course, title: "Course 1")
+      @course2 = create(:course, title: "Course 2")
+      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
+      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
       @user.course_progresses << [@course_progress1, @course_progress2]
     end
 

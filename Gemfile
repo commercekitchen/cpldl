@@ -4,7 +4,7 @@
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'rails', '4.2.5'
+gem 'rails', '4.2.7.1'
 gem 'pg'
 gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
@@ -19,7 +19,7 @@ gem 'pg_search', '~> 1.0.5'
 gem 'where_exists'
 
 # Authentication and authorization
-gem 'devise'
+gem 'devise', '3.5.10'
 gem 'devise_invitable'
 gem 'rolify'
 
@@ -64,9 +64,11 @@ group :development do
   gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem "pry-remote"
 end
 
 group :development, :test do
+  gem "bundler-audit", require: false
   gem 'faker'
   gem 'pry'
   gem 'pry-nav'
@@ -99,5 +101,9 @@ group :test do
   gem 'database_cleaner'
   gem 'codeclimate-test-reporter'
   gem 'simplecov', require: false
-  # gem 'webmock'
+  gem "shoulda-matchers"
+end
+
+group :development, :staging do
+  gem 'mail_interceptor'
 end

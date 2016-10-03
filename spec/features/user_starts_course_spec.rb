@@ -3,28 +3,26 @@ require "feature_helper"
 feature "User visits course listing page" do
 
   before(:each) do
-    @language = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @organization = FactoryGirl.create(:organization)
-    @course1 = FactoryGirl.create(:course, title: "Title 1",
-                                           course_order: 1,
-                                           language: @language,
-                                           organization: @organization)
-    @course2 = FactoryGirl.create(:course, title: "Title 2",
-                                           course_order: 2,
-                                           language: @language,
-                                           organization: @organization)
-    @course3 = FactoryGirl.create(:course, title: "Title 3",
-                                           course_order: 3,
-                                           language: @language,
-                                           organization: @organization)
+    @language = create(:language)
+    @spanish = create(:spanish_lang)
+    @organization = create(:organization, subdomain: 'chipublib')
+    @course1 = create(:course, title: "Title 1",
+                               course_order: 1,
+                               language: @language,
+                               organization: @organization)
+    @course2 = create(:course, title: "Title 2",
+                               course_order: 2,
+                               language: @language,
+                               organization: @organization)
+    @course3 = create(:course, title: "Title 3",
+                               course_order: 3,
+                               language: @language,
+                               organization: @organization)
     switch_to_subdomain("chipublib")
   end
 
   context "as an anonymous user" do
-
     context "courses url version" do
-
       scenario "should see all courses in the catalog from the homepage" do
         visit courses_path
         expect(page).to have_content(@course1.title)
@@ -34,7 +32,7 @@ feature "User visits course listing page" do
 
       scenario "can click on a course to be taken to the course page" do
         visit courses_path
-        first(:css, ".course-widget-cpl").click
+        first(:css, ".course-widget-chipublib").click
         expect(current_path).to eq(course_path(@course1))
       end
 
@@ -57,7 +55,7 @@ feature "User visits course listing page" do
 
       scenario "can click on a course to be taken to the course page" do
         visit root_path
-        first(:css, ".course-widget-cpl").click
+        first(:css, ".course-widget-chipublib").click
         expect(current_path).to eq(course_path(@course1))
       end
 
