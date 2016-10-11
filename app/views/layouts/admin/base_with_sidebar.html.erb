@@ -11,11 +11,7 @@
           <%= yield :callout %>
         <% else %>
           <h1 class="<%= slogan_class %>">
-            <% if subdomain? %>
-              <%= t('home.logo_banner_html') %>
-            <% else %>
-              <%= t('home.logo_banner_partial_2') %>
-            <% end %>
+            <%= render "shared/logo_banner" %>
           </h1>
         <% end %>
       </div>

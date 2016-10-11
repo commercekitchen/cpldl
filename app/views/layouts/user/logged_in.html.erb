@@ -10,7 +10,7 @@
       <%= render "shared/admin/header" %>
     <% elsif current_user %>
       <%= render "shared/user/header" %>
-    <% elsif !subdomain? %>
+    <% elsif top_level_domain? %>
       <%= render "shared/dl_header" %>
     <% else %>
       <%= render "shared/header" %>
@@ -22,13 +22,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1 class="<%= slogan_class %>">
-                <% if subdomain? %>
-                  <%= t('home.logo_banner_html') %>
-                <% else %>
-                  <%= t('home.logo_banner_partial_2') %>
-                <% end %>
-              </h1>
+              <%= render "shared/logo_banner" %>
             <% end %>
           </div>
           <div class="fourcol last">
@@ -41,12 +35,7 @@
             <% if content_for?(:callout) %>
               <%= yield :callout %>
             <% else %>
-              <h1> <% if subdomain? %>
-                  <%= t('home.logo_banner_html') %>
-                <% else %>
-                  <%= t('home.logo_banner_partial_2') %>
-                <% end %>
-              </h1>
+              <%= render "shared/logo_banner" %>
             <% end %>
           </div>
         <% end %>

@@ -1,15 +1,7 @@
 <% if user_signed_in? && current_user.has_role?(:admin, current_organization) %>
-  <%= content_for(:callout) { %>
-    <h1 class="<%= slogan_class %>" >
-   <% if subdomain? %>
-      <%= t('home.logo_banner_partial') %><br>
-      Hi Admin!<br>
-      <%= t('home.logo_banner_partial_2') %>
-    <% else %>
-      <%= t('home.logo_banner_partial_2') %>
-    <% end %>
-  </h1>
-  <% } %>
+  <%= content_for(:callout) do %>
+    <%= render "shared/logo_banner" %>
+  <% end %>
   <h1 class="<%= text_color_class %>">
     Edit a course by clicking on a course below, search courses or navigate to the
     <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: link_color_class %>.
@@ -17,14 +9,7 @@
 
 <% elsif user_signed_in? %>
   <%= content_for(:callout) do %>
-    <h1 class="<%= slogan_class %>" >
-    <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
-      <% if subdomain? %>
-        <%= t('home.logo_banner_html') %>
-      <% else %>
-        <%= t('home.logo_banner_partial_2') %>
-      <% end %>
-    </h1>
+    <%= render "shared/logo_banner" %>
   <% end %>
   <h1 class="<%= slogan_class %> <%= text_color_class %>" >
     <%= t('logged_in_user.choose_a_course') %>
