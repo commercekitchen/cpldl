@@ -26,8 +26,10 @@ class ApplicationController < ActionController::Base
   def set_mailer_host
     if staging?
       ActionMailer::Base.default_url_options[:host] = "#{stage_subdomain}.stage.digitallearn.org"
-    else
+    elsif Rails.env.production?
       ActionMailer::Base.default_url_options[:host] = "#{current_organization.subdomain}.digitallearn.org"
+    else
+      ActionMailer::Base.default_url_options[:host] = request.host
     end
   end
 
