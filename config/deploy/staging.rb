@@ -3,7 +3,7 @@
 
 set :bundle_without, %w{integration production test}.join(" ")
 
-set :branch, "staging"
+set :branch, "dm-initial-branch"
 
 server "dl-stageapp-01.do.lark-it.com",
   user: fetch(:application),

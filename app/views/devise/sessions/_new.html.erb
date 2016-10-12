@@ -1,4 +1,4 @@
-<h1 class="<%= text_color_class %>"><%= t('home.login') %></h1>
+<h1 class="text-color"><%= t('home.login') %></h1>
 
 <p><%= t('login_signup.already_have_an_account') %></p>
 
@@ -21,7 +21,7 @@
     </fieldset>
   <% end -%>
 
-  <%= f.submit "#{t('login_signup.access_courses')}", class: button_color %>
+  <%= f.submit "#{t('login_signup.access_courses')}", class: "button-color"%>
 <% end %>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>

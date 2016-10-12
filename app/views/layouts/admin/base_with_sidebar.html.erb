@@ -3,14 +3,14 @@
   <head>
     <%= render "shared/meta_tags" %>
   </head>
-  <body>
+  <body class="<%= current_organization.subdomain %>">
     <%= render "shared/admin/header" %>
-    <div class="banner <%= color_class %> large-top-padding">
+    <div class="banner color large-top-padding">
       <div class="container">
         <% if content_for?(:callout) %>
           <%= yield :callout %>
         <% else %>
-          <h1 class="<%= slogan_class %>">
+          <h1 class="slogan">
             <%= render "shared/logo_banner" %>
           </h1>
         <% end %>

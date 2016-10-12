@@ -1,11 +1,11 @@
 <% if top_level_domain? %>
-  <h1 class="<%= text_color_class %>"><%= t('home.signup_notice') %></h1>
+  <h1 class="text-color"><%= t('home.signup_notice') %></h1>
 
   <p>
     <%= t('login_signup.notice_to_users') %>
   </p>
 <% else %>
-  <h1 class="<%= text_color_class %>"><%= t('home.signup') %></h1>
+  <h1 class="text-color"><%= t('home.signup') %></h1>
 
   <p>
     <%= t('login_signup.want_to_take_a_course') %>
@@ -57,7 +57,7 @@
       <%= hidden_field(:user, :subdomain, value:  current_organization.subdomain) %>
     </fieldset>
 
-    <%= f.submit "#{t('home.signup')}", class: button_color %>
+    <%= f.submit "#{t('home.signup')}", class: "button-color" %>
 
   <% end %>
 <% end %>

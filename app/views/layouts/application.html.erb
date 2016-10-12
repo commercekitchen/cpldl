@@ -7,14 +7,14 @@
     <% end %>
     <%= render "shared/ga_event_tracking" if Rails.env.production? %>
   </head>
-  <body class="<%= "#{controller_name}-#{action_name}" %>">
+  <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
     <%= render "shared/alternate_cpl_header" %>
-    <div class="banner <%= color_class %>">
+    <div class="banner color">
       <div class="container">
         <% if content_for?(:callout) %>
           <%= yield :callout %>
         <% else %>
-          <h1 class="<%= slogan_class %>" >
+          <h1 class="slogan" >
             <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>
           </h1>
         <% end %>

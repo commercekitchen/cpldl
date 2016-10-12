@@ -13,7 +13,7 @@
           <div class="row lesson-listing lesson-listing-first-row">
             <div class="onecol">
               <% if l.id == lesson.id %>
-                <i class="<%= icon_color_class %> icon-play"></i>
+                <i class="icon-color icon-play"></i>
               <% elsif lessons_completed.include?(l.id) %>
                 <i class="icon-ok orange"></i>
               <% else %>
@@ -24,7 +24,7 @@
               <%= l.lesson_order %>.
             </div>
             <div class="ninecol">
-              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: link_color_class %>
+              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: "link-color" %>
             </div>
           </div>
         </li>
@@ -51,7 +51,7 @@
               <%= l.lesson_order %>.
             </div>
             <div class="ninecol">
-              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: link_color_class %>
+              <%= link_to l.title, course_lesson_path(course, l), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: "link-color" %>
             </div>
           </div>
         </li>

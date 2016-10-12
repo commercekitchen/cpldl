@@ -1,6 +1,6 @@
 <%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
 
-<h1 class="<%= text_color_class %>">Courses</h1>
+<h1 class="text-color">Courses</h1>
 
 <div class="row">
   <div class="sixcol">
@@ -9,21 +9,21 @@
     </p>
   </div>
   <div class="sixcol last left-or-right">
-    <%= link_to "Add a New Course", new_admin_course_path, class: "btn #{button_color}" %>
+    <%= link_to "Add a New Course", new_admin_course_path, class: "btn button-color" %>
   </div>
 </div>
 
 <div class="sortable-list" data-page="courses">
   <div class="list-titles">
-    <div class="cell <%= text_color_class %>">Course</div>
-    <div class="cell <%= text_color_class %>">Topic</div>
-    <div class="cell <%= text_color_class %>">Language</div>
-    <div class="cell <%= text_color_class %>">Publication Status</div>
+    <div class="cell text-color">Course</div>
+    <div class="cell text-color">Topic</div>
+    <div class="cell text-color">Language</div>
+    <div class="cell text-color">Publication Status</div>
   </div>
   <ul class="objects sortable reorderable">
     <% @courses.each do |course| %>
       <li class="sortable-item" data-id="<%= course.id %>">
-        <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: link_color_class %></div>
+        <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "link-color" %></div>
         <div class="cell"><%= course.topics_str %></div>
         <div class="cell"><%= course.language.name %></div>
         <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Publish", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>

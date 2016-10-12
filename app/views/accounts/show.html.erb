@@ -1,4 +1,4 @@
-<h1 class="<%= text_color_class %>" ><%= t('logged_in_user.my_account') %></h1>
+<h1 class="text-color" ><%= t('logged_in_user.my_account') %></h1>
 
 <%= form_for @user, url: account_path, method: :put do |f| %>
 
@@ -14,18 +14,18 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :email, class: text_color_class do %>
+    <%= f.label :email, class: "text-color" do %>
       <%= t('login_signup.email') %>
     <% end %>
     <%= f.email_field :email, autofocus: true %>
   </fieldset>
 
   <% if @user.pending_reconfirmation? %>
-    <div class="<%= text_color_class %>">Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
+    <div class="text-color">Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
   <% end %>
 
   <fieldset>
-    <%= f.label :password, class: text_color_class do %>
+    <%= f.label :password, class: "text-color" do %>
       <%= t('login_signup.password') %> <i class="note"><%= t('change_login_page.leave_blank_to_not_change_password') %></i>
     <% end %>
     <%= f.text_field :password, autocomplete: "off", class: "strength" %>
@@ -33,14 +33,14 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :password_confirmation, class: text_color_class do %>
+    <%= f.label :password_confirmation, class: "text-color" do %>
       <%= t('change_login_page.password_confirmation') %>
     <% end %>
     <%= f.text_field :password_confirmation %>
   </fieldset>
 
   <fieldset>
-    <%= f.submit "Save", class: button_color %>
+    <%= f.submit "Save", class: "button-color" %>
   </fieldset>
 
 <% end %>

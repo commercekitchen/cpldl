@@ -1,7 +1,7 @@
-<h1 class="<%= slogan_class %>">
+<h1 class="slogan">
   <% if user_signed_in? %>
     <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%>!
-  <% elsif current_user.admin? %>
+  <% elsif current_user && current_user.admin? %>
     <%= t('logged_in_user.hi') %> <%= current_user.profile.first_name "(ADMIN)"%>!
   <% end %>
   <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>

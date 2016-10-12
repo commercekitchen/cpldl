@@ -12,7 +12,7 @@
 <div><small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small></div>
 
 <div class="row">
-  <div class="twelvecol congrats-banner <%= color_class %>">
+  <div class="twelvecol congrats-banner color">
     <div class="row">
       <% if current_user %>
         <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.profile.first_name}." %>
@@ -21,7 +21,7 @@
     </div>
     <div class="row extra-margin">
       <div class="cert-preview hide-on-tablet">
-        <div class="cert-inner <%= cert_color_class %>">
+        <div class="cert-inner cert-color">
           <div>
             <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
             <p>
@@ -46,14 +46,14 @@
     </div>
     <div class="row">
       <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
-        <%= button_tag(type: 'button', class: "congrats-button #{button_color}") do %>
+        <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
           <%= t('course_completion_page.download_certificate') %>
         <% end %>
       <% end %>
 
       <% if subdomain? %>
         <%= link_to(course_skills_path(@course.id)) do %>
-          <%= button_tag(type: 'button', class: "congrats-button #{button_color}") do %>
+          <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
               <%= t('course_completion_page.practice_skills') %>
           <% end %>
         <% end %>
@@ -62,13 +62,13 @@
     <div class="row">
       <% if current_user %>
         <%= link_to(your_courses_path) do %>
-          <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button #{button_color}" ) do %>
+          <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button button-color" ) do %>
             <%= t('course_completion_page.return_to_my_courses') %>
           <% end %>
         <% end %>
       <% end %>
       <%= link_to(courses_path) do %>
-        <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button #{button_color}") do %>
+        <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button button-color") do %>
           <%= t('course_completion_page.view_all_courses') %>
         <% end %>
       <% end %>
@@ -83,9 +83,9 @@
 
 <div class="row">
   <div class="sixcol border-right">
-    <h2 class="<%= text_color_class %>"><%= t('course_completion_page.practice_new_skills') %></h2>
+    <h2 class="text-color"><%= t('course_completion_page.practice_new_skills') %></h2>
     <% if @course.notes.present? %>
-      <div class="show_with_bullets <%= ck_color_class %>"><%= sanitize(@course.notes) %></div>
+      <div class="show_with_bullets"><%= sanitize(@course.notes) %></div>
     <% else %>
       <p class="note"><%= t('course_completion_page.there_are_no_notes_for_course') %></p>
     <% end %>
