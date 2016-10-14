@@ -1,0 +1,43 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<span><h1>Organizations</h1><%= link_to "Add an Organization", new_admin_organization_path, class: "btn button-color" %></span>
+<div class="row twelvecol underlined">
+  <div class="two-of-twelve">
+    <h2>Name</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>Subdomain</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>User count</h2>
+  </div>
+  <div class="two-of-twelve">
+    <h2>Branch List</h2>
+  </div>
+  <div class="four-of-twelve">
+    <h2>Admin Users</h2>
+  </div>
+</div>
+
+
+<% @organizations.each do |organization| %>
+  <div class="row twelvecol underlined">
+    <div class="two-of-twelve">
+      <%= organization.name %>
+    </div>
+    <div class="two-of-twelve">
+      <%= organization.subdomain %>
+    </div>
+    <div class="two-of-twelve">
+      <%= organization.user_count %>
+    </div>
+    <div class="two-of-twelve">
+      <%= organization.branches?%>
+    </div>
+    <div class="four-of-twelve">
+      <% organization.admin_user_emails.each do |email| %>
+        <%= email %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

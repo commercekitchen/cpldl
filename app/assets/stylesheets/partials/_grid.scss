@@ -47,7 +47,13 @@
 .sixcol {
   @include span-columns(6);
   @include media($mobile) {
-    @include span-columns(12);
+    @include span-columns(6);
+  }
+  .two-of-six {
+    @include span-columns(2 of 6);
+  }
+  .four-of-six {
+    @include span-columns(4 of 6);
   }
 }
 

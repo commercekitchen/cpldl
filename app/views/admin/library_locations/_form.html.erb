@@ -1,0 +1,26 @@
+<%= form_for([:admin, @library_location], html: { multipart: true } ) do |f| %>
+  <% if @library_location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@library_location.errors.count, "error") %> prohibited this library branch from being saved:</h2>
+      <ul>
+      <% @library_location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :name do %>
+      Name<span class="required"></span>
+    <% end %>
+    <%= f.text_field :name, class: "bottom-margin" %>
+  </fieldset>
+  <fieldset>
+    <%= f.label :zipcode do %>
+      Zipcode<span class="required"></span>
+    <% end %>
+    <%= f.text_field :zipcode, class: "bottom-margin" %>
+  </fieldset>
+  <%= f.submit "Save Library Branch", class: "button-color" %>
+<% end %>

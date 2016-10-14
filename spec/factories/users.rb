@@ -38,7 +38,7 @@
 
 FactoryGirl.define do
   factory :user do
-    email "user@example.com"
+    sequence(:email) { |n| "jane#{n}@example.com" }
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
     organization

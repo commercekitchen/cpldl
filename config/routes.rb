@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
+    resources :organizations, only: [:new, :create, :index]
+    resources :library_locations
 
     resources :dashboard, only: [:index]
       get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index

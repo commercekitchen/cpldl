@@ -1,0 +1,32 @@
+<%= form_for([:admin, @organization], html: { multipart: true } ) do |f| %>
+  <% if @organization.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
+      <ul>
+      <% @organization.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.label :name do %>
+      Name<span class="required"></span>
+    <% end %>
+    <%= f.text_field :name, class: "bottom-margin" %>
+  </fieldset>
+  <fieldset>
+    <%= f.label :branches do %>
+      Include Branches in registration?<span class="required"></span>
+    <% end %>
+    <%= f.select :branches, [['Yes', true], ['No', false]], class: "bottom-margin" %>
+  </fieldset>
+  <fieldset>
+    <%= f.label :subdomain do %>
+      Subdomain<span class="required"></span>
+    <% end %>
+    <%= f.text_field :subdomain, class: "bottom-margin" %>
+  </fieldset>
+  <%= f.submit "Save Organization", class: "button-color" %>
+<% end %>

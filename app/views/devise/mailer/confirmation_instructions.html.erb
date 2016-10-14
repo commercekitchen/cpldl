@@ -1,6 +1,6 @@
 <p><%= t("confirmation_email.#{@resource.subdomain}.subject") %></p>
 
-<p><%= t("confirmation_email.#{@resource.subdomain}.greeting") %> <%= @user.profile.first_name %>,</p>
+<p><%= t("confirmation_email.#{@resource.subdomain}.greeting") %> <% if @user.profile %> <%= @user.profile.first_name %>,<% end %></p>
 
 <p><%= t("confirmation_email.#{@resource.subdomain}.welcome") %></p>
 

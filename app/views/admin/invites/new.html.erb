@@ -8,6 +8,9 @@
   <%= f.text_field field %></p>
 <% end -%>
 
+<% if top_level_domain? %>
+  <%= f.collection_select(:organization_id, Organization.all, :id, "name", class: "select-large" ) %>
+<% end %>
   <p>
     <%= f.submit t("devise.invitations.new.submit_button"), class: "button-color" %>
   </p>

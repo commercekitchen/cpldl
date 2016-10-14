@@ -11,6 +11,6 @@
 FactoryGirl.define do
   factory :library_location do
     name "Back of the Yards"
+    zipcode "87654"
   end
-
 end

@@ -455,7 +455,8 @@ CREATE TABLE library_locations (
     name character varying,
     zipcode integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    organization_id integer
 );
 
 
@@ -519,7 +520,8 @@ CREATE TABLE organizations (
     name character varying,
     subdomain character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    branches boolean
 );
 
 
@@ -1094,6 +1096,13 @@ CREATE INDEX index_lessons_on_slug ON lessons USING btree (slug);
 
 
 --
+-- Name: index_library_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_library_locations_on_organization_id ON library_locations USING btree (organization_id);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1190,6 +1199,14 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT fk_rails_d7b9ff90af FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: fk_rails_fe22bb8133; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY library_locations
+    ADD CONSTRAINT fk_rails_fe22bb8133 FOREIGN KEY (organization_id) REFERENCES organizations(id);
 
 
 --
@@ -1339,4 +1356,8 @@ INSERT INTO schema_migrations (version) VALUES ('20160421153406');
 INSERT INTO schema_migrations (version) VALUES ('20160726200925');
 
 INSERT INTO schema_migrations (version) VALUES ('20161004043125');
+
+INSERT INTO schema_migrations (version) VALUES ('20161013231902');
+
+INSERT INTO schema_migrations (version) VALUES ('20161014040703');
 

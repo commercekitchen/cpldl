@@ -10,4 +10,6 @@
 #
 
 class LibraryLocation < ActiveRecord::Base
+  belongs_to :organization
+  validates :name, :zipcode, presence: true
 end
