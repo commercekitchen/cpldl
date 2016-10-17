@@ -36,3 +36,9 @@ $mobile-large: new-breakpoint(max-width 700px 12);
 $mobile-xlarge: new-breakpoint(max-width 830px 12);
 $tablet: new-breakpoint(max-width 1044px 12);
 $desktop: new-breakpoint(min-width 1044px 12);
+
+/* Misc Colors (Are these needed, or should they be something else) */
+$grey-1: #e9e9e9;
+$grey-2: #f4f4f4;
+$grey-3: #c2c2c2;
+$mustard-2: #795b05;

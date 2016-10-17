@@ -1,6 +1,6 @@
 .chipublib {
   .slogan {
-    color: white;
+    color: $white;
     text-align: center;
   }
 
@@ -10,7 +10,7 @@
 
   .button-color {
     background-color: $blind-man-mustard;
-    color: white;
+    color: $white;
   }
 
   .color {
@@ -18,11 +18,11 @@
   }
 
   .text-color {
-    color: "cpl-blue-text";
+    color: $cpl-blue;
   }
 
   .link-color {
-    color: "cpl-purple-text";
+    color: $cpl-purple;
   }
 
   .icon-color {
@@ -30,7 +30,7 @@
   }
 
   .download-color {
-    color: "cpl-purple";
+    color: $cpl-purple;
   }
 
   .cert-color {
@@ -65,7 +65,7 @@
     }
 
     h3 {
-      color: white;
+      color: $white;
       font-size: 1.5em;
       font-weight: 300;
       margin: 0em 0.5em;
@@ -90,7 +90,7 @@
 
     .description {
       position: relative;
-      background-color: white;
+      background-color: $white;
       height: 80px;
       margin: .75em 1em 0;
     }
@@ -125,7 +125,7 @@
 
     header {
       background: $blind-man-mustard;
-      background: linear-gradient(to bottom, $blind-man-mustard 0%, #795b05 100%);
+      background: linear-gradient(to bottom, $blind-man-mustard 0%, $mustard-2 100%);
     }
 
     &:hover {
@@ -135,8 +135,8 @@
 
   div.course-widget{
     header {
-      background-color: #E9E9E9;
-      background: linear-gradient(to bottom,#f4f4f4 0%,#c2c2c2 100%);
+      background-color: $grey-1;
+      background: linear-gradient(to bottom, $grey-2 0%, $grey-3 100%);
     }
   }
 }
