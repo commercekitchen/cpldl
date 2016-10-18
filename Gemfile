@@ -65,6 +65,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem "pry-remote"
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
@@ -73,7 +74,6 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
   gem 'rspec-rails', '~> 3.0'

@@ -12,7 +12,7 @@ feature "Admin create a new organization and manages its branches" do
     log_in_with @www_admin_user.email, @www_admin_user.password
   end
 
-  scenario "can visit each link in the header" do
+  scenario "can create and add admin" do
     visit admin_dashboard_index_path(subdomain: "chipublib")
     expect(page).to have_content("Hi Admin!")
 
@@ -60,5 +60,24 @@ feature "Admin create a new organization and manages its branches" do
     click_on "Save Library Branch"
 
     expect(page).to have_content("Ross-Barnum Branch Library")
+  end
+
+  scenario "branches is only visible when selected yes" do
+    visit admin_dashboard_index_path(subdomain: "chipublib")
+    expect(page).to have_content("Hi Admin!")
+
+    click_on "Organizations"
+    click_on "Add an Organization"
+    fill_in :organization_name, with: "Denver Public Library"
+    select "No", from: :organization_branches
+    fill_in :organization_subdomain, with: "dpl"
+
+    click_on "Save Organization"
+
+    switch_to_subdomain("dpl")
+    visit login_path
+
+    expect(page).to have_content("Your Password (must be at least 8 characters)")
+    expect(page).not_to have_content("What's your library called?")
   end
 end

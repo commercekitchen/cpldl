@@ -24,7 +24,9 @@
     <%= f.label :library_location_id, class: "text-color" do %>
       <%= t('profile_page.library_location') %>
     <% end %>
-    <%= f.collection_select(:library_location_id, LibraryLocation.all, :id, "name", {include_blank: "Select..."}, class: "select-large", id: "chzn" ) %>
+    <% if current_organization.branches? %>
+      <%= f.collection_select(:library_location_id, current_organization.library_locations, :id, "name", {include_blank: "Select..."}, class: "select-large", id: "chzn" ) %>
+    <% end %>
   </fieldset>
 
   <fieldset>
