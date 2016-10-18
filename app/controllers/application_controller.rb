@@ -154,7 +154,7 @@ class ApplicationController < ActionController::Base
   end
 
   def first_admin_login?(user)
-    return true if user.sign_in_count == 1 && (user.is_super? || user.has_role?(:admin, current_organization))
+    return true if user.sign_in_count <= 1 && (user.is_super? || user.has_role?(:admin, current_organization))
     false
   end
 end
