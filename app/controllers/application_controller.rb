@@ -75,11 +75,10 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_subdomain(user)
-    user_subdomain = user.try(:organization).subdomain
-
-    if user_subdomain != current_organization.subdomain
+    if user.organization != current_organization
       user.update_attribute(:sign_in_count,  0) if user.sign_in_count == 1
       sign_out user
+      user_subdomain = user.organization.subdomain
       flash[:alert] = %Q[Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>]
       root_path
     else

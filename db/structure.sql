@@ -720,7 +720,6 @@ CREATE TABLE users (
     invited_by_id integer,
     invited_by_type character varying,
     invitations_count integer DEFAULT 0,
-    subdomain character varying,
     token character varying,
     organization_id integer
 );
@@ -1360,4 +1359,6 @@ INSERT INTO schema_migrations (version) VALUES ('20161004043125');
 INSERT INTO schema_migrations (version) VALUES ('20161013231902');
 
 INSERT INTO schema_migrations (version) VALUES ('20161014040703');
+
+INSERT INTO schema_migrations (version) VALUES ('20161018030748');
 

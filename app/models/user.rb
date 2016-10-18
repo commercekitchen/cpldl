@@ -56,7 +56,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   validates_associated :profile
   before_create :add_token_to_user
-  before_create :add_subdomain
 
   ROLES = %w(Admin Trainer User)
 
@@ -89,13 +88,13 @@ class User < ActiveRecord::Base
     language.blank? ? "English" : language.name
   end
 
+  def subdomain
+    organization.subdomain
+  end
+
   private
 
     def add_token_to_user
       self.token = SecureRandom.uuid if self.token.blank?
-    end
-
-    def add_subdomain
-      self.subdomain = organization.subdomain
     end
 end

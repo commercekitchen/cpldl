@@ -15,7 +15,6 @@
     params.require(:user).permit(:email,
                                  :password,
                                  :password_confirmation,
-                                 :subdomain,
                                  profile_attributes: [:first_name,
                                                       :zip_code,
                                                       :library_location_id]

@@ -10,8 +10,8 @@ feature "User logs in" do
   end
 
   scenario "with valid email and password" do
-    user = create(:user)
-    user.add_role(:user, create(:organization))
+    user = create(:user, organization: @org)
+    user.add_role(:user, @org)
     log_in_with(user.email, user.password)
     expect(current_path).to eq(root_path)
     expect(page).to_not have_content("Signed in successfully.")
