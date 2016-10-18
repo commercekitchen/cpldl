@@ -80,4 +80,29 @@ feature "Admin create a new organization and manages its branches" do
     expect(page).to have_content("Your Password (must be at least 8 characters)")
     expect(page).not_to have_content("What's your library called?")
   end
+
+  scenario "can not add an admin that already exists in the system anywhere" do
+    user = create(:user,
+                  email: "amy@example.com",
+                  organization: @www)
+    visit admin_dashboard_index_path(subdomain: "chipublib")
+    expect(page).to have_content("Hi Admin!")
+
+    click_on "Organizations"
+    click_on "Add an Organization"
+    fill_in :organization_name, with: "Denver Public Library"
+    select "Yes", from: :organization_branches
+    fill_in :organization_subdomain, with: "dpl"
+
+    click_on "Save Organization"
+
+    click_on "Admin Dashboard"
+    click_on "Invite Admin"
+    fill_in :user_email, with: "amy@example.com"
+    select "Denver Public Library", from: :user_organization_id
+    click_on "Send an invitation"
+
+    expect(page).to have_content("The user already exists")
+    expect(current_path).to eq(admin_invites_index_path)
+  end
 end
