@@ -6,7 +6,7 @@ feature "User visits course listing page" do
     @language = create(:language)
     @spanish = create(:spanish_lang)
     @organization = create(:organization, subdomain: 'chipublib')
-    @course1 = create(:course, title: "Title 1",
+    @course1 = create(:course_with_lessons, title: "Title 1",
                                course_order: 1,
                                language: @language,
                                organization: @organization)
@@ -36,16 +36,14 @@ feature "User visits course listing page" do
         expect(current_path).to eq(course_path(@course1))
       end
 
-      scenario "can click to start a course and is not required to sign in" do
+      scenario "can click to start a course and is required to sign in" do
         visit course_path(@course1)
         click_link "Start Course"
-        expect(current_path).to eq(course_start_path(@course1))
+        expect(current_path).to eq(user_session_path)
       end
-
     end
 
     context "homepage version" do
-
       scenario "should see all courses in the catalog from the homepage" do
         visit root_path
         expect(page).to have_content(@course1.title)
@@ -58,17 +56,14 @@ feature "User visits course listing page" do
         first(:css, ".course-widget").click
         expect(current_path).to eq(course_path(@course1))
       end
-
     end
-
   end
 
   context "as a logged in user" do
-
     before(:each) do
-      @user = FactoryGirl.create(:user)
-      @course_with_lessons = FactoryGirl.create(:course_with_lessons)
-      @course_progress1 = FactoryGirl.create(:course_progress, course_id: @course_with_lessons.id)
+      @user = create(:user)
+      @course_with_lessons = create(:course_with_lessons)
+      @course_progress1 = create(:course_progress, course_id: @course_with_lessons.id)
       @user.course_progresses << [@course_progress1]
       login_as(@user)
     end
@@ -80,7 +75,7 @@ feature "User visits course listing page" do
     end
 
     scenario "can click to start a course and be taken to the first not-completed lesson" do
-      @completed_lesson1 = FactoryGirl.create(:completed_lesson, lesson_id: @course_with_lessons.lessons.first.id)
+      @completed_lesson1 = create(:completed_lesson, lesson_id: @course_with_lessons.lessons.first.id)
       @course_progress1.completed_lessons << @completed_lesson1
       visit course_path(@course_with_lessons)
       click_link "Start Course"
