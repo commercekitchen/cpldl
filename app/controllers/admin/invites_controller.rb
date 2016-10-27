@@ -17,6 +17,7 @@ module Admin
       User.invite!({ email: params[:user][:email] }, current_user) do |u|
         u.organization = organization
         u.skip_invitation = true
+        u.skip_confirmation_notification!
         u.add_role(:admin, organization)
         u.deliver_invitation
       end

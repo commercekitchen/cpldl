@@ -64,8 +64,8 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     check_user_subdomain(user)
-    if first_admin_login? user
-      flash[:notice] = "This is the first time you have logged in, please change your password."
+    if (user.is_super? || user.has_role?(:admin, current_organization)) and user.profile.nil?
+      flash[:notice] = "This is the first time you have logged in, update your profile!"
       profile_path
     elsif user.has_role?(:admin, current_organization)
       admin_dashboard_index_path
@@ -153,8 +153,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def first_admin_login?(user)
-    return true if user.sign_in_count <= 1 && (user.is_super? || user.has_role?(:admin, current_organization))
-    false
-  end
 end
