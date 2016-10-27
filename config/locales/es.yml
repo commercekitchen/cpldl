@@ -21,8 +21,10 @@
 
 es:
   home:
-    logo_banner: "Use la computadora para hacer casi todo!"
-    logo_banner_html: "Chicago DigitalLearn<br>Use la computadora para hacer casi todo!"
+    www:
+      logo_banner_html: "Use la computadora para hacer casi todo!"
+    chipublib:
+      logo_banner_html: "Chicago DigitalLearn<br>Use la computadora para hacer casi todo!"
     # Used on course intro text partial
     logo_banner_partial: "Chicago DigitalLearn"
     logo_banner_partial_2: Use la computadora para hacer casi todo!
@@ -52,17 +54,17 @@ es:
     your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"
   confirmation_email:
-    cpl_subject: "Empieza con Chicago Digital Aprende"
-    greeting: "Hola"
-    cpl_welcome: "Bienvenido a Chicago Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-    welcome: "Bienvenido"
-    confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-    confirm_my_account: "Confirmar mi cuenta"
-    signature_line_1: "Chicago Digital Más ofertas:"
-    signature_line_2: "Los vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo"
-    signature_line_3: "Chicago educativo y recursos de empleo"
-    signature_line_4: "Los enlaces a otros recursos útiles en línea"
-    have_questions_link_html: "¿Tener preguntas? <a href='http://www.chipublib.org/spanish/'>Visitar o llamar a una biblioteca pública de Chicago</a> ubicación cerca de usted."
+    www:
+      greeting: "Hola"
+      welcome: "Bienvenido"
+      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+      confirm_my_account: "Confirmar mi cuenta"
+    chipublib:
+      subject: "Empieza con Chicago Digital Aprende"
+      welcome: "Bienvenido a Chicago Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
+      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+      confirm_my_account: "Confirmar mi cuenta"
+      signature: "<p>Chicago Digital Más ofertas:</p><ul><li>Los vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo</li><li>Chicago educativo y recursos de empleo</li><li>Los enlaces a otros recursos útiles en línea</li></ul><p></p><p>¿Tener preguntas? <a href='http://www.chipublib.org/spanish/'>Visitar o llamar a una biblioteca pública de Chicago</a> ubicación cerca de usted.</p>"
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
@@ -98,9 +100,11 @@ es:
     retake_the_quiz: "Volver a Responder el Cuestionario"
     practice_skills: "Ahora usar mis habilidades"
   my_courses_page:
+    www:
+      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    chipublib:
+      "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
-    purple_and_gray_courses: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
-    yellow_and_gray_courses: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     click_here_to_homepage: "de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
     click_here_to_quiz: "responda el questionario otra vez"
@@ -166,4 +170,3 @@ es:
     set_three_4: "Buscar empleo."
     set_three_5: "Aprender una aplicación específica como Microsoft Word."
     set_three_6: "Usar internet de manera más segura."
-
