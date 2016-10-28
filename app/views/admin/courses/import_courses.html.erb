@@ -23,7 +23,7 @@
   <ul class="objects">
     <% @importable_courses.each do |course| %>
       <li>
-        <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
+        <div class="cell"><%= course.title %></div>
         <div class="cell"><%= course.topics_str %></div>
         <div class="cell"><%= course.language.name %></div>
         <div class="cell">

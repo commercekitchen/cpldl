@@ -52,3 +52,6 @@ config/secrets.yml
 /public/system
 /public/storylines
 /public/ckeditor_assets
+
+# Byebug history
+.byebug_history

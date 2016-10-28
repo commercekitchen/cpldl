@@ -66,6 +66,7 @@ group :development do
   gem 'binding_of_caller'
   gem "pry-remote"
   gem 'web-console', '~> 2.0'
+  gem 'powder'
 end
 
 group :development, :test do

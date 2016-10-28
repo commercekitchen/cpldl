@@ -4,6 +4,7 @@ Organization.create(name: "Chicago Public Library", subdomain: "chipublib")
 admin_user = User.create(email: "admin@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)
+admin_user.update(organization_id: Organization.first.id)
 admin_user.add_role(:admin, Organization.first)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
@@ -11,6 +12,7 @@ Organization.create(name: "Admin", subdomain: "www")
 admin_user = User.create(email: "admin2@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)
+admin_user.update(organization_id: Organization.second.id)
 admin_user.add_role(:admin, Organization.second)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
@@ -22,6 +24,7 @@ puts "Regular User Created - Username: #{regular_user.email}, Password: asdfasdf
 dev_user = User.create(email: "dev@nowhere.com", password: "password", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Developer", zip_code: "80209", user_id: dev_user.id)
 dev_user.update(profile_id: admin_profile.id)
+dev_user.update(organization_id: Organization.first.id)
 dev_user.add_role(:admin, Organization.first)
 puts "Regular User Created - Username: #{dev_user.email}, Password: password"
 
