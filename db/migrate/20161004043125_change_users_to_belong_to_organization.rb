@@ -4,7 +4,7 @@ class ChangeUsersToBelongToOrganization < ActiveRecord::Migration
     add_foreign_key :users, :organizations
 
     User.all.each do |user|
-      user.organization = Organization.find_by_subdomain(user.subdomain) || user.roles.find_by_resource_type("Organization").resource
+      user.organization = user.roles.find_by_resource_type("Organization").resource
       unless user.save
         puts "#{user.id} did not save"
       end
