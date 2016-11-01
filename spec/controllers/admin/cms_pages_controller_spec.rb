@@ -37,13 +37,15 @@ describe Admin::CmsPagesController do
     end
 
     it "updates the pub_date if status is published" do
-      patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "A" }
-      @page1.reload
-      expect(@page1.pub_date).to be(nil)
+      Timecop.freeze do
+        patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "A" }
+        @page1.reload
+        expect(@page1.pub_date).to be(nil)
 
-      patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "P" }
-      @page1.reload
-      expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
+        patch :update_pub_status, { cms_page_id: @page1.id.to_param, value: "P" }
+        @page1.reload
+        expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
+      end
     end
   end
 

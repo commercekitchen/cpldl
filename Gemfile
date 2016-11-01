@@ -103,6 +103,7 @@ group :test do
   gem 'codeclimate-test-reporter'
   gem 'simplecov', require: false
   gem "shoulda-matchers"
+  gem "timecop"
 end
 
 group :development, :staging do
