@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
     if request.host.include?("stage")
       "stage.digitallearn.org"
     else
-      "digitiallearn.org"
+      "digitallearn.org"
     end
   end
 
