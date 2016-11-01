@@ -67,4 +67,5 @@ FactoryGirl.define do
       create(:lesson, course: course, lesson_order: 3)
     end
   end
+
 end
