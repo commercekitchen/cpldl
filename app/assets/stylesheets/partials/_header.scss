@@ -189,7 +189,7 @@
 }
 
 .header-logged-in {
-  position: fixed;
+  position: relative;
   @include media($mobile-large) {
     position: static;
     min-height: 0;
@@ -197,7 +197,6 @@
   }
   top: 0;
   width: 100%;
-  min-height: 140px;
   padding: .5em 0;
   background-color: $white;
   border-bottom: 1px solid $grey;

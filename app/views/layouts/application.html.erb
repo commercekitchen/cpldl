@@ -15,7 +15,8 @@
           <%= yield :callout %>
         <% else %>
           <h1 class="slogan" >
-            <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>
+            <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting") %>
+            <%= t("home.logo_banner_html") %>
           </h1>
         <% end %>
       </div>

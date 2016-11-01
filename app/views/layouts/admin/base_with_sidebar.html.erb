@@ -5,7 +5,7 @@
   </head>
   <body class="<%= current_organization.subdomain %>">
     <%= render "shared/admin/header" %>
-    <div class="banner color large-top-padding">
+    <div class="banner color">
       <div class="container">
         <% if content_for?(:callout) %>
           <%= yield :callout %>

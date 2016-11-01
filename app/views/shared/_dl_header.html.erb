@@ -8,10 +8,14 @@
         <%= link_to "Help Learners", "http://community.digitallearn.org", class: "practice-link" %>
       </small>
     </div>
-    <div class="logo-link-container">
-      <%= render "shared/logo_purple" %>
-      <div class="signup-box">
-        <%= link_to "#{t('home.login')}", login_path, class: "btn" %>
+    <div class="row">
+      <div class="sixcol">
+        <%= render "shared/logo_purple" %>
+      </div>
+      <div class="sixcol last">
+        <div class="signup-box">
+          <%= link_to "#{t('home.login')}", login_path, class: "btn" %>
+        </div>
       </div>
     </div>
   </div>

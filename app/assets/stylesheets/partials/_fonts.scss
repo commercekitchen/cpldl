@@ -64,14 +64,6 @@
   color: $purple;
 }
 
-[class^="icon-"].cpl-purple:before, [class*=" icon-"].cpl-purple:before {
-  color: $cpl-purple;
-}
-
-[class^="icon-"].cpl-blue:before, [class*=" icon-"].cpl-blue:before {
-  color: $cpl-blue;
-}
-
 .icon-pencil:before { content: '\e800'; } /* '' */
 .icon-clock:before { content: '\e801'; } /* '' */
 .icon-download:before { content: '\e802'; } /* '' */

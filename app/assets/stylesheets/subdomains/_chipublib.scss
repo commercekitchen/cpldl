@@ -1,4 +1,14 @@
 .chipublib {
+  h1, h2, h3, h4, h5, h6 {
+    color: $cpl-blue;
+  }
+
+  .banner {
+    h1 {
+      color: $white;
+    }
+  }
+
   .slogan {
     color: $white;
     text-align: center;
@@ -60,5 +70,38 @@
       background: linear-gradient(to bottom, $grey-2 0%, $grey-3 100%);
     }
   }  
+
+  [class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: 7px;
+    text-align: center;
+    color: $cpl-blue;
+
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+
+  }
+
+  [class^="icon-"].orange:before, [class*=" icon-"].orange:before {
+    color: $orange;
+  }
 
 }

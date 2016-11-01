@@ -22,9 +22,10 @@
 en:
   home:
     www:
-      logo_banner_html: "Use a computer to do almost anything!"
+      custom_banner_greeting: ""
     chipublib:
-      logo_banner_html: "Chicago DigitalLearn<br>Use a computer to do almost anything!"
+      custom_banner_greeting: "Chicago DigitalLearn<br>"
+    logo_banner_html: "Use a computer to do almost anything!"
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
