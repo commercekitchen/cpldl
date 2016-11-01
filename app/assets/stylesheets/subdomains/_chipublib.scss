@@ -37,4 +37,28 @@
     @include lesson_block($cpl-blue, $grey);
   }
 
+  .course-widget {
+    @include course_widget($blind-man-mustard);
+  }
+
+  a.course-widget {
+    text-decoration: none;
+
+    header {
+      background: $blind-man-mustard;
+      background: linear-gradient(to bottom, $blind-man-mustard 0%, $mustard-2 100%);
+    }
+
+    &:hover {
+      box-shadow: 0 0 10px $grey;
+    }
+  }
+
+  div.course-widget {
+    header {
+      background-color: $grey-1;
+      background: linear-gradient(to bottom, $grey-2 0%, $grey-3 100%);
+    }
+  }  
+
 }

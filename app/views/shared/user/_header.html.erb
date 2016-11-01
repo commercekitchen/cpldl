@@ -5,25 +5,29 @@
         <%= link_to "English", home_language_toggle_path(lang: "en") %> | <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
       </small>
     </div>
-    <div class="logo-link-container">
-      <%= render "shared/logo_purple" %>
-      <nav class="header-top-nav link-color">
-        <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path %> |
-        <% if current_user.has_role?(:trainer, current_organization) %>
-          <%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %> |
-        <% end %>
-        <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
-        <%= link_to "#{t('logged_in_user.my_courses')}", your_courses_path %> |
-        <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
-
-        <div class="logged-in-search-box">
-          <%= form_tag courses_path, method: :get do %>
-            <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-            <i class="icon-search grey"></i>
-            <%= submit_tag "Search", id: "search_btn" %>
+    <div class="row">
+      <div class="sixcol">
+        <%= render "shared/logo_purple" %>
+      </div>
+      <div class="sixcol last">
+        <nav class="header-top-nav link-color">
+          <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path %> |
+          <% if current_user.has_role?(:trainer, current_organization) %>
+            <%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %> |
           <% end %>
-        </div>
-      </nav>
+          <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
+          <%= link_to "#{t('logged_in_user.my_courses')}", your_courses_path %> |
+          <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
+
+          <div class="logged-in-search-box">
+            <%= form_tag courses_path, method: :get do %>
+              <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+              <i class="icon-search grey"></i>
+              <%= submit_tag "Search", id: "search_btn" %>
+            <% end %>
+          </div>
+        </nav>
+      </div>
     </div>
   </div>
 </header>
