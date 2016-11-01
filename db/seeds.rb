@@ -4,6 +4,7 @@ Organization.create(name: "Chicago Public Library", subdomain: "chipublib")
 admin_user = User.create(email: "admin@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)
+admin_user.update(organization_id: Organization.first.id)
 admin_user.add_role(:admin, Organization.first)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
@@ -11,17 +12,20 @@ Organization.create(name: "Admin", subdomain: "www")
 admin_user = User.create(email: "admin2@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Super", zip_code: "80206", user_id: admin_user.id)
 admin_user.update(profile_id: admin_profile.id)
+admin_user.update(organization_id: Organization.second.id)
 admin_user.add_role(:admin, Organization.second)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
 regular_user = User.create(email: "alex@commercekitchen.com", password: "asdfasdf", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Alex", zip_code: "80209", user_id: regular_user.id)
 regular_user.update(profile_id: admin_profile.id)
+regular_user.update(organization_id: Organization.first.id)
 puts "Regular User Created - Username: #{regular_user.email}, Password: asdfasdf"
 
 dev_user = User.create(email: "dev@nowhere.com", password: "password", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Developer", zip_code: "80209", user_id: dev_user.id)
 dev_user.update(profile_id: admin_profile.id)
+dev_user.update(organization_id: Organization.first.id)
 dev_user.add_role(:admin, Organization.first)
 puts "Regular User Created - Username: #{dev_user.email}, Password: password"
 
@@ -78,10 +82,10 @@ puts "#{Course.count} courses created."
 
 Course.all.each do |c|
   c.topics << Topic.first
-  c.lessons << Lesson.create(title: "Lesson 1", summary: "Lesson A summary", duration: 90, lesson_order: 1)
-  c.lessons << Lesson.create(title: "Lesson 2", summary: "Lesson B summary", duration: 120, lesson_order: 2)
-  c.lessons << Lesson.create(title: "Lesson 3", summary: "Lesson C summary", duration: 80, lesson_order: 3)
-  c.lessons << Lesson.create(title: "Lesson 4", summary: "Lesson D summary", duration: 40, lesson_order: 4)
+  c.lessons << Lesson.create(title: "Lesson 1", summary: "Lesson A summary", duration: 90, lesson_order: 1, pub_status: "P")
+  c.lessons << Lesson.create(title: "Lesson 2", summary: "Lesson B summary", duration: 120, lesson_order: 2, pub_status: "P")
+  c.lessons << Lesson.create(title: "Lesson 3", summary: "Lesson C summary", duration: 80, lesson_order: 3, pub_status: "P")
+  c.lessons << Lesson.create(title: "Lesson 4", summary: "Lesson D summary", duration: 40, lesson_order: 4, pub_status: "P")
   c.save
 end
 

@@ -1,7 +1,7 @@
-.lesson-block {
+@mixin lesson_block($bg-color, $completed-bg-color) {
   height: 222px;
   width: 222px;
-  background-color: $teal;
+  background-color: $bg-color;
   color: $white;
   margin-bottom: 2em;
   margin-right: 2.8em;
@@ -19,12 +19,8 @@
     margin-right: 2em;
   }
 
-  &.cpl-blue {
-    background-color: $cpl-blue;
-  }
-
   &.completed {
-    background-color: $grey;
+    background-color: $completed-bg-color;
     .icon-ok::before {
       position: absolute;
       left: 5px;
@@ -134,6 +130,10 @@
   }
 }
 
+.lesson-block {
+  @include lesson_block($teal, $grey);
+}
+
 //Fix wonky display of lessons on phone view
 
 .lesson-listing {
@@ -155,8 +155,3 @@
   margin-bottom: 0;
  }
 }
-
-
-  
-  
-
