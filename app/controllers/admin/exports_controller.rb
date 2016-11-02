@@ -24,7 +24,7 @@ module Admin
           if progresses.key?(p.course.title)
             progresses.replace(p.course.title => progresses[p.course.title] + 1)
           else
-            progresses.merge!(p.course.title => progress_by_zip.where(course_id: p.id).count)
+            progresses.merge!(p.course.title => progress_by_zip.where(course_id: p.course.id).count)
           end
         end
 
@@ -53,7 +53,7 @@ module Admin
           if progresses.key?(p.course.title)
             progresses.replace(p.course.title => progresses[p.course.title] + 1)
           else
-            progresses.merge!(p.course.title => progress_by_location.where(course_id: p.id).count)
+            progresses.merge!(p.course.title => progress_by_location.where(course_id: p.course.id).count)
           end
         end
 

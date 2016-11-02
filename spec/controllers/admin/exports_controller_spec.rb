@@ -37,12 +37,12 @@ describe Admin::ExportsController do
     end
     it "return completions by zip" do
       returned = controller.data_for_completions_report_by_zip
-      expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
+      expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>1, :completions=>{"Course 1"=>1}}})
     end
 
     it "return completions by lib" do
       returned = controller.data_for_completions_report_by_lib
-      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>1, :completions=>{"Course 1"=>0}}})
+      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>1, :completions=>{"Course 1"=>1}}})
     end
   end
 end
