@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
   def current_organization
     if staging?
-      Organization.find_by_subdomain(stage_subdomain)
+      Organization.find_by_subdomain(stage_subdomain) || Organization.find_by_subdomain("www")
     elsif request.subdomain == "" || request.subdomain == "admin"
       Organization.find_by_subdomain("") || Organization.find_by_subdomain("www")
     else

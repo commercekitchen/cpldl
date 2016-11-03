@@ -3,7 +3,7 @@
 
 set :bundle_without, %w{integration production test}.join(" ")
 
-set :branch, "release-2.0.1"
+set :branch, "feature/nashville_subdomain"
 
 server "dl-stageapp-01.do.lark-it.com",
   user: fetch(:application),
