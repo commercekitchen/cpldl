@@ -1,0 +1,66 @@
+@mixin icons($icon_color) {
+  [class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "fontello";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: 7px;
+    text-align: center;
+    color: $icon_color;
+
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+
+  }
+
+  [class^="icon-"].grey:before, [class*=" icon-"].grey:before {
+    color: $grey;
+  }
+
+  [class^="icon-"].orange:before, [class*=" icon-"].orange:before {
+    color: $orange;
+  }
+
+  [class^="icon-"].white:before, [class*=" icon-"].white:before {
+    color: $white;
+  }
+
+  [class^="icon-"].purple:before, [class*=" icon-"].purple:before {
+    color: $purple;
+  }
+
+  .icon-pencil:before { content: '\e800'; } /* '' */
+  .icon-clock:before { content: '\e801'; } /* '' */
+  .icon-download:before { content: '\e802'; } /* '' */
+  .icon-cw:before { content: '\e803';
+    -webkit-transform: scale(-1, 1);
+    -moz-transform: scale(-1, 1);
+    -ms-transform: scale(-1, 1);
+    -o-transform: scale(-1, 1);
+    transform: scale(-1, 1); } /* '' */
+  .icon-arrow:before { content: '\e804'; } /* '' */
+  .icon-lock:before { content: '\e805'; } /* '' */
+  .icon-move:before { content: '\e806'; } /* '' */
+  .icon-search:before { content: '\e807'; } /* '' */
+  .icon-plus:before { content: '\e808'; } /* '' */
+  .icon-book-open:before { content: '\e809'; } /* '' */
+  .icon-ok:before { content: '\e80a'; } /* '' */
+  .icon-play:before { content: '\e80b'; } /* '' */
+  .icon-none:before { content: ''; } /* '' */
+  .icon-monitor:before { content: '\e80c'; } /* '' */
+}

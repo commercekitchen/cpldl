@@ -1,0 +1,8 @@
+.www {
+  @include color_scheme($teal, $white, $purple);
+  @include banner($teal, $white);
+  @include buttons($purple, $white);
+  @include course_widget($purple, $purple-2);
+  @include lesson_block($teal, $grey);
+  @include icons($cpl-blue);
+}

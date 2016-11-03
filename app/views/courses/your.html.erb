@@ -1,8 +1,8 @@
 <h1 class="text-color"><%= t('my_courses_page.my_plan_click_to_start') %></h1>
 
 <p>
-<%= t("my_courses_page.#{current_organization.subdomain}.course_color_explaination") %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path, class: "link-color" %>
-  <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path, class: "link-color" %>
+<%= t("my_courses_page.#{current_organization.subdomain}.course_color_explaination") %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path %>
+  <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path %>
   <%= t('my_courses_page.well_suggest_more_courses') %>
 </p>
 

@@ -12,11 +12,11 @@
       <div class="sixcol last">
         <nav class="left-or-right header-top-nav">
           Hi Admin! |
-          <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: "link-color" %> |
+          <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
           <% if top_level_domain? %>
             <%= link_to "Community Of Practice", "http://community.digitallearn.org", target: "_blank" %> |
           <% end %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: "delete", class: "link-color" %>
+          <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
 
 
           <div class="admin-search-box">

@@ -22,7 +22,7 @@
       <%= local_time(current_user.course_progresses.where(course_id: course.id).first.completed_at, '%B %e, %Y') %>
     </div>
     <div class="one-third">
-      <%= link_to "Download Certificate", course_complete_path(course, format: 'pdf'), class: "link-color" %>
+      <%= link_to "Download Certificate", course_complete_path(course, format: 'pdf') %>
     </div>
   </div>
 <% end %>

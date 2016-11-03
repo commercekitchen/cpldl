@@ -1,0 +1,52 @@
+@mixin buttons($button_color, $text_color) {
+  button, input[type="submit"], .btn {
+    display: inline-block;
+    background-color: $button_color;
+    border: 3px solid $text_color;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 5px 0px;
+    color: $text_color;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    height: 50px;
+    padding: 11px 40px;
+    text-align: center;
+    min-width: 300px;
+    letter-spacing: 1px;
+
+    @include media($tablet) {
+      min-width: 0;
+    }
+
+    &.small{
+      min-width: 0;
+      height: 35px;
+      padding: 6px 40px;
+    }
+
+    &.small-lesson-button {
+      min-width: 0;
+      height: 35px;
+      padding: 6px 40px;
+      position: relative;
+      left: 0.6em;
+    }
+
+    &.spanish-small {
+      font-size: 10px;
+    }
+
+    &.btn-grey {
+      background-color: $grey;
+    }
+
+    &.btn-mustard {
+      background-color: $blind-man-mustard;
+    }
+
+    &.btn-blue {
+      background-color: $teal;
+    }
+  }
+}

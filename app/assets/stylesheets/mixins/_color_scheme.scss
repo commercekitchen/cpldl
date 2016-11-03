@@ -1,0 +1,41 @@
+@mixin color_scheme($primary_color, $negative_color, $action_color, $text_alignment: left) {
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: $primary_color;
+  }
+
+  .color {
+    background-color: $primary_color;
+  }
+
+  a {
+    text-decoration: none;
+    color: $action_color;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  a.inverted {
+    color: $white;
+  }
+
+  .slogan {
+    color: $negative_color;
+    text-align: $text_alignment;
+  }
+
+  .text-color {
+    color: $primary_color;
+  }
+
+  .download-color {
+    color: $action_color;
+  }
+
+  .cert-color {
+    color: $primary_color;
+  }
+
+}

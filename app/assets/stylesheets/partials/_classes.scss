@@ -65,36 +65,6 @@
   padding-right: 10px;
 }
 
-.banner {
-  background-color: $teal;
-  margin-bottom: 2em;
-  padding: 1em 0 2em 0;
-  min-height: 2em;
-
-  h1 {
-    font-family: $font-secondary;
-    color: $white;
-    font-size: 2em;
-    font-weight: 100;
-    margin-bottom: 0;
-    margin-top: 13px;
-
-    @include media($desktop) {
-      font-size: 3.3em;
-    }
-  }
-
-  [class^="icon-"]{
-    font-size: 20px;
-    padding-right: 5px;
-  }
-
-  small {
-    font-size: 20px;
-    color: $white;
-  }
-}
-
 small {
   @include media($mobile-large) {
     font-size: 1rem;
@@ -336,17 +306,4 @@ ul.less-padding {
   margin-top: 1px;
   margin-bottom: 5px;
   padding-left: 2em;
-}
-
-.cpl-blue-block {
-  background-color: $cpl-blue !important;
-}
-
-.cpl-blue-text {
-  color: $cpl-blue;
-}
-
-.cpl-purple-text {
-  color: $cpl-purple;
-  a { color: $cpl-purple; }
 }

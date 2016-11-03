@@ -23,7 +23,7 @@
   <ul class="objects sortable reorderable">
     <% @courses.each do |course| %>
       <li class="sortable-item" data-id="<%= course.id %>">
-        <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "link-color" %></div>
+        <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
         <div class="cell"><%= course.topics_str %></div>
         <div class="cell"><%= course.language.name %></div>
         <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Publish", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
