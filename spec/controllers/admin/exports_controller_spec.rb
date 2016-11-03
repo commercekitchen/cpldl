@@ -24,6 +24,10 @@ describe Admin::ExportsController do
       @user = create(:user)
       @user.add_role(:user, @organization)
       @user.profile = create(:profile)
+      @user2 = create(:user)
+      @user2.add_role(:user, @organization)
+      @user2.profile = create(:profile)
+
       @language = create(:language)
       @course1 = create(:course, title: "Course 1",
                                              language: @language,
@@ -33,16 +37,19 @@ describe Admin::ExportsController do
                                              language: @language,
                                              organization: @organization)
       @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @user.course_progresses << [@course_progress1]
+      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)
+      @course_progress3 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
+      @user.course_progresses << [@course_progress1, @course_progress2]
+      @user2.course_progresses << [@course_progress3]
     end
     it "return completions by zip" do
       returned = controller.data_for_completions_report_by_zip
-      expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>1, :completions=>{"Course 1"=>1}}})
+      expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>2, :completions=>{"Course 1"=>2, "Course 2"=>1}}})
     end
 
     it "return completions by lib" do
       returned = controller.data_for_completions_report_by_lib
-      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>1, :completions=>{"Course 1"=>1}}})
+      expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>2, :completions=>{"Course 1"=>2, "Course 2"=>1}}})
     end
   end
 end

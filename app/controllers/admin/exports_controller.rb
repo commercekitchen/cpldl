@@ -21,9 +21,7 @@ module Admin
         progresses = {}
 
         progress_by_zip.each do |p|
-          if progresses.key?(p.course.title)
-            progresses.replace(p.course.title => progresses[p.course.title] + 1)
-          else
+          unless progresses.key?(p.course.title)
             progresses.merge!(p.course.title => progress_by_zip.where(course_id: p.course.id).count)
           end
         end
@@ -50,9 +48,7 @@ module Admin
         progresses = {}
 
         progress_by_location.each do |p|
-          if progresses.key?(p.course.title)
-            progresses.replace(p.course.title => progresses[p.course.title] + 1)
-          else
+          unless progresses.key?(p.course.title)
             progresses.merge!(p.course.title => progress_by_location.where(course_id: p.course.id).count)
           end
         end
