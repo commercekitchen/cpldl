@@ -3,6 +3,16 @@
     color: $cpl-blue;
   }
 
+  label {
+    color: $cpl-blue;
+  }
+
+  .required:after {
+    content: " *";
+    color: $cpl-blue;
+    font-weight: bold;
+  }
+
   .banner {
     h1 {
       color: $white;

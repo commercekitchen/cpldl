@@ -21,9 +21,10 @@ feature "Admin courses" do
       login_as(@dpl_admin_user)
     end
 
-    scenario "wont see links to edit courses on courses page" do
+    scenario "will see links to edit courses on courses page" do
       visit admin_root_path
-      expect(page).not_to have_selector(:xpath, "/html/body/main/div/div[2]/div[2]/ul/li[1]/div[1]/a")
+      click_link @course.title
+      expect(current_path).to eq edit_admin_course_path(@course)
     end
 
     scenario "wont see links to edit courses on course import page" do
