@@ -9,10 +9,10 @@ $(document).ready(function(){
   // call set_positions function
   set_positions();
 
-  $(".sortable").sortable();
+  $(".sortable").sortable({handle: ":not(a)"});
 
   // after the order changes
-  $(".sortable").sortable().bind("sortupdate", function(e, ui) {
+  $(".sortable").sortable({handle: ":not(a)"}).bind("sortupdate", function(e, ui) {
     // array to store new order
     updated_order = []
     // set the updated positions
