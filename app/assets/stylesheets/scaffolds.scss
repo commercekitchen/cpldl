@@ -18,6 +18,11 @@ div {
     display: block;
     color: $black;
   }
+  .required:after {
+    content: " *";
+    color: $black;
+    font-weight: bold;
+  }
 }
 
 #error_explanation {
