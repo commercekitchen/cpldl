@@ -32,8 +32,9 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
-#  subdomain              :string
 #  token                  :string
+#  organization_id        :integer
+#  program_location_id    :integer
 #
 
 require "rails_helper"

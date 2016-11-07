@@ -44,6 +44,14 @@ textarea {
   background: $white;
 }
 
+.hideUntilActive {
+  display: none;
+}
+
+.table_row_disabled {
+  color: $grey;
+}
+
 // This is for applying to a link_to that wraps a button div. Use this class or
 // the link path text is visible from behind the button where the drop shadow is
 .transparent {
@@ -56,7 +64,6 @@ select {
   background: url("/assets/select_box_arrows.png") no-repeat 96% 50%;
   border: 2px solid $grey;
   font-size: 16px;
-  color: $grey;
   width: 100%;
 
   &.small {

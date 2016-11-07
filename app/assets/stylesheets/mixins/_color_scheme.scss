@@ -50,4 +50,10 @@
     color: $primary_color;
   }
 
+  .required:after {
+    content: " *";
+    color: $primary_color;
+    font-weight: bold;
+  }
+
 }

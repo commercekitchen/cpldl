@@ -32,8 +32,9 @@
 #  invited_by_id          :integer
 #  invited_by_type        :string
 #  invitations_count      :integer          default(0)
-#  subdomain              :string
 #  token                  :string
+#  organization_id        :integer
+#  program_location_id    :integer
 #
 
 class User < ActiveRecord::Base
@@ -51,13 +52,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   rolify
   belongs_to :organization
+  belongs_to :program_location
   has_one :profile, dependent: :destroy
   has_many :course_progresses, dependent: :destroy
   accepts_nested_attributes_for :profile
   validates_associated :profile
   before_create :add_token_to_user
 
-  ROLES = %w(Admin Trainer User)
+  ROLES = %w(Admin Trainer User Parent Student)
 
   def organization_id_to_be_deleted
     roles.find_by_resource_type("Organization").resource_id

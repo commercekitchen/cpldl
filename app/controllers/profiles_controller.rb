@@ -20,6 +20,7 @@ class ProfilesController < ApplicationController
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)
+    @organization_programs = organization_programs
   end
 
   def update
@@ -43,6 +44,12 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:first_name, :zip_code, :language_id)
+  end
+
+  def organization_programs
+    if current_user.organization.accepts_programs?
+      Program.for_subdomain("npl").collect { |program| [ program.program_name, program.id ] }
+    end
   end
 
 end

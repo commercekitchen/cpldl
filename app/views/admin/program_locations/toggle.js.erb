@@ -1,0 +1,1 @@
+$("#location_row_<%= @program_location.id %>").replaceWith("<%= escape_javascript(render(partial: 'location_row', locals: { program_location: @program_location })) %>");

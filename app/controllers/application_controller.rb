@@ -69,6 +69,9 @@ class ApplicationController < ActionController::Base
       profile_path
     elsif user.has_role?(:admin, current_organization)
       admin_dashboard_index_path
+    elsif current_organization.subdomain == "npl" && user.program_location.blank?
+      @profile = user.profile
+      profile_path
     else
       root_path
     end

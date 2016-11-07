@@ -14,7 +14,10 @@
   <div class="two-of-twelve">
     <h2>Branch List</h2>
   </div>
-  <div class="four-of-twelve">
+  <div class="two-of-twelve">
+    <h2>Custom Programs</h2>
+  </div>
+  <div class="two-of-twelve">
     <h2>Admin Users</h2>
   </div>
 </div>
@@ -34,7 +37,10 @@
     <div class="two-of-twelve">
       <%= organization.branches?%>
     </div>
-    <div class="four-of-twelve">
+    <div class="two-of-twelve">
+      <%= organization.accepts_programs?%>
+    </div>
+    <div class="two-of-twelve">
       <% organization.admin_user_emails.each do |email| %>
         <%= email %>
       <% end %>

@@ -1,0 +1,1 @@
+$("#school_row_<%= @school.id %>").replaceWith("<%= escape_javascript(render(partial: 'school_row', locals: { school: @school })) %>");

@@ -90,6 +90,13 @@ es:
     change_login_information: "Cambiar Información de Ingreso"
     update_profile: "Actualizar Perfil"
     my_completed_courses: "Mis Cursos Terminados"
+    last_name: "Apellido"
+    phone: "Teléfono"
+    street_address: "Dirección"
+    city: "Ciudad"
+    state: "Estado"
+    library_card_number: "Número de tarjeta de la biblioteca"
+    no_program: "¿A qué programa u organización pertenece usted?"
   change_login_page:
     leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
     password_confirmation: "Confirmar contraseña"

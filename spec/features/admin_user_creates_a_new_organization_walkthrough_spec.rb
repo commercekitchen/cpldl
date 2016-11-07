@@ -1,6 +1,6 @@
 require "feature_helper"
 
-feature "Admin create a new organization and manages its branches" do
+feature "Admin create a new organization" do
   before(:each) do
     @spanish = create(:spanish_lang)
     @english = create(:language)
@@ -13,7 +13,7 @@ feature "Admin create a new organization and manages its branches" do
   end
 
   scenario "can create and add admin" do
-    visit admin_dashboard_index_path(subdomain: "chipublib")
+    visit admin_dashboard_index_path
     expect(page).to have_content("Hi Admin!")
 
     click_on "Organizations"
@@ -63,8 +63,7 @@ feature "Admin create a new organization and manages its branches" do
   end
 
   scenario "branches is only visible when selected yes" do
-    visit admin_dashboard_index_path(subdomain: "chipublib")
-    expect(page).to have_content("Hi Admin!")
+    visit admin_dashboard_index_path
 
     click_on "Organizations"
     click_on "Add an Organization"
@@ -82,10 +81,8 @@ feature "Admin create a new organization and manages its branches" do
   end
 
   scenario "can not add an admin that already exists in the system anywhere" do
-    user = create(:user,
-                  email: "amy@example.com",
-                  organization: @www)
-    visit admin_dashboard_index_path(subdomain: "chipublib")
+    user = create(:user, email: "amy@example.com", organization: @www)
+    visit admin_dashboard_index_path
     expect(page).to have_content("Hi Admin!")
 
     click_on "Organizations"
@@ -104,5 +101,22 @@ feature "Admin create a new organization and manages its branches" do
 
     expect(page).to have_content("The user already exists")
     expect(current_path).to eq(admin_invites_index_path)
+  end
+
+  scenario "with programs" do
+    visit admin_dashboard_index_path
+
+    click_on "Organizations"
+    click_on "Add an Organization"
+    fill_in :organization_name, with: "Denver Public Library"
+    select "No", from: :organization_branches
+    select "Yes", from: :organization_accepts_programs
+    fill_in :organization_subdomain, with: "dpl"
+
+    click_on "Save Organization"
+
+    expect(page).to have_content("Organization was successfully created.")
+    expect(page).to have_content("false")
+    expect(page).to have_content("true")
   end
 end

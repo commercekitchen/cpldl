@@ -1,0 +1,26 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h1>Schools</h1>
+
+<div class="row underlined">
+  <div class="four-of-twelve">
+    &nbsp;
+  </div>
+</div>
+
+<div id="school_rows">
+  <% @schools.each do |school| %>
+    <%= render partial: "school_row", locals: { school: school } %>
+  <% end %>
+</div>
+
+<%= form_for [:admin, @new_school], remote: true do |f| %>
+  <div class="row">
+    <div class="sixcol">
+      <%= f.text_field :school_name %>
+    </div>
+    <div class="sixcol">
+      <%= f.submit "Add School" %>
+    </div>
+  </div>
+<% end %>

@@ -16,4 +16,10 @@
   <% if current_organization.branches %>
     <li><%= link_to "Manage Library Branches", admin_library_locations_path %></li>
   <% end %>
+  <% if current_organization.accepts_programs %>
+    <li><%= link_to "Manage Programs", admin_programs_path %></li>
+  <% end %>
+  <% if current_organization.has_student_programs? %>
+    <li><%= link_to "Manage Schools", admin_schools_path %></li>
+  <% end %>
 </ul>

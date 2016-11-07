@@ -1,0 +1,10 @@
+<div class="row twelvecol underlined <%= school.enabled? ? "table_row_enabled" : "table_row_disabled" %>" id="school_row_<%= school.id %>" >
+  <div class="four-of-twelve">
+    <%= school.school_name %>
+  </div>
+  <div class="four-of-twelve">
+    <span>
+      <%= link_to (school.enabled? ? "Disable" : "Enable"), admin_school_toggle_path(school.id), method: :post, remote: true %>
+    </span>
+  </div>
+</div>

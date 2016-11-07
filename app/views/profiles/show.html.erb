@@ -29,19 +29,25 @@
     <% end %>
   </fieldset>
 
-  <fieldset>
-    <%= f.label :first_name, class: "text-color" do %>
-      <%= t('login_signup.first_name') %>
-    <% end %>
-    <%= f.text_field :first_name %>
-  </fieldset>
+  <% if current_organization.accepts_programs? %>
+    <%= render partial: 'shared/programs_profile_form', locals: {f: f} %>
+  <% else %>
 
-  <fieldset>
-    <%= f.label :zip_code, class: "text-color" do %>
-      <%= t('login_signup.zip_code') %>
-    <% end %>
-    <%= f.text_field :zip_code %>
-  </fieldset>
+    <fieldset>
+      <%= f.label :first_name, class: "text-color" do %>
+        <%= t('login_signup.first_name') %>
+      <% end %>
+      <%= f.text_field :first_name %>
+    </fieldset>
+
+    <fieldset>
+      <%= f.label :zip_code, class: "text-color" do %>
+        <%= t('login_signup.zip_code') %>
+      <% end %>
+      <%= f.text_field :zip_code %>
+    </fieldset>
+
+  <% end %>
 
   <fieldset>
     <%= f.submit "#{t('profile_page.save')}", class: "button-color" %>

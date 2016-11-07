@@ -1,0 +1,15 @@
+<%= content_for(:callout) { %><h1>Edit Program</h1><% } %>
+
+<%= label_tag :program_locations, class: "text-color underlined" do %>
+  <%= "#{@location_field_name} Options" %><span class="required"></span>
+<% end %>
+
+<div id="program_location_rows">
+  <% @program.program_locations.select(&:persisted?).each do |pl| %>
+    <%= render partial: "admin/program_locations/location_row", locals: { program_location: pl } %>
+  <% end %>
+</div>
+
+<%= form_for [:admin, @program_location], remote: true do |f| %>
+  <%= render partial: "program_locations_form", locals: { f: f } %>
+<% end %>

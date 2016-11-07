@@ -21,7 +21,7 @@ module Admin
     private
 
     def organization_params
-      params.require(:organization).permit(:name, :subdomain, :branches)
+      params.require(:organization).permit(:name, :subdomain, :branches, :accepts_programs)
     end
   end
 end

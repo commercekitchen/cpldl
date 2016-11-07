@@ -521,7 +521,8 @@ CREATE TABLE organizations (
     subdomain character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    branches boolean
+    branches boolean,
+    accepts_programs boolean
 );
 
 
@@ -589,7 +590,18 @@ CREATE TABLE profiles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     language_id integer,
-    library_location_id integer
+    library_location_id integer,
+    acting_as integer DEFAULT 0,
+    last_name character varying,
+    phone character varying,
+    street_address character varying,
+    city character varying,
+    state character varying,
+    library_card_number character varying,
+    student_id character varying,
+    date_of_birth timestamp without time zone,
+    grade integer,
+    school_id integer
 );
 
 
@@ -610,6 +622,74 @@ CREATE SEQUENCE profiles_id_seq
 --
 
 ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
+
+
+--
+-- Name: program_locations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE program_locations (
+    id integer NOT NULL,
+    location_name character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    enabled boolean DEFAULT true,
+    program_id integer
+);
+
+
+--
+-- Name: program_locations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE program_locations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: program_locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE program_locations_id_seq OWNED BY program_locations.id;
+
+
+--
+-- Name: programs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE programs (
+    id integer NOT NULL,
+    program_name character varying,
+    location_field_name character varying,
+    location_required boolean DEFAULT false,
+    student_program boolean DEFAULT false,
+    organization_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: programs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE programs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: programs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE programs_id_seq OWNED BY programs.id;
 
 
 --
@@ -652,6 +732,39 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 CREATE TABLE schema_migrations (
     version character varying NOT NULL
 );
+
+
+--
+-- Name: schools; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE schools (
+    id integer NOT NULL,
+    school_name character varying,
+    enabled boolean DEFAULT true,
+    organization_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: schools_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE schools_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: schools_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE schools_id_seq OWNED BY schools.id;
 
 
 --
@@ -721,7 +834,8 @@ CREATE TABLE users (
     invited_by_type character varying,
     invitations_count integer DEFAULT 0,
     token character varying,
-    organization_id integer
+    organization_id integer,
+    program_location_id integer
 );
 
 
@@ -863,7 +977,28 @@ ALTER TABLE ONLY profiles ALTER COLUMN id SET DEFAULT nextval('profiles_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY program_locations ALTER COLUMN id SET DEFAULT nextval('program_locations_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY programs ALTER COLUMN id SET DEFAULT nextval('programs_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schools ALTER COLUMN id SET DEFAULT nextval('schools_id_seq'::regclass);
 
 
 --
@@ -1001,11 +1136,35 @@ ALTER TABLE ONLY profiles
 
 
 --
+-- Name: program_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY program_locations
+    ADD CONSTRAINT program_locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: programs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY programs
+    ADD CONSTRAINT programs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY roles
     ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schools_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schools
+    ADD CONSTRAINT schools_pkey PRIMARY KEY (id);
 
 
 --
@@ -1109,6 +1268,20 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
+-- Name: index_program_locations_on_program_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_program_locations_on_program_id ON program_locations USING btree (program_id);
+
+
+--
+-- Name: index_programs_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_programs_on_organization_id ON programs USING btree (organization_id);
+
+
+--
 -- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1120,6 +1293,13 @@ CREATE INDEX index_roles_on_name ON roles USING btree (name);
 --
 
 CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON roles USING btree (name, resource_type, resource_id);
+
+
+--
+-- Name: index_schools_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_schools_on_organization_id ON schools USING btree (organization_id);
 
 
 --
@@ -1165,6 +1345,13 @@ CREATE INDEX index_users_on_organization_id ON users USING btree (organization_i
 
 
 --
+-- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_program_location_id ON users USING btree (program_location_id);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1190,6 +1377,38 @@ CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+
+
+--
+-- Name: fk_rails_0586629141; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY programs
+    ADD CONSTRAINT fk_rails_0586629141 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: fk_rails_099ab22c67; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schools
+    ADD CONSTRAINT fk_rails_099ab22c67 FOREIGN KEY (organization_id) REFERENCES organizations(id);
+
+
+--
+-- Name: fk_rails_4dce22cfb5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT fk_rails_4dce22cfb5 FOREIGN KEY (program_location_id) REFERENCES program_locations(id);
+
+
+--
+-- Name: fk_rails_684ed17f10; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY program_locations
+    ADD CONSTRAINT fk_rails_684ed17f10 FOREIGN KEY (program_id) REFERENCES programs(id);
 
 
 --
@@ -1361,4 +1580,18 @@ INSERT INTO schema_migrations (version) VALUES ('20161013231902');
 INSERT INTO schema_migrations (version) VALUES ('20161014040703');
 
 INSERT INTO schema_migrations (version) VALUES ('20161018030748');
+
+INSERT INTO schema_migrations (version) VALUES ('20161107203204');
+
+INSERT INTO schema_migrations (version) VALUES ('20161107205206');
+
+INSERT INTO schema_migrations (version) VALUES ('20161110193750');
+
+INSERT INTO schema_migrations (version) VALUES ('20161110224949');
+
+INSERT INTO schema_migrations (version) VALUES ('20161110224954');
+
+INSERT INTO schema_migrations (version) VALUES ('20161111163954');
+
+INSERT INTO schema_migrations (version) VALUES ('20161111165026');
 

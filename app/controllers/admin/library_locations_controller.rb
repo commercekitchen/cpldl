@@ -36,7 +36,7 @@ module Admin
       if @library_location.destroy
         redirect_to admin_library_locations_path, notice: "Library Branch was successfully deleted."
       else
-        redirect_to admin_library_locations_path, notice: "Library Branch was NOT deleted."
+        redirect_to admin_library_locations_path, alert: "Sorry, we were unable to remove this library branch."
       end
     end
 

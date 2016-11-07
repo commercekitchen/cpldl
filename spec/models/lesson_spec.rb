@@ -20,6 +20,7 @@
 #  story_line_file_size    :integer
 #  story_line_updated_at   :datetime
 #  pub_status              :string
+#  parent_lesson_id        :integer
 #
 
 require "rails_helper"

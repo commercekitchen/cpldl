@@ -1,0 +1,10 @@
+<div class="row twelvecol underlined <%= program_location.enabled? ? "table_row_enabled" : "table_row_disabled" %>" id="location_row_<%= program_location.id %>" >
+  <div class="four-of-twelve">
+    <%= program_location.location_name %>
+  </div>
+  <div class="four-of-twelve">
+    <span>
+      <%= link_to (program_location.enabled? ? "Disable" : "Enable"), admin_program_location_toggle_path(program_location.id), method: :post, remote: true %>
+    </span>
+  </div>
+</div>

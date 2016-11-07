@@ -38,6 +38,17 @@ Rails.application.routes.draw do
     put 'lessons/sort', to: 'lessons#sort'
     resources :organizations, only: [:new, :create, :index]
     resources :library_locations
+    
+    resources :programs, only: [:index, :edit] do
+    end
+
+    resources :program_locations, only: [:create] do
+      post 'toggle'
+    end
+
+    resources :schools, only: [:create, :index] do
+      post 'toggle'
+    end
 
     resources :dashboard, only: [:index]
       get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index

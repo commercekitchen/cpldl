@@ -16,6 +16,14 @@ admin_user.update(organization_id: Organization.second.id)
 admin_user.add_role(:admin, Organization.second)
 puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
 
+Organization.create(name: "Nashville Public Library", subdomain: "npl")
+admin_user = User.create(email: "admin+nash@commercekitchen.com", password: "ChangeMe!", confirmed_at: Time.zone.now)
+admin_profile = Profile.create(first_name: "Super", zip_code: "37115", user_id: admin_user.id)
+admin_user.update(profile_id: admin_profile.id)
+admin_user.update(organization_id: Organization.third.id)
+admin_user.add_role(:admin, Organization.third)
+puts "Admin User Created - Username: #{admin_user.email}, Password: ChangeMe!"
+
 regular_user = User.create(email: "alex@commercekitchen.com", password: "asdfasdf", confirmed_at: Time.zone.now)
 admin_profile = Profile.create(first_name: "Alex", zip_code: "80209", user_id: regular_user.id)
 regular_user.update(profile_id: admin_profile.id)

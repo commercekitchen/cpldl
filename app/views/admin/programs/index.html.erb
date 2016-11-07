@@ -1,0 +1,22 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h1>Programs</h1>
+
+<div class="row underlined">
+  <div class="four-of-twelve">
+    &nbsp;
+  </div>
+</div>
+
+<% @programs.each do |program| %>
+  <div class="row twelvecol underlined">
+    <div class="four-of-twelve">
+       <%= program.program_name %>
+    </div>
+    <% if program.location_required? %>
+      <div class="four-of-twelve">
+        <%= link_to  "Edit", edit_admin_program_path(program) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

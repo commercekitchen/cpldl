@@ -23,6 +23,12 @@
     <%= f.select :branches, [['Yes', true], ['No', false]], class: "bottom-margin" %>
   </fieldset>
   <fieldset>
+    <%= f.label :accepts_programs do %>
+      Include Registration Program Options for Organization?<span class="required"></span>
+    <% end %>
+    <%= f.select :accepts_programs, [['Yes', true], ['No', false]], class: "bottom-margin" %> 
+  </fieldset>
+  <fieldset>
     <%= f.label :subdomain do %>
       Subdomain<span class="required"></span>
     <% end %>
