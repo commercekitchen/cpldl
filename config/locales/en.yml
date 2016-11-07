@@ -25,6 +25,8 @@ en:
       custom_banner_greeting: ""
     chipublib:
       custom_banner_greeting: "Chicago DigitalLearn<br>"
+    npl:
+      custom_banner_Greeting: "Nashville DigitalLearn<br>"
     logo_banner_html: "Use a computer to do almost anything!"
     login: "Log In"
     signup: "Sign Up"
@@ -64,6 +66,12 @@ en:
       confirm_my_account: "Confirm my account"
       confirm_your_account_through_link: "You can confirm your account email through the link below:"
       signature: "<p>Chicago Digital Learn offers:</p><ul><li>Videos that explain how computers work you can watch at your own pace</li><li>Chicago educational and employment resource</li><li>Links to other helpful online resources</li></ul><p></p><p>Have questions? <a href='https://chipublib.bibliocommons.com/locations/list/?_ga=1.46846951.1119167552.1454774219'>Visit or call a Chicago Public Library</a> location near you.</p>"
+    npl:
+      subject: "Get Started with Nashville Digital Learn"
+      welcome: "Welcome to Nashville Digital Learn. Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
+      confirm_your_account_through_link: "You can confirm your account email through the link below:"
+      confirm_my_account: "Confirm my account"
+      signature: "Thanks and have a wonderful day!"
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"

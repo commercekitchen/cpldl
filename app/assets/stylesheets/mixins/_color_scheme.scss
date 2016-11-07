@@ -17,6 +17,12 @@
     text-decoration: underline;
   }
 
+  .logo-icon {
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
   a.inverted {
     color: $white;
   }
@@ -24,6 +30,12 @@
   .slogan {
     color: $negative_color;
     text-align: $text_alignment;
+  }
+
+  .signup-password-label {
+    font-size: 1.1em;
+    color: $primary_color;
+    margin-top: 1.5em;
   }
 
   .text-color {

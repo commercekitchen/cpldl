@@ -5,7 +5,7 @@
       <% when "www" %>
         <%= image_tag "dl_logo" %>
       <% else %>
-        <%= image_tag "chipub_logo_2_black", class: "dark-logo" %>
+        <%= image_tag "#{current_organization.subdomain}_logo_black", class: "dark-logo" %>
       <% end %>
     </div>
   </div>

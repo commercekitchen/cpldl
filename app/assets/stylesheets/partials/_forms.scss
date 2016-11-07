@@ -17,12 +17,6 @@ label.plain {
   padding-right: 1em;
 }
 
-.signup-password-label {
-    font-size: 1.1em;
-    color: $cpl-blue;
-    margin-top: 1.5em;
-  }
-
 .required:after {
   content: " *";
   color: $teal;
