@@ -1,0 +1,34 @@
+<div id="schoolFields">
+  <fieldset>
+    <%= f.label :role, t('login_signup.parent_student'), class: "signup-label" %>
+    <%= f.select :acting_as, options_for_select(['Parent', 'Student'], resource.acting_as), class: "bottom-margin" %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.text_field :student_id, placeholder: "Students' ID #s" %>
+  </fieldset>
+
+  <div id="student-only" class="hideUntilActive">
+    <fieldset>
+      <%= f.label :date_of_birth, t('login_signup.birthday'), class: "signup-label" %>
+      <div class="date-select">
+        <%= f.date_select :date_of_birth, order: [:month, :day, :year], start_year: 1990, end_year: Date.today.year %>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <%= f.label :grade, t('login_signup.grade'), class: "signup-label" %>
+      <div class="row">
+        <div class="threecol">
+          <%= f.select :grade, (1..12) %>
+        </div>
+      </div>
+
+    </fieldset>
+
+    <fieldset>
+      <%= f.label :school, t('login_signup.school'), class: "signup-label" %>
+      <%= f.collection_select :school_id, current_organization.schools.enabled, :id, :school_name, { include_blank: "Select School" }, class: "select-large" %>
+    </fieldset>
+  </div>
+</div>

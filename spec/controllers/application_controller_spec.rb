@@ -40,24 +40,5 @@ describe ApplicationController do
       expect(@controller.after_sign_in_path_for(user)).to eq(root_path)
     end
 
-    describe "for npl users" do
-
-      before(:each) do
-        @request.host = "npl.test.host"
-        @user = create(:user, organization: @npl_organization)
-        @user.add_role(:user, @npl_organization)
-      end
-
-      it "should redirect to profile path without program information" do
-        expect(@controller.after_sign_in_path_for(@user)).to eq(profile_path)
-      end
-
-      it "should redirect to root path if valid program information" do
-        program = create(:program, organization: @npl_organization)
-        pl = create(:program_location, program: program, users: [@user])
-        expect(@controller.after_sign_in_path_for(@user)).to eq(root_path)
-      end
-
-    end
   end
 end

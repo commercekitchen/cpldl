@@ -34,6 +34,12 @@
 #  invitations_count      :integer          default(0)
 #  token                  :string
 #  organization_id        :integer
+#  acting_as              :string
+#  library_card_number    :string
+#  student_id             :string
+#  date_of_birth          :datetime
+#  grade                  :integer
+#  school_id              :integer
 #  program_location_id    :integer
 #
 
@@ -52,6 +58,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   rolify
   belongs_to :organization
+  belongs_to :school
   belongs_to :program_location
   has_one :profile, dependent: :destroy
   has_many :course_progresses, dependent: :destroy

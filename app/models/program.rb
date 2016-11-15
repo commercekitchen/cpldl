@@ -18,7 +18,6 @@ class Program < ActiveRecord::Base
   belongs_to :organization
   validates :program_name, presence: true
   validates :location_field_name, presence: true, if: :location_required
-  validates :program_locations, presence: true, if: :location_required
 
   accepts_nested_attributes_for :program_locations
 

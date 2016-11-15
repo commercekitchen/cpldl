@@ -15,6 +15,17 @@
 FactoryGirl.define do
   factory :program do
     program_name Faker::App.name
+    location_required false
+    student_program false
     organization
+
+    trait :student_program do
+      student_program true
+    end
+
+    trait :location_required do
+      location_required true
+      location_field_name Faker::Hipster.word
+    end
   end
 end

@@ -591,17 +591,11 @@ CREATE TABLE profiles (
     updated_at timestamp without time zone NOT NULL,
     language_id integer,
     library_location_id integer,
-    acting_as integer DEFAULT 0,
     last_name character varying,
     phone character varying,
     street_address character varying,
     city character varying,
-    state character varying,
-    library_card_number character varying,
-    student_id character varying,
-    date_of_birth timestamp without time zone,
-    grade integer,
-    school_id integer
+    state character varying
 );
 
 
@@ -835,6 +829,12 @@ CREATE TABLE users (
     invitations_count integer DEFAULT 0,
     token character varying,
     organization_id integer,
+    acting_as character varying,
+    library_card_number character varying,
+    student_id character varying,
+    date_of_birth timestamp without time zone,
+    grade integer,
+    school_id integer,
     program_location_id integer
 );
 

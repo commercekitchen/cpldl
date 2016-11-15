@@ -14,4 +14,6 @@ class ProgramLocation < ActiveRecord::Base
   belongs_to :program
   has_many :users
   validates :location_name, presence: true
+
+  scope :enabled, -> { where(enabled: true) }
 end

@@ -10,11 +10,13 @@
 #  updated_at      :datetime         not null
 #
 
-class School < ActiveRecord::Base
-  has_many :profiles
-  belongs_to :organization
+FactoryGirl.define do
+  factory :school do
+    school_name Faker::Hipster.sentence(3)
+    organization
 
-  validates :school_name, presence: true
-
-  scope :enabled, -> { where(enabled: true) }
+    trait :disabled do
+      enabled false
+    end
+  end
 end

@@ -12,28 +12,17 @@ feature "Subdomain admin program management" do
     log_in_with @dpl_admin.email, @dpl_admin.password
   end
 
-  scenario "subdomain admin can add a new program" do
-    # TODO: finish testing new program addition
+  scenario "subdomain admin can manage program locations" do
+    program = create(:program, :location_required, organization: @dpl)
+    program_location1 = create(:program_location, program: program)
+    program_location2 = create(:program_location, program: program)
+    program_location3 = create(:program_location, program: program)
     visit admin_dashboard_index_path(subdomain: "dpl")
     click_on "Admin Dashboard"
     click_on "Manage Programs"
-    # Expect no library program row
-    click_on "Add a New Program"
-    # Fill in program info
-    # Save program
-    # Expect new program on page
-  end
-
-  scenario "subdomain admin can manage existing programs" do
-    # TODO: Test management of programs
-    program = create(:program, organization: @dpl)
-    pl = create(:program_location, program: program)
-    visit admin_dashboard_index_path(subdomain: "dpl")
-    click_on "Admin Dashboard"
-    click_on "Manage Programs"
-    click_on "Edit Program"
-    # Assert current attribute
-    # Change something
-    # Assert attribute changed
+    expect(page).to have_selector("a[href='/admin/programs/#{program.id}/edit']")
+    find("a[href='/admin/programs/#{program.id}/edit']").click
+    expect(page).to have_link("Disable", count: 3)
+    expect(page).to have_button("Add")
   end
 end

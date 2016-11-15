@@ -53,6 +53,10 @@ en:
     zip_code: "Zip Code"
     your_password: "Your Password (must be at least 8 characters)"
     re_enter_password: "Re-enter Your Password"
+    parent_student: "Parent or Student?"
+    birthday: "Date of Birth"
+    grade: "Grade"
+    school: "School"
   confirmation_email:
     www:
       greeting: "Hello"
@@ -93,6 +97,7 @@ en:
     city: "City"
     state: "State"
     library_card_number: "Library Card #"
+    program: "Program Information"
     no_program: "What Program or Organization are you a part of?"
   change_login_page:
     leave_blank_to_not_change_password: "(Leave blank to not change. Passwords should be at least 8 characters long.)"

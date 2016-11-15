@@ -30,7 +30,7 @@
   </fieldset>
 
   <% if current_organization.accepts_programs? %>
-    <%= render partial: 'shared/programs_profile_form', locals: {f: f} %>
+    <%= render partial: 'programs_profile_form', locals: { f: f } %>
   <% else %>
 
     <fieldset>

@@ -25,6 +25,18 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find_or_initialize_by(user: @user)
+    @organization_programs = organization_programs
+
+    if params[:profile][:user].present?
+      new_role = params[:profile][:user][:user_role_string]
+
+      if new_role == "Student"
+        @user.add_role("Student")
+      else
+        @user.add_role("Parent")
+      end
+    end
+
     respond_to do |format|
       if @profile.update(profile_params)
         format.html { redirect_to profile_path, notice: "Profile was successfully updated." }
@@ -43,12 +55,13 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:first_name, :zip_code, :language_id)
+    params.require(:profile).permit(:language_id, :first_name, :last_name,
+      :phone, :street_address, :city, :state, :zip_code)
   end
 
   def organization_programs
     if current_user.organization.accepts_programs?
-      Program.for_subdomain("npl").collect { |program| [ program.program_name, program.id ] }
+      Program.for_subdomain(current_organization.subdomain).collect { |program| [ program.program_name, program.id ] }
     end
   end
 

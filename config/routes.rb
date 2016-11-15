@@ -5,7 +5,16 @@ Rails.application.routes.draw do
 
   get 'login/new', as: :login
   resource :account, only: [:show, :update]
-  resource :profile, only: [:show, :update]
+  resource :profile, only: [:show, :update] do
+    post 'select_program'
+    post 'get_schools_for_organization'
+    get 'get_user_school'
+    get 'get_program_data'
+  end
+
+  namespace :ajax do
+    post 'programs/select_program'
+  end
 
   get 'courses/your', to: 'courses#your', as: :your_courses
   get 'courses/completed', to: 'courses#completed', as: :completed_courses
