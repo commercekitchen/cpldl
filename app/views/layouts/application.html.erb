@@ -16,7 +16,7 @@
         <% else %>
           <h1 class="slogan" >
             <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting") %>
-            <%= t("home.logo_banner_html") %>
+            <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>
           </h1>
         <% end %>
       </div>

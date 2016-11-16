@@ -15,7 +15,7 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :title do %>
+    <%= f.label :title, class: "text-color" do %>
       Title<span class="required"></span>
     <% end %>
     <%= f.text_field :title %>
@@ -25,14 +25,14 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :contributor do %>
+    <%= f.label :contributor, class: "text-color" do %>
       Contributor<span class="required"></span>
     <% end %>
     <%= f.text_field :contributor, class: "bottom-margin" %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :summary do %>
+    <%= f.label :summary, class: "text-color" do %>
       Course Summary<span class="required"></span>
     <% end %>
     <%= f.text_field :summary %>
@@ -40,7 +40,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :description do %>
+    <%= f.label :description, class: "text-color" do %>
       Course Description<span class="required"></span>
     <% end %>
     <%= f.cktext_area :description %>
@@ -50,7 +50,7 @@
     <div class="sixcol">
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
-          <%= a.label :document, "Text copies of the course" %>
+          <%= a.label :document, "Text copies of the course", class: "text-color" %>
           <p><i>Upload any supporting documentation or supplemental materials needed during the course.</i></p>
         </fieldset>
         <fieldset>
@@ -66,7 +66,7 @@
     <div class="sixcol last">
       <%= f.fields_for :attachments, @course.attachments.build do |a| %>
         <fieldset>
-          <%= a.label :document, "Additional Resources (post-completion)" %>
+          <%= a.label :document, "Additional Resources (post-completion)", class: "text-color" %>
           <p><i>Upload any supporting documentation or supplemental materials needed after the course.</i></p>
         </fieldset>
         <fieldset>
@@ -83,7 +83,7 @@
   <% if @course.attachments.exists? %>
     <div class="row">
       <fieldset class="sixcol">
-        <%= f.label :document, "Current Supplemental Attachments" %>
+        <%= f.label :document, "Current Supplemental Attachments", class: "text-color" %>
         <ul>
           <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
             <li>
@@ -93,7 +93,7 @@
         </ul>
       </fieldset>
       <fieldset class="sixcol last">
-        <%= f.label :document, "Current Post-Course Attachments" %>
+        <%= f.label :document, "Current Post-Course Attachments", class: "text-color" %>
         <ul>
           <% @course.attachments.where(doc_type: "post-course").each do |a| %>
             <li>
@@ -107,7 +107,7 @@
 
   <div>
     <fieldset>
-      <%= f.label :notes, "Info to help learners practice and use their new skills (post completion)" %>
+      <%= f.label :notes, "Info to help learners practice and use their new skills (post completion)", class: "text-color" %>
       <%= f.cktext_area :notes %>
     </fieldset>
   </div>
@@ -115,7 +115,7 @@
   <div class="row">
     <div class="fourcol">
       <fieldset>
-        <%= f.label :topics do %>
+        <%= f.label :topics, class: "text-color" do %>
           Course Topics<span class="required"></span>
         <% end %>
 
@@ -136,7 +136,7 @@
 
     <div class="fourcol">
       <fieldset>
-        <%= f.label :language_id do %>
+        <%= f.label :language_id, class: "text-color" do %>
           Course Language<span class="required"></span>
         <% end %>
         <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
@@ -145,7 +145,7 @@
 
     <div class="fourcol last">
     <fieldset>
-      <%= f.label :format do %>
+      <%= f.label :format, class: "text-color" do %>
         Course Format<span class="required"></span>
       <% end %>
       <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." } ) %>
@@ -160,7 +160,7 @@
   <% end %>
 
   <fieldset>
-    <%= f.label "SEO page title" %>
+    <%= f.label "SEO page title", class: "text-color" %>
     <%= f.text_field :seo_page_title %>
     <div class="note left-or-right">
       <span id="course_seo_page_title_counter"></span> out of <%= @max_seo %> characters
@@ -168,7 +168,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label "Meta Description" %>
+    <%= f.label "Meta Description", class: "text-color" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
       <span id="course_meta_desc_counter"></span> out of <%= @max_meta %> characters

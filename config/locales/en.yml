@@ -23,11 +23,13 @@ en:
   home:
     www:
       custom_banner_greeting: ""
+      logo_banner_html: "Use a computer to do almost anything!"
     chipublib:
       custom_banner_greeting: "Chicago DigitalLearn<br>"
+      logo_banner_html: "Use a computer to do almost anything!"
     npl:
       custom_banner_greeting: "Being Online Can Improve Your Life<br>"
-    logo_banner_html: "Use a computer to do almost anything!"
+      logo_banner_html: ""
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"

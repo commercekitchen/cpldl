@@ -23,11 +23,13 @@ es:
   home:
     www:
       custom_banner_greeting: ""
+      logo_banner_html: "Use la computadora para hacer casi todo!"
     chipublib:
       custom_banner_greeting: "Chicago DigitalLearn<br>"
+      logo_banner_html: "Use la computadora para hacer casi todo!"
     npl:
       custom_banner_greeting: "Estar en Línea Puede Mejorar Su Vida<br>"
-    logo_banner_html: "Use la computadora para hacer casi todo!"
+      logo_banner_html: "Use la computadora para hacer casi todo!"
     # Used on course intro text partial
     logo_banner_partial: "Chicago DigitalLearn"
     logo_banner_partial_2: Use la computadora para hacer casi todo!

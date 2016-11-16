@@ -1,8 +1,12 @@
 <%= content_for(:callout) { %><h1>Edit Program</h1><% } %>
 
-<%= label_tag :program_locations, class: "text-color underlined" do %>
-  <%= "#{@location_field_name} Options" %><span class="required"></span>
-<% end %>
+<h1>
+  <%= "#{@location_field_name} Options" %>
+</h1>
+
+<div class="row underlined">
+  &nbsp;
+</div>
 
 <div id="program_location_rows">
   <% @program.program_locations.select(&:persisted?).each do |pl| %>
