@@ -829,13 +829,13 @@ CREATE TABLE users (
     invitations_count integer DEFAULT 0,
     token character varying,
     organization_id integer,
+    school_id integer,
+    program_location_id integer,
     acting_as character varying,
     library_card_number character varying,
     student_id character varying,
     date_of_birth timestamp without time zone,
-    grade integer,
-    school_id integer,
-    program_location_id integer
+    grade integer
 );
 
 
@@ -1594,4 +1594,6 @@ INSERT INTO schema_migrations (version) VALUES ('20161110224954');
 INSERT INTO schema_migrations (version) VALUES ('20161111163954');
 
 INSERT INTO schema_migrations (version) VALUES ('20161111165026');
+
+INSERT INTO schema_migrations (version) VALUES ('20161116175916');
 
