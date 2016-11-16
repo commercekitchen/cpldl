@@ -90,4 +90,31 @@ describe Admin::DashboardController do
       expect(@user2.confirmed?).to be true
     end
   end
+
+  describe "GET #import_courses" do
+    before do
+      @user.add_role(:admin, @org)
+      @other_org = create(:organization)
+      @dl_course1 = create(:course, title: "Course1", subsite_course: true)
+      @dl_course2 = create(:course, title: "Course2", subsite_course: true)
+      @dl_course3 = create(:course, title: "Course3", subsite_course: true)
+      @course1 = create(:course, title: "Course1", subsite_course: false, parent_id: @dl_course1.id)
+      @course2 = create(:course, title: "Course2", subsite_course: false, parent_id: @dl_course2.id)
+      @course3 = create(:course, title: "Course3", subsite_course: false, parent_id: @dl_course3.id)
+      @org_course1 = create(:organization_course, organization_id: @org.id, course_id: @course1.id)
+      @org_course2 = create(:organization_course, organization_id: @other_org.id, course_id: @course2.id)
+      @org_course3 = create(:organization_course, organization_id: @org.id, course_id: @course3.id)
+      @org_course4 = create(:organization_course, organization_id: @other_org.id, course_id: @course3.id)
+    end
+
+    it "should correctly assign previously imported courses" do
+      get :import_courses
+      expect(assigns(:previously_imported_ids)).to eq([@dl_course1.id, @dl_course3.id])
+    end
+
+    it "should correctly assign importable courses" do
+      get :import_courses
+      expect(assigns(:importable_courses)).to eq([@dl_course2])
+    end
+  end
 end
