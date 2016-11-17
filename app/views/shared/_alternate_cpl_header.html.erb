@@ -1,24 +1,28 @@
-<header class="alternate-header-logged-out <%= "lesson-header" if request.path.include?("/lessons/")%>">
+<header class="header-logged-in <%= "lesson-header" if request.path.include?("/lessons/")%>">
   <div class="container">
-    <div class="language-links">
+    <div class="language-links ">
       <small>
         <%= link_to "English", home_language_toggle_path(lang: "en") %> | <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
       </small>
-      <small>
-        <%= link_to "Help Learners", "http://community.digitallearn.org", class: "practice-link" %>
-      </small>
+      <% if current_organization.subdomain == "www" %>
+        <small>
+          <%= link_to "Help Learners", "http://community.digitallearn.org", class: "practice-link" %>
+        </small>
+      <% end %>
     </div>
     <div class="logo-link-container">
       <%= render "shared/logo_purple" %>
-      <div class="signup-box">
-        <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
-      </div>
-      <div class="alternate-search-box">
-        <%= form_tag courses_path, method: :get do %>
-          <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-          <i class="icon-search grey"></i>
-          <%= submit_tag "Search", id: "search_btn" %>
-        <% end %>
+      <div class="search-container">
+        <div class="signup-box">
+          <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
+        </div>
+        <div class="alternate-search-box">
+          <%= form_tag courses_path, method: :get do %>
+            <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+            <i class="icon-search grey"></i>
+            <%= submit_tag "Search", id: "search_btn" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

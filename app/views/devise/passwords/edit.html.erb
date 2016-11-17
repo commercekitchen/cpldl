@@ -5,7 +5,7 @@
   <%= f.hidden_field :reset_password_token %>
 
   <fieldset>
-    <%= f.label :password do %>
+    <%= f.label :password, class: "text-color" do %>
       New Password
       <% if @minimum_password_length %>
         <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
@@ -15,7 +15,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :password_confirmation, "Confirm new password" %>
+    <%= f.label :password_confirmation, "Confirm new password", class: "text-color" %>
     <%= f.text_field :password_confirmation, autocomplete: "off" %>
   </fieldset>
 

@@ -21,7 +21,7 @@
   </fieldset>
 
   <fieldset>
-    <% if current_organization.branches? %>
+    <% if current_organization.branches? && current_organization.library_locations.present? %>
       <%= f.label :library_location_id, class: "text-color" do %>
         <%= t('profile_page.library_location') %>
       <% end %>

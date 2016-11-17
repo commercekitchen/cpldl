@@ -15,7 +15,7 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :title do %>
+    <%= f.label :title, class: "text-color" do %>
       Lesson Title<span class="required"></span>
     <% end %>
     <%= f.text_field :title %>
@@ -25,7 +25,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :summary do %>
+    <%= f.label :summary, class: "text-color" do %>
       Lesson Summary<span class="required"></span>
     <% end %>
     <%= f.text_field :summary %>
@@ -37,7 +37,7 @@
   <div class="row">
     <div class="sixcol">
       <fieldset>
-        <%= f.label :duration do %>
+        <%= f.label :duration, class: "text-color" do %>
           Duration<span class="required"></span>
         <% end %>
         <p class="note">Enter the estimated amount of time that this lesson
@@ -49,7 +49,7 @@
     <div class="sixcol last">
       <% if @lesson.story_line.blank? %>
         <fieldset>
-          <%= f.label :story_line do %>
+          <%= f.label :story_line, class: "text-color" do %>
             Articulate Storyline Package<span class="required"></span>
           <% end %>
           <p class="note">Upload a zip file containing all of the directories and
@@ -58,7 +58,7 @@
         </fieldset>
       <% else %>
         <fieldset>
-          <%= f.label :story_line do %>
+          <%= f.label :story_line, class: "text-color" do %>
             Articulate Storyline Package<span class="required"></span>
           <% end %>
           <p class="note">There can only be one story line per lesson, if you want
@@ -73,7 +73,7 @@
   </div>
 
   <fieldset>
-    <%= f.label :seo_page_title do %>
+    <%= f.label :seo_page_title, class: "text-color" do %>
       Page Title
     <% end %>
     <%= f.text_field :seo_page_title %>
@@ -83,7 +83,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label "Meta Description" %>
+    <%= f.label "Meta Description", class: "text-color" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
       <span id="lesson_meta_desc_counter"></span> out of <%= @max_meta_desc %> characters
@@ -92,7 +92,7 @@
 
   <div class="sixcol">
     <fieldset>
-      <%= f.label :pub_status do %>
+      <%= f.label :pub_status, class: "text-color" do %>
         Publication Status<span class="required"></span>
       <% end %>
       <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"]], @lesson.pub_status), { include_blank: "Select..." } ) %>
@@ -101,7 +101,7 @@
 
   <div class="sixcol last">
     <fieldset>
-      <%= f.label :is_assessment do %>
+      <%= f.label :is_assessment, class: "text-color" do %>
         Assessment<span class="required"></span>
       <% end %>
       <p class="note">Is this lesson the final assessment for the course?</p>

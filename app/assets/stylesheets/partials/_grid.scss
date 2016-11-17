@@ -4,7 +4,8 @@
 .row {
   @include row();
   margin-bottom: 1em;
-  .no-margin {
+
+  &.no-margin {
     margin: 0em;
   }
 }

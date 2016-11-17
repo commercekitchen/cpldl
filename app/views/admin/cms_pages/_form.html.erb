@@ -39,7 +39,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label :title do %>
+    <%= f.label :title, class: "text-color" do %>
       Title<span class="required"></span>
     <% end %>
     <%= f.text_field :title %>
@@ -51,7 +51,7 @@
   <div class="row">
     <div class="sixcol">
       <fieldset>
-        <%= f.label :audience do %>
+        <%= f.label :audience, class: "text-color" do %>
           Who can view<span class="required"></span>
         <% end %>
         <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @cms_page.audience), { include_blank: "Select..."} ) %>
@@ -60,7 +60,7 @@
 
     <div class="sixcol last">
       <fieldset>
-        <%= f.label :pub_status do %>
+        <%= f.label :pub_status, class: "text-color" do %>
           Publication Status<span class="required"></span>
         <% end %>
         <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archive", "A"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
@@ -69,21 +69,21 @@
   </div>
 
   <fieldset>
-    <%= f.label :author do %>
+    <%= f.label :author, class: "text-color" do %>
       Author<span class="required"></span>
     <% end %>
     <%= f.text_field :author, class: "bottom-margin" %>
   </fieldset>
 
   <fieldset>
-    <%= f.label :body do %>
+    <%= f.label :body, class: "text-color" do %>
       Page Content<span class="required"></span>
     <% end %>
     <%= f.cktext_area :body %>
   </fieldset>
 
   <fieldset>
-    <%= f.label "SEO page title" %>
+    <%= f.label "SEO page title", class: "text-color" %>
     <%= f.text_field :seo_page_title %>
     <div class="note left-or-right">
       <span id="cms_page_seo_page_title_counter"></span> out of <%= @max_seo %> characters
@@ -91,7 +91,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label "Meta Description" %>
+    <%= f.label "Meta Description", class: "text-color" %>
     <%= f.text_field :meta_desc %>
     <div class="note left-or-right">
       <span id="cms_page_meta_desc_counter"></span> out of <%= @max_meta %> characters

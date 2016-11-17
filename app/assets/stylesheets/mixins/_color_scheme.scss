@@ -17,6 +17,14 @@
     text-decoration: underline;
   }
 
+  .language-links {
+    color: $action_color;
+
+    a {
+      color: $action_color;
+    }
+  }
+
   .logo-icon {
     a:hover {
       text-decoration: none;
@@ -36,6 +44,10 @@
     font-size: 1.1em;
     color: $primary_color;
     margin-top: 1.5em;
+
+    &-no-margin {
+      margin-top: 0; 
+    }
   }
 
   .text-color {

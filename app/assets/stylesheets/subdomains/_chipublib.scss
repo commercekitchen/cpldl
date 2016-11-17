@@ -3,6 +3,6 @@
   @include banner($cpl-blue, $white);
   @include buttons($blind-man-mustard, $white);
   @include course_widget($blind-man-mustard, $mustard-2);
-  @include lesson_block($cpl-blue, $grey);
+  @include lesson_block($cpl-blue, $grey, $cpl-purple, $orange);
   @include icons($cpl-blue);
 }

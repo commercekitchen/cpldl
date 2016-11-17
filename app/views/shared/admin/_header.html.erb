@@ -1,32 +1,31 @@
 <header class="header-logged-in <%= "lesson-header" if request.path.include?("/lessons/")%>">
   <div class="container">
-    <div class="row">
+    <div class="language-links">
       <small>
         <%= link_to "English", home_language_toggle_path(lang: "en") %> | <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
       </small>
     </div>
-    <div class="row">
-      <div class="sixcol">
-        <%= render "shared/logo_purple" %>
-      </div>
-      <div class="sixcol last">
-        <nav class="left-or-right header-top-nav">
-          Hi Admin! |
-          <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
-          <% if top_level_domain? %>
-            <%= link_to "Community Of Practice", "http://community.digitallearn.org", target: "_blank" %> |
-          <% end %>
-          <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
-
-
-          <div class="admin-search-box">
-            <%= form_tag courses_path, method: :get do %>
-              <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-              <i class="icon-search grey"></i>
-              <%= submit_tag "Search", id: "search_btn" %>
+    <div class="logo-link-container">
+      <%= render "shared/logo_purple" %>
+      <div class="search-container">
+        <div class="signup-box">
+          <nav class="left-or-right header-top-nav">
+            Hi Admin! |
+            <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
+            <% if top_level_domain? %>
+              <%= link_to "Community Of Practice", "http://community.digitallearn.org", target: "_blank" %> |
             <% end %>
-          </div>
-        </nav>
+            <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
+
+          </nav>
+        </div>
+        <div class="alternate-search-box">
+          <%= form_tag courses_path, method: :get do %>
+            <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
+            <i class="icon-search grey"></i>
+            <%= submit_tag "Search", id: "search_btn" %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
