@@ -32,11 +32,9 @@
     float: left;
 
     .logo-icon {
-      width: 155px;
 
       img {
-        max-width: 100%;
-        height: auto;
+        max-height: 100%;
       }
 
       @include media($mobile-large) {
@@ -145,11 +143,10 @@
 
     .logo-icon {
       display: inline-block;
-      width: 160px;
 
       .dark-logo {
-        max-width: 100%;
-        height: auto;
+        max-width: 350px;
+        max-height: 120px;
         margin: 0.2em;
       }
 
