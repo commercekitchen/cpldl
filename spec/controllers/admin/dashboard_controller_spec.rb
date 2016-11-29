@@ -116,7 +116,7 @@ describe Admin::DashboardController do
 
     it "should correctly assign previously imported courses" do
       get :import_courses
-      expect(assigns(:previously_imported_ids)).to eq([@dl_course1.id, @dl_course3.id, @dl_course5.id])
+      expect(assigns(:previously_imported_ids) - [@dl_course1.id, @dl_course3.id, @dl_course5.id]).to eq([])
     end
 
     it "should correctly assign importable courses" do
