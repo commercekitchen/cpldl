@@ -36,9 +36,11 @@ ul strong {
 .cms_nav {
   padding-left: 0px;
   text-align: left;
+
   a {
-    color: $white;
+    color: $white !important;
   }
+
 }
 
 .link-cpl {
