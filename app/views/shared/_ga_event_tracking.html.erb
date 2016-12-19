@@ -45,6 +45,10 @@ $(document).ready(function() {
     ga("send", "event", "exernal link", "click", "Nashville Public Library");
   });
 
+  $("footer").on("click", ".link-kpl", function() {
+    ga("send", "event", "exernal link", "click", "Kalamazoo Public Library");
+  });
+
   $("footer").on("click", ".link-pla", function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });
