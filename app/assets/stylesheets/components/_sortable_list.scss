@@ -18,11 +18,6 @@ ul.objects {
   padding-left: 0;
 }
 
-ul.objects li {
-  padding: 10px 10px 10px 0;
-  border-bottom: 1px solid $purple;
-}
-
 ul.objects li:last-child {
   border-bottom: none;
 }

@@ -1,4 +1,4 @@
-@mixin color_scheme($primary_color, $negative_color, $action_color, $text_alignment: left) {
+@mixin color_scheme($primary_color, $negative_color, $action_color, $text_alignment: left, $footer-color: $primary_color, $underline-color: $purple) {
   
   h1, h2, h3, h4, h5, h6 {
     color: $primary_color;
@@ -6,6 +6,10 @@
 
   .color {
     background-color: $primary_color;
+  }
+
+  .footer-primary {
+    background-color: $footer-color;
   }
 
   a {
@@ -66,6 +70,18 @@
     content: " *";
     color: $primary_color;
     font-weight: bold;
+  }
+
+  .underlined {
+    border-bottom: solid;
+    border-color: $underline-color;
+    border-width: 1px;
+    padding-bottom: 1em;
+  }
+
+  ul.objects li {
+    padding: 10px 10px 10px 0;
+    border-bottom: 1px solid $underline-color;
   }
 
 }

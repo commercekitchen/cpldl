@@ -29,7 +29,10 @@ es:
       logo_banner_html: "Use la computadora para hacer casi todo!"
     npl:
       custom_banner_greeting: "Estar en Línea Puede Mejorar Su Vida<br>"
-      logo_banner_html: "Use la computadora para hacer casi todo!"
+      logo_banner_html: ""
+    kpl:
+      custom_banner_greeting: "Explorar, descubrir y participar con su computadora!<br>"
+      logo_banner_html: ""
     # Used on course intro text partial
     logo_banner_partial: "Chicago DigitalLearn"
     logo_banner_partial_2: Use la computadora para hacer casi todo!
@@ -83,6 +86,13 @@ es:
       confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
       confirm_my_account: "Confirmar mi cuenta"
       signature: "Gracias y que tenga un día maravilloso!"
+    kpl:
+      greeting: "Hola"
+      subject: "Empieza con Kalamazoo Digital Aprende"
+      welcome: "Bienvenido a Kalamazoo Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
+      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+      confirm_my_account: "Confirmar mi cuenta"
+      signature: "Gracias y que tenga un día maravilloso!"
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
@@ -129,7 +139,11 @@ es:
     www:
       course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     chipublib:
-      "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    npl:
+      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    kpl:
+      course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
