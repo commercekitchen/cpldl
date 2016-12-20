@@ -1,4 +1,4 @@
-@mixin icons($icon_color) {
+@mixin icons($icon_color, $check_color) {
   [class^="icon-"]:before, [class*=" icon-"]:before {
     font-family: "fontello";
     font-style: normal;
@@ -33,7 +33,7 @@
   }
 
   [class^="icon-"].orange:before, [class*=" icon-"].orange:before {
-    color: $orange;
+    color: $check_color;
   }
 
   [class^="icon-"].white:before, [class*=" icon-"].white:before {

@@ -4,5 +4,5 @@
   @include buttons($npl-orange, $white);
   @include course_widget($npl-orange, $npl-orange);
   @include lesson_block($npl-blue, $grey, $npl-orange, $npl-orange);
-  @include icons($npl-blue);
+  @include icons($npl-blue, $npl-orange);
 }

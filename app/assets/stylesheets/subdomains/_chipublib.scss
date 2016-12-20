@@ -4,5 +4,5 @@
   @include buttons($blind-man-mustard, $white);
   @include course_widget($blind-man-mustard, $mustard-2);
   @include lesson_block($cpl-blue, $grey, $cpl-purple, $orange);
-  @include icons($cpl-blue);
+  @include icons($cpl-blue, $orange);
 }
