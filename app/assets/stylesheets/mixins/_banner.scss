@@ -1,4 +1,4 @@
-@mixin banner($background_color, $text_color, $desktop_font_size: 3.3em) {
+@mixin banner($background_color, $text_color, $custom_banner_font: 3.3em) {
   .banner {
     background-color: $background_color;
     margin-bottom: 2em;
@@ -14,7 +14,13 @@
       margin-top: 13px;
 
       @include media($desktop) {
-        font-size: $desktop_font_size;
+        font-size: 3.3em;
+      }
+
+      &.slogan {
+        @include media($desktop){
+          font-size: $custom_banner_font;
+        }
       }
     }
 
