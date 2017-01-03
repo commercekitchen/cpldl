@@ -13,12 +13,13 @@
 
 class Organization < ActiveRecord::Base
   resourcify
-  has_many :cms_pages
-  has_many :library_locations
-  has_many :programs
-  has_many :schools
+  has_many :cms_pages, dependent: :destroy
+  has_many :library_locations, dependent: :destroy
+  has_many :programs, dependent: :destroy
+  has_many :schools, dependent: :destroy
   has_many :organization_courses
   has_many :courses, through: :organization_courses
+  has_many :users, dependent: :destroy
   validate 
 
   def user_count
