@@ -56,7 +56,7 @@ class ProfilesController < ApplicationController
 
   def profile_params
     params.require(:profile).permit(:language_id, :first_name, :last_name,
-      :phone, :street_address, :city, :state, :zip_code)
+      :phone, :street_address, :city, :state, :zip_code, :opt_out_of_recommendations)
   end
 
   def organization_programs

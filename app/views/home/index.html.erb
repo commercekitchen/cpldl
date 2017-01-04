@@ -30,7 +30,7 @@
   })(jQuery);
 <% end %>
 
-<% if current_user && current_user.quiz_modal_complete == false %>
+<% if current_user && current_user.quiz_modal_complete == false && !current_user.profile.opt_out_of_recommendations %>
   <%= render partial: "shared/quiz_modal" %>
 
   <%= javascript_tag do %>

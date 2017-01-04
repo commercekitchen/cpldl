@@ -64,6 +64,7 @@ en:
     birthday: "Date of Birth"
     grade: "Grade"
     school: "School"
+    opt_out_of_recommendations: "Opt out of Course Recommendations"
   confirmation_email:
     www:
       greeting: "Hello"

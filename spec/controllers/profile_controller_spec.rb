@@ -37,13 +37,14 @@ describe ProfilesController do
 
       it "allows the user to update their profile information" do
         put :update, id: @user.profile,
-          profile: { first_name: "Robby", zip_code: "12345", language_id: create(:language) },
+          profile: { first_name: "Robby", zip_code: "12345", language_id: create(:language), opt_out_of_recommendations: true },
           authenticity_token: set_authenticity_token
 
         @user.reload
         expect(@user.profile.first_name).to eq("Robby")
         expect(@user.profile.zip_code).to eq("12345")
         expect(@user.profile.language.name).to eq("English")
+        expect(@user.profile.opt_out_of_recommendations).to be true
       end
     end
 

@@ -595,7 +595,8 @@ CREATE TABLE profiles (
     phone character varying,
     street_address character varying,
     city character varying,
-    state character varying
+    state character varying,
+    opt_out_of_recommendations boolean DEFAULT false
 );
 
 
@@ -1596,4 +1597,6 @@ INSERT INTO schema_migrations (version) VALUES ('20161111163954');
 INSERT INTO schema_migrations (version) VALUES ('20161111165026');
 
 INSERT INTO schema_migrations (version) VALUES ('20161116175916');
+
+INSERT INTO schema_migrations (version) VALUES ('20170104190831');
 

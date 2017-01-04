@@ -159,3 +159,16 @@ select {
 //Fine for accessiblity since the textbook you type in has an outline
 
 .select2-container .select2-selection--single{ outline: 0 }
+
+.inline-checkbox-row {
+  padding-top: 15px;
+
+  .plain-label {
+    font-size: 16px;
+    color: black;
+
+    span {
+      padding-left: 10px;
+    }
+  }
+}

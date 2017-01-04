@@ -149,6 +149,8 @@ class CoursesController < ApplicationController
     end
 
     @courses = params[:search].blank? ? Course.where(id: tracked_course_ids) : @results
+    @skip_quiz = current_user.profile.opt_out_of_recommendations
+
     respond_to do |format|
       format.html { render :your }
       format.json { render json: @courses }

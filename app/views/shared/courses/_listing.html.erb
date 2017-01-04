@@ -20,5 +20,9 @@
       </div>
     </a>
 <% end %>
-<%= render partial: "shared/courses/learn_more" %>
+
+<% unless current_user && current_user.profile.opt_out_of_recommendations %>
+  <%= render partial: "shared/courses/learn_more" %>
+<% end %>
+
 </div>
