@@ -33,9 +33,6 @@ es:
     kpl:
       custom_banner_greeting: "Explorar, descubrir y participar con su computadora!<br>"
       logo_banner_html: ""
-    # Used on course intro text partial
-    logo_banner_partial: "Chicago DigitalLearn"
-    logo_banner_partial_2: Use la computadora para hacer casi todo!
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
@@ -57,6 +54,8 @@ es:
     dont_have_email: "¿No tiene una cuenta de correo electrónico?"
     click_here: "De clic aquí"
     open_a_tutorial: "para ver un video que le enseñará cómo crear una."
+    dont_have_library_card: "¿No tiene una tarjeta de biblioteca?"
+    register_for_library_card: "para registrarse en una tarjeta de biblioteca en línea que puede utilizar de inmediato."
     first_name: "Nombre"
     zip_code: "Código Postal"
     your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
@@ -113,7 +112,7 @@ es:
     street_address: "Dirección"
     city: "Ciudad"
     state: "Estado"
-    library_card_number: "Número de tarjeta de la biblioteca"
+    library_card_number: "Número de tarjeta de biblioteca"
     program: "Información del Programa"
     no_program: "¿A qué programa u organización pertenece usted?"
   change_login_page:

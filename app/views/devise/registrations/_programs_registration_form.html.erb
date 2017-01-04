@@ -3,6 +3,10 @@
   <%= f.text_field :library_card_number, placeholder: "#{t('profile_page.library_card_number')}" %>
 </fieldset>
 
+<p class="small-14 grey extra-bottom-margin">
+  <%= t('login_signup.dont_have_library_card') %> <%= link_to "#{t('login_signup.click_here')}", "https://library.nashville.org/get-card", target: "_blank" %> <%= t('login_signup.register_for_library_card') %>
+</p>
+
 <fieldset>
   <%= select_tag :organization_program, options_for_select(current_organization.programs.map{ |p| [p.program_name, p.id] }), include_blank: "#{t('profile_page.no_program')}" %>
 </fieldset>
