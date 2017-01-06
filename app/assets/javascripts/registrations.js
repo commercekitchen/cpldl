@@ -3,24 +3,26 @@
 }(function($, window, document) {
     $(function() {
 
-      $("input[type=radio][name=program_type]").change(function(){
-        if (this.value !== "none"){
-          $("#organization_program.hideUntilActive").show();
-          getProgramsOfType(this.value).done(updateProgramSelection);
-        } else {
-          $("#organization_program.hideUntilActive").hide();
+      $(document).ready(function(){
+        var programType = $("input[type=radio][name=program_type][checked='checked']").val();
+        if (programType){
+          updateVisibleInputs(programType);
         }
+      });
+
+      $("input[type=radio][name=program_type]").change(function(){
+        updateVisibleInputs(this.value);
       });
 
       $("#organization_program").change(function(e){
         var programId = $(this).val();
+        $("#previously_selected_program").val(programId);
+        programSelected(programId);
+      });
 
-        if (programId === ""){
-          $("#program_location_fields.hideUntilActive").hide();
-          $("#school_fields.hideUntilActive").hide();
-        } else {
-          getNewProgramData(programId).done(updateRegistrationFields);
-        }
+      $("#user_program_location_id").change(function(){
+        var locationId = $(this).val();
+        $("#user_previous_location_id").val(locationId);
       });
 
       $("#user_acting_as").change(function(e){
@@ -32,9 +34,45 @@
           hideStudentFields();
         }
       });
-
     });
 
+    function updateVisibleInputs(programType){
+      if (programType !== "none"){
+        $("#organization_program.hideUntilActive").show();
+        getProgramsOfType(programType).done(updateProgramSelection);
+      } else {
+        $("#organization_program.hideUntilActive").hide();
+        $("#program_location_fields.hideUntilActive").hide();
+      }
+      $("#program_location_fields.hideUntilActive").hide();
+      updateSchoolsSection(programType);
+    }
+
+    function tryPreviousProgramSelection(){
+      var programId = $("#previously_selected_program").val();
+      if (!programId){ return; }
+      if ($("#organization_program").find("option[value=" + programId + "]").length > 0){
+        $("#organization_program").val(programId);
+        programSelected(programId);
+      }
+    }
+
+    function tryPreviousLocationSelection(){
+      var previousId = $("#user_previous_location_id").val();
+      if (!previousId){ return; }
+      if ($("#user_program_location_id").find("option[value=" + previousId + "]").length > 0){
+        $("#user_program_location_id").val(previousId);
+      }
+    }
+
+    function programSelected(id){
+      if (id === ""){
+        $("#program_location_fields.hideUntilActive").hide();
+        $("#school_fields.hideUntilActive").hide();
+      } else {
+        getNewProgramData(id).done(updateRegistrationFields);
+      }
+    }
 
     function getProgramsOfType(type){
       return $.ajax({
@@ -50,6 +88,8 @@
       });
 
       $("#organization_program").updateDropdown("Program", newOptionsArray);
+
+      tryPreviousProgramSelection();
     }
 
     function getNewProgramData(programId){
@@ -89,6 +129,7 @@
         });
 
         $("#user_program_location_id").updateDropdown("Location", newOptionsArray);
+        tryPreviousLocationSelection();
       } else {
         $("#program_location_fields.hideUntilActive").hide();
       }
@@ -101,6 +142,5 @@
         $("#school_fields.hideUntilActive").hide();
       }
     }
-
   }
 ));

@@ -34,11 +34,16 @@
     ]
 
     list_params_allowed << [
+      :parent_type,
+      :organization_program,
       :program_location_id,
-      :acting_as,
-      :student_id,
       :library_card_number,
     ] if current_organization.accepts_programs?
+
+    list_params_allowed << [
+      :acting_as,
+      :student_id,
+    ] if params["program_type"] == "students_and_parents"
 
     list_params_allowed << [
       :date_of_birth,
