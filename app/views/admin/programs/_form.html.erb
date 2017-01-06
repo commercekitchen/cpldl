@@ -1,0 +1,30 @@
+<%= form_for( [:admin, @program], html: { multipart: true } ) do |f| %>
+  <% if @program.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@program.errors.count, "error") %> prohibited this program from being saved:</h2>
+      <ul>
+      <% @program.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <fieldset>
+    <%= f.text_field :program_name, placeholder: "#{t('programs_form.program_name')}" %>
+  </fieldset>
+
+  <fieldset>
+    <%= f.select :parent_type, Program::PARENT_TYPES, { include_blank: t('programs_form.parent_type') } %>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <%= f.label :location_required, class: "text-color" do %>
+      <span><%= t('programs_form.require_locations') %>&nbsp;</span>
+      <%= f.check_box :location_required %>
+    <% end %>
+  </fieldset>
+
+  <%= f.submit "Create Program", class: "button-color" %>
+<% end %>

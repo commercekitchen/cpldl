@@ -659,12 +659,11 @@ ALTER SEQUENCE program_locations_id_seq OWNED BY program_locations.id;
 CREATE TABLE programs (
     id integer NOT NULL,
     program_name character varying,
-    location_field_name character varying,
     location_required boolean DEFAULT false,
-    student_program boolean DEFAULT false,
     organization_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    parent_type integer
 );
 
 
@@ -1599,4 +1598,10 @@ INSERT INTO schema_migrations (version) VALUES ('20161111165026');
 INSERT INTO schema_migrations (version) VALUES ('20161116175916');
 
 INSERT INTO schema_migrations (version) VALUES ('20170104190831');
+
+INSERT INTO schema_migrations (version) VALUES ('20170104212615');
+
+INSERT INTO schema_migrations (version) VALUES ('20170104220648');
+
+INSERT INTO schema_migrations (version) VALUES ('20170105201500');
 

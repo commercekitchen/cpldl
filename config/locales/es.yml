@@ -64,7 +64,10 @@ es:
     birthday: "Fecha de Nacimiento"
     grade: "Grado"
     school: "Escuela"
-    opt_out_of_recommendations: "Optar por no Recomendaciones del Curso"
+    library_card_number: "Número de tarjeta de biblioteca"
+    program: "Información del Programa"
+    program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
+    no_program_selected: "Seleccione el programa..."
   confirmation_email:
     www:
       greeting: "Hola"
@@ -113,9 +116,11 @@ es:
     street_address: "Dirección"
     city: "Ciudad"
     state: "Estado"
-    library_card_number: "Número de tarjeta de biblioteca"
-    program: "Información del Programa"
-    no_program: "¿A qué programa u organización pertenece usted?"
+    opt_out_of_recommendations: "Optar por no Recomendaciones del Curso"
+  programs_form:
+    parent_type: "Seleccione el tipo de programa..."
+    program_name: "Nombre del programa"
+    require_locations: "¿Incluir ubicaciones del programa?"
   change_login_page:
     leave_blank_to_not_change_password: "(Deje vacio para no hacer cambios. Su contraseña de tener al menos 8 caracteres)"
     password_confirmation: "Confirmar contraseña"

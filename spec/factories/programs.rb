@@ -10,22 +10,26 @@
 #  organization_id     :integer
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
+#  parent_type         :integer
 #
 
 FactoryGirl.define do
   factory :program do
     program_name Faker::App.name
     location_required false
-    student_program false
+    parent_type Program.parent_types["seniors"]
     organization
 
     trait :student_program do
-      student_program true
+      parent_type Program.parent_types["students_and_parents"]
+    end
+
+    trait :young_adult_program do
+      parent_type Program.parent_types["young_adults"]
     end
 
     trait :location_required do
       location_required true
-      location_field_name Faker::Hipster.word
     end
   end
 end

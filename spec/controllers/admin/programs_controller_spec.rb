@@ -16,6 +16,35 @@ describe Admin::ProgramsController do
     sign_in @admin
   end
 
+  describe "GET #new" do
+    it "assigns program" do
+      get :new
+      expect(assigns(:program)).to be_a_new(Program)
+    end
+  end
+
+  describe "POST #create" do
+    it "creates new program" do
+      expect do
+        post :create, program: { program_name: "New Program", location_required: false, parent_type: "seniors"  }
+      end.to change(Program, :count).by(1)
+    end
+
+    it "creates program with locations" do
+      post :create, program: { program_name: "Locations Program", location_required: true, parent_type: "young_adults" }
+      expect(Program.last.program_name).to eq "Locations Program"
+      expect(Program.last.location_required).to be true
+      expect(Program.last.parent_type).to eq "young_adults"
+    end
+
+    it "creates program with no locations" do
+      post :create, program: { program_name: "No Locations Program", location_required: false, parent_type: "students_and_parents" }
+      expect(Program.last.program_name).to eq "No Locations Program"
+      expect(Program.last.location_required).to be false
+      expect(Program.last.parent_type).to eq "students_and_parents"
+    end
+  end
+
   describe "GET #index" do
     it "assigns all programs as @programs" do
       get :index

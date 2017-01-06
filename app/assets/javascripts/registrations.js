@@ -3,6 +3,15 @@
 }(function($, window, document) {
     $(function() {
 
+      $("input[type=radio][name=program_type]").change(function(){
+        if (this.value !== "none"){
+          $("#organization_program.hideUntilActive").show();
+          getProgramsOfType(this.value).done(updateProgramSelection);
+        } else {
+          $("#organization_program.hideUntilActive").hide();
+        }
+      });
+
       $("#organization_program").change(function(e){
         var programId = $(this).val();
 
@@ -26,6 +35,23 @@
 
     });
 
+
+    function getProgramsOfType(type){
+      return $.ajax({
+        method: "post",
+        url: "/ajax/programs/get_sub_programs",
+        data: { parent_type: type }
+      })
+    }
+
+    function updateProgramSelection(data){
+      var newOptionsArray = data.map(function(obj){
+        return [obj.id, obj.program_name];
+      });
+
+      $("#organization_program").updateDropdown("Program", newOptionsArray);
+    }
+
     function getNewProgramData(programId){
       return $.ajax({
         method: "post",
@@ -35,12 +61,11 @@
     }
 
     function updateRegistrationFields(data){
-      var studentProgram = JSON.parse(data.student_program);
+      var programType = data.parent_type;
       var programLocations = data.program_locations;
-      var locationFieldName = data.location_field_name;
 
-      updateProgramLocationSection(programLocations, locationFieldName);
-      updateSchoolsSection(studentProgram);
+      updateProgramLocationSection(programLocations);
+      updateSchoolsSection(programType);
     }
 
     function showStudentFields(){
@@ -53,7 +78,7 @@
       $("#user_student_id").attr("placeholder", "Students' ID #s");
     }
 
-    function updateProgramLocationSection(programLocations, locationFieldName){
+    function updateProgramLocationSection(programLocations){
       if (programLocations.length > 0){
         $("#program_location_fields.hideUntilActive").show();
 
@@ -63,14 +88,14 @@
           return [obj.id, obj.location_name];
         });
 
-        $("#user_program_location_id").updateDropdown(locationFieldName, newOptionsArray);
+        $("#user_program_location_id").updateDropdown("Location", newOptionsArray);
       } else {
         $("#program_location_fields.hideUntilActive").hide();
       }
     }
 
-    function updateSchoolsSection(studentProgram, organizationId){
-      if (studentProgram){
+    function updateSchoolsSection(programType){
+      if (programType == "students_and_parents"){
         $("#school_fields.hideUntilActive").show();
       } else {
         $("#school_fields.hideUntilActive").hide();

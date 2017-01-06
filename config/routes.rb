@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   end
 
   namespace :ajax do
+    post 'programs/get_sub_programs'
     post 'programs/select_program'
   end
 
@@ -21,6 +22,7 @@ Rails.application.routes.draw do
   get 'courses/quiz', to: 'courses#quiz'
   post 'courses/quiz', to: 'courses#quiz_submit'
   get 'home_language_toggle', to: 'home#language_toggle'
+
   resources :courses, only: [:index, :show] do
     post 'start'
     post 'add'
@@ -48,7 +50,7 @@ Rails.application.routes.draw do
     resources :organizations, only: [:new, :create, :index]
     resources :library_locations
     
-    resources :programs, only: [:index, :edit] do
+    resources :programs, only: [:new, :create, :index, :edit] do
     end
 
     resources :program_locations, only: [:create] do

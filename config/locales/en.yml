@@ -64,7 +64,10 @@ en:
     birthday: "Date of Birth"
     grade: "Grade"
     school: "School"
-    opt_out_of_recommendations: "Opt out of Course Recommendations"
+    program: "Program Information"
+    program_type_prompt: "Are you a participant in one of the Library’s Technology Training Programs?"
+    no_program_selected: "Select Program..."
+    library_card_number: "Library Card #"
   confirmation_email:
     www:
       greeting: "Hello"
@@ -113,9 +116,11 @@ en:
     street_address: "Street Address"
     city: "City"
     state: "State"
-    library_card_number: "Library Card #"
-    program: "Program Information"
-    no_program: "What Program or Organization are you a part of?"
+    opt_out_of_recommendations: "Opt out of Course Recommendations"
+  programs_form:
+    parent_type: "Select Program Type..."
+    program_name: "Program Name"
+    require_locations: "Include Program Locations?"
   change_login_page:
     leave_blank_to_not_change_password: "(Leave blank to not change. Passwords should be at least 8 characters long.)"
     password_confirmation: "Password confirmation"

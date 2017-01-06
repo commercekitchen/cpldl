@@ -142,12 +142,12 @@ select {
 }
 
 .select2-container--default .select2-selection--single {
-    padding: .5em 2.5em .7em .4em;
-    border: 2px solid $grey;
-    height: 48px;
-    width: 100%;
-    font-size: 1em;
-    position: relative;
+  padding: .5em 2.5em .7em .4em;
+  border: 2px solid $grey;
+  height: 48px;
+  width: 100%;
+  font-size: 1em;
+  position: relative;
 }
 
 .select2-container--default .select2-selection--single .select2-selection__arrow {
@@ -168,6 +168,24 @@ select {
     color: black;
 
     span {
+      padding-left: 10px;
+    }
+  }
+}
+
+.inline-radio-group {
+  padding-top: 10px;
+  padding-left: 20px;
+
+  .radio-option {
+    input, label {
+      margin-top: 0;
+      display: inline-block;
+    }
+
+    label {
+      font-size: 14px;
+      color: black;
       padding-left: 10px;
     }
   }

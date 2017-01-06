@@ -15,7 +15,7 @@
         var $dropDown = $(this);
 
         $dropDown.empty();
-        $dropDown.append("<option value=''>Choose " + defaultOption + "</option>");
+        $dropDown.append("<option value=''>Select " + defaultOption + "...</option>");
 
         for (var i = 0; i < newOptions.length; i++){
           $dropDown.append("<option value='" + newOptions[i][0] + "'>" + newOptions[i][1] + "</option>");

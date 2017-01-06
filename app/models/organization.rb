@@ -31,7 +31,7 @@ class Organization < ActiveRecord::Base
   end
 
   def has_student_programs?
-    programs.map(&:student_program?).any?{ |p| p }
+    programs.map(&:parent_type).any?{ |p| p.to_sym == :students_and_parents }
   end
 
   private
