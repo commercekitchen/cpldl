@@ -7,8 +7,6 @@
   <%= t('login_signup.dont_have_library_card') %> <%= link_to "#{t('login_signup.click_here')}", "https://library.nashville.org/get-card", target: "_blank" %> <%= t('login_signup.register_for_library_card') %>
 </p>
 
-<p><%= params["program_type"] %></p>
-
 <fieldset>
   <%= f.label :program_type, t('login_signup.program_type_prompt'), class: "signup-label" %>
   <div class="inline-radio-group">
