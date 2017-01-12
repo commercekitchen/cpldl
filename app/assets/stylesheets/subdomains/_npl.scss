@@ -1,6 +1,6 @@
 .npl {
   @include color_scheme($npl-blue, $white, $npl-orange);
-  @include banner($npl-blue, $white);
+  @include banner($npl-blue, $white, 2.5em);
   @include buttons($npl-orange, $white);
   @include course_widget($npl-orange, $npl-orange);
   @include lesson_block($npl-blue, $grey, $npl-orange, $npl-orange);
