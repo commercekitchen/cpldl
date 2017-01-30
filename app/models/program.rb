@@ -17,9 +17,9 @@ class Program < ActiveRecord::Base
   enum parent_type: [:seniors, :young_adults, :students_and_parents]
   PARENT_TYPES = {
     "Programs for Seniors" => :seniors,
+    "Programs for Adults" => :adults,
     "Programs for Young Adults" => :young_adults,
-    "Programs for Students and Parents" => :students_and_parents,
-    "Programs for Adults" => :adults
+    "Programs for Students and Parents" => :students_and_parents
   }
 
   has_many :users

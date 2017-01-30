@@ -103,6 +103,7 @@ es:
     view_your_customized_plan: "para revisar los cursos en su plan personal."
     my_account: "Mi Cuenta"
     my_courses: "Mis Cursos"
+    all_courses: "Ver todos los cursos"
     sign_out: "Salir"
   profile_page:
     preferred_language: "Idioma de preferencia"
