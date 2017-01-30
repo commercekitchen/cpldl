@@ -65,7 +65,7 @@ es:
     grade: "Grado"
     school: "Escuela"
     library_card_number: "Número de tarjeta de biblioteca"
-    program: "Información del Programa"
+    program: "Información de la tarjeta de biblioteca"
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
     no_program_selected: "Seleccione el programa..."
   confirmation_email:
