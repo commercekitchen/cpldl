@@ -49,12 +49,23 @@
 
   <% end %>
 
-  <fieldset class="inline-checkbox-row">
-    <%= f.label :opt_out_of_recommendations, class: "plain-label" do %>
-      <%= f.check_box :opt_out_of_recommendations, class: "checkbox inline" %>
+  <br/>
+  <fieldset>
+    <%= f.label :opt_out_of_recommendations, class: "text-color" do %>
       <span><%= t('profile_page.opt_out_of_recommendations') %></span>
     <% end %>
+    <div class="inline-radio-group">
+      <div class="radio-option">
+        <%= f.radio_button :opt_out_of_recommendations, false %>
+        <label class="signup-label"><%= t('profile_page.opt_out_false') %></label>
+      </div>
+      <div class="radio-option">
+        <%= f.radio_button :opt_out_of_recommendations, true %>
+        <label class="signup-label"><%= t('profile_page.opt_out_true') %></label>
+      </div>
+    </div>
   </fieldset>
+  <br/>
 
   <fieldset>
     <%= f.submit "#{t('profile_page.save')}", class: "button-color" %>

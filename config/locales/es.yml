@@ -117,7 +117,10 @@ es:
     street_address: "Dirección"
     city: "Ciudad"
     state: "Estado"
-    opt_out_of_recommendations: "Optar por no Recomendaciones del Curso"
+    opt_out_of_recommendations: "¿Quiere que ayudemos a elegir sus cursos?"
+    # These are backward because of the question phrasing:
+    opt_out_false: "Si"
+    opt_out_true: "No"
   programs_form:
     parent_type: "Seleccione el tipo de programa..."
     program_name: "Nombre del programa"

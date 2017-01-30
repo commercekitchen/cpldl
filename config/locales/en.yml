@@ -117,7 +117,10 @@ en:
     street_address: "Street Address"
     city: "City"
     state: "State"
-    opt_out_of_recommendations: "Opt out of Course Recommendations"
+    opt_out_of_recommendations: "Do you want us to help choose your courses?"
+    # These are backward because of the question phrasing:
+    opt_out_false: "Yes"
+    opt_out_true: "No"
   programs_form:
     parent_type: "Select Program Type..."
     program_name: "Program Name"
