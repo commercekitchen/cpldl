@@ -10,7 +10,7 @@ feature "User signs up" do
       switch_to_subdomain("chipublib")
     end
 
-    scenario "with valid email, password, first name, last name, zip code" do
+    scenario "with valid email, password, first name, zip code" do
       sign_up_with "valid@example.com", "password", "Alejandro", "12345"
       expect(page).to have_content("A message with a confirmation link has been sent \
         to your email address. Please follow the link to activate your account.")

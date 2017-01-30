@@ -56,7 +56,7 @@ feature "Registered user visits account page" do
   context "belongs to Nashville subdomain" do
 
     before(:each) do
-      @npl_organization = create(:organization, subdomain: "npl")
+      @npl_organization = create(:organization, :accepts_programs, subdomain: "npl")
       @npl_user = create(:user, organization: @npl_organization)
       Language.all.each(&:destroy)
       @english = create(:language)
@@ -89,14 +89,23 @@ feature "Registered user visits account page" do
       # TODO: add npl specific fields
       visit profile_path
       fill_in "First Name", with: "Alex"
+      fill_in "Last Name", with: "Monroe"
       fill_in "Zip Code", with: "12345"
       select("English", from: "profile_language_id")
       click_button "Save"
 
       @npl_user.reload
       expect(@npl_user.profile.first_name).to eq("Alex")
+      expect(@npl_user.profile.last_name).to eq("Monroe")
       expect(@npl_user.profile.zip_code).to eq("12345")
       expect(@npl_user.profile.language.name).to eq("English")
+    end
+
+    scenario "last name required" do
+      visit profile_path
+      fill_in "First Name", with: "Alex"
+      click_button "Save"
+      expect(page).to have_content "Last name can't be blank"
     end
 
   end

@@ -18,7 +18,8 @@ class Program < ActiveRecord::Base
   PARENT_TYPES = {
     "Programs for Seniors" => :seniors,
     "Programs for Young Adults" => :young_adults,
-    "Programs for Students and Parents" => :students_and_parents
+    "Programs for Students and Parents" => :students_and_parents,
+    "Programs for Adults" => :adults
   }
 
   has_many :users

@@ -20,7 +20,7 @@
 
 FactoryGirl.define do
   factory(:profile) do
-    first_name "Jane"
+    first_name Faker::Name.first_name
     zip_code "90210"
     language_id 1
   end
