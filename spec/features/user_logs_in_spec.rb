@@ -43,4 +43,52 @@ feature "User logs in" do
     expect(page).to have_content("You have to confirm your email address before continuing.")
   end
 
+  scenario "first time login non-program org" do
+    user = create(:first_time_user, organization: @org)
+    past_time = 10.minutes.ago
+    user.profile.update_attributes({created_at: past_time, updated_at: past_time})
+    log_in_with(user.email, user.password)
+    expect(current_path).to eq(profile_path)
+
+    click_on "Save"
+    user.profile.reload
+
+    expect(current_path).to eq(root_path)
+    visit profile_path
+    click_on "Save"
+
+    expect(current_path).to eq(profile_path)
+  end
+
+  scenario "first time login with program org" do
+    @npl = create(:organization, :accepts_programs, subdomain: "npl")
+    @npl_profile = create(:profile, :with_last_name)
+    @npl_user = create(:first_time_user, organization: @npl, profile: @npl_profile)
+    switch_to_subdomain("npl")
+    log_in_with(@npl_user.email, @npl_user.password)
+
+    expect(current_path).to eq(profile_path)
+  end
+
+  scenario "with an invalid profile for a program org" do
+    @npl = create(:organization, :accepts_programs, subdomain: "npl")
+    @npl_profile = create(:profile, :with_last_name)
+    @npl_user = create(:user, organization: @npl, profile: @npl_profile)
+    @npl_profile.update_attribute(:last_name, nil)
+    switch_to_subdomain("npl")
+    log_in_with(@npl_user.email, @npl_user.password)
+
+    expect(current_path).to eq(profile_path)
+  end
+
+  scenario "with a valid profile for a program org" do
+    @npl = create(:organization, :accepts_programs, subdomain: "npl")
+    @npl_profile = create(:profile, :with_last_name)
+    @npl_user = create(:user, organization: @npl, profile: @npl_profile)
+    switch_to_subdomain("npl")
+    log_in_with(@npl_user.email, @npl_user.password)
+
+    expect(current_path).to eq(root_path)
+  end
+
 end

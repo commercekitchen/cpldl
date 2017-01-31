@@ -57,7 +57,8 @@ feature "Registered user visits account page" do
 
     before(:each) do
       @npl_organization = create(:organization, :accepts_programs, subdomain: "npl")
-      @npl_user = create(:user, organization: @npl_organization)
+      @npl_profile = create(:profile, :with_last_name)
+      @npl_user = create(:user, organization: @npl_organization, profile: @npl_profile)
       Language.all.each(&:destroy)
       @english = create(:language)
       @spanish = create(:spanish_lang)
@@ -104,6 +105,7 @@ feature "Registered user visits account page" do
     scenario "last name required" do
       visit profile_path
       fill_in "First Name", with: "Alex"
+      fill_in "Last Name", with: ""
       click_button "Save"
       expect(page).to have_content "Last name can't be blank"
     end

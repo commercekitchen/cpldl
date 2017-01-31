@@ -49,23 +49,25 @@
 
   <% end %>
 
-  <br/>
-  <fieldset>
-    <%= f.label :opt_out_of_recommendations, class: "text-color" do %>
-      <span><%= t('profile_page.opt_out_of_recommendations') %></span>
-    <% end %>
-    <div class="inline-radio-group">
-      <div class="radio-option">
-        <%= f.radio_button :opt_out_of_recommendations, false %>
-        <label class="signup-label"><%= t('profile_page.opt_out_false') %></label>
+  <% if current_organization.accepts_programs? %>
+    <br/>
+    <fieldset>
+      <%= f.label :opt_out_of_recommendations, class: "text-color" do %>
+        <span><%= t('profile_page.opt_out_of_recommendations') %></span>
+      <% end %>
+      <div class="inline-radio-group">
+        <div class="radio-option">
+          <%= f.radio_button :opt_out_of_recommendations, false %>
+          <label class="signup-label"><%= t('profile_page.opt_out_false') %></label>
+        </div>
+        <div class="radio-option">
+          <%= f.radio_button :opt_out_of_recommendations, true %>
+          <label class="signup-label"><%= t('profile_page.opt_out_true') %></label>
+        </div>
       </div>
-      <div class="radio-option">
-        <%= f.radio_button :opt_out_of_recommendations, true %>
-        <label class="signup-label"><%= t('profile_page.opt_out_true') %></label>
-      </div>
-    </div>
-  </fieldset>
-  <br/>
+    </fieldset>
+    <br/>
+  <% end %>
 
   <fieldset>
     <%= f.submit "#{t('profile_page.save')}", class: "button-color" %>

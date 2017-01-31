@@ -31,5 +31,9 @@ module CPLDigitalLearn
 
     require Rails.root.join("lib/custom_public_exceptions")
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
+
+    config.to_prepare do
+        Devise::SessionsController.skip_before_filter :require_valid_profile
+    end
   end
 end

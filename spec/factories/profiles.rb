@@ -23,6 +23,9 @@ FactoryGirl.define do
     first_name Faker::Name.first_name
     zip_code "90210"
     language_id 1
-  end
 
+    trait :with_last_name do
+      last_name Faker::Name.last_name
+    end
+  end
 end

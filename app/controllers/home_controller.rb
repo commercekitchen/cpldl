@@ -1,4 +1,5 @@
 class HomeController < ApplicationController
+  skip_before_action :require_valid_profile, only: [:language_toggle]
 
   def index
     english_id = Language.find_by_name("English").id || 1

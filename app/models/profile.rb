@@ -24,7 +24,7 @@ class Profile < ActiveRecord::Base
   belongs_to :library_location
 
   validates :first_name, presence: true
-  validates :last_name, presence: true, on: :profile_update, if: :program_organization
+  validates :last_name, presence: true, if: :program_organization
   validates :zip_code, format: { with: /\A\d{5}-\d{4}|\A\d{5}\z/, message: "should be ##### or #####-####" },
     allow_blank: true
 
