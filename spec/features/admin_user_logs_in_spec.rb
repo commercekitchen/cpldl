@@ -5,7 +5,7 @@ feature "Admin user logs in" do
     before(:each) do
       @org = create(:organization)
       Capybara.default_host = "http://chipublib.example.com"
-      @user = create(:user, organization: @org)
+      @user = create(:first_time_user, organization: @org)
       @user.profile.destroy
       @english = create(:language)
       @spanish = create(:spanish_lang)

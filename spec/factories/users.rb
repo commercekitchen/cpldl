@@ -48,6 +48,16 @@ FactoryGirl.define do
     sequence(:email) { |n| "jane#{n}@example.com" }
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
+    sign_in_count 2
+    organization
+    profile
+  end
+
+  factory :first_time_user, class: User do
+    email Faker::Internet.free_email
+    password Faker::Internet.password
+    confirmed_at Time.zone.now.to_s
+    sign_in_count 0
     organization
     profile
   end

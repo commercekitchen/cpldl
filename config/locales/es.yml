@@ -219,3 +219,13 @@ es:
     set_three_4: "Buscar empleo."
     set_three_5: "Aprender una aplicación específica como Microsoft Word."
     set_three_6: "Usar internet de manera más segura."
+  activerecord:
+    attributes:
+      profile:
+        last_name: "Apellido"
+    errors:
+      models:
+        profile:
+          attributes:
+            last_name:
+              blank: "no puede estar en blanco"

@@ -13,7 +13,7 @@
 #
 
 class ProfilesController < ApplicationController
-
+  skip_before_action :require_valid_profile
   before_action :authenticate_user!
   before_action :set_user
   layout "user/logged_in_with_sidebar"
@@ -21,6 +21,13 @@ class ProfilesController < ApplicationController
   def show
     @profile = Profile.find_or_initialize_by(user: @user)
     @organization_programs = organization_programs
+  end
+
+  def invalid_profile
+    @profile = @user.profile
+    @organization_params = organization_programs
+    @profile.valid?
+    render "show"
   end
 
   def update
@@ -37,9 +44,16 @@ class ProfilesController < ApplicationController
       end
     end
 
+    if first_time_login?
+      profile_params.merge!(updated_at: Time.zone.now)
+      redirect_path = root_path
+    else
+      redirect_path = profile_path
+    end
+
     respond_to do |format|
       if @profile.context_update(profile_params)
-        format.html { redirect_to profile_path, notice: "Profile was successfully updated." }
+        format.html { redirect_to redirect_path, notice: "Profile was successfully updated." }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :show }
@@ -55,7 +69,7 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:language_id, :first_name, :last_name,
+    @profile_params ||= params.require(:profile).permit(:language_id, :first_name, :last_name,
       :phone, :street_address, :city, :state, :zip_code, :opt_out_of_recommendations)
   end
 

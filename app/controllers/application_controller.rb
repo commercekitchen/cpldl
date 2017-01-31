@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :set_cms_footer_pages
   before_action :set_user_token
   before_action :set_mailer_host
+  before_action :require_valid_profile
   protect_from_forgery with: :exception
 
   helper_method :current_organization
@@ -30,6 +31,13 @@ class ApplicationController < ActionController::Base
       ActionMailer::Base.default_url_options[:host] = "#{current_organization.subdomain}.digitallearn.org"
     else
       ActionMailer::Base.default_url_options[:host] = request.host
+    end
+  end
+
+  def require_valid_profile
+    if invalid_user_profile?
+      flash[:alert] = "You must have a valid profile before you can continue:"
+      redirect_to invalid_profile_path
     end
   end
 
@@ -69,6 +77,11 @@ class ApplicationController < ActionController::Base
       profile_path
     elsif user.has_role?(:admin, current_organization)
       admin_dashboard_index_path
+    elsif invalid_user_profile?
+      profile_path
+    elsif first_time_login?
+      flash[:notice] = "This is the first time you have logged in, update your profile!"
+      profile_path
     else
       root_path
     end
@@ -119,7 +132,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def first_time_login?
+    current_user.present? && current_user.sign_in_count == 1 && current_user.profile.present? && current_user.profile.created_at.to_s == current_user.profile.updated_at.to_s
+  end
+
   private
+
+  def invalid_user_profile?
+    current_user.present? && current_user.profile.present? && !current_user.profile.valid?
+  end
 
   def user_language_override?
     if current_user.profile.language.blank? == false
@@ -145,8 +166,8 @@ class ApplicationController < ActionController::Base
     if current_user && current_user.token
       session[:user_ga_id] = current_user.token
     elsif current_user && current_user.token.blank?
-      current_user.add_token_to_user
-      current_user.save
+      current_user.send(:add_token_to_user)
+      current_user.save(validate: false)
       session[:user_ga_id] = current_user.token
     else
       session[:user_ga_id] = "guest"
