@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
       profile_path
     elsif user.has_role?(:admin, current_organization)
       admin_dashboard_index_path
-    elsif !user.profile.valid?
+    elsif invalid_user_profile?
       profile_path
     elsif first_time_login?
       flash[:notice] = "This is the first time you have logged in, update your profile!"
