@@ -136,13 +136,20 @@ en:
     continue: "Continue"
     repeat_activity: "Repeat Activity"
   completed_courses_page:
+    www:
+      retake_the_quiz: "Retake the Quiz"
+    chipublib:
+      retake_the_quiz: "Retake the Quiz"
+    npl:
+      retake_the_quiz: "Add More Courses"
+    kpl:
+      retake_the_quiz: "Retake the Quiz"
     course: "Course"
     date_completed: "Date Completed"
     certificate_of_completion: "Certificate of Completion"
     update_course_recommendations: "Update Course Recommendations"
     when_you_signed_up_quiz: "When you signed up for an account, you took a quiz that helped us recommend courses for you to take."
     have_you_completed_most_courses: "Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses."
-    retake_the_quiz: "Retake the Quiz"
     practice_skills: "Use My Skills Now"
   my_courses_page:
     www:

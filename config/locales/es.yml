@@ -142,7 +142,7 @@ es:
     update_course_recommendations: "Actualizar Cursos Recomendados"
     when_you_signed_up_quiz: "Cuando creó su cuenta, respondió un questionario que nos ayudó a recomendarle cursos útiles para usted."
     have_you_completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones, responda las preguntas otra vez y le sugeriremos más cursos."
-    retake_the_quiz: "Volver a Responder el Cuestionario"
+    retake_the_quiz: "Añadir más cursos"
     practice_skills: "Ahora usar mis habilidades"
   my_courses_page:
     www:
