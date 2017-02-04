@@ -68,6 +68,7 @@ es:
     program: "Información de la tarjeta de biblioteca"
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
     no_program_selected: "Seleccione el programa..."
+    your_library: "¿Cómo se llama tu biblioteca?"
   confirmation_email:
     www:
       greeting: "Hola"

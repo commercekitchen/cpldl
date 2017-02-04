@@ -68,6 +68,7 @@ en:
     program_type_prompt: "Are you a participant in one of the Library’s Technology Training Programs?"
     no_program_selected: "Select Program..."
     library_card_number: "Library Card #"
+    your_library: "What's your library called?"
   confirmation_email:
     www:
       greeting: "Hello"
