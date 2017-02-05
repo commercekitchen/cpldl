@@ -19,6 +19,7 @@ feature "Admin create a new organization" do
     click_on "Organizations"
     click_on "Add an Organization"
     fill_in :organization_name, with: "Denver Public Library"
+    select "No", from: :organization_accepts_programs
     select "Yes", from: :organization_branches
     fill_in :organization_subdomain, with: "dpl"
 

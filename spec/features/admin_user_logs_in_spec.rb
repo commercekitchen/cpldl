@@ -1,23 +1,54 @@
 require "feature_helper"
 
 feature "Admin user logs in" do
-  context "force profile update" do
+  before(:each) do
+    @org = create(:organization)
+    Capybara.default_host = "http://chipublib.example.com"
+    @user = create(:first_time_user, organization: @org)
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+    @user.add_role(:admin, @org)
+    switch_to_subdomain("chipublib")
+  end
+
+  context "with invalid profile" do
     before(:each) do
-      @org = create(:organization)
-      Capybara.default_host = "http://chipublib.example.com"
-      @user = create(:first_time_user, organization: @org)
-      @user.profile.destroy
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
-      @user.add_role(:admin, @org)
-      switch_to_subdomain("chipublib")
+      @user.profile.update_attribute(:first_name, nil)
     end
 
-    scenario "is prompted to update profile" do
+    scenario "is sent to profile page" do
+      log_in_with @user.email, @user.password
+      expect(current_path).to eq(profile_path)
+    end
+
+    scenario "can't navigate away from profile page with invalid profile" do
+      log_in_with @user.email, @user.password
+      visit new_admin_library_location_path
+      expect(current_path).to eq(invalid_profile_path)
+      expect(page).to have_content("You must have a valid profile before you can continue:")
+      expect(page).to have_content("First name can't be blank")
+    end
+  end
+
+  context "with no profile" do
+    before(:each) do
+      @user.profile.destroy
+    end
+
+    scenario "is prompted to update profile on first time sign in" do
       expect(@user.sign_in_count).to eq(0)
       log_in_with @user.email, @user.password
       expect(current_path).to eq(profile_path)
+      expect(page).to have_content("This is the first time you have logged in, update your profile!")
       click_link "Sign Out"
+    end
+
+    scenario "can't navigate away from profile page with no profile" do
+      log_in_with @user.email, @user.password
+      visit new_admin_library_location_path
+      expect(current_path).to eq(invalid_profile_path)
+      expect(page).to have_content("You must have a valid profile before you can continue:")
+      expect(page).to have_content("First name can't be blank")
     end
   end
 end

@@ -6,7 +6,8 @@ feature "Subdomain admin program management" do
     @spanish = create(:spanish_lang)
     @english = create(:language)
     @dpl = create(:organization, :accepts_programs, subdomain: "dpl")
-    @dpl_admin = create(:user, organization: @dpl)
+    valid_profile = create(:profile, :with_last_name)
+    @dpl_admin = create(:user, organization: @dpl, profile: valid_profile)
     @dpl_admin.add_role(:admin, @dpl)
     switch_to_subdomain("dpl")
     log_in_with @dpl_admin.email, @dpl_admin.password

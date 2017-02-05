@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_valid_profile
-    if invalid_user_profile?
+    if invalid_user_profile?(current_user) || missing_profile?(current_user)
       flash[:alert] = "You must have a valid profile before you can continue:"
       redirect_to invalid_profile_path
     end
@@ -72,18 +72,11 @@ class ApplicationController < ActionController::Base
 
   def after_sign_in_path_for(user)
     check_user_subdomain(user)
-    if (user.is_super? || user.has_role?(:admin, current_organization)) and user.profile.nil?
-      flash[:notice] = "This is the first time you have logged in, update your profile!"
-      profile_path
-    elsif user.has_role?(:admin, current_organization)
-      admin_dashboard_index_path
-    elsif invalid_user_profile?
-      profile_path
-    elsif first_time_login?
-      flash[:notice] = "This is the first time you have logged in, update your profile!"
-      profile_path
+
+    if (user.is_super? || org_admin?(user))
+      admin_after_sign_in_path_for(user)
     else
-      root_path
+      user_after_sign_in_path_for(user)
     end
   end
 
@@ -138,8 +131,40 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def invalid_user_profile?
-    current_user.present? && current_user.profile.present? && !current_user.profile.valid?
+  def admin_after_sign_in_path_for(user)
+    if user.profile.nil?
+      flash[:notice] = "This is the first time you have logged in, update your profile!"
+      profile_path
+    elsif invalid_user_profile?(user)
+      profile_path
+    elsif org_admin?(user)
+      admin_dashboard_index_path
+    else
+      root_path
+    end
+  end
+
+  def user_after_sign_in_path_for(user)
+    if first_time_login?
+      flash[:notice] = "This is the first time you have logged in, update your profile!"
+      profile_path
+    elsif invalid_user_profile?(user)
+      profile_path
+    else
+      root_path
+    end
+  end
+
+  def org_admin?(user)
+    user.has_role?(:admin, current_organization)
+  end
+
+  def invalid_user_profile?(user)
+    user.present? && user.profile.present? && !user.profile.valid?
+  end
+
+  def missing_profile?(user)
+    user.present? && user.profile.nil?
   end
 
   def user_language_override?

@@ -24,7 +24,7 @@ class ProfilesController < ApplicationController
   end
 
   def invalid_profile
-    @profile = @user.profile
+    @profile = Profile.find_or_initialize_by(user: @user)
     @organization_params = organization_programs
     @profile.valid?
     render "show"

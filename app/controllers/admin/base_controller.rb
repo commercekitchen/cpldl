@@ -1,7 +1,6 @@
 module Admin
   class BaseController < ApplicationController
     before_action :authorize_admin
-    skip_before_filter :require_valid_profile
 
     layout "admin/base"
 

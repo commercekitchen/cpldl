@@ -100,9 +100,11 @@ describe Admin::CmsPagesController do
 
       it "sets the pub_date if page is saved as (P)ublished" do
         valid_attributes[:pub_status] = "P"
-        post :create, { cms_page: valid_attributes, commit: "Save Page" }
-        page = CmsPage.find_by_title(valid_attributes[:title])
-        expect(page.pub_date.to_i).to eq(Time.zone.now.to_i)
+        Timecop.freeze do
+          post :create, { cms_page: valid_attributes, commit: "Save Page" }
+          page = CmsPage.find_by_title(valid_attributes[:title])
+          expect(page.pub_date.to_i).to eq(Time.zone.now.to_i)
+        end
       end
     end
 
