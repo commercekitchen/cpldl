@@ -81,7 +81,7 @@ es:
       greeting: "Hola"
       subject: "Empieza con Chicago Digital Learn"
       welcome: "Bienvenido a Chicago Digital Learn. Usted está a un paso de aprender cómo utilizar la computadora para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+      confirm_your_account_through_link: ""
       confirm_my_account: "Confirmar mi cuenta"
       signature: "<p>Chicago Digital Learn le ofrece:</p><ul><li>Vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo</li><li>Recursos educativos y para búsqueda de empleo de Chicago</li><li>Enlaces a otros recursos útiles en línea</li></ul><p></p><p>¿Tiene preguntas? <a href='http://www.chipublib.org/spanish/'>Llame o visite la biblioteca pública de Chicago</a> más cerca de usted."
     npl:
