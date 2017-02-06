@@ -19,6 +19,7 @@ feature "User logs in" do
     expect(page).to have_content(
       "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
     )
+    expect(page).to have_css("#quiz-start-modal")
   end
 
   scenario "with invalid or blank email" do
