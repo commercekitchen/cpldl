@@ -53,6 +53,7 @@ en:
     notice_to_users: "We’re sorry, but users cannot create new accounts at this time. If you've already created an account, please login. If not, just choose a course to start learning! To keep a record of your courses, please print the certificate you receive at the end."
     dont_have_email: "Don't have an email address?"
     click_here: "Click here"
+    tutorial_link: "http://digitallearn.org/learn/intro-email"
     open_a_tutorial: "to open a tutorial in a new tab that explains how to set up an email account."
     dont_have_library_card: "Don't have a library card?"
     register_for_library_card: "to open a new tab to register for an online library card that you can use right away."
