@@ -19,7 +19,6 @@ feature "User logs in" do
     expect(page).to have_content(
       "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
     )
-    expect(page).to have_css("#quiz-start-modal")
   end
 
   scenario "with invalid or blank email" do
@@ -54,7 +53,7 @@ feature "User logs in" do
     click_on "Save"
     user.profile.reload
 
-    expect(current_path).to eq(root_path)
+    expect(current_path).to eq(courses_quiz_path)
     visit profile_path
     click_on "Save"
 

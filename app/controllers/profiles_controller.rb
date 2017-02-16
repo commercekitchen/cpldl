@@ -46,7 +46,7 @@ class ProfilesController < ApplicationController
 
     if first_time_login?
       profile_params.merge!(updated_at: Time.zone.now)
-      redirect_path = root_path
+      redirect_path = ( show_quiz? ? courses_quiz_path : root_path ) 
     else
       redirect_path = profile_path
     end
@@ -77,6 +77,10 @@ class ProfilesController < ApplicationController
     if current_user.organization.accepts_programs?
       Program.for_subdomain(current_organization.subdomain).collect { |program| [ program.program_name, program.id ] }
     end
+  end
+
+  def show_quiz?
+    current_user.present? && current_user.quiz_modal_complete == false && !current_user.profile.opt_out_of_recommendations && !current_user.has_role?(:admin, current_organization)
   end
 
 end
