@@ -60,7 +60,7 @@ feature "User logs in" do
     expect(current_path).to eq(profile_path)
   end
 
-  scenario "first time login with program org" do
+  scenario "first time login with program org, with course recommendations" do
     @npl = create(:organization, :accepts_programs, subdomain: "npl")
     @npl_profile = create(:profile, :with_last_name)
     @npl_user = create(:first_time_user, organization: @npl, profile: @npl_profile)
@@ -68,6 +68,28 @@ feature "User logs in" do
     log_in_with(@npl_user.email, @npl_user.password)
 
     expect(current_path).to eq(profile_path)
+
+    fill_in "Last Name", with: Faker::Name.last_name
+
+    click_on "Save"
+
+    expect(current_path).to eq(courses_quiz_path)
+  end
+
+  scenario "first time login with program org, no course recommendations" do
+    @npl = create(:organization, :accepts_programs, subdomain: "npl")
+    @npl_profile = create(:profile, :with_last_name)
+    @npl_user = create(:first_time_user, organization: @npl, profile: @npl_profile)
+    switch_to_subdomain("npl")
+    log_in_with(@npl_user.email, @npl_user.password)
+
+    expect(current_path).to eq(profile_path)
+
+    fill_in "Last Name", with: Faker::Name.last_name
+    choose "profile_opt_out_of_recommendations_true"
+    click_on "Save"
+
+    expect(current_path).to eq(root_path)
   end
 
   scenario "with an invalid profile for a program org" do
