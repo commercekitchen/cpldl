@@ -5,7 +5,6 @@ feature "Admin user creates new course and lesson" do
   before(:each) do
     # @new_course = FactoryGirl.create(:course)
     @topic = FactoryGirl.create(:topic)
-    @english = FactoryGirl.create(:language)
     @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 

@@ -35,8 +35,5 @@
 @import "components/sortable_list";
 @import "components/congratulation_banner";
 @import "mixins/*";
-@import "subdomains/www";
-@import "subdomains/chipublib";
-@import "subdomains/npl";
-@import "subdomains/kpl";
+@import "subdomains/*";
 @import "scaffolds";

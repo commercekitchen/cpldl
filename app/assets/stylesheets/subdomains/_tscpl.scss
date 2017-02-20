@@ -1,0 +1,8 @@
+.tscpl {
+  @include color_scheme($tscpl-blue, $white, $tscpl-orange, left, $tscpl-gray, $tscpl-orange);
+  @include banner($tscpl-blue, $white, 2.7em);
+  @include buttons($tscpl-orange, $white);
+  @include course_widget($tscpl-orange, $tscpl-orange);
+  @include lesson_block($tscpl-blue, $grey, $tscpl-orange, $tscpl-orange);
+  @include icons($tscpl-blue, $tscpl-orange);
+}
