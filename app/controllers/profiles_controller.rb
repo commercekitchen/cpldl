@@ -57,7 +57,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.context_update(profile_params)
         update_locale(new_language_id) unless new_language_id == old_language_id
-        format.html { redirect_to redirect_path, notice: "Profile was successfully updated." }
+        format.html { redirect_to redirect_path, notice: I18n.t("profile_page.updated") }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :show }

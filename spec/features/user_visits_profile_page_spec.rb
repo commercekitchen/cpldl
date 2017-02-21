@@ -47,6 +47,21 @@ feature "Registered user visits account page" do
       expect(@user.profile.language.name).to eq("English")
     end
 
+    scenario "can change language preference" do
+      visit profile_path
+      select("Spanish", from: "profile_language_id")
+      click_button "Save"
+
+      expect(page).to have_content "El perfil se actualizó correctamente."
+      expect(page).to have_content "Idioma de preferencia"
+
+      select("English", from: "profile_language_id")
+      click_button "Guardar"
+
+      expect(page).to have_content "Profile was successfully updated."
+      expect(page).to have_content "Preferred Language"
+    end
+
     scenario "can view completed courses" do
       # visit courses_completed_path
     end

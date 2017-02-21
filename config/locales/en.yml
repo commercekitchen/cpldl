@@ -133,6 +133,7 @@ en:
     # These are backward because of the question phrasing:
     opt_out_false: "Yes"
     opt_out_true: "No"
+    updated: "Profile was successfully updated."
   programs_form:
     parent_type: "Select Program Type..."
     program_name: "Program Name"
