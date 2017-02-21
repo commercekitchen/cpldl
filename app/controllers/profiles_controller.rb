@@ -51,8 +51,12 @@ class ProfilesController < ApplicationController
       redirect_path = profile_path
     end
 
+    old_language_id = @profile.language.id if @profile.language.present?
+    new_language_id = profile_params[:language_id].to_i if profile_params[:language_id].present?
+
     respond_to do |format|
       if @profile.context_update(profile_params)
+        update_locale(new_language_id) unless new_language_id == old_language_id
         format.html { redirect_to redirect_path, notice: "Profile was successfully updated." }
         format.json { render :show, status: :ok, location: @profile }
       else
@@ -84,6 +88,17 @@ class ProfilesController < ApplicationController
       current_user.quiz_modal_complete == false &&
       !(params[:profile][:opt_out_of_recommendations] == "true") &&
       !current_user.has_role?(:admin, current_organization)
+  end
+
+  def update_locale(language_id=1)
+    language = Language.find(language_id)
+    case language.name
+    when "English"
+      I18n.locale = :en
+    when "Spanish"
+      I18n.locale = :es
+    end
+    session[:locale] = I18n.locale.to_s
   end
 
 end

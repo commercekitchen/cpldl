@@ -109,7 +109,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    if current_user && current_user.profile && current_user.profile.language.blank? == false
+    if current_user && current_user.profile && current_user.profile.language.present?
       if user_language_override? == true
         I18n.locale = session[:locale].to_sym unless session[:locale].blank?
       else
@@ -119,6 +119,7 @@ class ApplicationController < ActionController::Base
         when "Spanish"
           I18n.locale = :es
         end
+        session[:locale] = I18n.locale.to_s
       end
     else
       I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
@@ -168,7 +169,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_language_override?
-    if current_user.profile.language.blank? == false
+    if current_user.profile.language.present?
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
       return true if session[:locale] != user_lang_abbrv2
     else
