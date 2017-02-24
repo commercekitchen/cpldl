@@ -34,7 +34,7 @@ en:
       custom_banner_greeting: "Explore, discover, and engage with your computer!<br>"
       logo_banner_html: ""
     tscpl:
-      custom_banner_greeting: "Learn new skills for a better life!"
+      custom_banner_greeting: "Learn new skills for a better life!<br>"
       logo_banner_html: ""
     login: "Log In"
     signup: "Sign Up"
