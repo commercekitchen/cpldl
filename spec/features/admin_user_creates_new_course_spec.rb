@@ -36,6 +36,25 @@ feature "Admin user creates new course and lesson" do
     expect(current_path).to eq(edit_admin_course_path(Course.last))
   end
 
+  scenario "creates new category with course" do
+    visit new_admin_course_path
+    within(:css, "main") do
+      fill_in :course_title, with: "New Course Title"
+      fill_in :course_contributor, with: "Jane Doe"
+      fill_in :course_summary, with: "Summary for new course"
+      fill_in :course_description, with: "Description for new course"
+      check "Topic A"
+      check "Other Topic"
+      fill_in :course_other_topic_text, with: "Some New Topic"
+      select("Desktop", from: "course_format")
+      select("English", from: "course_language_id")
+      select("Beginner", from: "course_level")
+      select("Published", from: "course_pub_status")
+      click_button "Save Course"
+    end
+    expect(current_path).to eq(edit_admin_course_path(Course.last))
+  end
+
   pending "Admin should be able to add both course supl materials and post-course supl materials"
 
   #file uploader is the issue here

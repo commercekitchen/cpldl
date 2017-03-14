@@ -3,7 +3,7 @@ module Admin
 
     before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :set_maximums, only: [:new, :edit]
-    before_action :set_category_options, only: [:new, :edit]
+    before_action :set_category_options, only: [:new, :edit, :create, :update]
 
     def index
       @courses = Course.includes(:language)
@@ -25,11 +25,10 @@ module Admin
     end
 
     def create
-      if course_params[:category].present?
-        @category = Category.create(name: course_params[:category][:name], organization: current_user.organization)
-        @course = Course.new(course_params.except(:category).merge(category_id: @category.id))
-      else
+      if course_params[:category_id].present?
         @course = Course.new(course_params)
+      else
+        @course = Course.new(course_params.except(:category_attributes))
       end
 
       if params[:course][:pub_status] == "P"
@@ -38,7 +37,8 @@ module Admin
 
       @course.org_id = current_user.organization_id
       @course.validate_has_unique_title
-      if @course.errors.any?
+
+      if @course.errors.any? || (@course.category.present? && !@course.category.valid?)
         render :new
       elsif @course.save
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
@@ -75,11 +75,10 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      if course_params[:category].present?
-        @category = Category.create(name: course_params[:category][:name], organization: current_user.organization)
-        new_course_params = course_params.except(:category).merge(category_id: @category.id)
-      else
+      if course_params[:category_id].present?
         new_course_params = course_params
+      else
+        new_course_params = course_params.except(:category_attributes)
       end
 
       if @course.update(new_course_params)
@@ -158,7 +157,7 @@ module Admin
         :display_on_dl,
         :subdomain,
         :category_id,
-        category: [:name],
+        category_attributes: [:name, :organization_id],
         attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy]
       ]
 

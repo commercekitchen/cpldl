@@ -87,9 +87,9 @@ $(document).ready(function() {
     var value = $(this).val();
 
     if (value == "0"){
-      $("#course_category_name").show();
+      $("#course_category_attributes_name").show();
     } else {
-      $("#course_category_name").val("").hide();
+      $("#course_category_attributes_name").val("").hide();
     }
   });
 });

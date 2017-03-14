@@ -140,15 +140,15 @@
       <%= f.select(:category_id, options_for_select(@category_options, @course.category_id),{ include_blank: "Select..." } ) %>
     </div>
     <div class="fourcol">
-      <%= f.fields_for :category do |c| %>
+      <%= f.fields_for :category_attributes do |c| %>
+        <%= c.hidden_field :organization_id, value: current_user.organization.id %>
         <%= c.label :name do %>
           &nbsp;
         <% end %>
-        <%= c.text_field :name, placeholder: "Enter new category name", class: "hideUntilActive" %>
+        <%= c.text_field :name, value: @category_name || nil, placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
       <% end %>
     </div>
   </div>
-
 
   <div class="row">
     <div class="sixcol">

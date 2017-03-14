@@ -3,6 +3,7 @@ class Category < ActiveRecord::Base
   has_many :courses
 
   validates :name, presence: true
+  validates :organization_id, presence: true
 
   validate :unique_org_categories
   validate :unique_org_category_order

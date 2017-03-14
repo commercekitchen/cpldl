@@ -138,10 +138,32 @@ describe Admin::CoursesController do
 
       it "creates and adds category if new category selected" do
         expect do
-          post :create, { course: valid_attributes.merge(category: { name: Faker::Lorem.word } ) }
+          post :create, { 
+            course: valid_attributes.merge(
+              category_id: "0",
+              category_attributes: {
+                name: Faker::Lorem.word,
+                organization_id: @organization.id
+              }
+            )
+          }
         end.to change(Category, :count).by(1)
 
         expect(assigns(:course).category).not_to be_nil
+      end
+
+      it "re-reders new if repeat category name" do
+        @existing_category = FactoryGirl.create(:category, organization: @organization)
+        post :create, {
+          course: valid_attributes.merge(
+            category_id: "0",
+            category_attributes: {
+              name: @existing_category.name,
+              organization_id: @organization.id
+            }
+          )
+        }
+        expect(response).to render_template("new")
       end
     end
 
