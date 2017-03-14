@@ -163,7 +163,6 @@ describe Course do
       @course.other_topic_text = "New topic"
       expect(@course).to be_valid
     end
-
   end
 
   context "#topics_list" do

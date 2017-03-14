@@ -81,8 +81,16 @@ $(document).ready(function() {
         return false
       }
     }
+  });
 
+  $("#course_category_id").change(function(){
+    var value = $(this).val();
 
+    if (value == "0"){
+      $("#course_category_name").show();
+    } else {
+      $("#course_category_name").val("").hide();
+    }
   });
 });
 

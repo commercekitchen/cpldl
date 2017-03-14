@@ -64,6 +64,7 @@ class Course < ActiveRecord::Base
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
   belongs_to :language
+  belongs_to :category
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 40 }, presence: true

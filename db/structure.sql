@@ -111,6 +111,39 @@ ALTER SEQUENCE attachments_id_seq OWNED BY attachments.id;
 
 
 --
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE categories (
+    id integer NOT NULL,
+    name character varying,
+    category_order integer,
+    organization_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
+
+
+--
 -- Name: ckeditor_assets; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -313,7 +346,8 @@ CREATE TABLE courses (
     format character varying,
     subsite_course boolean DEFAULT false,
     parent_id integer,
-    display_on_dl boolean DEFAULT false
+    display_on_dl boolean DEFAULT false,
+    category_id integer
 );
 
 
@@ -879,6 +913,13 @@ ALTER TABLE ONLY attachments ALTER COLUMN id SET DEFAULT nextval('attachments_id
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY ckeditor_assets ALTER COLUMN id SET DEFAULT nextval('ckeditor_assets_id_seq'::regclass);
 
 
@@ -1021,6 +1062,14 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 ALTER TABLE ONLY attachments
     ADD CONSTRAINT attachments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY categories
+    ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
 
 
 --
@@ -1202,6 +1251,13 @@ CREATE INDEX idx_ckeditor_assetable_type ON ckeditor_assets USING btree (assetab
 --
 
 CREATE INDEX index_cms_pages_on_slug ON cms_pages USING btree (slug);
+
+
+--
+-- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_category_id ON courses USING btree (category_id);
 
 
 --
@@ -1604,4 +1660,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170104212615');
 INSERT INTO schema_migrations (version) VALUES ('20170104220648');
 
 INSERT INTO schema_migrations (version) VALUES ('20170105201500');
+
+INSERT INTO schema_migrations (version) VALUES ('20170314175120');
 

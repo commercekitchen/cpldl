@@ -133,8 +133,25 @@
         </div>
       </fieldset>
     </div>
-
     <div class="fourcol">
+      <%= f.label :category_id, class: "text-color" do %>
+        Course Category
+      <% end %>
+      <%= f.select(:category_id, options_for_select(@category_options, @course.category_id),{ include_blank: "Select..." } ) %>
+    </div>
+    <div class="fourcol">
+      <%= f.fields_for :category do |c| %>
+        <%= c.label :name do %>
+          &nbsp;
+        <% end %>
+        <%= c.text_field :name, placeholder: "Enter new category name", class: "hideUntilActive" %>
+      <% end %>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="sixcol">
       <fieldset>
         <%= f.label :language_id, class: "text-color" do %>
           Course Language<span class="required"></span>
@@ -143,7 +160,7 @@
       </fieldset>
     </div>
 
-    <div class="fourcol last">
+    <div class="sixcol last">
     <fieldset>
       <%= f.label :format, class: "text-color" do %>
         Course Format<span class="required"></span>

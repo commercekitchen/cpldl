@@ -52,13 +52,15 @@ describe Admin::CoursesController do
     end
 
     it "updates the pub_date if status is published" do
-      patch :update_pub_status, { course_id: @course1.id.to_param, value: "A" }
-      @course1.reload
-      expect(@course1.pub_date).to be(nil)
+      Timecop.freeze do
+        patch :update_pub_status, { course_id: @course1.id.to_param, value: "A" }
+        @course1.reload
+        expect(@course1.pub_date).to be(nil)
 
-      patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
-      @course1.reload
-      expect(@course1.pub_date.to_i).to eq(Time.zone.now.to_i)
+        patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
+        @course1.reload
+        expect(@course1.pub_date.to_i).to eq(Time.zone.now.to_i)
+      end
     end
   end
 
@@ -128,6 +130,19 @@ describe Admin::CoursesController do
         expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by_title(valid_attributes[:title])))
       end
 
+      it "adds an existing category if provided" do
+        @category = FactoryGirl.create(:category, organization: @organization)
+        post :create, { course: valid_attributes.merge(category_id: @category.id) }
+        expect(assigns(:course).category).to eq(@category)
+      end
+
+      it "creates and adds category if new category selected" do
+        expect do
+          post :create, { course: valid_attributes.merge(category: { name: Faker::Lorem.word } ) }
+        end.to change(Category, :count).by(1)
+
+        expect(assigns(:course).category).not_to be_nil
+      end
     end
 
     context "with invalid params" do

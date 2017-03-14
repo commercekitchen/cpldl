@@ -20,6 +20,10 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 es:
+  activerecord:
+    attributes:
+      category:
+        name: "Nombre de la Categoría"
   home:
     www:
       custom_banner_greeting: ""

@@ -3,6 +3,7 @@ module Admin
 
     before_action :set_course, only: [:show, :edit, :update, :destroy]
     before_action :set_maximums, only: [:new, :edit]
+    before_action :set_category_options, only: [:new, :edit]
 
     def index
       @courses = Course.includes(:language)
@@ -24,7 +25,13 @@ module Admin
     end
 
     def create
-      @course = Course.new(course_params)
+      if course_params[:category].present?
+        @category = Category.create(name: course_params[:category][:name], organization: current_user.organization)
+        @course = Course.new(course_params.except(:category).merge(category_id: @category.id))
+      else
+        @course = Course.new(course_params)
+      end
+
       if params[:course][:pub_status] == "P"
         @course.set_pub_date
       end
@@ -68,7 +75,14 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      if @course.update(course_params)
+      if course_params[:category].present?
+        @category = Category.create(name: course_params[:category][:name], organization: current_user.organization)
+        new_course_params = course_params.except(:category).merge(category_id: @category.id)
+      else
+        new_course_params = course_params
+      end
+
+      if @course.update(new_course_params)
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
           org_course.organization_id = current_user.organization_id
           org_course.course_id = @course.id
@@ -102,6 +116,14 @@ module Admin
 
     private
 
+    def set_category_options
+      @category_options = Category.where(organization_id: current_user.organization_id).map do |category|
+        [category.name, category.id]
+      end
+
+      @category_options << ["Create new category", 0]
+    end
+
     def set_maximums
       @max_title   = Course.validators_on(:title).first.options[:maximum]
       @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
@@ -114,11 +136,33 @@ module Admin
     end
 
     def course_params
-      params.require(:course).permit(:title,        :seo_page_title,  :meta_desc,       :summary,           :description,
-                                     :contributor,  :pub_status,      :language_id,     :level,             :topics,
-                                     :notes,        :delete_document, :other_topic,     :other_topic_text,  :course_order,
-                                     :pub_date,     :format,          :subsite_course,  :display_on_dl,     :subdomain,
-            attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy])
+      permitted_attributes = [
+        :title,
+        :seo_page_title,
+        :meta_desc,
+        :summary,
+        :description,
+        :contributor,
+        :pub_status,
+        :language_id,
+        :level,
+        :topics,
+        :notes,
+        :delete_document,
+        :other_topic,
+        :other_topic_text,
+        :course_order,
+        :pub_date,
+        :format,
+        :subsite_course,
+        :display_on_dl,
+        :subdomain,
+        :category_id,
+        category: [:name],
+        attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy]
+      ]
+
+      params.require(:course).permit(permitted_attributes)
     end
 
     def build_topics_list(params)

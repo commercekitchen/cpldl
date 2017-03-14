@@ -20,6 +20,7 @@ class Organization < ActiveRecord::Base
   has_many :organization_courses
   has_many :courses, through: :organization_courses
   has_many :users, dependent: :destroy
+  has_many :categories, dependent: :destroy
   validate 
 
   def user_count
