@@ -85,13 +85,21 @@ $(document).ready(function() {
 
   $("#course_category_id").change(function(){
     var value = $(this).val();
+    var $el = $("#course_category_attributes_name");
 
     if (value == "0"){
-      $("#course_category_attributes_name").show();
+      $el.show();
     } else {
-      $("#course_category_attributes_name").val("").hide();
+      $el
+        .val("")
+        .hide()
+        .parent().removeClass("field_with_errors");
     }
   });
+
+  if ($("#course_category_id").val() == "0" ){
+    $("#course_category_attributes_name").show();
+  }
 });
 
   // remove attachment fields in Course form

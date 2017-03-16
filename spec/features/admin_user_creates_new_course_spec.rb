@@ -3,13 +3,12 @@ require "feature_helper"
 feature "Admin user creates new course and lesson" do
 
   before(:each) do
-    # @new_course = FactoryGirl.create(:course)
     @topic = FactoryGirl.create(:topic)
     @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
-
-    @user = FactoryGirl.create(:user)
+    
     @organization = FactoryGirl.create(:organization)
+    @user = FactoryGirl.create(:user, organization: @organization)
     @user.add_role(:admin)
     @user.add_role(:admin, @organization)
     switch_to_subdomain("chipublib")
@@ -46,6 +45,8 @@ feature "Admin user creates new course and lesson" do
       check "Topic A"
       check "Other Topic"
       fill_in :course_other_topic_text, with: "Some New Topic"
+      select("Create new category", from: "course_category_id")
+      fill_in :course_category_attributes_name, with: Faker::Lorem.word
       select("Desktop", from: "course_format")
       select("English", from: "course_language_id")
       select("Beginner", from: "course_level")
@@ -53,6 +54,33 @@ feature "Admin user creates new course and lesson" do
       click_button "Save Course"
     end
     expect(current_path).to eq(edit_admin_course_path(Course.last))
+    expect(page).to have_select("course_category_id", selected: Course.last.category.name)
+  end
+
+  scenario "attempts to create duplicate category" do
+    @category = FactoryGirl.create(:category, organization: @organization)
+    @organization.reload
+
+    visit new_admin_course_path
+    within(:css, "main") do
+      fill_in :course_title, with: "New Course Title"
+      fill_in :course_contributor, with: "Jane Doe"
+      fill_in :course_summary, with: "Summary for new course"
+      fill_in :course_description, with: "Description for new course"
+      check "Topic A"
+      check "Other Topic"
+      fill_in :course_other_topic_text, with: "Some New Topic"
+      select("Create new category", from: "course_category_id")
+      fill_in :course_category_attributes_name, with: @category.name
+      select("Desktop", from: "course_format")
+      select("English", from: "course_language_id")
+      select("Beginner", from: "course_level")
+      select("Published", from: "course_pub_status")
+      click_button "Save Course"
+    end
+    expect(page).to have_content("Category Name is already in use by your organization. Please select an existing category or use a unique name.")
+    expect(page).to have_select("course_category_id", selected: "Create new category")
+    expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{@category.name}']")
   end
 
   pending "Admin should be able to add both course supl materials and post-course supl materials"

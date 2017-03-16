@@ -22,6 +22,7 @@
 #  subsite_course :boolean          default(FALSE)
 #  parent_id      :integer
 #  display_on_dl  :boolean          default(FALSE)
+#  category_id    :integer
 #
 
 class Course < ActiveRecord::Base

@@ -137,7 +137,7 @@
       <%= f.label :category_id, class: "text-color" do %>
         Course Category
       <% end %>
-      <%= f.select(:category_id, options_for_select(@category_options, @course.category_id),{ include_blank: "Select..." } ) %>
+      <%= f.select(:category_id, options_for_select(@category_options, @course.category_id || ("0" if @custom)),{ include_blank: "Uncategorized" } ) %>
     </div>
     <div class="fourcol">
       <%= f.fields_for :category_attributes do |c| %>
@@ -145,7 +145,9 @@
         <%= c.label :name do %>
           &nbsp;
         <% end %>
-        <%= c.text_field :name, value: @category_name || nil, placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
+        <div class=<%="#{'field_with_errors' if f.object.category.present? && f.object.category.errors[:name].present?}"%>>
+          <%= c.text_field :name, value: (@category.name if @category.present?) || (@custom_category), placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
+        </div>
       <% end %>
     </div>
   </div>

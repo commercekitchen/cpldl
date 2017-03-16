@@ -18,6 +18,7 @@ module Admin
 
     def new
       @course = Course.new
+      @category = @course.category.build if params[:category].present?
     end
 
     def edit
@@ -38,7 +39,7 @@ module Admin
       @course.org_id = current_user.organization_id
       @course.validate_has_unique_title
 
-      if @course.errors.any? || (@course.category.present? && !@course.category.valid?)
+      if @course.errors.any?
         render :new
       elsif @course.save
         OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
@@ -52,6 +53,8 @@ module Admin
           redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully created. Now add some lessons."
         end
       else
+        @custom = course_params[:category_id] == "0"
+        @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
         render :new
       end
     end
@@ -75,7 +78,7 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      if course_params[:category_id].present?
+      if course_params[:category_id].present? && course_params[:category_id] == "0"
         new_course_params = course_params
       else
         new_course_params = course_params.except(:category_attributes)
@@ -96,6 +99,9 @@ module Admin
           redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully updated."
         end
       else
+        @custom = course_params[:category_id] == "0"
+        @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
+
         render :edit
       end
     end
