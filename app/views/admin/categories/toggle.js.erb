@@ -1,0 +1,4 @@
+$("#category_row_<%= @category.id %>").replaceWith("<%= escape_javascript(render(partial: 'category_row', locals: { category: @category} )) %>");
+
+sortableTable.set_positions();
+sortableTable.init_sortables();

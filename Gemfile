@@ -13,7 +13,7 @@ gem 'jquery-rails'
 gem 'sprockets-rails', '2.3.3'
 
 # Full text search via PostgreSQL
-gem 'pg_search', '~> 1.0.5'
+gem 'pg_search'
 
 # Leverage the SQL EXISTS to chec related tables
 gem 'where_exists'

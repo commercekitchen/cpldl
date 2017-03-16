@@ -6,6 +6,7 @@
 #  name            :string
 #  category_order  :integer
 #  organization_id :integer
+#  enabled         :boolean          default(TRUE)
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #

@@ -4,6 +4,7 @@ class CreateCategories < ActiveRecord::Migration
       t.string :name
       t.integer :category_order
       t.references :organization
+      t.boolean :enabled, default: true
       t.timestamps null: false
     end
 

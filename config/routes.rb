@@ -55,6 +55,11 @@ Rails.application.routes.draw do
     resources :programs, only: [:new, :create, :index, :edit] do
     end
 
+    resources :categories, only: [:create, :index] do
+      put :sort, on: :collection
+      post 'toggle'
+    end
+
     resources :program_locations, only: [:create] do
       post 'toggle'
     end

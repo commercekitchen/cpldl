@@ -12,7 +12,11 @@ module Admin
       @school = current_organization.schools.create(school_params)
 
       respond_to do |format|
-        format.js
+        format.html do
+          redirect_to action: "index"
+        end
+
+        format.js {}
       end
     end
 
@@ -22,7 +26,11 @@ module Admin
       @school.update(enabled: !currently_enabled)
 
       respond_to do |format|
-        format.js
+        format.html do
+          redirect_to action: "index"
+        end
+
+        format.js {}
       end
     end
 

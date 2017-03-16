@@ -38,7 +38,7 @@ feature "Admin user updates course" do
       click_button "Save Course"
     end
     expect(current_path).to eq(admin_course_path(Course.last))
-    expect(page).to have_content("Category Name is already in use by your organization. Please select an existing category or use a unique name.")
+    expect(page).to have_content("Category Name is already in use by your organization.")
     expect(page).to have_select("course_category_id", selected: "Create new category")
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{@category.name}']")
   end

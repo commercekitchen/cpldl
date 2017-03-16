@@ -130,13 +130,15 @@ describe Admin::CmsPagesController do
       end
 
       it "updates pub_date if pub_status changes" do
-        patch :update, id: @page1.to_param, cms_page: { pub_status: "P" }, commit: "Save Page"
-        @page1.reload
-        expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
+        Timecop.freeze do
+          patch :update, id: @page1.to_param, cms_page: { pub_status: "P" }, commit: "Save Page"
+          @page1.reload
+          expect(@page1.pub_date.to_i).to eq(Time.zone.now.to_i)
 
-        patch :update, id: @page1.to_param, cms_page: { pub_status: "D" }, commit: "Save Page"
-        @page1.reload
-        expect(@page1.pub_date).to eq(nil)
+          patch :update, id: @page1.to_param, cms_page: { pub_status: "D" }, commit: "Save Page"
+          @page1.reload
+          expect(@page1.pub_date).to eq(nil)
+        end
       end
 
       it "renders a preview of page" do

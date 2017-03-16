@@ -1,0 +1,11 @@
+<% if @category.errors.present? %>
+
+  alert("foo")
+<% else %>
+
+  $("#category_rows").append("<%= escape_javascript(render(partial: 'category_row', locals: { category: @category })) %>");
+  $("#category_name").val('');
+
+  sortableTable.set_positions();
+  sortableTable.init_sortables();
+<% end %>

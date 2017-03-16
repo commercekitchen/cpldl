@@ -54,7 +54,7 @@ FactoryGirl.define do
   end
 
   factory :first_time_user, class: User do
-    email Faker::Internet.free_email
+    email { Faker::Internet.free_email }
     password Faker::Internet.password
     confirmed_at Time.zone.now.to_s
     sign_in_count 0
@@ -71,7 +71,7 @@ FactoryGirl.define do
   end
 
   factory :admin_user, class: User do
-    email "admin@example.com"
+    email { Faker::Internet.free_email }
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
     organization

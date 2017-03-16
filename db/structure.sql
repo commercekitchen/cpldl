@@ -119,6 +119,7 @@ CREATE TABLE categories (
     name character varying,
     category_order integer,
     organization_id integer,
+    enabled boolean DEFAULT true,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

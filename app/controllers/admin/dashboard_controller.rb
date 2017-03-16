@@ -6,7 +6,7 @@ module Admin
                        .where_exists(:organization_course, organization_id: current_user.organization_id)
                        .where.not(pub_status: "A")
 
-      @category_ids = @courses.map(&:category_id).compact.uniq
+      @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
       render "admin/courses/index", layout: "admin/base_with_sidebar"
@@ -43,7 +43,7 @@ module Admin
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
       @importable_courses = Course.where(id: @unadded_course_ids)
 
-      @category_ids = @importable_courses.map(&:category_id).compact.uniq
+      @category_ids = Organization.find_by_subdomain("www").categories.map(&:id)
       @uncategorized_courses = @importable_courses.where(category_id: nil)
 
       respond_to do |format|

@@ -1,0 +1,24 @@
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h1>Categories</h1>
+
+<div id="category_list">
+  <div class="sortable-list" data-page="categories">
+    <ul class="objects sortable reorderable" id="category_rows">
+      <% @categories.each do |category| %>
+        <%= render partial: "category_row", locals: { category: category } %>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<%= form_for [:admin, @new_category], remote: true, format: :js do |f| %>
+  <div class="row">
+    <div class="sixcol">
+      <%= f.text_field :name %>
+    </div>
+    <div class="sixcol">
+      <%= f.submit "Add Category" %>
+    </div>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@ module Admin
                         .where_exists(:organization_course, organization_id: current_user.organization_id)
                         .where.not(pub_status: "A")
 
-      @category_ids = @courses.map(&:category_id).compact.uniq
+      @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
       render layout: "admin/base_with_sidebar"

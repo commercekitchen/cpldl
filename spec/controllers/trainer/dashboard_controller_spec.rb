@@ -52,6 +52,8 @@ describe Trainer::DashboardController do
     end
 
     it "assigns all users as @users with an empty params" do
+      # FIXME: This test is flaky and I can't figure out why
+      # Seeding the same as a failed run doesn't repeat the issue
       get :index, {}
       expect(assigns(:users)).to include(@user, @user1, @user2, @user3)
     end

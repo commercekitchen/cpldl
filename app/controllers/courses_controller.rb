@@ -29,12 +29,14 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment, :skills] if :subdomain?
 
   def index
-    results = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable)
-    published_results = []
+    result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
 
-    results.each do |result|
-      published_results << result if result.pub_status == "P"
-    end
+    # Only courses are multisearchable right now, so this works
+    # If another class is made multisearchable, this won't work as intended
+    # PgSearch multisearch isn't working well here - I'm running into
+    # an issue similar to https://github.com/rails/rails/issues/13648
+    # when I try to chain PgSearch results with AR queries.
+    published_results = Course.where(id: result_ids).where(pub_status: "P")
 
     if user_signed_in? && current_user.profile.language_id
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
@@ -42,11 +44,14 @@ class CoursesController < ApplicationController
       if params[:search].blank?
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain)
       else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain) & published_results
+        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) & published_results
+      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
     end
+
+    @category_ids = current_organization.categories.map(&:id)
+    @uncategorized_courses = @courses.where(category_id: nil)
 
     respond_to do |format|
       format.html { render :index }
@@ -145,11 +150,15 @@ class CoursesController < ApplicationController
   def your
     tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
     unless params[:search].blank?
-      @results = PgSearch.multisearch(params[:search]).includes(:searchable).where(id: tracked_course_ids).map(&:searchable)
+      result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).where(id: tracked_course_ids).map(&:searchable).map(&:id)
+      @results = Course.where(id: result_ids)
     end
 
     @courses = params[:search].blank? ? Course.where(id: tracked_course_ids) : @results
     @skip_quiz = current_user.profile.opt_out_of_recommendations
+
+    @category_ids = current_organization.categories.map(&:id)
+    @uncategorized_courses = @courses.where(category_id: nil)
 
     respond_to do |format|
       format.html { render :your }

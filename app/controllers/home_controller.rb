@@ -18,6 +18,9 @@ class HomeController < ApplicationController
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: english_id).where_exists(:organization, subdomain: current_organization.subdomain)
       end
     end
+
+    @category_ids = current_organization.categories.map(&:id)
+    @uncategorized_courses = @courses.where(category_id: nil)
   end
 
   def language_toggle

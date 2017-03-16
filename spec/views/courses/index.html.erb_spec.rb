@@ -20,6 +20,7 @@ describe "courses/index.html.erb" do
 
   it "shows the appropriate message when at least one course is returned" do
     assign(:courses, [@course])
+    assign(:uncategorized_courses, [@course])
     render
     expect(rendered).to have_content "Searched Title"
   end

@@ -12,7 +12,7 @@
   <% end %>
 </div>
 
-<%= form_for [:admin, @new_school], remote: true do |f| %>
+<%= form_for [:admin, @new_school], remote: true, format: :js do |f| %>
   <div class="row">
     <div class="sixcol">
       <%= f.text_field :school_name %>
