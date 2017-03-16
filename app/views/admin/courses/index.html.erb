@@ -13,25 +13,11 @@
   </div>
 </div>
 
-<div class="sortable-list" data-page="courses">
-  <div class="list-titles">
-    <div class="cell text-color">Course</div>
-    <div class="cell text-color">Topic</div>
-    <div class="cell text-color">Language</div>
-    <div class="cell text-color">Publication Status</div>
-  </div>
-  <ul class="objects sortable reorderable">
-    <% @courses.each do |course| %>
-      <li class="sortable-item" data-id="<%= course.id %>">
-        <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
-        <div class="cell"><%= course.topics_str %></div>
-        <div class="cell"><%= course.language.name %></div>
-        <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Publish", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
-          <% unless course.pub_date.blank? %>
-            <span class="note">(<%= course.pub_date.strftime("%m/%d/%Y") %>)</span>
-          <% end %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
+
+<% (@category_ids || []).each do |category_id| %>
+  <%= render partial: "admin/courses/sortable_list", locals: { courses: @courses.with_category(category_id), category: Category.find_by_id(category_id) } %>
+<% end %>
+
+<% if @uncategorized_courses.present? %>
+  <%= render partial: "admin/courses/sortable_list", locals: { courses: @uncategorized_courses, category: nil } %>
+<% end %>

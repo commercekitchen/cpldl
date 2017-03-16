@@ -13,23 +13,10 @@
   </div>
 </div>
 
-<div class="sortable-list" data-page="courses">
-  <div class="list-titles">
-    <div class="cell text-color">Course</div>
-    <div class="cell text-color">Topic</div>
-    <div class="cell text-color">Language</div>
-    <div class="cell text-color">Import</div>
-  </div>
-  <ul class="objects">
-    <% @importable_courses.each do |course| %>
-      <li>
-        <div class="cell"><%= course.title %></div>
-        <div class="cell"><%= course.topics_str %></div>
-        <div class="cell"><%= course.language.name %></div>
-        <div class="cell">
-          <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
+<% (@category_ids || []).each do |category_id| %>
+  <%= render partial: "admin/courses/sortable_import_list", locals: { courses: @importable_courses.with_category(category_id), category: Category.find_by_id(category_id) } %>
+<% end %>
+
+<% if @uncategorized_courses.present? %>
+  <%= render partial: "admin/courses/sortable_import_list", locals: { courses: @uncategorized_courses, category: nil } %>
+<% end %>

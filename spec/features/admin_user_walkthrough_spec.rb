@@ -5,11 +5,14 @@ feature "Admin user clicks through each page" do
   before(:each) do
     @spanish = FactoryGirl.create(:spanish_lang)
     @english = FactoryGirl.create(:language)
-    @course = FactoryGirl.create(:course_with_lessons)
     @user = FactoryGirl.create(:user)
     @user.add_role(:admin)
     @organization = FactoryGirl.create(:organization)
+    @category = FactoryGirl.create(:category, organization: @user.organization)
+    @course = FactoryGirl.create(:course_with_lessons, category: @category)
+    @org_course = FactoryGirl.create(:organization_course, organization_id: @user.organization.id, course_id: @course.id)
     @user.add_role(:admin, @organization)
+    @user.organization.reload
     switch_to_subdomain("chipublib")
     log_in_with @user.email, @user.password
   end

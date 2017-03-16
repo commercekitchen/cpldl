@@ -12,7 +12,7 @@
 
 FactoryGirl.define do
   factory :category do
-    name { Faker::Lorem.word }
+    name { Faker::Lorem.words(3).join(" ") }
     organization
   end
 end

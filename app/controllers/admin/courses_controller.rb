@@ -7,8 +7,12 @@ module Admin
 
     def index
       @courses = Course.includes(:language)
-                       .where_exists(:organization_course, organization_id: current_user.organization_id)
-                       .where.not(pub_status: "A")
+                        .where_exists(:organization_course, organization_id: current_user.organization_id)
+                        .where.not(pub_status: "A")
+
+      @category_ids = @courses.map(&:category_id).compact.uniq
+      @uncategorized_courses = @courses.where(category_id: nil)
+
       render layout: "admin/base_with_sidebar"
     end
 

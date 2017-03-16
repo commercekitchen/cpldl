@@ -5,6 +5,10 @@ module Admin
       @courses = Course.includes(:language)
                        .where_exists(:organization_course, organization_id: current_user.organization_id)
                        .where.not(pub_status: "A")
+
+      @category_ids = @courses.map(&:category_id).compact.uniq
+      @uncategorized_courses = @courses.where(category_id: nil)
+
       render "admin/courses/index", layout: "admin/base_with_sidebar"
     end
 
@@ -38,6 +42,10 @@ module Admin
       @previously_imported_ids = current_organization.courses.where.not(pub_status: "A").pluck(:parent_id).compact
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
       @importable_courses = Course.where(id: @unadded_course_ids)
+
+      @category_ids = @importable_courses.map(&:category_id).compact.uniq
+      @uncategorized_courses = @importable_courses.where(category_id: nil)
+
       respond_to do |format|
         format.html do
           render "admin/courses/import_courses", layout: "admin/base_with_sidebar"
@@ -53,6 +61,7 @@ module Admin
       new_course.subsite_course = false
       new_course.pub_date = nil
       new_course.pub_status = "D"
+      new_course.category_id = new_or_existing_subsite_category_id(course_to_import.category)
       new_course.save
 
       # Create copies of the lessons and ASLs
@@ -85,5 +94,18 @@ module Admin
                                 course_id: new_course.id)
       redirect_to edit_admin_course_path(new_course)
     end
+
+    private
+
+    def new_or_existing_subsite_category_id(category)
+      return nil unless category.present?
+      current_user.organization.categories.each do |org_category|
+        if org_category.name.downcase == category.name.downcase
+          @subsite_category_id = org_category.id
+        end
+      end
+      @subsite_category_id ||= current_user.organization.categories.create(name: category.name).id
+    end
+
   end
 end

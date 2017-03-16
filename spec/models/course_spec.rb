@@ -100,17 +100,21 @@ describe Course do
     end
 
     it "should set pub date on publication" do
-      @course.pub_status = "P"
-      expect(@course.set_pub_date.to_i).to eq(Time.zone.now.to_i)
+      Timecop.freeze do
+        @course.pub_status = "P"
+        expect(@course.set_pub_date.to_i).to eq(Time.zone.now.to_i)
+      end
     end
 
     it "should update the pub date with status change" do
-      @course.pub_status = "P"
-      expect(@course.set_pub_date).to_not be(nil)
-      @course.pub_status = "D"
-      expect(@course.update_pub_date(@course.pub_status)).to be(nil)
-      @course.pub_status = "P"
-      expect(@course.update_pub_date(@course.pub_status).to_i).to be(Time.zone.now.to_i)
+      Timecop.freeze do
+        @course.pub_status = "P"
+        expect(@course.set_pub_date).to_not be(nil)
+        @course.pub_status = "D"
+        expect(@course.update_pub_date(@course.pub_status)).to be(nil)
+        @course.pub_status = "P"
+        expect(@course.update_pub_date(@course.pub_status).to_i).to be(Time.zone.now.to_i)
+      end
     end
 
     it "humanizes publication status" do

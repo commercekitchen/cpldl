@@ -28,7 +28,7 @@
 FactoryGirl.define do
 
   factory :course do
-    title "Computer Course"
+    title { Faker::Lorem.words(3, true).join(" ") }
     meta_desc "A first course in computing"
     summary "In this course you will..."
     description "Description"
@@ -40,7 +40,7 @@ FactoryGirl.define do
   end
 
   factory :draft_course, class: Course do
-    title "Draft Course"
+    title { Faker::Lorem.words(3, true).join(" ") }
     meta_desc "A draft course in computing"
     summary "In this course you will..."
     description "Description"
@@ -52,7 +52,7 @@ FactoryGirl.define do
   end
 
   factory :course_with_lessons, class: Course do
-    title "Computer Course"
+    title { Faker::Lorem.words(3, true).join(" ") }
     meta_desc "A first course in computing"
     summary "In this course you will..."
     description "Description"

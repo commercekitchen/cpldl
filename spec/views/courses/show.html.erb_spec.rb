@@ -69,7 +69,7 @@ describe "courses/show.html.erb" do
     it "uses the course title if seo title is not available" do
       @course.seo_page_title = ""
       render template: "courses/show", layout: "layouts/application"
-      expect(rendered).to have_selector("title", text: "Computer Course", visible: false)
+      expect(rendered).to have_selector("title", text: @course.title, visible: false)
     end
 
     it "respects html formatting of the body" do

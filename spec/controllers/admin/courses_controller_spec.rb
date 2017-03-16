@@ -4,12 +4,17 @@ describe Admin::CoursesController do
 
   before(:each) do
     @organization = create(:organization)
+    @other_organization = create(:organization)
     @request.host = "chipublib.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)
-    @course1 = create(:course, title: "Course1", course_order: 1)
-    @course2 = create(:course, title: "Course2", course_order: 2)
+    @category1 = create(:category, organization: @organization)
+    @category2 = create(:category, organization: @organization)
+    @category3 = create(:category, organization: @other_organization)
+    @course1 = create(:course, title: "Course1", course_order: 1, category: @category1)
+    @course2 = create(:course, title: "Course2", course_order: 2, category: @category2)
     @course3 = create(:course, title: "Course3", course_order: 3)
+    @course_for_different_org = create(:course, title: "Different Org")
     @admin = create(:admin_user, organization: @organization)
     @admin.add_role(:admin, @organization)
 
@@ -19,14 +24,38 @@ describe Admin::CoursesController do
                                              course_id: @course2.id)
     @org_course3 = OrganizationCourse.create(organization_id: @organization.id,
                                              course_id: @course3.id)
+    @different_org_course = OrganizationCourse.create(organization_id: @other_organization.id,
+                                                      course_id: @course_for_different_org.id)
     sign_in @admin
   end
 
   describe "GET #index" do
-    it "assigns all courses as @courses" do
+    before(:each) do
       get :index, subdomain: "chipublib"
+    end
+
+    it "assigns all courses as @courses" do
       expect(assigns(:courses)).to include(@course1, @course2, @course3)
+    end
+
+    it "only assigns correct number of courses" do
       expect(assigns(:courses).count).to eq(3)
+    end
+
+    it "assigns category_ids" do
+      expect(assigns(:category_ids)).to include(@category1.id, @category2.id)
+    end
+
+    it "only assigns proper category ids" do
+      expect(assigns(:category_ids).count).to eq(2)
+    end
+
+    it "assigns uncategorized_courses" do
+      expect(assigns(:uncategorized_courses)).to include(@course3)
+    end
+
+    it "only assigns uncategorized courses" do
+      expect(assigns(:uncategorized_courses).count).to eq(1)
     end
   end
 

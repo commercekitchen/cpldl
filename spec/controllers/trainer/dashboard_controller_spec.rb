@@ -41,6 +41,7 @@ describe Trainer::DashboardController do
       @user1.add_role(:user, @org)
       @user2.add_role(:user, @org)
       @user3.add_role(:user, @org)
+      sign_in @user
     end
 
     it "assigns all users as @users" do
