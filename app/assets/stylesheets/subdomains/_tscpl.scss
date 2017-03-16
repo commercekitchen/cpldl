@@ -1,8 +1,8 @@
 .tscpl {
-  @include color_scheme($tscpl-blue, $white, $tscpl-orange, left, $tscpl-gray, $tscpl-orange);
+  @include color_scheme($tscpl-blue, $white, $tscpl-action-gray, left, $tscpl-gray, $tscpl-orange);
   @include banner($tscpl-blue, $white);
-  @include buttons($tscpl-orange, $white);
-  @include course_widget($tscpl-orange, $tscpl-orange);
-  @include lesson_block($tscpl-blue, $grey, $tscpl-orange, $tscpl-orange);
-  @include icons($tscpl-blue, $tscpl-orange);
+  @include buttons($tscpl-action-gray, $white);
+  @include course_widget($tscpl-action-gray, $tscpl-action-gray);
+  @include lesson_block($tscpl-blue, $grey, $tscpl-action-gray, $tscpl-action-gray);
+  @include icons($tscpl-blue, $tscpl-action-gray);
 }
