@@ -14,6 +14,7 @@ feature "Admin user updates course" do
     @course = FactoryGirl.create(:course)
     @org_course = FactoryGirl.create(:organization_course, organization_id: @organization.id, course_id: @course.id)
     @category = FactoryGirl.create(:category, organization: @organization)
+    @disabled_category = FactoryGirl.create(:category, :disabled, organization: @organization)
     switch_to_subdomain("chipublib")
     log_in_with @user.email, @user.password
   end
@@ -54,5 +55,10 @@ feature "Admin user updates course" do
     end
     expect(current_path).to eq(edit_admin_course_path(Course.last))
     expect(page).to have_select("course_category_id", selected: "#{@category.name}_#{new_word}")
+  end
+
+  scenario "can see which categories are disabled" do
+    visit edit_admin_course_path(@course)
+    expect(page).to have_select("course_category_id", with_options: ["#{@category.name}", "#{@disabled_category.name} (disabled)"])
   end
 end

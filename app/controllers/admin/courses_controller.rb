@@ -127,7 +127,7 @@ module Admin
 
     def set_category_options
       @category_options = Category.where(organization_id: current_user.organization_id).map do |category|
-        [category.name, category.id]
+        [category.admin_display_name, category.id]
       end
 
       @category_options << ["Create new category", 0]

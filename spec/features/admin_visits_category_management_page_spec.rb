@@ -24,8 +24,6 @@ feature "Admin user visits category management page" do
     expect(page).to have_content(@category3.name)
   end
 
-
-
   scenario "can add new category", js: true do
     new_word = Faker::Lorem.word
     visit admin_categories_path
@@ -39,12 +37,15 @@ feature "Admin user visits category management page" do
     fill_in "category_name", with: @category1.name
     click_on "Add Category"
     expect(page).to have_content("Category Name is already in use by your organization.")
-    expect(page).to have_selector(:css, ".field_with_errors #category_name[value='#{@category1.name}']")
+    expect(page).to have_selector(:css, ".field_with_errors #category_name")
   end
 
   scenario "can disable category", js: true do
-
+    visit admin_categories_path
+    click_on "category_toggle_link_#{@category1.id}"
+    expect(page).to have_selector(:css, ".table_row_disabled .four-of-twelve #category_toggle_link_#{@category1.id}")
+    @category1.reload
+    expect(@category1.enabled).to eq(false)
   end
-
 
 end

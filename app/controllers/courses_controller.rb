@@ -50,7 +50,7 @@ class CoursesController < ApplicationController
       @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
     end
 
-    @category_ids = current_organization.categories.map(&:id)
+    @category_ids = current_organization.categories.enabled.map(&:id)
     @uncategorized_courses = @courses.where(category_id: nil)
 
     respond_to do |format|
@@ -157,7 +157,7 @@ class CoursesController < ApplicationController
     @courses = params[:search].blank? ? Course.where(id: tracked_course_ids) : @results
     @skip_quiz = current_user.profile.opt_out_of_recommendations
 
-    @category_ids = current_organization.categories.map(&:id)
+    @category_ids = current_organization.categories.enabled.map(&:id)
     @uncategorized_courses = @courses.where(category_id: nil)
 
     respond_to do |format|

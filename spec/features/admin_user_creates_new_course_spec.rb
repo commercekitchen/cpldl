@@ -9,6 +9,8 @@ feature "Admin user creates new course and lesson" do
     
     @organization = FactoryGirl.create(:organization)
     @user = FactoryGirl.create(:user, organization: @organization)
+    @category = FactoryGirl.create(:category, organization: @organization)
+    @disabled_category = FactoryGirl.create(:category, :disabled, organization: @organization)
 
     @user.add_role(:admin, @organization)
     switch_to_subdomain("chipublib")
@@ -57,6 +59,11 @@ feature "Admin user creates new course and lesson" do
     expect(page).to have_select("course_category_id", selected: Course.last.category.name)
   end
 
+  scenario "can see which categories are disabled" do
+    visit new_admin_course_path
+    expect(page).to have_select("course_category_id", with_options: ["#{@category.name}", "#{@disabled_category.name} (disabled)"])
+  end
+
   scenario "attempts to create duplicate category" do
     @category = FactoryGirl.create(:category, organization: @organization)
     @organization.reload
@@ -78,7 +85,7 @@ feature "Admin user creates new course and lesson" do
       select("Published", from: "course_pub_status")
       click_button "Save Course"
     end
-    expect(page).to have_content("Category Name is already in use by your organization. Please select an existing category or use a unique name.")
+    expect(page).to have_content("Category Name is already in use by your organization.")
     expect(page).to have_select("course_category_id", selected: "Create new category")
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{@category.name}']")
   end

@@ -1,7 +1,9 @@
 <% if @category.errors.present? %>
-
-  alert("foo")
+  $("main").prepend("<%= escape_javascript(render(partial: 'shared/flashes', locals: { flash: { alert: @category.errors.full_messages.join('') } })) %>")
+  $(".category_name_input").addClass("field_with_errors");
 <% else %>
+  $("main p.alert").remove();
+  $(".category_name_input").removeClass("field_with_errors");
 
   $("#category_rows").append("<%= escape_javascript(render(partial: 'category_row', locals: { category: @category })) %>");
   $("#category_name").val('');

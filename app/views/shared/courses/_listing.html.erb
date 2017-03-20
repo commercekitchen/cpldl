@@ -6,7 +6,9 @@
 
 <div class="container">
 <% (@category_ids || []).each do |category_id| %>
-  <h3><%= Category.find_by_id(category_id).name %></h3>
+  <% unless @courses.with_category(category_id).blank? %>
+    <h3><%= Category.find_by_id(category_id).name %></h3>
+  <% end %>
   <% @courses.with_category(category_id).each do |c| %>
     <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
         href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">

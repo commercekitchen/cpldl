@@ -1,23 +1,27 @@
 <div class="sortable_list_wrapper">
-  <h3><%= category.present? ? category.name : "Uncategorized" %></h3>
-  <div class="sortable-list" data-page="courses">
-    <div class="list-titles">
-      <div class="cell text-color">Course</div>
-      <div class="cell text-color">Topic</div>
-      <div class="cell text-color">Language</div>
-      <div class="cell text-color">Publication Status</div>
+  <h3 class="<%= 'disabled' if (category.present? && !category.enabled) %>"><%= category.present? ? category.admin_display_name : "Uncategorized" %></h3>
+  <% if courses.empty? %>
+    No courses in this category
+  <% else %>
+    <div class="sortable-list" data-page="courses">
+      <div class="list-titles">
+        <div class="cell text-color">Course</div>
+        <div class="cell text-color">Topic</div>
+        <div class="cell text-color">Language</div>
+        <div class="cell text-color">Publication Status</div>
+      </div>
+      <ul class="objects sortable reorderable">
+        <% courses.each do |course| %>
+          <li class="sortable-item" data-id="<%= course.id %>">
+            <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
+            <div class="cell"><%= course.topics_str %></div>
+            <div class="cell"><%= course.language.name %></div>
+            <div class="cell">
+              <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
     </div>
-    <ul class="objects sortable reorderable">
-      <% courses.each do |course| %>
-        <li class="sortable-item" data-id="<%= course.id %>">
-          <div class="cell"><%= link_to course.title, edit_admin_course_path(course) %></div>
-          <div class="cell"><%= course.topics_str %></div>
-          <div class="cell"><%= course.language.name %></div>
-          <div class="cell">
-            <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
-          </div>
-        </li>
-      <% end %>
-    </ul>
-  </div>
+  <% end %>
 </div>

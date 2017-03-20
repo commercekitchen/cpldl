@@ -14,7 +14,7 @@
 
 <%= form_for [:admin, @new_category], remote: true, format: :js do |f| %>
   <div class="row">
-    <div class="sixcol">
+    <div class="sixcol category_name_input">
       <%= f.text_field :name %>
     </div>
     <div class="sixcol">

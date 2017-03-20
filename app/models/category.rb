@@ -19,11 +19,14 @@ class Category < ActiveRecord::Base
   validates :organization_id, presence: true
 
   validate :unique_org_categories, on: :create
-  validate :unique_org_category_order
 
-  default_scope { order("category_order ASC") }
+  default_scope { order("enabled DESC, category_order ASC") }
 
   scope :enabled, -> { where(enabled: true) }
+
+  def admin_display_name
+    self.name + (self.enabled ? "" : " (disabled)")
+  end
 
   private
 
@@ -31,11 +34,5 @@ class Category < ActiveRecord::Base
     return true unless organization.present?
     category_names = organization.categories.map(&:name)
     errors.add(:name, "is already in use by your organization.") if category_names.include?(name)
-  end
-  
-  def unique_org_category_order
-    return true unless category_order.present?
-    category_orders = organization.categories.map(&:category_order)
-    errors.add(:category_order, "is already in use by your organization.") if category_orders.include?(category_order)
   end
 end

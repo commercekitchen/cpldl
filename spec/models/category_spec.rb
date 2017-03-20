@@ -46,20 +46,5 @@ describe Category do
       @new_category.update(name: @category1.name, organization: @organization)
       expect(@new_category).to be_valid
     end
-
-    it "fail if category order is repeated within org" do
-      @new_category.update(name: "#{@category1.name}_new", organization: @category1.organization, category_order: 1)
-      expect(@new_category).not_to be_valid
-    end
-
-    it "pass if category order is not repeated within org" do
-      @new_category.update(name: "#{@category1.name}_new", organization: @category1.organization, category_order: 2)
-      expect(@new_category).to be_valid
-    end
-
-    it "pass if category order is repeated in a different org" do
-      @new_category.update(name: "#{@category1.name}_new", organization: @organization, category_order: 1)
-      expect(@new_category).to be_valid
-    end
   end
 end

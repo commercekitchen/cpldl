@@ -1,5 +1,5 @@
 <div class="sortable_list_wrapper">
-  <h3><%= category.present? ? category.name : "Uncategorized" %></h3>
+  <h3 class="<%= 'disabled' if (category.present? && !category.enabled) %>"><%= category.present? ? category.admin_display_name : "Uncategorized" %></h3>
   <% if courses.empty? %>
     No courses in this category
   <% else %>

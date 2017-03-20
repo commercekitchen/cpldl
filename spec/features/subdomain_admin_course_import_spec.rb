@@ -8,12 +8,15 @@ feature "Admin courses" do
     @www = create(:organization, subdomain: "www")
 
     @dpl_category = create(:category, organization: @dpl)
+    @dpl_disabled_category = create(:category, :disabled, organization: @dpl)
     @www_category = create(:category, organization: @www)
     @www_category_repeat_name = create(:category, name: @dpl_category.name, organization: @www)
+    @www_disabled_category = create(:category, :disabled, organization: @www)
 
     @dpl_course1 = create(:course_with_lessons, organization: @dpl, category: @dpl_category)
     @dpl_course2 = create(:course_with_lessons, organization: @dpl, category: @dpl_category)
     @dpl_course3 = create(:course_with_lessons, organization: @dpl)
+    
 
     @importable_course1 = create(:course_with_lessons, subsite_course: true, category: @www_category)
     @importable_course2 = create(:course_with_lessons, subsite_course: true, category: @www_category)
@@ -47,6 +50,11 @@ feature "Admin courses" do
       expect(page).to have_content(@dpl_category.name, count: 1)
     end
 
+    scenario "will see label for disabled courses" do
+      visit admin_root_path
+      expect(page).to have_content("#{@dpl_disabled_category.name} (disabled)")
+    end
+
     scenario "will see uncategorized section" do
       visit admin_root_path
       expect(page).to have_content("Uncategorized", count: 1)
@@ -65,6 +73,11 @@ feature "Admin courses" do
     scenario "will see www category headers for importable courses" do
       visit admin_import_courses_path
       expect(page).to have_content(@www_category.name, count: 1)
+    end
+
+    scenario "will see label for disabled courses" do
+      visit admin_import_courses_path
+      expect(page).to have_content("#{@www_disabled_category.name} (disabled)")
     end
 
     scenario "will see uncategorized header for importable courses" do
@@ -109,6 +122,11 @@ feature "Admin courses" do
     scenario "will see edit links in categories" do
       visit admin_root_path
       expect(page).to have_content(@www_category.name, count: 1)
+    end
+
+    scenario "will see label for disabled courses" do
+      visit admin_root_path
+      expect(page).to have_content("#{@www_disabled_category.name} (disabled)")
     end
 
     scenario "will see uncategorized section" do

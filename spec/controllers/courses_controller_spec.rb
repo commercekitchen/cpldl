@@ -33,10 +33,14 @@ describe CoursesController do
     @language = create(:language)
     @spanish = create(:spanish_lang)
     @organization = create(:organization)
+    @category1 = create(:category, organization: @organization)
+    @category2 = create(:category, :disabled, organization: @organization)
+
     @course1 = create(:course, title: "Course 1",
                                language: @language,
                                description: "Mocha Java Scripta",
-                               organization: @organization)
+                               organization: @organization,
+                               category: @category1)
     @course2 = create(:course, title: "Course 2",
                                language: @language,
                                organization: @organization)
@@ -65,6 +69,21 @@ describe CoursesController do
     it "responds to json" do
       get :index, format: :json
       expect(response).to have_http_status(:success)
+    end
+
+    it "assigns categories" do
+      get :index
+      expect(assigns(:category_ids)).to eq([@category1.id])
+    end
+
+    it "assigns uncategorized courses" do
+      get :index
+      expect(assigns(:uncategorized_courses)).to include(@course2, @course3)
+    end
+
+    it "has correct number of uncategorized courses" do
+      get :index
+      expect(assigns(:uncategorized_courses).count).to eq(2)
     end
   end
 
@@ -122,6 +141,11 @@ describe CoursesController do
       it "assigns search results to @courses" do
         get :your, { search: "java" }
         expect(assigns(:courses)).to eq([@course1])
+      end
+
+      it "assigns categories" do
+        get :your
+        expect(assigns(:category_ids)).to eq([@category1.id])
       end
     end
 
