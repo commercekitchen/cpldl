@@ -48,17 +48,22 @@ describe CoursesController do
                                language: @language,
                                description: "Ruby on Rails",
                                organization: @organization)
+    @disabled_category_course = create(:course, title: "Disabled Category Course",
+                                                language: @language,
+                                                description: "Foo Bar Baz",
+                                                organization: @organization,
+                                                category: @category2)
   end
 
   describe "GET #index" do
     it "assigns all courses as @courses" do
       get :index
-      expect(assigns(:courses)).to include(@course1, @course2, @course3)
+      expect(assigns(:courses)).to include(@course1, @course2, @course3, @disabled_category_course)
     end
 
     it "assigns all courses as @courses with an empty params" do
       get :index, {}
-      expect(assigns(:courses)).to include(@course1, @course2, @course3)
+      expect(assigns(:courses)).to include(@course1, @course2, @course3, @disabled_category_course)
     end
 
     it "assigns search results to @courses" do
@@ -78,12 +83,12 @@ describe CoursesController do
 
     it "assigns uncategorized courses" do
       get :index
-      expect(assigns(:uncategorized_courses)).to include(@course2, @course3)
+      expect(assigns(:uncategorized_courses)).to include(@course2, @course3, @disabled_category_course)
     end
 
     it "has correct number of uncategorized courses" do
       get :index
-      expect(assigns(:uncategorized_courses).count).to eq(2)
+      expect(assigns(:uncategorized_courses).count).to eq(3)
     end
   end
 
@@ -125,12 +130,14 @@ describe CoursesController do
         sign_in @user
         @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
         @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
-        @user.course_progresses << [@course_progress1, @course_progress2]
+        @course_progress3 = create(:course_progress, course_id: @course3.id, tracked: true)
+        @course_progress4 = create(:course_progress, course_id: @disabled_category_course.id, tracked: true)
+        @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3, @course_progress4]
       end
 
       it "allows the user to view their tracked courses" do
         get :your
-        expect(assigns(:courses)).to eq([@course1])
+        expect(assigns(:courses)).to include(@course1, @course3, @disabled_category_course)
       end
 
       it "assigns @results if search params exist" do
@@ -146,6 +153,11 @@ describe CoursesController do
       it "assigns categories" do
         get :your
         expect(assigns(:category_ids)).to eq([@category1.id])
+      end
+
+      it "assigns uncategorized courses including courses with a disabled category" do
+        get :your
+        expect(assigns(:uncategorized_courses)).to include(@course3, @disabled_category_course)
       end
     end
 

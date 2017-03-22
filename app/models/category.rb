@@ -23,6 +23,7 @@ class Category < ActiveRecord::Base
   default_scope { order("enabled DESC, category_order ASC") }
 
   scope :enabled, -> { where(enabled: true) }
+  scope :disabled, -> { where(enabled: false) }
 
   def admin_display_name
     self.name + (self.enabled ? "" : " (disabled)")

@@ -19,8 +19,10 @@ class HomeController < ApplicationController
       end
     end
 
-    @category_ids = current_organization.categories.map(&:id)
-    @uncategorized_courses = @courses.where(category_id: nil)
+    @category_ids = current_organization.categories.enabled.map(&:id)
+    @disabled_category_ids = current_organization.categories.disabled.map(&:id)
+    @disabled_category_courses = @courses.where(category_id: @disabled_category_ids)
+    @uncategorized_courses = @courses.where(category_id: nil) + @disabled_category_courses
   end
 
   def language_toggle

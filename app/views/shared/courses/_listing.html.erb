@@ -4,30 +4,32 @@
   <% courses_completed = [] %>
 <% end %>
 
-<div class="container">
 <% (@category_ids || []).each do |category_id| %>
-  <% unless @courses.with_category(category_id).blank? %>
-    <h3><%= Category.find_by_id(category_id).name %></h3>
-  <% end %>
-  <% @courses.with_category(category_id).each do |c| %>
-    <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
-        href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
-        <header>
-          <h3><%= c.title %></h3>
-        </header>
-        <div class="description">
-          <p><%= c.summary %></p>
-          <div class="percent-complete"><%= percent_complete(c) %></div>
-          <div class="duration">
-            <i class="icon-clock grey"></i><%= c.duration %>
+  <div class="container">
+    <% unless @courses.with_category(category_id).blank? %>
+      <h3><%= Category.find_by_id(category_id).name %></h3>
+    <% end %>
+    <% @courses.with_category(category_id).each do |c| %>
+      <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
+          href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
+          <header>
+            <h3><%= c.title %></h3>
+          </header>
+          <div class="description">
+            <p><%= c.summary %></p>
+            <div class="percent-complete"><%= percent_complete(c) %></div>
+            <div class="duration">
+              <i class="icon-clock grey"></i><%= c.duration %>
+            </div>
           </div>
-        </div>
-      </a>
-  <% end %>
+        </a>
+    <% end %>
+  </div>
 <% end %>
 
-<% if @uncategorized_courses.present? %>
-  <div class="container">
+
+<div class="container">
+  <% if @uncategorized_courses.present? %>
     <h3>Uncategorized</h3>
     <% @uncategorized_courses.each do |c| %>
       <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
@@ -44,11 +46,8 @@
         </div>
       </a>
     <% end %>
-  </div>
-<% end %>
-
-<% unless current_user && current_user.profile.opt_out_of_recommendations %>
-  <%= render partial: "shared/courses/learn_more" %>
-<% end %>
-
+  <% end %>
+  <% unless current_user && current_user.profile.opt_out_of_recommendations %>
+    <%= render partial: "shared/courses/learn_more" %>
+  <% end %>
 </div>
