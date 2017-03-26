@@ -40,6 +40,9 @@ en:
     tscpl:
       custom_banner_greeting: "Learn new skills for a better life!<br>"
       logo_banner_html: ""
+    pima:
+      custom_banner_greeting: "Get Connected. Anything is Possible.<br>"
+      logo_banner_html: ""
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
@@ -108,7 +111,14 @@ en:
     tscpl:
       greeting: "Greetings"
       subject: "Get Started with Topeka & Shawnee County Public Library DigitalLearn"
-      welcome: "Welcome to Topeka & Shawnee County Public Library's DigitalLearn project! Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
+      welcome: "Welcome to Topeka & Shawnee  County Public Library’s DigitalLearn! Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
+      confirm_your_account_through_link: "You can confirm your account email through the link below:"
+      confirm_my_account: "Confirm my account"
+      signature: "Thanks and have a wonderful day!"
+    pima:
+      greeting: "Greetings"
+      subject: "Get Started with Pima County Public Library DigitalLearn"
+      welcome: "Welcome to Pima County Public Library's DigitalLearn project! Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
       confirm_your_account_through_link: "You can confirm your account email through the link below:"
       confirm_my_account: "Confirm my account"
       signature: "Thanks and have a wonderful day!"
@@ -163,6 +173,8 @@ en:
       retake_the_quiz: "Retake the Quiz"
     tscpl:
       retake_the_quiz: "Retake the Quiz"
+    pima:
+      retake_the_quiz: "Retake the Quiz"
     course: "Course"
     date_completed: "Date Completed"
     certificate_of_completion: "Certificate of Completion"
@@ -181,6 +193,8 @@ en:
       course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     tscpl:
       course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+    pima:
+      course_color_explaination: "Light Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     my_plan_click_to_start: "My Plan: Click on a course below and get started!"
     click_here_to_homepage: "click here to go to the homepage."
     completed_most_courses: "Have you completed most of the courses? If so,"

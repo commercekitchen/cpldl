@@ -20,6 +20,10 @@
         <%= link_to "http://tscpl.org/", target: "_blank" do %>
           <%= image_tag "tscpl_logo_white", class: "medium-logo link-tscpl" %>
         <% end %>
+      <% when 'pima' %>
+        <%= link_to "https://www.ibrary.pima.gov", target: "_blank" do %>
+          <%= image_tag "pima_logo_white", class: "medium-logo link-pima" %>
+        <% end %>
       <% else %>
         &nbsp;
       <% end %>

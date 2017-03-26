@@ -49,6 +49,14 @@ $(document).ready(function() {
     ga("send", "event", "exernal link", "click", "Kalamazoo Public Library");
   });
 
+  $("footer").on("click", ".link-tscpl", function() {
+    ga("send", "event", "exernal link", "click", "Topeka Shawnee County Public Library");
+  });
+
+  $("footer").on("click", ".link-pima", function() {
+    ga("send", "event", "exernal link", "click", "Pima County Public Library");
+  });
+
   $("footer").on("click", ".link-pla", function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });
