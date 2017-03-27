@@ -111,14 +111,14 @@ es:
     tscpl:
       greeting: "Hola"
       subject: "Empieza con Topeka & Shawnee County Public Library DigitalLearn"
-      welcome: "Bienvenido a Bienvenido a Topeka & Shawnee County Public Library’s DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
+      welcome: "Bienvenido a Topeka & Shawnee County Public Library’s DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
       confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
       confirm_my_account: "Confirmar mi cuenta"
       signature: "Gracias y que tenga un día maravilloso!"
     pima:
       greeting: "Hola"
       subject: "Empieza con Pima County Public Library DigitalLearn"
-      welcome: "Bienvenido a Bienvenido a Pima County Public Library DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
+      welcome: "Bienvenido a Pima County Public Library DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
       confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
       confirm_my_account: "Confirmar mi cuenta"
       signature: "Gracias y que tenga un día maravilloso!"
