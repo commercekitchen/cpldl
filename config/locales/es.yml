@@ -254,12 +254,14 @@ es:
     set_two_3: "Sé usar un dispositivo móvil, pero me gustaría aprender más."
     set_two_4: "Soy muy bueno con dispositivos móviles, pero me gustaría aprender más sobre un tema específico."
     question_3: "¿Qué le gustaría hacer con la computadora? Seleccione solo la opción que más le interese."
-    set_three_1: "Usar Internet para encontrar información."
-    set_three_2: "Comunicarse con amigos y familiares por correo electrónico y video."
-    set_three_3: "Ser más productivo en el trabajo."
-    set_three_4: "Buscar empleo."
-    set_three_5: "Aprender una aplicación específica como Microsoft Word."
+    set_three_1: "Buscar empleo."
+    set_three_2: "Ayude a mi hijo con la escuela."
+    set_three_3: "Acceda a información y beneficios en línea del gobierno."
+    set_three_4: "Utilice herramientas en línea para mejorar mi educación."
+    set_three_5: "Comunicarse con amigos y familiares por correo electrónico y video." 
     set_three_6: "Usar internet de manera más segura."
+    set_three_7: "Aprender una aplicación específica como Microsoft Word."
+    set_three_8: "Usar Internet para encontrar información."
   activerecord:
     attributes:
       profile:
