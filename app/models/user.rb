@@ -34,13 +34,14 @@
 #  invitations_count      :integer          default(0)
 #  token                  :string
 #  organization_id        :integer
+#  school_id              :integer
+#  program_location_id    :integer
 #  acting_as              :string
 #  library_card_number    :string
 #  student_id             :string
 #  date_of_birth          :datetime
 #  grade                  :integer
-#  school_id              :integer
-#  program_location_id    :integer
+#  quiz_responses         :text
 #
 
 class User < ActiveRecord::Base
@@ -65,6 +66,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   validates_associated :profile
   before_create :add_token_to_user
+
+  # Serialized hash of quiz responses
+  serialize :quiz_responses, Hash
 
   ROLES = %w(Admin Trainer User Parent Student)
 

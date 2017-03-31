@@ -34,13 +34,14 @@
 #  invitations_count      :integer          default(0)
 #  token                  :string
 #  organization_id        :integer
+#  school_id              :integer
+#  program_location_id    :integer
 #  acting_as              :string
 #  library_card_number    :string
 #  student_id             :string
 #  date_of_birth          :datetime
 #  grade                  :integer
-#  school_id              :integer
-#  program_location_id    :integer
+#  quiz_responses         :text
 #
 
 require "rails_helper"

@@ -198,6 +198,7 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
+    current_user.update!(quiz_responses: quiz_params.to_h) unless current_user.quiz_responses.present?
     recommendation_service = CourseRecommendationService.new(current_organization.id, quiz_params)
     recommendation_service.add_recommended_courses(current_user.id)
     redirect_to your_courses_path

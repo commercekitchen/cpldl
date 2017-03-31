@@ -47,6 +47,11 @@ RSpec.configure do |config|
     end
   end
 
+  # Set language to english unless
+  config.before(:each) do
+    I18n.locale = :en
+  end
+
   config.after(:each, type: :view) do
     config.mock_with :rspec do |mocks|
       mocks.verify_partial_doubles = true
