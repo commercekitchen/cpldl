@@ -26,11 +26,20 @@
       <%= label_tag(:set_three_5, "#{t('quiz.set_three_5')}", class: "inline-label") %>
     </li>
 
-      <li>
+    <li>
       <%= radio_button_tag(:set_three, "6") %>
       <%= label_tag(:set_three_6, "#{t('quiz.set_three_6')}", class: "inline-label") %>
     </li>
 
+    <li>
+      <%= radio_button_tag(:set_three, "7") %>
+      <%= label_tag(:set_three_7, "#{t('quiz.set_three_7')}", class: "inline-label") %>
+    </li>
+
+    <li>
+      <%= radio_button_tag(:set_three, "8") %>
+      <%= label_tag(:set_three_8, "#{t('quiz.set_three_8')}", class: "inline-label") %>
+    </li>
   </ul>
   <% if current_page?(root_url) %>
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>

@@ -1,0 +1,72 @@
+class CourseRecommendationService
+
+  def initialize(org_id, responses)
+    @org = Organization.find(org_id)
+    @responses = responses
+  end
+
+  def add_recommended_courses(user_id)
+    @user = User.find(user_id)
+
+    course_collection.each do |course|
+      course_progress = @user.course_progresses.where(course_id: course.id).first_or_create
+      course_progress.tracked = true
+      course_progress.save
+    end
+  end
+
+  private
+
+  def course_collection
+    (desktop_courses + mobile_courses + topic_courses) & org_courses
+  end
+
+  def desktop_courses
+    response = @responses["set_one"]
+    core_courses.where(format: "D", level: level_string(response), pub_status: "P")
+  end
+
+  def mobile_courses
+    response = @responses["set_two"]
+    core_courses.where(format: "M", level: level_string(response), pub_status: "P")
+  end
+
+  def topic_courses
+    response = @responses["set_three"]
+    Course.topic_search(topics[response.to_i]).where(pub_status: "P")
+  end
+
+  def topics
+    {
+      1 => "Job Search",
+      2 => "Education: Child",
+      3 => "Government",
+      4 => "Education: Adult",
+      5 => "Communication Social Media",
+      6 => "Security",
+      7 => "Software Apps",
+      8 => "Information Searching"
+    }
+  end
+
+  def level_string(level)
+    case level
+    when "1"
+      "Beginner"
+    when "2"
+      "Intermediate"
+    end
+  end
+
+  def language_string
+     @language ||= (I18n.locale == :es ? "Spanish" : "English")
+  end
+
+  def org_courses
+    @org_courses ||= Course.where_exists(:organization_course, organization_id: @org.id).where(language_id: Language.find_by_name(language_string).id)
+  end
+
+  def core_courses
+    Course.topic_search("Core")
+  end
+end

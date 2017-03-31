@@ -198,48 +198,9 @@ class CoursesController < ApplicationController
   end
 
   def quiz_submit
-    case I18n.locale
-    when :es
-      @org_courses = Course.where_exists(:organization_course, organization_id: current_organization.id).where(language_id: Language.find_by_name("Spanish").id)
-    when :en
-      @org_courses = Course.where_exists(:organization_course, organization_id: current_organization.id).where(language_id: Language.find_by_name("English").id)
-    end
-    # Finds and bulk adds relevant core desktop topics
-    case params["set_one"]
-    when "1"
-      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Beginner", pub_status: "P") & @org_courses)
-    when "2"
-      bulk_add_courses(Course.topic_search("Core").where(format: "D", level: "Intermediate", pub_status: "P") & @org_courses)
-    end
-
-    # Finds and bulk adds relevant core mobile topics
-    case params["set_two"]
-    when "1"
-      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Beginner", pub_status: "P") & @org_courses)
-    when "2"
-      bulk_add_courses(Course.topic_search("Core").where(format: "M", level: "Intermediate", pub_status: "P") & @org_courses)
-    end
-
-    # Finds and bulk adds topic_specific courses
-    set_three_topics = { 1 => "Information Searching",
-                         2 => "Communication Social Media",
-                         3 => "Productivity",
-                         4 => "Job Search",
-                         5 => "Software Apps",
-                         6 => "Security" }
-
-    bulk_add_courses(Course.topic_search(set_three_topics[params["set_three"].to_i]).where(pub_status: "P") & @org_courses)
-
-    # Send them back to "My Courses" page
+    recommendation_service = CourseRecommendationService.new(current_organization.id, quiz_params)
+    recommendation_service.add_recommended_courses(current_user.id)
     redirect_to your_courses_path
-  end
-
-  def bulk_add_courses(course_collection)
-    course_collection.each do |course|
-      course_progress = current_user.course_progresses.where(course_id: course.id).first_or_create
-      course_progress.tracked = true
-      course_progress.save
-    end
   end
 
   def skills
@@ -255,5 +216,9 @@ class CoursesController < ApplicationController
     when "es"
       2
     end
+  end
+
+  def quiz_params
+    params.permit("set_one", "set_two", "set_three")
   end
 end
