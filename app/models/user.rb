@@ -41,7 +41,7 @@
 #  student_id             :string
 #  date_of_birth          :datetime
 #  grade                  :integer
-#  quiz_responses         :text
+#  quiz_responses_object  :text
 #
 
 class User < ActiveRecord::Base
@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   before_create :add_token_to_user
 
   # Serialized hash of quiz responses
-  serialize :quiz_responses, Hash
+  serialize :quiz_responses_object
 
   ROLES = %w(Admin Trainer User Parent Student)
 

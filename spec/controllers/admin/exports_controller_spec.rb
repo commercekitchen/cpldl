@@ -19,12 +19,12 @@ describe Admin::ExportsController do
     end
   end
 
-  describe "#data_for_completions_report_by_zip" do
+  describe "#data_for_completions_report_by" do
     before(:each) do
-      @user = create(:user)
+      @user = create(:user, quiz_responses_object: {"set_one"=>"1", "set_two"=>"3", "set_three"=>"3"})
       @user.add_role(:user, @organization)
       @user.profile = create(:profile)
-      @user2 = create(:user)
+      @user2 = create(:user, quiz_responses_object: {"set_one"=>"2", "set_two"=>"1", "set_three"=>"2"})
       @user2.add_role(:user, @organization)
       @user2.profile = create(:profile)
 
@@ -42,6 +42,7 @@ describe Admin::ExportsController do
       @user.course_progresses << [@course_progress1, @course_progress2]
       @user2.course_progresses << [@course_progress3]
     end
+
     it "return completions by zip" do
       returned = controller.data_for_completions_report_by_zip
       expect(returned).to eq({:version=>"zip", "90210"=>{:sign_ups=>2, :completions=>{"Course 1"=>2, "Course 2"=>1}}})
@@ -50,6 +51,19 @@ describe Admin::ExportsController do
     it "return completions by lib" do
       returned = controller.data_for_completions_report_by_lib
       expect(returned).to eq({:version=>"lib", nil=>{:sign_ups=>2, :completions=>{"Course 1"=>2, "Course 2"=>1}}})
+    end
+
+    it "return completions by quiz response" do
+      returned = controller.data_for_completions_by_survey_responses
+      expect(returned).to eq(
+        {
+          version: "survey_responses",
+          { "set_one"=>"1", "set_two"=>"3", "set_three"=>"3" } => { responses: 1,
+                                                                    completions: { "Course 1" => 1, "Course 2" => 1 } },
+          { "set_one"=>"2", "set_two"=>"1", "set_three"=>"2" } => { responses: 1,
+                                                                    completions: { "Course 1" => 1 } }
+        }
+      )
     end
   end
 end

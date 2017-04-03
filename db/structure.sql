@@ -871,7 +871,7 @@ CREATE TABLE users (
     student_id character varying,
     date_of_birth timestamp without time zone,
     grade integer,
-    quiz_responses text
+    quiz_responses_object text
 );
 
 

@@ -396,14 +396,14 @@ describe CoursesController do
       it "should store quiz responses for user" do
         post :quiz_submit, choices
         @user.reload
-        expect(@user.quiz_responses).to eq(choices)
+        expect(@user.quiz_responses_object).to eq(choices)
       end
 
       it "should not overwrite quiz responses for user" do
         post :quiz_submit, choices
         post :quiz_submit, { "set_one" => "3", "set_two" => "3", "set_three" => "5" }
         @user.reload
-        expect(@user.quiz_responses).to eq(choices)
+        expect(@user.quiz_responses_object).to eq(choices)
       end
     end
   end

@@ -41,7 +41,7 @@
 #  student_id             :string
 #  date_of_birth          :datetime
 #  grade                  :integer
-#  quiz_responses         :text
+#  quiz_responses_object  :text
 #
 
 require "rails_helper"

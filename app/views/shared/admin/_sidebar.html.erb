@@ -7,6 +7,7 @@
     <li><%= link_to "Completions Report (by Library)", admin_export_completions_path(format: "csv", version: "lib") %></li>
   <% end %>
   <li><%= link_to "Completions Report (by Zipcode)", admin_export_completions_path(format: "csv", version: "zip") %></li>
+  <li><%= link_to "Completions Report (by Survey Answers)", admin_export_completions_path(format: "csv", version: "survey_responses") %></li>
   <li><%= link_to "User Accounts", admin_users_index_path %></li>
   <li><%= link_to "CMS Pages", admin_pages_index_path %></li>
   <li><%= link_to "Invite Admin", admin_invites_index_path %></li>

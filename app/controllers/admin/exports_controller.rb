@@ -62,5 +62,30 @@ module Admin
 
       grouped
     end
+
+    def data_for_completions_by_survey_responses
+      grouped = { version: "survey_responses" }
+      current_site = current_organization
+      course_progs = CourseProgress.completed_with_profile
+      quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map{ |prog| prog.user.quiz_responses_object }.uniq
+
+      quiz_response_combinations.each do |responses_hash|
+        users_with_responses = User.with_role(:user, current_site).where("users.quiz_responses_object = ?", responses_hash.to_yaml)
+        progresses_by_quiz_responses = course_progs.merge(users_with_responses)
+
+        progresses = {}
+
+        progresses_by_quiz_responses.each do |p|
+          unless progresses.key?(p.course.title)
+            progresses.merge!(p.course.title => progresses_by_quiz_responses.where(course_id: p.course.id).count)
+          end
+        end
+
+        data = { responses: users_with_responses.count, completions: progresses }
+        grouped.merge!(version: "survey_responses", responses_hash => data)
+      end
+
+      grouped
+    end
   end
 end

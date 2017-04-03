@@ -1,5 +1,5 @@
 class AddQuizResponsesToUsers < ActiveRecord::Migration
   def change
-    add_column :users, :quiz_responses, :text
+    add_column :users, :quiz_responses_object, :text
   end
 end
