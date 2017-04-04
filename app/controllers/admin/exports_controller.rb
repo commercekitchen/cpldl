@@ -63,7 +63,7 @@ module Admin
       grouped
     end
 
-    def data_for_completions_by_survey_responses
+    def data_for_completions_report_by_survey_responses
       grouped = { version: "survey_responses" }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
