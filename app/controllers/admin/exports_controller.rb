@@ -67,7 +67,7 @@ module Admin
       grouped = { version: "survey_responses" }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
-      quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map{ |prog| prog.user.quiz_responses_object }.uniq
+      quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map{ |prog| prog.user.quiz_responses_object }.compact.uniq
 
       quiz_response_combinations.each do |responses_hash|
         users_with_responses = User.with_role(:user, current_site).where("users.quiz_responses_object = ?", responses_hash.to_yaml)

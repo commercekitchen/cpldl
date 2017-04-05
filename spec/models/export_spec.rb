@@ -19,7 +19,8 @@ describe Export do
   let(:lib_data) { { :version => "lib", library.id => { :sign_ups => 1, :completions => { "Sample Course 3" => 1 } } } }
   let(:survey_responses_data) {
     { :version => "survey_responses",
-      { "set_one" => "3", "set_two" => "3", "set_three" => "5" } => { :responses => 3, completions: { "Test Course" => 3 } }
+      { "set_one" => "3", "set_two" => "3", "set_three" => "5" } => { :responses => 3, completions: { "Test Course" => 3 } },
+      { "set_three" => "8" } => { :responses => 2, completions: { "Intro to BS" => 2 } }
     }
   }
 
@@ -43,6 +44,10 @@ describe Export do
 
     it "translates question_3 response correctly" do
       expect(csv).to match(/Communicate with friends and family through email and video./)
+    end
+
+    it "translates lone question_8 correctly" do
+      expect(csv).to match(/Search for information./)
     end
   end
 end
