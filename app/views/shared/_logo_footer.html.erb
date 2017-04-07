@@ -24,6 +24,10 @@
         <%= link_to "https://www.library.pima.gov", target: "_blank" do %>
           <%= image_tag "pima_logo_white", class: "medium-logo link-pima" %>
         <% end %>
+      <% when 'ebrpl' %>
+        <%= link_to "https://www.ebrpl.com", target: "_blank" do %>
+          <%= image_tag "ebrpl_logo_white", class: "medium-logo link-ebrpl" %>
+        <% end %>
       <% else %>
         &nbsp;
       <% end %>

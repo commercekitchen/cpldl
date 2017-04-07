@@ -57,6 +57,10 @@ $(document).ready(function() {
     ga("send", "event", "exernal link", "click", "Pima County Public Library");
   });
 
+  $("footer").on("click", ".link-ebrpl", function(){
+    ga("send", "event", "external link", "click", "East Baton Rouge Public Library");
+  });
+
   $("footer").on("click", ".link-pla", function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });

@@ -43,6 +43,9 @@ es:
     pima:
       custom_banner_greeting: "Conectarse. Todo es posible.<br>"
       logo_banner_html: ""
+    ebrpl:
+      custom_banner_greeting: "Saber cómo usar una computadora le ayuda a avanzar en la vida<br>"
+      logo_banner_html: ""
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
@@ -122,6 +125,13 @@ es:
       confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
       confirm_my_account: "Confirmar mi cuenta"
       signature: "Gracias y que tenga un día maravilloso!"
+    ebrpl:
+      greeting: "Hola"
+      subject: "Empieza con East Baton Rouge Public Library DigitalLearn"
+      welcome: "Bienvenido a East Baton Rouge Public Library DigitalLearn! Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
+      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
+      confirm_my_account: "Confirmar mi cuenta"
+      signature: "Gracias y que tenga un día maravilloso!"
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
@@ -175,6 +185,8 @@ es:
       retake_the_quiz: "Repite el Cuestionario"
     pima: 
       retake_the_quiz: "Repite el Cuestionario"
+    ebrpl: 
+      retake_the_quiz: "Repite el Cuestionario"
     course: "Curso"
     date_completed: "Fecha de terminación"
     certificate_of_completion: "Certificado de Culminación"
@@ -193,6 +205,8 @@ es:
     tscpl:
       course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     pima:
+      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    ebrpl:
       course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "de clic aquí para regresar a la página principal."

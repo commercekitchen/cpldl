@@ -43,6 +43,9 @@ en:
     pima:
       custom_banner_greeting: "Get Connected. Anything is Possible.<br>"
       logo_banner_html: ""
+    ebrpl:
+      custom_banner_greeting: "Knowing How to Use a Computer Helps You Get Ahead in Life<br>"
+      logo_banner_html: ""
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
@@ -122,6 +125,13 @@ en:
       confirm_your_account_through_link: "You can confirm your account email through the link below:"
       confirm_my_account: "Confirm my account"
       signature: "Thanks and have a wonderful day!"
+    ebrpl:
+      greeting: "Greetings"
+      subject: "Get Started with East Baton Rouge Public Library DigitalLearn"
+      welcome: "Welcome to East Baton Rouge Public Library’s DigitalLearn! Please take one more step to begin learning how to use your computer to do almost anything. Click the link below to activate your account, and you’ll be ready to go."
+      confirm_your_account_through_link: "You can confirm your account email through the link below:"
+      confirm_my_account: "Confirm my account"
+      signature: "Thanks and have a wonderful day!"
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"
@@ -175,6 +185,8 @@ en:
       retake_the_quiz: "Retake the Quiz"
     pima:
       retake_the_quiz: "Retake the Quiz"
+    ebrpl:
+      retake_the_quiz: "Retake the Quiz"
     course: "Course"
     date_completed: "Date Completed"
     certificate_of_completion: "Certificate of Completion"
@@ -195,6 +207,8 @@ en:
       course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     pima:
       course_color_explaination: "Light Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+    ebrpl:
+      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     my_plan_click_to_start: "My Plan: Click on a course below and get started!"
     click_here_to_homepage: "click here to go to the homepage."
     completed_most_courses: "Have you completed most of the courses? If so,"
