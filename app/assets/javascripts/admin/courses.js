@@ -7,6 +7,11 @@ $(document).ready(function() {
     }
   });
 
+  $(".no_drag_link").on("mousedown", function(e){
+    $(this).trigger("mouseup");
+    return false;
+  });
+
   // If the user enters text in the topics textbox, mark the checkbox too.
   $("body").on("change", "#course_other_topic_text", function() {
     if($(this).val().trim() !== "") {

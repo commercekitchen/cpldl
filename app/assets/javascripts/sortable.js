@@ -14,10 +14,10 @@ var sortableTable =  (function(){
     },
 
     init_sortables: function(){
-      $(".sortable").sortable({handle: ":not(a)"});
+      $(".sortable").sortable();
 
       // after the order changes
-      $(".sortable").sortable({handle: ":not(a)"}).bind("sortupdate", function(e, ui) {
+      $(".sortable").bind("sortupdate", function(e, ui) {
         // array to store new order
         updated_order = []
         // set the updated positions
@@ -25,8 +25,10 @@ var sortableTable =  (function(){
 
         // populate the updated_order array with the new task positions
         $(".sortable-item").each(function(i){
-            updated_order.push({ id: $(this).data("id"), position: i+1 });
+          updated_order.push({ id: $(this).data("id"), position: i+1 });
         });
+
+        $(".no_drag").attr("draggable", false);
 
         // send the updated order via ajax
         $.ajax({
