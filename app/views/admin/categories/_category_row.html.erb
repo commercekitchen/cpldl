@@ -4,7 +4,7 @@
       <%= category.name %>  
     </div>
     <div class="four-of-twelve">
-      <%= link_to (category.enabled ? "Disable" : "Enable"), admin_category_toggle_path(category_id: category.id, format: "js"), method: :post, remote: true, id: "category_toggle_link_#{category.id}" %>
+      <%= link_to (category.enabled ? "Disable" : "Enable"), admin_category_toggle_path(category_id: category.id, format: "js"), method: :post, remote: true, id: "category_toggle_link_#{category.id}", class: "no_drag_link" %>
     </div>
   </div>
 </li>
