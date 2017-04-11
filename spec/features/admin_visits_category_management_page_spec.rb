@@ -29,7 +29,7 @@ feature "Admin user visits category management page" do
     visit admin_categories_path
     fill_in "category_name", with: "#{@category1.name}_#{new_word}"
     click_on "Add Category"
-    expect(page).to have_css("div[draggable='true']", text: "#{@category1.name}_#{new_word}")
+    expect(page).to have_content "#{@category1.name}_#{new_word}"
   end
 
   scenario "sees error if category name exists", js: true do
