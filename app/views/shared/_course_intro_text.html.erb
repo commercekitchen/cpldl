@@ -12,12 +12,12 @@
     <%= render "shared/logo_banner" %>
   <% end %>
   <h1 class="slogan text-color" >
-    <%= t('logged_in_user.choose_a_course') %>
+    <%= t("logged_in_user.choose_a_course") %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", your_courses_path %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h1>
 
 <% else %>
-  <h1 class="slogan centered text-color"><%= t('home.choose_a_course') %></h1>
+  <h1 class="slogan centered text-color"><%= t("home.choose_a_course.#{current_organization.subdomain}") %></h1>
   <% if top_level_domain? %>
     <div class="clearfix">
       <p class="no-top-margin left-two-thirds"><%= t("home.new_to_computers") %></p>
