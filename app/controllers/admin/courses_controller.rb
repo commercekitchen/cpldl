@@ -30,7 +30,7 @@ module Admin
     end
 
     def create
-      if course_params[:category_id].present?
+      if course_params[:category_id].present? && course_params[:category_id] == "0"
         @course = Course.new(course_params)
       else
         @course = Course.new(course_params.except(:category_attributes))
