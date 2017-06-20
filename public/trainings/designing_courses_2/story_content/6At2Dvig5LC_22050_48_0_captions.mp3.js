@@ -1,0 +1,1 @@
+window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:06,733%0D%0ADon%E2%80%99t%20use%20unnecessary%20jargon.%20When%20you%20introduce%20a%20new%20term,%20explain%20what%20it%20means.%20%0D%0A%0D%0A2%0D%0A00:00:06,733%20--%3E%2000:00:10,599%0D%0ADon%E2%80%99t%20make%20explanations%20unnecessarily%20complicated.%20%0D%0A%0D%0A"}')

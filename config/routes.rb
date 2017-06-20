@@ -40,6 +40,9 @@ Rails.application.routes.draw do
 
   resources 'cms_pages', only: [:show]
 
+  get 'designing-courses-1', to: 'courses#designing_courses_1'
+  get 'designing-courses-2', to: 'courses#designing_courses_2'
+
   namespace :trainer do
     root 'home#index'
     resources :dashboard, only: [:index]

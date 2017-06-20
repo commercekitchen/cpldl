@@ -26,7 +26,7 @@
 
 class CoursesController < ApplicationController
   before_action :authenticate_user!, only: [:add, :remove, :your, :completed, :bulk_add_courses] if :top_level_domain?
-  before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment, :skills] if :subdomain?
+  before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
 
   def index
     result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
@@ -206,6 +206,12 @@ class CoursesController < ApplicationController
 
   def skills
     @course = Course.friendly.find(params[:course_id])
+  end
+
+  def designing_courses_1
+  end
+
+  def designing_courses_2
   end
 
   private

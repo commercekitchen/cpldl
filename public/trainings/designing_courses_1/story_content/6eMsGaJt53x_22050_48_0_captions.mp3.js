@@ -1,0 +1,1 @@
+window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:09,566%0D%0ANow%20you%E2%80%99ve%20seen%20an%20overview%20of%20the%20design%20process.%20In%20the%20next%20lesson,%20we%E2%80%99ll%20look%20at%20design%20techniques%20for%20the%20DigitalLearn.org%20audience.%0D%0A%0D%0A"}')

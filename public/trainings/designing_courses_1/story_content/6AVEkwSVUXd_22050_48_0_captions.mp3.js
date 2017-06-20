@@ -1,0 +1,1 @@
+window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:08,400%0D%0ALet%E2%80%99s%20start%20by%20looking%20at%20the%20overall%20design%20process%20for%20DigitalLearn%20courses,%20start-to%20finish.%20Click%20the%20first%20step%20to%20get%20started.%0D%0A%0D%0A"}')
