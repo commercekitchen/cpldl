@@ -20,4 +20,18 @@ describe Admin::UsersController do
       expect(@user.current_roles).to eq("admin")
     end
   end
+
+  describe "#export_user_info" do
+    before do
+      4.times do
+        create(:user, organization: @user.organization)
+      end
+
+      get :export_user_info, format: :csv
+    end
+
+    it "assigns correct number of users" do
+      expect(assigns(:users).count).to eq(6)
+    end
+  end
 end

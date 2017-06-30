@@ -13,7 +13,6 @@
   </div>
 </div>
 
-
 <% (@category_ids || []).each do |category_id| %>
   <%= render partial: "admin/courses/sortable_list", locals: { courses: @courses.with_category(category_id), category: Category.find_by_id(category_id) } %>
 <% end %>

@@ -2,12 +2,19 @@
 
 <h1>Users</h1>
 
-<div class="users-search-box">
-  <%= form_tag admin_users_index_path, method: :get do %>
-    <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
-    <i class="icon-search grey"></i>
-    <%= submit_tag "Search", id: "search_btn" %>
-  <% end %>
+<div class="row">
+  <div class="sixcol">
+    <div class="users-search-box">
+      <%= form_tag admin_users_index_path, method: :get do %>
+        <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
+        <i class="icon-search grey"></i>
+        <%= submit_tag "Search", id: "search_btn" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="sixcol last left-or-right">
+    <%= link_to "Export User Information", admin_export_user_info_path(format: :csv), class: "btn button-color" %>
+  </div>
 </div>
 
 <div class="row twelvecol underlined">
@@ -27,7 +34,6 @@
     <h2>Confirmed?</h2>
   </div>
 </div>
-
 
 <% @users.each do |user| %>
   <div class="row twelvecol underlined">

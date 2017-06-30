@@ -84,7 +84,9 @@ Rails.application.routes.draw do
       patch 'update_pub_status'
     end
 
-      patch 'users/:id/change_user_roles', to: 'users#change_user_roles', as: :change_user_roles
+    patch 'users/:id/change_user_roles', to: 'users#change_user_roles', as: :change_user_roles
+
+    get 'users/export_user_info', to: 'users#export_user_info', as: :export_user_info
 
     resources :courses do
       put :sort, on: :collection
