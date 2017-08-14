@@ -9,6 +9,12 @@
   font-weight: 100;
 }
 
+.table-row {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
 .cell {
   display: table-cell;
   width: 15%;

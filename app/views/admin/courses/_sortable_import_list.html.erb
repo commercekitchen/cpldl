@@ -12,7 +12,7 @@
       </div>
       <ul class="objects sortable reorderable">
         <% courses.each do |course| %>
-          <li class="sortable-item" data-id="<%= course.id %>">
+          <li class="sortable-item table-row" data-id="<%= course.id %>">
             <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "no_drag_link" %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>

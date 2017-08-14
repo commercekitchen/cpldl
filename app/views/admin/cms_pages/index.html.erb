@@ -22,7 +22,7 @@
   </div>
   <ul class="objects sortable reorderable">
     <% @cms_pages.each do |page| %>
-      <li class="sortable-item" data-id="<%= page.id %>">
+      <li class="sortable-item table-row" data-id="<%= page.id %>">
         <div class="cell"><%= link_to page.title, edit_admin_cms_page_path(page), class: "no_drag_link" %></div>
         <div class="cell"><%= page.author %></div>
         <div class="cell"><%= page.language.name %></div>
