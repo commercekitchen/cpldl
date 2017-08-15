@@ -1,4 +1,4 @@
-<small>Admin >> Courses >> Edit Course</small>
+<small><%= "Admin >> Courses >> #{breadcrumb}" %></small>
 
 <h1>Course Information</h1>
 
@@ -187,7 +187,7 @@
   </fieldset>
 
   <fieldset>
-    <%= f.label "Meta Description", class: "text-color" %>
+    <%= f.label :meta_desc, class: "text-color" %>
     <%= f.text_field :meta_desc, maxlength: 156 %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>

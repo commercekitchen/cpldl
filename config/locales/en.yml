@@ -24,6 +24,8 @@ en:
     attributes:
       category:
         name: "Category Name"
+      cms_page:
+        meta_desc: "Meta Description"
   home:
     www:
       custom_banner_greeting: ""
