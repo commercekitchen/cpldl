@@ -7,31 +7,6 @@ $(document).ready(function() {
     }
   });
 
-  // Add character counts to form values (title, seo, meta)
-  $("#cms_page_title").simplyCountable({
-    counter: "#cms_page_title_counter",
-    countable: "characters",
-    maxCount: 90,
-    strictMax: true,
-    countDirection: "down"
-  });
-
-  $("#cms_page_seo_page_title").simplyCountable({
-    counter: "#cms_page_seo_page_title_counter",
-    countable: "characters",
-    maxCount: 90,
-    strictMax: true,
-    countDirection: "down"
-  });
-
-  $("#cms_page_meta_desc").simplyCountable({
-    counter: "#cms_page_meta_desc_counter",
-    countable: "characters",
-    maxCount: 156,
-    strictMax: true,
-    countDirection: "down"
-  });
-
   $(".page_pub").on("change", function(){ //listen for a change on the given selector(id)
     var pageId = $(this).data("pageId");
     var value = $(this).val();

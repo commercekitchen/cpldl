@@ -18,10 +18,8 @@
     <%= f.label :title, class: "text-color" do %>
       Title<span class="required"></span>
     <% end %>
-    <%= f.text_field :title %>
-    <div class="note left-or-right">
-      <span id="course_title_counter"></span> out of <%= @max_title %> characters remaining.
-    </div>
+    <%= f.text_field :title, maxlength: 40 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset>
@@ -35,8 +33,8 @@
     <%= f.label :summary, class: "text-color" do %>
       Course Summary<span class="required"></span>
     <% end %>
-    <%= f.text_field :summary %>
-    <div class="note left-or-right"><span id="course_summary_counter"></span> out of <%= @max_summary %> characters remaining.</div>
+    <%= f.text_field :summary, maxlength: 74 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset>
@@ -184,18 +182,14 @@
 
   <fieldset>
     <%= f.label "SEO page title", class: "text-color" %>
-    <%= f.text_field :seo_page_title %>
-    <div class="note left-or-right">
-      <span id="course_seo_page_title_counter"></span> out of <%= @max_seo %> characters
-    </div>
+    <%= f.text_field :seo_page_title, maxlength: 90 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset>
     <%= f.label "Meta Description", class: "text-color" %>
-    <%= f.text_field :meta_desc %>
-    <div class="note left-or-right">
-      <span id="course_meta_desc_counter"></span> out of <%= @max_meta %> characters
-    </div>
+    <%= f.text_field :meta_desc, maxlength: 156 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>

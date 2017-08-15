@@ -18,20 +18,16 @@
     <%= f.label :title, class: "text-color" do %>
       Lesson Title<span class="required"></span>
     <% end %>
-    <%= f.text_field :title %>
-    <div class="note left-or-right">
-      <span id="lesson_title_counter"></span> out of <%= @max_title %> characters remaining.
-    </div>
+    <%= f.text_field :title, maxlength: 90  %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset>
     <%= f.label :summary, class: "text-color" do %>
       Lesson Summary<span class="required"></span>
     <% end %>
-    <%= f.text_field :summary %>
-    <div class="note left-or-right">
-      <span id="lesson_summary_counter"></span> out of <%= @max_summary %> characters remaining.
-    </div>
+    <%= f.text_field :summary, maxlength: 156 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <div class="row">
@@ -76,18 +72,14 @@
     <%= f.label :seo_page_title, class: "text-color" do %>
       Page Title
     <% end %>
-    <%= f.text_field :seo_page_title %>
-    <div class="note left-or-right">
-      <span id="lesson_seo_page_title_counter"></span> out of <%= @max_seo_page_title %> characters
-    </div>
+    <%= f.text_field :seo_page_title, maxlength: 90 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset>
     <%= f.label "Meta Description", class: "text-color" %>
-    <%= f.text_field :meta_desc %>
-    <div class="note left-or-right">
-      <span id="lesson_meta_desc_counter"></span> out of <%= @max_meta_desc %> characters
-    </div>
+    <%= f.text_field :meta_desc, maxlength: 156 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <div class="sixcol">
