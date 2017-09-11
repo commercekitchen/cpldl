@@ -5,7 +5,7 @@ feature "User visits course listing page" do
   before(:each) do
     @language = create(:language)
     @spanish = create(:spanish_lang)
-    @organization = create(:organization, subdomain: 'chipublib')
+    @organization = create(:organization, subdomain: "chipublib")
     @course1 = create(:course_with_lessons, title: "Title 1",
                                course_order: 1,
                                language: @language,

@@ -361,7 +361,7 @@ describe CoursesController do
   describe "POST #quiz_submit" do
     context "when logged in" do
 
-      let(:choices){
+      let(:choices) {
         { "set_one" => "2", "set_two" => "2", "set_three" => "3" }
       }
 

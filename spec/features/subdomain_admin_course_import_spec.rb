@@ -16,7 +16,6 @@ feature "Admin courses" do
     @dpl_course1 = create(:course_with_lessons, organization: @dpl, category: @dpl_category)
     @dpl_course2 = create(:course_with_lessons, organization: @dpl, category: @dpl_category)
     @dpl_course3 = create(:course_with_lessons, organization: @dpl)
-    
 
     @importable_course1 = create(:course_with_lessons, subsite_course: true, category: @www_category)
     @importable_course2 = create(:course_with_lessons, subsite_course: true, category: @www_category)

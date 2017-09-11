@@ -186,10 +186,10 @@ class CoursesController < ApplicationController
     if extension == ".pdf"
       file_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
     else
-      file_options = { disposition: "attachment", type: [ "application/msword",
-                                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation"],
-                      x_sendfile: true}
+      file_options = { disposition: "attachment", type: ["application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.presentationml.presentation"],
+        x_sendfile: true }
     end
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
   end

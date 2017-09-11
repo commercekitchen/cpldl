@@ -97,7 +97,6 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 
-
   # Allow js tests on test subdomain
   Capybara::Webkit.configure do |config|
     config.allow_url("chipublib.lvh.me")
@@ -113,5 +112,6 @@ def set_authenticity_token
 end
 
 def save_and_open_rspec_page
-  File.open('/tmp/test.html','w'){|file| file.write(rendered)}; `open '/tmp/test.html'`
+  File.open("/tmp/test.html", "w") { |file| file.write(rendered) }
+  `open "/tmp/test.html"`
 end

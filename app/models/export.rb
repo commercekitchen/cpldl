@@ -61,17 +61,17 @@ class Export
   def self.generate_csv_for_survey_responses
     @data.delete(:version)
     CSV.generate do |csv|
-      csv << [ "How comfortable are you with desktop or laptop computers?",
-               "How comfortable are you using a phone, tablet, or iPad to access the Internet?",
-               "What would you like to do with a computer?",
-               "Total Responses",
-               "Course Title",
-               "Completions" ]
+      csv << ["How comfortable are you with desktop or laptop computers?",
+              "How comfortable are you using a phone, tablet, or iPad to access the Internet?",
+              "What would you like to do with a computer?",
+              "Total Responses",
+              "Course Title",
+              "Completions"]
       @data.each do |responses_hash, count_data|
-        csv_row = [ I18n.t("quiz.set_one_#{responses_hash["set_one"]}"),
-                    I18n.t("quiz.set_two_#{responses_hash["set_two"]}"),
-                    I18n.t("quiz.set_three_#{responses_hash["set_three"]}"),
-                    count_data[:responses] ]
+        csv_row = [I18n.t("quiz.set_one_#{responses_hash["set_one"]}"),
+                   I18n.t("quiz.set_two_#{responses_hash["set_two"]}"),
+                   I18n.t("quiz.set_three_#{responses_hash["set_three"]}"),
+                   count_data[:responses]]
 
         csv.add_row csv_row
 

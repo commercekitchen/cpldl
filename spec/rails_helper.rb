@@ -39,8 +39,8 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :view
   config.include Devise::TestHelpers, type: :helper
 
-  #Lines 43 to 53 are to allow views to mock access to helper methods in
-  #application helper
+  # Lines 43 to 53 are to allow views to mock access to helper methods in
+  # application helper
   config.before(:each, type: :view) do
     config.mock_with :rspec do |mocks|
       mocks.verify_partial_doubles = false

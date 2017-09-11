@@ -46,7 +46,7 @@ class ProfilesController < ApplicationController
 
     if first_time_login?
       profile_params.merge!(updated_at: Time.zone.now)
-      redirect_path = ( show_quiz? ? courses_quiz_path : root_path ) 
+      redirect_path = (show_quiz? ? courses_quiz_path : root_path)
     else
       redirect_path = profile_path
     end
@@ -79,7 +79,7 @@ class ProfilesController < ApplicationController
 
   def organization_programs
     if current_user.organization.accepts_programs?
-      Program.for_subdomain(current_organization.subdomain).collect { |program| [ program.program_name, program.id ] }
+      Program.for_subdomain(current_organization.subdomain).collect { |program| [program.program_name, program.id] }
     end
   end
 

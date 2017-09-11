@@ -7,7 +7,7 @@ describe "courses/index.html.erb" do
     allow(view).to receive(:current_organization).and_return(@organization)
     allow(view).to receive(:subdomain?).and_return(false)
     allow(view).to receive(:top_level_domain?).and_return(false)
-    switch_to_subdomain('chipublib')
+    switch_to_subdomain("chipublib")
     @course = create(:course, title: "Searched Title")
   end
 

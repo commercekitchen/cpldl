@@ -26,7 +26,7 @@ describe Admin::ProgramsController do
   describe "POST #create" do
     it "creates new program" do
       expect do
-        post :create, program: { program_name: "New Program", location_required: false, parent_type: "seniors"  }
+        post :create, program: { program_name: "New Program", location_required: false, parent_type: "seniors" }
       end.to change(Program, :count).by(1)
     end
 
@@ -61,9 +61,3 @@ describe Admin::ProgramsController do
   end
 
 end
-
-
-
-
-
-

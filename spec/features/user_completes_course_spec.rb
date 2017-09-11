@@ -12,7 +12,7 @@ feature "User visits course complete page" do
 
   context "as a logged in user" do
     before(:each) do
-      @user = create(:user, organization: @org )
+      @user = create(:user, organization: @org)
       @course = create(:course)
       @course_progress = create(:course_progress, user_id: @user.id,
                                                               course_id: @course.id,

@@ -10,7 +10,6 @@ feature "User lands on subdomain" do
     switch_to_subdomain(@dpl.subdomain)
   end
 
-
   context "and they fill out the registration form" do
     it "should log them in and display a message" do
       sign_up_with "valid@example.com", "password", "Alejandro", "12345"

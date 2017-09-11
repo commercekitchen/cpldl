@@ -105,9 +105,9 @@ describe Profile do
       end
 
       context "user in organization with programs" do
-        
+
         before do
-          @new_org = FactoryGirl.create(:organization, :accepts_programs, subdomain: "new" )
+          @new_org = FactoryGirl.create(:organization, :accepts_programs, subdomain: "new")
           FactoryGirl.create(:user, profile: @profile, organization: @new_org)
         end
 

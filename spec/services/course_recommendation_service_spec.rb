@@ -37,7 +37,7 @@ describe CourseRecommendationService do
       end
     end
 
-    topics.each do |k,v|
+    topics.each do |k, v|
       topic = create(:topic, title: v)
       en_course = create(:course, language: @english, topics: [topic])
       es_course = create(:course, language: @spanish, topics: [topic])
@@ -104,7 +104,7 @@ describe CourseRecommendationService do
 
     it "should create a course progress for each topic" do
       expect do
-        topics.each do |topic_int,topic_string|
+        topics.each do |topic_int, topic_string|
           responses = {
             "set_three" => topic_int
           }

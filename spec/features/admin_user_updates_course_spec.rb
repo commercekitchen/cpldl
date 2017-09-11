@@ -5,7 +5,7 @@ feature "Admin user updates course" do
     @topic = FactoryGirl.create(:topic)
     @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
-    
+
     @organization = FactoryGirl.create(:organization)
     @user = FactoryGirl.create(:user, organization: @organization)
     @user.add_role(:admin)

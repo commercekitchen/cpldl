@@ -6,7 +6,7 @@ feature "Admin user creates new course and lesson" do
     @topic = FactoryGirl.create(:topic)
     @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
-    
+
     @organization = FactoryGirl.create(:organization)
     @user = FactoryGirl.create(:user, organization: @organization)
     @category = FactoryGirl.create(:category, organization: @organization)
@@ -114,7 +114,7 @@ feature "Admin user creates new course and lesson" do
 
   pending "Admin should be able to add both course supl materials and post-course supl materials"
 
-  #file uploader is the issue here
+  # File uploader is the issue here
   pending "adds a lesson" do
     @course = create(:course)
     visit edit_admin_course_path(course_id: @course, id: @course.id)
@@ -124,7 +124,7 @@ feature "Admin user creates new course and lesson" do
       fill_in :lesson_title, with: "New Lesson Title"
       fill_in :lesson_summary, with: "Summary for new lesson"
       fill_in :lesson_duration, with: "05:15"
-      File.open('spec/fixtures/BasicSearch1.zip') { |file| @story_line.upload = file }
+      File.open("spec/fixtures/BasicSearch1.zip") { |file| @story_line.upload = file }
       click_button "Save Lesson"
     end
     expect(current_path).to eq(edit_admin_course_lesson_path(@course, Lesson.last))

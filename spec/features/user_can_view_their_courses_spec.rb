@@ -4,7 +4,7 @@ feature "User is able to view the courses in their plan" do
   before(:each) do
     @org = create(:organization)
     @npl = create(:organization, subdomain: "npl")
-    switch_to_subdomain('chipublib')
+    switch_to_subdomain("chipublib")
     @english = create(:language)
     @spanish = create(:spanish_lang)
     @user = create(:user, organization: @org)

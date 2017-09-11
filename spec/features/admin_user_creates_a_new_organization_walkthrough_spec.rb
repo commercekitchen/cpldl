@@ -37,7 +37,7 @@ feature "Admin create a new organization" do
     count_after = User.count
     expect(count_after).to eq(count_before + 1)
 
-    dpl = Organization.find_by(subdomain: 'dpl')
+    dpl = Organization.find_by(subdomain: "dpl")
     user = create(:user, organization: dpl)
     user.add_role(:admin, dpl)
 

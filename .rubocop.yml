@@ -31,10 +31,10 @@ Metrics/MethodLength:
   Max: 32
 
 Metrics/ClassLength:
-  Max: 150
+  Max: 170
 
 Metrics/AbcSize:
-  Max: 60
+  Max: 69
 
 Style/Documentation:
   Enabled: false

@@ -1,4 +1,4 @@
- class RegistrationsController < Devise::RegistrationsController
+class RegistrationsController < Devise::RegistrationsController
   after_action :create_organization_user_entry
 
   protected
@@ -37,12 +37,12 @@
       :parent_type,
       :organization_program,
       :program_location_id,
-      :library_card_number,
+      :library_card_number
     ] if current_organization.accepts_programs?
 
     list_params_allowed << [
       :acting_as,
-      :student_id,
+      :student_id
     ] if params["program_type"] == "students_and_parents"
 
     list_params_allowed << [

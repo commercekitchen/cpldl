@@ -10,7 +10,7 @@ describe "courses/show.html.erb" do
     assign(:course, @course)
     @admin = create(:admin_user)
     @admin.add_role(:admin, @org)
-    @user = create(:user, organization: @org )
+    @user = create(:user, organization: @org)
     @course_progress1 = create(:course_progress, course_id: @course.id)
     @user.course_progresses << [@course_progress1]
   end

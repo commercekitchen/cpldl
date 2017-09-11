@@ -4,7 +4,7 @@ module Admin
     def completions
       respond_to do |format|
         format.html { redirect_to admin_dashboard_index_path }
-        format.csv { send_data Export.to_csv_for_completion_report(public_send("data_for_completions_report_by_#{params[:version]}"))}
+        format.csv { send_data Export.to_csv_for_completion_report(public_send("data_for_completions_report_by_#{params[:version]}")) }
       end
     end
 
@@ -57,7 +57,7 @@ module Admin
 
         data = { sign_ups: users_by_lib, completions: progresses }
 
-        grouped.merge!(version: "lib",l_id => data)
+        grouped.merge!(version: "lib", l_id => data)
       end
 
       grouped
@@ -67,7 +67,7 @@ module Admin
       grouped = { version: "survey_responses" }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
-      quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map{ |prog| prog.user.quiz_responses_object }.compact.uniq
+      quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map { |prog| prog.user.quiz_responses_object }.compact.uniq
 
       quiz_response_combinations.each do |responses_hash|
         users_with_responses = User.with_role(:user, current_site).where("users.quiz_responses_object = ?", responses_hash.to_yaml)

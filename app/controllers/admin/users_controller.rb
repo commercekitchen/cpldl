@@ -43,8 +43,8 @@ module Admin
           row << user.created_at.in_time_zone("Central Time (US & Canada)").strftime("%m-%d-%Y")
           row << profile.try(:library_location).try(:name)
           row << profile.try(:zip_code)
-          row << user.course_progresses.where(completed_at: nil).map{ |cp| cp.course.title }.join(", ")
-          row << user.course_progresses.where.not(completed_at: nil).map{ |cp| cp.course.title }.join(", ")
+          row << user.course_progresses.where(completed_at: nil).map { |cp| cp.course.title }.join(", ")
+          row << user.course_progresses.where.not(completed_at: nil).map { |cp| cp.course.title }.join(", ")
 
           csv << row
         end

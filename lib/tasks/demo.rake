@@ -52,7 +52,6 @@ namespace :demo do
     end
   end
 
-
   desc "duplicate courses so that they show up on the demo site"
   task remove_courses: :environment do
     courses = Course.where_exists(:organization, subdomain: "demo")

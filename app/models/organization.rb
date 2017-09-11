@@ -21,18 +21,18 @@ class Organization < ActiveRecord::Base
   has_many :courses, through: :organization_courses
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
-  validate 
+  validate
 
   def user_count
     users.count
   end
 
   def admin_user_emails
-    users.select{|u| u.has_role?(:admin, self)}.map(&:email)
+    users.select { |u| u.has_role?(:admin, self) }.map(&:email)
   end
 
   def has_student_programs?
-    programs.map(&:parent_type).any?{ |p| p.to_sym == :students_and_parents }
+    programs.map(&:parent_type).any? { |p| p.to_sym == :students_and_parents }
   end
 
   private
