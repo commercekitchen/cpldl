@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
   helper_method :subdomain?
   helper_method :top_level_domain?
+  helper_method :course_detail_route?
 
   layout proc { user_signed_in? || !subdomain? ? "user/logged_in" : "application" }
 
@@ -128,6 +129,12 @@ class ApplicationController < ActionController::Base
 
   def first_time_login?
     current_user.present? && current_user.sign_in_count == 1 && current_user.profile.present? && current_user.profile.created_at.to_s == current_user.profile.updated_at.to_s
+  end
+
+  def course_detail_route?
+    return true if params[:controller] == "courses" && params[:action] != "index"
+    return true if params[:controller] == "lessons"
+    false
   end
 
   private

@@ -1,9 +1,7 @@
 <header class="header-logged-in <%= "lesson-header" if request.path.include?("/lessons/")%>">
   <div class="container">
     <div class="language-links">
-      <small>
-        <%= link_to "English", home_language_toggle_path(lang: "en") %> | <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
-      </small>
+      <%= render "shared/language_links" %>
       <small>
         <%= link_to "Help Learners", "http://community.digitallearn.org", class: "practice-link" %>
       </small>

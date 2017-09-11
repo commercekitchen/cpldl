@@ -41,4 +41,34 @@ describe ApplicationController do
     end
 
   end
+
+  describe "course_detail_route?" do
+
+    it "should return true if any one of an individual course's routes, i.e. not the index route" do
+      allow(@controller).to receive(:params).and_return({ controller: "courses", action: "show" })
+      expect(@controller.course_detail_route?).to be true
+    end
+
+    it "should return true if any one of an individual course's routes, i.e. not the index route" do
+      allow(@controller).to receive(:params).and_return({ controller: "lessons", action: "show" })
+      expect(@controller.course_detail_route?).to be true
+    end
+
+    it "should return false for the courses index route" do
+      allow(@controller).to receive(:params).and_return({ controller: "courses", action: "index" })
+      expect(@controller.course_detail_route?).to be false
+    end
+
+    it "should return false for the admin/courses route" do
+      allow(@controller).to receive(:params).and_return({ controller: "admin/courses", action: "show" })
+      expect(@controller.course_detail_route?).to be false
+    end
+
+    it "should return false for anything else" do
+      allow(@controller).to receive(:params).and_return({ controller: "home", action: "index" })
+      expect(@controller.course_detail_route?).to be false
+    end
+
+  end
+
 end
