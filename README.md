@@ -24,3 +24,7 @@ Redis
   - `rspec`    : testing suite
   - `rubocop`  : for syntax and code smells
   - `brakeman` : for security smells
+
+## Sync staging server db to local
+  `rake db:reset`
+  `cap staging app:local:sync`
