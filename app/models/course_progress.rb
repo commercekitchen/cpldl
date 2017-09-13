@@ -29,10 +29,11 @@ class CourseProgress < ActiveRecord::Base
   end
 
   def percent_complete
-    total = course.lessons.count
+    total = course.lessons.published.count
     completed = lessons_completed
     return 0 if total == 0
     percent = (completed.to_f / total) * 100
+    percent = 100 if percent > 100
     percent.round
   end
 

@@ -27,7 +27,7 @@ require "rails_helper"
 
 describe Lesson do
 
-  context "verify validations" do
+  context "validations" do
 
     before(:each) do
       @lesson = FactoryGirl.create(:lesson)
@@ -35,6 +35,43 @@ describe Lesson do
 
     it "initially it is valid" do
       expect(@lesson).to be_valid
+    end
+
+  end
+
+  context "scopes" do
+
+    context ".published" do
+
+      it "returns all published lessons" do
+        @course = FactoryGirl.create(:course_with_lessons)
+        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.second, @course.lessons.third)
+      end
+
+      it "returns all published lessons" do
+        @course = FactoryGirl.create(:course_with_lessons)
+        @course.lessons.second.update(pub_status: "D")
+        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.third)
+      end
+
+      it "returns all published lessons" do
+        @course = FactoryGirl.create(:course_with_lessons)
+        @course.lessons.second.update(pub_status: "A")
+        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.third)
+      end
+
+    end
+
+  end
+
+  context "#published_lesson_order" do
+
+    it "returns the order of only published lessons" do
+      @course = FactoryGirl.create(:course_with_lessons)
+      @course.lessons.second.update(pub_status: "D")
+      expect(@course.lessons.first.published_lesson_order).to eq 1
+      expect(@course.lessons.second.published_lesson_order).to eq 0
+      expect(@course.lessons.third.published_lesson_order).to eq 2
     end
 
   end

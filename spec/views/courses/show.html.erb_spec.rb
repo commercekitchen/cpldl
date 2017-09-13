@@ -6,6 +6,7 @@ describe "courses/show.html.erb" do
     @org = create(:organization, subdomain: "www")
     allow(view).to receive(:current_organization).and_return(@org)
     allow(view).to receive(:subdomain?).and_return(false)
+    allow(view).to receive(:course_detail_route?).and_return(false)
     @course = create(:course, meta_desc: "Meta description.", seo_page_title: "SEO Title")
     assign(:course, @course)
     @admin = create(:admin_user)

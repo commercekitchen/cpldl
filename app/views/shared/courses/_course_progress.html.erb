@@ -1,33 +1,30 @@
 <div class="course-progress">
-  <header><%= t('completed_courses_page.course') %>: <%= course.title %></header>
+  <header><%= t("completed_courses_page.course") %>: <%= course.title %></header>
   <div class="progress-bar">
   <% if current_user %>
     <span class="meter" style="width: <%= course_progress.percent_complete %>%;"></span>
   <% else %>
     <span class="meter" style="width: <%= percent_complete_without_user(course, lesson.id) %>%;"></span>
   <% end %>
-    <% lesson_count = course.lessons.count %>
+    <% lesson_count = course.lessons.published.count %>
     <% spacing = 100.0 / lesson_count %>
-    <% arrow_position = lesson.lesson_order * spacing - (spacing / 2) - 6 %>
+    <% arrow_position = lesson.published_lesson_order * spacing - (spacing / 2) - 6 %>
     <% lesson_count.times do |i| %>
       <% if i >= 1 %>
         <span class="lesson-break" style="left: <%= (i * spacing) - (i-1) %>%;"></span>
       <% end %>
     <% end %>
-    <span class="current-lesson"
-      style="left: <%= arrow_position %>%;">
-    </span>
+    <span class="current-lesson" style="left: <%= arrow_position %>%;"></span>
   </div>
   <footer>
     <% if current_user %>
-      <span class="percent-complete"><%= course_progress.percent_complete %><%= t('lesson_page.percent_complete') %></span>
+      <span class="percent-complete"><%= course_progress.percent_complete %><%= t("lesson_page.percent_complete") %></span>
     <% else %>
-      <span class="percent-complete"><%= percent_complete_without_user(course, lesson.id) %><%= t('lesson_page.percent_complete') %></span>
+      <span class="percent-complete"><%= percent_complete_without_user(course, lesson.id) %><%= t("lesson_page.percent_complete") %></span>
     <% end %>
     <span class="next-lesson-link">
       <% unless lesson.is_assessment %>
-        <%= link_to "#{t('lesson_page.skip_to_next_lesson')}",
-          course_lesson_path(course, course.next_lesson_id(lesson.id)), class: "inverted" %>
+        <%= link_to t('lesson_page.skip_to_next_lesson'), course_lesson_path(course, course.next_lesson_id(lesson.id)), class: "inverted" %>
       <% end %>
     </span>
   </footer>

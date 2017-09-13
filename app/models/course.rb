@@ -63,7 +63,7 @@ class Course < ActiveRecord::Base
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
-  
+
   belongs_to :language
   belongs_to :category
 
@@ -116,17 +116,14 @@ class Course < ActiveRecord::Base
   end
 
   def next_lesson_id(current_lesson_id = 0)
-    fail StandardError, "There are no available lessons for this course." if lessons.count == 0
+    raise StandardError, "There are no available lessons for this course." if lessons.published.count.zero?
 
     begin
-      current_lesson = lessons.find(current_lesson_id)
-      order = current_lesson.lesson_order
-      order += 1
-      return lessons.order("lesson_order").last.id if order >= last_lesson_order
-      next_lesson = lessons.find_by_lesson_order(order)
-      next_lesson.id
+      lesson_order = lessons.published.find(current_lesson_id).lesson_order
+      return lessons.order("lesson_order").last.id if lesson_order >= last_lesson_order
+      self.lessons.published.where("lesson_order > ?", lesson_order).first.id
     rescue
-      lessons.order("lesson_order").first.id
+      lessons.published.order("lesson_order").first.id
     end
   end
 
@@ -137,7 +134,7 @@ class Course < ActiveRecord::Base
 
   def duration(format = "mins")
     total = 0
-    lessons.each { |l| total += l.duration }
+    lessons.published.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
 

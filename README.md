@@ -28,3 +28,7 @@ Redis
 ## Sync staging server db to local
   `rake db:reset`
   `cap staging app:local:sync`
+
+## Staging urls
+https://subdomain.stage.digitallearn.org
+https://npl.stage.digitallearn.org/

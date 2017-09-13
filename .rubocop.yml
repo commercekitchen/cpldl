@@ -63,6 +63,9 @@ Style/AlignHash:
 Style/BracesAroundHashParameters:
   Enabled: false
 
+Style/RedundantSelf:
+  Enabled: false
+
 Style/AlignParameters:
   Enabled: false
 

@@ -29,7 +29,7 @@ require "rails_helper"
 
 describe Course do
 
-  context "verify validations" do
+  context "validations" do
 
     before(:each) do
       @course = FactoryGirl.build(:course)
@@ -50,12 +50,6 @@ describe Course do
       expect(course.errors.messages.empty?).to be(false)
       expect(course.errors.messages[:title].first).to eq("must be unique. There is already a course with that title, please select a different title and try again.")
     end
-
-    # it "should allow two courses with the same title" do
-    #   @course.save
-    #   @course2 = FactoryGirl.build(:course)
-    #   expect(@course2).to be_valid
-    # end
 
     it "can only have listed statuses" do
       allowed_statuses = %w(P D A)
@@ -218,7 +212,7 @@ describe Course do
 
   end
 
-  context "#next_lesson_id" do
+  context "#next_lesson_id (from old version of next_lesson_id)" do
 
     before :each do
       @course = FactoryGirl.create(:course_with_lessons)
@@ -247,7 +241,43 @@ describe Course do
 
   end
 
-  context "duration functions" do
+  context "#next_lesson_id" do
+
+    it "should raise an error if there are no lessons" do
+      expect do
+        @course = FactoryGirl.create(:course)
+        @course.next_lesson_id(@course.lessons.first.id)
+      end.to raise_error StandardError
+    end
+
+    it "should return the id of the next lesson in order" do
+      @course = FactoryGirl.create(:course_with_lessons)
+      expect(@course.next_lesson_id).to eq @course.lessons.first.id
+      expect(@course.next_lesson_id(nil)).to eq @course.lessons.first.id
+      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
+      expect(@course.next_lesson_id(@course.lessons.second.id)).to eq @course.lessons.third.id
+      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
+    end
+
+    it "should return the next lesson id, even if the lessons are out of order" do
+      @course = FactoryGirl.create(:course_with_lessons)
+      @course.lessons.third.update(lesson_order: 5)
+      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
+      expect(@course.next_lesson_id(@course.lessons.second.id)).to eq @course.lessons.third.id
+      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
+    end
+
+    it "should skip unpublished lessons" do
+      @course = FactoryGirl.create(:course_with_lessons)
+      @course.lessons.second.update(pub_status: "D")
+      @course.lessons.third.update(lesson_order: 5)
+      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.third.id
+      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
+    end
+
+  end
+
+  context "#duration" do
 
     before :each do
       @course = FactoryGirl.create(:course)
@@ -277,6 +307,13 @@ describe Course do
       @course.lessons << [@lesson1, @lesson2, @lesson3]
       expect(@course.duration("minutes")).to eq("7 minutes")
     end
+
+    it "should not count draft lessons" do
+      @course = FactoryGirl.create(:course_with_lessons)
+      @course.lessons.first.update(pub_status: "D")
+      expect(@course.duration).to eq "3 mins" # 90 * 2 = 180 / 60 = 3 mins
+    end
+
   end
 
 end

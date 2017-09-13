@@ -54,9 +54,6 @@ class Lesson < ActiveRecord::Base
   validates :pub_status, presence: true,
     inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
 
-  # validates :story_line, attachment_presence: true
-  # validates_with AttachmentPresenceValidator, attributes: :story_line
-
   has_attached_file :story_line, url: "/system/lessons/story_lines/:id/:style/:basename.:extension"
   before_post_process :skip_for_zip
   validates_attachment_content_type :story_line, content_type: ["application/zip", "application/x-zip"],
@@ -66,6 +63,7 @@ class Lesson < ActiveRecord::Base
   before_destroy :delete_associated_user_completions
 
   default_scope { order("lesson_order") }
+  scope :published, -> { where(pub_status: "P") }
 
   def skip_for_zip
     %w(application/zip application/x-zip).include?(story_line_content_type)
@@ -91,4 +89,14 @@ class Lesson < ActiveRecord::Base
       self.duration = duration_param.to_i
     end
   end
+
+  def published?
+    pub_status == "P"
+  end
+
+  def published_lesson_order
+    return 0 unless self.published?
+    self.course.lessons.published.map(&:id).index(self.id) + 1
+  end
+
 end
