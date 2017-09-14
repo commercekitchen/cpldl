@@ -1,6 +1,6 @@
-options = { forward_emails_to: ['jen+staging-digitallearn@commercekitchen.com',
-                                'jamie+staging-digitallearn@commercekitchen.com',
-                                'tom+staging-digitallearn@commercekitchen.com']}
+options = { forward_emails_to: ["joe+staging-digitallearn@commercekitchen.com",
+                                "jamie+staging-digitallearn@commercekitchen.com",
+                                "tom+staging-digitallearn@commercekitchen.com"]}
 
 unless (Rails.env.test? || Rails.env.production?)
   interceptor = MailInterceptor::Interceptor.new(options)
