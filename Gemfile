@@ -37,7 +37,7 @@ gem 'sinatra', require: nil # For the sidekiq web interface.
 gem 'sidekiq-failures'
 
 # Error reporting
-gem 'honeybadger', '~> 2.0'
+gem 'rollbar'
 gem 'newrelic_rpm'
 
 gem 'paperclip', '~> 4.3' # File uploads
