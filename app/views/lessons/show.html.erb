@@ -1,5 +1,5 @@
 <%= content_for :callout do %>
-  <h1><%="#{@lesson.lesson_order}. #{@lesson.title}" %></h1>
+  <h1><%="#{@lesson.published_lesson_order}. #{@lesson.title}" %></h1>
   <small><i class="icon-clock white"></i><%= @lesson.duration_str %></small>
 <% end %>
 
@@ -18,7 +18,7 @@
       <h3 class="text-color"><%= @course.title %></h3>
       <div>
         <i class="icon-book-open grey"></i>
-        <small class="padding-right"><%= @course.lessons.count %> <%= t('course_page.lessons') %></small>
+        <small class="padding-right"><%= @course.lessons.published.count %> <%= t("course_page.lessons") %></small>
         <i class="icon-clock grey"></i>
         <small><%= @course.duration %></small>
       </div>
