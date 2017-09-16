@@ -16,7 +16,7 @@
               <%= yield :callout %>
             <% else %>
               <%= render "shared/logo_banner" %>
-            <% end %> <%# End callout if %>
+            <% end %>
           <% end %> <%# End case end %>
         </div>
       <% end %> <%# End big old link %>
@@ -25,11 +25,7 @@
       <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
     </div>
     <div class="search-box">
-      <%= form_tag courses_path, method: :get do %>
-        <%= search_field_tag :search, params[:search], placeholder: "#{t('home.search_courses')}" %>
-        <i class="icon-search white"></i>
-        <%= submit_tag "Search", id: "search_btn" %>
-      <% end %>
+      <%= render "shared/search_box" %>
     </div>
   </div>
 </div>

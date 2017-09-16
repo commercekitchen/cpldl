@@ -1,0 +1,35 @@
+.screen-reader-text {
+  display: block;
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.screen-reader-text:active, .screen-reader-text:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: absolute;
+  width: auto;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* To handle the IE 10, 11 issue of blank placeholder text on simple focus. Other browsers remove the
+  placeholder text once the value of the text box is not blank.  Our solution is to just show the labels
+  in IE 10, 11 */
+  label.screen-reader-text, label.screen-reader-text:active, label.screen-reader-text:focus {
+    position: relative;
+    height: auto;
+    width: auto;
+  }
+
+  :-ms-input-placeholder {
+    color: $white;
+  }
+}
