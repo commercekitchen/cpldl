@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     post 'programs/select_program'
   end
 
+  namespace :static do
+    resource :customization, only: [:show]
+  end
+
   get 'courses/your', to: 'courses#your', as: :your_courses
   get 'courses/completed', to: 'courses#completed', as: :completed_courses
   get 'courses/quiz', to: 'courses#quiz'
@@ -46,7 +50,7 @@ Rails.application.routes.draw do
   namespace :trainer do
     root 'home#index'
     resources :dashboard, only: [:index]
-      put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
+    put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
   end
 
   namespace :admin do
@@ -54,7 +58,7 @@ Rails.application.routes.draw do
     put 'lessons/sort', to: 'lessons#sort'
     resources :organizations, only: [:new, :create, :index]
     resources :library_locations
-    
+
     resources :programs, only: [:new, :create, :index, :edit] do
     end
 
@@ -72,12 +76,12 @@ Rails.application.routes.draw do
     end
 
     resources :dashboard, only: [:index]
-      get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index
-      get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
-      get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
-      get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
-      post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
-      put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
+    get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index
+    get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
+    get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
+    get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
+    post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
+    put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
 
     resources :cms_pages do
       put :sort, on: :collection
