@@ -21,6 +21,7 @@ Rails.application.routes.draw do
 
   namespace :static do
     resource :customization, only: [:show]
+    resource :portfolio, only: [:show]
   end
 
   get 'courses/your', to: 'courses#your', as: :your_courses

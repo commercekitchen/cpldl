@@ -11,4 +11,9 @@ feature "Annonymous visits static pages" do
     expect(current_path).to eq(static_customization_path)
   end
 
+  scenario "can visit the portfolio page" do
+    visit static_portfolio_path
+    expect(current_path).to eq(static_portfolio_path)
+  end
+
 end

@@ -10,7 +10,7 @@ namespace :rollbar do
   task :set_env do
     ROLLBAR_TOKEN = YAML.load_file(File.expand_path("config/secrets.yml"))["default"]["rollbar_api_key"]
     set :rollbar_token, ROLLBAR_TOKEN
-    set :rollbar_env, Proc.new { fetch :stage }
-    set :rollbar_role, Proc.new { :app }
+    set :rollbar_env, proc { fetch :stage }
+    set :rollbar_role, proc { :app }
   end
 end

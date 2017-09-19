@@ -58,6 +58,12 @@ div.static-page {
     width: 90%;
   }
 
+  .portfolio-image {
+    max-width: 300px;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   .callout-text {
     font-size: 100px;
     color: $teal;
