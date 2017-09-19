@@ -1,5 +1,5 @@
 module Static
-  class PortfoliosController < ApplicationController
+  class PortfoliosController < BaseController
 
     def show
 

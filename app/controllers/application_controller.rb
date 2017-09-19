@@ -137,6 +137,11 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def redirect_to_www
+    first_subdomain = request.subdomains.first
+    redirect_to request.url.sub(first_subdomain, "www") if first_subdomain != "www"
+  end
+
   private
 
   def admin_after_sign_in_path_for(user)
@@ -183,17 +188,6 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
-
-  # TODO: determine if we need to set the client_ID or if we can use googles
-  # def save_google_analytics_client_id
-  #   if current_user && cookies["_ga"]
-  #     client_id = cookies["_ga"].split(".").last(2).join(".")
-  #     if current_user.google_analytics_client_id != client_id
-  #       current_user.google_analytics_client_id = client_id
-  #       current_user.save
-  #     end
-  #   end
-  # end
 
   def set_user_token
     if current_user && current_user.token

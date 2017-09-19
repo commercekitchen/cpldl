@@ -1,5 +1,5 @@
 module Static
-  class CustomizationsController < ApplicationController
+  class CustomizationsController < BaseController
 
     def show
 
