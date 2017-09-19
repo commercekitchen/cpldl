@@ -29,9 +29,11 @@ div.static-page {
   ul.checkmarks {
     list-style: none;
     padding: 0;
+
     li {
       padding-left: 1.3em;
     }
+
     li:before {
       content: "\e80a";
       font-family: "fontello";
@@ -58,6 +60,21 @@ div.static-page {
     width: 90%;
   }
 
+  .overview-image {
+    max-width: 450px;
+    max-height: 350px;
+    width: 90%;
+
+    .background-fill {
+      fill: $purple;
+    }
+
+    .foreground-fill {
+      fill: $white;
+    }
+
+  }
+
   .portfolio-image {
     max-width: 300px;
     width: 100%;
@@ -68,4 +85,42 @@ div.static-page {
     font-size: 100px;
     color: $teal;
   }
+
+  // Ugg, hacky, but what's the alternative?
+  .vertical-center-1 {
+    @include media($desktop) {
+      padding-top: 40px;
+    }
+  }
+
+  .vertical-center-2 {
+    @include media($desktop) {
+      padding-top: 80px;
+    }
+  }
+
+  .vertical-center-3 {
+    @include media($desktop) {
+      padding-top: 60px;
+    }
+  }
+
+  .vertical-center-4 {
+    @include media($desktop) {
+      padding-top: 54px;
+    }
+  }
+
+  .vertical-center-5 {
+    @include media($desktop) {
+      padding-top: 20px;
+    }
+  }
+
+  .vertical-center-6 {
+    @include media($desktop) {
+      padding-top: 30px;
+    }
+  }
+
 }

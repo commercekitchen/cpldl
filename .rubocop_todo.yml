@@ -103,6 +103,7 @@ Rails/OutputSafety:
     - 'app/controllers/admin/cms_pages_controller.rb'
     - 'app/controllers/admin/lessons_controller.rb'
     - 'app/controllers/cms_pages_controller.rb'
+    - "app/helpers/application_helper.rb"
 
 # Offense count: 1
 Style/AccessorMethodName:

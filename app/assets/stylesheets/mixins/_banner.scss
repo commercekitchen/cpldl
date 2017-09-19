@@ -18,13 +18,13 @@
       }
 
       &.slogan {
-        @include media($desktop){
+        @include media($desktop) {
           font-size: $custom_banner_font;
         }
       }
     }
 
-    [class^="icon-"]{
+    [class^="icon-"] {
       font-size: 20px;
       padding-right: 5px;
     }

@@ -93,6 +93,10 @@ small {
   margin-bottom: 10px;
 }
 
+.margin-bottom {
+  margin-bottom: 2rem;
+}
+
 .extra-bottom-margin {
   margin-bottom: 3em;
 }
@@ -304,4 +308,27 @@ ul.less-padding {
 .cleared-float {
   float: none;
   clear: both;
+}
+
+div.sub-callout {
+  background-color: $light-grey;
+  padding: 4em 0 4em 0;
+  min-height: 2em;
+  position: relative;
+  top: -2em; // To overcome the preceeding callout.
+
+  h2 {
+    font-size: 34px;
+    text-transform: uppercase;
+    color: $purple;
+  }
+
+  .sub-callout-image {
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.centered {
+  text-align: center;
 }

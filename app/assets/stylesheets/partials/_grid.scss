@@ -48,7 +48,7 @@
 .sixcol {
   @include span-columns(6);
   @include media($mobile) {
-    @include span-columns(6);
+    @include span-columns(12);
   }
   .two-of-six {
     @include span-columns(2 of 6);
@@ -67,9 +67,9 @@
 
 .eightcol {
   @include span-columns(8);
-  /*@include media($mobile) {*/
-    /*@include span-columns(12);*/
-  /*}*/
+  @include media($mobile) {
+    @include span-columns(12);
+  }
 }
 
 .ninecol {

@@ -1,0 +1,121 @@
+<% content_for :callout do %>
+  <h1>Get DigitalLearn for Your Library</h1>
+<% end %>
+
+<% content_for :sub_callout do %>
+  <div class="sub-callout">
+    <div class="container">
+      <div class="row">
+        <div class="sixcol">
+          <h2>Custom DigitalLearn Sites</h2>
+          <p>
+            Leverage PLA's premier digital literacy training site to empower the
+            digital skills trainers in your library and the learners in your community
+            by working with PLA to build a custom, branded DigitalLearn site. The sites include any
+            of DigitalLearn.org's growing collection of courses, as well as any custom
+            course and page content from your library.
+          </p>
+        </div>
+
+        <div class="sixcol last centered">
+          <%= image_tag "laptop", class: "sub-callout-image" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<div class="static-page">
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol centered">
+      <%= svg_tag "overview/personalized", class: "overview-image" %>
+    </div>
+
+    <div class="sixcol last vertical-center-1">
+      <h2>Provide Personalized Training to Patrons</h2>
+      <p>
+        Help Learners Learners visiting your library's site can create and personalize their course
+        lists, tailor content through a course recommendation tool, track progress, receive
+        certificates for course completions, and access learning at any time.
+      </p>
+    </div>
+  </div>
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol vertical-center-2">
+      <h2>Measure Your Impact</h2>
+      <p>
+        Track and demonstrate the impact of your digital literacy training through learner analytics.
+      </p>
+    </div>
+
+    <div class="sixcol last centered">
+      <%= svg_tag "overview/impact", class: "overview-image" %>
+    </div>
+  </div>
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol centered">
+      <%= link_to static_customization_path do %>
+        <%= svg_tag "overview/pricing", class: "overview-image" %>
+      <% end %>
+    </div>
+
+    <div class="sixcol last vertical-center-3">
+      <h2>Pricing & Features</h2>
+      <p class="margin-bottom">
+        Costs and features vary based on the customization plan you choose.
+      </p>
+      <%= link_to "View Plans", static_customization_path, class: "btn extra-bottom-margin" %>
+    </div>
+  </div>
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol vertical-center-4">
+      <h2>See Our Work in Action</h2>
+      <p class="margin-bottom">
+        Take a look at how libraries are using our custom sites.
+      </p>
+      <%= link_to "View Sites", static_portfolio_path, class: "btn extra-bottom-margin" %>
+    </div>
+
+    <div class="sixcol last centered">
+      <%= link_to static_portfolio_path do %>
+        <%= svg_tag "overview/customized", class: "overview-image" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol centered">
+      <%= link_to "https://training.digitallearn.org/trainings/designing-digitallearn-courses" do %>
+        <%= svg_tag "overview/own_course", class: "overview-image" %>
+      <% end %>
+    </div>
+
+    <div class="sixcol last vertical-center-5">
+      <h2>Develop Your Own Courses</h2>
+      <p class="margin-bottom">
+        Learn how to create courses to add to your Digital Learn site with these simple tutorials.
+      </p>
+      <%= link_to "Take Tutorials", "https://training.digitallearn.org/trainings/designing-digitallearn-courses", class: "btn extra-bottom-margin" %>
+    </div>
+  </div>
+
+  <div class="row extra-bottom-margin">
+    <div class="sixcol vertical-center-6">
+      <h2>Get DigitalLearn For Your Library Today</h2>
+      <p class="margin-bottom">
+        Ready to create your library's own Digital Learn site? Visit our contact page to get started.
+      </p>
+      <%# TODO: fill in when ready. %>
+      <%= link_to "Get Started", "#", class: "btn extra-bottom-margin" %>
+    </div>
+
+    <div class="sixcol last centered">
+      <%= svg_tag "overview/get_dl", class: "overview-image" %>
+    </div>
+  </div>
+
+</div>

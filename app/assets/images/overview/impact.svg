@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 213 213">
+  <title>measure impact</title>
+  <g>
+    <g>
+      <rect class="background-fill" width="213" height="213" rx="10" ry="10"/>
+    </g>
+    <g>
+      <polygon class="foreground-fill" points="58.96 123.66 101.02 99.94 109.8 113.11 155.27 91.72 155.27 83.15 58.96 83.15 58.96 123.66"/>
+      <path class="foreground-fill" d="M145.67,67.42H68.56A9.63,9.63,0,0,0,59,77v2.76h96.31V77A9.63,9.63,0,0,0,145.67,67.42Z"/>
+      <path class="foreground-fill" d="M98.58,110.13,59,132.48v.75a9.63,9.63,0,0,0,9.6,9.6h77.11a9.63,9.63,0,0,0,9.6-9.6v-33l-48.19,22.67Z"/>
+    </g>
+  </g>
+</svg>

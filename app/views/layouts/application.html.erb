@@ -21,6 +21,9 @@
         <% end %>
       </div>
     </div>
+    <% if content_for?(:sub_callout) %>
+      <%= yield :sub_callout %>
+    <% end %>
     <main class="container">
       <%= render "shared/flashes" %>
       <%= yield %>
