@@ -1,0 +1,75 @@
+<% content_for :callout do %>
+  <h1>Get DigitalLearn for Your Library</h1>
+<% end %>
+
+<div class="static-page">
+  <h2>Get Started</h2>
+  <p>
+    Ready to create your library's own DigitalLearn site? Contact Scott Allen
+    at <strong><%= tel_to "312-280-5858" %></strong> or complete the form below to get started.
+  </p>
+
+  <%= form_for(@contact, url: contact_index_path, html: { class: "form-style-2" }) do |f| %>
+
+    <% if @contact.errors.any? %>
+      <div id="error_explanation">
+        <h2>The following errors prohibited this record from being saved:</h2>
+        <ul>
+        <% @contact.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="row">
+      <fieldset class="sixcol">
+        <%= f.label :first_name, class: "screen-reader-text" %>
+        <%= f.text_field :first_name, placeholder: "First *", maxlength: 30 %>
+      </fieldset>
+
+      <fieldset class="sixcol last">
+        <%= f.label :last_name, class: "screen-reader-text" %>
+        <%= f.text_field :last_name, placeholder: "Last *", maxlength: 30 %>
+      </fieldset>
+    </div>
+
+    <fieldset>
+      <%= f.label :organization, class: "screen-reader-text" %>
+      <%= f.text_field :organization, placeholder: "Organization *", maxlength: 50 %>
+    </fieldset>
+
+    <div class="row">
+      <fieldset class="eightcol">
+        <%= f.label :city, class: "screen-reader-text" %>
+        <%= f.text_field :city, placeholder: "City *", maxlength: 30 %>
+      </fieldset>
+
+      <fieldset class="fourcol last">
+        <%= f.label :state, class: "screen-reader-text" %>
+        <%= f.select :state, options_for_select(Constants.us_states), { include_blank: "Select..." } %>
+      </fieldset>
+    </div>
+
+    <div class="row">
+      <fieldset class="eightcol">
+        <%= f.label :email, class: "screen-reader-text" %>
+        <%= f.text_field :email, placeholder: "Email *", maxlength: 30 %>
+      </fieldset>
+
+      <fieldset class="fourcol last">
+        <%= f.label :phone, class: "screen-reader-text" %>
+        <%= f.text_field :phone, placeholder: "Phone", maxlength: 20 %>
+      </fieldset>
+    </div>
+
+    <fieldset class="extra-bottom-margin">
+      <%= f.label :comments, class: "screen-reader-text" %>
+      <%= f.text_area :comments, placeholder: "Comments *", maxlength: 2048 %>
+    </fieldset>
+
+    <%= f.submit "Submit" %>
+
+  <% end %>
+
+</div>

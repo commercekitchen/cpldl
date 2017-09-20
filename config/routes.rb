@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     resource :portfolio, only: [:show]
   end
 
-  # resources :contact, only: [:new, :create]
+  resources :contact, only: [:new, :create]
 
   get 'courses/your', to: 'courses#your', as: :your_courses
   get 'courses/completed', to: 'courses#completed', as: :completed_courses

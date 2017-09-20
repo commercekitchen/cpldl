@@ -11,7 +11,14 @@ div {
 }
 
 .field_with_errors {
-  input[type="text"], input[type="email"], input[type="password"], input[type="url"] {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="url"],
+  textarea, select {
+    background-color: $error-color;
+  }
+  textarea {
     background-color: $error-color;
   }
   label {

@@ -253,6 +253,44 @@ ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
 
 
 --
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE contacts (
+    id integer NOT NULL,
+    first_name character varying(30) NOT NULL,
+    last_name character varying(30) NOT NULL,
+    organization character varying(50) NOT NULL,
+    city character varying(30) NOT NULL,
+    state character varying(2) NOT NULL,
+    email character varying(30) NOT NULL,
+    phone character varying(20),
+    comments text NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE contacts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: contacts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
+
+
+--
 -- Name: course_progresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -939,6 +977,13 @@ ALTER TABLE ONLY completed_lessons ALTER COLUMN id SET DEFAULT nextval('complete
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY course_progresses ALTER COLUMN id SET DEFAULT nextval('course_progresses_id_seq'::regclass);
 
 
@@ -1092,6 +1137,14 @@ ALTER TABLE ONLY cms_pages
 
 ALTER TABLE ONLY completed_lessons
     ADD CONSTRAINT completed_lessons_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY contacts
+    ADD CONSTRAINT contacts_pkey PRIMARY KEY (id);
 
 
 --
@@ -1662,4 +1715,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170105201500');
 INSERT INTO schema_migrations (version) VALUES ('20170314175120');
 
 INSERT INTO schema_migrations (version) VALUES ('20170331200655');
+
+INSERT INTO schema_migrations (version) VALUES ('20170920031218');
 

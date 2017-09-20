@@ -19,4 +19,9 @@ module ApplicationHelper
     svg["class"] = options[:class] if options[:class].present?
     raw doc
   end
+
+  def tel_to(number)
+    return "<no phone number>" if number.blank?
+    link_to number_to_phone(number, area_code: true), "tel:#{number}"
+  end
 end

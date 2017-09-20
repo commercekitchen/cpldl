@@ -40,7 +40,8 @@ textarea {
   height: 200px;
   font-size: 14px;
   padding: 0.5rem;
-  border: 1px solid $light-grey;
+  border: 2px solid $grey;
+  border-radius: 5px;
   background: $white;
 }
 
@@ -194,5 +195,14 @@ select {
 .form_action {
   &_skip {
     margin-left: 2em;
+  }
+}
+
+.form-style-2 {
+  background: $light-grey;
+  padding: 2rem 4rem;
+
+  .row {
+    margin-bottom: 0;
   }
 }
