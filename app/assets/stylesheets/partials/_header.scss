@@ -1,5 +1,6 @@
 @import "bourbon";
 @import "neat";
+
 .header-logged-out {
   margin-bottom: 2em;
   padding: 1em 0 1em 0;
@@ -21,7 +22,7 @@
       display: inline-block;
 
       @include media($mobile-large) {
-          font-size: .9rem;
+        font-size: .9rem;
       }
 
     }
@@ -42,10 +43,7 @@
         float: left;
       }
 
-      /* The given svg file isn't cropped to the edge, so ... */
       position: relative;
-      // top: -7px;
-      // left: -8px;
     }
   }
 
@@ -68,13 +66,13 @@
     float: left;
     text-align: center;
     @include media($mobile-large) {
-        font-size: 1.2rem;
-        float: left;
-        display: block;
-        width: 39%;
-        max-width: 100%;
-        margin-top: 10px;
-      }
+      font-size: 1.2rem;
+      float: left;
+      display: block;
+      width: 39%;
+      max-width: 100%;
+      margin-top: 10px;
+    }
     @include media($tablet) {
       font-size: 1.3rem;
       float: left;
@@ -83,15 +81,9 @@
       max-width: 100%;
       margin-top: 10px;
     }
-    // @include media($mobile-xlarge) {
-    //   font-size: 2em;
-    //   max-width: 400px;
-    // }
+
   }
   .btn {
-    // text-align: right;
-    // float: right
-    // margin-right: .5em;
     @include media($mobile-large) {
       margin-right: .5em;
       margin-bottom: .5em;
@@ -200,11 +192,10 @@
 }
 
 .link-box {
-  // float: left;
   width: 65%;
   @include media($mobile-large) {
-      width: 100%;
-      float: left;
+    width: 100%;
+    float: left;
   }
 }
 

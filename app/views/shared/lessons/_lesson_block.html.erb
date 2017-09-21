@@ -5,7 +5,7 @@
       <i class="icon-ok"></i>
     <% end %>
     <div class="lesson-order"><%= lesson.published_lesson_order %></div>
-    <div class="lesson-title"><%= lesson.title %></div>
+    <div class="lesson-title"><%= lesson.title.truncate(27) %></div>
     <div class="lesson-duration"><i class="icon-clock"></i>
       <%= Duration.duration_str(lesson.duration) %>
     </div>
@@ -17,8 +17,8 @@
       <i class="icon-clock"></i>
       <span class="lesson-duration"><%= Duration.duration_str(lesson.duration) %></span>
     </div>
-    <h2 class="lesson-title"><%= lesson.title %></h2>
-    <p class="lesson-summary"><%= lesson.summary %></p>
+    <h2 class="lesson-title"><%= lesson.title.truncate(23) %></h2>
+    <p class="lesson-summary"><%= lesson.summary.truncate(85) %></p>
     <%= link_to course_lesson_path(course, lesson), data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } do %>
       <% if I18n.locale == :es %>
         <div class="btn small-lesson-button spanish-small button-color">

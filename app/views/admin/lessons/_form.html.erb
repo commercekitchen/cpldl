@@ -37,7 +37,7 @@
           Duration<span class="required"></span>
         <% end %>
         <p class="note">Enter the estimated amount of time that this lesson
-        will take to complete in the format (MM:SS).</p>
+        will take to complete in the following format (MM:SS).</p>
         <%= f.text_field :duration, value: @lesson.duration_str %>
       </fieldset>
     </div>
@@ -57,8 +57,8 @@
           <%= f.label :story_line, class: "text-color" do %>
             Articulate Storyline Package<span class="required"></span>
           <% end %>
-          <p class="note">There can only be one story line per lesson, if you want
-          to upload a new on, you need to delete the current one first.</p>
+          <p class="note">There can only be one story line per lesson. If you want
+          to upload a new one, you need to delete the current one first.</p>
           <p class="upload-field">
             <%= @lesson.story_line.instance.story_line_file_name %>
               <%= link_to "Remove", destroy_asl_attachment_admin_course_lessons_path(@course, @lesson), method: "delete", data: { confirm: "Are you sure?" } %>

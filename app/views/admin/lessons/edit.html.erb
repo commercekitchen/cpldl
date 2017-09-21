@@ -11,8 +11,7 @@
     <div class="objects sortable grid reorderable">
       <% @course.lessons.where.not(pub_status: "A").each do |lesson| %>
         <div class="sortable-item" data-id="<%= lesson.id %>">
-          <%= render partial: "shared/lessons/admin_lesson_grid",
-                      locals: { course: @course, lesson: lesson }%>
+          <%= render partial: "shared/lessons/admin_lesson_grid", locals: { course: @course, lesson: lesson } %>
         </div>
       <% end %>
     </div>
@@ -20,7 +19,7 @@
 </div>
 
 <%= link_to new_admin_course_lesson_path, class: "transparent" do %>
-  <div class="btn button-color"  >
+  <div class="btn button-color">
     Add Another Lesson
   </div>
 <% end %>

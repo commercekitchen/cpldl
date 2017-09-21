@@ -52,8 +52,9 @@ $notice-font-color: #444;
 $notice-border-color: #9dbc89;
 $notice-color: #e3ecdc;
 
-$font-primary: 'Open Sans', sans-serif;
-$font-secondary: 'Roboto', sans-serif;
+// $font-primary: "Open Sans", sans-serif;
+$font-primary: sans-serif;
+$font-secondary: "Roboto", sans-serif;
 
 /* Breakpoints */
 $mobile: new-breakpoint(max-width 500px 12);
