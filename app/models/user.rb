@@ -56,7 +56,7 @@ class User < ActiveRecord::Base
                                                        trigram: { threshold: 0.1 } }
 
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable
   rolify
   belongs_to :organization
   belongs_to :school
