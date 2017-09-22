@@ -30,7 +30,6 @@ feature "Registered user visits account page" do
       click_button "Save"
 
       @user.reload
-      expect(@user.unconfirmed_email).to eq("alex@commercekitchen.com")
       expect(@user.encrypted_password).not_to eq original_encrypted_pw
     end
 
@@ -97,7 +96,6 @@ feature "Registered user visits account page" do
       click_button "Save"
 
       @npl_user.reload
-      expect(@npl_user.unconfirmed_email).to eq("alex@commercekitchen.com")
       expect(@npl_user.encrypted_password).not_to eq original_encrypted_pw
     end
 

@@ -44,7 +44,6 @@ describe AccountsController do
         @user.reload
         expect(response).to redirect_to(account_path)
         expect(flash[:notice]).to be_present
-        expect(@user.unconfirmed_email).to eq("new@commercekitchen.com")
       end
 
       it "should not allow invalid user information" do

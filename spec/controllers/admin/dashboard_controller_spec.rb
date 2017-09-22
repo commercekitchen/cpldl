@@ -76,21 +76,6 @@ describe Admin::DashboardController do
     end
   end
 
-  describe "put#admin_dashboard_manually_confirm_user" do
-    before(:each) do
-      @user.add_role(:admin, @org)
-      @user1 = create(:user, email: "one@example.com", confirmed_at: nil)
-    end
-
-    it "should manually confirm user" do
-      expect(@user1.confirmed?).to be false
-      put :manually_confirm_user, { user_id: @user1.id }
-
-      @user2 = User.find(@user1.id)
-      expect(@user2.confirmed?).to be true
-    end
-  end
-
   describe "GET #import_courses" do
     before do
       @user.add_role(:admin, @org)
@@ -152,7 +137,7 @@ describe Admin::DashboardController do
         expect(course_category.id).not_to eq(@importable_course1.category.id)
         expect(course_category.name).to eq(@importable_course1.category.name)
         expect(course_category.organization_id).to eq(@org.id)
-      end 
+      end
 
       it "should create new category if category name doesn't exist for org" do
         expect do

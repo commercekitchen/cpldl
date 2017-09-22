@@ -64,18 +64,4 @@ describe Trainer::DashboardController do
     end
   end
 
-  describe "put#trainer_dashboard_manually_confirm_user" do
-    before(:each) do
-      @user.add_role(:trainer, @org)
-      @user1 = FactoryGirl.create(:user, email: "one@example.com", confirmed_at: nil)
-    end
-
-    it "should manually confirm user" do
-      expect(@user1.confirmed?).to be false
-      put :manually_confirm_user, { user_id: @user1.id }
-
-      @user2 = User.find(@user1.id)
-      expect(@user2.confirmed?).to be true
-    end
-  end
 end

@@ -37,12 +37,6 @@ feature "User logs in" do
     expect(page).to have_content("Invalid email or password.")
   end
 
-  scenario "with unconfirmed email" do
-    user = create(:unconfirmed_user)
-    log_in_with user.email, user.password
-    expect(page).to have_content("You have to confirm your email address before continuing.")
-  end
-
   scenario "first time login non-program org" do
     user = create(:first_time_user, organization: @org)
     past_time = 10.minutes.ago

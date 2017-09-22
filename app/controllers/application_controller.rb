@@ -146,7 +146,7 @@ class ApplicationController < ActionController::Base
 
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?
-      flash[:notice] = "This is the first time you have logged in, update your profile!"
+      flash[:notice] = "This is the first time you have logged in, please update your profile."
       profile_path
     elsif invalid_user_profile?(user)
       profile_path
@@ -159,7 +159,7 @@ class ApplicationController < ActionController::Base
 
   def user_after_sign_in_path_for(user)
     if first_time_login?
-      flash[:notice] = "This is the first time you have logged in, update your profile!"
+      flash[:notice] = "This is the first time you have logged in, please update your profile."
       profile_path
     elsif invalid_user_profile?(user)
       profile_path

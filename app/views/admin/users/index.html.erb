@@ -30,9 +30,6 @@
   <div class="two-of-twelve">
     <h2>User Role</h2>
   </div>
-  <div class="two-of-twelve">
-    <h2>Confirmed?</h2>
-  </div>
 </div>
 
 <% @users.each do |user| %>
@@ -48,13 +45,6 @@
     </div>
     <div class="two-of-twelve">
       <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
-    </div>
-    <div class="two-of-twelve">
-      <% if user.confirmed? %>
-        Yes
-      <% else %>
-        <%= link_to "Click to Confirm", admin_dashboard_manually_confirm_user_path(user_id: user.id), method: :put %>
-      <% end %>
     </div>
   </div>
 <% end %>

@@ -20,7 +20,7 @@
     <%= f.email_field :email, autofocus: true %>
   </fieldset>
 
-  <% if @user.pending_reconfirmation? %>
+  <% if devise_mapping.confirmable? && @user.pending_reconfirmation? %>
     <div class="text-color">Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
   <% end %>
 

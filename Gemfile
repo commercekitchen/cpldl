@@ -22,6 +22,7 @@ gem 'where_exists'
 gem 'devise', '3.5.10'
 gem 'devise_invitable'
 gem 'rolify'
+gem 'recaptcha', require: 'recaptcha/rails'
 
 # Bourbon for sass mixins, and neat for the grid framework
 gem 'bourbon'

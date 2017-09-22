@@ -22,9 +22,6 @@
   <div class="two-of-twelve">
     <h2>User Role</h2>
   </div>
-  <div class="two-of-twelve">
-    <h2>Confirmed?</h2>
-  </div>
 </div>
 
 <% @users.each do |user| %>
@@ -40,13 +37,6 @@
     </div>
     <div class="two-of-twelve">
       <%= user.current_roles.empty? ? "user" : user.current_roles %>
-    </div>
-    <div class="two-of-twelve">
-      <% if user.confirmed? %>
-        Yes
-      <% else %>
-        <%= link_to "Click to Confirm", trainer_dashboard_manually_confirm_user_path(user_id: user.id), method: :put %>
-      <% end %>
     </div>
   </div>
 <% end %>

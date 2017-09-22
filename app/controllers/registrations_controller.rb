@@ -1,6 +1,15 @@
 class RegistrationsController < Devise::RegistrationsController
   after_action :create_organization_user_entry
 
+  def create
+    @user = User.new(sign_up_params)
+    if verify_recaptcha(model: @user)
+      super
+    else
+      render :new
+    end
+  end
+
   protected
 
   def create_organization_user_entry

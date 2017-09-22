@@ -12,8 +12,7 @@ feature "User signs up" do
 
     scenario "with valid email, password, first name, zip code" do
       sign_up_with "valid@example.com", "password", "Alejandro", "12345"
-      expect(page).to have_content("A message with a confirmation link has been sent \
-        to your email address. Please follow the link to activate your account.")
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
 
       # TODO: I'm not sure this is the best place for this expectation, but I'm not
       # sure where else to put it.  I just want to be sure the profile is created too.
@@ -24,8 +23,7 @@ feature "User signs up" do
 
     scenario "with valid email, password, first name, but no zip code" do
       sign_up_with "valid@example.com", "password", "Alejandro", ""
-      expect(page).to have_content("A message with a confirmation link has been sent \
-        to your email address. Please follow the link to activate your account.")
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
 
       user = User.last
       expect(user.profile.first_name).to eq("Alejandro")

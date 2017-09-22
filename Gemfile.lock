@@ -236,6 +236,8 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
     rake (11.3.0)
+    recaptcha (4.4.1)
+      json
     redis (3.3.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -376,6 +378,7 @@ DEPENDENCIES
   pry-remote
   quiet_assets
   rails (= 4.2.7.1)
+  recaptcha
   redis
   redis-namespace
   rolify

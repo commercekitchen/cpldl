@@ -54,7 +54,6 @@ Rails.application.routes.draw do
   namespace :trainer do
     root 'home#index'
     resources :dashboard, only: [:index]
-    put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
   end
 
   namespace :admin do
@@ -85,7 +84,6 @@ Rails.application.routes.draw do
     get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
     get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
     post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
-    put 'dashboard/manually_confirm_user', to: 'dashboard#manually_confirm_user'
 
     resources :cms_pages do
       put :sort, on: :collection

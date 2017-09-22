@@ -7,16 +7,20 @@
     <title><%= "#{current_organization.name} - Digital Learn" %></title>
   <% end %>
 <% end %>
+
 <meta name="robots" content="noindex">
 <meta name="viewport" content="width=device-width">
+
 <%= stylesheet_link_tag "application", media: "all" %>
 <%= javascript_include_tag "application" %>
 <%= csrf_meta_tags %>
 <%= favicon_link_tag "favicon.ico" %>
 
+<script src="https://www.google.com/recaptcha/api.js"></script>
+
 <%# TODO: Load back in Roboto, once QA'd %>
-<%# TODO: Also, need to set open sans as the default font site-wide, and cleanup number of versions used. %>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+<%# TODO: Also, need to set open sans as the default font site-wide, and figure out which weights. %>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:300" rel="stylesheet">
 <%# <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet"> %>
 
 <% if content_for?(:meta_description) %>

@@ -39,7 +39,7 @@ feature "Admin user logs in" do
       expect(@user.sign_in_count).to eq(0)
       log_in_with @user.email, @user.password
       expect(current_path).to eq(profile_path)
-      expect(page).to have_content("This is the first time you have logged in, update your profile!")
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
       click_link "Sign Out"
     end
 

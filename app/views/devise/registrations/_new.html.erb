@@ -22,6 +22,8 @@
       <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "#{t('login_signup.tutorial_link')}", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
     </p>
 
+    <%# TODO: this isn't right, it should be built in the controller, and only if it doesn't already exist, like in an error situation. %>
+    <%# otherwise we just wipe out entered information. %>
     <% resource.build_profile %>
     <%= f.fields_for :profile do |p| %>
       <fieldset>
@@ -61,7 +63,11 @@
       <%= hidden_field(:user, :subdomain, value:  current_organization.subdomain) %>
     </fieldset>
 
-    <%= f.submit "#{t('home.signup')}", class: "button-color" %>
+    <fieldset>
+      <%= recaptcha_tags %>
+    </fieldset>
+
+    <%= f.submit t("home.signup"), class: "button-color" %>
 
   <% end %>
 <% end %>
