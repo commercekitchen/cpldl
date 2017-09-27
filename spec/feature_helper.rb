@@ -34,5 +34,6 @@ Capybara.javascript_driver = :webkit
 Capybara::Webkit.configure do |config|
   config.allow_url("fonts.googleapis.com")
   config.allow_url("https://www.google.com/recaptcha/api.js")
+  config.allow_url("www.gstatic.com") # Recaptcha
   # config.debug = true
 end
