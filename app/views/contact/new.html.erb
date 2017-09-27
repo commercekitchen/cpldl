@@ -47,7 +47,7 @@
 
       <fieldset class="fourcol last">
         <%= f.label :state, class: "screen-reader-text" %>
-        <%= f.select :state, options_for_select(Constants.us_states), { include_blank: "Select..." } %>
+        <%= f.select :state, options_for_select(Constants.us_states), { include_blank: "Select... *" } %>
       </fieldset>
     </div>
 
@@ -69,6 +69,8 @@
     </fieldset>
 
     <%= f.submit "Submit" %>
+
+    <%= render "shared/required_field_msg" %>
 
   <% end %>
 

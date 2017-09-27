@@ -61,8 +61,8 @@ div.static-page {
   }
 
   .overview-image {
-    max-width: 450px;
-    max-height: 350px;
+    max-width: 300px;
+    max-height: 231px;
     width: 90%;
 
     .background-fill {
@@ -89,37 +89,43 @@ div.static-page {
   // Ugg, hacky, but what's the alternative?
   .vertical-center-1 {
     @include media($desktop) {
-      padding-top: 40px;
+      position: relative;
+      top: -18px;
     }
   }
 
   .vertical-center-2 {
     @include media($desktop) {
-      padding-top: 80px;
+      position: relative;
+      top: 23px;
     }
   }
 
   .vertical-center-3 {
     @include media($desktop) {
-      padding-top: 60px;
+      position: relative;
+      top: 0px;
     }
   }
 
   .vertical-center-4 {
     @include media($desktop) {
-      padding-top: 54px;
+      position: relative;
+      top: 0px;
     }
   }
 
   .vertical-center-5 {
     @include media($desktop) {
-      padding-top: 20px;
+      position: relative;
+      top: -30px;
     }
   }
 
   .vertical-center-6 {
     @include media($desktop) {
-      padding-top: 30px;
+      position: relative;
+      top: -32px;
     }
   }
 

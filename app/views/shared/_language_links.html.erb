@@ -1,5 +1,5 @@
 <small>
-  <% if course_detail_route? %>
+  <% if hide_language_links? %>
     &nbsp;
   <% else %>
     <%= link_to "English", home_language_toggle_path(lang: "en") %> |
