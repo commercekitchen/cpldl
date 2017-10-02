@@ -1,34 +1,40 @@
-# Chicago Public Library - Digital Learn [![Code Climate](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/badges/gpa.svg)](https://codeclimate.com/github/PublicLibraryAssoc/cpldl) [![Test Coverage](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/badges/coverage.svg)](https://codeclimate.com/github/PublicLibraryAssoc/cpldl/coverage)
+# DigitalLearn
 
-## Install Dependencies
-RVM
-Postgresql
-Redis
+A Public Library Association curated collection of course materials to be used for in-person
+digital literacy courses, online trainings on developing courses and content, and a community of
+practice for digital literacy trainers.
 
-## Starting a new project using this template
+## Contributions
 
-* Clone this project from Github
-* Create a new gemset with 'rvm gemset create cpldl' (assumes rvm is installed)
-* Run `bundle install`
-* Run `rake db:migrate`
+Please ask before opening a pull to add features, as we must weigh the impact against current
+implementations of this code base.
 
-## Up and Running.
+That said, if you find a bug, please do open an issue!
 
-* Ruby version
-  ruby 2.2.3
+## Getting Started
 
-* Database creation
-  - `rake db:create db:migrate`
+DigitalLearn is built on top of Ruby on Rails.  A basic understanding of working with Rails is
+required to stand up a new DigitalLearn site.
 
-* How to run the test suite
-  - `rspec`    : testing suite
-  - `rubocop`  : for syntax and code smells
-  - `brakeman` : for security smells
+### Dependencies
 
-## Sync staging server db to local
-  `rake db:reset`
-  `cap staging app:local:sync`
+* Ruby 2.2.3
+* Rails 4.2.7.1
+* Postgresql v 9.4.5
 
-## Staging urls
-https://subdomain.stage.digitallearn.org
-https://npl.stage.digitallearn.org/
+### Update Secrets
+
+* Update secrets.yml with your values
+
+### Database Creation
+
+* Update database.yml.example with your credentials
+* Run `rake db:create db:migrate db:seed`
+
+### Install Gems
+
+* `bundle install`
+
+### Start Server
+
+* `rails s`
