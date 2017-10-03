@@ -1,24 +1,27 @@
-<h2 class="text-color"><%= t('home.login') %></h2>
+<h2 class="text-color"><%= t("home.login") %></h2>
 
-<p><%= t('login_signup.already_have_an_account') %></p>
+<p><%= t("login_signup.already_have_an_account") %></p>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
-  <fieldset>
+  <div class="form-group">
+    <%= label_tag "login_email", "Email", class: "screen-reader-text" %>
     <%= f.email_field :email, autofocus: true, id: "login_email", placeholder: "#{t('login_signup.email')} *" %>
-  </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false", id: "login_password",  placeholder: "#{t('login_signup.password')} *"  } %>
-  </fieldset>
+  <div class="form-group">
+    <%= label_tag "login_password", "Password", class: "screen-reader-text" %>
+    <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
+      spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
+  </div>
 
   <% if devise_mapping.rememberable? -%>
-    <fieldset>
+    <div class="form-group">
       <%= f.check_box :remember_me %>
       <%= f.label :remember_me, "#{t('login_signup.keep_me_logged_in')}", class: "plain" %>
       <%= check_box_tag('hide_signin_pass', '1', false, onchange: 'hide_login_password(this);') %>
       <%= label_tag('hide_signin_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
-    </fieldset>
+    </div>
   <% end -%>
 
   <%= f.submit "#{t('login_signup.access_courses')}", class: "button-color"%>

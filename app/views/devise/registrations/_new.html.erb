@@ -1,22 +1,17 @@
 <% if top_level_domain? %>
   <h2 class="text-color"><%= t('home.signup_notice') %></h2>
-
-  <p>
-    <%= t('login_signup.notice_to_users') %>
-  </p>
+  <p><%= t('login_signup.notice_to_users') %></p>
 <% else %>
   <h2 class="text-color"><%= t('home.signup') %></h2>
-
-  <p>
-    <%= t('login_signup.want_to_take_a_course') %>
-  </p>
+  <p><%= t('login_signup.want_to_take_a_course') %></p>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-    <fieldset class="no-bottom-margin">
+    <div class="form-group no-bottom-margin">
+      <%= label_tag "signup_email", "Email", class: "screen-reader-text" %>
       <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "#{t('login_signup.email')} *" %>
-    </fieldset>
+    </div>
 
     <p class="small-14 grey extra-bottom-margin">
       <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "#{t('login_signup.tutorial_link')}", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
@@ -26,46 +21,50 @@
     <%# otherwise we just wipe out entered information. %>
     <% resource.build_profile %>
     <%= f.fields_for :profile do |p| %>
-      <fieldset>
+      <div class="form-group">
+        <%= p.label :first_name, class: "screen-reader-text" %>
         <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
-      </fieldset>
+      </div>
 
-      <fieldset>
+      <div class="form-group">
+        <%= p.label :zip_code, class: "screen-reader-text" %>
         <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
-      </fieldset>
+      </div>
 
       <% if current_organization.branches? && current_organization.library_locations.present? %>
-        <fieldset>
-          <%= p.collection_select(:library_location_id, current_organization.library_locations, :id, "name", {include_blank: "#{t('login_signup.your_library')}"}, class: "select-large", id: "chzn" ) %>
-        </fieldset>
+        <div class="form-group">
+          <%= label_tag "chzn", "Select Your Library", class: "screen-reader-text" %>
+          <%= p.collection_select(:library_location_id, current_organization.library_locations,
+              :id, "name", { include_blank: "#{t('login_signup.your_library')}" },
+              class: "select-large", id: "chzn" ) %>
+        </div>
       <% end %>
     <% end %>
 
-    <fieldset>
-      <%= f.label :password, t('login_signup.your_password'), class: 'signup-label' %>
+    <div class="form-group">
+      <%= label_tag "signup_password", t("login_signup.your_password"), class: "signup-label" %>
       <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
-    </fieldset>
+    </div>
 
-    <fieldset>
+    <div class="form-group">
+      <%= f.label :password_confirmation, class: "screen-reader-text" %>
       <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
-    </fieldset>
+    </div>
 
-    <fieldset>
+    <div class="form-group">
       <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
       <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
-    </fieldset>
+    </div>
 
     <% if current_organization.accepts_programs? %>
       <%= render partial: 'devise/registrations/programs_registration_form', locals: { f: f } %>
     <% end %>
 
-    <fieldset>
-      <%= hidden_field(:user, :subdomain, value:  current_organization.subdomain) %>
-    </fieldset>
+    <%= hidden_field(:user, :subdomain, value: current_organization.subdomain) %>
 
-    <fieldset>
+    <div class="form-group">
       <%= recaptcha_tags %>
-    </fieldset>
+    </div>
 
     <%= f.submit t("home.signup"), class: "button-color" %>
 

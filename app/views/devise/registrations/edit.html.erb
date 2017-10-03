@@ -3,31 +3,31 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <fieldset>
+  <div class="form-group">
     <%= f.label :email, class: "text-color" %>
     <%= f.email_field :email, autofocus: true %>
-  </fieldset>
+  </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <fieldset>
+  <div class="form-group">
     <%= f.label :password, class: "text-color" do %>
       <%= t('login_signup.password') %> <i class="note">(leave blank if you don't want to change it)</i>
     <% end %>
     <%= f.text_field :password, autocomplete: "off" %>
-  </fieldset>
+  </div>
 
-  <fieldset>
+  <div class="form-group">
     <%= f.label :password_confirmation, class: "text-color" %>
     <%= f.text_field :password_confirmation, autocomplete: "off" %>
-  </fieldset>
+  </div>
 
-  <fieldset>
+  <div class="form-group">
     <%= f.label :current_password, class: "text-color" %> <i>(we need your current password to confirm your changes)</i>
     <%= f.text_field :current_password, autocomplete: "off" %>
-  </fieldset>
+  </div>
 
   <%= f.submit "Update" %>
 
