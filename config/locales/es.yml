@@ -46,6 +46,9 @@ es:
     ebrpl:
       custom_banner_greeting: "Saber cómo usar una computadora le ayuda a avanzar en la vida<br>"
       logo_banner_html: ""
+    carnegielibrary:
+      custom_banner_greeting: "¡Desarrolle sus habilidades de la computadora y desbloquee su potencial!<br>"
+      logo_banner_html: ""
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
@@ -57,6 +60,7 @@ es:
       tscpl: "Seleccione un curso de los que aparecen a continuación para comenzar."
       pima: "Seleccione un curso de los que aparecen a continuación para comenzar."
       ebrpl: "Seleccione un tema a continuación para comenzar a aprender o utilice el cuadro de búsqueda en la parte superior de la pantalla."
+      carnegielibrary: "Seleccione un tema a continuación para comenzar a aprender o utilice el cuadro de búsqueda en la parte superior de la pantalla."
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses: "¿Qué le gustaría aprender?"
     mins_abbr: "min"
@@ -90,55 +94,6 @@ es:
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
     no_program_selected: "Seleccione el programa..."
     your_library: "¿Cómo se llama su biblioteca?"
-  confirmation_email:
-    www:
-      greeting: "Hola"
-      welcome: "Bienvenido"
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
-    chipublib:
-      greeting: "Hola"
-      subject: "Empieza con Chicago Digital Learn"
-      welcome: "Bienvenido a Chicago Digital Learn. Usted está a un paso de aprender cómo utilizar la computadora para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta."
-      confirm_your_account_through_link: ""
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "<p>Chicago Digital Learn le ofrece:</p><ul><li>Vídeos que explican cómo funcionan las computadoras se puede ver a su propio ritmo</li><li>Recursos educativos y para búsqueda de empleo de Chicago</li><li>Enlaces a otros recursos útiles en línea</li></ul><p></p><p>¿Tiene preguntas? <a href='http://www.chipublib.org/spanish/'>Llame o visite la biblioteca pública de Chicago</a> más cerca de usted."
-    npl:
-      greeting: "Hola"
-      subject: "Empieza con Nashville Digital Aprende"
-      welcome: "Bienvenido a Nashville Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
-    kpl:
-      greeting: "Hola"
-      subject: "Empieza con Kalamazoo Digital Aprende"
-      welcome: "Bienvenido a Kalamazoo Digital Aprender. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
-    tscpl:
-      greeting: "Hola"
-      subject: "Empieza con Topeka & Shawnee County Public Library DigitalLearn"
-      welcome: "Bienvenido a Topeka & Shawnee County Public Library’s DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
-    pima:
-      greeting: "Hola"
-      subject: "Empieza con Pima County Public Library DigitalLearn"
-      welcome: "Bienvenido a Pima County Public Library DigitalLearn!. Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
-    ebrpl:
-      greeting: "Hola"
-      subject: "Empieza con East Baton Rouge Public Library DigitalLearn"
-      welcome: "Bienvenido a East Baton Rouge Public Library DigitalLearn! Por favor, dar un paso más para empezar a aprender cómo utilizar el ordenador para hacer casi cualquier cosa. Haga clic en el siguiente enlace para activar su cuenta, y usted estará listo para funcionar."
-      confirm_your_account_through_link: "Puede confirmar su cuenta de correo haciendo clic en la liga de abajo:"
-      confirm_my_account: "Confirmar mi cuenta"
-      signature: "Gracias y que tenga un día maravilloso!"
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
@@ -194,6 +149,8 @@ es:
       retake_the_quiz: "Repite el Cuestionario"
     ebrpl: 
       retake_the_quiz: "Repite el Cuestionario"
+    carnegielibrary:
+      retake_the_quiz: "Repite el Cuestionario"
     course: "Curso"
     date_completed: "Fecha de terminación"
     certificate_of_completion: "Certificado de Culminación"
@@ -215,6 +172,8 @@ es:
       course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     ebrpl:
       course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+    carnegielibrary:
+      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"

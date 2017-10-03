@@ -61,6 +61,10 @@ $(document).ready(function() {
     ga("send", "event", "external link", "click", "East Baton Rouge Public Library");
   });
 
+  $("footer").on("click", ".link-carnegielibrary", function(){
+    ga("send", "event", "external link", "click", "Carnegie Library of Pittsburgh");
+  });
+
   $("footer").on("click", ".link-pla", function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });
