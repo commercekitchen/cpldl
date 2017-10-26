@@ -13,11 +13,11 @@
       <ul class="objects sortable reorderable">
         <% courses.each do |course| %>
           <li class="sortable-item table-row" data-id="<%= course.id %>">
-            <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "no_drag_link" %></div>
+            <div class="cell"><%= course.title %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
             <div class="cell">
-              <%= link_to("Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post) %>
+              <%= link_to "Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post %>
             </div>
           </li>
         <% end %>
