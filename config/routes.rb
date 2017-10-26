@@ -122,8 +122,8 @@ Rails.application.routes.draw do
   # Please don't delete them.
   # ~~~ Start of redirect matchers ~~~ #
   get '/learn', to: redirect('/courses')
-  get '/teach', to: redirect('http://community.digitallearn.org')
-  get '/teach/*path', to: redirect('http://community.digitallearn.org')
+  get '/teach', to: redirect('https://training.digitallearn.org')
+  get '/teach/*path', to: redirect('https://training.digitallearn.org')
   get '/about', to: redirect('/cms_pages/about-digitallearn-org')
   get '/get-help', to: redirect('/cms_pages/about-digitallearn-org')
   get '/learn/getting-started-computer', to: redirect('/courses/getting-started-on-a-computer')
