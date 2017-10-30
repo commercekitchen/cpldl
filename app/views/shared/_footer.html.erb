@@ -9,6 +9,8 @@
               <li><%= link_to page.title, cms_page_path(page) %></li>
             <% end %>
           <% end %>
+          <li><%= link_to "Get DigitalLearn for your Library", static_overview_url(subdomain: "www") %></li>
+          <li><%= link_to "Libraries with DigitalLearn", static_portfolio_url(subdomain: "www") %></li>
         </ul>
       </div>
       <%= render "shared/logo_footer" %>
