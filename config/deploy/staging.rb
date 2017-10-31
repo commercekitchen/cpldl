@@ -1,7 +1,4 @@
-## INTEGRATION
-## ==========
-
-set :bundle_without, %w{integration production test}.join(" ")
+set :bundle_without, %w{production test}.join(" ")
 
 set :branch, "release-2.5.3"
 

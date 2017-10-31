@@ -1,7 +1,4 @@
-## INTEGRATION
-## ==========
-
-set :bundle_without, %w{integration staging test}.join(" ")
+set :bundle_without, %w{staging test}.join(" ")
 
 set :branch, "master"
 
