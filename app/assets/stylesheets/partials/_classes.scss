@@ -337,6 +337,29 @@ div.sub-callout {
   }
 }
 
+div.sub-nav {
+  background-color: $medium-grey;
+  padding: 1em 0 1em 0;
+  min-height: 1em;
+  position: relative;
+  top: -2em; // To overcome the preceeding callout.
+
+  a {
+    color: $purple;
+    line-height: 2em;
+  }
+
+  a:hover {
+    // text-decoration: none;
+  }
+
+  .spacer {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+}
+
 .centered {
   text-align: center;
 }
