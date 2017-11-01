@@ -3,7 +3,7 @@
   <li><%= link_to "Update Profile", profile_path %></li>
   <li><%= link_to "Courses", admin_root_path %></li>
   <% if subdomain? %>
-    <li><%= link_to "Import Digital Learn Courses", admin_import_courses_path %></li>
+    <li><%= link_to "Import DigitalLearn Courses", admin_import_courses_path %></li>
     <li><%= link_to "Completions Report (by Library)", admin_export_completions_path(format: "csv", version: "lib") %></li>
   <% end %>
   <li><%= link_to "Completions Report (by Zipcode)", admin_export_completions_path(format: "csv", version: "zip") %></li>
