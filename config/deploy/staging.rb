@@ -1,6 +1,6 @@
 set :bundle_without, %w{production test}.join(" ")
 
-set :branch, "release-2.5.4"
+set :branch, "release-2.5.5"
 
 server "dl-stageapp-01.do.lark-it.com",
   user: fetch(:application),
