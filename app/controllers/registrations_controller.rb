@@ -44,7 +44,7 @@ class RegistrationsController < Devise::RegistrationsController
 
     list_params_allowed << [
       :parent_type,
-      :organization_program,
+      :program_id,
       :program_location_id,
       :library_card_number
     ] if current_organization.accepts_programs?

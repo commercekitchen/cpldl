@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   belongs_to :organization
   belongs_to :school
   belongs_to :program_location
+  belongs_to :program
   has_one :profile, dependent: :destroy
   has_many :course_progresses, dependent: :destroy
   accepts_nested_attributes_for :profile

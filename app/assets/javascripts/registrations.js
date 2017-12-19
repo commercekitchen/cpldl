@@ -14,7 +14,7 @@
         updateVisibleInputs(this.value);
       });
 
-      $("#organization_program").change(function(e){
+      $("#user_program_id").change(function(e){
         var programId = $(this).val();
         $("#previously_selected_program").val(programId);
         programSelected(programId);
@@ -38,10 +38,10 @@
 
     function updateVisibleInputs(programType){
       if (programType !== "none"){
-        $("#organization_program.hideUntilActive").show();
+        $("#user_program_id.hideUntilActive").show();
         getProgramsOfType(programType).done(updateProgramSelection);
       } else {
-        $("#organization_program.hideUntilActive").hide();
+        $("#user_program_id.hideUntilActive").hide();
         $("#program_location_fields.hideUntilActive").hide();
       }
       $("#program_location_fields.hideUntilActive").hide();
@@ -51,8 +51,8 @@
     function tryPreviousProgramSelection(){
       var programId = $("#previously_selected_program").val();
       if (!programId){ return; }
-      if ($("#organization_program").find("option[value=" + programId + "]").length > 0){
-        $("#organization_program").val(programId);
+      if ($("#user_program_id").find("option[value=" + programId + "]").length > 0){
+        $("#user_program_id").val(programId);
         programSelected(programId);
       }
     }
@@ -87,7 +87,7 @@
         return [obj.id, obj.program_name];
       });
 
-      $("#organization_program").updateDropdown("Program", newOptionsArray);
+      $("#user_program_id").updateDropdown("Program", newOptionsArray);
 
       tryPreviousProgramSelection();
     }
