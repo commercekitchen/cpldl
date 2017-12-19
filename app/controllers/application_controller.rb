@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   helper_method :subdomain?
   helper_method :top_level_domain?
   helper_method :hide_language_links?
+  helper_method :in_subdomain?
 
   layout proc { user_signed_in? || !subdomain? ? "user/logged_in" : "application" }
 
@@ -141,6 +142,10 @@ class ApplicationController < ActionController::Base
   def redirect_to_www
     first_subdomain = request.subdomains.first
     redirect_to request.url.sub(first_subdomain, "www") if first_subdomain != "www"
+  end
+
+  def in_subdomain?(subdomain)
+    current_organization.subdomain == subdomain
   end
 
   private

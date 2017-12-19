@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     put 'lessons/sort', to: 'lessons#sort'
     resources :organizations, only: [:new, :create, :index]
     resources :library_locations
+    resource :reports, only: [:show]
+    resource :report_export, only: [:show]
 
     resources :programs, only: [:new, :create, :index, :edit] do
     end

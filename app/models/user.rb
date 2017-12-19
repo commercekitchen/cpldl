@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
     organization.subdomain
   end
 
+  def reportable_role?(org)
+    return true if self.has_role?(:user, org) || self.has_role?(:parent, org) || self.has_role?(:student, org)
+    false
+  end
+
   private
 
     def add_token_to_user
