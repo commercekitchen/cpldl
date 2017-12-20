@@ -1,7 +1,7 @@
 module Admin
   class LibraryLocationsController < BaseController
     def index
-      @library_locations = current_organization.library_locations
+      @library_locations = current_organization.library_locations.unscoped.order(:sort_order)
       render layout: "admin/base_with_sidebar"
     end
 
@@ -39,6 +39,13 @@ module Admin
       else
         redirect_to admin_library_locations_path, alert: "Sorry, we were unable to remove this library branch."
       end
+    end
+
+    def sort
+      params[:order].each do |_k, v|
+        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position])
+      end
+      render nothing: true
     end
 
     private

@@ -60,7 +60,9 @@ Rails.application.routes.draw do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
     resources :organizations, only: [:new, :create, :index]
-    resources :library_locations
+    resources :library_locations do
+      put :sort, on: :collection
+    end
     resource :reports, only: [:show]
     resource :report_export, only: [:show]
 

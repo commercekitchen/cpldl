@@ -23,6 +23,14 @@
   }
 }
 
+.wide-cell {
+  display: table-cell;
+  width: 50%;
+  @include media($mobile-large) {
+    display: block;
+  }
+}
+
 ul.objects {
   list-style: none;
   padding-left: 0;

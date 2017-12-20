@@ -525,7 +525,8 @@ CREATE TABLE library_locations (
     zipcode integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    organization_id integer
+    organization_id integer,
+    sort_order integer DEFAULT 0
 );
 
 
@@ -1720,4 +1721,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170331200655');
 INSERT INTO schema_migrations (version) VALUES ('20170920031218');
 
 INSERT INTO schema_migrations (version) VALUES ('20171219194830');
+
+INSERT INTO schema_migrations (version) VALUES ('20171220180542');
 

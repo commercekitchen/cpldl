@@ -146,6 +146,13 @@ small {
   }
 }
 
+.left-or-center {
+  text-align: center;
+  @include media($mobile) {
+    text-align: left;
+  }
+}
+
 .align-left {
   text-align: left;
 }

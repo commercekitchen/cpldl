@@ -1,30 +1,35 @@
-<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
-<%= link_to "Add a Library Branch", new_admin_library_location_path, class: "btn button-color" %>
-<h1>Library Branches</h1>
-<div class="row twelvecol underlined">
-  <div class="two-of-twelve">
-    <h2>Name</h2>
+<%= content_for(:callout) { %><h1>Library Branches</h1><% } %>
+
+<div class="row">
+  <div class="sixcol">
+    <p class="emphasis no-top-margin">
+      Re-order library branches by clicking on the arrow icon to drag and drop. Edit by clicking the appropriate location name.
+    </p>
   </div>
-  <div class="two-of-twelve">
-    <h2>Zipcode</h2>
-  </div>
-  <div class="four-of-twelve">
-    <h2>Actions</h2>
+  <div class="sixcol last left-or-right">
+    <%= link_to "Add a Library Branch", new_admin_library_location_path, class: "btn button-color" %>
   </div>
 </div>
 
-
-<% @library_locations.each do |library_location| %>
-  <div class="row twelvecol underlined">
-    <div class="two-of-twelve">
-      <%= library_location.name %>
-    </div>
-    <div class="two-of-twelve">
-      <%= library_location.zipcode%>
-    </div>
-    <div class="four-of-twelve">
-      <%= link_to "Delete", admin_library_location_path(library_location), method: :delete, data: { confirm: "Are you sure you want to delete this library branch?" } %>
-      <%= link_to "Edit", edit_admin_library_location_path(library_location) %>
-    </div>
+<div class="sortable-list" data-page="library_locations">
+  <div class="list-titles">
+    <div class="wide-cell text-color align-left">Name</div>
+    <div class="wide-cell text-color">Zipcode</div>
+    <div class="wide-cell text-color left-or-right">Actions</div>
   </div>
-<% end %>
+  <ul class="objects sortable reorderable">
+    <% @library_locations.each do |location| %>
+      <li class="sortable-item table-row" data-id="<%= location.id %>">
+        <div class="wide-cell align-left">
+          <%= link_to location.name, edit_admin_library_location_path(location), class: "no-drag-link" %>
+        </div>
+        <div class="wide-cell left-or-center"><%= location.zipcode %></div>
+        <div class="wide-cell left-or-right">
+
+          <%= link_to "Delete", admin_library_location_path(location),
+            class: "no-drag-link", method: :delete, data: { confirm: "Are you sure you want to delete this library branch?" } %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
