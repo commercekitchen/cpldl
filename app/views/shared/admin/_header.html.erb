@@ -11,7 +11,7 @@
             Hi Admin! |
             <%= link_to "Admin Dashboard", admin_dashboard_index_path %> |
             <% if top_level_domain? %>
-              <%= link_to "Help Learners", "https://training.digitallearn.org", target: "_blank" %> |
+              <strong><%= link_to "Tools and Resources for Trainers", "https://training.digitallearn.org", target: "_blank" %></strong> |
             <% end %>
             <%= link_to "Sign Out", destroy_user_session_path, method: "delete" %>
           </nav>

@@ -3,9 +3,9 @@
     <div class="language-links">
       <%= render "shared/language_links" %>
       <% if current_organization.subdomain == "www" %>
-        <small>
+        <small><strong>
           <%= link_to "Help Learners", "https://training.digitallearn.org", class: "practice-link" %>
-        </small>
+        </strong></small>
       <% end %>
     </div>
     <div class="logo-link-container">
