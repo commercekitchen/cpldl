@@ -2,12 +2,17 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 10.0
+-- Dumped by pg_dump version 10.0
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -69,7 +74,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: attachments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: attachments; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE attachments (
@@ -92,6 +97,7 @@ CREATE TABLE attachments (
 --
 
 CREATE SEQUENCE attachments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -107,7 +113,7 @@ ALTER SEQUENCE attachments_id_seq OWNED BY attachments.id;
 
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE categories (
@@ -126,6 +132,7 @@ CREATE TABLE categories (
 --
 
 CREATE SEQUENCE categories_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -141,7 +148,7 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
--- Name: ckeditor_assets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: ckeditor_assets; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE ckeditor_assets (
@@ -164,6 +171,7 @@ CREATE TABLE ckeditor_assets (
 --
 
 CREATE SEQUENCE ckeditor_assets_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -179,7 +187,7 @@ ALTER SEQUENCE ckeditor_assets_id_seq OWNED BY ckeditor_assets.id;
 
 
 --
--- Name: cms_pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: cms_pages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE cms_pages (
@@ -206,6 +214,7 @@ CREATE TABLE cms_pages (
 --
 
 CREATE SEQUENCE cms_pages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -221,7 +230,7 @@ ALTER SEQUENCE cms_pages_id_seq OWNED BY cms_pages.id;
 
 
 --
--- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE completed_lessons (
@@ -238,6 +247,7 @@ CREATE TABLE completed_lessons (
 --
 
 CREATE SEQUENCE completed_lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -253,7 +263,7 @@ ALTER SEQUENCE completed_lessons_id_seq OWNED BY completed_lessons.id;
 
 
 --
--- Name: contacts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: contacts; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE contacts (
@@ -276,6 +286,7 @@ CREATE TABLE contacts (
 --
 
 CREATE SEQUENCE contacts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -291,7 +302,7 @@ ALTER SEQUENCE contacts_id_seq OWNED BY contacts.id;
 
 
 --
--- Name: course_progresses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: course_progresses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE course_progresses (
@@ -311,6 +322,7 @@ CREATE TABLE course_progresses (
 --
 
 CREATE SEQUENCE course_progresses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -326,7 +338,7 @@ ALTER SEQUENCE course_progresses_id_seq OWNED BY course_progresses.id;
 
 
 --
--- Name: course_topics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: course_topics; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE course_topics (
@@ -343,6 +355,7 @@ CREATE TABLE course_topics (
 --
 
 CREATE SEQUENCE course_topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -358,7 +371,7 @@ ALTER SEQUENCE course_topics_id_seq OWNED BY course_topics.id;
 
 
 --
--- Name: courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: courses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE courses (
@@ -391,6 +404,7 @@ CREATE TABLE courses (
 --
 
 CREATE SEQUENCE courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -406,7 +420,7 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
--- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE friendly_id_slugs (
@@ -424,6 +438,7 @@ CREATE TABLE friendly_id_slugs (
 --
 
 CREATE SEQUENCE friendly_id_slugs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -439,7 +454,7 @@ ALTER SEQUENCE friendly_id_slugs_id_seq OWNED BY friendly_id_slugs.id;
 
 
 --
--- Name: languages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: languages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE languages (
@@ -455,6 +470,7 @@ CREATE TABLE languages (
 --
 
 CREATE SEQUENCE languages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -470,7 +486,7 @@ ALTER SEQUENCE languages_id_seq OWNED BY languages.id;
 
 
 --
--- Name: lessons; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: lessons; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE lessons (
@@ -501,6 +517,7 @@ CREATE TABLE lessons (
 --
 
 CREATE SEQUENCE lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -516,7 +533,7 @@ ALTER SEQUENCE lessons_id_seq OWNED BY lessons.id;
 
 
 --
--- Name: library_locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: library_locations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE library_locations (
@@ -535,6 +552,7 @@ CREATE TABLE library_locations (
 --
 
 CREATE SEQUENCE library_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -550,7 +568,7 @@ ALTER SEQUENCE library_locations_id_seq OWNED BY library_locations.id;
 
 
 --
--- Name: organization_courses; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: organization_courses; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE organization_courses (
@@ -567,6 +585,7 @@ CREATE TABLE organization_courses (
 --
 
 CREATE SEQUENCE organization_courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -582,7 +601,7 @@ ALTER SEQUENCE organization_courses_id_seq OWNED BY organization_courses.id;
 
 
 --
--- Name: organizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE organizations (
@@ -601,6 +620,7 @@ CREATE TABLE organizations (
 --
 
 CREATE SEQUENCE organizations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -616,7 +636,7 @@ ALTER SEQUENCE organizations_id_seq OWNED BY organizations.id;
 
 
 --
--- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pg_search_documents (
@@ -634,6 +654,7 @@ CREATE TABLE pg_search_documents (
 --
 
 CREATE SEQUENCE pg_search_documents_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -649,7 +670,7 @@ ALTER SEQUENCE pg_search_documents_id_seq OWNED BY pg_search_documents.id;
 
 
 --
--- Name: profiles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: profiles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE profiles (
@@ -675,6 +696,7 @@ CREATE TABLE profiles (
 --
 
 CREATE SEQUENCE profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -690,7 +712,7 @@ ALTER SEQUENCE profiles_id_seq OWNED BY profiles.id;
 
 
 --
--- Name: program_locations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: program_locations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE program_locations (
@@ -708,6 +730,7 @@ CREATE TABLE program_locations (
 --
 
 CREATE SEQUENCE program_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -723,7 +746,7 @@ ALTER SEQUENCE program_locations_id_seq OWNED BY program_locations.id;
 
 
 --
--- Name: programs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: programs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE programs (
@@ -742,6 +765,7 @@ CREATE TABLE programs (
 --
 
 CREATE SEQUENCE programs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -757,7 +781,7 @@ ALTER SEQUENCE programs_id_seq OWNED BY programs.id;
 
 
 --
--- Name: roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE roles (
@@ -775,6 +799,7 @@ CREATE TABLE roles (
 --
 
 CREATE SEQUENCE roles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -790,7 +815,7 @@ ALTER SEQUENCE roles_id_seq OWNED BY roles.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -799,7 +824,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: schools; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schools; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schools (
@@ -817,6 +842,7 @@ CREATE TABLE schools (
 --
 
 CREATE SEQUENCE schools_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -832,7 +858,7 @@ ALTER SEQUENCE schools_id_seq OWNED BY schools.id;
 
 
 --
--- Name: topics; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: topics; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE topics (
@@ -848,6 +874,7 @@ CREATE TABLE topics (
 --
 
 CREATE SEQUENCE topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -863,7 +890,7 @@ ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -916,6 +943,7 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -931,7 +959,7 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: users_roles; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users_roles; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users_roles (
@@ -941,168 +969,168 @@ CREATE TABLE users_roles (
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: attachments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY attachments ALTER COLUMN id SET DEFAULT nextval('attachments_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: ckeditor_assets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ckeditor_assets ALTER COLUMN id SET DEFAULT nextval('ckeditor_assets_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: cms_pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY cms_pages ALTER COLUMN id SET DEFAULT nextval('cms_pages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: completed_lessons id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY completed_lessons ALTER COLUMN id SET DEFAULT nextval('completed_lessons_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts ALTER COLUMN id SET DEFAULT nextval('contacts_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: course_progresses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY course_progresses ALTER COLUMN id SET DEFAULT nextval('course_progresses_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: course_topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY course_topics ALTER COLUMN id SET DEFAULT nextval('course_topics_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: courses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY courses ALTER COLUMN id SET DEFAULT nextval('courses_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('friendly_id_slugs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: languages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY languages ALTER COLUMN id SET DEFAULT nextval('languages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: lessons id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY lessons ALTER COLUMN id SET DEFAULT nextval('lessons_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: library_locations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY library_locations ALTER COLUMN id SET DEFAULT nextval('library_locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: organization_courses id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organization_courses ALTER COLUMN id SET DEFAULT nextval('organization_courses_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations ALTER COLUMN id SET DEFAULT nextval('organizations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pg_search_documents id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents ALTER COLUMN id SET DEFAULT nextval('pg_search_documents_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: profiles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profiles ALTER COLUMN id SET DEFAULT nextval('profiles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: program_locations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY program_locations ALTER COLUMN id SET DEFAULT nextval('program_locations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: programs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY programs ALTER COLUMN id SET DEFAULT nextval('programs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY roles ALTER COLUMN id SET DEFAULT nextval('roles_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: schools id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schools ALTER COLUMN id SET DEFAULT nextval('schools_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: topics id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY topics ALTER COLUMN id SET DEFAULT nextval('topics_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: attachments attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY attachments
@@ -1110,7 +1138,7 @@ ALTER TABLE ONLY attachments
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories
@@ -1118,7 +1146,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: ckeditor_assets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: ckeditor_assets ckeditor_assets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY ckeditor_assets
@@ -1126,7 +1154,7 @@ ALTER TABLE ONLY ckeditor_assets
 
 
 --
--- Name: cms_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: cms_pages cms_pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY cms_pages
@@ -1134,7 +1162,7 @@ ALTER TABLE ONLY cms_pages
 
 
 --
--- Name: completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: completed_lessons completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY completed_lessons
@@ -1142,7 +1170,7 @@ ALTER TABLE ONLY completed_lessons
 
 
 --
--- Name: contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY contacts
@@ -1150,7 +1178,7 @@ ALTER TABLE ONLY contacts
 
 
 --
--- Name: course_progresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_progresses course_progresses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY course_progresses
@@ -1158,7 +1186,7 @@ ALTER TABLE ONLY course_progresses
 
 
 --
--- Name: course_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: course_topics course_topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY course_topics
@@ -1166,7 +1194,7 @@ ALTER TABLE ONLY course_topics
 
 
 --
--- Name: courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: courses courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY courses
@@ -1174,7 +1202,7 @@ ALTER TABLE ONLY courses
 
 
 --
--- Name: friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY friendly_id_slugs
@@ -1182,7 +1210,7 @@ ALTER TABLE ONLY friendly_id_slugs
 
 
 --
--- Name: languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: languages languages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY languages
@@ -1190,7 +1218,7 @@ ALTER TABLE ONLY languages
 
 
 --
--- Name: lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: lessons lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY lessons
@@ -1198,7 +1226,7 @@ ALTER TABLE ONLY lessons
 
 
 --
--- Name: library_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: library_locations library_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY library_locations
@@ -1206,7 +1234,7 @@ ALTER TABLE ONLY library_locations
 
 
 --
--- Name: organization_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: organization_courses organization_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organization_courses
@@ -1214,7 +1242,7 @@ ALTER TABLE ONLY organization_courses
 
 
 --
--- Name: organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: organizations organizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY organizations
@@ -1222,7 +1250,7 @@ ALTER TABLE ONLY organizations
 
 
 --
--- Name: pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pg_search_documents
@@ -1230,7 +1258,7 @@ ALTER TABLE ONLY pg_search_documents
 
 
 --
--- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY profiles
@@ -1238,7 +1266,7 @@ ALTER TABLE ONLY profiles
 
 
 --
--- Name: program_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: program_locations program_locations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY program_locations
@@ -1246,7 +1274,7 @@ ALTER TABLE ONLY program_locations
 
 
 --
--- Name: programs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: programs programs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY programs
@@ -1254,7 +1282,7 @@ ALTER TABLE ONLY programs
 
 
 --
--- Name: roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY roles
@@ -1262,7 +1290,7 @@ ALTER TABLE ONLY roles
 
 
 --
--- Name: schools_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: schools schools_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schools
@@ -1270,7 +1298,7 @@ ALTER TABLE ONLY schools
 
 
 --
--- Name: topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: topics topics_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY topics
@@ -1278,7 +1306,7 @@ ALTER TABLE ONLY topics
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1286,210 +1314,210 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: idx_ckeditor_assetable; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_ckeditor_assetable; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_ckeditor_assetable ON ckeditor_assets USING btree (assetable_type, assetable_id);
 
 
 --
--- Name: idx_ckeditor_assetable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: idx_ckeditor_assetable_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX idx_ckeditor_assetable_type ON ckeditor_assets USING btree (assetable_type, type, assetable_id);
 
 
 --
--- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_cms_pages_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_cms_pages_on_slug ON cms_pages USING btree (slug);
 
 
 --
--- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_courses_on_category_id ON courses USING btree (category_id);
 
 
 --
--- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_courses_on_slug ON courses USING btree (slug);
 
 
 --
--- Name: index_courses_on_title; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_courses_on_title; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_courses_on_title ON courses USING btree (title);
 
 
 --
--- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type ON friendly_id_slugs USING btree (slug, sluggable_type);
 
 
 --
--- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope ON friendly_id_slugs USING btree (slug, sluggable_type, scope);
 
 
 --
--- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_friendly_id_slugs_on_sluggable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON friendly_id_slugs USING btree (sluggable_id);
 
 
 --
--- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_friendly_id_slugs_on_sluggable_type; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON friendly_id_slugs USING btree (sluggable_type);
 
 
 --
--- Name: index_lessons_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_lessons_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_lessons_on_slug ON lessons USING btree (slug);
 
 
 --
--- Name: index_library_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_library_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_library_locations_on_organization_id ON library_locations USING btree (organization_id);
 
 
 --
--- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON pg_search_documents USING btree (searchable_type, searchable_id);
 
 
 --
--- Name: index_program_locations_on_program_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_program_locations_on_program_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_program_locations_on_program_id ON program_locations USING btree (program_id);
 
 
 --
--- Name: index_programs_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_programs_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_programs_on_organization_id ON programs USING btree (organization_id);
 
 
 --
--- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_roles_on_name; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_roles_on_name ON roles USING btree (name);
 
 
 --
--- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_roles_on_name_and_resource_type_and_resource_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_roles_on_name_and_resource_type_and_resource_id ON roles USING btree (name, resource_type, resource_id);
 
 
 --
--- Name: index_schools_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_schools_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_schools_on_organization_id ON schools USING btree (organization_id);
 
 
 --
--- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_confirmation_token ON users USING btree (confirmation_token);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_invitation_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_invitation_token ON users USING btree (invitation_token);
 
 
 --
--- Name: index_users_on_invitations_count; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_invitations_count; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_invitations_count ON users USING btree (invitations_count);
 
 
 --
--- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_invited_by_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_invited_by_id ON users USING btree (invited_by_id);
 
 
 --
--- Name: index_users_on_organization_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_organization_id ON users USING btree (organization_id);
 
 
 --
--- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_on_program_location_id ON users USING btree (program_location_id);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_unlock_token ON users USING btree (unlock_token);
 
 
 --
--- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree (user_id, role_id);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
 
 
 --
--- Name: fk_rails_0586629141; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: programs fk_rails_0586629141; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY programs
@@ -1497,7 +1525,7 @@ ALTER TABLE ONLY programs
 
 
 --
--- Name: fk_rails_099ab22c67; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: schools fk_rails_099ab22c67; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY schools
@@ -1505,7 +1533,7 @@ ALTER TABLE ONLY schools
 
 
 --
--- Name: fk_rails_4dce22cfb5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users fk_rails_4dce22cfb5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1513,7 +1541,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: fk_rails_684ed17f10; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: program_locations fk_rails_684ed17f10; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY program_locations
@@ -1521,7 +1549,7 @@ ALTER TABLE ONLY program_locations
 
 
 --
--- Name: fk_rails_d7b9ff90af; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users fk_rails_d7b9ff90af; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1529,7 +1557,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: fk_rails_fe22bb8133; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: library_locations fk_rails_fe22bb8133; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY library_locations
@@ -1540,7 +1568,7 @@ ALTER TABLE ONLY library_locations
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20151006221749');
 
@@ -1571,8 +1599,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151013153234');
 INSERT INTO schema_migrations (version) VALUES ('20151013190948');
 
 INSERT INTO schema_migrations (version) VALUES ('20151013213922');
-
-INSERT INTO schema_migrations (version) VALUES ('20151014102555');
 
 INSERT INTO schema_migrations (version) VALUES ('20151014161239');
 

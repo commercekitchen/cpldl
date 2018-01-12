@@ -8,11 +8,12 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  organization_id :integer
+#  sort_order      :integer          default(0)
 #
 
 class LibraryLocation < ActiveRecord::Base
   belongs_to :organization
   validates :name, :zipcode, presence: true
 
-  default_scope { order(:name) }
+  default_scope { order(:sort_order) }
 end

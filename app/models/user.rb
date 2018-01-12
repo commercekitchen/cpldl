@@ -42,6 +42,7 @@
 #  date_of_birth          :datetime
 #  grade                  :integer
 #  quiz_responses_object  :text
+#  program_id             :integer
 #
 
 class User < ActiveRecord::Base

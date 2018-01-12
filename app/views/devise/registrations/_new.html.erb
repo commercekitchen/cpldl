@@ -34,7 +34,7 @@
       <% if current_organization.branches? && current_organization.library_locations.present? %>
         <div class="form-group">
           <%= label_tag "chzn", "Select Your Library", class: "screen-reader-text" %>
-          <%= p.collection_select(:library_location_id, current_organization.library_locations.unscoped.order(:sort_order),
+          <%= p.collection_select(:library_location_id, current_organization.library_locations,
               :id, "name", { include_blank: "#{t('login_signup.your_library')}" },
               class: "select-large", id: "chzn" ) %>
         </div>

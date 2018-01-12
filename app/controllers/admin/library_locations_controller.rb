@@ -1,7 +1,7 @@
 module Admin
   class LibraryLocationsController < BaseController
     def index
-      @library_locations = current_organization.library_locations.unscoped.order(:sort_order)
+      @library_locations = current_organization.library_locations
       render layout: "admin/base_with_sidebar"
     end
 

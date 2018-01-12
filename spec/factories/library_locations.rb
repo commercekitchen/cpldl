@@ -1,11 +1,14 @@
 # == Schema Information
 #
-# Table name: languages
+# Table name: library_locations
 #
-#  id         :integer          not null, primary key
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :string
+#  zipcode         :integer
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  organization_id :integer
+#  sort_order      :integer          default(0)
 #
 
 FactoryGirl.define do
