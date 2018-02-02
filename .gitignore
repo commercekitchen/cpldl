@@ -48,6 +48,9 @@ config/secrets.yml
 # Sublime files
 *.sublime-*
 
+# Jetbrains
+.idea/
+
 # paperclip uploads attachments
 /public/system
 /public/storylines
