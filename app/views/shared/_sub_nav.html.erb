@@ -1,9 +1,16 @@
 <div class="sub-nav">
   <div class="container">
-    <%= link_to "Get DigitalLearn for Your Library", static_overview_url(subdomain: "www") %><span class="spacer">|</span>
-    <%= link_to "Pricing & Features", static_customization_url(subdomain: "www") %><span class="spacer">|</span>
-    <%= link_to "See Our Work in Action", static_portfolio_url(subdomain: "www") %><span class="spacer">|</span>
-    <%= link_to "Develop Your Own Courses", "https://training.digitallearn.org/trainings/designing-digitallearn-courses" %><span class="spacer">|</span>
+    <% if @overview_page.present? %>
+      <%= link_to "Get DigitalLearn for Your Library", cms_page_path(@overview_page) %><span class="spacer">|</span>
+    <% end %>
+    <% if @customization_page.present? %>
+      <%= link_to "Pricing & Features", cms_page_path(@customization_page) %><span class="spacer">|</span>
+    <% end %>
+    <% if @portfolio_page.present? %>
+      <%= link_to "See Our Work in Action", cms_page_path(@portfolio_page) %><span class="spacer">|</span>
+    <% end %>
+    <%= link_to "Develop Your Own Courses", "https://training.digitallearn.org/trainings/designing-digitallearn-courses" %>
+    <span class="spacer">|</span>
     <%= link_to "Contact Us", new_contact_url(subdomain: "www") %>
   </div>
 </div>

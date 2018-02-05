@@ -63,7 +63,7 @@
 
   <div class="row extra-bottom-margin">
     <div class="sixcol centered">
-      <%= link_to static_customization_path do %>
+      <%= link_to cms_page_path(@customization_page) do %>
         <%= svg_tag "overview/pricing", class: "overview-image" %>
       <% end %>
     </div>
@@ -73,7 +73,7 @@
       <p class="margin-bottom">
         Costs and features vary based on the customization plan you choose.
       </p>
-      <%= link_to "View Plans", static_customization_path, class: "btn btn-orange extra-bottom-margin" %>
+      <%= link_to "View Plans", cms_page_path(@customization_page), class: "btn btn-orange extra-bottom-margin" %>
     </div>
   </div>
 
@@ -83,11 +83,11 @@
       <p class="margin-bottom">
         Take a look at how libraries are using our custom sites.
       </p>
-      <%= link_to "View Sites", static_portfolio_path, class: "btn btn-orange extra-bottom-margin" %>
+      <%= link_to "View Sites", cms_page_path(@portfolio_page), class: "btn btn-orange extra-bottom-margin" %>
     </div>
 
     <div class="sixcol last centered">
-      <%= link_to static_portfolio_path do %>
+      <%= link_to cms_page_path(@portfolio_page) do %>
         <%= svg_tag "overview/customized", class: "overview-image" %>
       <% end %>
     </div>

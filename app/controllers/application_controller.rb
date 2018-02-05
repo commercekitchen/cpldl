@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_language
   before_action :set_cms_footer_pages
+  before_action :set_cms_marketing_pages
   before_action :set_user_token
   before_action :set_mailer_host
   before_action :require_valid_profile
@@ -108,6 +109,12 @@ class ApplicationController < ActionController::Base
     else
       @footer_pages = CmsPage.where(pub_status: "P", language_id: english_id, organization_id: org_id)
     end
+  end
+
+  def set_cms_marketing_pages
+    @overview_page = CmsPage.find_by_title('Get DigitalLearn for Your Library')
+    @customization_page = CmsPage.find_by_title('Pricing & Featurerous')
+    @portfolio_page = CmsPage.find_by_title('See Our Work In Action')
   end
 
   def set_locale

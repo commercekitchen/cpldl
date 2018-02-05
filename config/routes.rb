@@ -20,9 +20,9 @@ Rails.application.routes.draw do
   end
 
   namespace :static do
-    resource :customization, only: [:show]
-    resource :overview, only: [:show]
-    resource :portfolio, only: [:show]
+	  get :customization
+	  get :overview
+	  get :portfolio
   end
 
   resources :contact, only: [:new, :create]
