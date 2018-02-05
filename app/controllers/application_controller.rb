@@ -113,7 +113,7 @@ class ApplicationController < ActionController::Base
 
   def set_cms_marketing_pages
     @overview_page = CmsPage.find_by_title('Get DigitalLearn for Your Library')
-    @customization_page = CmsPage.find_by_title('Pricing & Featurerous')
+    @customization_page = CmsPage.find_by_title('Pricing & Features')
     @portfolio_page = CmsPage.find_by_title('See Our Work In Action')
   end
 

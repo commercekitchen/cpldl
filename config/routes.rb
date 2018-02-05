@@ -19,12 +19,6 @@ Rails.application.routes.draw do
     post 'programs/select_program'
   end
 
-  namespace :static do
-	  get :customization
-	  get :overview
-	  get :portfolio
-  end
-
   resources :contact, only: [:new, :create]
 
   get 'courses/your', to: 'courses#your', as: :your_courses
