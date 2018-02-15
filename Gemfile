@@ -41,7 +41,7 @@ gem 'sidekiq-failures'
 gem 'rollbar'
 gem 'newrelic_rpm'
 
-gem 'paperclip', '~> 4.3' # File uploads
+gem 'paperclip', '~> 5.2.1' # File uploads
 gem 'rubyzip' # ASL files
 gem 'friendly_id'
 
