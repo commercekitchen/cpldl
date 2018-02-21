@@ -42,6 +42,10 @@ Rails.application.routes.draw do
 
   resources 'cms_pages', only: [:show]
 
+  get '/static/customization', to: redirect('/cms_pages/pricing-features')
+  get '/static/portfolio', to: redirect('/cms_pages/see-our-work-in-action')
+  get '/static/overview', to: redirect('/cms_pages/get-digitallearn-for-your-library')
+
   get 'designing-courses-1', to: 'courses#designing_courses_1'
   get 'designing-courses-2', to: 'courses#designing_courses_2'
 
