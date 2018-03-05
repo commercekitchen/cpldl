@@ -6,7 +6,7 @@ require 'colorize'
 set :repo_url, "git@github.com:PublicLibraryAssoc/cpldl.git"
 
 # Ruby Version (used for RVM) - MUST MATCH PASSENGER/SERVER CONFIG!
-set :ruby_version, '2.2.3'
+set :ruby_version, '2.2.9'
 
 # Application name (default to using "railsapp")
 #   -- determines deploy path and user
