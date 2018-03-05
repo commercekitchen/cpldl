@@ -7,7 +7,9 @@
 <li><%= link_to "Incomplete Courses", admin_report_export_path(report: :incomplete_courses, format: :csv) %></li>
 <li><%= link_to "Completed Courses", admin_report_export_path(report: :completed_courses, format: :csv) %></li>
 <li><%= link_to "Users that have not started a course", admin_report_export_path(report: :no_courses, format: :csv) %></li>
-
+<% if t("google_analytics_url.#{current_organization.subdomain}").present? %>
+  <li><%= link_to "Google Analytics Dashboard", t("google_analytics_url.#{current_organization.subdomain}"), target: "_blank" %></li>
+<% end %>
 <%# Reports specific to Nashville %>
 <% if in_subdomain? "npl" %>
   <li><%= link_to "Registrations", admin_report_export_path(report: :registrations, format: :csv) %></li>

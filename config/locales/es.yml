@@ -252,3 +252,12 @@ es:
           attributes:
             last_name:
               blank: "no puede estar en blanco"
+  google_analytics_url:
+    www: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w66482317p68369117/"
+    chipublib: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w107924237p112444339/"
+    npl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w130859384p134820709/"
+    kpl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w132433004p136409604/"
+    tscpl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w137479411p141749616/"
+    pima: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w141655195p146188645/"
+    ebrpl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w142229276p146794222/"
+    carnegielibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w160560212p161760560/"
