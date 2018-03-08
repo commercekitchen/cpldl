@@ -14,3 +14,6 @@
 <% if in_subdomain? "npl" %>
   <li><%= link_to "Registrations", admin_report_export_path(report: :registrations, format: :csv) %></li>
 <% end %>
+<% if in_subdomain? 'chipublib' %>
+<li><%= link_to 'https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik', 'https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik' %></li>
+<% end %>
