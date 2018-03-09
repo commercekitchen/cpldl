@@ -261,3 +261,11 @@ es:
     pima: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w141655195p146188645/"
     ebrpl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w142229276p146794222/"
     carnegielibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w160560212p161760560/"
+  google_studio_url:
+    chipublib: "https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik"
+    npl: "https://datastudio.google.com/open/1Z4sv_djbM53ZRAkcGOOlq8tjVM3AS8gb"
+    kpl: "https://datastudio.google.com/open/1KbDVYDbAG91KB8vHRGBOZ220LzN2lrsF"
+    tscpl: "https://datastudio.google.com/open/13kIIBPgSY9wr3j2ad-75qLlGmf8ubxog"
+    pima: "https://datastudio.google.com/open/1pKcDMp_UsVJaSWqcT-UtxAwGZv26a7Y0"
+    ebrpl: "https://datastudio.google.com/open/1L6OawPKlkimAQOOcM0XwQTNL6geJH6s3"
+    carnegielibrary: "https://datastudio.google.com/open/1f_fMldtp_AK6bgpVnxpU4pj5nKaLUzqZ"
