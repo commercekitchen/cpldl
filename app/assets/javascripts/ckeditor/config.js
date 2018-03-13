@@ -102,13 +102,13 @@ CKEDITOR.editorConfig = function( config )
         { name: 'forms' },
         { name: 'tools' },
         { name: 'document',    groups: [ 'mode', 'document', 'doctools' ] },
-        { name: 'others' },
         // '/',
         { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ],                    items: [ 'Bold', 'Italic', 'Underline' ] },
         { name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote'] },
         { name: 'styles',                                                               items: [ 'Styles', 'Format', 'Font', 'FontSize' ]  },
         { name: 'colors' },
-        { name: 'about' }
+        { name: 'about' },
+        { name: 'others', items: ['Source']}
     ];
 
     // Remove some buttons provided by the standard plugins, which are
