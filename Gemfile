@@ -54,6 +54,9 @@ gem 'wkhtmltopdf-binary'
 # Local time helper library
 gem 'local_time'
 
+# Prevent botspam and allow white/blacklisting IPs, etc
+gem 'rack-attack'
+
 # integrate chosen library
 # gem 'select2-rails'
 
