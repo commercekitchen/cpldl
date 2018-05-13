@@ -192,6 +192,23 @@
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
+  <% if current_organization.base_site? %>
+    <div class="row">
+      <div class="twelvecol">
+        <fieldset>
+          <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
+
+          <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
+            <div class="form-1-col">
+              <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
+              <%= b.label class: "plain" %>
+            </div>
+          <% end %>
+        </fieldset>
+      </div>
+    </div>
+  <% end %>
+
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 
   <div class="actions">

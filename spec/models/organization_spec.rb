@@ -45,6 +45,18 @@ RSpec.describe Organization, type: :model do
         expect(Organization.using_lesson(parent_lesson.id)).to eq([lesson_org])
       end
     end
+
+    describe 'using_course' do
+      it 'includes only orgs using the passed course' do
+        course_org = create(:organization)
+        other_org = create(:organization)
+        parent_course = create(:course)
+        course = create(:course, parent_id: parent_course.id)
+        course_org.courses << course
+
+        expect(Organization.using_course(parent_course.id)).to eq([course_org])
+      end
+    end
   end
 
   describe "#users_count" do

@@ -93,14 +93,17 @@ module Admin
           org_course.organization_id = current_user.organization_id
           org_course.course_id = @course.id
         end
+        changed = propagate_changes? ? propagate_course_changes : 0
+
         @course.topics_list(build_topics_list(params))
+        notice = "Course was successfully updated. Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}."
         case params[:commit]
         when "Save Course"
-          redirect_to edit_admin_course_path(@course), notice: "Course was successfully updated."
+          redirect_to edit_admin_course_path(@course), notice: notice
         when "Save Course and Edit Lessons"
-          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: "Course was successfully updated."
+          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: notice
         else
-          redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully updated."
+          redirect_to new_admin_course_lesson_path(@course), notice: notice
         end
       else
         @custom = course_params[:category_id] == "0"
@@ -167,6 +170,7 @@ module Admin
         :display_on_dl,
         :subdomain,
         :category_id,
+        propagation_org_ids: [],
         category_attributes: [:name, :organization_id],
         attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy]
       ]
@@ -178,6 +182,18 @@ module Admin
       topics_list = params[:course][:topics] || []
       other_topic = params[:course][:other_topic] == "1" ? [params[:course][:other_topic_text]] : []
       topics_list | other_topic
+    end
+
+    def propagate_changes?
+      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.any?
+    end
+
+    def attributes_to_change
+      course_params.delete_if {|k, _| !@course.previous_changes.keys.include?(k.to_s)}
+    end
+
+    def propagate_course_changes
+      Course.copied_from_course(@course).update_all(attributes_to_change)
     end
   end
 end

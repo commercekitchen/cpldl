@@ -24,6 +24,7 @@ class Organization < ActiveRecord::Base
   validate
 
   scope :using_lesson, -> (lesson_id) { includes(courses: :lessons).where(lessons: {parent_id: lesson_id}) }
+  scope :using_course, -> (course_id) { includes(:courses).where(courses: {parent_id: course_id}) }
 
   def user_count
     users.count

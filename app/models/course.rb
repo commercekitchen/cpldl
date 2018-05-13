@@ -51,6 +51,7 @@ class Course < ActiveRecord::Base
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
+  attr_writer :propagation_org_ids
 
   # has_one :assessment
   has_one :course_progress
@@ -86,11 +87,16 @@ class Course < ActiveRecord::Base
   default_scope { order("course_order ASC") }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
+  scope :copied_from_course, -> (course) { joins(:organization).where(parent_id: course.id, organizations: {id: course.propagation_org_ids}) }
 
   def validate_has_unique_title
     if Course.where(title: title).where_exists(:organization_course, organization_id: org_id).count > 0
       errors.add(:title, "must be unique. There is already a course with that title, please select a different title and try again.")
     end
+  end
+
+  def propagation_org_ids
+    @propagation_org_ids ||= []
   end
 
   def topics_list(topic_list)
