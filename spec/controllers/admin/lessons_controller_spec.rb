@@ -160,6 +160,19 @@ describe Admin::LessonsController do
           { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson_attributes, commit: "Save Lesson" }
         expect(response).to have_http_status(:redirect)
       end
+
+      it "propagates updates to child lessons" do
+        org = create(:organization)
+        @lesson2.course.organization = org
+        @lesson2.save
+        @lesson1.propagation_org_ids = [org.id]
+        @lesson2.update(parent_id: @lesson1.id)
+        patch :update,
+              { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: 'Test Lesson'), commit: "Save Lesson" }
+
+        @lesson2.reload
+        expect(@lesson2.title).to eq('Test Lesson')
+      end
     end
   end
 

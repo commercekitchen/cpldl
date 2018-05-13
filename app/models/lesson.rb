@@ -41,6 +41,7 @@ class Lesson < ActiveRecord::Base
   end
 
   attr_accessor :subdomain
+  attr_writer :propagation_org_ids
 
   belongs_to :course
 
@@ -62,8 +63,16 @@ class Lesson < ActiveRecord::Base
   before_destroy :delete_associated_asl_files
   before_destroy :delete_associated_user_completions
 
-  default_scope { order("lesson_order") }
+  # default_scope { order("lesson_order") }
   scope :published, -> { where(pub_status: "P") }
+  scope :copied_from_lesson, -> (lesson) do
+    joins(course: :organization)
+      .where(parent_id: lesson.id, organizations: {id: lesson.propagation_org_ids})
+  end
+
+  def propagation_org_ids
+    @propagation_org_ids ||= []
+  end
 
   def skip_for_zip
     %w(application/zip application/x-zip).include?(story_line_content_type)

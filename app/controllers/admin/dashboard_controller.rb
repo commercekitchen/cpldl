@@ -67,6 +67,7 @@ module Admin
       # Create copies of the lessons and ASLs
       course_to_import.lessons.each do |imported_lesson|
         new_lesson = imported_lesson.dup
+        new_lesson.parent_id = imported_lesson.id
         new_lesson.course_id = new_course.id
         new_lesson.story_line = nil
         new_lesson.story_line = imported_lesson.story_line

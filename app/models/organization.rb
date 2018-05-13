@@ -23,6 +23,8 @@ class Organization < ActiveRecord::Base
   has_many :categories, dependent: :destroy
   validate
 
+  scope :using_lesson, -> (lesson_id) { includes(courses: :lessons).where(lessons: {parent_id: lesson_id}) }
+
   def user_count
     users.count
   end
@@ -33,6 +35,10 @@ class Organization < ActiveRecord::Base
 
   def has_student_programs?
     programs.map(&:parent_type).any? { |p| p.to_sym == :students_and_parents }
+  end
+
+  def base_site?
+    subdomain == 'www'
   end
 
   private

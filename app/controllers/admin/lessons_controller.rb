@@ -46,7 +46,8 @@ module Admin
       asl_is_new = @lesson.story_line_updated_at.nil?
       if @lesson.update(@lesson_params)
         Unzipper.new(@lesson.story_line) if asl_is_new
-        redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated."
+        changed = propagate_changes? ? propagate_lesson_changes : 0
+        redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated. Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}."
       else
         render :edit, notice: "Lesson failed to update."
       end
@@ -84,7 +85,8 @@ module Admin
                                      :is_assessment,
                                      :lesson_order,
                                      :pub_status,
-                                     :subdomain)
+                                     :subdomain,
+                                     propagation_org_ids: [])
     end
 
     def set_maximums
@@ -105,6 +107,18 @@ module Admin
         flash.now[:alert] = warnings.join("<br/>").html_safe
         render :new and return # rubocop:disable Style/AndOr
       end
+    end
+
+    def propagate_changes?
+      @lesson.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.any?
+    end
+
+    def attributes_to_change
+      lesson_params.delete_if {|k, _| !@lesson.previous_changes.keys.include?(k.to_s)}
+    end
+
+    def propagate_lesson_changes
+      Lesson.copied_from_lesson(@lesson).update_all(attributes_to_change)
     end
   end
 end

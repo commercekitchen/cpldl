@@ -76,4 +76,15 @@ describe Lesson do
 
   end
 
+  context '#propagates_org_ids' do
+    it 'is empty by default' do
+      expect(Lesson.new.propagation_org_ids).to eq([])
+    end
+
+    it 'can be updated' do
+      lesson = Lesson.new
+      lesson.propagation_org_ids = [1]
+      expect(lesson.propagation_org_ids).to eq([1])
+    end
+  end
 end
