@@ -43,9 +43,8 @@ module Admin
       @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
-      asl_is_new = @lesson.story_line_updated_at.nil?
       if @lesson.update(@lesson_params)
-        Unzipper.new(@lesson.story_line) if asl_is_new
+        Unzipper.new(@lesson.story_line) if @lesson.story_line_updated_at.nil?
         changed = propagate_changes? ? propagate_lesson_changes : 0
         redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated. Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}."
       else
@@ -110,7 +109,7 @@ module Admin
     end
 
     def propagate_changes?
-      @lesson.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.any?
+      @lesson.propagation_org_ids.delete_if(&:blank?).any? && ( attributes_to_change.any? || lesson_params[:story_line].present? )
     end
 
     def attributes_to_change
@@ -118,7 +117,17 @@ module Admin
     end
 
     def propagate_lesson_changes
-      Lesson.copied_from_lesson(@lesson).update_all(attributes_to_change)
+      lessons = Lesson.copied_from_lesson(@lesson)
+      
+      lessons.find_each do |lesson|
+        lesson.update(attributes_to_change)
+        if lesson_params[:story_line].present?
+          lesson.story_line = lesson_params[:story_line]
+          Unzipper.new(lesson.story_line) if lesson.save
+        end
+      end
+
+      lessons.size
     end
   end
 end
