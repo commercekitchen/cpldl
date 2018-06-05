@@ -44,7 +44,7 @@ module Admin
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
       if @lesson.update(@lesson_params)
-        Unzipper.new(@lesson.story_line) if @lesson.story_line_updated_at.nil?
+        Unzipper.new(@lesson.story_line) if lesson_params[:story_line].present?
         changed = propagate_changes? ? propagate_lesson_changes : 0
         redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated. Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}."
       else
