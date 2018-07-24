@@ -1,0 +1,18 @@
+.kclibrary {
+  @include color_scheme($kc-blue, $white, $kc-grey);
+  @include banner($kc-blue, $white, 2.5em);
+  @include buttons($kc-grey, $white);
+  @include course_widget($kc-grey, $kc-grey);
+  @include lesson_block($kc-blue, $grey, $kc-grey, $kc-grey);
+  @include icons($npl-blue, $npl-orange);
+
+  .icon-search,
+  .icon-search:before {
+    color: $kc-blue !important;
+  }
+
+  .footer-primary {
+    background-color: $kc-light-grey;
+    color: $kc-grey;
+  }
+}

@@ -65,6 +65,10 @@ $(document).ready(function() {
     ga("send", "event", "external link", "click", "Carnegie Library of Pittsburgh");
   });
 
+  $("footer").on("click", ".link-kclibrary", function(){
+    ga("send", "event", "external link", "click", "Kansas City Public Library");
+  });
+
   $("footer").on("click", ".link-pla", function() {
     ga("send", "event", "exernal link", "click", "Public Library Association");
   });

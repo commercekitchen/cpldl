@@ -51,6 +51,9 @@ en:
     carnegielibrary:
       custom_banner_greeting: "Build your computer skills and unlock your potential!<br>"
       logo_banner_html: ""
+    kclibrary:
+      custom_banner_greeting: "Build your computer skills and unlock your potential!<br>"
+      logo_banner_html: ""
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
@@ -63,6 +66,7 @@ en:
       pima: "Choose a course below to start learning or search courses."
       ebrpl: "Choose a topic below to start learning or use the search box at the top of the screen."
       carnegielibrary: "Choose a topic below to start learning or use the search box at the top of the screen."
+      kclibrary: "Choose a course below to start learning or search courses."
     new_to_computers: "If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed."
     search_courses: "Search Courses by Keyword"
     mins_abbr: "mins"
@@ -153,6 +157,8 @@ en:
       retake_the_quiz: "Retake the Quiz"
     carnegielibrary:
       retake_the_quiz: "Retake the Quiz"
+    kclibrary:
+      retake_the_quiz: "Retake the Quiz"
     course: "Course"
     date_completed: "Date Completed"
     certificate_of_completion: "Certificate of Completion"
@@ -177,6 +183,8 @@ en:
       course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     carnegielibrary:
       course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+    kclibrary:
+      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
     my_plan_click_to_start: "My Plan: Click on a course below and get started!"
     click_here_to_homepage: "click here to go to the homepage."
     completed_most_courses: "Have you completed most of the courses? If so,"
