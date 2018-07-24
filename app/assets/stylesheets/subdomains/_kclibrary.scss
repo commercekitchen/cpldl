@@ -1,18 +1,39 @@
 .kclibrary {
-  @include color_scheme($kc-blue, $white, $kc-grey);
+  @include color_scheme($kc-blue, $white, $kc-grey, left, $kc-light-grey, $kc-grey);
   @include banner($kc-blue, $white, 2.5em);
   @include buttons($kc-grey, $white);
   @include course_widget($kc-grey, $kc-grey);
-  @include lesson_block($kc-blue, $grey, $kc-grey, $kc-grey);
-  @include icons($npl-blue, $npl-orange);
+  @include lesson_block($kc-light-grey, $kc-light-grey, $kc-blue, $kc-blue);
+  @include icons($kc-blue, $kc-grey);
 
   .icon-search,
-  .icon-search:before {
+  .icon-search:before,
+  i:before {
     color: $kc-blue !important;
   }
 
   .footer-primary {
-    background-color: $kc-light-grey;
     color: $kc-grey;
+  }
+
+  &.login-new,
+  &.sessions-new,
+  &.registrations-new {
+    p {
+      color: $kc-blue;
+    }
+  }
+
+  a:not(.btn):not(.inverted) {
+    color: $kc-blue;
+  }
+
+  .course-widget.completed header {
+    background: linear-gradient(to bottom, $kc-blue 0%, $kc-blue 100%);
+  }
+
+  .lesson-block:hover,
+  .lesson-block:hover .lesson-title {
+    color: $kc-blue;
   }
 }
