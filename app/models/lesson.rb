@@ -63,7 +63,7 @@ class Lesson < ActiveRecord::Base
   before_destroy :delete_associated_asl_files
   before_destroy :delete_associated_user_completions
 
-  # default_scope { order("lesson_order") }
+  default_scope { order(:lesson_order) }
   scope :published, -> { where(pub_status: "P") }
   scope :copied_from_lesson, -> (lesson) do
     joins(course: :organization)
