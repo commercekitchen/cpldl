@@ -4,7 +4,7 @@
   @include buttons($kc-grey, $white);
   @include course_widget($kc-grey, $kc-grey);
   @include lesson_block($kc-light-grey, $kc-light-grey, $kc-blue, $kc-blue);
-  @include icons($kc-blue, $kc-grey);
+  @include icons($kc-blue, $kc-blue);
 
   .icon-search,
   .icon-search:before,
