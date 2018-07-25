@@ -3,7 +3,7 @@
   @include banner($kc-blue, $white, 2.5em);
   @include buttons($kc-grey, $white);
   @include course_widget($kc-grey, $kc-grey);
-  @include lesson_block($kc-light-grey, $kc-light-grey, $kc-blue, $kc-blue);
+  @include lesson_block($kc-grey, $kc-blue, $kc-blue, $kc-blue);
   @include icons($kc-blue, $kc-blue);
 
   .icon-search,
