@@ -1,14 +1,18 @@
 @mixin lesson_block($bg-color, $completed-bg-color, $arrow-color, $check-color) {
+  .sortable-item {
+    @include span-columns(3);
+    display: inline-block;
+  }
+
+
   .lesson-block {
     height: 222px;
     width: 222px;
     background-color: $bg-color;
     color: $white;
     margin-bottom: 2em;
-    margin-right: 2.8em;
     position: relative;
     cursor: pointer;
-    float: left;
 
     @include media($desktop) {
       &:nth-child(4n) {
@@ -62,7 +66,7 @@
     }
 
     .default-state {
-      display: block;
+      display: inline-block;
       text-align: center;
     }
 
@@ -126,7 +130,7 @@
       }
 
       .hover-state {
-        display: block;
+        display: inline-block;
       }
     }
   }
