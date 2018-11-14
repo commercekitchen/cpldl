@@ -19,8 +19,7 @@ describe "home/index.html.erb" do
     it "displays the admin message" do
       sign_in @admin
       render
-      expect(rendered).to have_content("Edit a course by clicking on a course below,
-        search courses or navigate to the Admin Dashboard.")
+      expect(rendered).to have_content("Edit a course by clicking on a course below,")
     end
   end
 
@@ -28,9 +27,7 @@ describe "home/index.html.erb" do
     it "displays the user message" do
       sign_in @user
       render
-      expect(rendered).to have_content(
-        "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
-      )
+      expect(rendered).to have_content("Choose a course below to start learning")
     end
   end
 
