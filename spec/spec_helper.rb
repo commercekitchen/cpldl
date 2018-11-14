@@ -99,11 +99,6 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
-  # Allow js tests on test subdomain
-  Capybara::Webkit.configure do |config|
-    config.allow_url("chipublib.lvh.me")
-  end
 end
 
 def set_devise_env

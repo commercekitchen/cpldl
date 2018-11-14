@@ -1,6 +1,8 @@
 require "rails_helper"
 require "capybara/rails"
 require "capybara/rspec"
+require "selenium/webdriver"
+require "webmock/rspec"
 
 def log_in_with(email, password)
   visit new_user_session_path
@@ -30,10 +32,25 @@ def change_password(password)
   click_button "Save"
 end
 
-Capybara.javascript_driver = :webkit
-Capybara::Webkit.configure do |config|
-  config.allow_url("fonts.googleapis.com")
-  config.allow_url("https://www.google.com/recaptcha/api.js")
-  config.allow_url("www.gstatic.com") # Recaptcha
-  # config.debug = true
+Capybara.server = :webrick
+
+# Use Selenium and Chromedriver for feature specs because
+# webkit is broken for newer versions of xcode/macOS
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, browser: :chrome)
 end
+
+Capybara.register_driver :headless_chrome do |app|
+  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+    chromeOptions: { args: %w(headless disable-gpu) }
+  )
+
+  Capybara::Selenium::Driver.new app,
+    browser: :chrome,
+    desired_capabilities: capabilities
+end
+
+Capybara.javascript_driver = :headless_chrome
+
+# Configure webmock to disallow network connections
+WebMock.disable_net_connect!(allow_localhost: true)

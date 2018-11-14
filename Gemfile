@@ -101,13 +101,15 @@ end
 group :test do
   gem 'launchy'
   gem 'factory_girl_rails'
-  gem 'capybara-webkit'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
   gem 'mocha'
   gem 'database_cleaner'
   gem 'codeclimate-test-reporter'
   gem 'simplecov', require: false
-  gem "shoulda-matchers"
-  gem "timecop"
+  gem 'shoulda-matchers'
+  gem 'timecop'
+  gem 'webmock'
 end
 
 group :development, :staging do
