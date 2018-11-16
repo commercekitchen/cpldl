@@ -112,7 +112,7 @@ Rails.application.routes.draw do
     resources :attachments, only: [:destroy]
   end
 
-  devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invites' }
+  devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invites', sessions: 'sessions' }
   get 'users/invitation/accept', to: 'devise/invitations#edit'
   # accept_user_invitation GET    /users/invitation/accept(.:format) devise/invitations#edit
 

@@ -72,6 +72,7 @@ en:
     mins_abbr: "mins"
   login_signup:
     already_have_an_account: "Already have an account? Log in using your email address and password below."
+    already_have_an_account_card_number: "Already have an account? Log in using your library card number and PIN below"
     email: "Email"
     password: "Password"
     keep_me_logged_in: "Keep me logged in"
@@ -99,6 +100,7 @@ en:
     program_type_prompt: "Are you a participant in one of the Library’s Technology Training Programs?"
     no_program_selected: "Select Program..."
     library_card_number: "Library Card #"
+    library_card_pin: "Library Card PIN"
     your_library: "What's your library called?"
   logged_in_user:
     hi: Hi
