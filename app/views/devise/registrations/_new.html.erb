@@ -8,14 +8,21 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-    <div class="form-group no-bottom-margin">
-      <%= label_tag "signup_email", "Email", class: "screen-reader-text" %>
-      <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "#{t('login_signup.email')} *" %>
-    </div>
+    <% if current_organization.library_card_login? %>
+      <div class="form-group no-bottom-margin">
+        <%= label_tag :library_card_number, t('login_signup.library_card_number'), class: "screen-reader-text" %>
+        <%= f.text_field :library_card_number, autofocus: true, id: "library_card_number", placeholder: "#{t('login_signup.library_card_number')} *" %>
+      </div>
+    <% else %>
+      <div class="form-group no-bottom-margin">
+        <%= label_tag "signup_email", "Email", class: "screen-reader-text" %>
+        <%= f.email_field :email, autofocus: true, id: "signup_email", placeholder: "#{t('login_signup.email')} *" %>
+      </div>
 
-    <p class="small-14 grey extra-bottom-margin">
-      <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "#{t('login_signup.tutorial_link')}", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
-    </p>
+      <p class="small-14 grey extra-bottom-margin">
+        <%= t('login_signup.dont_have_email') %> <%= link_to "#{t('login_signup.click_here')}", "#{t('login_signup.tutorial_link')}", target: "_blank" %> <%= t('login_signup.open_a_tutorial') %>
+      </p>
+    <% end %>
 
     <%# TODO: this isn't right, it should be built in the controller, and only if it doesn't already exist, like in an error situation. %>
     <%# otherwise we just wipe out entered information. %>
@@ -41,20 +48,27 @@
       <% end %>
     <% end %>
 
-    <div class="form-group">
-      <%= label_tag "signup_password", t("login_signup.your_password"), class: "signup-label" %>
-      <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
-    </div>
+    <% if current_organization.library_card_login? %>
+      <div class="form-group">
+        <%= label_tag "library_card_pin", t("login_signup.library_card_pin"), class: "screen-reader-text" %>
+        <%= f.text_field :library_card_pin, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false", id: "library_card_pin", placeholder: "#{t('login_signup.library_card_pin')} *" } %>
+      </div>
+    <% else %>
+      <div class="form-group">
+        <%= label_tag "signup_password", t("login_signup.your_password"), class: "signup-label" %>
+        <%= f.text_field :password, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  id: "signup_password",  placeholder: "#{t('login_signup.your_password')} *" } %>
+      </div>
 
-    <div class="form-group">
-      <%= f.label :password_confirmation, class: "screen-reader-text" %>
-      <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
-    </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: "screen-reader-text" %>
+        <%= f.text_field :password_confirmation, { autocomplete: "off",  autocorrect: "off",  autocapitalize: "off", spellcheck: "false",  placeholder: "#{t('login_signup.re_enter_password')} *" } %>
+      </div>
 
-    <div class="form-group">
-      <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
-      <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
-    </div>
+      <div class="form-group">
+        <%= check_box_tag('hide_signup_pass', '1', false, onchange: 'hide_signup_password(this);') %>
+        <%= label_tag('hide_signup_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
+      </div>
+    <% end %>
 
     <% if current_organization.accepts_programs? %>
       <%= render partial: 'devise/registrations/programs_registration_form', locals: { f: f } %>

@@ -2,13 +2,14 @@
 #
 # Table name: organizations
 #
-#  id               :integer          not null, primary key
-#  name             :string
-#  subdomain        :string
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  branches         :boolean
-#  accepts_programs :boolean
+#  id                 :integer          not null, primary key
+#  name               :string
+#  subdomain          :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  branches           :boolean
+#  accepts_programs   :boolean
+#  library_card_login :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
@@ -18,6 +19,10 @@ FactoryGirl.define do
 
     trait :accepts_programs do
       accepts_programs true
+    end
+
+    trait :library_card_login do
+      library_card_login true
     end
   end
 end

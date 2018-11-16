@@ -55,4 +55,43 @@ feature "User signs up" do
     end
   end
 
+  context "for a library_card_login organization" do
+    let(:lib_card_number) { 13.times.map{rand(10)}.join }
+    let(:lib_card_pin) { 4.times.map{rand(10)}.join }
+    let(:first_name) { Faker::Name.first_name }
+    let(:zip_code) { 5.times.map{rand(10)}.join }
+
+
+    before(:each) do
+      @org = create(:organization, :library_card_login)
+      switch_to_subdomain(@org.subdomain)
+    end
+
+    scenario "with valid library card, library card pin, first name" do
+      visit login_path
+      find("#library_card_number").set(lib_card_number)
+      find("#library_card_pin").set(lib_card_pin)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      click_button "Sign Up"
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
+
+      user = User.last
+      expect(user.profile.first_name).to eq(first_name)
+      expect(user.profile.zip_code).to eq(zip_code)
+    end
+
+    scenario "with invalid library card number" do
+    end
+
+    scenario "without zip code" do
+    end
+
+    scenario "without first name" do
+    end
+
+    scenario "with blank password" do
+    end
+  end
+
 end

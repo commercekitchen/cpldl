@@ -29,6 +29,10 @@ class RegistrationsController < Devise::RegistrationsController
       params[:user][:date_of_birth] = Date.new(year, month, day)
     end
 
+    if current_organization.library_card_login?
+      params[:user] = convert_library_card_pin_to_password(params[:user])
+    end
+
     params.require(:user).permit(list_params).merge(organization_id: current_organization.id)
   end
 
@@ -60,6 +64,21 @@ class RegistrationsController < Devise::RegistrationsController
       :school_id
     ] if params[:user][:acting_as] == "Student"
 
+    list_params_allowed << [
+      :library_card_number
+    ] if current_organization.library_card_login?
+
     list_params_allowed
+  end
+
+  def convert_library_card_pin_to_password(user_params)
+    return user_params unless user_params[:library_card_pin].present?
+
+    hashed_pin = Digest::MD5.hexdigest(user_params[:library_card_pin]).first(10)
+    user_params[:password] = hashed_pin
+    user_params[:password_confirmation] = hashed_pin
+
+    user_params = user_params.except(:library_card_pin)
+    user_params
   end
 end

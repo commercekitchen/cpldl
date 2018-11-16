@@ -74,6 +74,39 @@ class User < ActiveRecord::Base
 
   ROLES = %w(Admin Trainer User Parent Student)
 
+  ### Devise overrides to allow library card number login
+
+  attr_accessor :library_card_pin
+  attr_writer :login
+
+  def login
+    @login || (
+      if self.organization.library_card_login?
+        self.library_card_number
+      else
+        self.email
+      end
+    )
+  end
+
+  def email_required?
+    if organization.library_card_login?
+      false
+    else
+      super
+    end
+  end
+
+  def email_changed?
+    if organization.library_card_login?
+      false
+    else
+      super
+    end
+  end
+
+  ###
+
   def organization_id_to_be_deleted
     roles.find_by_resource_type("Organization").resource_id
   end
