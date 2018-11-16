@@ -66,6 +66,7 @@ es:
     mins_abbr: "min"
   login_signup:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
+    already_have_an_account_card_number: "¿Ya tiene una cuenta? Use su número de tarjeta de biblioteca y su PIN de tarjeta de biblioteca para iniciar sesión."
     email: "Correo electrónico"
     password: "Contraseña"
     keep_me_logged_in: "No cerrar sesión"
@@ -90,6 +91,7 @@ es:
     grade: "Grado"
     school: "Escuela"
     library_card_number: "Número de tarjeta de biblioteca"
+    library_card_pin: "PIN de tarjeta de biblioteca"
     program: "Información de la tarjeta de biblioteca"
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
     no_program_selected: "Seleccione el programa..."
