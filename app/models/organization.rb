@@ -43,6 +43,22 @@ class Organization < ActiveRecord::Base
     subdomain == 'www'
   end
 
+  def authentication_key_field
+    if library_card_login?
+      :library_card_number
+    else
+      :email
+    end
+  end
+
+  def password_key_field
+    if library_card_login?
+      :library_card_pin
+    else
+      :password
+    end
+  end
+
   private
 
   def users

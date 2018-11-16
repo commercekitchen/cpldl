@@ -23,6 +23,7 @@ feature "User logs in" do
 
   scenario "with invalid or blank email" do
     log_in_with "", "password"
+
     expect(page).to have_content("Invalid email or password.")
 
     log_in_with "not@real.com", "password"

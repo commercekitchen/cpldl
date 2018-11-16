@@ -81,12 +81,16 @@ class User < ActiveRecord::Base
 
   def login
     @login || (
-      if self.organization.library_card_login?
+      if self.organization.present? && self.organization.library_card_login?
         self.library_card_number
       else
         self.email
       end
     )
+  end
+
+  def login_type_string
+    'foobar'
   end
 
   def email_required?
@@ -102,6 +106,15 @@ class User < ActiveRecord::Base
       false
     else
       super
+    end
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_h).where(["library_card_number = :value OR email = :value", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:library_card_number) || conditions.has_key?(:email)
+      where(conditions.to_h).first
     end
   end
 
