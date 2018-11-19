@@ -76,6 +76,9 @@ class User < ActiveRecord::Base
   # Encrypt library card pin for security
   attr_encrypted :library_card_pin, key: Rails.application.secrets.secret_key_base
 
+  # Save blank emails as NULL
+  nilify_blanks only: [:email]
+
   # Validate card number and pin for library card logins
   validates_format_of :library_card_number, with: /\A[0-9]{13}\z/, if: :library_card_login?
   validates_format_of :library_card_pin, with: /\A[0-9]{4}\z/, if: :library_card_login?

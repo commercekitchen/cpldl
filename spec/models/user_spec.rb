@@ -163,6 +163,13 @@ describe User do
       user = User.new(user_params)
       expect(user).to be_valid
     end
+
+    it 'should be valid for second user' do
+      user = User.create(user_params)
+      user2 = User.new(user_params.merge(library_card_number: 13.times.map{rand(10)}.join))
+      expect(user2).to be_valid
+      expect(user2.save).to be_truthy
+    end
   end
 
   context "#add_user_token" do

@@ -60,6 +60,9 @@ gem 'rack-attack'
 # Encrypt attributes to avoid storing plaintext in DB
 gem 'attr_encrypted'
 
+# Cast blanks to nil
+gem 'nilify_blanks'
+
 # integrate chosen library
 # gem 'select2-rails'
 

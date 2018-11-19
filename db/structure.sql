@@ -897,7 +897,7 @@ ALTER SEQUENCE topics_id_seq OWNED BY topics.id;
 
 CREATE TABLE users (
     id integer NOT NULL,
-    email character varying DEFAULT ''::character varying NOT NULL,
+    email character varying DEFAULT ''::character varying,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
     reset_password_token character varying,
     reset_password_sent_at timestamp without time zone,
@@ -1768,4 +1768,6 @@ INSERT INTO schema_migrations (version) VALUES ('20181115233025');
 INSERT INTO schema_migrations (version) VALUES ('20181119174344');
 
 INSERT INTO schema_migrations (version) VALUES ('20181119193248');
+
+INSERT INTO schema_migrations (version) VALUES ('20181119194721');
 
