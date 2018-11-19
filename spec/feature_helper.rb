@@ -11,6 +11,13 @@ def log_in_with(email, password)
   click_button "Access Courses"
 end
 
+def spanish_log_in_with(email, password)
+  visit new_user_session_path
+  find("#login_email").set(email)
+  find("#login_password").set(password)
+  click_button "Accesar Cursos"
+end
+
 def log_out
   click_link "Sign Out"
 end

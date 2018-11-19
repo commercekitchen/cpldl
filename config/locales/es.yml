@@ -22,8 +22,23 @@
 es:
   activerecord:
     attributes:
+      profile:
+        last_name: "Apellido"
       category:
         name: "Nombre de la Categoría"
+      cms_page:
+        meta_desc: "Metadescripción"
+      user:
+        library_card_number: "Número de tarjeta de biblioteca"
+        library_card_pin: "PIN de tarjeta de biblioteca"
+        email: "Email"
+        password: "Contraseña"
+    errors:
+      models:
+        profile:
+          attributes:
+            last_name:
+              blank: "no puede estar en blanco"
   home:
     www:
       custom_banner_greeting: ""
@@ -244,16 +259,6 @@ es:
     set_three_6: "Usar internet de manera más segura."
     set_three_7: "Aprender una aplicación específica como Microsoft Word."
     set_three_8: "Usar Internet para encontrar información."
-  activerecord:
-    attributes:
-      profile:
-        last_name: "Apellido"
-    errors:
-      models:
-        profile:
-          attributes:
-            last_name:
-              blank: "no puede estar en blanco"
   google_analytics_url:
     www: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w66482317p68369117/"
     chipublib: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w107924237p112444339/"

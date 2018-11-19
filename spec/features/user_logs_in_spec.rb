@@ -25,18 +25,30 @@ feature "User logs in" do
     scenario "with invalid or blank email" do
       log_in_with "", "password"
 
-      expect(page).to have_content("Invalid email or password.")
+      expect(page).to have_content("Invalid Email or Password.")
 
       log_in_with "not@real.com", "password"
-      expect(page).to have_content("Invalid email or password.")
+      expect(page).to have_content("Invalid Email or Password.")
     end
 
     scenario "with blank password" do
       log_in_with "valid@example.com", ""
-      expect(page).to have_content("Invalid email or password.")
+      expect(page).to have_content("Invalid Email or Password.")
 
       log_in_with "valid@example.com", "no correct pwd"
-      expect(page).to have_content("Invalid email or password.")
+      expect(page).to have_content("Invalid Email or Password.")
+    end
+
+    scenario "spanish language user with invalid email" do
+      user = create(:user, organization: @org)
+      user.add_role(:user, @org)
+
+      visit root_path
+
+      click_link "Español"
+
+      spanish_log_in_with "", "password"
+      expect(page).to have_content("Email o Contraseña no válidos.")
     end
 
     scenario "first time login non-program org" do
@@ -111,32 +123,82 @@ feature "User logs in" do
   end
 
   context "library card number and pin" do
-    let(:organization) { create(:organization, :library_card_login) }
-    let(:card_number) { 13.times.map{rand(10)}.join }
-    let(:card_pin) { 4.times.map{rand(10)}.join }
-    let(:first_name) { Faker::Name.first_name }
-    let(:zip_code) { 5.times.map{rand(10)}.join }
+    context "new registration" do
+      let(:organization) { create(:organization, :library_card_login) }
+      let(:card_number) { 13.times.map{rand(10)}.join }
+      let(:card_pin) { 4.times.map{rand(10)}.join }
+      let(:first_name) { Faker::Name.first_name }
+      let(:zip_code) { 5.times.map{rand(10)}.join }
 
-    before(:each) do
-      @spanish = create(:spanish_lang)
-      @english = create(:language)
-      switch_to_subdomain(organization.subdomain)
+      before(:each) do
+        @spanish = create(:spanish_lang)
+        @english = create(:language)
+        switch_to_subdomain(organization.subdomain)
+      end
+
+      scenario "registers with card number and pin then signs in" do
+        library_card_sign_up_with(card_number, card_pin, first_name, zip_code)
+
+        click_link "Sign Out"
+
+        user = User.last
+
+        log_in_with(card_number, card_pin)
+        expect(current_path).to eq(root_path)
+        expect(page).to_not have_content("Signed in successfully.")
+        expect(page).to have_content("Use a computer to do almost anything!")
+        expect(page).to have_content(
+          "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
+        )
+      end
     end
 
-    scenario "registers with card number and pin then signs in" do
-      library_card_sign_up_with(card_number, card_pin, first_name, zip_code)
+    context "user already exists" do
+      let(:org) { create(:organization, :library_card_login) }
+      let(:user) { create(:library_card_login_user, organization: org) }
 
-      click_link "Sign Out"
+      before(:each) do
+        @spanish = create(:spanish_lang)
+        @english = create(:language)
+        switch_to_subdomain(org.subdomain)
+      end
 
-      user = User.last
+      scenario "with invalid library card number" do
+        log_in_with("12345", user.library_card_pin)
+        expect(current_path).to eq(new_user_session_path)
+        expect(page).to have_content("Invalid Library Card Number or Library Card PIN")
+      end
 
-      log_in_with(card_number, card_pin)
-      expect(current_path).to eq(root_path)
-      expect(page).to_not have_content("Signed in successfully.")
-      expect(page).to have_content("Use a computer to do almost anything!")
-      expect(page).to have_content(
-        "Choose a course below to start learning, or visit My Courses to view your customized learning plan."
-      )
+      scenario "with invalid pin" do
+        log_in_with(user.library_card_number, '123')
+        expect(current_path).to eq(new_user_session_path)
+        expect(page).to have_content("Invalid Library Card Number or Library Card PIN")
+      end
+    end
+
+    context "spanish language user" do
+      let(:org) { create(:organization, :library_card_login) }
+      let(:user) { create(:library_card_login_user, organization: org) }
+
+      before(:each) do
+        @spanish = create(:spanish_lang)
+        @english = create(:language)
+        switch_to_subdomain(org.subdomain)
+        visit root_path
+        click_link("Español")
+      end
+
+      scenario "with invalid library card number" do
+        spanish_log_in_with("12345", user.library_card_pin)
+        expect(current_path).to eq(new_user_session_path)
+        expect(page).to have_content("Número de tarjeta de biblioteca o PIN de tarjeta de biblioteca no válidos")
+      end
+
+      scenario "with invalid pin" do
+        spanish_log_in_with(user.library_card_number, '123')
+        expect(current_path).to eq(new_user_session_path)
+        expect(page).to have_content("Número de tarjeta de biblioteca o PIN de tarjeta de biblioteca no válidos")
+      end
     end
   end
 
