@@ -4,8 +4,8 @@ require "capybara/rspec"
 require "selenium/webdriver"
 require "webmock/rspec"
 
-def log_in_with(email, password)
-  visit new_user_session_path
+def log_in_with(email, password, admin=nil)
+  visit new_user_session_path(admin: admin)
   find("#login_email").set(email)
   find("#login_password").set(password)
   click_button "Access Courses"

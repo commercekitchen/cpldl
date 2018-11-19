@@ -8,7 +8,7 @@
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
     <%= devise_error_messages! %>
 
-    <% if current_organization.library_card_login? %>
+    <% if @library_card_login %>
       <div class="form-group no-bottom-margin">
         <%= label_tag :library_card_number, t('login_signup.library_card_number'), class: "screen-reader-text" %>
         <%= f.text_field :library_card_number, autofocus: true, id: "library_card_number", placeholder: "#{t('login_signup.library_card_number')} *" %>
@@ -48,7 +48,7 @@
       <% end %>
     <% end %>
 
-    <% if current_organization.library_card_login? %>
+    <% if @library_card_login %>
       <div class="form-group">
         <%= label_tag "library_card_pin", t("login_signup.library_card_pin"), class: "screen-reader-text" %>
         <%= f.text_field :library_card_pin, { autocomplete: "off", autocorrect: "off",  autocapitalize: "off", spellcheck: "false", id: "library_card_pin", placeholder: "#{t('login_signup.library_card_pin')} *" } %>

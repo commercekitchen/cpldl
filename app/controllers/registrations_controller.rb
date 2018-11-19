@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  prepend_before_action :set_library_card_login
   after_action :create_organization_user_entry
 
   def create
@@ -20,6 +21,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   private
+
+  def set_library_card_login
+    @library_card_login = current_organization.library_card_login? && !params[:admin]
+  end
 
   def sign_up_params
 

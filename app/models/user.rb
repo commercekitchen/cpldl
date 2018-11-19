@@ -71,8 +71,6 @@ class User < ActiveRecord::Base
   validates_associated :profile
   before_create :add_token_to_user
 
-  delegate :library_card_login?, to: :organization
-
   # Encrypt library card pin for security
   attr_encrypted :library_card_pin, key: Rails.application.secrets.secret_key_base
 
@@ -95,7 +93,7 @@ class User < ActiveRecord::Base
 
   def login
     @login || (
-      if self.organization.present? && self.organization.library_card_login?
+      if self.organization.present? && library_card_login?
         self.library_card_number
       else
         self.email
@@ -130,6 +128,10 @@ class User < ActiveRecord::Base
     elsif conditions.has_key?(:library_card_number) || conditions.has_key?(:email)
       where(conditions.to_h).first
     end
+  end
+
+  def library_card_login?
+    self.organization.library_card_login? && !self.has_role?(:admin, self.organization)
   end
 
   ###
