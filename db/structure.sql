@@ -936,7 +936,8 @@ CREATE TABLE users (
     date_of_birth timestamp without time zone,
     grade integer,
     quiz_responses_object text,
-    program_id integer
+    program_id integer,
+    library_card_pin character varying
 );
 
 
@@ -1762,4 +1763,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171220180542');
 INSERT INTO schema_migrations (version) VALUES ('20180510205122');
 
 INSERT INTO schema_migrations (version) VALUES ('20181115233025');
+
+INSERT INTO schema_migrations (version) VALUES ('20181119174344');
 

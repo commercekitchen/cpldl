@@ -25,6 +25,15 @@ def sign_up_with(email, password, first_name, zip_code)
   click_button "Sign Up"
 end
 
+def library_card_sign_up_with(card_number, card_pin, first_name, zip_code)
+  visit login_path
+  find("#library_card_number").set(card_number)
+  find("#library_card_pin").set(card_pin)
+  find("#user_profile_attributes_first_name").set(first_name)
+  find("#user_profile_attributes_zip_code").set(zip_code)
+  click_button "Sign Up"
+end
+
 def change_password(password)
   visit profile_path
   fill_in "user_password", with: password

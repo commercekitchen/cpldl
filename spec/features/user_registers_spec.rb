@@ -60,7 +60,10 @@ feature "User signs up" do
     let(:lib_card_pin) { 4.times.map{rand(10)}.join }
     let(:first_name) { Faker::Name.first_name }
     let(:zip_code) { 5.times.map{rand(10)}.join }
-
+    let(:invalid_card_number_short) { 10.times.map{rand(10)}.join }
+    let(:invalid_card_number_long) { 15.times.map{rand(10)}.join }
+    let(:invalid_pin_short) { 3.times.map{rand(10)}.join }
+    let(:invalid_pin_long) { 5.times.map{rand(10)}.join }
 
     before(:each) do
       @org = create(:organization, :library_card_login)
@@ -68,12 +71,7 @@ feature "User signs up" do
     end
 
     scenario "with valid library card, library card pin, first name" do
-      visit login_path
-      find("#library_card_number").set(lib_card_number)
-      find("#library_card_pin").set(lib_card_pin)
-      find("#user_profile_attributes_first_name").set(first_name)
-      find("#user_profile_attributes_zip_code").set(zip_code)
-      click_button "Sign Up"
+      library_card_sign_up_with(lib_card_number, lib_card_pin, first_name, zip_code)
       expect(page).to have_content("This is the first time you have logged in, please update your profile.")
 
       user = User.last
@@ -81,16 +79,48 @@ feature "User signs up" do
       expect(user.profile.zip_code).to eq(zip_code)
     end
 
-    scenario "with invalid library card number" do
+    scenario "with short library card number" do
+      library_card_sign_up_with(invalid_card_number_short, lib_card_pin, first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to have_content("Library Card Number is invalid")
+    end
+
+    scenario "with long library card number" do
+      library_card_sign_up_with(invalid_card_number_long, lib_card_pin, first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to have_content("Library Card Number is invalid")
+    end
+
+    scenario "with short pin" do
+      library_card_sign_up_with(lib_card_number, invalid_pin_short, first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to have_content("Library Card PIN is invalid")
+    end
+
+    scenario "with long pin" do
+      library_card_sign_up_with(lib_card_number, invalid_pin_long, first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to have_content("Library Card PIN is invalid")
+    end
+
+    scenario "with blank Library Card PIN" do
+      library_card_sign_up_with(lib_card_number, "", first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to have_content("Library Card PIN is invalid")
     end
 
     scenario "without zip code" do
+      library_card_sign_up_with(lib_card_number, lib_card_pin, first_name, "")
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
+
+      user = User.last
+      expect(user.profile.first_name).to eq(first_name)
+      expect(user.profile.zip_code).to eq("")
     end
 
     scenario "without first name" do
-    end
-
-    scenario "with blank password" do
+      library_card_sign_up_with(lib_card_number, lib_card_pin, "", zip_code)
+      expect(page).to have_content("Profile first name can't be blank")
     end
   end
 

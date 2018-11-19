@@ -43,6 +43,7 @@
 #  grade                  :integer
 #  quiz_responses_object  :text
 #  program_id             :integer
+#  library_card_pin       :string
 #
 
 FactoryGirl.define do
@@ -53,6 +54,19 @@ FactoryGirl.define do
     sign_in_count 2
     organization
     profile
+  end
+
+  factory :library_card_login_user, class: User do
+    library_card_number { 13.times.map{rand(10)}.join }
+    library_card_pin { 4.times.map{rand(10)}.join }
+    confirmed_at Time.zone.now.to_s
+    sign_in_count 0
+    organization
+    profile
+
+    before(:create) do |user|
+      user.password = Digest::MD5.hexdigest(user.library_card_pin).first(10)
+    end
   end
 
   factory :first_time_user, class: User do

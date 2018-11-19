@@ -125,4 +125,53 @@ feature "Registered user visits account page" do
 
   end
 
+  context "belongs to library card login organization" do
+    let(:org) { FactoryGirl.create(:organization, :library_card_login) }
+    let(:user) { FactoryGirl.create(:library_card_login_user, organization: org) }
+
+    before(:each) do
+      switch_to_subdomain(org.subdomain)
+      Language.all.each(&:destroy)
+      @spanish = create(:spanish_lang)
+      # English gets created from factories
+      user.update(sign_in_count: 2) # To prevent first time sign in events
+      log_in_with(user.library_card_number, user.library_card_pin)
+    end
+
+    scenario "can view their account options" do
+      visit account_path
+      expect(page).to_not have_content("Change Login Information") # Library Card login users shouldn't see this
+      expect(page).to have_content("Update Profile")
+      expect(page).to have_content("My Completed Courses")
+    end
+
+    scenario "can update their profile information" do
+      visit profile_path
+      fill_in "First Name", with: "Alex"
+      fill_in "Zip Code", with: "12345"
+      select("English", from: "profile_language_id")
+      click_button "Save"
+
+      user.reload
+      expect(user.profile.first_name).to eq("Alex")
+      expect(user.profile.zip_code).to eq("12345")
+      expect(user.profile.language.name).to eq("English")
+    end
+
+    scenario "can change language preference" do
+      visit profile_path
+      select("Spanish", from: "profile_language_id")
+      click_button "Save"
+
+      expect(page).to have_content "El perfil se actualizó correctamente."
+      expect(page).to have_content "Idioma de preferencia"
+
+      select("English", from: "profile_language_id")
+      click_button "Guardar"
+
+      expect(page).to have_content "Profile was successfully updated."
+      expect(page).to have_content "Preferred Language"
+    end
+  end
+
 end

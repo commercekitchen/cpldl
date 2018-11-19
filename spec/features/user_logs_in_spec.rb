@@ -124,12 +124,7 @@ feature "User logs in" do
     end
 
     scenario "registers with card number and pin then signs in" do
-      visit login_path
-      find("#library_card_number").set(card_number)
-      find("#library_card_pin").set(card_pin)
-      find("#user_profile_attributes_first_name").set(first_name)
-      find("#user_profile_attributes_zip_code").set(zip_code)
-      click_button "Sign Up"
+      library_card_sign_up_with(card_number, card_pin, first_name, zip_code)
 
       click_link "Sign Out"
 

@@ -43,6 +43,7 @@
 #  grade                  :integer
 #  quiz_responses_object  :text
 #  program_id             :integer
+#  library_card_pin       :string
 #
 
 class User < ActiveRecord::Base
@@ -69,12 +70,19 @@ class User < ActiveRecord::Base
   validates_associated :profile
   before_create :add_token_to_user
 
+  delegate :library_card_login?, to: :organization
+
+  # Validate card number and pin for library card logins
+  validates_format_of :library_card_number, with: /\A[0-9]{13}\z/, if: :library_card_login?
+  validates_format_of :library_card_pin, with: /\A[0-9]{4}\z/, if: :library_card_login?
+
   # Serialized hash of quiz responses
   serialize :quiz_responses_object
 
   ROLES = %w(Admin Trainer User Parent Student)
 
   ### Devise overrides to allow library card number login
+  # TODO: Pull this into a concern
 
   attr_accessor :library_card_pin
   attr_writer :login

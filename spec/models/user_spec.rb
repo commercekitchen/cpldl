@@ -43,6 +43,7 @@
 #  grade                  :integer
 #  quiz_responses_object  :text
 #  program_id             :integer
+#  library_card_pin       :string
 #
 
 require "rails_helper"
@@ -141,6 +142,25 @@ describe User do
     it "returns preferred language" do
       @user.profile = FactoryGirl.create(:profile, language: FactoryGirl.create(:language))
       expect(@user.preferred_language).to eq("English")
+    end
+  end
+
+  context "library card login user" do
+    let(:org) { FactoryGirl.create(:organization, :library_card_login) }
+    let(:pin) { 4.times.map{rand(10)}.join }
+    let(:user_params) {
+      {
+        library_card_number: 13.times.map{rand(10)}.join,
+        library_card_pin: pin,
+        organization_id: org.id,
+        password: Digest::MD5.hexdigest(pin).first(10),
+        password_confirmation: Digest::MD5.hexdigest(pin).first(10)
+      }
+    }
+
+    it 'should be valid' do
+      user = User.new(user_params)
+      expect(user).to be_valid
     end
   end
 

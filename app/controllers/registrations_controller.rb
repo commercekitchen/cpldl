@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     @user = User.new(sign_up_params)
+
     if verify_recaptcha(model: @user)
       super
     else
@@ -65,7 +66,8 @@ class RegistrationsController < Devise::RegistrationsController
     ] if params[:user][:acting_as] == "Student"
 
     list_params_allowed << [
-      :library_card_number
+      :library_card_number,
+      :library_card_pin
     ] if current_organization.library_card_login?
 
     list_params_allowed
@@ -78,7 +80,6 @@ class RegistrationsController < Devise::RegistrationsController
     user_params[:password] = hashed_pin
     user_params[:password_confirmation] = hashed_pin
 
-    user_params = user_params.except(:library_card_pin)
     user_params
   end
 end
