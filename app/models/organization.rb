@@ -24,8 +24,8 @@ class Organization < ActiveRecord::Base
   has_many :categories, dependent: :destroy
   validate
 
-  scope :using_lesson, -> (lesson_id) { includes(courses: :lessons).where(lessons: {parent_id: lesson_id}) }
-  scope :using_course, -> (course_id) { includes(:courses).where(courses: {parent_id: course_id}) }
+  scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
+  scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
 
   def user_count
     users.count
@@ -40,7 +40,7 @@ class Organization < ActiveRecord::Base
   end
 
   def base_site?
-    subdomain == 'www'
+    subdomain == "www"
   end
 
   def authentication_key_field

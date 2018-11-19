@@ -235,10 +235,10 @@ describe Admin::CoursesController do
         @course1.propagation_org_ids = [org.id]
         @course2.update(parent_id: @course1.id)
         patch :update,
-              { id: @course1.to_param, course: @course1.attributes.merge(propagation_org_ids: [org.id], title: 'Test Course'), commit: "Save Course" }
+              { id: @course1.to_param, course: @course1.attributes.merge(propagation_org_ids: [org.id], title: "Test Course"), commit: "Save Course" }
 
         @course2.reload
-        expect(@course2.title).to eq('Test Course')
+        expect(@course2.title).to eq("Test Course")
       end
     end
   end

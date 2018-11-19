@@ -189,7 +189,7 @@ module Admin
     end
 
     def attributes_to_change
-      course_params.delete_if {|k, _| !@course.previous_changes.keys.include?(k.to_s)}
+      course_params.delete_if { |k, _| !@course.previous_changes.keys.include?(k.to_s) }
     end
 
     def propagate_course_changes

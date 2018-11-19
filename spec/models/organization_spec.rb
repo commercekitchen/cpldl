@@ -34,9 +34,9 @@ RSpec.describe Organization, type: :model do
   it { should have_many(:cms_pages) }
   it { should have_many(:library_locations) }
 
-  describe 'scopes' do
-    describe 'using_lesson' do
-      it 'includes only orgs using the passed lesson' do
+  describe "scopes" do
+    describe "using_lesson" do
+      it "includes only orgs using the passed lesson" do
         lesson_org = create(:organization)
         other_org = create(:organization)
         parent_lesson = create(:lesson)
@@ -47,8 +47,8 @@ RSpec.describe Organization, type: :model do
       end
     end
 
-    describe 'using_course' do
-      it 'includes only orgs using the passed course' do
+    describe "using_course" do
+      it "includes only orgs using the passed course" do
         course_org = create(:organization)
         other_org = create(:organization)
         parent_course = create(:course)
@@ -75,13 +75,13 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe '#base_site?' do
-    it 'returns true if the org has the www subdomain' do
-      subject.update(subdomain: 'www')
+  describe "#base_site?" do
+    it "returns true if the org has the www subdomain" do
+      subject.update(subdomain: "www")
       expect(subject.base_site?).to eq(true)
     end
 
-    it 'returns false if the org does not have the www subdomain' do
+    it "returns false if the org does not have the www subdomain" do
       expect(subject.base_site?).to eq(false)
     end
   end

@@ -109,16 +109,16 @@ module Admin
     end
 
     def propagate_changes?
-      @lesson.propagation_org_ids.delete_if(&:blank?).any? && ( attributes_to_change.any? || lesson_params[:story_line].present? )
+      @lesson.propagation_org_ids.delete_if(&:blank?).any? && (attributes_to_change.any? || lesson_params[:story_line].present?)
     end
 
     def attributes_to_change
-      lesson_params.delete_if {|k, _| !@lesson.previous_changes.keys.include?(k.to_s)}
+      lesson_params.delete_if { |k, _| !@lesson.previous_changes.keys.include?(k.to_s) }
     end
 
     def propagate_lesson_changes
       lessons = Lesson.copied_from_lesson(@lesson)
-      
+
       lessons.find_each do |lesson|
         lesson.update(attributes_to_change)
         if lesson_params[:story_line].present?

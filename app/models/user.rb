@@ -78,8 +78,8 @@ class User < ActiveRecord::Base
   nilify_blanks only: [:email]
 
   # Validate card number and pin for library card logins
-  validates_format_of :library_card_number, with: /\A[0-9]{13}\z/, if: :library_card_login?
-  validates_format_of :library_card_pin, with: /\A[0-9]{4}\z/, if: :library_card_login?
+  validates :library_card_number, format: { with: /\A[0-9]{13}\z/, if: :library_card_login? }
+  validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
 
   # Serialized hash of quiz responses
   serialize :quiz_responses_object
@@ -102,7 +102,7 @@ class User < ActiveRecord::Base
   end
 
   def login_type_string
-    'foobar'
+    "foobar"
   end
 
   def email_required?
@@ -124,8 +124,8 @@ class User < ActiveRecord::Base
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_h).where(["library_card_number = :value OR email = :value", { :value => login.downcase }]).first
-    elsif conditions.has_key?(:library_card_number) || conditions.has_key?(:email)
+      where(conditions.to_h).where(["library_card_number = :value OR email = :value", { value: login.downcase }]).first
+    elsif conditions.key?(:library_card_number) || conditions.key?(:email)
       where(conditions.to_h).first
     end
   end

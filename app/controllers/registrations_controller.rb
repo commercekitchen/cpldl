@@ -79,7 +79,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def convert_library_card_pin_to_password(user_params)
-    return user_params unless user_params[:library_card_pin].present?
+    return user_params if user_params[:library_card_pin].blank?
 
     hashed_pin = Digest::MD5.hexdigest(user_params[:library_card_pin]).first(10)
     user_params[:password] = hashed_pin

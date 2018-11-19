@@ -125,10 +125,10 @@ feature "User logs in" do
   context "library card number and pin" do
     context "new registration" do
       let(:organization) { create(:organization, :library_card_login) }
-      let(:card_number) { 13.times.map{rand(10)}.join }
-      let(:card_pin) { 4.times.map{rand(10)}.join }
+      let(:card_number) { 13.times.map { rand(10) }.join }
+      let(:card_pin) { 4.times.map { rand(10) }.join }
       let(:first_name) { Faker::Name.first_name }
-      let(:zip_code) { 5.times.map{rand(10)}.join }
+      let(:zip_code) { 5.times.map { rand(10) }.join }
 
       before(:each) do
         @spanish = create(:spanish_lang)
@@ -170,7 +170,7 @@ feature "User logs in" do
       end
 
       scenario "with invalid pin" do
-        log_in_with(user.library_card_number, '123')
+        log_in_with(user.library_card_number, "123")
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Invalid Library Card Number or Library Card PIN")
       end
@@ -195,7 +195,7 @@ feature "User logs in" do
       end
 
       scenario "with invalid pin" do
-        spanish_log_in_with(user.library_card_number, '123')
+        spanish_log_in_with(user.library_card_number, "123")
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Número de tarjeta de biblioteca o PIN de tarjeta de biblioteca no válidos")
       end

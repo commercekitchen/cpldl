@@ -4,7 +4,7 @@ require "capybara/rspec"
 require "selenium/webdriver"
 require "webmock/rspec"
 
-def log_in_with(email, password, admin=nil)
+def log_in_with(email, password, admin = nil)
   visit new_user_session_path(admin: admin)
   find("#login_email").set(email)
   find("#login_password").set(password)
@@ -58,7 +58,7 @@ end
 
 Capybara.register_driver :headless_chrome do |app|
   capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w(headless disable-gpu) }
+    chromeOptions: { args: %w[headless disable-gpu] }
   )
 
   Capybara::Selenium::Driver.new app,

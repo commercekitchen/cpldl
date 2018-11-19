@@ -168,10 +168,10 @@ describe Admin::LessonsController do
         @lesson1.propagation_org_ids = [org.id]
         @lesson2.update(parent_id: @lesson1.id)
         patch :update,
-              { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: 'Test Lesson'), commit: "Save Lesson" }
+              { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: "Test Lesson"), commit: "Save Lesson" }
 
         @lesson2.reload
-        expect(@lesson2.title).to eq('Test Lesson')
+        expect(@lesson2.title).to eq("Test Lesson")
       end
     end
   end

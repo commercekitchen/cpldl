@@ -58,8 +58,8 @@ FactoryGirl.define do
   end
 
   factory :library_card_login_user, class: User do
-    library_card_number { 13.times.map{rand(10)}.join }
-    library_card_pin { 4.times.map{rand(10)}.join }
+    library_card_number { 13.times.map { rand(10) }.join }
+    library_card_pin { 4.times.map { rand(10) }.join }
     confirmed_at Time.zone.now.to_s
     sign_in_count 0
     organization

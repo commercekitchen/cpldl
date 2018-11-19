@@ -87,7 +87,7 @@ class Course < ActiveRecord::Base
   default_scope { order("course_order ASC") }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
-  scope :copied_from_course, -> (course) { joins(:organization).where(parent_id: course.id, organizations: {id: course.propagation_org_ids}) }
+  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
 
   def validate_has_unique_title
     if Course.where(title: title).where_exists(:organization_course, organization_id: org_id).count > 0

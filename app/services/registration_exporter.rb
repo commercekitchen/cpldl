@@ -12,11 +12,10 @@ class RegistrationExporter
     CSV.generate do |csv|
       csv << [User.human_attribute_name(@primary_id_field), "Program Name", "Registration Date"]
       users.each do |user|
-        if user.reportable_role?(@org)
-          program_name = user.program.present? ? user.program.program_name : ""
-          values = [user.send(@primary_id_field), program_name, user.created_at]
-          csv.add_row values
-        end
+        next unless user.reportable_role?(@org)
+        program_name = user.program.present? ? user.program.program_name : ""
+        values = [user.send(@primary_id_field), program_name, user.created_at]
+        csv.add_row values
       end
     end
   end
