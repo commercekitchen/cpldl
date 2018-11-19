@@ -937,7 +937,8 @@ CREATE TABLE users (
     grade integer,
     quiz_responses_object text,
     program_id integer,
-    library_card_pin character varying
+    encrypted_library_card_pin character varying,
+    encrypted_library_card_pin_iv character varying
 );
 
 
@@ -1765,4 +1766,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180510205122');
 INSERT INTO schema_migrations (version) VALUES ('20181115233025');
 
 INSERT INTO schema_migrations (version) VALUES ('20181119174344');
+
+INSERT INTO schema_migrations (version) VALUES ('20181119193248');
 

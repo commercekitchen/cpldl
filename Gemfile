@@ -57,6 +57,9 @@ gem 'local_time'
 # Prevent botspam and allow white/blacklisting IPs, etc
 gem 'rack-attack'
 
+# Encrypt attributes to avoid storing plaintext in DB
+gem 'attr_encrypted'
+
 # integrate chosen library
 # gem 'select2-rails'
 

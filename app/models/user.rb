@@ -2,48 +2,49 @@
 #
 # Table name: users
 #
-#  id                     :integer          not null, primary key
-#  email                  :string           default(""), not null
-#  encrypted_password     :string           default(""), not null
-#  reset_password_token   :string
-#  reset_password_sent_at :datetime
-#  remember_created_at    :datetime
-#  sign_in_count          :integer          default(0), not null
-#  current_sign_in_at     :datetime
-#  last_sign_in_at        :datetime
-#  current_sign_in_ip     :string
-#  last_sign_in_ip        :string
-#  confirmation_token     :string
-#  confirmed_at           :datetime
-#  confirmation_sent_at   :datetime
-#  unconfirmed_email      :string
-#  failed_attempts        :integer          default(0), not null
-#  unlock_token           :string
-#  locked_at              :datetime
-#  created_at             :datetime         not null
-#  updated_at             :datetime         not null
-#  profile_id             :integer
-#  quiz_modal_complete    :boolean          default(FALSE)
-#  invitation_token       :string
-#  invitation_created_at  :datetime
-#  invitation_sent_at     :datetime
-#  invitation_accepted_at :datetime
-#  invitation_limit       :integer
-#  invited_by_id          :integer
-#  invited_by_type        :string
-#  invitations_count      :integer          default(0)
-#  token                  :string
-#  organization_id        :integer
-#  school_id              :integer
-#  program_location_id    :integer
-#  acting_as              :string
-#  library_card_number    :string
-#  student_id             :string
-#  date_of_birth          :datetime
-#  grade                  :integer
-#  quiz_responses_object  :text
-#  program_id             :integer
-#  library_card_pin       :string
+#  id                            :integer          not null, primary key
+#  email                         :string           default(""), not null
+#  encrypted_password            :string           default(""), not null
+#  reset_password_token          :string
+#  reset_password_sent_at        :datetime
+#  remember_created_at           :datetime
+#  sign_in_count                 :integer          default(0), not null
+#  current_sign_in_at            :datetime
+#  last_sign_in_at               :datetime
+#  current_sign_in_ip            :string
+#  last_sign_in_ip               :string
+#  confirmation_token            :string
+#  confirmed_at                  :datetime
+#  confirmation_sent_at          :datetime
+#  unconfirmed_email             :string
+#  failed_attempts               :integer          default(0), not null
+#  unlock_token                  :string
+#  locked_at                     :datetime
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  profile_id                    :integer
+#  quiz_modal_complete           :boolean          default(FALSE)
+#  invitation_token              :string
+#  invitation_created_at         :datetime
+#  invitation_sent_at            :datetime
+#  invitation_accepted_at        :datetime
+#  invitation_limit              :integer
+#  invited_by_id                 :integer
+#  invited_by_type               :string
+#  invitations_count             :integer          default(0)
+#  token                         :string
+#  organization_id               :integer
+#  school_id                     :integer
+#  program_location_id           :integer
+#  acting_as                     :string
+#  library_card_number           :string
+#  student_id                    :string
+#  date_of_birth                 :datetime
+#  grade                         :integer
+#  quiz_responses_object         :text
+#  program_id                    :integer
+#  encrypted_library_card_pin    :string
+#  encrypted_library_card_pin_iv :string
 #
 
 class User < ActiveRecord::Base
@@ -72,6 +73,9 @@ class User < ActiveRecord::Base
 
   delegate :library_card_login?, to: :organization
 
+  # Encrypt library card pin for security
+  attr_encrypted :library_card_pin, key: Rails.application.secrets.secret_key_base
+
   # Validate card number and pin for library card logins
   validates_format_of :library_card_number, with: /\A[0-9]{13}\z/, if: :library_card_login?
   validates_format_of :library_card_pin, with: /\A[0-9]{4}\z/, if: :library_card_login?
@@ -84,7 +88,6 @@ class User < ActiveRecord::Base
   ### Devise overrides to allow library card number login
   # TODO: Pull this into a concern
 
-  attr_accessor :library_card_pin
   attr_writer :login
 
   def login
