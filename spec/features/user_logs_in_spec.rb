@@ -125,10 +125,10 @@ feature "User logs in" do
   context "library card number and pin" do
     context "new registration" do
       let(:organization) { create(:organization, :library_card_login) }
-      let(:card_number) { 13.times.map { rand(10) }.join }
-      let(:card_pin) { 4.times.map { rand(10) }.join }
+      let(:card_number) { Array.new(13) { rand(10) }.join }
+      let(:card_pin) { Array.new(4) { rand(10) }.join }
       let(:first_name) { Faker::Name.first_name }
-      let(:zip_code) { 5.times.map { rand(10) }.join }
+      let(:zip_code) { Array.new(5) { rand(10) }.join }
 
       before(:each) do
         @spanish = create(:spanish_lang)

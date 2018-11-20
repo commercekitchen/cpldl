@@ -56,14 +56,14 @@ feature "User signs up" do
   end
 
   context "for a library_card_login organization" do
-    let(:lib_card_number) { 13.times.map { rand(10) }.join }
-    let(:lib_card_pin) { 4.times.map { rand(10) }.join }
+    let(:lib_card_number) { Array.new(13) { rand(10) }.join }
+    let(:lib_card_pin) { Array.new(4) { rand(10) }.join }
     let(:first_name) { Faker::Name.first_name }
-    let(:zip_code) { 5.times.map { rand(10) }.join }
-    let(:invalid_card_number_short) { 10.times.map { rand(10) }.join }
-    let(:invalid_card_number_long) { 15.times.map { rand(10) }.join }
-    let(:invalid_pin_short) { 3.times.map { rand(10) }.join }
-    let(:invalid_pin_long) { 5.times.map { rand(10) }.join }
+    let(:zip_code) { Array.new(5) { rand(10) }.join }
+    let(:invalid_card_number_short) { Array.new(10) { rand(10) }.join }
+    let(:invalid_card_number_long) { Array.new(15) { rand(10) }.join }
+    let(:invalid_pin_short) { Array.new(3) { rand(10) }.join }
+    let(:invalid_pin_long) { Array.new(5) { rand(10) }.join }
 
     before(:each) do
       @org = create(:organization, :library_card_login)

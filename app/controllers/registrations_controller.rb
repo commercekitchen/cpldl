@@ -40,9 +40,8 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     if current_organization.accepts_custom_branches?
-      provided_zip = params[:user][:profile_attributes][:zip_code].blank?
-      library_location_zip = (provided_zip.blank? ? "00000" : provided_zip)
-      params[:user][:profile_attributes][:library_location_attributes].merge!({zipcode: library_location_zip})
+      library_location_zip = params[:user][:profile_attributes][:zip_code].presence || "00000"
+      params[:user][:profile_attributes][:library_location_attributes][:zipcode] = library_location_zip
     end
 
     params.require(:user).permit(list_params).merge(organization_id: current_organization.id)

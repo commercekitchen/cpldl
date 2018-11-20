@@ -148,10 +148,10 @@ describe User do
 
   context "library card login user" do
     let(:org) { FactoryGirl.create(:organization, :library_card_login) }
-    let(:pin) { 4.times.map { rand(10) }.join }
+    let(:pin) { Array.new(4) { rand(10) }.join }
     let(:user_params) do
       {
-        library_card_number: 13.times.map { rand(10) }.join,
+        library_card_number: Array.new(13) { rand(10) }.join,
         library_card_pin: pin,
         organization_id: org.id,
         password: Digest::MD5.hexdigest(pin).first(10),
@@ -166,7 +166,7 @@ describe User do
 
     it "should be valid for second user" do
       user = User.create(user_params)
-      user2 = User.new(user_params.merge(library_card_number: 13.times.map { rand(10) }.join))
+      user2 = User.new(user_params.merge(library_card_number: Array.new(13) { rand(10) }.join))
       expect(user2).to be_valid
       expect(user2.save).to be_truthy
     end
