@@ -124,4 +124,62 @@ feature "User signs up" do
     end
   end
 
+  context "with a custom branch name", js: true do
+    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let(:email) { Faker::Internet.free_email }
+    let(:password) { Faker::Internet.password }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:zip_code) { Faker::Address.zip }
+
+    before do
+      org.library_locations << create(:library_location, organization: org)
+    end
+
+    scenario "registers" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      fill_in "user_password_confirmation", with: password
+
+      expect(page).to have_css("#custom_branch_name", visible: false)
+
+      select "Community Partner", from: :chzn
+
+      expect(page).to have_css("#custom_branch_name", visible: true)
+
+      fill_in "Community Partner Name", with: "New Branch"
+
+      expect do
+        click_button "Sign Up"
+      end.to change(LibraryLocation, :count).by(1)
+    end
+
+    scenario "registers without zipcode" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      fill_in "user_password_confirmation", with: password
+
+      expect(page).to have_css("#custom_branch_name", visible: false)
+
+      select "Community Partner", from: :chzn
+
+      expect(page).to have_css("#custom_branch_name", visible: true)
+
+      fill_in "Community Partner Name", with: "New Branch"
+
+      expect do
+        click_button "Sign Up"
+      end.to change(LibraryLocation, :count).by(1)
+    end
+  end
+
 end

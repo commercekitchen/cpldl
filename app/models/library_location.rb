@@ -9,6 +9,7 @@
 #  updated_at      :datetime         not null
 #  organization_id :integer
 #  sort_order      :integer          default(0)
+#  custom          :boolean          default(FALSE)
 #
 
 class LibraryLocation < ActiveRecord::Base

@@ -28,6 +28,8 @@ class Profile < ActiveRecord::Base
   validates :zip_code, format: { with: /\A\d{5}-\d{4}|\A\d{5}\z/, message: "should be ##### or #####-####" },
     allow_blank: true
 
+  accepts_nested_attributes_for :library_location, reject_if: :all_blank
+
   def context_update(attributes)
     with_transaction_returning_status do
       assign_attributes(attributes)

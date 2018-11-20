@@ -26,7 +26,7 @@
 
     <%# TODO: this isn't right, it should be built in the controller, and only if it doesn't already exist, like in an error situation. %>
     <%# otherwise we just wipe out entered information. %>
-    <% resource.build_profile %>
+    <% @new_profile = resource.build_profile %>
     <%= f.fields_for :profile do |p| %>
       <div class="form-group">
         <%= p.label :first_name, class: "screen-reader-text" %>
@@ -41,10 +41,14 @@
       <% if current_organization.branches? && current_organization.library_locations.present? %>
         <div class="form-group">
           <%= label_tag "chzn", "Select Your Library", class: "screen-reader-text" %>
-          <%= p.collection_select(:library_location_id, current_organization.library_locations,
-              :id, "name", { include_blank: "#{t('login_signup.your_library')}" },
+          <%= p.select(:library_location_id, branch_options_for(current_organization), { include_blank: "#{t('login_signup.your_library')}" },
               class: "select-large", id: "chzn" ) %>
         </div>
+
+        <% if current_organization.accepts_custom_branches? %>
+          <% @new_profile.build_library_location %>
+          <%= render partial: 'devise/registrations/custom_branch_form', locals: { profile_form: p } %>
+        <% end %>
       <% end %>
     <% end %>
 
