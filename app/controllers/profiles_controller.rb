@@ -51,8 +51,14 @@ class ProfilesController < ApplicationController
     old_language_id = @profile.language.id if @profile.language.present?
     new_language_id = profile_params[:language_id].to_i if profile_params[:language_id].present?
 
+    if current_organization.accepts_custom_branches?
+      new_profile_params = convert_branch_params(profile_params)
+    else
+      new_profile_params = profile_params
+    end
+
     respond_to do |format|
-      if @profile.context_update(profile_params)
+      if @profile.context_update(new_profile_params)
         update_locale(new_language_id) unless new_language_id == old_language_id
         format.html { redirect_to redirect_path, notice: I18n.t("profile_page.updated") }
         format.json { render :show, status: :ok, location: @profile }
@@ -70,8 +76,32 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    @profile_params ||= params.require(:profile).permit(:language_id, :first_name, :last_name,
-      :phone, :street_address, :city, :state, :zip_code, :opt_out_of_recommendations)
+    @profile_params ||= params.require(:profile).permit(allowed_profile_params)
+  end
+
+  def allowed_profile_params
+    allowed_params = [
+      :language_id,
+      :first_name,
+      :last_name,
+      :phone,
+      :street_address,
+      :city,
+      :state,
+      :zip_code,
+      :opt_out_of_recommendations,
+      :library_location_id
+    ]
+
+    allowed_params << [
+      library_location_attributes: [
+        :name,
+        :custom,
+        :zipcode
+      ]
+    ] if current_organization.accepts_custom_branches?
+
+    allowed_params
   end
 
   def show_quiz?
@@ -90,6 +120,16 @@ class ProfilesController < ApplicationController
       I18n.locale = :es
     end
     session[:locale] = I18n.locale.to_s
+  end
+
+  def convert_branch_params(profile_params)
+    if profile_params[:library_location_id].present?
+      profile_params.except(:library_location_attributes)
+    else
+      library_location_zip = profile_params[:zip_code].presence || "00000"
+      profile_params[:library_location_attributes][:zipcode] = library_location_zip
+      profile_params
+    end
   end
 
 end

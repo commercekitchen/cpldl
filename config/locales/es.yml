@@ -111,6 +111,7 @@ es:
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
     no_program_selected: "Seleccione el programa..."
     your_library: "¿Cómo se llama su biblioteca?"
+    custom_branch: "Nombre de Community Partner"
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"

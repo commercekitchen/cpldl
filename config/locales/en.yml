@@ -107,6 +107,7 @@ en:
     library_card_number: "Library Card #"
     library_card_pin: "Library Card PIN"
     your_library: "What's your library called?"
+    custom_branch: "Community Partner Name"
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"

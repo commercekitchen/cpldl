@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  email                         :string           default(""), not null
+#  email                         :string           default("")
 #  encrypted_password            :string           default(""), not null
 #  reset_password_token          :string
 #  reset_password_sent_at        :datetime
@@ -58,8 +58,8 @@ FactoryGirl.define do
   end
 
   factory :library_card_login_user, class: User do
-    library_card_number { 13.times.map { rand(10) }.join }
-    library_card_pin { 4.times.map { rand(10) }.join }
+    library_card_number { Array.new(13) { rand(10) }.join }
+    library_card_pin { Array.new(4) { rand(10) }.join }
     confirmed_at Time.zone.now.to_s
     sign_in_count 0
     organization

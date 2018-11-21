@@ -544,7 +544,8 @@ CREATE TABLE library_locations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     organization_id integer,
-    sort_order integer DEFAULT 0
+    sort_order integer DEFAULT 0,
+    custom boolean DEFAULT false
 );
 
 
@@ -613,7 +614,8 @@ CREATE TABLE organizations (
     updated_at timestamp without time zone NOT NULL,
     branches boolean,
     accepts_programs boolean,
-    library_card_login boolean DEFAULT false
+    library_card_login boolean DEFAULT false,
+    accepts_custom_branches boolean DEFAULT false
 );
 
 
@@ -1770,4 +1772,8 @@ INSERT INTO schema_migrations (version) VALUES ('20181119174344');
 INSERT INTO schema_migrations (version) VALUES ('20181119193248');
 
 INSERT INTO schema_migrations (version) VALUES ('20181119194721');
+
+INSERT INTO schema_migrations (version) VALUES ('20181120180332');
+
+INSERT INTO schema_migrations (version) VALUES ('20181120182048');
 

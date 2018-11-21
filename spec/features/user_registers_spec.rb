@@ -56,14 +56,14 @@ feature "User signs up" do
   end
 
   context "for a library_card_login organization" do
-    let(:lib_card_number) { 13.times.map { rand(10) }.join }
-    let(:lib_card_pin) { 4.times.map { rand(10) }.join }
+    let(:lib_card_number) { Array.new(13) { rand(10) }.join }
+    let(:lib_card_pin) { Array.new(4) { rand(10) }.join }
     let(:first_name) { Faker::Name.first_name }
-    let(:zip_code) { 5.times.map { rand(10) }.join }
-    let(:invalid_card_number_short) { 10.times.map { rand(10) }.join }
-    let(:invalid_card_number_long) { 15.times.map { rand(10) }.join }
-    let(:invalid_pin_short) { 3.times.map { rand(10) }.join }
-    let(:invalid_pin_long) { 5.times.map { rand(10) }.join }
+    let(:zip_code) { Array.new(5) { rand(10) }.join }
+    let(:invalid_card_number_short) { Array.new(10) { rand(10) }.join }
+    let(:invalid_card_number_long) { Array.new(15) { rand(10) }.join }
+    let(:invalid_pin_short) { Array.new(3) { rand(10) }.join }
+    let(:invalid_pin_long) { Array.new(5) { rand(10) }.join }
 
     before(:each) do
       @org = create(:organization, :library_card_login)
@@ -121,6 +121,98 @@ feature "User signs up" do
     scenario "without first name" do
       library_card_sign_up_with(lib_card_number, lib_card_pin, "", zip_code)
       expect(page).to have_content("Profile first name can't be blank")
+    end
+  end
+
+  context "by selecting a branch" do
+    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let(:email) { Faker::Internet.free_email }
+    let(:password) { Faker::Internet.password }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:zip_code) { Faker::Address.zip }
+    let(:library_location) { create(:library_location, organization: org) }
+
+    before do
+      org.library_locations << library_location
+    end
+
+    scenario "registers" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      fill_in "user_password_confirmation", with: password
+
+      select library_location.name, from: :chzn
+
+      click_button "Sign Up"
+
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
+
+      user = User.last
+      expect(user.library_location_name).to eq(library_location.name)
+    end
+  end
+
+  context "with a custom branch name", js: true do
+    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let(:email) { Faker::Internet.free_email }
+    let(:password) { Faker::Internet.password }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:zip_code) { Faker::Address.zip }
+
+    before do
+      org.library_locations << create(:library_location, organization: org)
+    end
+
+    scenario "registers" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      fill_in "user_password_confirmation", with: password
+
+      expect(page).to have_css("#custom_branch_name", visible: false)
+
+      select "Community Partner", from: :chzn
+
+      expect(page).to have_css("#custom_branch_name", visible: true)
+
+      fill_in "Community Partner Name", with: "New Branch"
+
+      expect do
+        click_button "Sign Up"
+      end.to change(LibraryLocation, :count).by(1)
+    end
+
+    scenario "registers without zipcode" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      fill_in "user_password_confirmation", with: password
+
+      expect(page).to have_css("#custom_branch_name", visible: false)
+
+      select "Community Partner", from: :chzn
+
+      expect(page).to have_css("#custom_branch_name", visible: true)
+
+      fill_in "Community Partner Name", with: "New Branch"
+
+      expect do
+        click_button "Sign Up"
+      end.to change(LibraryLocation, :count).by(1)
     end
   end
 

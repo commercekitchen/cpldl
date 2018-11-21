@@ -3,7 +3,7 @@
 # Table name: users
 #
 #  id                            :integer          not null, primary key
-#  email                         :string           default(""), not null
+#  email                         :string           default("")
 #  encrypted_password            :string           default(""), not null
 #  reset_password_token          :string
 #  reset_password_sent_at        :datetime
@@ -146,12 +146,40 @@ describe User do
     end
   end
 
+  context "delegated methods" do
+    context "missing profile" do
+      let(:user) { FactoryGirl.create(:user, profile: nil) }
+
+      it "library_location_name should be nil" do
+        expect(user.library_location_name).to be_nil
+      end
+
+      it "library_location_zipcode should be nil" do
+        expect(user.library_location_zipcode).to be_nil
+      end
+    end
+
+    context "with profile" do
+      let(:library_location) { FactoryGirl.create(:library_location) }
+      let(:profile) { FactoryGirl.create(:profile, library_location: library_location) }
+      let(:user) { FactoryGirl.create(:user, profile: profile) }
+
+      it "library_location_name should be correct" do
+        expect(user.library_location_name).to eq(library_location.name)
+      end
+
+      it "library_location_zipcode should be correct" do
+        expect(user.library_location_zipcode).to eq(library_location.zipcode)
+      end
+    end
+  end
+
   context "library card login user" do
     let(:org) { FactoryGirl.create(:organization, :library_card_login) }
-    let(:pin) { 4.times.map { rand(10) }.join }
+    let(:pin) { Array.new(4) { rand(10) }.join }
     let(:user_params) do
       {
-        library_card_number: 13.times.map { rand(10) }.join,
+        library_card_number: Array.new(13) { rand(10) }.join,
         library_card_pin: pin,
         organization_id: org.id,
         password: Digest::MD5.hexdigest(pin).first(10),
@@ -166,7 +194,7 @@ describe User do
 
     it "should be valid for second user" do
       user = User.create(user_params)
-      user2 = User.new(user_params.merge(library_card_number: 13.times.map { rand(10) }.join))
+      user2 = User.new(user_params.merge(library_card_number: Array.new(13) { rand(10) }.join))
       expect(user2).to be_valid
       expect(user2.save).to be_truthy
     end

@@ -25,7 +25,11 @@
       <%= f.label :library_location_id, class: "text-color" do %>
         <%= t('profile_page.library_location') %>
       <% end %>
-      <%= f.collection_select(:library_location_id, current_organization.library_locations, :id, "name", {include_blank: "Select..."}, class: "select-large", id: "chzn" ) %>
+      <%= f.select(:library_location_id, branch_options_for(current_organization, profile: @profile, selected: @profile.library_location_id), {include_blank: "#{t('login_signup.your_library')}"}, class: "select-large", id: "chzn" ) %>
+
+      <% if current_organization.accepts_custom_branches? %>
+          <%= render partial: 'shared/custom_branch_form', locals: { profile: @profile, profile_form: f } %>
+        <% end %>
     <% end %>
   </fieldset>
 

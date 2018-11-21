@@ -51,6 +51,33 @@ describe Profile do
 
   end
 
+  context "delgated metods" do
+    describe "no library_location" do
+      let(:profile) { FactoryGirl.create(:profile) }
+
+      it "should return nil for location name" do
+        expect(profile.library_location_name).to be_nil
+      end
+
+      it "should return nil for location zipcode" do
+        expect(profile.library_location_zipcode).to be_nil
+      end
+    end
+
+    describe "with library_location" do
+      let(:library_location) { FactoryGirl.create(:library_location) }
+      let(:profile) { FactoryGirl.create(:profile, library_location: library_location) }
+
+      it "should return correct location name" do
+        expect(profile.library_location_name).to eq(library_location.name)
+      end
+
+      it "should return correct zipcode" do
+        expect(profile.library_location_zipcode).to eq(library_location.zipcode)
+      end
+    end
+  end
+
   context "public methods" do
 
     describe "program_organization" do

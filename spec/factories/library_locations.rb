@@ -9,11 +9,12 @@
 #  updated_at      :datetime         not null
 #  organization_id :integer
 #  sort_order      :integer          default(0)
+#  custom          :boolean          default(FALSE)
 #
 
 FactoryGirl.define do
   factory :library_location do
-    name "Back of the Yards"
+    name { Faker::Lorem.words(2).join(" ") }
     zipcode "87654"
   end
 end

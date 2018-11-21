@@ -39,6 +39,10 @@ class RegistrationsController < Devise::RegistrationsController
       params[:user] = convert_library_card_pin_to_password(params[:user])
     end
 
+    if current_organization.accepts_custom_branches?
+      params[:user][:profile_attributes] = convert_branch_params(params[:user][:profile_attributes])
+    end
+
     params.require(:user).permit(list_params).merge(organization_id: current_organization.id)
   end
 
@@ -47,9 +51,7 @@ class RegistrationsController < Devise::RegistrationsController
       :email,
       :password,
       :password_confirmation,
-      profile_attributes: [:first_name,
-                           :zip_code,
-                           :library_location_id]
+      profile_attributes: profile_attributes
     ]
 
     list_params_allowed << [
@@ -87,4 +89,33 @@ class RegistrationsController < Devise::RegistrationsController
 
     user_params
   end
+
+  def profile_attributes
+    allowed_attrs = [
+      :first_name,
+      :zip_code,
+      :library_location_id
+    ]
+
+    allowed_attrs << [
+      library_location_attributes: [
+        :name,
+        :custom,
+        :zipcode
+      ]
+    ] if current_organization.accepts_custom_branches?
+
+    allowed_attrs
+  end
+
+  def convert_branch_params(profile_params)
+    if profile_params[:library_location_id].present?
+      profile_params.except(:library_location_attributes)
+    else
+      library_location_zip = profile_params[:zip_code].presence || "00000"
+      profile_params[:library_location_attributes][:zipcode] = library_location_zip
+      profile_params
+    end
+  end
+
 end
