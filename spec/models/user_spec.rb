@@ -146,6 +146,34 @@ describe User do
     end
   end
 
+  context "delegated methods" do
+    context "missing profile" do
+      let(:user) { FactoryGirl.create(:user, profile: nil) }
+
+      it "library_location_name should be nil" do
+        expect(user.library_location_name).to be_nil
+      end
+
+      it "library_location_zipcode should be nil" do
+        expect(user.library_location_zipcode).to be_nil
+      end
+    end
+
+    context "with profile" do
+      let(:library_location) { FactoryGirl.create(:library_location) }
+      let(:profile) { FactoryGirl.create(:profile, library_location: library_location) }
+      let(:user) { FactoryGirl.create(:user, profile: profile) }
+
+      it "library_location_name should be correct" do
+        expect(user.library_location_name).to eq(library_location.name)
+      end
+
+      it "library_location_zipcode should be correct" do
+        expect(user.library_location_zipcode).to eq(library_location.zipcode)
+      end
+    end
+  end
+
   context "library card login user" do
     let(:org) { FactoryGirl.create(:organization, :library_card_login) }
     let(:pin) { Array.new(4) { rand(10) }.join }

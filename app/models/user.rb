@@ -84,6 +84,9 @@ class User < ActiveRecord::Base
   # Serialized hash of quiz responses
   serialize :quiz_responses_object
 
+  # Expose some information from profile
+  delegate :library_location_name, :library_location_zipcode, to: :profile, allow_nil: true
+
   ROLES = %w(Admin Trainer User Parent Student)
 
   ### Devise overrides to allow library card number login

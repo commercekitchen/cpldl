@@ -124,6 +124,40 @@ feature "User signs up" do
     end
   end
 
+  context "by selecting a branch" do
+    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let(:email) { Faker::Internet.free_email }
+    let(:password) { Faker::Internet.password }
+    let(:first_name) { Faker::Name.first_name }
+    let(:last_name) { Faker::Name.last_name }
+    let(:zip_code) { Faker::Address.zip }
+    let(:library_location) { create(:library_location, organization: org) }
+
+    before do
+      org.library_locations << library_location
+    end
+
+    scenario "registers" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      fill_in "user_password_confirmation", with: password
+
+      select library_location.name, from: :chzn
+
+      click_button "Sign Up"
+
+      expect(page).to have_content("This is the first time you have logged in, please update your profile.")
+
+      user = User.last
+      expect(user.library_location_name).to eq(library_location.name)
+    end
+  end
+
   context "with a custom branch name", js: true do
     let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
     let(:email) { Faker::Internet.free_email }
