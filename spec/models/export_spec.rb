@@ -27,7 +27,7 @@ describe Export do
   context "check library name lookup" do
     let(:csv) { Export.to_csv_for_completion_report(lib_data) }
     it "looks up the library name" do
-      expect(csv).to match(/^Back of the Yards/)
+      expect(csv).to match(library.name)
     end
   end
 

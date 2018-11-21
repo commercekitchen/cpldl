@@ -46,8 +46,7 @@
         </div>
 
         <% if current_organization.accepts_custom_branches? %>
-          <% @new_profile.build_library_location %>
-          <%= render partial: 'devise/registrations/custom_branch_form', locals: { profile_form: p } %>
+          <%= render partial: 'shared/custom_branch_form', locals: { profile: @new_profile, profile_form: p } %>
         <% end %>
       <% end %>
     <% end %>

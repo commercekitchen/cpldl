@@ -174,4 +174,54 @@ feature "Registered user visits account page" do
     end
   end
 
+  context "belongs to custom branch organization", js: true do
+    let(:org) { FactoryGirl.create(:organization, branches: true, accepts_custom_branches: true) }
+    let(:library_location1) { FactoryGirl.create(:library_location) }
+    let(:library_location2) { FactoryGirl.create(:library_location) }
+    let(:profile) { FactoryGirl.create(:profile, library_location: library_location1) }
+    let(:user) { FactoryGirl.create(:user, organization: org, profile: profile) }
+
+    before(:each) do
+      Language.all.each(&:destroy)
+      @spanish = create(:spanish_lang)
+
+      org.library_locations << library_location1
+      org.library_locations << library_location2
+
+      switch_to_subdomain(org.subdomain)
+      log_in_with(user.email, user.password)
+
+      visit profile_path
+    end
+
+    scenario "can change library location" do
+      expect(page).to have_select('chzn', selected: library_location1.name)
+
+      select library_location2.name, from: :chzn
+      click_on('Save')
+      expect(page).to have_content('Profile was successfully updated.')
+
+      visit profile_path
+      expect(page).to have_select('chzn', selected: library_location2.name)
+    end
+
+    scenario "can choose custom location" do
+      expect(page).to have_css("#custom_branch_name", visible: false)
+
+      select "Community Partner", from: :chzn
+
+      expect(page).to have_css("#custom_branch_name", visible: true)
+
+      fill_in "Community Partner Name", with: "New Branch"
+
+      expect do
+        click_button "Save"
+      end.to change(LibraryLocation, :count).by(1)
+
+      visit profile_path
+
+      expect(page).to have_select('chzn', selected: "New Branch")
+    end
+  end
+
 end

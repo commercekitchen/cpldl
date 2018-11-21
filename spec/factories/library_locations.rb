@@ -14,7 +14,7 @@
 
 FactoryGirl.define do
   factory :library_location do
-    name "Back of the Yards"
+    name { Faker::Lorem.words(2).join(" ") }
     zipcode "87654"
   end
 end
