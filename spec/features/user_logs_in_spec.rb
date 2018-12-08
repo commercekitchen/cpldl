@@ -120,6 +120,17 @@ feature "User logs in" do
 
       expect(current_path).to eq(root_path)
     end
+
+    scenario "for incorrect organization" do
+      other_org = create(:organization, subdomain: 'foobar')
+      switch_to_subdomain(other_org.subdomain)
+
+      user = create(:user, organization: @org)
+      user.add_role(:user, @org)
+      log_in_with(user.email, user.password)
+      expect(current_path).to eq(login_path)
+      expect(page).to have_content("Oops! You’re a member of #{@org.name}")
+    end
   end
 
   context "library card number and pin" do
