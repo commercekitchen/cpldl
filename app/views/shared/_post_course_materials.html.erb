@@ -3,7 +3,7 @@
 <ul class="no-padding">
 <%# TODO: make this a model method %>
 <% course.attachments.where(doc_type: "post-course").each do |a| %>
-  <%= link_to course_attachment_path(course, a), target: "_blank" do %>
+  <%= link_to course_attachment_path(course, a), target: "_blank", class: "block_link" do %>
     <li><i class="icon-download download-color"></i><%= a.document_file_name %></li>
   <% end %>
 <% end %>
