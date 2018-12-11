@@ -30,6 +30,6 @@ feature "User completes course recommendations quiz" do
 
     click_button "Submit"
 
-    expect(current_path).to eq(your_courses_path)
+    expect(current_path).to eq(my_courses_path)
   end
 end

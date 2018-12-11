@@ -123,53 +123,6 @@ describe CoursesController do
     end
   end
 
-  describe "GET #your" do
-    context "when logged in" do
-      before(:each) do
-        @user = create(:user, organization: @organization)
-        sign_in @user
-        @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
-        @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
-        @course_progress3 = create(:course_progress, course_id: @course3.id, tracked: true)
-        @course_progress4 = create(:course_progress, course_id: @disabled_category_course.id, tracked: true)
-        @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3, @course_progress4]
-      end
-
-      it "allows the user to view their tracked courses" do
-        get :your
-        expect(assigns(:courses)).to include(@course1, @course3, @disabled_category_course)
-      end
-
-      it "assigns @results if search params exist" do
-        get :your, { search: "java" }
-        expect(assigns(:results)).to eq([@course1])
-      end
-
-      it "assigns search results to @courses" do
-        get :your, { search: "java" }
-        expect(assigns(:courses)).to eq([@course1])
-      end
-
-      it "assigns categories" do
-        get :your
-        expect(assigns(:category_ids)).to eq([@category1.id])
-      end
-
-      it "assigns uncategorized courses including courses with a disabled category" do
-        get :your
-        expect(assigns(:uncategorized_courses)).to include(@course3, @disabled_category_course)
-      end
-    end
-
-    context "when logged out" do
-      it "should redirect to login page" do
-        get :your
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(user_session_path)
-      end
-    end
-  end
-
   describe "GET #completed" do
     context "when logged in" do
       before(:each) do
@@ -284,36 +237,6 @@ describe CoursesController do
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(course_lesson_path(@course1, @lesson1.id))
       end
-    end
-  end
-
-  describe "POST #add" do
-    before(:each) do
-      @user = create(:user)
-      sign_in @user
-    end
-
-    it "marks a course as tracked" do
-      post :add, { course_id: @course1 }
-      progress = @user.course_progresses.find_by_course_id(@course1.id)
-      expect(progress.tracked).to be true
-    end
-  end
-
-  describe "POST #remove" do
-    before(:each) do
-      @user = create(:user)
-      sign_in @user
-    end
-
-    it "marks a course as un-tracked" do
-      progress = @user.course_progresses.where(course_id: @course1.id).first_or_create
-      progress.tracked = false
-      progress.save
-
-      post :remove, { course_id: @course1 }
-      progress = @user.course_progresses.find_by_course_id(@course1.id)
-      expect(progress.tracked).to be false
     end
   end
 

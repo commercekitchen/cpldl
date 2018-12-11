@@ -615,7 +615,8 @@ CREATE TABLE organizations (
     branches boolean,
     accepts_programs boolean,
     library_card_login boolean DEFAULT false,
-    accepts_custom_branches boolean DEFAULT false
+    accepts_custom_branches boolean DEFAULT false,
+    login_required boolean DEFAULT true
 );
 
 
@@ -1776,4 +1777,6 @@ INSERT INTO schema_migrations (version) VALUES ('20181119194721');
 INSERT INTO schema_migrations (version) VALUES ('20181120180332');
 
 INSERT INTO schema_migrations (version) VALUES ('20181120182048');
+
+INSERT INTO schema_migrations (version) VALUES ('20181211172626');
 

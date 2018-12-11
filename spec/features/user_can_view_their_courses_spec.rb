@@ -19,13 +19,13 @@ feature "User is able to view the courses in their plan" do
 
   context "as a logged in user" do
     scenario "can view their added courses" do
-      visit your_courses_path
+      visit my_courses_path
       expect(page).to have_content("Course 1")
       expect(page).to_not have_content("Course 2")
     end
 
     scenario "should always have the option to learn more" do
-      visit your_courses_path
+      visit my_courses_path
       expect(page).to have_content("Ready to Learn More?")
       expect(page).to have_content("Find new courses when you retake the quiz")
       expect(page).to have_link("Retake the Quiz")
@@ -39,7 +39,7 @@ feature "User is able to view the courses in their plan" do
     end
 
     scenario "should have correct quiz retake button text" do
-      visit your_courses_path
+      visit my_courses_path
       expect(page).to have_link("Add More Courses")
     end
   end

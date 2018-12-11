@@ -29,7 +29,7 @@ feature "User clicks through each page" do
     within(:css, ".header-logged-in") do
       click_link "My Courses"
     end
-    expect(current_path).to eq(your_courses_path)
+    expect(current_path).to eq(my_courses_path)
 
     visit root_path
     within(:css, ".header-logged-in") do
