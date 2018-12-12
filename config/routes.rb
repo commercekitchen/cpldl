@@ -21,7 +21,6 @@ Rails.application.routes.draw do
 
   resources :contact, only: [:new, :create]
 
-  get 'courses/completed', to: 'courses#completed', as: :completed_courses
   get 'courses/quiz', to: 'courses#quiz'
   post 'courses/quiz', to: 'courses#quiz_submit'
   get 'home_language_toggle', to: 'home#language_toggle'
@@ -37,9 +36,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :my_courses, only: [:index]
+  resources :my_courses, only: [:index, :create], param: :course_id
 
   resources :course_trackings, only: [:update, :destroy], param: :course_id
+
+  resources :course_completions, only: [:index]
 
   resources 'cms_pages', only: [:show]
 

@@ -123,37 +123,6 @@ describe CoursesController do
     end
   end
 
-  describe "GET #completed" do
-    context "when logged in" do
-      before(:each) do
-        @user = create(:user, organization: @organization)
-        @course_progress1 = create(:course_progress, course_id: @course1.id,
-                                                     tracked: true,
-                                                     completed_at: Time.zone.now)
-        @course_progress2 = create(:course_progress, course_id: @course2.id,
-                                                     tracked: true)
-        @course_progress3 = create(:course_progress, course_id: @course3.id,
-                                                     tracked: true,
-                                                     completed_at: Time.zone.now)
-        @user.course_progresses << [@course_progress1, @course_progress2, @course_progress3]
-        sign_in @user
-      end
-
-      it "allows the user to view their completed courses" do
-        get :completed
-        expect(assigns(:courses)).to include(@course1, @course3)
-      end
-    end
-
-    context "when logged out" do
-      it "should redirect to login page" do
-        get :completed
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(user_session_path)
-      end
-    end
-  end
-
   describe "GET #complete" do
     context "when logged in" do
       before(:each) do

@@ -65,13 +65,19 @@ describe MyCoursesController do
     end
 
     describe "GET #index" do
-
       it "should redirect to login page" do
         get :index
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)
       end
+    end
 
+    describe "POST #create" do
+      it "should redirect to login page" do
+        get :index
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(user_session_path)
+      end
     end
 
   end

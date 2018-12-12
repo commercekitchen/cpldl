@@ -56,7 +56,7 @@ feature "User clicks through each page" do
     within(:css, ".sidebar") do
       click_link "My Completed Courses"
     end
-    expect(current_path).to eq(completed_courses_path)
+    expect(current_path).to eq(course_completions_path)
   end
 
 end

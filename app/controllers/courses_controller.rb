@@ -25,7 +25,7 @@
 #
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, only: [:completed, :bulk_add_courses] if :top_level_domain?
+  before_action :authenticate_user!, only: [:bulk_add_courses] if :top_level_domain?
   before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
 
   def index
@@ -41,6 +41,7 @@ class CoursesController < ApplicationController
     if user_signed_in? && current_user.profile.language_id
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
       language_id = session[:locale] != user_lang_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
+
       if params[:search].blank?
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain)
       else
@@ -124,16 +125,6 @@ class CoursesController < ApplicationController
                     type: "application/pdf")
         end
       end
-    end
-  end
-
-  def completed
-    completed_ids = current_user.course_progresses.completed.collect(&:course_id)
-    @courses = Course.where(id: completed_ids)
-
-    respond_to do |format|
-      format.html { render "completed_list", layout: "user/logged_in_with_sidebar" }
-      format.json { render json: @courses }
     end
   end
 
