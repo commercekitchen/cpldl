@@ -25,7 +25,7 @@
 #
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :start, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
+  before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
 
   def index
     result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
@@ -83,22 +83,6 @@ class CoursesController < ApplicationController
         end
         format.json { render json: @course }
       end
-    end
-  end
-
-  def start
-    @course = Course.friendly.find(params[:course_id])
-    if current_user
-      course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
-      course_progress.tracked = true
-      if course_progress.save
-        redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
-      else
-        render :show, alert: "Sorry, we were unable to add this course to your plan."
-      end
-    else
-      session[:completed_lessons] = []
-      redirect_to course_lesson_path(@course, @course.next_lesson_id)
     end
   end
 

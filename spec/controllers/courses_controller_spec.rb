@@ -123,64 +123,6 @@ describe CoursesController do
     end
   end
 
-  describe "POST #start" do
-    context "when logged in" do
-      before(:each) do
-        @user = create(:user)
-        @lesson1 = create(:lesson, lesson_order: 1)
-        @lesson2 = create(:lesson, lesson_order: 2)
-        @lesson3 = create(:lesson, lesson_order: 3)
-        @lesson4 = create(:lesson)
-        @course1.lessons << [@lesson1, @lesson2, @lesson3]
-        @course2.lessons << [@lesson4]
-        sign_in @user
-      end
-
-      it "records that a user started a course" do
-        post :start, { course_id: @course1 }
-        progress = @user.course_progresses.last
-        expect(progress.course_id).to eq(@course1.id)
-        expect(progress.tracked).to be true
-        expect(response).to redirect_to(course_lesson_path(@course1, @course1.lessons.where(lesson_order: 1).first.id))
-      end
-
-      it "sends a user to the correct lesson if the course was already started" do
-        @user.course_progresses.create({ user_id: @user.id, course_id: @course1.id })
-        @user.course_progresses.first.completed_lessons.create({ lesson_id: @lesson1.id })
-        @user.course_progresses.first.completed_lessons.create({ lesson_id: @lesson2.id })
-        post :start, { course_id: @course1 }
-        expect(response).to redirect_to(course_lesson_path(@course1, @lesson3.id))
-      end
-
-      it "only creates one course progress record per user per course" do
-        expect(@user.course_progresses.count).to eq(0)
-        post :start, { course_id: @course1 }
-        expect(@user.course_progresses.count).to eq(1)
-        post :start, { course_id: @course1 }
-        expect(@user.course_progresses.count).to eq(1)
-        post :start, { course_id: @course2 }
-        expect(@user.course_progresses.count).to eq(2)
-        post :start, { course_id: @course2 }
-        expect(@user.course_progresses.count).to eq(2)
-      end
-    end
-
-    context "when logged out" do
-      it "should redirect to login page" do
-        @lesson1 = create(:lesson, lesson_order: 1)
-        @lesson2 = create(:lesson, lesson_order: 2)
-        @lesson3 = create(:lesson, lesson_order: 3)
-        @lesson4 = create(:lesson)
-        @course1.lessons << [@lesson1, @lesson2, @lesson3]
-        @course2.lessons << [@lesson4]
-
-        post :start, { course_id: @course1 }
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(course_lesson_path(@course1, @lesson1.id))
-      end
-    end
-  end
-
   describe "GET #view_attachment" do
     context "when logged in" do
       before(:each) do

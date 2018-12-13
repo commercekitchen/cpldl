@@ -36,9 +36,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :my_courses, only: [:index, :create], param: :course_id
+  resources :my_courses, only: [:index], param: :course_id
 
-  resources :course_progresses, only: [:update], param: :course_id
+  resources :course_progresses, only: [:create, :update], param: :course_id
 
   resources :course_completions, only: [:index, :show], param: :course_id
 
