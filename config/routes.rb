@@ -38,7 +38,7 @@ Rails.application.routes.draw do
 
   resources :my_courses, only: [:index, :create], param: :course_id
 
-  resources :course_trackings, only: [:update, :destroy], param: :course_id
+  resources :course_progresses, only: [:update], param: :course_id
 
   resources :course_completions, only: [:index, :show], param: :course_id
 
