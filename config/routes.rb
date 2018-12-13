@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
   resources :course_trackings, only: [:update, :destroy], param: :course_id
 
-  resources :course_completions, only: [:index]
+  resources :course_completions, only: [:index, :show], param: :course_id
 
   resources 'cms_pages', only: [:show]
 

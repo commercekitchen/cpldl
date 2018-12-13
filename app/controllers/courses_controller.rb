@@ -25,8 +25,7 @@
 #
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, only: [:bulk_add_courses] if :top_level_domain?
-  before_action :authenticate_user!, except: [:index, :show, :start, :complete, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
+  before_action :authenticate_user!, except: [:index, :show, :start, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
 
   def index
     result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
@@ -100,31 +99,6 @@ class CoursesController < ApplicationController
     else
       session[:completed_lessons] = []
       redirect_to course_lesson_path(@course, @course.next_lesson_id)
-    end
-  end
-
-  def complete
-    # TODO: Do we want to ensure that the assessment was completed to get here?
-    @course = Course.friendly.find(params[:course_id])
-    respond_to do |format|
-      format.html
-      format.pdf do
-        @pdf = render_to_string pdf: "file_name",
-               template: "courses/complete.pdf.erb",
-               layout: "pdf.html.erb",
-               orientation: "Landscape",
-               page_size: "Letter",
-               show_as_html: params[:debug].present?
-        if current_user
-          send_data(@pdf,
-                    filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
-                    type: "application/pdf")
-        else
-          send_data(@pdf,
-                    filename: "#{@course.title} completion certificate.pdf",
-                    type: "application/pdf")
-        end
-      end
     end
   end
 

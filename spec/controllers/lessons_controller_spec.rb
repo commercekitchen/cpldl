@@ -120,7 +120,7 @@ describe LessonsController do
       @lesson3.is_assessment = true
       @lesson3.save
       post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
-      expect(response).to redirect_to(course_complete_path(@course1.to_param))
+      expect(response).to redirect_to(course_completion_path(@course1.to_param))
     end
 
     it "responds to json" do
