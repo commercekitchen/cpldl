@@ -22,7 +22,7 @@ feature "User completes course recommendations quiz" do
   end
 
   scenario "user completes course recommendations quiz" do
-    visit courses_quiz_path
+    visit new_quiz_response_path
     expect(page).to have_content("what would you like to learn?")
     choose "set_one_2"
     choose "set_two_2"

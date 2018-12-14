@@ -21,8 +21,6 @@ Rails.application.routes.draw do
 
   resources :contact, only: [:new, :create]
 
-  get 'courses/quiz', to: 'courses#quiz'
-  post 'courses/quiz', to: 'courses#quiz_submit'
   get 'home_language_toggle', to: 'home#language_toggle'
 
   resources :courses, only: [:index, :show] do
@@ -41,6 +39,8 @@ Rails.application.routes.draw do
   resources :course_progresses, only: [:create, :update], param: :course_id
 
   resources :course_completions, only: [:index, :show], param: :course_id
+
+  resources :quiz_responses, only: [:new, :create]
 
   resources 'cms_pages', only: [:show]
 

@@ -43,7 +43,7 @@ class ProfilesController < ApplicationController
 
     if first_time_login?
       profile_params.merge!(updated_at: Time.zone.now)
-      redirect_path = (show_quiz? ? courses_quiz_path : root_path)
+      redirect_path = (show_quiz? ? new_quiz_response_path : root_path)
     else
       redirect_path = profile_path
     end

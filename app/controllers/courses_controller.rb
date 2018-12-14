@@ -25,7 +25,7 @@
 #
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2] if :subdomain?
+  before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
 
   def index
     result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
@@ -100,9 +100,6 @@ class CoursesController < ApplicationController
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
   end
 
-  def quiz
-  end
-
   def quiz_submit
     current_user.update!(quiz_responses_object: quiz_params.to_h) unless current_user.quiz_responses_object.present?
     recommendation_service = CourseRecommendationService.new(current_organization.id, quiz_params)
@@ -131,7 +128,4 @@ class CoursesController < ApplicationController
     end
   end
 
-  def quiz_params
-    params.permit("set_one", "set_two", "set_three")
-  end
 end
