@@ -73,7 +73,9 @@ feature "Admin user logs in" do
   end
 
   context "for library card login organization" do
-    let(:org) { create(:organization, :library_card_login, subdomain: "kclibrary") }
+    let(:location) { create(:library_location) }
+    let(:org) { create(:organization, :library_card_login, subdomain: "kclibrary", branches: true,
+                       accepts_custom_branches: true, library_locations: [location]) }
     let(:user) { create(:admin_user, sign_in_count: 2) }
 
     before(:each) do
@@ -84,9 +86,19 @@ feature "Admin user logs in" do
       switch_to_subdomain(org.subdomain)
     end
 
-    scenario "can sign in with email and password" do
-      log_in_with(user.email, user.password, true)
-      expect(current_path).to eq(admin_dashboard_index_path)
+    context "with no profile" do
+      scenario "can sign in with email and password" do
+        user.update(profile: nil)
+        log_in_with(user.email, user.password, true)
+        expect(current_path).to eq(profile_path)
+      end
+    end
+
+    context "with valid profile" do
+      scenario "can sign in with email and password" do
+        log_in_with(user.email, user.password, true)
+        expect(current_path).to eq(admin_dashboard_index_path)
+      end
     end
 
   end
