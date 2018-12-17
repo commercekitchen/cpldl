@@ -11,7 +11,7 @@
   <% if @library_card_login %>
     <div class="form-group">
       <%= label_tag "login_library_card_number", "Library Card Number", class: "screen-reader-text" %>
-      <%= f.email_field :login, autofocus: true, id: "login_email", placeholder: "#{t('login_signup.library_card_number')} *" %>
+      <%= f.text_field :login, autofocus: true, id: "login_library_card_number", placeholder: "#{t('login_signup.library_card_number')} *" %>
     </div>
 
     <div class="form-group">
