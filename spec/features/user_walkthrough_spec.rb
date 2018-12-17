@@ -3,7 +3,7 @@ require "feature_helper"
 feature "User clicks through each page" do
 
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @org = create(:organization)
     @spanish = create(:spanish_lang)
     @english = create(:language)

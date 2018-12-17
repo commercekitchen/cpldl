@@ -5,7 +5,7 @@ describe ApplicationController do
     before(:each) do
       @chipublib_organization = create(:organization)
       @npl_organization = create(:organization, subdomain: "npl")
-      @www_organization = create(:organization, subdomain: "www")
+      @www_organization = create(:default_organization)
     end
 
     it "should only allow sign in for matching subdomain users" do

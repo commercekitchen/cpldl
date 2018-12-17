@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Admin::DashboardController do
   before(:each) do
-    @org = create(:organization, subdomain: "www")
+    @org = create(:default_organization)
     @request.host = "www.test.host"
     @user = create(:user, organization: @org)
     @english = create(:language)

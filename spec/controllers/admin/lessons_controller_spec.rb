@@ -4,7 +4,7 @@ describe Admin::LessonsController do
 
   before(:each) do
     @request.host = "www.test.host"
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @english = create(:language)
     @spanish = create(:spanish_lang)
     @course1 = create(:course)

@@ -3,7 +3,7 @@ require "feature_helper"
 feature "Annonymous user submits contact form" do
 
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     switch_to_subdomain("www")
     create(:spanish_lang)
     create(:language)

@@ -18,7 +18,7 @@ require "rails_helper"
 RSpec.describe Organization, type: :model do
   before do
     @org = create(:organization)
-    other_org = create(:organization, subdomain: "www")
+    other_org = create(:default_organization)
     @user1 = create(:user, organization: @org)
     @user1.add_role("admin", @org)
 

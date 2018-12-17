@@ -3,7 +3,7 @@ require "rails_helper"
 describe ContactController do
 
   before(:each) do
-    @www = create(:organization, subdomain: "www")
+    @www = create(:default_organization)
     @request.host = "www.digitallearn.org"
   end
 

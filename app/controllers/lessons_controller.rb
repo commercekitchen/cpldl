@@ -115,7 +115,7 @@ class LessonsController < ApplicationController
   end
 
   def auth_subsites
-    if subdomain?
+    if current_organization.login_required?
       authenticate_user!
     end
   end

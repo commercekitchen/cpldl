@@ -4,7 +4,7 @@ feature "User completes course recommendations quiz" do
 
   before(:each) do
     @english = create(:language)
-    @org = create(:organization, subdomain: "www")
+    @org = create(:default_organization)
     @user = create(:user, organization: @org)
 
     @core_topic = create(:topic, title: "Core")

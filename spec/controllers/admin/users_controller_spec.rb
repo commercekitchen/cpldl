@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe Admin::UsersController do
   before(:each) do
-    org = create(:organization, subdomain: "www")
+    org = create(:default_organization)
     @request.host = "www.test.host"
     @admin = create(:admin_user, organization: org)
     @user = create(:user, organization: org)

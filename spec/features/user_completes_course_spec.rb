@@ -4,7 +4,7 @@ feature "User visits course complete page" do
 
   before(:each) do
     @org = create(:organization)
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @course1 = create(:course, title: "Title 1")
     @english = create(:language)
     @spanish = create(:spanish_lang)
