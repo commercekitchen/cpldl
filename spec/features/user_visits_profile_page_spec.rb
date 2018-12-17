@@ -135,7 +135,7 @@ feature "Registered user visits account page" do
       @spanish = create(:spanish_lang)
       # English gets created from factories
       user.update(sign_in_count: 2) # To prevent first time sign in events
-      log_in_with(user.library_card_number, user.library_card_pin)
+      library_card_log_in_with(user.library_card_number, user.library_card_pin)
     end
 
     scenario "can view their account options" do

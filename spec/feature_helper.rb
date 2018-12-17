@@ -4,6 +4,8 @@ require "capybara/rspec"
 require "selenium/webdriver"
 require "webmock/rspec"
 
+
+# TODO: Consolidate these 4 methods into one method with keyword args, maybe?
 def log_in_with(email, password, admin = nil)
   visit new_user_session_path(admin: admin)
   find("#login_email").set(email)
@@ -11,9 +13,23 @@ def log_in_with(email, password, admin = nil)
   click_button "Access Courses"
 end
 
+def library_card_log_in_with(card_number, password)
+  visit new_user_session_path
+  find("#login_library_card_number").set(card_number)
+  find("#login_password").set(password)
+  click_button "Access Courses"
+end
+
 def spanish_log_in_with(email, password)
   visit new_user_session_path
   find("#login_email").set(email)
+  find("#login_password").set(password)
+  click_button "Accesar Cursos"
+end
+
+def spanish_library_card_log_in_with(card_number, password)
+  visit new_user_session_path
+  find("#login_library_card_number").set(card_number)
   find("#login_password").set(password)
   click_button "Accesar Cursos"
 end
