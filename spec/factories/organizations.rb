@@ -11,6 +11,7 @@
 #  accepts_programs        :boolean
 #  library_card_login      :boolean          default(FALSE)
 #  accepts_custom_branches :boolean          default(FALSE)
+#  login_required          :boolean          default(TRUE)
 #
 
 FactoryGirl.define do
