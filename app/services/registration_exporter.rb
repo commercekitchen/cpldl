@@ -24,10 +24,10 @@ class RegistrationExporter
 
   private
 
-    def column_headers
-      headers = [User.human_attribute_name(@primary_id_field), "Program Name", "Registration Date"]
-      headers.concat(["Branch Name", "Zip"]) if @org.accepts_custom_branches?
-      headers
-    end
+  def column_headers
+    headers = [User.human_attribute_name(@primary_id_field), "Program Name", "Registration Date"]
+    headers.concat(["Branch Name", "Zip"]) if @org.accepts_custom_branches?
+    headers
+  end
 
 end

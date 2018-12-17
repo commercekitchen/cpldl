@@ -4,7 +4,7 @@ class MyCoursesController < ApplicationController
   def index
     tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)
 
-    unless params[:search].blank?
+    if params[:search].present?
       result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).where(searchable_id: tracked_course_ids).map(&:searchable).map(&:id)
       @results = Course.where(id: result_ids)
     end

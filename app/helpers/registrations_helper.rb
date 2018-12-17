@@ -1,5 +1,5 @@
 module RegistrationsHelper
-  def branch_options_for(organization, options={})
+  def branch_options_for(organization, options = {})
     branch_options = organization.library_locations.map { |ll| [ll.name, ll.id] }
 
     if organization.accepts_custom_branches

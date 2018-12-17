@@ -3,16 +3,16 @@ require "rails_helper"
 describe MyCoursesController do
   let(:organization) { FactoryGirl.create(:organization) }
   let(:language) { FactoryGirl.create(:language) }
-  let(:category) { FactoryGirl.create(:category, organization: organization)}
+  let(:category) { FactoryGirl.create(:category, organization: organization) }
   let(:disabled_category) { FactoryGirl.create(:category, :disabled, organization: organization) }
   let(:course1) { FactoryGirl.create(:course, title: "Course 1", language: language, category: category, organization: organization) }
   let(:course2) { FactoryGirl.create(:course, title: "Course 2", language: language, organization: organization) }
   let(:course3) { FactoryGirl.create(:course, title: "Course 3", language: language, organization: organization) }
-  let(:course4) { FactoryGirl.create(:course, title: "Course 4", language: language, category: disabled_category, organization: organization)}
+  let(:course4) { FactoryGirl.create(:course, title: "Course 4", language: language, category: disabled_category, organization: organization) }
   let(:user) { FactoryGirl.create(:user, organization: organization) }
 
   context "authenticated user" do
-  
+
     before(:each) do
       request.host = "#{organization.subdomain}.example.com"
       sign_in user

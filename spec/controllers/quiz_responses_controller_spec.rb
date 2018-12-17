@@ -11,7 +11,7 @@ describe QuizResponsesController do
 
   describe "GET #new" do
     context "when logged in" do
- 
+
       before(:each) do
         sign_in user
       end
@@ -36,9 +36,9 @@ describe QuizResponsesController do
   end
 
   describe "POST #create" do
-    let(:choices) {
+    let(:choices) do
       { "set_one" => "2", "set_two" => "2", "set_three" => "3" }
-    }
+    end
 
     let(:core_topic) { FactoryGirl.create(:topic, title: "Core") }
     let(:topic) { FactoryGirl.create(:topic, title: "Government") }
