@@ -66,10 +66,10 @@ class Lesson < ActiveRecord::Base
 
   default_scope { order(:lesson_order) }
   scope :published, -> { where(pub_status: "P") }
-  scope :copied_from_lesson, ->(lesson) do
+  scope :copied_from_lesson, lambda { |lesson|
     joins(course: :organization)
       .where(parent_id: lesson.id, organizations: { id: lesson.propagation_org_ids })
-  end
+  }
 
   def propagation_org_ids
     @propagation_org_ids ||= []

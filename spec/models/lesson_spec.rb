@@ -28,6 +28,8 @@ require "rails_helper"
 
 describe Lesson do
 
+  let(:course) { FactoryGirl.create(:course_with_lessons) }
+
   context "validations" do
 
     before(:each) do
@@ -45,20 +47,39 @@ describe Lesson do
     context ".published" do
 
       it "returns all published lessons" do
-        @course = FactoryGirl.create(:course_with_lessons)
-        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.second, @course.lessons.third)
+        expect(course.lessons.published).to contain_exactly(course.lessons.first, course.lessons.second, course.lessons.third)
       end
 
       it "returns all published lessons" do
-        @course = FactoryGirl.create(:course_with_lessons)
-        @course.lessons.second.update(pub_status: "D")
-        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.third)
+        course.lessons.second.update(pub_status: "D")
+        expect(course.lessons.published).to contain_exactly(course.lessons.first, course.lessons.third)
       end
 
       it "returns all published lessons" do
-        @course = FactoryGirl.create(:course_with_lessons)
-        @course.lessons.second.update(pub_status: "A")
-        expect(@course.lessons.published).to contain_exactly(@course.lessons.first, @course.lessons.third)
+        course.lessons.second.update(pub_status: "A")
+        expect(course.lessons.published).to contain_exactly(course.lessons.first, course.lessons.third)
+      end
+
+    end
+
+    context ".copied_from_lesson" do
+
+      let(:new_org) { FactoryGirl.create(:organization) }
+      let(:new_course) { FactoryGirl.create(:course_with_lessons, organization: new_org) }
+      let(:original_lesson) { course.lessons.first }
+      let(:copied_lesson) { new_course.lessons.first }
+
+      before(:each) do
+        original_lesson.propagation_org_ids << new_org.id
+        copied_lesson.update(parent_id: original_lesson.id)
+      end
+
+      it "returns all copied lessons" do
+        expect(Lesson.copied_from_lesson(original_lesson)).to include(copied_lesson)
+      end
+
+      it "does not return non-copied lessons" do
+        expect(Lesson.copied_from_lesson(original_lesson).count).to eq(1)
       end
 
     end
@@ -68,11 +89,10 @@ describe Lesson do
   context "#published_lesson_order" do
 
     it "returns the order of only published lessons" do
-      @course = FactoryGirl.create(:course_with_lessons)
-      @course.lessons.second.update(pub_status: "D")
-      expect(@course.lessons.first.published_lesson_order).to eq 1
-      expect(@course.lessons.second.published_lesson_order).to eq 0
-      expect(@course.lessons.third.published_lesson_order).to eq 2
+      course.lessons.second.update(pub_status: "D")
+      expect(course.lessons.first.published_lesson_order).to eq 1
+      expect(course.lessons.second.published_lesson_order).to eq 0
+      expect(course.lessons.third.published_lesson_order).to eq 2
     end
 
   end
