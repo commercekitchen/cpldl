@@ -143,7 +143,7 @@ feature "User logs in" do
 
         user = User.last
 
-        log_in_with(card_number, card_pin)
+        library_card_log_in_with(card_number, card_pin)
         expect(current_path).to eq(root_path)
         expect(page).to_not have_content("Signed in successfully.")
         expect(page).to have_content("Use a computer to do almost anything!")
@@ -164,13 +164,13 @@ feature "User logs in" do
       end
 
       scenario "with invalid library card number" do
-        log_in_with("12345", user.library_card_pin)
+        library_card_log_in_with("12345", user.library_card_pin)
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Invalid Library Card Number or Library Card PIN")
       end
 
       scenario "with invalid pin" do
-        log_in_with(user.library_card_number, "123")
+        library_card_log_in_with(user.library_card_number, "123")
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Invalid Library Card Number or Library Card PIN")
       end
@@ -189,13 +189,13 @@ feature "User logs in" do
       end
 
       scenario "with invalid library card number" do
-        spanish_log_in_with("12345", user.library_card_pin)
+        spanish_library_card_log_in_with("12345", user.library_card_pin)
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Número de tarjeta de biblioteca o PIN de tarjeta de biblioteca no válidos")
       end
 
       scenario "with invalid pin" do
-        spanish_log_in_with(user.library_card_number, "123")
+        spanish_library_card_log_in_with(user.library_card_number, "123")
         expect(current_path).to eq(new_user_session_path)
         expect(page).to have_content("Número de tarjeta de biblioteca o PIN de tarjeta de biblioteca no válidos")
       end

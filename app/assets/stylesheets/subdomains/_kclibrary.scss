@@ -12,10 +12,6 @@
     color: $kc-blue !important;
   }
 
-  .footer-primary {
-    color: $kc-grey;
-  }
-
   &.login-new,
   &.sessions-new,
   &.registrations-new {
@@ -27,6 +23,18 @@
   a:not(.btn):not(.inverted) {
     color: $kc-blue;
   }
+
+  .cms_nav {
+    color: $kc-grey;
+
+    .cms_nav--link {
+      color: $kc-grey !important;
+    }
+  }
+
+  .license {
+    color: $kc-grey;
+  }  
 
   .course-widget.completed header {
     background: linear-gradient(to bottom, $kc-blue 0%, $kc-blue 100%);
