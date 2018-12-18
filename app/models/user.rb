@@ -104,10 +104,6 @@ class User < ActiveRecord::Base
     )
   end
 
-  def login_type_string
-    "foobar"
-  end
-
   def email_required?
     if organization.library_card_login?
       false
