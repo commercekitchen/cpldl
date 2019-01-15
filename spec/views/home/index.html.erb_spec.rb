@@ -3,7 +3,7 @@ require "rails_helper"
 describe "home/index.html.erb" do
 
   before(:each) do
-    @org = create(:organization, subdomain: "www")
+    @org = create(:default_organization)
     allow(view).to receive(:current_organization).and_return(@org)
     allow(view).to receive(:subdomain?).and_return(false)
     allow(view).to receive(:top_level_domain?).and_return(true)

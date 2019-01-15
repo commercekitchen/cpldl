@@ -2,7 +2,7 @@ require "feature_helper"
 
 feature "Annonymous visits static pages" do
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
   end
 
   scenario "can visit the customization page" do

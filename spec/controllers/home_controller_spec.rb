@@ -3,7 +3,7 @@ require "rails_helper"
 describe HomeController do
 
   before(:each) do
-    @www = create(:organization, subdomain: "www")
+    @www = create(:default_organization)
     @request.host = "www.test.host"
     @spanish = create(:spanish_lang)
     @english = create(:language)

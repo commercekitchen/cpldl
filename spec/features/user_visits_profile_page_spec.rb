@@ -195,14 +195,14 @@ feature "Registered user visits account page" do
     end
 
     scenario "can change library location" do
-      expect(page).to have_select('chzn', selected: library_location1.name)
+      expect(page).to have_select("chzn", selected: library_location1.name)
 
       select library_location2.name, from: :chzn
-      click_on('Save')
-      expect(page).to have_content('Profile was successfully updated.')
+      click_on("Save")
+      expect(page).to have_content("Profile was successfully updated.")
 
       visit profile_path
-      expect(page).to have_select('chzn', selected: library_location2.name)
+      expect(page).to have_select("chzn", selected: library_location2.name)
     end
 
     scenario "can choose custom location" do
@@ -220,7 +220,7 @@ feature "Registered user visits account page" do
 
       visit profile_path
 
-      expect(page).to have_select('chzn', selected: "New Branch")
+      expect(page).to have_select("chzn", selected: "New Branch")
     end
   end
 

@@ -420,6 +420,15 @@ ALTER SEQUENCE courses_id_seq OWNED BY courses.id;
 
 
 --
+-- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE data_migrations (
+    version character varying NOT NULL
+);
+
+
+--
 -- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -615,7 +624,8 @@ CREATE TABLE organizations (
     branches boolean,
     accepts_programs boolean,
     library_card_login boolean DEFAULT false,
-    accepts_custom_branches boolean DEFAULT false
+    accepts_custom_branches boolean DEFAULT false,
+    login_required boolean DEFAULT true
 );
 
 
@@ -1523,6 +1533,13 @@ CREATE INDEX index_users_roles_on_user_id_and_role_id ON users_roles USING btree
 
 
 --
+-- Name: unique_data_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_data_migrations ON data_migrations USING btree (version);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1776,4 +1793,6 @@ INSERT INTO schema_migrations (version) VALUES ('20181119194721');
 INSERT INTO schema_migrations (version) VALUES ('20181120180332');
 
 INSERT INTO schema_migrations (version) VALUES ('20181120182048');
+
+INSERT INTO schema_migrations (version) VALUES ('20181211172626');
 

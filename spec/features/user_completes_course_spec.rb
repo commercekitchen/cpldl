@@ -4,7 +4,7 @@ feature "User visits course complete page" do
 
   before(:each) do
     @org = create(:organization)
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @course1 = create(:course, title: "Title 1")
     @english = create(:language)
     @spanish = create(:spanish_lang)
@@ -23,7 +23,7 @@ feature "User visits course complete page" do
     scenario "can view the notes and partner resources info for the given course" do
       @course.notes = "<strong>Post-Course completion notes...</strong>"
       @course.save
-      visit course_complete_path(@course)
+      visit course_completion_path(@course)
       expect(page).to have_content("Practice and use your new skills! (click each link below)")
       expect(page).to have_content("Post-Course completion notes...")
       expect(page).to_not have_content("<strong>")
@@ -32,7 +32,7 @@ feature "User visits course complete page" do
     scenario "can view the supplemental materials link" do
       file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
       @course.attachments.create(document: file, doc_type: "post-course")
-      visit course_complete_path(@course)
+      visit course_completion_path(@course)
       expect(page).to have_content("testfile.pdf")
     end
 
@@ -48,7 +48,7 @@ feature "User visits course complete page" do
     scenario "can view the notes and partner resources info for the given course" do
       @course.notes = "<strong>Post-Course completion notes...</strong>"
       @course.save
-      visit course_complete_path(@course)
+      visit course_completion_path(@course)
       expect(page).to have_content("Practice and use your new skills! (click each link below)")
       expect(page).to have_content("Post-Course completion notes...")
       expect(page).to_not have_content("<strong>")
@@ -57,7 +57,7 @@ feature "User visits course complete page" do
     scenario "can view the supplemental materials link" do
       file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
       @course.attachments.create(document: file, doc_type: "post-course")
-      visit course_complete_path(@course)
+      visit course_completion_path(@course)
       # expect(page).to have_content("Click here for a text copy of the course.")
       expect(page).to have_content("testfile.pdf")
     end

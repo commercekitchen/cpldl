@@ -4,7 +4,7 @@ feature "User completes course recommendations quiz" do
 
   before(:each) do
     @english = create(:language)
-    @org = create(:organization, subdomain: "www")
+    @org = create(:default_organization)
     @user = create(:user, organization: @org)
 
     @core_topic = create(:topic, title: "Core")
@@ -22,7 +22,7 @@ feature "User completes course recommendations quiz" do
   end
 
   scenario "user completes course recommendations quiz" do
-    visit courses_quiz_path
+    visit new_quiz_response_path
     expect(page).to have_content("what would you like to learn?")
     choose "set_one_2"
     choose "set_two_2"
@@ -30,6 +30,6 @@ feature "User completes course recommendations quiz" do
 
     click_button "Submit"
 
-    expect(current_path).to eq(your_courses_path)
+    expect(current_path).to eq(my_courses_path)
   end
 end

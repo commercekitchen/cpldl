@@ -1,0 +1,11 @@
+<% if user_signed_in? %>
+  <% if current_user.tracking_course?(course.id) %>
+    <p class="course-edit-add-remove"><small>
+      <%= link_to "- Remove from your plan", course_progress_path(course, tracked: false), method: :put, data: { cpl_ga_event: "on", cpl_ga_value: "remove-course-from-plan" } %>
+    </small></p>
+  <% else%>
+    <p class="course-edit-add-remove"><small>
+      <%= link_to "+ #{t('course_page.add_to_your_plan')}", course_progress_path(course, tracked: true), method: :put, data: { cpl_ga_event: "on", cpl_ga_value: "add-course-to-plan" } %>
+    </small></p>
+  <% end %>
+<% end %>

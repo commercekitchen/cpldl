@@ -6,7 +6,7 @@
       <h2 class="text-color"><%= current_user.profile.first_name %>, <%= t('quiz.intro_text') %> </h2>
       <h2 class="text-color"><%= t('quiz.answer_3_questions') %> </h2>
       <div>
-        <%= form_tag courses_quiz_path, id: "msform" do %>
+        <%= form_tag new_quiz_response_path, id: "msform" do %>
           <%= render "shared/quiz_section_one" %>
           <%= render "shared/quiz_section_two" %>
           <%= render "shared/quiz_section_three" %>

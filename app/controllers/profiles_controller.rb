@@ -43,7 +43,7 @@ class ProfilesController < ApplicationController
 
     if first_time_login?
       profile_params.merge!(updated_at: Time.zone.now)
-      redirect_path = (show_quiz? ? courses_quiz_path : root_path)
+      redirect_path = (show_quiz? ? new_quiz_response_path : root_path)
     else
       redirect_path = profile_path
     end
@@ -51,11 +51,11 @@ class ProfilesController < ApplicationController
     old_language_id = @profile.language.id if @profile.language.present?
     new_language_id = profile_params[:language_id].to_i if profile_params[:language_id].present?
 
-    if current_organization.accepts_custom_branches?
-      new_profile_params = convert_branch_params(profile_params)
-    else
-      new_profile_params = profile_params
-    end
+    new_profile_params = if current_organization.accepts_custom_branches?
+                           convert_branch_params(profile_params)
+                         else
+                           profile_params
+                         end
 
     respond_to do |format|
       if @profile.context_update(new_profile_params)
@@ -93,13 +93,15 @@ class ProfilesController < ApplicationController
       :library_location_id
     ]
 
-    allowed_params << [
-      library_location_attributes: [
-        :name,
-        :custom,
-        :zipcode
+    if current_organization.accepts_custom_branches?
+      allowed_params << [
+        library_location_attributes: [
+          :name,
+          :custom,
+          :zipcode
+        ]
       ]
-    ] if current_organization.accepts_custom_branches?
+    end
 
     allowed_params
   end

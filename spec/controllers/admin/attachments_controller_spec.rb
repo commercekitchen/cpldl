@@ -3,7 +3,7 @@ require "rails_helper"
 describe Admin::AttachmentsController do
 
   before(:each) do
-    @organization = create(:organization, subdomain: "www")
+    @organization = create(:default_organization)
     @request.host = "www.test.host"
     @attachment = create(:attachment)
     @english = create(:language)

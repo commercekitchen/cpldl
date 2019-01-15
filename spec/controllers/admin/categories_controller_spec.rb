@@ -3,7 +3,7 @@ require "rails_helper"
 describe Admin::CategoriesController do
 
   before(:each) do
-    @www = create(:organization, subdomain: "www")
+    @www = create(:default_organization)
     @dpl = create(:organization, subdomain: "dpl")
 
     @www_admin = create(:admin_user, organization: @www)

@@ -15,7 +15,7 @@
             <% unless current_organization.library_card_login? %>
               <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
             <% end %>
-            <%= link_to "#{t('logged_in_user.my_courses')}", your_courses_path %> |
+            <%= link_to "#{t('logged_in_user.my_courses')}", my_courses_path %> |
             <%= link_to "#{t('logged_in_user.all_courses')}", root_path %> |
             <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
           </nav>

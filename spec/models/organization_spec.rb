@@ -11,6 +11,7 @@
 #  accepts_programs        :boolean
 #  library_card_login      :boolean          default(FALSE)
 #  accepts_custom_branches :boolean          default(FALSE)
+#  login_required          :boolean          default(TRUE)
 #
 
 require "rails_helper"
@@ -18,7 +19,7 @@ require "rails_helper"
 RSpec.describe Organization, type: :model do
   before do
     @org = create(:organization)
-    other_org = create(:organization, subdomain: "www")
+    other_org = create(:default_organization)
     @user1 = create(:user, organization: @org)
     @user1.add_role("admin", @org)
 

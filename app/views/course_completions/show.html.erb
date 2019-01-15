@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="row">
-      <%= link_to(course_complete_path(@course, format: 'pdf')) do %>
+      <%= link_to(course_completion_path(@course, format: 'pdf')) do %>
         <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
           <%= t('course_completion_page.download_certificate') %>
         <% end %>
@@ -61,7 +61,7 @@
     </div>
     <div class="row">
       <% if current_user %>
-        <%= link_to(your_courses_path) do %>
+        <%= link_to(my_courses_path) do %>
           <%= button_tag(type: "button", class: "btn-grey bottom-button congrats-button button-color" ) do %>
             <%= t('course_completion_page.return_to_my_courses') %>
           <% end %>

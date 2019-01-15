@@ -21,16 +21,10 @@ Rails.application.routes.draw do
 
   resources :contact, only: [:new, :create]
 
-  get 'courses/your', to: 'courses#your', as: :your_courses
-  get 'courses/completed', to: 'courses#completed', as: :completed_courses
-  get 'courses/quiz', to: 'courses#quiz'
-  post 'courses/quiz', to: 'courses#quiz_submit'
   get 'home_language_toggle', to: 'home#language_toggle'
 
   resources :courses, only: [:index, :show] do
     post 'start'
-    post 'add'
-    post 'remove'
     get 'complete'
     get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     get 'skills', to: 'courses#skills', as: :skills
@@ -39,6 +33,14 @@ Rails.application.routes.draw do
       post 'complete'
     end
   end
+
+  resources :my_courses, only: [:index], param: :course_id
+
+  resources :course_progresses, only: [:create, :update], param: :course_id
+
+  resources :course_completions, only: [:index, :show], param: :course_id
+
+  resources :quiz_responses, only: [:new, :create]
 
   resources 'cms_pages', only: [:show]
 

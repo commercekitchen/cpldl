@@ -3,7 +3,7 @@ require "rails_helper"
 describe LoginController do
 
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @request.host = "www.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)

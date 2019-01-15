@@ -3,7 +3,7 @@ require "feature_helper"
 feature "User clicks through each page" do
 
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @org = create(:organization)
     @spanish = create(:spanish_lang)
     @english = create(:language)
@@ -29,7 +29,7 @@ feature "User clicks through each page" do
     within(:css, ".header-logged-in") do
       click_link "My Courses"
     end
-    expect(current_path).to eq(your_courses_path)
+    expect(current_path).to eq(my_courses_path)
 
     visit root_path
     within(:css, ".header-logged-in") do
@@ -56,7 +56,7 @@ feature "User clicks through each page" do
     within(:css, ".sidebar") do
       click_link "My Completed Courses"
     end
-    expect(current_path).to eq(completed_courses_path)
+    expect(current_path).to eq(course_completions_path)
   end
 
 end

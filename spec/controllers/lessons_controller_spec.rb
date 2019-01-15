@@ -27,7 +27,7 @@ require "rails_helper"
 describe LessonsController do
 
   before(:each) do
-    create(:organization, subdomain: "www")
+    create(:default_organization)
     @request.host = "www.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)
@@ -120,7 +120,7 @@ describe LessonsController do
       @lesson3.is_assessment = true
       @lesson3.save
       post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
-      expect(response).to redirect_to(course_complete_path(@course1.to_param))
+      expect(response).to redirect_to(course_completion_path(@course1.to_param))
     end
 
     it "responds to json" do

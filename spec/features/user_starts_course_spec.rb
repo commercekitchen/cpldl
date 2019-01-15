@@ -2,59 +2,68 @@ require "feature_helper"
 
 feature "User visits course listing page" do
 
+  let(:language) { create(:language) }
+  let!(:spanish) { create(:spanish_lang) }
+  let(:organization) { create(:organization) }
+  let(:www) { create(:default_organization) }
+  let!(:course1) { create(:course_with_lessons, title: "Course 1", course_order: 1, language: language, organization: organization) }
+  let!(:course2) { create(:course, title: "Course 2", course_order: 2, language: language, organization: organization) }
+  let!(:course3) { create(:course, title: "Course 3", course_order: 3, language: language, organization: organization) }
+
   before(:each) do
-    @language = create(:language)
-    @spanish = create(:spanish_lang)
-    @organization = create(:organization, subdomain: "chipublib")
-    @course1 = create(:course_with_lessons, title: "Title 1",
-                               course_order: 1,
-                               language: @language,
-                               organization: @organization)
-    @course2 = create(:course, title: "Title 2",
-                               course_order: 2,
-                               language: @language,
-                               organization: @organization)
-    @course3 = create(:course, title: "Title 3",
-                               course_order: 3,
-                               language: @language,
-                               organization: @organization)
-    switch_to_subdomain("chipublib")
+    switch_to_subdomain(organization.subdomain)
   end
 
   context "as an anonymous user" do
-    context "courses url version" do
-      scenario "should see all courses in the catalog from the homepage" do
-        visit courses_path
-        expect(page).to have_content(@course1.title)
-        expect(page).to have_content(@course2.title)
-        expect(page).to have_content(@course3.title)
-      end
+    scenario "should see all courses in the catalog from the homepage" do
+      visit courses_path
+      expect(page).to have_content(course1.title)
+      expect(page).to have_content(course2.title)
+      expect(page).to have_content(course3.title)
+    end
 
-      scenario "can click on a course to be taken to the course page" do
-        visit courses_path
-        first(:css, ".course-widget").click
-        expect(current_path).to eq(course_path(@course1))
-      end
+    scenario "can click on a course to be taken to the course page" do
+      visit courses_path
+      first(:css, ".course-widget").click
+      expect(current_path).to eq(course_path(course1))
+    end
 
+    scenario "should see all courses in the catalog from the homepage" do
+      visit root_path
+      expect(page).to have_content(course1.title)
+      expect(page).to have_content(course2.title)
+      expect(page).to have_content(course3.title)
+    end
+
+    scenario "can click on a course to be taken to the course page" do
+      visit root_path
+      first(:css, ".course-widget").click
+      expect(current_path).to eq(course_path(course1))
+    end
+
+    context "on a login_required subdomain" do
       scenario "can click to start a course and is required to sign in" do
-        visit course_path(@course1)
+        visit course_path(course1)
         click_link "Start Course"
         expect(current_path).to eq(user_session_path)
       end
     end
 
-    context "homepage version" do
-      scenario "should see all courses in the catalog from the homepage" do
-        visit root_path
-        expect(page).to have_content(@course1.title)
-        expect(page).to have_content(@course2.title)
-        expect(page).to have_content(@course3.title)
+    context "on a non login_required subdomain" do
+      scenario "can click to start a course and is not required to sign in" do
+        organization.update(login_required: false)
+        visit course_path(course1)
+        click_link "Start Course"
+        expect(current_path).to eq(course_lesson_path(course1, course1.lessons.first))
       end
+    end
 
-      scenario "can click on a course to be taken to the course page" do
-        visit root_path
-        first(:css, ".course-widget").click
-        expect(current_path).to eq(course_path(@course1))
+    context "on www" do
+      scenario "can click to start a course and is not required to sign in" do
+        switch_to_subdomain(www.subdomain)
+        visit course_path(course1)
+        click_link "Start Course"
+        expect(current_path).to eq(course_lesson_path(course1, course1.lessons.first))
       end
     end
   end

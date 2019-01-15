@@ -63,6 +63,9 @@ gem 'attr_encrypted'
 # Cast blanks to nil
 gem 'nilify_blanks'
 
+# Use data migrations in addition to schema migrations
+gem 'data_migrate'
+
 # integrate chosen library
 # gem 'select2-rails'
 

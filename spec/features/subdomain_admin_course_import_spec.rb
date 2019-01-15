@@ -5,7 +5,7 @@ feature "Admin courses" do
     @dpl = create(:organization,
                   subdomain: "dpl",
                   name: "Denver Public Library")
-    @www = create(:organization, subdomain: "www")
+    @www = create(:default_organization)
 
     @dpl_category = create(:category, organization: @dpl)
     @dpl_disabled_category = create(:category, :disabled, organization: @dpl)

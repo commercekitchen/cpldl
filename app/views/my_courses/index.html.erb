@@ -4,7 +4,7 @@
   <%= t("my_courses_page.#{current_organization.subdomain}.course_color_explaination") %> <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path %>
 
   <% unless current_user.profile.opt_out_of_recommendations %>
-    <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", courses_quiz_path %>
+    <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", new_quiz_response_path %>
     <%= t('my_courses_page.well_suggest_more_courses') %>
   <% end %>
 </p>
@@ -12,5 +12,5 @@
 <%= render partial: "shared/courses/listing" %>
 
 <% if @results && @results.blank? %>
-  <p>No courses match your search. <%= link_to "View all your courses", your_courses_path %></p>
+  <p>No courses match your search. <%= link_to "View all your courses", my_courses_path %></p>
 <% end %>
