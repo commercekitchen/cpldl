@@ -72,7 +72,7 @@ module Admin
         new_lesson.story_line = nil
         new_lesson.story_line = imported_lesson.story_line
         new_lesson.save
-        Unzipper.new(new_lesson.story_line)
+        Unzipper.new(new_lesson.story_line).unzip_lesson
       end
 
       # Create copies of the attachments
