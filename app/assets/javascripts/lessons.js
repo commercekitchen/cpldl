@@ -19,4 +19,8 @@ $(document).ready(function() {
     });
   };
 
+  getDLCTransition = function(_){
+    sendLessonCompletedEvent();
+  };
+
 });
