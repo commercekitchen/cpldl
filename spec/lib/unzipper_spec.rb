@@ -3,10 +3,10 @@ require "unzipper"
 require "rails_helper"
 
 RSpec.describe Unzipper do
-  let(:temp_root) { File.join(Rails.root, 'tmp') }
+  let(:temp_root) { File.join(Rails.root, "tmp") }
   let(:lesson) { FactoryGirl.create(:lesson) }
   let(:storyline_path) { "public/storylines/#{lesson.story_line.instance.id}" }
-  let(:package_file_name) { "#{lesson.story_line.instance.story_line_file_name.chomp('.zip')}" }
+  let(:package_file_name) { lesson.story_line.instance.story_line_file_name.chomp(".zip").to_s }
 
   context "initialize" do
     it "without an ASL package" do
@@ -27,9 +27,9 @@ RSpec.describe Unzipper do
     test_file = File.join(temp_root, "#{storyline_path}/#{package_file_name}/test_file.txt")
     puts test_file
     FileUtils.mkdir_p(File.dirname(test_file))
-    File.open(test_file, 'w')
-    expect(File.exists?(test_file)).to be_truthy
+    File.open(test_file, "w")
+    expect(File.exist?(test_file)).to be_truthy
     Unzipper.new(lesson.story_line, temp_root).unzip_lesson
-    expect(File.exists?(test_file)).to be_falsey
+    expect(File.exist?(test_file)).to be_falsey
   end
 end

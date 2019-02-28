@@ -254,6 +254,7 @@ Rails/FilePath:
 Rails/FindBy:
   Exclude:
     - 'app/models/course.rb'
+    - 'app/models/user.rb'
 
 # Offense count: 12
 # Configuration parameters: Include.
@@ -293,6 +294,7 @@ Rails/InverseOf:
 Rails/LexicallyScopedActionFilter:
   Exclude:
     - 'app/controllers/courses_controller.rb'
+    - 'app/controllers/sessions_controller.rb'
 
 # Offense count: 5
 Rails/OutputSafety:
@@ -392,6 +394,8 @@ Style/FormatStringToken:
     - 'app/models/cms_page.rb'
     - 'app/models/course.rb'
     - 'app/models/lesson.rb'
+    - 'app/services/completed_courses_exporter.rb'
+    - 'app/services/unfinished_courses_exporter.rb'
 
 # Offense count: 6
 # Cop supports --auto-correct.

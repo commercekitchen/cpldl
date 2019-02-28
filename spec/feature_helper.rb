@@ -4,7 +4,6 @@ require "capybara/rspec"
 require "selenium/webdriver"
 require "webmock/rspec"
 
-
 # TODO: Consolidate these 4 methods into one method with keyword args, maybe?
 def log_in_with(email, password, admin = nil)
   visit new_user_session_path(admin: admin)
