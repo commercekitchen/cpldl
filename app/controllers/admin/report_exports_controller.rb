@@ -4,7 +4,7 @@ module Admin
     def show
       csv = run_exporter(params[:report])
       respond_to do |format|
-        format.csv { send_data csv, filename: params[:report] }
+        format.csv { send_data csv, filename: "#{params[:report]}.csv" }
       end
     end
 
