@@ -36,6 +36,8 @@ class ProfilesController < ApplicationController
       @user.add_role(new_role)
     end
 
+    profile_params.merge!(updated_at: Time.zone.now) if first_time_login?
+
     new_profile_params = if current_organization.accepts_custom_branches?
                            convert_branch_params(profile_params)
                          else
@@ -101,13 +103,13 @@ class ProfilesController < ApplicationController
   end
 
   def update_locale
-    language = Language.find(@profile.language.id)
-    case language.name
-    when "English"
-      I18n.locale = :en
-    when "Spanish"
-      I18n.locale = :es
-    end
+    language = Language.find_by(id: @profile.language_id) || Language.first
+    I18n.locale = case language.name
+                  when "Spanish"
+                    :es
+                  else
+                    :en
+                  end
     session[:locale] = I18n.locale.to_s
   end
 
@@ -123,7 +125,6 @@ class ProfilesController < ApplicationController
 
   def redirect_path
     if first_time_login?
-      profile_params.merge!(updated_at: Time.zone.now)
       show_quiz? ? new_quiz_response_path : root_path
     else
       profile_path
