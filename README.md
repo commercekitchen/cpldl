@@ -18,8 +18,8 @@ required to stand up a new DigitalLearn site.
 
 ### Dependencies
 
-* Ruby 2.2.3
-* Rails 4.2.7.1
+* Ruby 2.2.9
+* Rails 4.2.10
 * Postgresql v 9.4.5
 
 ### Update Secrets

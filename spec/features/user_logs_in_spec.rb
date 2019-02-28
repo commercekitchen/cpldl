@@ -122,7 +122,7 @@ feature "User logs in" do
     end
 
     scenario "for incorrect organization" do
-      other_org = create(:organization, subdomain: 'foobar')
+      other_org = create(:organization, subdomain: "foobar")
       switch_to_subdomain(other_org.subdomain)
 
       user = create(:user, organization: @org)
@@ -152,7 +152,7 @@ feature "User logs in" do
 
         click_link "Sign Out"
 
-        user = User.last
+        user = User.last # rubocop:disable Lint/UselessAssignment
 
         library_card_log_in_with(card_number, card_pin)
         expect(current_path).to eq(root_path)

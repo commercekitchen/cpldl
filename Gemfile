@@ -83,7 +83,7 @@ group :development do
 end
 
 group :development, :test do
-  gem "bundler-audit", require: false
+  gem 'bundler-audit', require: false
   gem 'faker'
   gem 'pry'
   gem 'pry-nav'

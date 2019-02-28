@@ -40,7 +40,7 @@ RSpec.describe Organization, type: :model do
     describe "using_lesson" do
       it "includes only orgs using the passed lesson" do
         lesson_org = create(:organization)
-        other_org = create(:organization)
+        create(:organization)
         parent_lesson = create(:lesson)
         lesson = create(:lesson, parent_id: parent_lesson.id, course: create(:course))
         lesson_org.courses << lesson.course
@@ -52,7 +52,7 @@ RSpec.describe Organization, type: :model do
     describe "using_course" do
       it "includes only orgs using the passed course" do
         course_org = create(:organization)
-        other_org = create(:organization)
+        create(:organization)
         parent_course = create(:course)
         course = create(:course, parent_id: parent_course.id)
         course_org.courses << course

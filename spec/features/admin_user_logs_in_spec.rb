@@ -74,8 +74,10 @@ feature "Admin user logs in" do
 
   context "for library card login organization" do
     let(:location) { create(:library_location) }
-    let(:org) { create(:organization, :library_card_login, subdomain: "kclibrary", branches: true,
-                       accepts_custom_branches: true, library_locations: [location]) }
+    let(:org) do
+      create(:organization, :library_card_login, subdomain: "kclibrary", branches: true,
+                       accepts_custom_branches: true, library_locations: [location])
+    end
     let(:user) { create(:admin_user, sign_in_count: 2) }
 
     before(:each) do

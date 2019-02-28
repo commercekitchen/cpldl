@@ -32,24 +32,11 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_or_initialize_by(user: @user)
 
     if params[:profile][:user].present?
-      new_role = params[:profile][:user][:user_role_string]
-
-      if new_role == "Student"
-        @user.add_role("Student")
-      else
-        @user.add_role("Parent")
-      end
+      new_role = params[:profile][:user][:user_role_string] == "Student" ? "Student" : "Parent"
+      @user.add_role(new_role)
     end
 
-    if first_time_login?
-      profile_params.merge!(updated_at: Time.zone.now)
-      redirect_path = (show_quiz? ? new_quiz_response_path : root_path)
-    else
-      redirect_path = profile_path
-    end
-
-    old_language_id = @profile.language.id if @profile.language.present?
-    new_language_id = profile_params[:language_id].to_i if profile_params[:language_id].present?
+    profile_params.merge!(updated_at: Time.zone.now) if first_time_login?
 
     new_profile_params = if current_organization.accepts_custom_branches?
                            convert_branch_params(profile_params)
@@ -57,9 +44,11 @@ class ProfilesController < ApplicationController
                            profile_params
                          end
 
+    language_changed = @profile.language_id != profile_params[:language_id].try(:to_i)
+
     respond_to do |format|
       if @profile.context_update(new_profile_params)
-        update_locale(new_language_id) unless new_language_id == old_language_id
+        update_locale if language_changed
         format.html { redirect_to redirect_path, notice: I18n.t("profile_page.updated") }
         format.json { render :show, status: :ok, location: @profile }
       else
@@ -113,14 +102,14 @@ class ProfilesController < ApplicationController
       !current_user.has_role?(:admin, current_organization)
   end
 
-  def update_locale(language_id=1)
-    language = Language.find(language_id)
-    case language.name
-    when "English"
-      I18n.locale = :en
-    when "Spanish"
-      I18n.locale = :es
-    end
+  def update_locale
+    language = Language.find_by(id: @profile.language_id) || Language.first
+    I18n.locale = case language.name
+                  when "Spanish"
+                    :es
+                  else
+                    :en
+                  end
     session[:locale] = I18n.locale.to_s
   end
 
@@ -131,6 +120,14 @@ class ProfilesController < ApplicationController
       library_location_zip = profile_params[:zip_code].presence || "00000"
       profile_params[:library_location_attributes][:zipcode] = library_location_zip
       profile_params
+    end
+  end
+
+  def redirect_path
+    if first_time_login?
+      show_quiz? ? new_quiz_response_path : root_path
+    else
+      profile_path
     end
   end
 

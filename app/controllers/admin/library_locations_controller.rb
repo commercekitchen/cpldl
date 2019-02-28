@@ -42,8 +42,8 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position])
+      params[:order].each_value do |v|
+        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position]) # rubocop:disable Rails/SkipsModelValidations
       end
       render nothing: true
     end

@@ -193,7 +193,7 @@ describe User do
     end
 
     it "should be valid for second user" do
-      user = User.create(user_params)
+      User.create(user_params)
       user2 = User.new(user_params.merge(library_card_number: Array.new(13) { rand(10) }.join))
       expect(user2).to be_valid
       expect(user2.save).to be_truthy
