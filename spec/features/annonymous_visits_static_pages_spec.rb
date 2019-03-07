@@ -28,7 +28,7 @@ feature "Annonymous visits static pages" do
     let!(:spanish_lang) { create(:spanish_lang) }
 
     shared_examples "trainer link" do
-      it "should exist on landing page" do
+      it "trainer link should exist on landing page" do
         visit root_path
         expect(page).to have_content("Tools and Resources for Trainers")
       end
