@@ -38,7 +38,7 @@ feature "Annonymous visits static pages" do
       before do
         switch_to_main_domain
       end
-      it_behaves_like "trainer link"
+      include_examples "trainer link"
     end
 
     context "under sub domain" do
@@ -46,7 +46,7 @@ feature "Annonymous visits static pages" do
       before do
         switch_to_subdomain(dpl.subdomain)
       end
-      it_behaves_like "trainer link"
+      include_examples "trainer link"
     end
   end
 end
