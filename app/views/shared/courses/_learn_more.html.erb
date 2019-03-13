@@ -1,5 +1,5 @@
 <% if current_page?(controller: "my_courses", action: "index") %>
-  <a class="course-widget retake-quiz" href="/courses/quiz">
+  <%= link_to new_quiz_response_path, class: "course-widget retake-quiz" do %>
     <header>
       <h3><%= t('my_courses_page.ready_to_learn_more') %></h3>
     </header>
@@ -11,5 +11,5 @@
         <%= button_tag t("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), class: "btn small button-color" %>
       <% end %>
     </div>
-  </a>
+  <% end %>
 <% end %>
