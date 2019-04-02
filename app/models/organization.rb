@@ -60,10 +60,4 @@ class Organization < ActiveRecord::Base
       :password
     end
   end
-
-  private
-
-  def users
-    User.where(organization_id: id)
-  end
 end
