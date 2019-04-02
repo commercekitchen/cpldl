@@ -39,7 +39,6 @@ gem 'sidekiq-failures'
 
 # Error reporting
 gem 'rollbar'
-gem 'newrelic_rpm'
 
 gem 'paperclip', '~> 5.2.1' # File uploads
 gem 'rubyzip' # ASL files
