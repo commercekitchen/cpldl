@@ -41,7 +41,11 @@
       <% end %>
 
       <%= link_to "http://www.ala.org/pla/", target: "_blank" do %>
-        <%= image_tag "pla_logo_white", class: "link-pla" %>
+        <% if top_level_domain? %>
+          <%= image_tag "pla_logo_black", class: "link-pla" %>
+        <% else %>
+          <%= image_tag "pla_logo_white", class: "link-pla" %>
+        <% end %>
       <% end %>
 
       <div class="license">

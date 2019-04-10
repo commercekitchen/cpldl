@@ -18,13 +18,15 @@ class ApplicationController < ActionController::Base
   layout proc { user_signed_in? || !subdomain? ? "user/logged_in" : "application" }
 
   def current_organization
-    if staging?
-      Organization.find_by_subdomain(stage_subdomain) || Organization.find_by_subdomain("www")
+    org = if staging?
+      Organization.find_by_subdomain(stage_subdomain)
     elsif request.subdomain == "" || request.subdomain == "admin"
-      Organization.find_by_subdomain("") || Organization.find_by_subdomain("www")
+      Organization.find_by_subdomain("")
     else
-      Organization.find_by_subdomain(request.subdomain) || Organization.find_by_subdomain("www")
+      Organization.find_by_subdomain(request.subdomain)
     end
+
+    org || Organization.find_by_subdomain("www")
   end
 
   def set_mailer_host
