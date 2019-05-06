@@ -20,7 +20,7 @@
       <%= render "shared/flashes" %>
       <div class="row">
         <div class="threecol sidebar">
-          <%= render "shared/admin/sidebar" %>
+          <%= render @sidebar || "shared/admin/sidebar" %>
         </div>
         <div class="ninecol last">
           <%= yield %>

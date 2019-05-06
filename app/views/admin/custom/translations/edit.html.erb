@@ -1,0 +1,7 @@
+<%= form_for @translation, url: admin_custom_translation_path do |form| %>
+  <%= form.label :locale %> <%= form.text_field :locale, readonly: true %>
+  <%= form.label :key %> <%= form.text_field :key, readonly: true %>
+  <%= form.label :value %> <%= form.text_area :value %>
+
+  <%= form.submit 'Save Translation' %> <%= link_to "Cancel", admin_custom_translations_url(@locale) %>
+<% end %>

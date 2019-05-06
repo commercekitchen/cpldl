@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
@@ -112,6 +111,13 @@ Rails.application.routes.draw do
     get 'export_completions', to: 'exports#completions', as: :export_completions
 
     resources :attachments, only: [:destroy]
+
+    get 'customizations', to: 'customizations#index'
+
+    namespace :custom do
+      resources :translations, constraints: { :id => /[^\/]+/ }
+    end
+
   end
 
   devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invites', sessions: 'sessions' }
