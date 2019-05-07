@@ -1,4 +1,9 @@
-<h1>Translations for <%= @locale %></h1>
+<% content_for(:callout) do %>
+  <h1>Translations for <%= locale_string(@locale) %></h1>
+<% end %>
+
+<p class="emphasis no-top-margin">Change your language preference on the header to update other language translations</p>
+
 <table>
   <thead>
     <tr>
@@ -17,8 +22,8 @@
           <% if translation.nil? %>
             <%= link_to "Edit", new_admin_custom_translation_url(@locale, key: key) %>
           <% else %>
-            <%= link_to "Edit", edit_admin_custom_translation_url(@locale, translation) %>
-            <%= link_to "Reset", admin_custom_translation_url(@locale, translation), method: :delete, data: { confirm: "Are you sure?" } %>
+            <%= link_to "Edit", edit_admin_custom_translation_url(translation, @locale) %>
+            <%= link_to "Reset", admin_custom_translation_url(translation, @locale), method: :delete, data: { confirm: "Are you sure?" } %>
           <% end %>
         </td>
       </tr>

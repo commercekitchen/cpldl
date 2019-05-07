@@ -1,13 +1,6 @@
 module Admin::Custom::TranslationsHelper
   def translation_keys(i18n_locale)
-    case i18n_locale
-    when "en"
-      en_keys
-    when "jp"
-      jp_keys
-    else
-      default_keys
-    end
+    send("#{i18n_locale}_keys")
   end
 
   def translation_for_key(translations, key)
@@ -18,14 +11,19 @@ module Admin::Custom::TranslationsHelper
   private
 
   def en_keys
-    [ "welcome", "site_description", "contact_name" ]
+    %w(
+      home.%{subdomain}.custom_banner_greeting
+      home.%{subdomain}.logo_banner_html
+      completed_courses_page.%{subdomain}.retake_the_quiz
+      my_courses_page.%{subdomain}.course_color_explaination
+    ).map { |k| k % { subdomain: current_organization.subdomain } }
   end
 
-  def jp_keys
-    [ "welcome", "site_description" ]
+  def es_keys
+    en_keys
   end
 
-  def default_keys
-    [ "welcome", "site_description" ]
+  def locale_string(i18n_locale)
+    i18n_locale == :en ? 'English' : 'Español'
   end
 end

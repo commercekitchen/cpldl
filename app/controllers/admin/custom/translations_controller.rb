@@ -23,7 +23,7 @@ module Admin::Custom
         if @translation.save
           flash[:success] = "Translation for #{ @key } updated."
           I18n.backend.reload!
-          redirect_to locale_translations_url(@locale)
+          redirect_to admin_custom_translations_url(@locale)
         else
           render :new
         end
@@ -37,7 +37,7 @@ module Admin::Custom
       if @translation.update(translation_params)
         flash[:notice] = "Translation for #{ @key } updated."
         I18n.backend.reload!
-        redirect_to locale_translations_url(@locale)
+        redirect_to admin_custom_translations_url(@locale)
       else
         render :edit
       end
@@ -46,7 +46,7 @@ module Admin::Custom
     def destroy
       Translation.destroy(params[:id])
       I18n.backend.reload!
-      redirect_to locale_translations_url(@locale)
+      redirect_to admin_custom_translations_url(@locale)
     end
 
     private

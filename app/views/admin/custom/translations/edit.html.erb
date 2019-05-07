@@ -1,3 +1,7 @@
+<% content_for(:callout) do %>
+  <h1>Translations for <%= locale_string(@locale) %></h1>
+<% end %>
+
 <%= form_for @translation, url: admin_custom_translation_path do |form| %>
   <%= form.label :locale %> <%= form.text_field :locale, readonly: true %>
   <%= form.label :key %> <%= form.text_field :key, readonly: true %>
