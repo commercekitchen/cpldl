@@ -3,8 +3,8 @@
     <div class="row">
       <div class="threecol">
         <ul class="cms_nav">
-          <strong>LEARN MORE</strong>
-          <% if @footer_pages %>
+          <% if @footer_pages.any? %>
+            <strong>LEARN MORE</strong>
             <% @footer_pages.each do |page| %>
               <li><%= link_to page.title, cms_page_path(page), class: "cms_nav--link" %></li>
             <% end %>
