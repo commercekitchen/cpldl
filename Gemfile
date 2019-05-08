@@ -54,9 +54,7 @@ gem 'wkhtmltopdf-binary'
 gem 'local_time'
 
 # i18n customization
-gem 'i18n-active_record',
-  github: 'svenfuchs/i18n-active_record',
-  require: 'i18n/active_record'
+gem 'i18n-active_record', require: 'i18n/active_record'
 
 # Prevent botspam and allow white/blacklisting IPs, etc
 gem 'rack-attack'
