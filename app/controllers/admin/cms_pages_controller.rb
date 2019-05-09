@@ -19,7 +19,6 @@ module Admin
         @cms_page.set_pub_date if params[:cms_page][:pub_status] == "P"
 
         if @cms_page.save
-          @cms_page.update_attribute(:organization_id, current_user.organization_id)
           redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully created."
         else
           render :new
@@ -100,7 +99,7 @@ module Admin
                                        :pub_date,
                                        :seo_page_title,
                                        :seo_meta_desc,
-                                       :subdomain)
+                                       :organization_id)
     end
   end
 end

@@ -1378,6 +1378,13 @@ CREATE INDEX index_cms_pages_on_slug ON public.cms_pages USING btree (slug);
 
 
 --
+-- Name: index_cms_pages_on_title_and_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_cms_pages_on_title_and_organization_id ON public.cms_pages USING btree (title, organization_id);
+
+
+--
 -- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1826,4 +1833,6 @@ INSERT INTO schema_migrations (version) VALUES ('20181211172626');
 INSERT INTO schema_migrations (version) VALUES ('20190506035357');
 
 INSERT INTO schema_migrations (version) VALUES ('20190508155003');
+
+INSERT INTO schema_migrations (version) VALUES ('20190509143205');
 
