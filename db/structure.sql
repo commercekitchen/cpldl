@@ -386,7 +386,8 @@ CREATE TABLE public.courses (
     subsite_course boolean DEFAULT false,
     parent_id integer,
     display_on_dl boolean DEFAULT false,
-    category_id integer
+    category_id integer,
+    organization_id integer
 );
 
 
@@ -1392,6 +1393,13 @@ CREATE INDEX index_courses_on_category_id ON public.courses USING btree (categor
 
 
 --
+-- Name: index_courses_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_courses_on_organization_id ON public.courses USING btree (organization_id);
+
+
+--
 -- Name: index_courses_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1403,6 +1411,13 @@ CREATE INDEX index_courses_on_slug ON public.courses USING btree (slug);
 --
 
 CREATE INDEX index_courses_on_title ON public.courses USING btree (title);
+
+
+--
+-- Name: index_courses_on_title_and_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_courses_on_title_and_organization_id ON public.courses USING btree (title, organization_id);
 
 
 --
@@ -1835,4 +1850,8 @@ INSERT INTO schema_migrations (version) VALUES ('20190506035357');
 INSERT INTO schema_migrations (version) VALUES ('20190508155003');
 
 INSERT INTO schema_migrations (version) VALUES ('20190509143205');
+
+INSERT INTO schema_migrations (version) VALUES ('20190509152342');
+
+INSERT INTO schema_migrations (version) VALUES ('20190509152902');
 

@@ -23,11 +23,9 @@ class Organization < ActiveRecord::Base
   has_many :library_locations, dependent: :destroy
   has_many :programs, dependent: :destroy
   has_many :schools, dependent: :destroy
-  has_many :organization_courses
-  has_many :courses, through: :organization_courses
+  has_many :courses
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
-  validate
 
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }

@@ -63,7 +63,7 @@ class CourseRecommendationService
   end
 
   def org_courses
-    @org_courses ||= Course.where_exists(:organization_course, organization_id: @org.id).where(language_id: Language.find_by_name(language_string).id)
+    @org_courses ||= Course.where(organization: @org).where(language_id: Language.find_by_name(language_string).id)
   end
 
   def core_courses

@@ -59,8 +59,7 @@ class Course < ActiveRecord::Base
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  has_one :organization_course
-  has_one :organization, through: :organization_course
+  belongs_to :organization, required: true
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
@@ -71,7 +70,8 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :category, reject_if: :all_blank
 
   validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 40 }, presence: true
+  validates :title, length: { maximum: 40 }, presence: true,
+    uniqueness: { scope: :organization_id, message: 'should be unique within an Organization' }
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
@@ -88,12 +88,7 @@ class Course < ActiveRecord::Base
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
-
-  def validate_has_unique_title
-    if Course.where(title: title).where_exists(:organization_course, organization_id: org_id).count > 0
-      errors.add(:title, "must be unique. There is already a course with that title, please select a different title and try again.")
-    end
-  end
+  scope :org, ->(org) { where(organization: org) }
 
   def propagation_org_ids
     @propagation_org_ids ||= []

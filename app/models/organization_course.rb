@@ -9,6 +9,8 @@
 #  updated_at      :datetime         not null
 #
 
+# TODO: deprecated
+
 class OrganizationCourse < ActiveRecord::Base
   belongs_to :organization
   belongs_to :course

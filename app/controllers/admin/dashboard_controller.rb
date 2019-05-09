@@ -2,9 +2,7 @@ module Admin
   class DashboardController < BaseController
 
     def index
-      @courses = Course.includes(:language)
-                       .where_exists(:organization_course, organization_id: current_user.organization_id)
-                       .where.not(pub_status: "A")
+      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: "A")
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
@@ -54,46 +52,47 @@ module Admin
     end
 
     def add_imported_course
-      # Create the course
-      course_to_import = Course.find(params["course_id"].to_i)
-      new_course = course_to_import.dup
-      new_course.parent_id = course_to_import.id
-      new_course.subsite_course = false
-      new_course.pub_date = nil
-      new_course.pub_status = "D"
-      new_course.category_id = new_or_existing_subsite_category_id(course_to_import.category)
-      new_course.save
+      ActiveRecord::Base.transaction do
+        course_to_import = Course.find(params["course_id"].to_i)
+        new_course = course_to_import.dup
+        new_course.parent_id = course_to_import.id
+        new_course.subsite_course = false
+        new_course.pub_date = nil
+        new_course.pub_status = "D"
+        new_course.category_id = new_or_existing_subsite_category_id(course_to_import.category)
+        new_course.organization = current_organization
+        new_course.save!
 
-      # Create copies of the lessons and ASLs
-      course_to_import.lessons.each do |imported_lesson|
-        new_lesson = imported_lesson.dup
-        new_lesson.parent_id = imported_lesson.id
-        new_lesson.course_id = new_course.id
-        new_lesson.story_line = nil
-        new_lesson.story_line = imported_lesson.story_line
-        new_lesson.save
-        Unzipper.new(new_lesson.story_line).unzip_lesson
+        # Create copies of the lessons and ASLs
+        course_to_import.lessons.each do |imported_lesson|
+          new_lesson = imported_lesson.dup
+          new_lesson.parent_id = imported_lesson.id
+          new_lesson.course_id = new_course.id
+          new_lesson.story_line = nil
+          new_lesson.story_line = imported_lesson.story_line
+          new_lesson.save!
+          Unzipper.new(new_lesson.story_line).unzip_lesson
+        end
+
+        # Create copies of the attachments
+        course_to_import.attachments.each do |attachment|
+          new_attachment = attachment.dup
+          new_attachment.document = attachment.document
+          new_attachment.course_id = new_course.id
+          new_attachment.save!
+        end
+
+        # Create copies of the topics
+        course_to_import.course_topics.each do |course_topic|
+          new_topic = course_topic.dup
+          new_topic.course_id = new_course.id
+          new_topic.save!
+        end
       end
 
-      # Create copies of the attachments
-      course_to_import.attachments.each do |attachment|
-        new_attachment = attachment.dup
-        new_attachment.document = attachment.document
-        new_attachment.course_id = new_course.id
-        new_attachment.save
-      end
-
-      # Create copies of the topics
-      course_to_import.course_topics.each do |course_topic|
-        new_topic = course_topic.dup
-        new_topic.course_id = new_course.id
-        new_topic.save
-      end
-
-      # Create OrganizationCourse Entry
-      OrganizationCourse.create(organization_id: current_user.organization_id,
-                                course_id: new_course.id)
       redirect_to edit_admin_course_path(new_course)
+    rescue ActiveRecord::RecordInvalid => e
+      redirect_to admin_import_courses_path, alert: e.record.errors.full_messages
     end
 
     private

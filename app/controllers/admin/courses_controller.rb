@@ -6,9 +6,7 @@ module Admin
     before_action :set_category_options, only: [:new, :edit, :create, :update]
 
     def index
-      @courses = Course.includes(:language)
-                        .where_exists(:organization_course, organization_id: current_user.organization_id)
-                        .where.not(pub_status: "A")
+      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: "A")
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
@@ -41,15 +39,8 @@ module Admin
       end
 
       @course.org_id = current_user.organization_id
-      @course.validate_has_unique_title
 
-      if @course.errors.any?
-        render :new
-      elsif @course.save
-        OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
-          org_course.organization_id = current_user.organization_id
-          org_course.course_id = @course.id
-        end
+      if @course.save
         @course.topics_list(build_topics_list(params))
         if params[:commit] == "Save Course"
           redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
@@ -89,10 +80,6 @@ module Admin
       end
 
       if @course.update(new_course_params)
-        OrganizationCourse.where(organization_id: current_user.organization_id, course_id: @course.id).first_or_create do |org_course|
-          org_course.organization_id = current_user.organization_id
-          org_course.course_id = @course.id
-        end
         changed = propagate_changes? ? propagate_course_changes : 0
 
         @course.topics_list(build_topics_list(params))
@@ -169,6 +156,7 @@ module Admin
         :subsite_course,
         :display_on_dl,
         :subdomain,
+        :organization_id,
         :category_id,
         propagation_org_ids: [],
         category_attributes: [:name, :organization_id],
