@@ -3,41 +3,10 @@
 <div class="logo">
   <div class="logo-icon">
     <div class="ninecol right-logo">
-      <% case current_organization.subdomain %>
-      <% when 'chipublib' %>
-        <%= link_to "http://www.chipublib.org/", target: "_blank" do %>
-          <%= image_tag "seal_white_on_transparent", class: "medium-logo link-cpl" %>
+      <% if subdomain? %>
+        <%= link_to current_organization.footer_logo_link || '#', target: "_blank" do %>
+          <%= image_tag footer_logo_url, class: "medium-logo link-kclibrary" %>
         <% end %>
-      <% when 'npl' %>
-        <%= link_to "http://library.nashville.org", target: "_blank" do %>
-          <%= image_tag "npl_logo_white", class: "medium-logo link-npl" %>
-        <% end %>
-      <% when 'kpl' %>
-        <%= link_to "http://kpl.gov/", target: "_blank" do %>
-          <%= image_tag "kpl_logo_white", class: "medium-logo link-kpl" %>
-        <% end %>
-      <% when 'tscpl' %>
-        <%= link_to "http://tscpl.org/", target: "_blank" do %>
-          <%= image_tag "tscpl_logo_white", class: "medium-logo link-tscpl" %>
-        <% end %>
-      <% when 'pima' %>
-        <%= link_to "https://www.library.pima.gov", target: "_blank" do %>
-          <%= image_tag "pima_logo_white", class: "medium-logo link-pima" %>
-        <% end %>
-      <% when 'ebrpl' %>
-        <%= link_to "https://www.ebrpl.com", target: "_blank" do %>
-          <%= image_tag "ebrpl_logo_white", class: "medium-logo link-ebrpl" %>
-        <% end %>
-      <% when 'carnegielibrary' %>
-        <%= link_to "https://www.carnegielibrary.org", target: "_blank" do %>
-          <%= image_tag "carnegielibrary_logo_white", class: "medium-logo link-carnegielibrary" %>
-        <% end %>
-      <% when 'kclibrary' %>
-        <%= link_to "http://www.kclibrary.org/", target: "_blank" do %>
-          <%= image_tag "kclibrary_logo_white", class: "medium-logo link-kclibrary" %>
-        <% end %>
-      <% else %>
-        &nbsp;
       <% end %>
 
       <%= link_to "http://www.ala.org/pla/", target: "_blank" do %>

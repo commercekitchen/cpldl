@@ -610,7 +610,8 @@ CREATE TABLE public.organizations (
     accepts_programs boolean,
     library_card_login boolean DEFAULT false,
     accepts_custom_branches boolean DEFAULT false,
-    login_required boolean DEFAULT true
+    login_required boolean DEFAULT true,
+    preferences jsonb
 );
 
 
@@ -1823,4 +1824,6 @@ INSERT INTO schema_migrations (version) VALUES ('20181120182048');
 INSERT INTO schema_migrations (version) VALUES ('20181211172626');
 
 INSERT INTO schema_migrations (version) VALUES ('20190506035357');
+
+INSERT INTO schema_migrations (version) VALUES ('20190508155003');
 

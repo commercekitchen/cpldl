@@ -1,11 +1,5 @@
-<% if flash[:notice] || flash[:alert] %>
   <div>
-    <% if flash[:notice] %>
-      <p class="notice"><%= flash[:notice].html_safe %></p>
-    <% end %>
-
-    <% if flash[:alert] %>
-      <p class="alert"><%= flash[:alert].html_safe %></p>
+    <% flash.keys.each do |kind| %>
+      <p class="#{kind} flash-message"><%= flash[kind].html_safe %></p>
     <% end %>
   </div>
-<% end %>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
@@ -112,10 +113,11 @@ Rails.application.routes.draw do
 
     resources :attachments, only: [:destroy]
 
-    get 'customizations', to: 'customizations#index'
-
     namespace :custom do
       resources :translations, constraints: { :id => /[^\/]+/ }
+      resource :organizations, only: [:show, :update] do
+        get :footer
+      end
     end
 
   end

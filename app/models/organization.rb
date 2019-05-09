@@ -16,6 +16,9 @@
 
 class Organization < ActiveRecord::Base
   resourcify
+
+  store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type
+
   has_many :cms_pages, dependent: :destroy
   has_many :library_locations, dependent: :destroy
   has_many :programs, dependent: :destroy
@@ -28,6 +31,10 @@ class Organization < ActiveRecord::Base
 
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
+
+  has_attached_file :footer_logo
+
+  validates_attachment_content_type :footer_logo, content_type: ["image/png", "image/jpeg"], message: ", Only Image files are allowed."
 
   def user_count
     users.count

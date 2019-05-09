@@ -24,4 +24,8 @@ module ApplicationHelper
     return "<no phone number>" if number.blank?
     link_to number_to_phone(number, area_code: true), "tel:#{number}"
   end
+
+  def footer_logo_url
+    current_organization.footer_logo.exists? ? current_organization.footer_logo.url : "#{current_organization.subdomain}_logo_white"
+  end
 end
