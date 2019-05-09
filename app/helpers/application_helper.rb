@@ -28,4 +28,18 @@ module ApplicationHelper
   def footer_logo_url
     current_organization.footer_logo.exists? ? current_organization.footer_logo.url : "#{current_organization.subdomain}_logo_white"
   end
+
+  def footer_logo_link_url
+    links = {
+      chipublib: "http://www.chipublib.org/",
+      npl: "http://library.nashville.org",
+      kpl: "http://kpl.gov/",
+      tscpl: "http://tscpl.org/",
+      pima: "https://www.library.pima.gov",
+      ebrpl: "https://www.ebrpl.com",
+      carnegielibrary: "https://www.carnegielibrary.org",
+      kclibrary: "http://www.kclibrary.org/"
+    }
+    current_organization.footer_logo_link.present? ? current_organization.footer_logo_link : links[current_organization.subdomain.to_sym]
+  end
 end
