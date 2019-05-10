@@ -11,8 +11,7 @@ feature "Admin user updates course" do
     @user.add_role(:admin)
     @user.add_role(:admin, @organization)
 
-    @course = FactoryGirl.create(:course)
-    @org_course = FactoryGirl.create(:organization_course, organization_id: @organization.id, course_id: @course.id)
+    @course = FactoryGirl.create(:course, organization: @organization)
     @category = FactoryGirl.create(:category, organization: @organization)
     @disabled_category = FactoryGirl.create(:category, :disabled, organization: @organization)
     switch_to_subdomain("chipublib")

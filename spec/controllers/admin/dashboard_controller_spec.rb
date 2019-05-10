@@ -86,17 +86,11 @@ describe Admin::DashboardController do
       @dl_course4 = create(:course, title: "Course4", subsite_course: true)
       @dl_course5 = create(:course, title: "Course5", subsite_course: true)
       @archived_course = create(:course, title: "Archived Cource", subsite_course: true, pub_status: "A")
-      @course1 = create(:course, title: "Course1", subsite_course: false, parent_id: @dl_course1.id)
-      @course2 = create(:course, title: "Course2", subsite_course: false, parent_id: @dl_course2.id)
-      @course3 = create(:course, title: "Course3", subsite_course: false, parent_id: @dl_course3.id)
-      @archived_subdomain_course = create(:course, title: "ArchSubCourse", subsite_course: false, parent_id: @dl_course4.id, pub_status: "A")
-      @draft_subdomain_course = create(:course, title: "DraftSubCourse", subsite_course: false, parent_id: @dl_course5.id, pub_status: "D")
-      @org_course1 = create(:organization_course, organization_id: @org.id, course_id: @course1.id)
-      @org_course2 = create(:organization_course, organization_id: @other_org.id, course_id: @course2.id)
-      @org_course3 = create(:organization_course, organization_id: @org.id, course_id: @course3.id)
-      @org_course4 = create(:organization_course, organization_id: @other_org.id, course_id: @course3.id)
-      @org_course5 = create(:organization_course, organization_id: @org.id, course_id: @archived_subdomain_course.id)
-      @org_course6 = create(:organization_course, organization_id: @org.id, course_id: @draft_subdomain_course.id)
+      @course1 = create(:course, title: "Course1", subsite_course: false, parent_id: @dl_course1.id, organization: @org)
+      @course2 = create(:course, title: "Course2", subsite_course: false, parent_id: @dl_course2.id, organization: @other_org)
+      @course3 = create(:course, title: "Course3", subsite_course: false, parent_id: @dl_course3.id, organization: @org)
+      @archived_subdomain_course = create(:course, title: "ArchSubCourse", subsite_course: false, parent_id: @dl_course4.id, pub_status: "A", organization: @org)
+      @draft_subdomain_course = create(:course, title: "DraftSubCourse", subsite_course: false, parent_id: @dl_course5.id, pub_status: "D", organization: @org)
     end
 
     it "should correctly assign previously imported courses" do

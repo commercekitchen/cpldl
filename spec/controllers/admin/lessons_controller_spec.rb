@@ -163,15 +163,13 @@ describe Admin::LessonsController do
 
       it "propagates updates to child lessons" do
         org = create(:organization)
-        @lesson2.course.organization = org
-        @lesson2.save
-        @lesson1.propagation_org_ids = [org.id]
-        @lesson2.update(parent_id: @lesson1.id)
+        child_course = create(:course, organization: org)
+        lesson1_child = create(:lesson, course: child_course, parent: @lesson1)
         patch :update,
               { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: "Test Lesson"), commit: "Save Lesson" }
 
-        @lesson2.reload
-        expect(@lesson2.title).to eq("Test Lesson")
+        lesson1_child.reload
+        expect(lesson1_child.title).to eq("Test Lesson")
       end
     end
   end

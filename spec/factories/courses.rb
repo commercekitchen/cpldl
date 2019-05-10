@@ -36,6 +36,7 @@ FactoryGirl.define do
     level "Beginner"
     format "D"
     language
+    organization
     pub_status "P"
   end
 
@@ -48,6 +49,7 @@ FactoryGirl.define do
     level "Beginner"
     format "D"
     language
+    organization
     pub_status "D"
   end
 
@@ -60,6 +62,7 @@ FactoryGirl.define do
     level "Beginner"
     format "D"
     language
+    organization
     pub_status "P"
 
     after(:create) do |course|

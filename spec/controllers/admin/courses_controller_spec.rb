@@ -11,21 +11,13 @@ describe Admin::CoursesController do
     @category1 = create(:category, organization: @organization)
     @category2 = create(:category, organization: @organization)
     @category3 = create(:category, organization: @other_organization)
-    @course1 = create(:course, title: "Course1", course_order: 1, category: @category1)
-    @course2 = create(:course, title: "Course2", course_order: 2, category: @category2)
-    @course3 = create(:course, title: "Course3", course_order: 3)
-    @course_for_different_org = create(:course, title: "Different Org")
+    @course1 = create(:course, title: "Course1", course_order: 1, category: @category1, organization: @organization)
+    @course2 = create(:course, title: "Course2", course_order: 2, category: @category2, organization: @organization)
+    @course3 = create(:course, title: "Course3", course_order: 3, organization: @organization)
+    @course_for_different_org = create(:course, title: "Different Org", organization: @other_organization)
     @admin = create(:admin_user, organization: @organization)
     @admin.add_role(:admin, @organization)
 
-    @org_course1 = OrganizationCourse.create(organization_id: @organization.id,
-                                             course_id: @course1.id)
-    @org_course2 = OrganizationCourse.create(organization_id: @organization.id,
-                                             course_id: @course2.id)
-    @org_course3 = OrganizationCourse.create(organization_id: @organization.id,
-                                             course_id: @course3.id)
-    @different_org_course = OrganizationCourse.create(organization_id: @other_organization.id,
-                                                      course_id: @course_for_different_org.id)
     sign_in @admin
   end
 
@@ -113,7 +105,8 @@ describe Admin::CoursesController do
         other_topic_text: "Learning",
         language_id: create(:language),
         level: "Advanced",
-        course_order: "" }
+        course_order: "",
+        organization_id: @organization.id }
     end
 
     let(:invalid_attributes) do
@@ -128,7 +121,8 @@ describe Admin::CoursesController do
         language: "",
         level: "",
         other_topic_text: "",
-        course_order: "" }
+        course_order: "",
+        organization_id: @organization.id }
     end
 
     context "with valid params" do
@@ -231,9 +225,8 @@ describe Admin::CoursesController do
 
       it "propagates changes to selected courses" do
         org = create(:organization)
-        create(:organization_course, course: @course2, organization: org)
+        @course2.update(organization: org, parent_id: @course1.id)
         @course1.propagation_org_ids = [org.id]
-        @course2.update(parent_id: @course1.id)
         patch :update,
               { id: @course1.to_param, course: @course1.attributes.merge(propagation_org_ids: [org.id], title: "Test Course"), commit: "Save Course" }
 

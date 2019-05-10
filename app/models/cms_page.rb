@@ -40,7 +40,7 @@ class CmsPage < ActiveRecord::Base
   belongs_to :organization
 
   validates :title, length: { maximum: 90 }, presence: true,
-    uniqueness: { scope: :organization_id, message: 'should be unique within an Organization' }
+    uniqueness: { scope: :organization_id, message: 'has already been taken for the organization' }
   validates :body, presence: true
   validates :language_id, presence: true, numericality: true
   validates :seo_page_title, length: { maximum: 90 }

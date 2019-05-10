@@ -31,8 +31,9 @@ describe Course do
 
   context "validations" do
 
+    let(:org) { create(:organization) }
     before(:each) do
-      @course = FactoryGirl.build(:course)
+      @course = FactoryGirl.build(:course, organization: org)
       @draft_course = FactoryGirl.create(:draft_course)
     end
 
@@ -40,15 +41,12 @@ describe Course do
       expect(@course).to be_valid
     end
 
-    it "should not allow two courses with the same title" do
-      course = FactoryGirl.create(:course)
-      course.organization = FactoryGirl.create(:organization, id: 1)
-      OrganizationCourse.create(course_id: @course, organization_id: @course.organization)
-      course.org_id = course.organization.id
-      course.validate_has_unique_title
+    it "should not allow two courses with the same title within organization" do
+      existing_course = FactoryGirl.create(:course, title: @course.title, organization: org)
+      @course.validate
 
-      expect(course.errors.messages.empty?).to be(false)
-      expect(course.errors.messages[:title].first).to eq("must be unique. There is already a course with that title, please select a different title and try again.")
+      expect(@course.errors.messages.empty?).to be(false)
+      expect(@course.errors.messages[:title].first).to eq("has already been taken for the organization")
     end
 
     it "can only have listed statuses" do

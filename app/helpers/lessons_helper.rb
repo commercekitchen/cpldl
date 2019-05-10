@@ -25,8 +25,8 @@
 module LessonsHelper
   def asl_iframe(lesson)
     if lesson.story_line_file_name
-      if lesson.parent_lesson_id
-        lesson_id = lesson.parent_lesson_id
+      if lesson.parent_id
+        lesson_id = lesson.parent_id
       else
         lesson_id = lesson.id
       end

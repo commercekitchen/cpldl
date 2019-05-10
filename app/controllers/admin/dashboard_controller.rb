@@ -52,6 +52,8 @@ module Admin
     end
 
     def add_imported_course
+      new_course = nil
+
       ActiveRecord::Base.transaction do
         course_to_import = Course.find(params["course_id"].to_i)
         new_course = course_to_import.dup

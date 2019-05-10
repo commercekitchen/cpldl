@@ -411,15 +411,6 @@ ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
 
 
 --
--- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.data_migrations (
-    version character varying NOT NULL
-);
-
-
---
 -- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1579,13 +1570,6 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USING btree (user_id, role_id);
-
-
---
--- Name: unique_data_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_data_migrations ON public.data_migrations USING btree (version);
 
 
 --

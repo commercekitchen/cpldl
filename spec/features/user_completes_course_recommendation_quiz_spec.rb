@@ -10,13 +10,9 @@ feature "User completes course recommendations quiz" do
     @core_topic = create(:topic, title: "Core")
     @topic = create(:topic, title: "Government")
 
-    @desktop_course = create(:course, language: @english, format: "D", level: "Intermediate", topics: [@core_topic])
-    @mobile_course = create(:course, language: @english, format: "M", level: "Intermediate", topics: [@core_topic])
+    @desktop_course = create(:course, language: @english, format: "D", level: "Intermediate", topics: [@core_topic], organization: @org)
+    @mobile_course = create(:course, language: @english, format: "M", level: "Intermediate", topics: [@core_topic], organization: @org)
     @topic_course = create(:course, language: @english, topics: [@topic])
-
-    [@desktop_course, @mobile_course, @topic_course].each do |course|
-      create(:organization_course, organization_id: @org.id, course_id: course.id)
-    end
 
     login_as(@user)
   end

@@ -41,11 +41,11 @@ RSpec.describe Organization, type: :model do
       it "includes only orgs using the passed lesson" do
         lesson_org = create(:organization)
         create(:organization)
-        parent_lesson = create(:lesson)
-        lesson = create(:lesson, parent_id: parent_lesson.id, course: create(:course))
+        parent = create(:lesson)
+        lesson = create(:lesson, parent_id: parent.id, course: create(:course))
         lesson_org.courses << lesson.course
 
-        expect(Organization.using_lesson(parent_lesson.id)).to eq([lesson_org])
+        expect(Organization.using_lesson(parent.id)).to eq([lesson_org])
       end
     end
 

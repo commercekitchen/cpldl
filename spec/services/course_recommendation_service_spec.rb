@@ -28,31 +28,21 @@ describe CourseRecommendationService do
     # Create applicable courses
     ["M", "D"].each do |format|
       ["Beginner", "Intermediate"].each do |level|
-        en_course = create(:course, language: @english, format: format, level: level, topics: [@core_topic])
-        es_course = create(:course, language: @spanish, format: format, level: level, topics: [@core_topic])
-        create(:organization_course, organization_id: @organization.id, course_id: en_course.id)
-        create(:organization_course, organization_id: @organization.id, course_id: es_course.id)
-        create(:organization_course, organization_id: @other_organization.id, course_id: en_course.id)
-        create(:organization_course, organization_id: @other_organization.id, course_id: es_course.id)
+        en_course = create(:course, language: @english, format: format, level: level, topics: [@core_topic], organization: @organization)
+        es_course = create(:course, language: @spanish, format: format, level: level, topics: [@core_topic], organization: @organization)
       end
     end
 
     topics.each do |k, v|
       topic = create(:topic, title: v)
-      en_course = create(:course, language: @english, topics: [topic])
-      es_course = create(:course, language: @spanish, topics: [topic])
-      create(:organization_course, organization_id: @organization.id, course_id: en_course.id)
-      create(:organization_course, organization_id: @organization.id, course_id: es_course.id)
-      create(:organization_course, organization_id: @other_organization.id, course_id: en_course.id)
-      create(:organization_course, organization_id: @other_organization.id, course_id: es_course.id)
+      en_course = create(:course, language: @english, topics: [topic], organization: @organization)
+      es_course = create(:course, language: @spanish, topics: [topic], organization: @organization)
     end
 
     # Create non-applicable course
     create(:course, language: @english, topics: [@other_topic])
-    @draft_desktop_course = create(:course, language: @english, format: "D", pub_status: "D")
-    @draft_mobile_course = create(:course, language: @english, format: "M", pub_status: "D")
-    create(:organization_course, organization_id: @organization.id, course_id: @draft_desktop_course.id)
-    create(:organization_course, organization_id: @organization.id, course_id: @draft_mobile_course.id)
+    @draft_desktop_course = create(:course, language: @english, format: "D", pub_status: "D", organization: @organization)
+    @draft_mobile_course = create(:course, language: @english, format: "M", pub_status: "D", organization: @organization)
   end
 
   describe "new service instance" do

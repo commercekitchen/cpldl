@@ -9,8 +9,7 @@ feature "Admin user clicks through each page" do
     @user.add_role(:admin)
     @organization = FactoryGirl.create(:organization)
     @category = FactoryGirl.create(:category, organization: @user.organization)
-    @course = FactoryGirl.create(:course_with_lessons, category: @category)
-    @org_course = FactoryGirl.create(:organization_course, organization_id: @user.organization.id, course_id: @course.id)
+    @course = FactoryGirl.create(:course_with_lessons, category: @category, organization: @user.organization)
     @user.add_role(:admin, @organization)
     @user.organization.reload
     switch_to_subdomain("chipublib")

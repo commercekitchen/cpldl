@@ -53,6 +53,7 @@ class Course < ActiveRecord::Base
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
   attr_writer :propagation_org_ids
 
+  belongs_to :parent, class_name: 'Course'
   # has_one :assessment
   has_one :course_progress
 
@@ -71,7 +72,7 @@ class Course < ActiveRecord::Base
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 40 }, presence: true,
-    uniqueness: { scope: :organization_id, message: 'should be unique within an Organization' }
+    uniqueness: { scope: :organization_id, message: 'has already been taken for the organization' }
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }

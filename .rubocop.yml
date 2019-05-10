@@ -13,7 +13,7 @@ AllCops:
     - "script/**/*"
 
 Style/StringLiterals:
-  EnforcedStyle: double_quotes
+  EnforcedStyle: single_quotes
   SupportedStyles:
     - single_quotes
     - double_quotes

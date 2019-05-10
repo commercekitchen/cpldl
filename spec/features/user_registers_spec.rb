@@ -4,7 +4,7 @@ feature "User signs up" do
 
   context "organization has no programs" do
     before(:each) do
-      create(:organization)
+      create(:organization, subdomain: 'chipublib')
       @spanish = create(:spanish_lang)
       @english = create(:language)
       switch_to_subdomain("chipublib")

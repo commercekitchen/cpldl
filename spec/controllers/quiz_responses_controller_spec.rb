@@ -42,17 +42,13 @@ describe QuizResponsesController do
 
     let(:core_topic) { FactoryGirl.create(:topic, title: "Core") }
     let(:topic) { FactoryGirl.create(:topic, title: "Government") }
-    let(:desktop_course) { create(:course, language: language, format: "D", level: "Intermediate", topics: [core_topic]) }
-    let(:mobile_course) { create(:course, language: language, format: "M", level: "Intermediate", topics: [core_topic]) }
-    let(:topic_course) { create(:course, language: language, topics: [topic]) }
+    let!(:desktop_course) { create(:course, language: language, format: "D", level: "Intermediate", topics: [core_topic], organization: organization) }
+    let!(:mobile_course) { create(:course, language: language, format: "M", level: "Intermediate", topics: [core_topic], organization: organization) }
+    let!(:topic_course) { create(:course, language: language, topics: [topic], organization: organization) }
 
     context "when logged in" do
 
       before(:each) do
-        [desktop_course, mobile_course, topic_course].each do |course|
-          create(:organization_course, organization_id: organization.id, course_id: course.id)
-        end
-
         sign_in user
       end
 
