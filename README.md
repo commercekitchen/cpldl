@@ -93,13 +93,6 @@ required to stand up a new DigitalLearn site.
   });
   ```
 
-* Add an entry to `views/shared/ga_event_tracking.html.erb` to track outgoing links to the new library's home page:
-  ```
-  $("footer").on("click", ".link-new_subdomain", function(){
-    ga("send", "event", "external link", "click", "New Library Name");
-  });
-  ```
-
 * Create organization to test/adjust subsite styles:
   ```
   Organization.create(name: "New Library", subdomain: "new_subdomain", branches: true, accepts_programs: false)

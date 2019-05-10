@@ -37,41 +37,11 @@ $(document).ready(function() {
 
   });
 
-  $("footer").on("click", ".link-cpl", function() {
-    ga("send", "event", "exernal link", "click", "Chicago Public Library");
-  });
-
-  $("footer").on("click", ".link-npl", function() {
-    ga("send", "event", "exernal link", "click", "Nashville Public Library");
-  });
-
-  $("footer").on("click", ".link-kpl", function() {
-    ga("send", "event", "exernal link", "click", "Kalamazoo Public Library");
-  });
-
-  $("footer").on("click", ".link-tscpl", function() {
-    ga("send", "event", "exernal link", "click", "Topeka Shawnee County Public Library");
-  });
-
-  $("footer").on("click", ".link-pima", function() {
-    ga("send", "event", "exernal link", "click", "Pima County Public Library");
-  });
-
-  $("footer").on("click", ".link-ebrpl", function(){
-    ga("send", "event", "external link", "click", "East Baton Rouge Public Library");
-  });
-
-  $("footer").on("click", ".link-carnegielibrary", function(){
-    ga("send", "event", "external link", "click", "Carnegie Library of Pittsburgh");
-  });
-
-  $("footer").on("click", ".link-kclibrary", function(){
-    ga("send", "event", "external link", "click", "Kansas City Public Library");
-  });
-
-  $("footer").on("click", ".link-pla", function() {
-    ga("send", "event", "exernal link", "click", "Public Library Association");
-  });
+  <% Organization.find_each do |org| %>
+    $("footer").on("click", ".link-<%= org.subdomain %>", function() {
+      ga("send", "event", "exernal link", "click", "<%= org.name %>");
+    });
+  <% end %>
 
   $(".cms_page a").on("click", function() {
     var hrefValue = $(this).attr("href");
