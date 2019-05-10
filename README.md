@@ -77,30 +77,14 @@ required to stand up a new DigitalLearn site.
 
   These components each take several color parameters, for which you'll use the colors defined for the new subsite in `_vars.scss`.
 
-* Add new subsite assets to images.
-  - `new_subdomain_logo_black.png` Main header logo
-  - `new_subdomain_logo_white.png` Footer logo
+* Add subsite Footer logo and logo link through subsite admin panel customization pages
 
-* Add a new `when` clause to the soul-sucking `case` statement in `_logo_footer.html.erb` to render the appropriate footer logo for the new subsite:
-  ```
-  ...
-
-  <% when 'new_subdomain' %>
-    <%= link_to "[library home page url]", target: "_blank" do %>
-      <%= image_tag "new_subdomain_logo_white", class: "medium-logo link-new_subdomain" %>
-    <% end %>
-  <% else %>
-  ...
-
-  ```
-  Note: The `link-new_subdomain` class is necessary for tracking outbound traffic to the Library's home page with Google Analytics
-
-* Add YAML entries for custom copy in BOTH `en.yml` and `es.yml` (translated)
-  - `en/home/new_subdomain/custom_banner_greeting` Custom banner greeting text
-  - `en/home/new_subdomain/logo_banner_html` Additional banner greeting content
-  - `en/home/choose_a_course/new_subdomain` User dashboard subheader
-  - `en/completed_courses_page/new_sbudomain/retake_the_quiz` Retake quiz prompt (usually just 'Retake the Quiz' unless otherwise specified)
-  - `en/my_courses_page/new_subdomain/course_color_explaination` (misspelled key in yaml file) Explanation of course colors - courses to be completed are displayed with the colors passed to the `course_widget` SASS mixin in the `_new_subdomain.scss` class. Completed courses are displayed in Gray by default. This sentence usually ends with the prompt "To add more to your plan,"
+* Customize subsite texts through admin panel
+  - Custom banner greeting text
+  - Additional banner greeting content
+  - User dashboard subheader
+  - Retake quiz prompt (usually just 'Retake the Quiz' unless otherwise specified)
+  - (misspelled key in yaml file) Explanation of course colors - courses to be completed are displayed with the colors passed to the `course_widget` SASS mixin in the `_new_subdomain.scss` class. Completed courses are displayed in Gray by default. This sentence usually ends with the prompt "To add more to your plan,"
 
 * Create google analytics javascript partial in `views/shared/` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
   ```

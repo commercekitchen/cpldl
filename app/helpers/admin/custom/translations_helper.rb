@@ -14,6 +14,7 @@ module Admin::Custom::TranslationsHelper
     %w(
       home.%{subdomain}.custom_banner_greeting
       home.%{subdomain}.logo_banner_html
+      home.choose_a_course.%{subdomain}
       completed_courses_page.%{subdomain}.retake_the_quiz
       my_courses_page.%{subdomain}.course_color_explaination
     ).map { |k| k % { subdomain: current_organization.subdomain } }
