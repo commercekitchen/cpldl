@@ -4,7 +4,7 @@
   <%= render "shared/meta_tags" %>
 </head>
 <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
-  <%= render "shared/alternate_cpl_header" %>
+  <%= render "shared/header" %>
   <main class="container">
     <%= render "shared/flashes" %>
     <%= yield %>

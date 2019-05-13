@@ -6,13 +6,7 @@
     <%= render "shared/ga_event_tracking" if Rails.env.production? %>
   </head>
   <body class="<%= current_organization.subdomain %>">
-    <% if current_user && current_user.has_role?(:admin, current_organization) %>
-      <%= render "shared/admin/header" %>
-    <% elsif current_user %>
-      <%= render "shared/user/header" %>
-    <% elsif top_level_domain? %>
-      <%= render "shared/dl_header" %>
-    <% end %>
+    <%= render "shared/header" %>
     <div class="banner color">
       <div class="container row">
         <% if content_for?(:course_progress) %>
