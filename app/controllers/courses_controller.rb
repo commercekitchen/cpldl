@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
 
   def index
-    result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).map(&:id)
+    result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
 
     # Only courses are multisearchable right now, so this works
     # If another class is made multisearchable, this won't work as intended
