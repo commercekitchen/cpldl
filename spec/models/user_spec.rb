@@ -209,4 +209,12 @@ describe User do
       expect(@user.token).to_not eq(@user2.token)
     end
   end
+
+  context 'case insensitive login' do
+    let!(:user1) { FactoryGirl.create(:user, email: 'downcase@gmail.com') }
+    it 'should not allow two emails with upppercased and downcased one' do
+      user2 = FactoryGirl.build(:user, email:'Downcase@gmail.com')
+      expect(user2.valid?).to be_falsey
+    end
+  end
 end
