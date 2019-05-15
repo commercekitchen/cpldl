@@ -4,8 +4,9 @@
 
 <%= form_for @translation, url: admin_custom_translations_path do |form| %>
   <%= form.label :locale %> <%= form.text_field :locale, readonly: true %>
-  <%= form.label :key %> <%= form.text_field :key, readonly: true %>
-  <%= form.label :value %> <%= form.text_area :value, value: I18n.t(@translation.key, locale: @locale) %>
+  <%= form.label :section %> <%= form.text_field :section, value: translation_keys(@locale)[@translation.key], readonly: true %>
+  <%= form.hidden_field :key %>
+  <%= form.label :value, 'Text' %> <%= form.text_area :value, value: t(default_org_i18n_key(@translation.key)) %>
 
   <%= form.submit 'Save Translation' %> <%= link_to "Cancel", admin_custom_translations_url(@locale) %>
 <% end %>

@@ -1,5 +1,7 @@
 module Admin::Custom
   class TranslationsController < BaseController
+    include TranslationsHelper
+
     before_action :find_locale
     before_action :retrieve_key, only: [:create, :update]
     before_action :find_translation, only: [:edit, :update]
@@ -21,7 +23,7 @@ module Admin::Custom
         render :new
       else
         if @translation.save
-          flash[:success] = "Translation for #{ @key } updated."
+          flash[:success] = "Translation for #{translation_keys(@locale)[@key]} updated."
           I18n.backend.reload!
           redirect_to admin_custom_translations_url(@locale)
         else
@@ -35,7 +37,7 @@ module Admin::Custom
 
     def update
       if @translation.update(translation_params)
-        flash[:notice] = "Translation for #{ @key } updated."
+        flash[:notice] = "Translation for #{translation_keys(@locale)[@key]} updated."
         I18n.backend.reload!
         redirect_to admin_custom_translations_url(@locale)
       else

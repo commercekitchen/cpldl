@@ -5,6 +5,6 @@
   <% elsif current_user && current_user.admin? %>
     <%= t('logged_in_user.hi') %> <%= current_user.profile.first_name "(ADMIN)" %>!
   <% end %>
-  <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting") %>
-  <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>
+  <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting", default: t("home.default_org.custom_banner_greeting")) %>
+  <%= t("home.#{current_organization.subdomain}.logo_banner_html", default: t("home.default_org.logo_banner_html")) %>
 </h1>

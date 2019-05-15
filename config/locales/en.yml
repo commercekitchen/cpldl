@@ -32,6 +32,9 @@ en:
         email: "Email"
         password: "Password"
   home:
+    default_org:
+      custom_banner_greeting: ""
+      logo_banner_html: ""
     www:
       custom_banner_greeting: ""
       logo_banner_html: "Use a computer to do almost anything!"
@@ -63,6 +66,7 @@ en:
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
     choose_a_course:
+      default_org: "Choose a course below to start learning or search courses."
       www: "Choose a course below to start learning or search courses."
       chipublib: "Choose a course below to start learning or search courses."
       npl: "Choose a course below to start learning or search courses."
@@ -150,6 +154,8 @@ en:
     continue: "Continue"
     repeat_activity: "Repeat Activity"
   completed_courses_page:
+    default_org:
+      retake_the_quiz: "Retake the Quiz"
     www:
       retake_the_quiz: "Retake the Quiz"
     chipublib:
@@ -176,26 +182,28 @@ en:
     have_you_completed_most_courses: "Have you completed most of your courses? If so, retake the quiz by clicking the button below, and we'll suggest even more courses."
     practice_skills: "Use My Skills Now"
   my_courses_page:
+    default_org:
+      course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed."
     www:
-      course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed."
     chipublib:
-      course_color_explaination: "Yellow courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Yellow courses need to be completed. Gray courses have already been completed."
     npl:
-      course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed."
     kpl:
-      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed."
     tscpl:
-      course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed."
     pima:
-      course_color_explaination: "Light Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Light Blue courses need to be completed. Gray courses have already been completed."
     ebrpl:
-      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed."
     carnegielibrary:
-      course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed."
     kclibrary:
-      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. To add more to your plan,"
+      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. "
     my_plan_click_to_start: "My Plan: Click on a course below and get started!"
-    click_here_to_homepage: "click here to go to the homepage."
+    click_here_to_homepage: "To add more to your plan, click here to go to the homepage."
     completed_most_courses: "Have you completed most of the courses? If so,"
     click_here_to_quiz: "click here to retake the quiz"
     well_suggest_more_courses: "and we'll suggest even more courses."

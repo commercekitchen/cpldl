@@ -6,18 +6,21 @@ module Admin::Custom::TranslationsHelper
   def translation_for_key(translations, key)
     hits = translations.to_a.select{ |t| t.key == key }
     hits.first
-  end  
+  end
 
   private
 
   def en_keys
-    %w(
-      home.%{subdomain}.custom_banner_greeting
-      home.%{subdomain}.logo_banner_html
-      home.choose_a_course.%{subdomain}
-      completed_courses_page.%{subdomain}.retake_the_quiz
-      my_courses_page.%{subdomain}.course_color_explaination
-    ).map { |k| k % { subdomain: current_organization.subdomain } }
+    {
+      'home.%{subdomain}.custom_banner_greeting' => 'Custom banner greetings',
+      'home.%{subdomain}.logo_banner_html' => 'Logo Banner Html',
+      'home.choose_a_course.%{subdomain}' => 'Choose a course',
+      'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the quiz',
+      'my_courses_page.%{subdomain}.course_color_explaination' => 'Course color explaination'
+    }.each_with_object({}) do |(k, v), obj|
+      key = k % { subdomain: current_organization.subdomain }
+      obj[key] = v
+    end
   end
 
   def es_keys
@@ -27,4 +30,9 @@ module Admin::Custom::TranslationsHelper
   def locale_string(i18n_locale)
     i18n_locale == :en ? 'English' : 'Español'
   end
+
+  def default_org_i18n_key(key)
+    key.gsub(current_organization.subdomain, 'default_org')
+  end
+
 end

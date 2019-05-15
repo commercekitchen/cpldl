@@ -40,6 +40,9 @@ es:
             last_name:
               blank: "no puede estar en blanco"
   home:
+    default_org:
+      custom_banner_greeting: ""
+      logo_banner_html: ""
     www:
       custom_banner_greeting: ""
       logo_banner_html: "Use la computadora para hacer casi todo!"
@@ -68,6 +71,7 @@ es:
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
     choose_a_course:
+      default_org: "Seleccione un curso de los que aparecen a continuación para comenzar."
       www: "Seleccione un curso de los que aparecen a continuación para comenzar."
       chipublib: "Seleccione un curso de los que aparecen a continuación para comenzar."
       npl: "Seleccione un curso de los que aparecen a continuación para comenzar."
@@ -154,6 +158,8 @@ es:
     continue: "Continuar"
     repeat_activity: "Repita la actividad"
   completed_courses_page:
+    default_org:
+      retake_the_quiz: "Repite el Cuestionario"
     www:
       retake_the_quiz: "Repite el Cuestionario"
     chipublib:
@@ -177,24 +183,26 @@ es:
     when_you_signed_up_quiz: "Cuando creó su cuenta, respondió un questionario que nos ayudó a recomendarle cursos útiles para usted."
     practice_skills: "Ahora usar mis habilidades"
   my_courses_page:
+    default_org:
+      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris."
     www:
-      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris."
     chipublib:
-      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris."
     npl:
-      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris."
     kpl:
-      course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris."
     tscpl:
-      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris."
     pima:
-      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris."
     ebrpl:
-      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris."
     carnegielibrary:
-      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris. "
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
-    click_here_to_homepage: "de clic aquí para regresar a la página principal."
+    click_here_to_homepage: "Para agregar cursos a su plan personal, de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
     click_here_to_quiz: "responda el questionario otra vez"
     well_suggest_more_courses: "y le sugeriremos más cursos."

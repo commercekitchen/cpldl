@@ -1,23 +1,23 @@
 <% content_for(:callout) do %>
-  <h1>Translations for <%= locale_string(@locale) %></h1>
+  <h1>Customizable Text Sections - <%= locale_string(@locale) %></h1>
 <% end %>
 
-<p class="emphasis no-top-margin">Change your language preference on the header to update other language translations</p>
+<p class="emphasis no-top-margin">Customize various text sections of your DigitalLearn site below. Select language in the header of this page to toggle between editable text sections in English and Spanish</p>
 
 <table>
   <thead>
     <tr>
-      <th>Translation Key</th>
-      <th>Setting</th>
+      <th>Section</th>
+      <th>Default Text</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <% translation_keys(@locale).each do |key| %>
+    <% translation_keys(@locale).each do |key, section| %>
       <% translation = translation_for_key(@translations, key) %>
       <tr id="<%= key %>">
-        <td><%= key %></td>
-        <td><%= translation.nil? ? I18n.t(key, locale: @locale) : translation.value %></td>
+        <td><%= section %></td>
+        <td><%= translation.nil? ? I18n.t(key, locale: @locale, default: t(default_org_i18n_key(key), locale: @locale)) : translation.value %></td>
         <td>
           <% if translation.nil? %>
             <%= link_to "Edit", new_admin_custom_translation_url(@locale, key: key) %>
