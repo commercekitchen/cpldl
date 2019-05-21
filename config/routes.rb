@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :show] do
     post 'start'
-    get 'complete'
     get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     get 'skills', to: 'courses#skills', as: :skills
     resources :lessons, only: [:index, :show] do
@@ -38,7 +37,9 @@ Rails.application.routes.draw do
 
   resources :course_progresses, only: [:create, :update], param: :course_id
 
-  resources :course_completions, only: [:index, :show], param: :course_id
+  resources :course_completions, only: [:index], param: :course_id
+  # redirect previous course completion url to new url for GA Goal completion conversion
+  get '/courses/:course_id/complete', to: 'course_completions#show', as: :course_completion
 
   resources :quiz_responses, only: [:new, :create]
 
