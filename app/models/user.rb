@@ -78,7 +78,7 @@ class User < ActiveRecord::Base
   nilify_blanks only: [:email]
 
   # Validate card number and pin for library card logins
-  validates :library_card_number, format: { with: /\A[0-9]{13}\z/, if: :library_card_login? }
+  validates :library_card_number, format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
 
   # Serialized hash of quiz responses
