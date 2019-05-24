@@ -1,6 +1,11 @@
 require "feature_helper"
 
 feature "User signs up" do
+  let(:email) { Faker::Internet.free_email }
+  let(:password) { Faker::Internet.password }
+  let(:first_name) { Faker::Name.first_name }
+  let(:last_name) { Faker::Name.last_name }
+  let(:zip_code) { Faker::Address.zip }
 
   context "organization has no programs" do
     before(:each) do
@@ -56,11 +61,9 @@ feature "User signs up" do
   end
 
   context "for a library_card_login organization" do
-    let(:lib_card_number) { Array.new(13) { rand(10) }.join }
+    let(:lib_card_number) { Array.new(7) { rand(10) }.join }
     let(:lib_card_pin) { Array.new(4) { rand(10) }.join }
-    let(:first_name) { Faker::Name.first_name }
-    let(:zip_code) { Array.new(5) { rand(10) }.join }
-    let(:invalid_card_number_short) { Array.new(10) { rand(10) }.join }
+    let(:invalid_card_number_short) { Array.new(6) { rand(10) }.join }
     let(:invalid_card_number_long) { Array.new(15) { rand(10) }.join }
     let(:invalid_pin_short) { Array.new(3) { rand(10) }.join }
     let(:invalid_pin_long) { Array.new(5) { rand(10) }.join }
@@ -87,8 +90,7 @@ feature "User signs up" do
 
     scenario "with long library card number" do
       library_card_sign_up_with(invalid_card_number_long, lib_card_pin, first_name, zip_code)
-      expect(current_path).to eq(user_registration_path)
-      expect(page).to have_content("Library Card Number is invalid")
+      expect(current_path).to eq(profile_path)
     end
 
     scenario "with short pin" do
@@ -126,11 +128,6 @@ feature "User signs up" do
 
   context "by selecting a branch" do
     let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
-    let(:email) { Faker::Internet.free_email }
-    let(:password) { Faker::Internet.password }
-    let(:first_name) { Faker::Name.first_name }
-    let(:last_name) { Faker::Name.last_name }
-    let(:zip_code) { Faker::Address.zip }
     let(:library_location) { create(:library_location, organization: org) }
 
     before do
@@ -213,6 +210,28 @@ feature "User signs up" do
       expect do
         click_button "Sign Up"
       end.to change(LibraryLocation, :count).by(1)
+    end
+  end
+
+  context "accepts_programs", js: true, focus: true do
+    let(:org) { create(:organization, accepts_programs: true) }
+
+    scenario "registers" do
+      switch_to_subdomain(org.subdomain)
+
+      visit login_path
+      find("#signup_email").set(email)
+      find("#signup_password").set(password)
+      find("#user_profile_attributes_first_name").set(first_name)
+      find("#user_profile_attributes_last_name").set(last_name)
+      find("#user_profile_attributes_zip_code").set(zip_code)
+      fill_in "user_password_confirmation", with: password
+
+      expect(page).to have_css("#user_program_id", visible: true)
+
+      expect do
+        click_button "Sign Up"
+      end.to change(Profile, :count).by(1)
     end
   end
 

@@ -33,6 +33,13 @@
         <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
       </div>
 
+      <% if current_organization.accepts_programs? %>
+        <div class="form-group">
+          <%= p.label :last_name, class: "screen-reader-text" %>
+          <%= p.text_field :last_name, placeholder: "#{t('login_signup.last_name')} *" %>
+        </div>
+      <% end %>
+
       <div class="form-group">
         <%= p.label :zip_code, class: "screen-reader-text" %>
         <%= p.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>

@@ -19,7 +19,7 @@
 #
 
 class Profile < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :user, inverse_of: :profile
   belongs_to :language
   belongs_to :library_location
 
@@ -40,9 +40,7 @@ class Profile < ActiveRecord::Base
   end
 
   def program_organization
-    if user.present?
-      user.organization.accepts_programs?
-    end
+    user.organization.accepts_programs?
   end
 
   def full_name
