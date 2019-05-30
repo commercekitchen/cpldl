@@ -30,6 +30,20 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 --
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
 -- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: -
 --
 
@@ -367,7 +381,7 @@ ALTER SEQUENCE public.course_topics_id_seq OWNED BY public.course_topics.id;
 
 CREATE TABLE public.courses (
     id integer NOT NULL,
-    title character varying(90),
+    title public.citext,
     seo_page_title character varying(90),
     meta_desc character varying(156),
     summary character varying(156),
@@ -408,6 +422,15 @@ CREATE SEQUENCE public.courses_id_seq
 --
 
 ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
+
+
+--
+-- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.data_migrations (
+    version character varying NOT NULL
+);
 
 
 --
@@ -1573,6 +1596,13 @@ CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USIN
 
 
 --
+-- Name: unique_data_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_data_migrations ON public.data_migrations USING btree (version);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1838,4 +1868,6 @@ INSERT INTO schema_migrations (version) VALUES ('20190509143205');
 INSERT INTO schema_migrations (version) VALUES ('20190509152342');
 
 INSERT INTO schema_migrations (version) VALUES ('20190509152902');
+
+INSERT INTO schema_migrations (version) VALUES ('20190530133959');
 
