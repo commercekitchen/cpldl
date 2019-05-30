@@ -160,7 +160,7 @@
         <%= f.label :language_id, class: "text-color" do %>
           Course Language<span class="required"></span>
         <% end %>
-        <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, class: "select-large" ) %>
+        <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." } ) %>
       </fieldset>
     </div>
 

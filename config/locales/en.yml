@@ -129,6 +129,7 @@ en:
     change_login_information: "Change Login Information"
     update_profile: "Update Profile"
     my_completed_courses: "My Completed Courses"
+    no_completed_courses: "You have no completed courses."
     last_name: "Last Name"
     phone: "Phone Number"
     street_address: "Street Address"
@@ -226,7 +227,7 @@ en:
     there_are_no_notes_for_course: "There are no notes or partner resources for this course"
     practice_and_use_your_skills: "Use my skills now! (click each link below)"
     lessons_in_this_course: "Activities in This Course"
-    start_lesson: "Start Activity"
+    start_lesson: "Start"
     lesson: "Activity"
   lesson_page:
     percent_complete: "% Complete"

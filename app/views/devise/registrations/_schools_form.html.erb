@@ -27,7 +27,7 @@
 
     <div class="form-group">
       <%= f.label :school, t('login_signup.school'), class: "signup-label signup-label-no-margin" %>
-      <%= f.collection_select :school_id, current_organization.schools.enabled, :id, :school_name, { include_blank: "Select School" }, class: "select-large" %>
+      <%= f.collection_select :school_id, current_organization.schools.enabled, :id, :school_name, { include_blank: "Select School" } %>
     </div>
   </div>
 </div>

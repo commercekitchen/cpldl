@@ -41,8 +41,8 @@
       <% if current_organization.branches? && current_organization.library_locations.present? %>
         <div class="form-group">
           <%= label_tag "chzn", "Select Your Library", class: "screen-reader-text" %>
-          <%= p.select(:library_location_id, branch_options_for(current_organization), { include_blank: "#{t('login_signup.your_library')}" },
-              class: "select-large", id: "chzn" ) %>
+          <%= p.select(:library_location_id, branch_options_for(current_organization),
+              { include_blank: "#{t('login_signup.your_library')}" }, id: "chzn" ) %>
         </div>
 
         <% if current_organization.accepts_custom_branches? %>

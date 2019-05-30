@@ -133,6 +133,7 @@ es:
     change_login_information: "Cambiar Información de Ingreso"
     update_profile: "Actualizar Perfil"
     my_completed_courses: "Mis Cursos Terminados"
+    no_completed_courses: "No tienes cursos completados."
     last_name: "Apellido"
     phone: "Teléfono"
     street_address: "Dirección"
@@ -225,7 +226,7 @@ es:
     there_are_no_notes_for_course: "No hay notas o recursos de los asociados para este curso"
     practice_and_use_your_skills: "Utilizar mis habilidades ahora! ( Haga clic en cada enlace de abajo )"
     lessons_in_this_course: "Actividades en este curso"
-    start_lesson: "Empezar la actividad"
+    start_lesson: "Empezar"
     lesson: "Actividad"
   lesson_page:
     percent_complete: "% Avance"

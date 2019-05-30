@@ -1,4 +1,4 @@
 $(document).ready(function() {
-  $("#chzn").select2();
+  $('.style-select2').select2();
   $('b[role="presentation"]').hide();
 });
