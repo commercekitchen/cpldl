@@ -21,20 +21,22 @@
 
     &.small{
       min-width: 0;
-      height: 40px;
+      height: 35px;
+      font-size: 16px;
       padding: 6px 40px;
     }
 
     &.small-lesson-button {
       min-width: 0;
       height: 35px;
+      font-size: 16px;
       padding: 6px 40px;
       position: relative;
       left: 0.6em;
     }
 
     &.spanish-small {
-      font-size: 10px;
+      font-size: 16px;
     }
 
     &.btn-grey {
