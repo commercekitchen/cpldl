@@ -24,10 +24,7 @@
       </p>
     <% end %>
 
-    <%# TODO: this isn't right, it should be built in the controller, and only if it doesn't already exist, like in an error situation. %>
-    <%# otherwise we just wipe out entered information. %>
-    <% @new_profile = resource.build_profile %>
-    <%= f.fields_for :profile do |p| %>
+    <%= f.fields_for :profile, resource.profile || resource.build_profile do |p| %>
       <div class="form-group">
         <%= p.label :first_name, class: "screen-reader-text" %>
         <%= p.text_field :first_name, placeholder: "#{t('login_signup.first_name')} *" %>
@@ -41,12 +38,12 @@
       <% if current_organization.branches? && current_organization.library_locations.present? %>
         <div class="form-group">
           <%= label_tag "chzn", "Select Your Library", class: "screen-reader-text" %>
-          <%= p.select(:library_location_id, branch_options_for(current_organization),
-              { include_blank: "#{t('login_signup.your_library')}" }, id: "chzn" ) %>
+          <%= p.select(:library_location_id, branch_options_for(current_organization, selected: p.object.library_location_id),
+              { include_blank: t('login_signup.your_library') }, id: "chzn", class: 'style-select2' ) %>
         </div>
 
         <% if current_organization.accepts_custom_branches? %>
-          <%= render partial: 'shared/custom_branch_form', locals: { profile: @new_profile, profile_form: p } %>
+          <%= render partial: 'shared/custom_branch_form', locals: { profile_form: p } %>
         <% end %>
       <% end %>
     <% end %>
