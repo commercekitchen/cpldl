@@ -125,6 +125,7 @@ en:
     change_login_information: "Change Login Information"
     update_profile: "Update Profile"
     my_completed_courses: "My Completed Courses"
+    no_completed_courses: "You have no completed courses."
     last_name: "Last Name"
     phone: "Phone Number"
     street_address: "Street Address"

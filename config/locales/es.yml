@@ -129,6 +129,7 @@ es:
     change_login_information: "Cambiar Información de Ingreso"
     update_profile: "Actualizar Perfil"
     my_completed_courses: "Mis Cursos Terminados"
+    no_completed_courses: "No tienes cursos completados."
     last_name: "Apellido"
     phone: "Teléfono"
     street_address: "Dirección"

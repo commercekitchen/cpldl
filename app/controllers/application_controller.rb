@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  layout proc { user_signed_in? || !subdomain? ? "user/logged_in" : "application" }
+  layout proc { user_signed_in? || top_level_domain? ? "user/logged_in" : "application" }
 
   def current_organization
     org = if staging?
