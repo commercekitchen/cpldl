@@ -130,8 +130,24 @@ class User < ActiveRecord::Base
     end
   end
 
+  def valid_password?(password)
+    # Library card login admins registered before Jun 5, 2019 use [email, password]
+    # for authentication but their password is MD5 hexdigested.
+    # As of Jun 5, 2019, we dont digest library card admin password because due to
+    # issues with password reset and password update
+    # Here's temporary solution to allow users with stale password access
+    if organization.library_card_login? && has_role?(:admin, organization)
+      valid = Devise::Encryptor.compare(self.class, encrypted_password, md5_digest(password))
+      return true if valid
+    end
+
+    # This is the main password validation
+    generated_password = library_card_login? ? md5_digest(password) : password
+    Devise::Encryptor.compare(self.class, encrypted_password, generated_password)
+  end
+
   def library_card_login?
-    self.organization.library_card_login? && !self.has_role?(:admin, self.organization)
+    organization.library_card_login? && !has_role?(:admin, organization)
   end
 
   ###
@@ -183,8 +199,12 @@ class User < ActiveRecord::Base
     def set_password_from_pin
       return unless library_card_pin_changed?
 
-      hashed_pin = Digest::MD5.hexdigest(library_card_pin).first(10)
+      hashed_pin = md5_digest(library_card_pin)
       self.password = hashed_pin
       self.password_confirmation = hashed_pin
+    end
+
+    def md5_digest(password, limit=10)
+      Digest::MD5.hexdigest(password).first(limit)
     end
 end
