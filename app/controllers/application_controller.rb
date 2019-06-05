@@ -98,19 +98,25 @@ class ApplicationController < ActionController::Base
   end
 
   def set_language
-    @language = Language.find_by(id: 1) unless Language.all.blank?
+    @language = Language.first unless Language.all.blank?
+  end
+
+  def user_audience_list
+    list = ['All']
+    if user_signed_in?
+      list << 'Auth'
+      list << 'Admin' if org_admin?(current_user)
+    else
+      list << 'Unauth'
+    end
+    list
   end
 
   def set_cms_footer_pages
-    english_id = Language.find_by_name("English").try(:id) || 1
-    spanish_id = Language.find_by_name("Spanish").try(:id) || 2
+    language_id = I18n.locale == :en ? Language.find_by_name("English").try(:id) : Language.find_by_name("Spanish").try(:id)
     org_id = current_organization.id
-    case I18n.locale
-    when :es
-      @footer_pages = CmsPage.where(pub_status: "P", language_id: spanish_id, organization_id: org_id)
-    else
-      @footer_pages = CmsPage.where(pub_status: "P", language_id: english_id, organization_id: org_id)
-    end
+
+    @footer_pages = CmsPage.where(pub_status: "P", language_id: language_id, organization_id: org_id, audience: user_audience_list)
   end
 
   def set_cms_marketing_pages
