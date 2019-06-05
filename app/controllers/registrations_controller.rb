@@ -1,5 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-  prepend_before_action :set_library_card_login
   after_action :create_organization_user_entry
 
   def create
@@ -21,10 +20,6 @@ class RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def set_library_card_login
-    @library_card_login = current_organization.library_card_login? && !params[:admin]
-  end
-
   def sign_up_params
 
     if params[:user]["date_of_birth(1i)"].present?
@@ -32,10 +27,6 @@ class RegistrationsController < Devise::RegistrationsController
       day = params[:user]["date_of_birth(3i)"].to_i
       year = params[:user]["date_of_birth(1i)"].to_i
       params[:user][:date_of_birth] = Date.new(year, month, day)
-    end
-
-    if current_organization.library_card_login?
-      params[:user] = convert_library_card_pin_to_password(params[:user])
     end
 
     if current_organization.accepts_custom_branches?
@@ -77,16 +68,6 @@ class RegistrationsController < Devise::RegistrationsController
     ] if current_organization.library_card_login?
 
     list_params_allowed
-  end
-
-  def convert_library_card_pin_to_password(user_params)
-    return user_params if user_params[:library_card_pin].blank?
-
-    hashed_pin = Digest::MD5.hexdigest(user_params[:library_card_pin]).first(10)
-    user_params[:password] = hashed_pin
-    user_params[:password_confirmation] = hashed_pin
-
-    user_params
   end
 
   def profile_attributes

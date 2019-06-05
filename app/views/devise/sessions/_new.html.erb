@@ -30,8 +30,6 @@
       <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
         spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
     </div>
-
-    <%= hidden_field_tag :admin, params[:admin] %>
   <% end %>
 
   <% if devise_mapping.rememberable? && !@library_card_login -%>

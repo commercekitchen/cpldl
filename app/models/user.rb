@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   # Save blank emails as NULL
   nilify_blanks only: [:email]
 
+  before_validation :set_password_from_pin, if: :library_card_login?
   # Validate card number and pin for library card logins
   validates :library_card_number, format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
@@ -177,5 +178,13 @@ class User < ActiveRecord::Base
 
     def add_token_to_user
       self.token = SecureRandom.uuid if self.token.blank?
+    end
+
+    def set_password_from_pin
+      return unless library_card_pin_changed?
+
+      hashed_pin = Digest::MD5.hexdigest(library_card_pin).first(10)
+      self.password = hashed_pin
+      self.password_confirmation = hashed_pin
     end
 end
