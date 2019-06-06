@@ -65,10 +65,12 @@ class User < ActiveRecord::Base
   belongs_to :school
   belongs_to :program_location
   belongs_to :program
-  has_one :profile, dependent: :destroy
-  has_many :course_progresses, dependent: :destroy
+
+  has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile
   validates_associated :profile
+
+  has_many :course_progresses, dependent: :destroy
   before_create :add_token_to_user
 
   # Encrypt library card pin for security

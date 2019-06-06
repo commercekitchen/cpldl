@@ -101,6 +101,7 @@ es:
     dont_have_library_card: "¿No tiene una tarjeta de biblioteca?"
     register_for_library_card: "para registrarse en una tarjeta de biblioteca en línea que puede utilizar de inmediato."
     first_name: "Nombre"
+    last_name: "Apellido"
     zip_code: "Código Postal"
     your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"

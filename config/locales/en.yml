@@ -97,6 +97,7 @@ en:
     dont_have_library_card: "Don't have a library card?"
     register_for_library_card: "to open a new tab to register for an online library card that you can use right away."
     first_name: "First Name"
+    last_name: "Last Name"
     zip_code: "Zip Code"
     your_password: "Your Password (must be at least 8 characters)"
     re_enter_password: "Re-enter Your Password"
