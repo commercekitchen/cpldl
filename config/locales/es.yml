@@ -39,6 +39,8 @@ es:
           attributes:
             last_name:
               blank: "no puede estar en blanco"
+  common:
+    submit: "Enviar"
   home:
     www:
       custom_banner_greeting: ""
@@ -262,6 +264,7 @@ es:
     set_three_6: "Usar internet de manera más segura."
     set_three_7: "Aprender una aplicación específica como Microsoft Word."
     set_three_8: "Usar Internet para encontrar información."
+    skip_quiz: "Saltarse el cuestionario"
   google_analytics_url:
     www: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w66482317p68369117/"
     chipublib: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w107924237p112444339/"

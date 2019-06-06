@@ -31,6 +31,8 @@ en:
         library_card_pin: "Library Card PIN"
         email: "Email"
         password: "Password"
+  common:
+    submit: "Submit"
   home:
     www:
       custom_banner_greeting: ""
@@ -263,6 +265,7 @@ en:
     set_three_6: "Be more safe and secure when using the Internet."
     set_three_7: "Learn specific software or apps such as Microsoft Word."
     set_three_8: "Search for information."
+    skip_quiz: "Skip Quiz"
   google_analytics_url:
     www: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w66482317p68369117/"
     chipublib: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w107924237p112444339/"

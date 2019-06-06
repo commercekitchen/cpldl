@@ -45,6 +45,6 @@
     <%= button_tag "Previous", class: "btn small previous-button btn-grey", type: "button", name: "previous" %>
   <% end %>
 
-  <%= submit_tag "Submit", class: "btn small submit-button button-color" %>
-  <%= link_to "Skip Quiz", root_path, class: "form_action form_action_skip" %>
+  <%= submit_tag t('common.submit'), class: "btn small submit-button button-color" %>
+  <%= link_to t('quiz.skip_quiz'), root_path, class: "form_action form_action_skip" %>
 <% end %>
