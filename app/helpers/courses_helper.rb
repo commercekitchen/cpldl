@@ -53,8 +53,7 @@ module CoursesHelper
   def percent_complete_without_user(course, lesson_id)
     session[:completed_lessons] ||= []
     total_lessons = course.lessons.published.count
-    session[:completed_lessons] << lesson_id unless session[:completed_lessons].include?(lesson_id)
-    completed = session[:completed_lessons].count
+    completed = (session[:completed_lessons] & course.lessons.pluck(:id)).count
     return 0 if total_lessons == 0
     percent = (completed.to_f / total_lessons) * 100
     percent = 100 if percent > 100

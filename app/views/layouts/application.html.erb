@@ -11,14 +11,7 @@
     <%= render "shared/alternate_cpl_header" %>
     <div class="banner color">
       <div class="container">
-        <% if content_for?(:callout) %>
-          <%= yield :callout %>
-        <% else %>
-          <h1 class="slogan" >
-            <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting") %>
-            <%= t("home.#{current_organization.subdomain}.logo_banner_html") %>
-          </h1>
-        <% end %>
+        <%= render partial: "shared/layout/callout_banner"%>
       </div>
     </div>
     <% if content_for?(:sub_nav) %>

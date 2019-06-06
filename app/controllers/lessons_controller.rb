@@ -88,21 +88,16 @@ class LessonsController < ApplicationController
       course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
       course_progress.completed_at = Time.zone.now if lesson.is_assessment
       course_progress.save
+    else
+      session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)
     end
 
     respond_to do |format|
-      format.html do
-        if lesson.is_assessment
-          redirect_to course_completion_path(@course)
-        else
-          redirect_to course_lesson_path(@course, @course.next_lesson_id(lesson.id))
-        end
-      end
       format.json do
         if lesson.is_assessment
-          render status: :ok, json: { complete: course_completion_path(@course) }
+          render status: :ok, json: { redirect_path: course_completion_path(@course) }
         else
-          render status: :ok, json: { next_lesson: course_lesson_path(@course, @course.next_lesson_id(lesson.id)) }
+          render status: :ok, json: { redirect_path: course_lesson_lesson_complete_path(@course, lesson) }
         end
       end
     end

@@ -1,12 +1,6 @@
-<% if user_signed_in? %>
-  <% lessons_completed = current_user.completed_lesson_ids(course) %>
-<% else %>
-  <% lessons_completed = [] %>
-<% end %>
-
 <div class="container">
 <% course.lessons.published.each do |l| %>
   <%= render partial: "shared/lessons/lesson_block",
-    locals: { course: course, lesson: l, completed: lessons_completed.include?(l.id) }%>
+    locals: { course: course, lesson: l, completed: lessons_completed(course).include?(l.id) }%>
 <% end %>
 </div>

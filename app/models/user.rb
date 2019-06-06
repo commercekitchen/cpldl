@@ -138,7 +138,7 @@ class User < ActiveRecord::Base
     # As of Jun 5, 2019, we dont digest library card admin password because due to
     # issues with password reset and password update
     # Here's temporary solution to allow users with stale password access
-    if organization.library_card_login? && has_role?(:admin, organization)
+    if organization.library_card_login? && admin?
       valid = Devise::Encryptor.compare(self.class, encrypted_password, md5_digest(password))
       return true if valid
     end
@@ -149,7 +149,7 @@ class User < ActiveRecord::Base
   end
 
   def library_card_login?
-    organization.library_card_login? && !has_role?(:admin, organization)
+    organization.library_card_login? && !admin?
   end
 
   ###
@@ -185,6 +185,10 @@ class User < ActiveRecord::Base
 
   def subdomain
     organization.subdomain
+  end
+
+  def admin?
+    has_role?(:admin, organization)
   end
 
   def reportable_role?(org)
