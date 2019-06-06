@@ -73,6 +73,7 @@ class RegistrationsController < Devise::RegistrationsController
   def profile_attributes
     allowed_attrs = [
       :first_name,
+      :last_name,
       :zip_code,
       :library_location_id
     ]

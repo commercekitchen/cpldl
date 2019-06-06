@@ -39,6 +39,8 @@ es:
           attributes:
             last_name:
               blank: "no puede estar en blanco"
+  common:
+    submit: "Enviar"
   home:
     default_org:
       custom_banner_greeting: ""
@@ -103,6 +105,7 @@ es:
     dont_have_library_card: "¿No tiene una tarjeta de biblioteca?"
     register_for_library_card: "para registrarse en una tarjeta de biblioteca en línea que puede utilizar de inmediato."
     first_name: "Nombre"
+    last_name: "Apellido"
     zip_code: "Código Postal"
     your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"
@@ -270,6 +273,7 @@ es:
     set_three_6: "Usar internet de manera más segura."
     set_three_7: "Aprender una aplicación específica como Microsoft Word."
     set_three_8: "Usar Internet para encontrar información."
+    skip_quiz: "Saltarse el cuestionario"
   google_analytics_url:
     www: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w66482317p68369117/"
     chipublib: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w107924237p112444339/"

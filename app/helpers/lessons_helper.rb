@@ -37,4 +37,12 @@ module LessonsHelper
       content_tag(:p, "No lesson available at this point.", class: "note")
     end
   end
+
+  def lessons_completed(course)
+    if user_signed_in?
+      current_user.completed_lesson_ids(course)
+    else
+      (session[:completed_lessons] || []) & course.lessons.pluck(:id)
+    end
+  end
 end
