@@ -44,31 +44,22 @@ es:
   home:
     default_org:
       custom_banner_greeting: ""
-      logo_banner_html: ""
     www:
-      custom_banner_greeting: ""
-      logo_banner_html: "Use la computadora para hacer casi todo!"
+      custom_banner_greeting: "Use la computadora para hacer casi todo!"
     chipublib:
-      custom_banner_greeting: "Chicago DigitalLearn<br>"
-      logo_banner_html: "Use la computadora para hacer casi todo!"
+      custom_banner_greeting: "Chicago DigitalLearn<br />Use la computadora para hacer casi todo!"
     npl:
       custom_banner_greeting: "Estar en línea puede hacer su vida más fácil y mejor!<br>"
-      logo_banner_html: ""
     kpl:
       custom_banner_greeting: "Explorar, descubrir y participar con su computadora!<br>"
-      logo_banner_html: ""
     tscpl:
       custom_banner_greeting: "¡Aprender nuevas habilidades para una vida mejor!<br>"
-      logo_banner_html: ""
     pima:
       custom_banner_greeting: "Conectarse. Todo es posible.<br>"
-      logo_banner_html: ""
     ebrpl:
       custom_banner_greeting: "Saber cómo usar una computadora le ayuda a avanzar en la vida<br>"
-      logo_banner_html: ""
     carnegielibrary:
       custom_banner_greeting: "¡Desarrolle sus habilidades de la computadora y desbloquee su potencial!<br>"
-      logo_banner_html: ""
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"

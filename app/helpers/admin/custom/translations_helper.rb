@@ -12,11 +12,10 @@ module Admin::Custom::TranslationsHelper
 
   def en_keys
     {
-      'home.%{subdomain}.custom_banner_greeting' => 'Custom banner greetings',
-      'home.%{subdomain}.logo_banner_html' => 'Logo Banner Html',
-      'home.choose_a_course.%{subdomain}' => 'Choose a course',
-      'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the quiz',
-      'my_courses_page.%{subdomain}.course_color_explaination' => 'Course color explaination'
+      'home.%{subdomain}.custom_banner_greeting' => 'Homepage Greeting',
+      'home.choose_a_course.%{subdomain}' => 'Course Selection Greeting',
+      'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the Quiz Greeting',
+      'my_courses_page.%{subdomain}.course_color_explaination' => 'User Course Title Color Explanation'
     }.each_with_object({}) do |(k, v), obj|
       key = k % { subdomain: current_organization.subdomain }
       obj[key] = v
