@@ -33,6 +33,7 @@ class Organization < ActiveRecord::Base
   has_attached_file :footer_logo
 
   validates_attachment_content_type :footer_logo, content_type: ["image/png", "image/jpeg"], message: ", Only Image files are allowed."
+  validates :footer_logo_link, url: { allow_blank: true }
 
   def user_count
     users.count

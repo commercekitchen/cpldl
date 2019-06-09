@@ -1,4 +1,8 @@
-<%= form_for @organization, url: admin_custom_organizations_path(page: :footer), html: { multipart: true } do |f| %>
+<% content_for(:callout) do %>
+  <h1>Add a custom logo to your footer to appear next to the DigitalLearn logo.</h1>
+<% end %>
+
+<%= form_for @organization, url: admin_custom_footers_path, html: { multipart: true } do |f| %>
   <% if @organization.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>

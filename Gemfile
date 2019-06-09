@@ -71,6 +71,8 @@ gem 'data_migrate'
 # integrate chosen library
 # gem 'select2-rails'
 
+gem 'validate_url'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
