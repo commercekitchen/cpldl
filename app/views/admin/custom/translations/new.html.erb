@@ -1,12 +1,18 @@
 <% content_for(:callout) do %>
-  <h1>Translations for <%= locale_string(@locale) %></h1>
+  <h1>Customizable Text Section</h1>
 <% end %>
 
 <%= form_for @translation, url: admin_custom_translations_path do |form| %>
-  <%= form.label :locale %> <%= form.text_field :locale, readonly: true %>
-  <%= form.label :section %> <%= form.text_field :section, value: translation_keys(@locale)[@translation.key], readonly: true %>
+  <%= form.hidden_field :locale, readonly: true %>
   <%= form.hidden_field :key %>
-  <%= form.label :value, 'Text' %> <%= form.text_area :value, value: t(default_org_i18n_key(@translation.key)) %>
 
-  <%= form.submit 'Save Translation' %> <%= link_to "Cancel", admin_custom_translations_url(@locale) %>
+  <%= form.label :value, class: "text-color" do %>
+    "<%= translation_keys(@locale)[@translation.key] %>" in <%= locale_string(@translation.locale) %>
+  <% end %>
+  <%= form.text_area :value, value: t(default_org_i18n_key(@translation.key)) %>
+
+  <p>
+    <%= form.submit t('common.submit'), class: "button-color" %>
+    <%= link_to t('common.cancel'), admin_custom_translations_url(@locale), class: "btn btn-grey" %>
+  </p>
 <% end %>

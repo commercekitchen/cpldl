@@ -15,17 +15,17 @@
   <% end %>
 
   <fieldset>
-    <%= f.label :footer_logo_link do %>
+    <%= f.label :footer_logo_link, class: 'text-color' do %>
       Footer Logo Link<span class="required"></span>
     <% end %>
     <%= f.text_field :footer_logo_link, class: "bottom-margin" %>
   </fieldset>
   <fieldset>
-    <%= f.label :footer_logo do %>
+    <%= f.label :footer_logo, class: 'text-color' do %>
       Footer logo<span class="required"></span>
     <% end %>
     <%= f.file_field :footer_logo, class: "upload-field" %>
   </fieldset>
   
-  <%= f.submit "Save Organization", class: "button-color" %>
+  <%= f.submit t('common.submit'), class: "button-color" %>
 <% end %>
