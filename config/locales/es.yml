@@ -182,21 +182,22 @@ es:
     practice_skills: "Ahora usar mis habilidades"
   my_courses_page:
     www:
-      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en morado. Ha terminado los cursos en gris."
     chipublib:
-      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris."
     npl:
-      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris."
     kpl:
-      course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris."
     tscpl:
-      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en naranja. Ha terminado los cursos en gris."
     pima:
-      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris."
     ebrpl:
-      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris."
     carnegielibrary:
-      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris. Para agregar cursos a su plan personal,"
+      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris."
+    add_more: "Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
