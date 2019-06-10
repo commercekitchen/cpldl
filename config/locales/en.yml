@@ -187,7 +187,7 @@ en:
     kpl:
       course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed."
     tscpl:
-      course_color_explaination: "Orange courses need to be completed. Gray courses have already been completed."
+      course_color_explaination: "Dark Gray courses need to be completed. Light Gray courses have already been completed."
     pima:
       course_color_explaination: "Light Blue courses need to be completed. Gray courses have already been completed."
     ebrpl:
@@ -195,7 +195,8 @@ en:
     carnegielibrary:
       course_color_explaination: "Purple courses need to be completed. Gray courses have already been completed."
     kclibrary:
-      course_color_explaination: "Blue courses need to be completed. Gray courses have already been completed. "
+      course_color_explaination: "Dark Gray courses need to be completed. Light Gray courses have already been completed."
+    add_more: "To add more to your plan,"
     my_plan_click_to_start: "My Plan: Click on a course below and get started!"
     click_here_to_homepage: "To add more to your plan, click here to go to the homepage."
     completed_most_courses: "Have you completed most of the courses? If so,"
@@ -251,10 +252,10 @@ en:
     set_one_3: "I can use a computer, but I'd like to learn more."
     set_one_4: "I'm very comfortable with a computer, but I would like to learn more on a specific topic."
     question_2: "How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one."
-    set_two_1: "This is my first time using a one."
-    set_two_2: "I can use one, but I'm not comfortable beyond that."
-    set_two_3: "I can use one, but I'd like to learn more."
-    set_two_4: "I'm very comfortable with one, but I would like to learn more on a specific topic."
+    set_two_1: "This is my first time using a phone, tablet, or iPad."
+    set_two_2: "I can use at least one of these technologies, but I'm not comfortable beyond that."
+    set_two_3: "I can use at least one of these technologies, but I'd like to learn more."
+    set_two_4: "I'm very comfortable with at least one of these technologies, but I would like to learn more on a specific topic."
     question_3: "What would you like to do with a computer? Choose your top goal."
     set_three_1: "Search for a job."
     set_three_2: "Help my child with school."

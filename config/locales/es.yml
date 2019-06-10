@@ -196,7 +196,8 @@ es:
     ebrpl:
       course_color_explaination: "Necesita terminar los cursos en azul claro. Ha terminado los cursos en gris."
     carnegielibrary:
-      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris. "
+      course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris."
+    add_more: "Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "Para agregar cursos a su plan personal, de clic aquí para regresar a la página principal."
     completed_most_courses: "Si ya completó esos cursos y quiere más recomendaciones,"
