@@ -118,6 +118,7 @@ Rails.application.routes.draw do
       resources :translations, constraints: { :id => /[^\/]+/ }
       resource :footers, only: [:show, :update]
       resource :user_surveys, only: [:show, :update]
+      resource :features, only: [:show, :update]
     end
 
   end

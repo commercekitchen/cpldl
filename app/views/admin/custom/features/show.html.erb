@@ -1,0 +1,72 @@
+<% content_for(:callout) do %>
+  <h1>Manage feature flags for your organization.</h1>
+<% end %>
+
+<p class="emphasis no-top-margin">Only change this when you actually know what they do. These flags are related to user profile and authentication.</p>
+
+<%= form_for @organization, url: admin_custom_features_path do |f| %>
+  <div class="row">
+    <div class="sixcol">
+      <fieldset>
+        <%= f.label :library_card_login, class: "text-color" %>
+        <div class="onecol">
+          <%= f.check_box :library_card_login %>
+        </div>
+        <div class="elevencol">
+          <span>Users register and log in with their library card.</span>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sixcol">
+      <fieldset>
+        <%= f.label :login_required, class: "text-color" %>
+        <div class="onecol">
+          <%= f.check_box :login_required %>
+        </div>
+        <div class="elevencol">
+          <span>Users should logged in to access courses.</span>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="sixcol">
+      <fieldset>
+        <%= f.label :accepts_programs, class: "text-color" %>
+        <div class="onecol">
+          <%= f.check_box :accepts_programs %>
+        </div>
+        <div class="elevencol">
+          <span>Organization accepts programs.</span>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row">
+    <div class="twelvecol">
+      <fieldset>
+        <%= f.label :branches, class: "text-color" %>
+        <div class="sixcol">
+          <div class="onecol">
+            <%= f.check_box :branches %>
+          </div>
+          <div class="elevencol">
+            <span>Organization has branches.</span>
+          </div>
+        </div>
+        <div class="sixcol last">
+          <div class="onecol">
+            <%= f.check_box :accepts_custom_branches, 'aria-label' => 'Accepts custom branches' %>
+          </div>
+          <div class="elevencol">
+            <span>Users can register their custom branches on registration.</span>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <%= f.submit t('common.submit'), class: "button-color" %>
+<% end %>
