@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="sixcol">
+    <fieldset>
+      <%= f.label :display_on_dl, class: "text-color" do %>
+        Display on Homepage?
+      <% end %>
+      <div class="onecol">
+        <%= f.check_box :display_on_dl %>
+      </div>
+      <div class="elevencol">
+        <span>This course should show up on the DigitalLearn home page.</span>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="sixcol last">
+    <fieldset>
+      <%= f.label :subsite_course, class: "text-color" do %>
+        Course for Subsites?
+      <% end %>
+      <div class="onecol">
+        <%= f.check_box :subsite_course %>
+      </div>
+      <div class="elevencol">
+        <span>This course is intended for subsites of DigitalLearn to use.</span>
+      </div>
+    </fieldset>
+  </div>
+</div>
