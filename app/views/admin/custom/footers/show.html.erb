@@ -3,17 +3,6 @@
 <% end %>
 
 <%= form_for @organization, url: admin_custom_footers_path, html: { multipart: true } do |f| %>
-  <% if @organization.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
-      <ul>
-      <% @organization.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
   <fieldset>
     <%= f.label :footer_logo_link, class: 'text-color' do %>
       Footer Logo Link<span class="required"></span>
