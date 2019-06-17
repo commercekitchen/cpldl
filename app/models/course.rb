@@ -49,6 +49,7 @@ class Course < ActiveRecord::Base
                                    tsearch: { any_word: true }
                                  }
 
+  enum access_level: [:all_users, :logged_in]
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
   attr_writer :propagation_org_ids

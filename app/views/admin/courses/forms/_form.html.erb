@@ -174,10 +174,10 @@
     </div>
   </div>
 
-  <% if subdomain? %>
-    <%= render("admin/courses/forms/level_pub_section", f: f) %>
-  <% else %>
-    <%= render("admin/courses/forms/dl_level_pub_section", f: f) %>
+  <%= render("admin/courses/forms/level_pub_section", f: f) %>
+
+  <% if top_level_domain? %>
+    <%= render("admin/courses/forms/www_fields", f: f) %>
   <% end %>
 
   <fieldset>

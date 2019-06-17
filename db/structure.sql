@@ -401,7 +401,8 @@ CREATE TABLE public.courses (
     parent_id integer,
     display_on_dl boolean DEFAULT false,
     category_id integer,
-    organization_id integer
+    organization_id integer,
+    access_level integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1870,4 +1871,6 @@ INSERT INTO schema_migrations (version) VALUES ('20190509152342');
 INSERT INTO schema_migrations (version) VALUES ('20190509152902');
 
 INSERT INTO schema_migrations (version) VALUES ('20190530133959');
+
+INSERT INTO schema_migrations (version) VALUES ('20190617025929');
 
