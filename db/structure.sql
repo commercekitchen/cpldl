@@ -627,7 +627,7 @@ CREATE TABLE public.organizations (
     library_card_login boolean DEFAULT false,
     accepts_custom_branches boolean DEFAULT false,
     login_required boolean DEFAULT true,
-    preferences jsonb
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -1485,6 +1485,13 @@ CREATE INDEX index_library_locations_on_organization_id ON public.library_locati
 
 
 --
+-- Name: index_organizations_on_preferences; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_organizations_on_preferences ON public.organizations USING gin (preferences);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1873,4 +1880,6 @@ INSERT INTO schema_migrations (version) VALUES ('20190509152902');
 INSERT INTO schema_migrations (version) VALUES ('20190530133959');
 
 INSERT INTO schema_migrations (version) VALUES ('20190617025929');
+
+INSERT INTO schema_migrations (version) VALUES ('20190617034333');
 

@@ -5,11 +5,7 @@
     </header>
     <div class="description">
       <p><%= t('my_courses_page.find_new_courses_retake_quiz') %></p>
-      <% if I18n.locale == :es %>
-        <%= button_tag t("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz", default: t("completed_courses_page.default_org.retake_the_quiz")), class: "btn small button-color" %>
-      <% else %>
-        <%= button_tag t("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz", default: t("completed_courses_page.default_org.retake_the_quiz")), class: "btn small button-color" %>
-      <% end %>
+      <%= button_tag i18n_with_default("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), class: "btn small button-color" %>
     </div>
   <% end %>
 <% end %>

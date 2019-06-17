@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     namespace :custom do
       resources :translations, constraints: { :id => /[^\/]+/ }
       resource :footers, only: [:show, :update]
+      resource :user_surveys, only: [:show, :update]
     end
 
   end

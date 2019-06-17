@@ -40,7 +40,7 @@
 <div class="row">
   <div>
     <%= link_to new_quiz_response_path do %>
-      <%= button_tag(t("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz", default: t("completed_courses_page.default_org.retake_the_quiz")), type: "button", class: "button-color") %>
+      <%= button_tag(i18n_with_default("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), type: "button", class: "button-color") %>
     <% end %>
   </div>
 </div>

@@ -71,6 +71,7 @@ gem 'data_migrate'
 # integrate chosen library
 # gem 'select2-rails'
 
+gem 'storext'
 gem 'validate_url'
 
 group :development do

@@ -3,5 +3,5 @@
     <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%><%= "(ADMIN)" if current_user.admin? %>!
     <br>
   <% end %>
-  <%= raw t("home.#{current_organization.subdomain}.custom_banner_greeting", default: t("home.default_org.custom_banner_greeting")) %>
+  <%= raw i18n_with_default("home.#{current_organization.subdomain}.custom_banner_greeting") %>
 </h1>

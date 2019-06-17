@@ -230,6 +230,8 @@ es:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"
   course_completion_page:
+    default_org:
+      user_survey_button_text: "Necesitamos su ayuda - Por favor tome una encuesta rápida"
     practice_new_skills: "¡Practica y usa sus nuevas habilidades! (Da clic en cada liga abajo)"
     congratulations: "Felicitaciones"
     you_successfully_completed: "Ha completado la Actividad"

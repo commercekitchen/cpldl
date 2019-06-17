@@ -73,6 +73,7 @@
         <% end %>
       <% end %>
     </div>
+    <%= render partial: 'user_survey' %>
     <div class="row">
       <%= link_to "#{t('course_completion_page.restart_this_course')}", course_path(@course), class: "white" %>
     </div>

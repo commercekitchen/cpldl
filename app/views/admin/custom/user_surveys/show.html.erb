@@ -1,0 +1,28 @@
+<% content_for(:callout) do %>
+  <h1>Add a user survey button on course complete page.</h1>
+<% end %>
+
+<%= form_for @organization, url: admin_custom_user_surveys_path do |f| %>
+  <fieldset>
+    <%= f.check_box :user_survey_enabled, class: "bottom-margin" %>
+    <%= f.label :user_survey_enabled, class: 'text-color inline-label' do %>
+      Enable Survey?
+    <% end %>
+  </fieldset>
+  <fieldset>
+    <%= f.label :user_survey_button_text, class: 'text-color' do %>
+      Survey button text
+    <% end %>
+    Go to
+    <%= link_to 'Translations section', admin_custom_translations_path %>
+    to set custom user survey button text.
+  </fieldset>
+  <fieldset>
+    <%= f.label :user_survey_link, class: 'text-color' do %>
+      Survey link
+    <% end %>
+    <%= f.text_field :user_survey_link %>
+  </fieldset>
+  
+  <%= f.submit t('common.submit'), class: "button-color" %>
+<% end %>

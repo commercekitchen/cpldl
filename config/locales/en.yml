@@ -227,6 +227,8 @@ en:
     percent_complete: "% Complete"
     skip_to_next_lesson: "Skip to next Activity >>"
   course_completion_page:
+    default_org:
+      user_survey_button_text: "We Need Your Help - Please Take a Quick Survey"
     practice_new_skills: "Practice and use your new skills! (click each link below)"
     congratulations: "Congratulations"
     you_successfully_completed: "You've successfully completed"

@@ -15,9 +15,20 @@
 #
 
 class Organization < ActiveRecord::Base
+  include Storext.model
+
   resourcify
 
-  store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type
+  store_attributes :preferences do
+    footer_logo_file_name     String
+    footer_logo_link          String
+    footer_logo_content_type  String
+    user_survey_enabled       Boolean,  default: false
+    user_survey_link          String
+  end
+
+  # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
+    # :user_survey_enabled, :user_survey_button_text, :user_survey_link
 
   has_many :cms_pages, dependent: :destroy
   has_many :library_locations, dependent: :destroy
@@ -35,6 +46,9 @@ class Organization < ActiveRecord::Base
   validates_attachment_content_type :footer_logo, content_type: ["image/png", "image/jpeg"], message: "should be png or jpeg format."
   validates :footer_logo_link, url: { allow_blank: true }
   after_validation :clean_up_paperclip_errors
+
+  validates :user_survey_link, url: { allow_blank: true }
+  validates_presence_of :user_survey_link, if: :user_survey_enabled?
 
   def user_count
     users.count
