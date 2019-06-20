@@ -41,6 +41,7 @@ es:
               blank: "no puede estar en blanco"
   common:
     submit: "Enviar"
+    save: "Guardar"
     cancel: "Cancelar"
   home:
     default_org:

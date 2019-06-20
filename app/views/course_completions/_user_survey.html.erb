@@ -1,7 +1,9 @@
-<div class="row">
-  <%= link_to(current_organization.user_survey_link) do %>
-    <%= button_tag(type: 'button', class: "congrats-button button-color small") do %>
-      <%= i18n_with_default("course_completion_page.#{current_organization.subdomain}.user_survey_button_text") %>
+<% if current_organization.user_survey_enabled? %>
+  <div class="row">
+    <%= link_to(current_organization.user_survey_link) do %>
+      <%= button_tag(type: 'button', class: "congrats-button button-color small") do %>
+        <%= i18n_with_default("course_completion_page.#{current_organization.subdomain}.user_survey_button_text") %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form.hidden_field :id %>
+<%= form.hidden_field :locale, readonly: true %>
+<%= form.hidden_field :key %>
+<% label = translation_keys(translation.locale)[translation.key] %>
+<%= form.label :value, class: "text-color" do %>
+  <%= label.present? ? "#{label} in" : '' %>
+  <%= locale_string(translation.locale) %>
+<% end %>
+<%= form.text_area :value, value: translation.value || t(default_org_i18n_key(translation.key), locale: translation.locale) %>

@@ -1,6 +1,8 @@
 <% content_for(:callout) do %>
-  <h1>Add a user survey button on course complete page.</h1>
+  <h1>User Survey</h1>
 <% end %>
+
+<p class="emphasis no-top-margin">Add a button that will appear on all course completion pages to take your users to an external survey site of your choice.</p>
 
 <%= form_for @organization, url: admin_custom_user_surveys_path do |f| %>
   <fieldset>
@@ -9,14 +11,23 @@
       Enable Survey?
     <% end %>
   </fieldset>
+
   <fieldset>
-    <%= f.label :user_survey_button_text, class: 'text-color' do %>
-      Survey button text
-    <% end %>
-    Go to
-    <%= link_to 'Translations section', admin_custom_translations_path %>
-    to set custom user survey button text.
+    <span class='text-color block-label'>
+      Survey Button Text
+    </span>
+    <div class='i18n-translation-fields'>
+      <%= fields_for 'translation[en]', @en_translation do |tf| %>
+        <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @en_translation } %>
+      <% end %>
+      <div class='bottom-margin'></div>
+      <%= fields_for 'translation[es]', @es_translation do |tf| %>
+        <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @es_translation } %>
+      <% end %>
+    </div>
+
   </fieldset>
+
   <fieldset>
     <%= f.label :user_survey_link, class: 'text-color' do %>
       Survey link
@@ -24,5 +35,5 @@
     <%= f.text_field :user_survey_link %>
   </fieldset>
   
-  <%= f.submit t('common.submit'), class: "button-color" %>
+  <%= f.submit t('common.save'), class: "button-color" %>
 <% end %>

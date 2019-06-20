@@ -33,6 +33,8 @@ en:
         password: "Password"
   common:
     submit: "Submit"
+    save: "Save"
+    cancel: "Cancel"
   home:
     default_org:
       custom_banner_greeting: ""

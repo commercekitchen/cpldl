@@ -15,10 +15,10 @@ module Admin::Custom::TranslationsHelper
       'home.%{subdomain}.custom_banner_greeting' => 'Homepage Greeting',
       'home.choose_a_course.%{subdomain}' => 'Course Selection Greeting',
       'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the Quiz Greeting',
-      'my_courses_page.%{subdomain}.course_color_explaination' => 'User Course Title Color Explanation'
+      'my_courses_page.%{subdomain}.course_color_explaination' => 'User Course Tile Color Explanation'
     }
     
-    texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
+    # texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
 
     texts.each_with_object({}) do |(k, v), obj|
       key = k % { subdomain: current_organization.subdomain }
@@ -31,7 +31,7 @@ module Admin::Custom::TranslationsHelper
   end
 
   def locale_string(i18n_locale)
-    i18n_locale.to_s == 'en' ? 'English' : 'Español'
+    i18n_locale.to_s == 'en' ? 'English' : 'Spanish'
   end
 
   def default_org_i18n_key(key)

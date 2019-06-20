@@ -3,16 +3,10 @@
 <% end %>
 
 <%= form_for @translation, url: admin_custom_translation_path do |form| %>
-  <%= form.hidden_field :locale, readonly: true %>
-  <%= form.hidden_field :key %>
-
-  <%= form.label :value, class: "text-color" do %>
-    "<%= translation_keys(@locale)[@translation.key] %>" in <%= locale_string(@translation.locale) %>
-  <% end %>
-  <%= form.text_area :value %>
+  <%= render partial: 'fields', locals: { form: form, translation: @translation } %>
 
   <p>
-    <%= form.submit t('common.submit'), class: "button-color" %>
-    <%= link_to t('common.cancel'), admin_custom_translations_url(@locale), class: "btn btn-grey" %>
+    <%= form.submit 'Save', class: "button-color" %>
+    <%= link_to 'Cancel', admin_custom_translations_url(@locale), class: "btn btn-grey" %>
   </p>
 <% end %>
