@@ -47,7 +47,13 @@ class CoursesController < ApplicationController
         @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
       end
     else
-      @courses = params[:search].blank? ? Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain) : Course.includes(:lessons).where(pub_status: "P").where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
+      @courses =  if params[:search].blank?
+                    Course.includes(:lessons).where(pub_status: "P")
+                          .where_exists(:organization, subdomain: current_organization.subdomain)
+                  else
+                    Course.includes(:lessons).where(pub_status: "P")
+                          .where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
+                  end
     end
 
     @category_ids = current_organization.categories.enabled.map(&:id)

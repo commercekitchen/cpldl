@@ -2,7 +2,7 @@
   <h1>Manage feature flags for your organization.</h1>
 <% end %>
 
-<p class="emphasis no-top-margin">Only change this when you actually know what they do. These flags are related to user profile and authentication.</p>
+<p class="emphasis no-top-margin">Only change this when you actually know what you do. These flags are related to user profile and authentication.</p>
 
 <%= form_for @organization, url: admin_custom_features_path do |f| %>
   <div class="row">
@@ -68,5 +68,5 @@
     </div>
   </div>
 
-  <%= f.submit t('common.submit'), class: "button-color" %>
+  <%= f.submit 'Submit', class: "button-color" %>
 <% end %>
