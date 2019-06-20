@@ -14,7 +14,7 @@ module Admin::Custom::TranslationsHelper
     texts = {
       'home.%{subdomain}.custom_banner_greeting' => 'Homepage Greeting',
       'home.choose_a_course.%{subdomain}' => 'Course Selection Greeting',
-      'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the Quiz Greeting',
+      'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the Quiz Button',
       'my_courses_page.%{subdomain}.course_color_explaination' => 'User Course Tile Color Explanation'
     }
     
