@@ -153,6 +153,7 @@ module Admin
         :course_order,
         :pub_date,
         :format,
+        :access_level,
         :subsite_course,
         :display_on_dl,
         :subdomain,

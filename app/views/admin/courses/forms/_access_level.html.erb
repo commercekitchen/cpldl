@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="sixcol">
+    <fieldset>
+      <%= f.label :access_level, class: "text-color" do %>
+        Access Level
+      <% end %>
+      <% options = [['Everyone', 'everyone'], ['Authenticated Users', 'authenticated_users']]%>
+      <%= f.select(:access_level, options_for_select(options, @course.access_level) ) %>
+    </fieldset>
+  </div>
+</div>

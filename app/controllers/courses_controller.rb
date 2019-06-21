@@ -25,41 +25,26 @@
 #
 
 class CoursesController < ApplicationController
+  include ::UserCourses
+
   before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
 
   def index
-    result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
+    @courses = authorized_courses
 
-    # Only courses are multisearchable right now, so this works
-    # If another class is made multisearchable, this won't work as intended
-    # PgSearch multisearch isn't working well here - I'm running into
-    # an issue similar to https://github.com/rails/rails/issues/13648
-    # when I try to chain PgSearch results with AR queries.
-    published_results = Course.where(id: result_ids).where(pub_status: "P")
+    if params[:search].present?
+      result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
 
-    if user_signed_in? && current_user.profile.language_id
-      user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
-      language_id = session[:locale] != user_lang_abbrv2 ? find_language_id_by_session : current_user.profile.language_id
-
-      if params[:search].blank?
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain)
-      else
-        @courses = Course.includes(:lessons).where(pub_status: "P", language_id: language_id).where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
-      end
-    else
-      @courses =  if params[:search].blank?
-                    Course.includes(:lessons).where(pub_status: "P")
-                          .where_exists(:organization, subdomain: current_organization.subdomain)
-                  else
-                    Course.includes(:lessons).where(pub_status: "P")
-                          .where_exists(:organization, subdomain: current_organization.subdomain).merge(published_results)
-                  end
+      # Only courses are multisearchable right now, so this works
+      # If another class is made multisearchable, this won't work as intended
+      # PgSearch multisearch isn't working well here - I'm running into
+      # an issue similar to https://github.com/rails/rails/issues/13648
+      # when I try to chain PgSearch results with AR queries.
+      published_results = Course.where(id: result_ids)
+      @courses = @courses.merge(published_results)
     end
 
-    @category_ids = current_organization.categories.enabled.map(&:id)
-    @disabled_category_ids = current_organization.categories.disabled.map(&:id)
-    @disabled_category_courses = @courses.where(category_id: @disabled_category_ids)
-    @uncategorized_courses = @courses.where(category_id: nil) + @disabled_category_courses
+    load_category_courses
 
     respond_to do |format|
       format.html { render :index }
