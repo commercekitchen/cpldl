@@ -1,12 +1,10 @@
 class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   before_action :load_ogranization
+  before_action :load_translations
+
   layout "admin/base_with_sidebar"
 
-  def show
-    key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
-    @en_translation = Translation.find_or_initialize_by(locale: 'en', key: key)
-    @es_translation = Translation.find_or_initialize_by(locale: 'es', key: key)
-  end
+  def show; end
 
   def update
     if @organization.update(org_params) & update_translations
@@ -22,6 +20,12 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
 
   def load_ogranization
     @organization = current_organization
+  end
+
+  def load_translations
+    key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
+    @en_translation = Translation.find_or_initialize_by(locale: 'en', key: key)
+    @es_translation = Translation.find_or_initialize_by(locale: 'es', key: key)
   end
 
   def org_params
