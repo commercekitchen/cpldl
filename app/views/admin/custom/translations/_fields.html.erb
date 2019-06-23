@@ -6,4 +6,4 @@
   <%= label.present? ? "#{label} in" : '' %>
   <%= locale_string(translation.locale) %>
 <% end %>
-<%= form.text_area :value, value: translation.value || t(default_org_i18n_key(translation.key), locale: translation.locale) %>
+<%= form.text_area :value, value: translation.try(:value) || I18n.t(translation.key, locale: translation.locale, default: t(default_org_i18n_key(translation.key), locale: translation.locale)) %>

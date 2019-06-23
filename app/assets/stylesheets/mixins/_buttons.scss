@@ -9,7 +9,7 @@
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    height: 50px;
+    min-height: 50px;
     padding: 11px 40px;
     text-align: center;
     min-width: 300px;
@@ -21,14 +21,14 @@
 
     &.small{
       min-width: 0;
-      height: 35px;
+      min-height: 35px;
       font-size: 16px;
       padding: 6px 40px;
     }
 
     &.small-lesson-button {
       min-width: 0;
-      height: 35px;
+      min-height: 35px;
       font-size: 16px;
       padding: 6px 40px;
       position: relative;
