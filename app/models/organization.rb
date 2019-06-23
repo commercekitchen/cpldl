@@ -21,7 +21,7 @@ class Organization < ActiveRecord::Base
 
   store_attributes :preferences do
     footer_logo_file_name     String
-    footer_logo_file_size     String
+    footer_logo_file_size     Integer
     footer_logo_link          String
     footer_logo_content_type  String
     user_survey_enabled       Boolean,  default: false
