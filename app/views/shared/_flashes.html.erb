@@ -1,6 +1,6 @@
   <div>
     <% flash.keys.each do |kind| %>
-      <% message = flash[kind].is_a?(Array) ? flash[kind].join("\n") : flash[kind] %>
+      <% message = flash[kind].is_a?(Array) ? flash[kind].join("<br />") : flash[kind] %>
       <p class="<%= kind %> flash-message"><%= message.html_safe %></p>
     <% end %>
   </div>

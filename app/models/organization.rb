@@ -88,5 +88,6 @@ class Organization < ActiveRecord::Base
   # https://github.com/thoughtbot/paperclip/commit/2aeb491fa79df886a39c35911603fad053a201c0
   def clean_up_paperclip_errors
     errors.delete(:footer_logo_content_type)
+    errors.delete(:footer_logo_file_size)
   end
 end
