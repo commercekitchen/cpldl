@@ -96,7 +96,7 @@ group :development, :test do
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
   gem 'rspec-rails', '~> 3.0'
-  gem 'bullet'
+  gem 'bullet', '~> 5.7.0'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end

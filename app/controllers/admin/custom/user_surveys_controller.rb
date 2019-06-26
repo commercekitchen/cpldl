@@ -9,6 +9,7 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   def update
     if @organization.update(org_params) & update_translations
       flash[:info] = 'Organization user survey updated.'
+      I18n.backend.reload!
       redirect_to admin_custom_user_surveys_path
     else
       flash[:error] = @organization.invalid? ? @organization.errors.full_messages : @translation_errors.flatten
@@ -35,7 +36,7 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   def update_translations
     @translation_errors = []
     params.require(:translation).permit!.each do |locale, values|
-      translation = values[:id].blank? ? Translation.new : Translation.find(values[:id])
+      translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
       unless translation.update(values)
         @translation_errors << translation.errors.full_messages
         return false

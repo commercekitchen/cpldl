@@ -7,7 +7,7 @@ class Admin::Custom::FeaturesController < Admin::Custom::BaseController
 
   def update
     if @organization.update(org_params)
-      flash[:info] = 'Organization features updated.'
+      flash[:info] = 'Organization Login Requirement Updated.'
       redirect_to admin_custom_features_path
     else
       flash[:error] = @organization.errors.full_messages
@@ -22,6 +22,6 @@ class Admin::Custom::FeaturesController < Admin::Custom::BaseController
   end
 
   def org_params
-    params.require(:organization).permit(:library_card_login, :login_required, :accepts_programs, :branches, :accepts_custom_branches)
+    params.require(:organization).permit(:login_required)
   end
 end

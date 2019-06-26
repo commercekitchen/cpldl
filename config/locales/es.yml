@@ -79,7 +79,7 @@ es:
     search_courses: "¿Qué le gustaría aprender?"
     trainer_link: "Herramientas y recursos para instructores"
     mins_abbr: "min"
-    more_courses: "Hay mas cursos disponible si se inscribe - lo puede hacer facilmente aqui."
+    more_courses: "Hay mas cursos disponible si se inscribe - lo puede hacer facilmente"
     here: "aquí"
   login_signup:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
