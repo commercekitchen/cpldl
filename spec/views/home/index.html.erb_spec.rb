@@ -10,7 +10,7 @@ describe "home/index.html.erb" do
     @course = create(:course)
     @courses = [@course]
     assign(:course, @course)
-    @admin = create(:user, :admin)
+    @admin = create(:user, :admin, organization: @org)
     @user = create(:user)
   end
 
