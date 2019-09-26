@@ -10,8 +10,7 @@ describe Admin::CmsPagesController do
     @page1   = create(:cms_page, title: "Page1", organization: @organization)
     @page2   = create(:cms_page, title: "Page2", organization: @organization)
     @page3   = create(:cms_page, title: "Page3", organization: @organization)
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
     sign_in @admin
   end
 

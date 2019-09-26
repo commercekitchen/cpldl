@@ -10,8 +10,7 @@ describe "courses/show.html.erb" do
     allow(view).to receive(:top_level_domain?).and_return(true)
     @course = create(:course, meta_desc: "Meta description.", seo_page_title: "SEO Title")
     assign(:course, @course)
-    @admin = create(:admin_user)
-    @admin.add_role(:admin, @org)
+    @admin = create(:user, :admin)
     @user = create(:user, organization: @org)
     @course_progress1 = create(:course_progress, course_id: @course.id)
     @user.course_progresses << [@course_progress1]

@@ -8,7 +8,7 @@ describe Admin::AttachmentsController do
     @attachment = create(:attachment)
     @english = create(:language)
     @spanish = create(:spanish_lang)
-    @admin = create(:admin_user)
+    @admin = create(:user)
     @admin.add_role(:admin)
     sign_in @admin
 

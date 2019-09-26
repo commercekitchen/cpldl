@@ -15,8 +15,7 @@ describe Admin::CoursesController do
     @course2 = create(:course, title: "Course2", course_order: 2, category: @category2, organization: @organization)
     @course3 = create(:course, title: "Course3", course_order: 3, organization: @organization)
     @course_for_different_org = create(:course, title: "Different Org", organization: @other_organization)
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
 
     sign_in @admin
   end

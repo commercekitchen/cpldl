@@ -13,7 +13,7 @@ describe Admin::LessonsController do
     @course1.lessons << [@lesson1, @lesson2]
     @course1.save
 
-    @admin = create(:admin_user)
+    @admin = create(:user)
     @admin.add_role(:admin)
     sign_in @admin
   end

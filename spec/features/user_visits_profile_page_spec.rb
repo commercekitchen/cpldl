@@ -127,7 +127,7 @@ feature "Registered user visits account page" do
 
   context "belongs to library card login organization" do
     let(:org) { FactoryGirl.create(:organization, :library_card_login) }
-    let(:user) { FactoryGirl.create(:library_card_login_user, organization: org) }
+    let(:user) { FactoryGirl.create(:user, :library_card_login_user, organization: org) }
 
     before(:each) do
       switch_to_subdomain(org.subdomain)

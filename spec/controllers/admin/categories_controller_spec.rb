@@ -6,10 +6,8 @@ describe Admin::CategoriesController do
     @www = create(:default_organization)
     @dpl = create(:organization, subdomain: "dpl")
 
-    @www_admin = create(:admin_user, organization: @www)
-    @www_admin.add_role(:admin, @www)
-    @dpl_admin = create(:admin_user, organization: @dpl)
-    @dpl_admin.add_role(:admin, @dpl)
+    @www_admin = create(:user, :admin, organization: @www)
+    @dpl_admin = create(:user, :admin, organization: @dpl)
 
     @www_category1 = create(:category, organization: @www)
     @www_category2 = create(:category, organization: @www)

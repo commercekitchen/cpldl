@@ -4,8 +4,7 @@ describe Admin::ExportsController do
   before(:each) do
     @organization = create(:organization)
     @request.host = "chipublib.test.host"
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
     sign_in @admin
     @zip_csv = { format: "csv", version: "zip" }
   end
