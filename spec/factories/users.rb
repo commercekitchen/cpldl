@@ -54,7 +54,7 @@ FactoryGirl.define do
     confirmed_at Time.zone.now.to_s
     sign_in_count 2
     organization
-    profile
+    profile { build(:profile, user: nil) }
   end
 
   factory :library_card_login_user, class: User do
@@ -63,7 +63,7 @@ FactoryGirl.define do
     confirmed_at Time.zone.now.to_s
     sign_in_count 0
     organization
-    profile
+    profile { build(:profile, user: nil) }
 
     before(:create) do |user|
       user.password = Digest::MD5.hexdigest(user.library_card_pin).first(10)
@@ -76,7 +76,7 @@ FactoryGirl.define do
     confirmed_at Time.zone.now.to_s
     sign_in_count 0
     organization
-    profile
+    profile { build(:profile, user: nil) }
   end
 
   factory :unconfirmed_user, class: User do
@@ -84,7 +84,7 @@ FactoryGirl.define do
     password "abcd1234"
     confirmed_at nil
     organization
-    profile
+    profile { build(:profile, user: nil) }
   end
 
   factory :admin_user, class: User do
@@ -92,7 +92,7 @@ FactoryGirl.define do
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
     organization
-    profile
+    profile { build(:profile, user: nil) }
   end
 
   factory :super_user, class: User do
