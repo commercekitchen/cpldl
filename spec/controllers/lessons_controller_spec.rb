@@ -102,7 +102,7 @@ describe LessonsController do
 
   describe "POST #complete" do
     it "marks a lesson for a given user as complete" do
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param, format: :json
       progress = @user.course_progresses.find_by_course_id(@course1.id)
       expect(progress.completed_lessons.count).to eq(1)
       expect(response).to redirect_to(course_lesson_path(@course1.to_param, @lesson3.id))
@@ -111,7 +111,7 @@ describe LessonsController do
     it "marks a course as complete if the assessment was completed" do
       @lesson3.is_assessment = true
       @lesson3.save
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param, format: :json
       progress = @user.course_progresses.find_by_course_id(@course1.id)
       expect(progress.complete?).to be true
     end
@@ -119,7 +119,7 @@ describe LessonsController do
     it "renders the course completion view if the assessment was completed" do
       @lesson3.is_assessment = true
       @lesson3.save
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param, format: :json
       expect(response).to redirect_to(course_completion_path(@course1.to_param))
     end
 
