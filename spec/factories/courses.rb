@@ -25,7 +25,7 @@
 #  category_id    :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
 
   factory :course do
     title { Faker::Lorem.words(3, true).join(" ") }

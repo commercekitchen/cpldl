@@ -10,7 +10,7 @@
 #  program_id    :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :program_location do
     location_name Faker::Hipster.word
     program

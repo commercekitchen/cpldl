@@ -12,7 +12,7 @@
 #  tracked      :boolean          default(FALSE)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory(:course_progress) do
   end
 

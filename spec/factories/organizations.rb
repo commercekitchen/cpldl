@@ -14,7 +14,7 @@
 #  login_required          :boolean          default(TRUE)
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :organization do
     name "Chicago Public Library"
     subdomain "chipublib"

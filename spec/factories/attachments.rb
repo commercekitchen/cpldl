@@ -15,7 +15,7 @@
 #  file_description      :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :attachment do
     document_file_name "post-course-info.pdf"
     document_content_type "application/pdf"

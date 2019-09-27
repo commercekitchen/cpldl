@@ -25,9 +25,9 @@ describe CmsPagesController do
   before(:each) do
     create(:default_organization)
     @request.host = "www.test.host"
-    @english = FactoryGirl.create(:language)
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @cms_page = FactoryGirl.create(:cms_page)
+    @english = FactoryBot.create(:language)
+    @spanish = FactoryBot.create(:spanish_lang)
+    @cms_page = FactoryBot.create(:cms_page)
   end
 
   describe "GET #show" do

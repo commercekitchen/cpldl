@@ -10,7 +10,7 @@
 #  updated_at      :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :school do
     school_name { Faker::Hipster.sentence(3) }
     organization

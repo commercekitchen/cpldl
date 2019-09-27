@@ -153,7 +153,7 @@ describe Admin::CoursesController do
       end
 
       it "adds an existing category if provided" do
-        @category = FactoryGirl.create(:category, organization: @organization)
+        @category = FactoryBot.create(:category, organization: @organization)
         post :create, { course: valid_attributes.merge(category_id: @category.id) }
         expect(assigns(:course).category).to eq(@category)
       end
@@ -175,7 +175,7 @@ describe Admin::CoursesController do
       end
 
       it "re-reders new if repeat category name" do
-        @existing_category = FactoryGirl.create(:category, organization: @organization)
+        @existing_category = FactoryBot.create(:category, organization: @organization)
         post :create, {
           course: valid_attributes.merge(
             category_id: "0",

@@ -24,7 +24,7 @@
 #  parent_id               :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :lesson do
     title "Lesson 1"
     summary "Lesson summary"

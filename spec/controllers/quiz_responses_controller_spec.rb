@@ -1,9 +1,9 @@
 require "rails_helper"
 
 describe QuizResponsesController do
-  let(:organization) { FactoryGirl.create(:organization) }
-  let(:user) { FactoryGirl.create(:user, organization: organization) }
-  let(:language) { FactoryGirl.create(:language) }
+  let(:organization) { FactoryBot.create(:organization) }
+  let(:user) { FactoryBot.create(:user, organization: organization) }
+  let(:language) { FactoryBot.create(:language) }
 
   before(:each) do
     request.host = "#{organization.subdomain}.example.com"
@@ -40,8 +40,8 @@ describe QuizResponsesController do
       { "set_one" => "2", "set_two" => "2", "set_three" => "3" }
     end
 
-    let(:core_topic) { FactoryGirl.create(:topic, title: "Core") }
-    let(:topic) { FactoryGirl.create(:topic, title: "Government") }
+    let(:core_topic) { FactoryBot.create(:topic, title: "Core") }
+    let(:topic) { FactoryBot.create(:topic, title: "Government") }
     let!(:desktop_course) { create(:course, language: language, format: "D", level: "Intermediate", topics: [core_topic], organization: organization) }
     let!(:mobile_course) { create(:course, language: language, format: "M", level: "Intermediate", topics: [core_topic], organization: organization) }
     let!(:topic_course) { create(:course, language: language, topics: [topic], organization: organization) }

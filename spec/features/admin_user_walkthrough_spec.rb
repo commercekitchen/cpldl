@@ -3,13 +3,13 @@ require "feature_helper"
 feature "Admin user clicks through each page" do
 
   before(:each) do
-    @spanish = FactoryGirl.create(:spanish_lang)
-    @english = FactoryGirl.create(:language)
-    @user = FactoryGirl.create(:user)
+    @spanish = FactoryBot.create(:spanish_lang)
+    @english = FactoryBot.create(:language)
+    @user = FactoryBot.create(:user)
     @user.add_role(:admin)
-    @organization = FactoryGirl.create(:organization)
-    @category = FactoryGirl.create(:category, organization: @user.organization)
-    @course = FactoryGirl.create(:course_with_lessons, category: @category, organization: @user.organization)
+    @organization = FactoryBot.create(:organization)
+    @category = FactoryBot.create(:category, organization: @user.organization)
+    @course = FactoryBot.create(:course_with_lessons, category: @category, organization: @user.organization)
     @user.add_role(:admin, @organization)
     @user.organization.reload
     switch_to_subdomain("chipublib")

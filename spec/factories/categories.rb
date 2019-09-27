@@ -11,7 +11,7 @@
 #  updated_at      :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :category do
     name { Faker::Lorem.words(3).join(" ") }
     organization

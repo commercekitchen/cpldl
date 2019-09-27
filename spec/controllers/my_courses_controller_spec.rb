@@ -1,15 +1,15 @@
 require "rails_helper"
 
 describe MyCoursesController do
-  let(:organization) { FactoryGirl.create(:organization) }
-  let(:language) { FactoryGirl.create(:language) }
-  let(:category) { FactoryGirl.create(:category, organization: organization) }
-  let(:disabled_category) { FactoryGirl.create(:category, :disabled, organization: organization) }
-  let(:course1) { FactoryGirl.create(:course, title: "Course 1", language: language, category: category, organization: organization) }
-  let(:course2) { FactoryGirl.create(:course, title: "Course 2", language: language, organization: organization) }
-  let(:course3) { FactoryGirl.create(:course, title: "Course 3", language: language, organization: organization) }
-  let(:course4) { FactoryGirl.create(:course, title: "Course 4", language: language, category: disabled_category, organization: organization) }
-  let(:user) { FactoryGirl.create(:user, organization: organization) }
+  let(:organization) { FactoryBot.create(:organization) }
+  let(:language) { FactoryBot.create(:language) }
+  let(:category) { FactoryBot.create(:category, organization: organization) }
+  let(:disabled_category) { FactoryBot.create(:category, :disabled, organization: organization) }
+  let(:course1) { FactoryBot.create(:course, title: "Course 1", language: language, category: category, organization: organization) }
+  let(:course2) { FactoryBot.create(:course, title: "Course 2", language: language, organization: organization) }
+  let(:course3) { FactoryBot.create(:course, title: "Course 3", language: language, organization: organization) }
+  let(:course4) { FactoryBot.create(:course, title: "Course 4", language: language, category: disabled_category, organization: organization) }
+  let(:user) { FactoryBot.create(:user, organization: organization) }
 
   context "authenticated user" do
 
@@ -19,10 +19,10 @@ describe MyCoursesController do
     end
 
     describe "GET #index" do
-      let!(:course_progress1) { FactoryGirl.create(:course_progress, user: user, course_id: course1.id, tracked: true) }
-      let!(:course_progress2) { FactoryGirl.create(:course_progress, user: user, course_id: course2.id, tracked: false) }
-      let!(:course_progress3) { FactoryGirl.create(:course_progress, user: user, course_id: course3.id, tracked: true) }
-      let!(:course_progress4) { FactoryGirl.create(:course_progress, user: user, course_id: course4.id, tracked: true) }
+      let!(:course_progress1) { FactoryBot.create(:course_progress, user: user, course_id: course1.id, tracked: true) }
+      let!(:course_progress2) { FactoryBot.create(:course_progress, user: user, course_id: course2.id, tracked: false) }
+      let!(:course_progress3) { FactoryBot.create(:course_progress, user: user, course_id: course3.id, tracked: true) }
+      let!(:course_progress4) { FactoryBot.create(:course_progress, user: user, course_id: course4.id, tracked: true) }
 
       before(:each) do
         user.course_progresses << [course_progress1, course_progress2, course_progress3]

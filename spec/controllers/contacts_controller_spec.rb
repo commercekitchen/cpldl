@@ -10,7 +10,7 @@ describe ContactController do
   describe "GET #new" do
 
     it "assigns a new instance of a contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = FactoryBot.create(:contact)
       get :new
       expect(assigns(:contact)).to be_an_instance_of(Contact)
     end
@@ -26,7 +26,7 @@ describe ContactController do
   describe "POST #create" do
 
     before :each do
-      @contact = FactoryGirl.create(:contact)
+      @contact = FactoryBot.create(:contact)
     end
 
     let(:valid_attributes) do
@@ -77,7 +77,7 @@ describe ContactController do
     end
 
     it "renders the new view if there is missing information" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = FactoryBot.create(:contact)
       post :create, contact: invalid_attributes
       expect(response).to render_template :new
     end

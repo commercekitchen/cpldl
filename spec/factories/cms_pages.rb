@@ -19,7 +19,7 @@
 #  organization_id :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :cms_page do
     organization
     title "A New Page"

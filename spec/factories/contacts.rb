@@ -15,7 +15,7 @@
 #  updated_at   :datetime         not null
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory(:contact) do
     first_name "Alan"
     last_name "Turing"
