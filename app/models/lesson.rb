@@ -24,7 +24,7 @@
 #  parent_id               :integer
 #
 
-require "zip"
+require "zip/zip"
 
 class Lesson < ActiveRecord::Base
   extend FriendlyId

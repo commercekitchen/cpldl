@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  include ::UserCourses
+  include UserCourses
 
   skip_before_action :require_valid_profile, only: [:language_toggle]
 
