@@ -4,23 +4,23 @@
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'rails', '4.2.10'
+gem 'rails', '>= 5.2.0', '< 6.0'
 gem 'pg'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'jquery-rails'
+gem 'sass-rails', '>= 6.0.0'
+gem 'uglifier'
+gem 'jquery-rails', '>= 4.3.0'
 
-gem 'sprockets-rails', '2.3.3'
+gem 'sprockets-rails', '>= 3.0'
 
 # Full text search via PostgreSQL
 gem 'pg_search'
 
 # Leverage the SQL EXISTS to chec related tables
-gem 'where_exists'
+gem 'where_exists', '>= 1.0.0'
 
 # Authentication and authorization
-gem 'devise', '3.5.10'
-gem 'devise_invitable'
+gem 'devise', '>= 4.6.0'
+gem 'devise_invitable', '>= 2.0.0'
 gem 'rolify'
 gem 'recaptcha', require: 'recaptcha/rails'
 
@@ -33,16 +33,16 @@ gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem 'sidekiq'
-gem 'sinatra', require: nil # For the sidekiq web interface.
+gem 'sidekiq', '>= 5.0'
+gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
 gem 'sidekiq-failures'
 
 # Error reporting
 gem 'rollbar'
 
-gem 'paperclip', '~> 5.2.1' # File uploads
+gem 'paperclip' # File uploads
 gem 'rubyzip' # ASL files
-gem 'friendly_id'
+gem 'friendly_id', '>= 5.1'
 
 gem 'ckeditor'
 
@@ -51,7 +51,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 # Local time helper library
-gem 'local_time'
+gem 'local_time', '>= 2.0'
 
 # i18n customization
 gem 'i18n-active_record', require: 'i18n/active_record'
@@ -66,7 +66,7 @@ gem 'attr_encrypted'
 gem 'nilify_blanks'
 
 # Use data migrations in addition to schema migrations
-gem 'data_migrate'
+gem 'data_migrate', '~> 5.3.2'
 
 # integrate chosen library
 # gem 'select2-rails'
@@ -77,13 +77,12 @@ gem 'validate_url'
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
-  gem 'quiet_assets'
   gem 'letter_opener'
   gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem "pry-remote"
-  gem 'web-console', '~> 2.0'
+  gem 'web-console', '~> 3.7.0'
   gem 'powder'
 end
 
@@ -95,8 +94,8 @@ group :development, :test do
   gem 'byebug'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
-  gem 'rspec-rails', '~> 3.0'
-  gem 'bullet', '~> 5.7.0'
+  gem 'rspec-rails', '>= 3.8.0'
+  gem 'bullet'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end
@@ -114,7 +113,7 @@ end
 
 group :test do
   gem 'launchy'
-  gem 'factory_girl_rails'
+  gem 'factory_bot'
   gem 'capybara-selenium'
   gem 'chromedriver-helper'
   gem 'mocha'
