@@ -204,18 +204,22 @@ describe Admin::CoursesController do
 
   describe "POST #update" do
     context "with valid params" do
+      let(:course1_attributes) {
+        @course1.attributes.merge(access_level: "everyone")
+      }
+
       it "updates an existing Course" do
-        patch :update, { id: @course1.to_param, course: @course1.attributes, commit: "Save Course" }
+        patch :update, { id: @course1.to_param, course: course1_attributes, commit: "Save Course" }
         expect(response).to redirect_to(edit_admin_course_path(@course1))
       end
 
       it "updates an existing Course, and moves on to lessons" do
-        patch :update, { id: @course1.to_param, course: @course1.attributes, commit: "Save Course and Add Lessons" }
+        patch :update, { id: @course1.to_param, course: course1_attributes, commit: "Save Course and Add Lessons" }
         expect(response).to redirect_to(new_admin_course_lesson_path(@course1, @course1.lessons.first))
       end
 
       it "creates a new topic, if given" do
-        valid_attributes = @course1.attributes
+        valid_attributes = course1_attributes
         valid_attributes[:other_topic] = "1"
         valid_attributes[:other_topic_text] = "Another new topic"
         patch :update, { id: @course1.to_param, course: valid_attributes }
@@ -227,7 +231,7 @@ describe Admin::CoursesController do
         @course2.update(organization: org, parent_id: @course1.id)
         @course1.propagation_org_ids = [org.id]
         patch :update,
-              { id: @course1.to_param, course: @course1.attributes.merge(propagation_org_ids: [org.id], title: "Test Course"), commit: "Save Course" }
+              { id: @course1.to_param, course: course1_attributes.merge(propagation_org_ids: [org.id], title: "Test Course"), commit: "Save Course" }
 
         @course2.reload
         expect(@course2.title).to eq("Test Course")
