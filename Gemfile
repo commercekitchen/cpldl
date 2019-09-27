@@ -41,7 +41,7 @@ gem 'sidekiq-failures'
 gem 'rollbar'
 
 gem 'paperclip' # File uploads
-gem 'rubyzip' # ASL files
+gem 'rubyzip', '~> 0.9.9' # ASL files
 gem 'friendly_id', '>= 5.1'
 
 gem 'ckeditor'
@@ -73,6 +73,10 @@ gem 'data_migrate', '~> 5.3.2'
 
 gem 'storext'
 gem 'validate_url'
+
+# Rails 5 gems
+gem 'bootsnap', require: false
+gem 'listen'
 
 group :development do
   gem 'rubocop', require: false
