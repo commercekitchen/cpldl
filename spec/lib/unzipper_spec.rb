@@ -25,7 +25,6 @@ RSpec.describe Unzipper do
 
   it "overwrites previous contents of destination directory" do
     test_file = File.join(temp_root, "#{storyline_path}/#{package_file_name}/test_file.txt")
-    puts test_file
     FileUtils.mkdir_p(File.dirname(test_file))
     File.open(test_file, "w")
     expect(File.exist?(test_file)).to be_truthy
