@@ -117,7 +117,7 @@ end
 
 group :test do
   gem 'launchy'
-  gem 'factory_bot'
+  gem 'factory_bot_rails', '~> 4.10.0'
   gem 'capybara-selenium'
   gem 'chromedriver-helper'
   gem 'mocha'
