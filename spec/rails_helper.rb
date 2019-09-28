@@ -34,11 +34,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false # Set to false when using database_cleaner
 
-  # => include devise test helpers
-  config.include Devise::TestHelpers, type: :controller
-  config.include Devise::TestHelpers, type: :view
-  config.include Devise::TestHelpers, type: :helper
-
   # Lines 43 to 53 are to allow views to mock access to helper methods in
   # application helper
   config.before(:each, type: :view) do
