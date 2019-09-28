@@ -32,10 +32,9 @@ describe LessonsController do
     @english = create(:language)
     @spanish = create(:spanish_lang)
     @course1 = create(:course)
-    @lesson1 = create(:lesson, title: "Lesson1", lesson_order: 1)
-    @lesson2 = create(:lesson, title: "Lesson2", lesson_order: 2)
-    @lesson3 = create(:lesson, title: "Lesson3", lesson_order: 3)
-    @course1.lessons << [@lesson1, @lesson2, @lesson3]
+    @lesson1 = create(:lesson, title: "Lesson1", lesson_order: 1, course: @course1)
+    @lesson2 = create(:lesson, title: "Lesson2", lesson_order: 2, course: @course1)
+    @lesson3 = create(:lesson, title: "Lesson3", lesson_order: 3, course: @course1)
     @course1.save
 
     @user = create(:user)

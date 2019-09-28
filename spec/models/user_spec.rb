@@ -58,9 +58,9 @@ describe User do
       @user = create(:user)
       @course1 = create(:course, title: "Course 1")
       @course2 = create(:course, title: "Course 2")
-      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
-      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
-      @user.course_progresses << [@course_progress1, @course_progress2]
+      @course_progress1 = create(:course_progress, user: @user, course_id: @course1.id, tracked: true)
+      @course_progress2 = create(:course_progress, user: @user, course_id: @course2.id, tracked: false)
+      #@user.course_progresses << [@course_progress1, @course_progress2]
     end
 
     it "should return true for a tracked course" do

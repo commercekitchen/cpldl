@@ -62,9 +62,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   rolify
   belongs_to :organization
-  belongs_to :school
-  belongs_to :program_location
-  belongs_to :program
+  belongs_to :school, required: false
+  belongs_to :program_location, required: false
+  belongs_to :program, required: false
 
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile

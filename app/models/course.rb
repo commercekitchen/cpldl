@@ -54,7 +54,7 @@ class Course < ActiveRecord::Base
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
   attr_writer :propagation_org_ids
 
-  belongs_to :parent, class_name: 'Course'
+  belongs_to :parent, class_name: 'Course', required: false
   # has_one :assessment
   has_one :course_progress
 
@@ -67,7 +67,7 @@ class Course < ActiveRecord::Base
     reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
   belongs_to :language
-  belongs_to :category
+  belongs_to :category, required: false
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
 

@@ -14,6 +14,8 @@
 
 FactoryBot.define do
   factory(:course_progress) do
+    user
+    course
   end
 
   factory(:course_progress_with_completed_lessons) do

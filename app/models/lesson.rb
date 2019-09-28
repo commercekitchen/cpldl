@@ -45,7 +45,7 @@ class Lesson < ActiveRecord::Base
   attr_writer :propagation_org_ids
 
   belongs_to :course
-  belongs_to :parent, class_name: 'Lesson'
+  belongs_to :parent, class_name: 'Lesson', required: false
 
   # TODO: We need to make lesson titles unique per course, but not site-wide.
   validates :title, length: { maximum: 90 }, presence: true # , uniqueness: true
