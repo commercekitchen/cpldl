@@ -1,4 +1,4 @@
-class AddAttachmentStoryLineToLessons < ActiveRecord::Migration
+class AddAttachmentStoryLineToLessons < ActiveRecord::Migration[4.2]
   def self.up
     change_table :lessons do |t|
       t.attachment :story_line

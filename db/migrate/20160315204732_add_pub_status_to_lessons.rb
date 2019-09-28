@@ -1,4 +1,4 @@
-class AddPubStatusToLessons < ActiveRecord::Migration
+class AddPubStatusToLessons < ActiveRecord::Migration[4.2]
   def self.up
     add_column :lessons, :pub_status, :string
 

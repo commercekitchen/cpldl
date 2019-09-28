@@ -27,7 +27,7 @@ module CPLDigitalLearn
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 
     config.to_prepare do
-        Devise::SessionsController.skip_before_filter :require_valid_profile
+        Devise::SessionsController.skip_before_action :require_valid_profile
     end
 
   end
