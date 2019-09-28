@@ -11,11 +11,24 @@ module CPLDigitalLearn
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
 
+    # This is needed to allow the test DB to load the functions needed for
+    # pg_search from what we've done in the development.
+    config.active_record.schema_format = :sql
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
 
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app/controllers/concern')
+
+    require Rails.root.join("lib/custom_public_exceptions")
+    config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
+
+    config.to_prepare do
+        Devise::SessionsController.skip_before_filter :require_valid_profile
+    end
+
   end
 end
