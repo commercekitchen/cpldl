@@ -10,6 +10,6 @@ class HomeController < ApplicationController
 
   def language_toggle
     session[:locale] = params["lang"]
-    redirect_to :back
+    redirect_back(fallback_location: root_path)
   end
 end
