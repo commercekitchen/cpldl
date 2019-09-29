@@ -128,6 +128,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'webmock'
+  gem 'rails-controller-testing'
 end
 
 group :development, :staging do
