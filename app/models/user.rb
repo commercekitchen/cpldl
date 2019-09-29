@@ -49,7 +49,7 @@
 
 class User < ActiveRecord::Base
   require "securerandom"
-  include PgSearch
+  include PgSearch::Model
   # TODO: determine lockable? functionality and add to search
   pg_search_scope :search_users, against: [:email],
                       associated_against: { profile: [:first_name],

@@ -41,7 +41,7 @@ class Course < ActiveRecord::Base
   end
 
   # PgSearch gem config
-  include PgSearch
+  include PgSearch::Model
   multisearchable against: [:title, :summary, :description, :topics_str, :level]
 
   pg_search_scope :topic_search, associated_against: { topics: :title },
