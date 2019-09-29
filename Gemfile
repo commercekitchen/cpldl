@@ -25,8 +25,8 @@ gem 'rolify'
 gem 'recaptcha', require: 'recaptcha/rails'
 
 # Bourbon for sass mixins, and neat for the grid framework
-gem 'bourbon'
-gem 'neat'
+gem 'bourbon', '< 5.0'
+gem 'neat', '< 2.0'
 
 # Redis for Sidekiq
 gem 'redis'
