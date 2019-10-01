@@ -65,7 +65,7 @@ describe CmsPage do
       @page.save
       expect(@page).to_not be_valid
 
-      @page.language_id = 1
+      @page.language = Language.first
       @page.save
       expect(@page).to be_valid
     end
@@ -75,7 +75,7 @@ describe CmsPage do
       @page.save
       expect(@page).to_not be_valid
 
-      @page.language_id = 1
+      @page.language = Language.first
       @page.save
       expect(@page).to be_valid
     end

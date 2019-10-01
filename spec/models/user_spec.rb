@@ -50,8 +50,6 @@
 require "rails_helper"
 
 describe User do
-  it { should belong_to(:organization) }
-
   context "#tracking_course?" do
 
     before(:each) do
