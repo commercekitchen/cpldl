@@ -45,20 +45,20 @@ describe CourseCompletionsController do
       end
 
       it "allows the user to view the complete view" do
-        get :show, { course_id: course1 }
+        get :show, params: { course_id: course1 }
         expect(assigns(:course)).to eq(course1)
       end
 
       it "generates a PDF when send as format pdf" do
         # the send on this opens a term window on run
-        get :show, { course_id: course1, format: "pdf" }
+        get :show, params: { course_id: course1, format: "pdf" }
         expect(assigns(:pdf)).not_to be_empty
       end
     end
 
     context "when logged out" do
       it "should allow completion" do
-        get :show, { course_id: course1 }
+        get :show, params: { course_id: course1 }
         expect(response).to have_http_status(:success)
         expect(assigns(:course)).to eq(course1)
       end

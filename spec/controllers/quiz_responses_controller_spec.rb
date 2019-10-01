@@ -54,23 +54,23 @@ describe QuizResponsesController do
 
       it "should add correct number of course progresses to user" do
         expect do
-          post :create, choices
+          post :create, params: choices
         end.to change(CourseProgress, :count).by(3)
       end
 
       it "should add correct course progresses to user" do
-        post :create, choices
+        post :create, params: choices
         expect(user.reload.course_progresses.map(&:course_id)).to include(desktop_course.id, mobile_course.id, topic_course.id)
       end
 
       it "should store quiz responses for user" do
-        post :create, choices
+        post :create, params: choices
         expect(user.reload.quiz_responses_object).to eq(choices)
       end
 
       it "should not overwrite quiz responses for user" do
-        post :create, choices
-        post :create, { "set_one" => "3", "set_two" => "3", "set_three" => "5" }
+        post :create, params: choices
+        post :create, params: { "set_one" => "3", "set_two" => "3", "set_three" => "5" }
         expect(user.reload.quiz_responses_object).to eq(choices)
       end
     end

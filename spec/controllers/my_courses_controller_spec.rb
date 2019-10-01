@@ -35,13 +35,13 @@ describe MyCoursesController do
 
       it "assigns @results if search params exist" do
         course1.update(description: "Mocha Java Scripta")
-        get :index, { search: "java" }
+        get :index, params: { search: "java" }
         expect(assigns(:results)).to eq([course1])
       end
 
       it "assigns search results to @courses" do
         course1.update(description: "Mocha Java Scripta")
-        get :index, { search: "java" }
+        get :index, params: { search: "java" }
         expect(assigns(:courses)).to eq([course1])
       end
 

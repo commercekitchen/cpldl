@@ -62,12 +62,12 @@ describe CoursesController do
     end
 
     it "assigns all courses as @courses with an empty params" do
-      get :index, {}
+      get :index, params: {}
       expect(assigns(:courses)).to include(@course1, @course2, @course3, @disabled_category_course)
     end
 
     it "assigns search results to @courses" do
-      get :index, { search: "ruby" }
+      get :index, params: { search: "ruby" }
       expect(assigns(:courses)).to eq([@course3])
     end
 
@@ -94,12 +94,12 @@ describe CoursesController do
 
   describe "GET #show" do
     it "assigns the requested course (by id) as @course" do
-      get :show, id: @course2.to_param
+      get :show, params: { id: @course2.to_param }
       expect(assigns(:course)).to eq(@course2)
     end
 
     it "assigns the requested course (by friendly id) as @course" do
-      get :show, id: @course2.friendly_id
+      get :show, params: { id: @course2.friendly_id }
       expect(assigns(:course)).to eq(@course2)
     end
 
@@ -109,16 +109,16 @@ describe CoursesController do
       @course1.title = "New Title"
       @course1.save
 
-      get :show, id: old_url
+      get :show, params: { id: old_url }
       expect(assigns(:course)).to eq(@course1)
       expect(response).to have_http_status(:success)
 
-      get :show, id: @course1.friendly_id
+      get :show, params: { id: @course1.friendly_id }
       expect(assigns(:course)).to eq(@course1)
     end
 
     it "responds to json" do
-      get :show, id: @course1.to_param, format: :json
+      get :show, params: { id: @course1.to_param, format: :json }
       expect(response).to have_http_status(:success)
     end
   end
@@ -134,7 +134,7 @@ describe CoursesController do
       it "allows the user to view an uploaded file" do
         file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
         @course1.attachments.create(document: file, doc_type: "post-course")
-        get :view_attachment, { course_id: @course1, attachment_id: @course1.attachments.first.id }
+        get :view_attachment, params: { course_id: @course1, attachment_id: @course1.attachments.first.id }
         expect(response).to have_http_status(:success)
       end
     end
@@ -143,7 +143,7 @@ describe CoursesController do
       it "should all view" do
         file = fixture_file_upload(Rails.root.join("spec", "fixtures", "testfile.pdf"), "application/pdf")
         @course1.attachments.create(document: file, doc_type: "post-course")
-        get :view_attachment, { course_id: @course1, attachment_id: @course1.attachments.first.id }
+        get :view_attachment, params: { course_id: @course1, attachment_id: @course1.attachments.first.id }
         expect(response).to have_http_status(:success)
       end
     end
