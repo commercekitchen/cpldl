@@ -38,7 +38,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false # Set to false when using database_cleaner
 
 
-  config.include Devise::Test::ControllerHelpers, type: :view
+  config.include Devise::Test::ControllerHelpers, type: :helper
 
   [:controller, :view].each do |type|
     # Devise controller helpers
