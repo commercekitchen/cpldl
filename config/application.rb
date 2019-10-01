@@ -15,6 +15,9 @@ module CPLDigitalLearn
     # pg_search from what we've done in the development.
     config.active_record.schema_format = :sql
 
+    
+    config.assets.unknown_asset_fallback = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading

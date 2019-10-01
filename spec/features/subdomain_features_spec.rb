@@ -1,7 +1,7 @@
 require "feature_helper"
 
 feature "User lands on subdomain" do
-  let(:subdomain) { 'dpl' }
+  let(:subdomain) { 'chipublib' }
   before do
     create(:spanish_lang)
     create(:language)
