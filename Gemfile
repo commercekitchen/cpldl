@@ -119,7 +119,7 @@ group :test do
   gem 'launchy'
   gem 'factory_bot_rails', '~> 4.10.0'
   gem 'capybara'
-  gem 'selenium-webdriver', '~> 3.0'
+  gem 'webdrivers'
   gem 'mocha'
   gem 'database_cleaner'
   gem 'simplecov', require: false
