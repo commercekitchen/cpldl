@@ -25,19 +25,19 @@ describe Admin::ProgramsController do
   describe "POST #create" do
     it "creates new program" do
       expect do
-        post :create, program: { program_name: "New Program", location_required: false, parent_type: "seniors" }
+        post :create, params: { program: { program_name: "New Program", location_required: false, parent_type: "seniors" } }
       end.to change(Program, :count).by(1)
     end
 
     it "creates program with locations" do
-      post :create, program: { program_name: "Locations Program", location_required: true, parent_type: "young_adults" }
+      post :create, params: { program: { program_name: "Locations Program", location_required: true, parent_type: "young_adults" } }
       expect(Program.last.program_name).to eq "Locations Program"
       expect(Program.last.location_required).to be true
       expect(Program.last.parent_type).to eq "young_adults"
     end
 
     it "creates program with no locations" do
-      post :create, program: { program_name: "No Locations Program", location_required: false, parent_type: "students_and_parents" }
+      post :create, params: { program: { program_name: "No Locations Program", location_required: false, parent_type: "students_and_parents" } }
       expect(Program.last.program_name).to eq "No Locations Program"
       expect(Program.last.location_required).to be false
       expect(Program.last.parent_type).to eq "students_and_parents"
@@ -54,7 +54,7 @@ describe Admin::ProgramsController do
 
   describe "GET #edit" do
     it "assigns requested program as @program" do
-      get :edit, { id: @program1.to_param }
+      get :edit, params: { id: @program1.to_param }
       expect(assigns(:program)).to eq(@program1)
     end
   end

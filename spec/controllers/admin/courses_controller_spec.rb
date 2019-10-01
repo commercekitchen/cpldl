@@ -22,7 +22,7 @@ describe Admin::CoursesController do
 
   describe "GET #index" do
     before(:each) do
-      get :index, subdomain: "chipublib"
+      get :index, params: { subdomain: "chipublib" }
     end
 
     it "assigns all courses as @courses" do
@@ -52,7 +52,7 @@ describe Admin::CoursesController do
 
   describe "GET #show" do
     it "assigns the requested course as @course" do
-      get :show, id: @course1.to_param
+      get :show, params: { id: @course1.to_param }
       expect(assigns(:course)).to eq(@course1)
     end
   end
@@ -66,18 +66,18 @@ describe Admin::CoursesController do
 
   describe "PATCH #update_pub_status" do
     it "updates the status" do
-      patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
+      patch :update_pub_status, params: { course_id: @course1.id.to_param, value: "P" }
       @course1.reload
       expect(@course1.pub_status).to eq("P")
     end
 
     it "updates the pub_date if status is published" do
       Timecop.freeze do
-        patch :update_pub_status, { course_id: @course1.id.to_param, value: "A" }
+        patch :update_pub_status, params: { course_id: @course1.id.to_param, value: "A" }
         @course1.reload
         expect(@course1.pub_date).to be(nil)
 
-        patch :update_pub_status, { course_id: @course1.id.to_param, value: "P" }
+        patch :update_pub_status, params: { course_id: @course1.id.to_param, value: "P" }
         @course1.reload
         expect(@course1.pub_date.to_i).to eq(Time.zone.now.to_i)
       end
@@ -86,7 +86,7 @@ describe Admin::CoursesController do
 
   describe "GET #edit" do
     it "assigns the requested course as @course" do
-      get :edit, { id: @course1.to_param }
+      get :edit, params: { id: @course1.to_param }
       expect(assigns(:course)).to eq(@course1)
     end
   end
@@ -127,12 +127,12 @@ describe Admin::CoursesController do
     context "with valid params" do
       it "creates a new Course" do
         expect do
-          post :create, { course: valid_attributes }
+          post :create, params: { course: valid_attributes }
         end.to change(Course, :count).by(1)
       end
 
       it "assigns a newly created course as @course" do
-        post :create, { course: valid_attributes }
+        post :create, params: { course: valid_attributes }
         expect(assigns(:course)).to be_a(Course)
         expect(assigns(:course)).to be_persisted
       end
@@ -140,27 +140,27 @@ describe Admin::CoursesController do
       it "creates a new topic, if given" do
         valid_attributes[:other_topic] = "1"
         valid_attributes[:other_topic_text] = "Some other topic"
-        post :create, { course: valid_attributes }
+        post :create, params: { course: valid_attributes }
         expect(assigns(:course)).to be_a(Course)
         expect(assigns(:course)).to be_persisted
         expect(assigns(:course).topics.last.title).to include("Some other topic")
       end
 
       it "redirects to the admin edit view of the course" do
-        post :create, { course: valid_attributes }
+        post :create, params: { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by_title(valid_attributes[:title])))
       end
 
       it "adds an existing category if provided" do
         @category = FactoryBot.create(:category, organization: @organization)
-        post :create, { course: valid_attributes.merge(category_id: @category.id) }
+        post :create, params: { course: valid_attributes.merge(category_id: @category.id) }
         expect(assigns(:course).category).to eq(@category)
       end
 
       it "creates and adds category if new category selected" do
         expect do
-          post :create, { 
+          post :create, params: { 
             course: valid_attributes.merge(
               category_id: "0",
               category_attributes: {
@@ -176,7 +176,7 @@ describe Admin::CoursesController do
 
       it "re-reders new if repeat category name" do
         @existing_category = FactoryBot.create(:category, organization: @organization)
-        post :create, {
+        post :create, params: {
           course: valid_attributes.merge(
             category_id: "0",
             category_attributes: {
@@ -191,12 +191,12 @@ describe Admin::CoursesController do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved course as @course" do
-        post :create, { course: invalid_attributes }
+        post :create, params: { course: invalid_attributes }
         expect(assigns(:course)).to be_a_new(Course)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { course: invalid_attributes }
+        post :create, params: { course: invalid_attributes }
         expect(response).to render_template("new")
       end
     end
@@ -209,12 +209,12 @@ describe Admin::CoursesController do
       }
 
       it "updates an existing Course" do
-        patch :update, { id: @course1.to_param, course: course1_attributes, commit: "Save Course" }
+        patch :update, params: { id: @course1.to_param, course: course1_attributes, commit: "Save Course" }
         expect(response).to redirect_to(edit_admin_course_path(@course1))
       end
 
       it "updates an existing Course, and moves on to lessons" do
-        patch :update, { id: @course1.to_param, course: course1_attributes, commit: "Save Course and Add Lessons" }
+        patch :update, params: { id: @course1.to_param, course: course1_attributes, commit: "Save Course and Add Lessons" }
         expect(response).to redirect_to(new_admin_course_lesson_path(@course1, @course1.lessons.first))
       end
 
@@ -222,7 +222,7 @@ describe Admin::CoursesController do
         valid_attributes = course1_attributes
         valid_attributes[:other_topic] = "1"
         valid_attributes[:other_topic_text] = "Another new topic"
-        patch :update, { id: @course1.to_param, course: valid_attributes }
+        patch :update, params: { id: @course1.to_param, course: valid_attributes }
         expect(assigns(:course).topics.last.title).to include("Another new topic")
       end
 
@@ -230,9 +230,10 @@ describe Admin::CoursesController do
         org = create(:organization)
         @course2.update(organization: org, parent_id: @course1.id)
         @course1.propagation_org_ids = [org.id]
-        patch :update,
-              { id: @course1.to_param, course: course1_attributes.merge(propagation_org_ids: [org.id], title: "Test Course"), commit: "Save Course" }
-
+        update_params = { id: @course1.to_param,
+                          course: course1_attributes.merge(propagation_org_ids: [org.id], title: "Test Course"),
+                          commit: "Save Course" }
+        patch :update, params: update_params
         @course2.reload
         expect(@course2.title).to eq("Test Course")
       end

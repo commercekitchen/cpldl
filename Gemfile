@@ -119,7 +119,6 @@ group :test do
   gem 'launchy'
   gem 'factory_bot_rails', '~> 4.10.0'
   gem 'capybara'
-  gem 'chromedriver-helper'
   gem 'selenium-webdriver', '~> 3.0'
   gem 'mocha'
   gem 'database_cleaner'

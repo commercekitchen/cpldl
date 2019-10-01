@@ -66,12 +66,12 @@ describe Admin::DashboardController do
     end
 
     it "assigns all users as @users with an empty params" do
-      get :users_index, {}
+      get :users_index, params: {}
       expect(assigns(:users)).to include(@user, @user1, @user2, @user3)
     end
 
     it "assigns search results to @users" do
-      get :users_index, { search: "two" }
+      get :users_index, params: { search: "two" }
       expect(assigns(:users)).to eq([@user2])
     end
   end
@@ -121,12 +121,12 @@ describe Admin::DashboardController do
     context "new category name" do
       it "should create new course" do
         expect do
-          post :add_imported_course, { course_id: @importable_course1.id }
+          post :add_imported_course, params: { course_id: @importable_course1.id }
         end.to change(Course, :count).by(1)
       end
 
       it "should create new subdomain course with new category with same name as imported course" do
-        post :add_imported_course, { course_id: @importable_course1.id }
+        post :add_imported_course, params: { course_id: @importable_course1.id }
         course_category = @org.courses.last.category
         expect(course_category.id).not_to eq(@importable_course1.category.id)
         expect(course_category.name).to eq(@importable_course1.category.name)
@@ -135,7 +135,7 @@ describe Admin::DashboardController do
 
       it "should create new category if category name doesn't exist for org" do
         expect do
-          post :add_imported_course, { course_id: @importable_course1.id }
+          post :add_imported_course, params: { course_id: @importable_course1.id }
         end.to change(Category, :count).by(1)
       end
     end
@@ -143,18 +143,18 @@ describe Admin::DashboardController do
     context "existing category name, regardelss of case" do
       it "should create a new course" do
         expect do
-          post :add_imported_course, { course_id: @importable_course2.id }
+          post :add_imported_course, params: { course_id: @importable_course2.id }
         end.to change(Course, :count).by(1)
       end
 
       it "should not create a new category" do
         expect do
-          post :add_imported_course, { course_id: @importable_course2.id }
+          post :add_imported_course, params: { course_id: @importable_course2.id }
         end.not_to change(Category, :count)
       end
 
       it "should add existing category to course if name does exist for org" do
-        post :add_imported_course, { course_id: @importable_course2.id }
+        post :add_imported_course, params: { course_id: @importable_course2.id }
         course_category = @org.courses.last.category
         expect(course_category.id).to eq(@org_category.id)
         expect(course_category.name).to eq(@org_category.name)
@@ -165,18 +165,18 @@ describe Admin::DashboardController do
     context "uncategorized import" do
       it "should create a new course" do
         expect do
-          post :add_imported_course, { course_id: @importable_course3.id }
+          post :add_imported_course, params: { course_id: @importable_course3.id }
         end.to change(Course, :count).by(1)
       end
 
       it "should not create a new category" do
         expect do
-          post :add_imported_course, { course_id: @importable_course3.id }
+          post :add_imported_course, params: { course_id: @importable_course3.id }
         end.not_to change(Category, :count)
       end
 
       it "should nullify course category info" do
-        post :add_imported_course, { course_id: @importable_course3.id }
+        post :add_imported_course, params: { course_id: @importable_course3.id }
         expect(@org.courses.last.category_id).to be_nil
         expect(@org.courses.last.category).to be_nil
       end
