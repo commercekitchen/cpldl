@@ -122,7 +122,6 @@ group :test do
   gem 'selenium-webdriver', '~> 3.0'
   gem 'mocha'
   gem 'database_cleaner'
-  gem 'codeclimate-test-reporter'
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
   gem 'timecop'
