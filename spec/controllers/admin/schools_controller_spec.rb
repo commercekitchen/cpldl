@@ -35,7 +35,7 @@ describe Admin::SchoolsController do
       }
 
       expect do
-        post :create, { school: valid_attributes, format: "js" }
+        post :create, params: { school: valid_attributes, format: "js" }
       end.to change(School, :count).by(1)
     end
   end
@@ -43,14 +43,14 @@ describe Admin::SchoolsController do
   describe "POST #toggle" do
     it "should disable enabled school" do
       expect(@school_enabled.enabled).to be true
-      post :toggle, { school_id: @school_enabled, format: "js" }
+      post :toggle, params: { school_id: @school_enabled, format: "js" }
       @school_enabled.reload
       expect(@school_enabled.enabled).to be false
     end
 
     it "should enable disabled school" do
       expect(@school_disabled.enabled).to be false
-      post :toggle, { school_id: @school_disabled, format: "js" }
+      post :toggle, params: { school_id: @school_disabled, format: "js" }
       @school_disabled.reload
       expect(@school_disabled.enabled).to be true
     end

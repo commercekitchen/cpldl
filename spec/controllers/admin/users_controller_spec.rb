@@ -12,11 +12,11 @@ describe Admin::UsersController do
 
   describe "PATCH #change_user_roles" do
     it "updates the role" do
-      patch :change_user_roles, { id: @user.id.to_param, value: "Trainer" }
-      expect(@user.current_roles).to eq("trainer")
+      patch :change_user_roles, params: { id: @user.id.to_param, value: "Trainer" }
+      expect(@user.reload.current_roles).to eq("trainer")
 
-      patch :change_user_roles, { id: @user.id.to_param, value: "Admin" }
-      expect(@user.current_roles).to eq("admin")
+      patch :change_user_roles, params: { id: @user.id.to_param, value: "Admin" }
+      expect(@user.reload.current_roles).to eq("admin")
     end
   end
 

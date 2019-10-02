@@ -42,4 +42,10 @@ module ApplicationHelper
     }
     current_organization.footer_logo_link.present? ? current_organization.footer_logo_link : links[current_organization.subdomain.to_sym]
   end
+
+  def safe_logo_tag(source, options = {})
+    image_tag(source, options)
+  rescue Sprockets::Rails::Helper::AssetNotFound
+    nil
+  end
 end

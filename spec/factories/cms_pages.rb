@@ -19,11 +19,11 @@
 #  organization_id :integer
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :cms_page do
     organization
     title "A New Page"
-    language_id 1
+    language
     body "Look at that body!"
     author "CK Dev"
     audience "Auth"

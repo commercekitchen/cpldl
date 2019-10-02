@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe Unzipper do
   let(:temp_root) { File.join(Rails.root, "tmp") }
-  let(:lesson) { FactoryGirl.create(:lesson) }
+  let(:lesson) { FactoryBot.create(:lesson) }
   let(:storyline_path) { "public/storylines/#{lesson.story_line.instance.id}" }
   let(:package_file_name) { lesson.story_line.instance.story_line_file_name.chomp(".zip").to_s }
 

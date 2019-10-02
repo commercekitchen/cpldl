@@ -10,7 +10,7 @@ describe ContactController do
   describe "GET #new" do
 
     it "assigns a new instance of a contact" do
-      @contact = FactoryGirl.create(:contact)
+      @contact = FactoryBot.create(:contact)
       get :new
       expect(assigns(:contact)).to be_an_instance_of(Contact)
     end
@@ -26,7 +26,7 @@ describe ContactController do
   describe "POST #create" do
 
     before :each do
-      @contact = FactoryGirl.create(:contact)
+      @contact = FactoryBot.create(:contact)
     end
 
     let(:valid_attributes) do
@@ -55,7 +55,7 @@ describe ContactController do
     end
 
     it "correctly assigns the passed in info" do
-      post :create, contact: valid_attributes
+      post :create, params: { contact: valid_attributes }
       contact = Contact.last
       expect(contact.first_name).to eq "Alan"
       expect(contact.last_name).to eq "Turing"
@@ -73,12 +73,12 @@ describe ContactController do
       # fixed too.
       success_object = stub(deliver_later: true)
       ContactMailer.expects(:email).once.returns(success_object)
-      post :create, contact: valid_attributes
+      post :create, params: { contact: valid_attributes }
     end
 
     it "renders the new view if there is missing information" do
-      @contact = FactoryGirl.create(:contact)
-      post :create, contact: invalid_attributes
+      @contact = FactoryBot.create(:contact)
+      post :create, params: { contact: invalid_attributes }
       expect(response).to render_template :new
     end
 

@@ -49,7 +49,7 @@
 
 class User < ActiveRecord::Base
   require "securerandom"
-  include PgSearch
+  include PgSearch::Model
   # TODO: determine lockable? functionality and add to search
   pg_search_scope :search_users, against: [:email],
                       associated_against: { profile: [:first_name],
@@ -62,9 +62,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   rolify
   belongs_to :organization
-  belongs_to :school
-  belongs_to :program_location
-  belongs_to :program
+  belongs_to :school, required: false
+  belongs_to :program_location, required: false
+  belongs_to :program, required: false
 
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   before_create :add_token_to_user
 
   # Encrypt library card pin for security
-  attr_encrypted :library_card_pin, key: Rails.application.secrets.secret_key_base
+  attr_encrypted :library_card_pin, key: Base64.decode64(Rails.application.secrets.secret_key_base)
 
   # Save blank emails as NULL
   nilify_blanks only: [:email]

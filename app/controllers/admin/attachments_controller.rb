@@ -3,7 +3,7 @@ module Admin
     def destroy
       @attachment = Attachment.find(params[:id])
       @attachment.destroy
-      redirect_to :back
+      redirect_back(fallback_location: root_path)
     end
   end
 end

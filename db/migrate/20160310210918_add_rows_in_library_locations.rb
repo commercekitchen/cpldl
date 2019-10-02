@@ -1,4 +1,4 @@
-class AddRowsInLibraryLocations < ActiveRecord::Migration
+class AddRowsInLibraryLocations < ActiveRecord::Migration[4.2]
   def change
   locations = { "Albany Park" => 60625, "Altgeld" => 60827, "Archer Heights" => 60632,
                 "Austin" => 60644, "Austin-Irving" => 60634, "Avalon" => 60617, 

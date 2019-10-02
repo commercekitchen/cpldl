@@ -11,7 +11,7 @@ describe Admin::ExportsController do
 
   describe "#completions" do
     it "respond to csv" do
-      get :completions, @zip_csv
+      get :completions, params: @zip_csv
       expect(response.body).to_not be(nil)
       expect(response.body).to eq("Zip Code,Sign-Ups(total),Course Title,Completions\n")
     end

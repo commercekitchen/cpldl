@@ -1,4 +1,4 @@
-class CourseTopics < ActiveRecord::Migration
+class CourseTopics < ActiveRecord::Migration[4.2]
   def change
     create_table :course_topics do |t|
       t.integer :topic_id

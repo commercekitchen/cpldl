@@ -47,7 +47,7 @@
 #  encrypted_library_card_pin_iv :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "jane#{n}@example.com" }
     password "abcd1234"

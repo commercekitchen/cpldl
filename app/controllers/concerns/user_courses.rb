@@ -1,4 +1,6 @@
 module UserCourses
+  extend ActiveSupport::Concern
+
   def authorized_courses
     @courses ||= begin
       courses = Course.includes(:lessons)

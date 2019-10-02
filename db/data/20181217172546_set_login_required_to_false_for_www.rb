@@ -1,4 +1,4 @@
-class SetLoginRequiredToFalseForWww < ActiveRecord::Migration
+class SetLoginRequiredToFalseForWww < ActiveRecord::Migration[4.2]
   def up
     # www subdomain should not require login to view lessons
     Organization.find_by(subdomain: "www").update(login_required: false)

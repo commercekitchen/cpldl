@@ -1,4 +1,4 @@
-class UpdateLessonFields < ActiveRecord::Migration
+class UpdateLessonFields < ActiveRecord::Migration[4.2]
   def change
     add_column :lessons, :summary, :string, limit: 156
     add_column :lessons, :story_line, :string, limit: 156  #Note: this is temporary

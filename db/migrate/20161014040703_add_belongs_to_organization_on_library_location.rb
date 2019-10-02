@@ -1,4 +1,4 @@
-class AddBelongsToOrganizationOnLibraryLocation < ActiveRecord::Migration
+class AddBelongsToOrganizationOnLibraryLocation < ActiveRecord::Migration[4.2]
   def change
     add_reference :library_locations, :organization, index: true, foreign_key: true
 
