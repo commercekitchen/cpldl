@@ -102,16 +102,16 @@ describe LessonsController do
 
   describe "POST #complete" do
     it "marks a lesson for a given user as complete" do
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param, format: :json
       progress = @user.course_progresses.find_by_course_id(@course1.id)
       expect(progress.completed_lessons.count).to eq(1)
-      expect(response).to redirect_to(course_lesson_path(@course1.to_param, @lesson3.id))
+      expect(JSON.parse(response.body)["redirect_path"]).to eq(course_lesson_lesson_complete_path(@course1, @lesson2))
     end
 
     it "marks a course as complete if the assessment was completed" do
       @lesson3.is_assessment = true
       @lesson3.save
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param, format: :json
       progress = @user.course_progresses.find_by_course_id(@course1.id)
       expect(progress.complete?).to be true
     end
@@ -119,16 +119,26 @@ describe LessonsController do
     it "renders the course completion view if the assessment was completed" do
       @lesson3.is_assessment = true
       @lesson3.save
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param
-      expect(response).to redirect_to(course_completion_path(@course1.to_param))
-    end
-
-    it "responds to json" do
-      post :complete, course_id: @course1.to_param, lesson_id: @lesson2.to_param, format: :json
-      expect(response).to have_http_status(:success)
-      json = JSON(response.body)
-      expect(json["next_lesson"]).to eq(course_lesson_path(@course1.to_param, @lesson3.id))
+      post :complete, course_id: @course1.to_param, lesson_id: @lesson3.to_param, format: :json
+      expect(JSON.parse(response.body)["redirect_path"]).to eq(course_completion_path(@course1.to_param))
     end
   end
 
+  describe "GET #lesson_complete" do
+    before do
+      get :lesson_complete, course_id: @course1, lesson_id: @lesson2
+    end
+
+    it "should be a successful response" do
+      expect(response).to have_http_status(:success)
+    end
+
+    it "assigns current lesson" do
+      expect(assigns(:current_lesson)).to eq(@lesson2)
+    end
+
+    it "assigns next lesson" do
+      expect(assigns(:next_lesson)).to eq(@lesson3)
+    end
+  end
 end

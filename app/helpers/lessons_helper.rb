@@ -27,10 +27,11 @@ module LessonsHelper
     if lesson.story_line_file_name
       if lesson.parent_id
         lesson_id = lesson.parent_id
+        directory = Lesson.find(lesson.parent_id).story_line_file_name.chomp(".zip")
       else
         lesson_id = lesson.id
+        directory = lesson.story_line_file_name.chomp(".zip")
       end
-      directory = lesson.story_line_file_name.chomp(".zip")
       story_line_url = "/storylines/#{lesson_id}/#{directory}/story.html"
       content_tag(:iframe, nil, src: "#{story_line_url}", class: "story_line", title: lesson.summary)
     else

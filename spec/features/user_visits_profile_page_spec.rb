@@ -71,7 +71,7 @@ feature "Registered user visits account page" do
 
     before(:each) do
       @npl_organization = create(:organization, :accepts_programs, subdomain: "npl")
-      @npl_profile = create(:profile, :with_last_name)
+      @npl_profile = build(:profile, :with_last_name)
       @npl_user = create(:user, organization: @npl_organization, profile: @npl_profile)
       Language.all.each(&:destroy)
       @english = create(:language)
@@ -127,7 +127,7 @@ feature "Registered user visits account page" do
 
   context "belongs to library card login organization" do
     let(:org) { FactoryGirl.create(:organization, :library_card_login) }
-    let(:user) { FactoryGirl.create(:library_card_login_user, organization: org) }
+    let(:user) { FactoryGirl.create(:user, :library_card_login_user, organization: org) }
 
     before(:each) do
       switch_to_subdomain(org.subdomain)
@@ -178,7 +178,7 @@ feature "Registered user visits account page" do
     let(:org) { FactoryGirl.create(:organization, branches: true, accepts_custom_branches: true) }
     let(:library_location1) { FactoryGirl.create(:library_location) }
     let(:library_location2) { FactoryGirl.create(:library_location) }
-    let(:profile) { FactoryGirl.create(:profile, library_location: library_location1) }
+    let(:profile) { FactoryGirl.build(:profile, library_location: library_location1) }
     let(:user) { FactoryGirl.create(:user, organization: org, profile: profile) }
 
     before(:each) do

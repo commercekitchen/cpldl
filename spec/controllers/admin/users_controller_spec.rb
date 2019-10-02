@@ -4,10 +4,9 @@ describe Admin::UsersController do
   before(:each) do
     org = create(:default_organization)
     @request.host = "www.test.host"
-    @admin = create(:admin_user, organization: org)
+    @admin = create(:user, :admin, organization: org)
     @user = create(:user, organization: org)
     @user.add_role(:user, org)
-    @admin.add_role(:admin, org)
     sign_in @admin
   end
 

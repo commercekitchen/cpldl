@@ -7,8 +7,7 @@ describe Admin::ProgramsController do
     @request.host = "dpl.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
     @program1 = create(:program, organization: @organization)
     @program2 = create(:program, organization: @organization)
     @location1 = create(:program_location, program: @program2)

@@ -7,8 +7,7 @@ describe Admin::SchoolsController do
     @request.host = "dpl.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
 
     @school_enabled = create(:school, organization: @organization)
     @school_disabled = create(:school, :disabled, organization: @organization)

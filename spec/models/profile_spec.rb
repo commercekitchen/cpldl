@@ -83,7 +83,7 @@ describe Profile do
     describe "program_organization" do
       before do
         @npl = FactoryGirl.create(:organization, :accepts_programs, subdomain: "npl")
-        @profile = FactoryGirl.create(:profile)
+        @profile = FactoryGirl.build(:profile, :with_last_name)
         @user = FactoryGirl.create(:user, profile: @profile, organization: @npl)
       end
 
@@ -116,6 +116,7 @@ describe Profile do
 
       before(:each) do
         @profile = FactoryGirl.create(:profile)
+        @user = @profile.user
       end
 
       context "user in organization without programs" do
@@ -135,7 +136,7 @@ describe Profile do
 
         before do
           @new_org = FactoryGirl.create(:organization, :accepts_programs, subdomain: "new")
-          FactoryGirl.create(:user, profile: @profile, organization: @new_org)
+          @user.update(organization: @new_org)
         end
 
         it "should not update profile without last name" do

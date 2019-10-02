@@ -141,7 +141,7 @@ describe User do
     end
 
     it "returns preferred language" do
-      @user.profile = FactoryGirl.create(:profile, language: FactoryGirl.create(:language))
+      @user.profile = FactoryGirl.create(:profile, user: @user, language: FactoryGirl.create(:language))
       expect(@user.preferred_language).to eq("English")
     end
   end
@@ -161,7 +161,7 @@ describe User do
 
     context "with profile" do
       let(:library_location) { FactoryGirl.create(:library_location) }
-      let(:profile) { FactoryGirl.create(:profile, library_location: library_location) }
+      let(:profile) { FactoryGirl.build(:profile, library_location: library_location) }
       let(:user) { FactoryGirl.create(:user, profile: profile) }
 
       it "library_location_name should be correct" do
