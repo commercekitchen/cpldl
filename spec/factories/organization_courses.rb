@@ -9,7 +9,7 @@
 #  updated_at      :datetime         not null
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory :organization_course do
   end
 end

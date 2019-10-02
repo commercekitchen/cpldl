@@ -1,4 +1,4 @@
-class AddParentIdToLesson < ActiveRecord::Migration[4.2]
+class AddParentIdToLesson < ActiveRecord::Migration
   def change
     add_column :lessons, :parent_id, :integer, index: true
     add_index :lessons, :parent_id

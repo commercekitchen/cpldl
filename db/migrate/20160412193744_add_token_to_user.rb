@@ -1,4 +1,4 @@
-class AddTokenToUser < ActiveRecord::Migration[4.2]
+class AddTokenToUser < ActiveRecord::Migration
   require "securerandom"
 
   def self.up

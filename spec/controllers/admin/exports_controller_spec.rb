@@ -4,14 +4,15 @@ describe Admin::ExportsController do
   before(:each) do
     @organization = create(:organization)
     @request.host = "chipublib.test.host"
-    @admin = create(:user, :admin, organization: @organization)
+    @admin = create(:admin_user, organization: @organization)
+    @admin.add_role(:admin, @organization)
     sign_in @admin
     @zip_csv = { format: "csv", version: "zip" }
   end
 
   describe "#completions" do
     it "respond to csv" do
-      get :completions, params: @zip_csv
+      get :completions, @zip_csv
       expect(response.body).to_not be(nil)
       expect(response.body).to eq("Zip Code,Sign-Ups(total),Course Title,Completions\n")
     end
@@ -21,12 +22,15 @@ describe Admin::ExportsController do
     before(:each) do
       @user = create(:user, quiz_responses_object: { "set_one"=>"1", "set_two"=>"3", "set_three"=>"3" })
       @user.add_role(:user, @organization)
+      @user.profile = create(:profile)
 
       @user2 = create(:user, quiz_responses_object: { "set_one"=>"2", "set_three"=>"2" })
       @user2.add_role(:user, @organization)
+      @user2.profile = create(:profile)
 
       @user3 = create(:user)
       @user3.add_role(:user, @organization)
+      @user3.profile = create(:profile)
 
       @language = create(:language)
       @course1 = create(:course, title: "Course 1",

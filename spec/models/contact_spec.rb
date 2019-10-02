@@ -22,7 +22,7 @@ describe Contact do
   context "validations" do
 
     before :each do
-      @contact = FactoryBot.create(:contact)
+      @contact = FactoryGirl.create(:contact)
     end
 
     it "should initially be valid" do

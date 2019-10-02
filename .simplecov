@@ -8,3 +8,4 @@ SimpleCov.start "rails" do
 
   add_filter "models/ckeditor"
 end
+

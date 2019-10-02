@@ -9,8 +9,7 @@
 #  updated_at         :datetime         not null
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory(:completed_lesson) do
-    course_progress
   end
 end

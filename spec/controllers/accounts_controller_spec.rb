@@ -38,20 +38,18 @@ describe AccountsController do
       end
 
       it "allows the user to update just their email" do
-        update_params = { id: @user.profile, 
-                          user: { email: "new@commercekitchen.com", password: "", password_confirmation: "" },
-                          authenticity_token: set_authenticity_token }
-        put :update, params: update_params
+        put :update, id: @user.profile,
+          user: { email: "new@commercekitchen.com", password: "", password_confirmation: "" },
+          authenticity_token: set_authenticity_token
         @user.reload
         expect(response).to redirect_to(account_path)
         expect(flash[:notice]).to be_present
       end
 
       it "should not allow invalid user information" do
-        update_params = { id: @user.profile,
-                          user: { email: @user.email, password: @user.password, password_confirmation: "something else" },
-                          authenticity_token: set_authenticity_token }
-        put :update, params: update_params
+        put :update, id: @user.profile,
+          user: { email: @user.email, password: @user.password, password_confirmation: "something else" },
+          authenticity_token: set_authenticity_token
         expect(assigns(:user).errors.any?).to be true
       end
     end

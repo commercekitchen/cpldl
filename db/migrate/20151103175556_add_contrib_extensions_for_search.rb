@@ -1,4 +1,4 @@
-class AddContribExtensionsForSearch < ActiveRecord::Migration[4.2]
+class AddContribExtensionsForSearch < ActiveRecord::Migration
   if Rails.env.development? || Rails.env.test?
     def up
       execute 'CREATE EXTENSION pg_trgm;'

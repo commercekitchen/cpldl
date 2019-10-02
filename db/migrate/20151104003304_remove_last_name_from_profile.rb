@@ -1,4 +1,4 @@
-class RemoveLastNameFromProfile < ActiveRecord::Migration[4.2]
+class RemoveLastNameFromProfile < ActiveRecord::Migration
   def change
     remove_column :profiles, :last_name, :string
   end

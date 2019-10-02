@@ -1,4 +1,4 @@
-class AddLevelToCourses < ActiveRecord::Migration[4.2]
+class AddLevelToCourses < ActiveRecord::Migration
   def change
     add_column :courses, :level, :string
   end

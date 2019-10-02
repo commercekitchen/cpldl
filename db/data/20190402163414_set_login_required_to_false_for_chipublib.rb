@@ -1,4 +1,4 @@
-class SetLoginRequiredToFalseForChipublib < ActiveRecord::Migration[4.2]
+class SetLoginRequiredToFalseForChipublib < ActiveRecord::Migration
   def up
     # chipublib subdomain should not require login to view lessons
     Organization.find_by(subdomain: "chipublib").update(login_required: false)

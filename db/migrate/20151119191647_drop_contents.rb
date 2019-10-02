@@ -1,4 +1,4 @@
-class DropContents < ActiveRecord::Migration[4.2]
+class DropContents < ActiveRecord::Migration
   def change
     drop_table :contents
   end

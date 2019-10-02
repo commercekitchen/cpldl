@@ -1,4 +1,4 @@
-class AddLibraryLocationIdToProfiles < ActiveRecord::Migration[4.2]
+class AddLibraryLocationIdToProfiles < ActiveRecord::Migration
   def change
     add_column :profiles, :library_location_id, :integer
   end

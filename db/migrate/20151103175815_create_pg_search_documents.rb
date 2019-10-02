@@ -1,4 +1,4 @@
-class CreatePgSearchDocuments < ActiveRecord::Migration[4.2]
+class CreatePgSearchDocuments < ActiveRecord::Migration
   def self.up
     say_with_time("Creating table for pg_search multisearch") do
       create_table :pg_search_documents do |t|

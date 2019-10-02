@@ -1,4 +1,4 @@
-class RemovePageTypeFromCmsPages < ActiveRecord::Migration[4.2]
+class RemovePageTypeFromCmsPages < ActiveRecord::Migration
   def change
     remove_column :cms_pages, :page_type
   end

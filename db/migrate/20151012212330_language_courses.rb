@@ -1,4 +1,4 @@
-class LanguageCourses < ActiveRecord::Migration[4.2]
+class LanguageCourses < ActiveRecord::Migration
   def change
     create_table :language_courses do |t|
       t.integer :language_id

@@ -6,8 +6,10 @@ describe Admin::CategoriesController do
     @www = create(:default_organization)
     @dpl = create(:organization, subdomain: "dpl")
 
-    @www_admin = create(:user, :admin, organization: @www)
-    @dpl_admin = create(:user, :admin, organization: @dpl)
+    @www_admin = create(:admin_user, organization: @www)
+    @www_admin.add_role(:admin, @www)
+    @dpl_admin = create(:admin_user, organization: @dpl)
+    @dpl_admin.add_role(:admin, @dpl)
 
     @www_category1 = create(:category, organization: @www)
     @www_category2 = create(:category, organization: @www)
@@ -40,13 +42,13 @@ describe Admin::CategoriesController do
     describe "POST #create" do
       it "should create category from new name" do
         expect do
-          post :create, params: { category: { name: "#{@www_category1.name}_#{Faker::Lorem.word}" } }, format: "js"
+          post :create, { category: { name: "#{@www_category1.name}_#{Faker::Lorem.word}" }, format: "js" }
         end.to change(Category, :count).by(1)
       end
 
       it "should not create category with repeat name" do
         expect do
-          post :create, params: { category: { name: @www_category1.name } }, format: "js"
+          post :create, { category: { name: @www_category1.name }, format: "js" }
         end.not_to change(Category, :count)
       end
     end
@@ -54,7 +56,7 @@ describe Admin::CategoriesController do
     describe "POST #toggle" do
       it "should disable enabled category" do
         expect(@www_category1.enabled).to be true
-        post :toggle, params: { category_id: @www_category1 }, format: "js"
+        post :toggle, { category_id: @www_category1, format: "js" }
 
         @www_category1.reload
         expect(@www_category1.enabled).to be false
@@ -62,7 +64,7 @@ describe Admin::CategoriesController do
 
       it "should disable enabled category" do
         expect(@www_category3.enabled).to be false
-        post :toggle, params: { category_id: @www_category3.id }, format: "js"
+        post :toggle, { category_id: @www_category3.id, format: "js" }
         @www_category3.reload
         expect(@www_category3.enabled).to be true
       end
@@ -92,13 +94,13 @@ describe Admin::CategoriesController do
     describe "POST #create" do
       it "should create category from new name" do
         expect do
-          post :create, params: { category: { name: "#{@dpl_category1.name}_#{Faker::Lorem.word}" } }, format: "js"
+          post :create, { category: { name: "#{@dpl_category1.name}_#{Faker::Lorem.word}" }, format: "js" }
         end.to change(Category, :count).by(1)
       end
 
       it "should not create category with repeat name" do
         expect do
-          post :create, params: { category: { name: @dpl_category1.name } }, format: "js"
+          post :create, { category: { name: @dpl_category1.name }, format: "js" }
         end.not_to change(Category, :count)
       end
     end
@@ -106,14 +108,14 @@ describe Admin::CategoriesController do
     describe "POST #toggle" do
       it "should disable enabled category" do
         expect(@dpl_category1.enabled).to be true
-        post :toggle, params: { category_id: @dpl_category1 }, format: "js"
+        post :toggle, { category_id: @dpl_category1, format: "js" }
         @dpl_category1.reload
         expect(@dpl_category1.enabled).to be false
       end
 
       it "should disable enabled category" do
         expect(@dpl_category3.enabled).to be false
-        post :toggle, params: { category_id: @dpl_category3 }, format: "js"
+        post :toggle, { category_id: @dpl_category3, format: "js" }
         @dpl_category3.reload
         expect(@dpl_category3.enabled).to be true
       end

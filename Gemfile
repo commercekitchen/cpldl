@@ -4,45 +4,45 @@
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'rails', '>= 5.2.0', '< 6.0'
+gem 'rails', '4.2.10'
 gem 'pg'
-gem 'sass-rails', '>= 6.0.0'
-gem 'uglifier'
-gem 'jquery-rails', '>= 4.3.0'
+gem 'sass-rails', '~> 5.0'
+gem 'uglifier', '>= 1.3.0'
+gem 'jquery-rails'
 
-gem 'sprockets-rails', '>= 3.0'
+gem 'sprockets-rails', '2.3.3'
 
 # Full text search via PostgreSQL
 gem 'pg_search'
 
 # Leverage the SQL EXISTS to chec related tables
-gem 'where_exists', '>= 1.0.0'
+gem 'where_exists'
 
 # Authentication and authorization
-gem 'devise', '>= 4.6.0'
-gem 'devise_invitable', '>= 2.0.0'
+gem 'devise', '3.5.10'
+gem 'devise_invitable'
 gem 'rolify'
 gem 'recaptcha', require: 'recaptcha/rails'
 
 # Bourbon for sass mixins, and neat for the grid framework
-gem 'bourbon', '< 5.0'
-gem 'neat', '< 2.0'
+gem 'bourbon'
+gem 'neat'
 
 # Redis for Sidekiq
 gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem 'sidekiq', '>= 5.0'
-gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
+gem 'sidekiq'
+gem 'sinatra', require: nil # For the sidekiq web interface.
 gem 'sidekiq-failures'
 
 # Error reporting
 gem 'rollbar'
 
-gem 'paperclip' # File uploads
-gem 'rubyzip', '~> 1.0' # ASL files
-gem 'friendly_id', '>= 5.1'
+gem 'paperclip', '~> 5.2.1' # File uploads
+gem 'rubyzip' # ASL files
+gem 'friendly_id'
 
 gem 'ckeditor'
 
@@ -51,7 +51,7 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 # Local time helper library
-gem 'local_time', '>= 2.0'
+gem 'local_time'
 
 # i18n customization
 gem 'i18n-active_record', require: 'i18n/active_record'
@@ -66,7 +66,7 @@ gem 'attr_encrypted'
 gem 'nilify_blanks'
 
 # Use data migrations in addition to schema migrations
-gem 'data_migrate', '~> 5.3.2'
+gem 'data_migrate'
 
 # integrate chosen library
 # gem 'select2-rails'
@@ -74,19 +74,16 @@ gem 'data_migrate', '~> 5.3.2'
 gem 'storext'
 gem 'validate_url'
 
-# Rails 5 gems
-gem 'bootsnap', require: false
-gem 'listen'
-
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
+  gem 'quiet_assets'
   gem 'letter_opener'
   gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem "pry-remote"
-  gem 'web-console', '~> 3.7.0'
+  gem 'web-console', '~> 2.0'
   gem 'powder'
 end
 
@@ -98,8 +95,8 @@ group :development, :test do
   gem 'byebug'
   gem 'sunspot_solr'
   gem 'awesome_print', require: 'ap'
-  gem 'rspec-rails', '>= 3.8.0'
-  gem 'bullet'
+  gem 'rspec-rails', '~> 3.0'
+  gem 'bullet', '~> 5.7.0'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end
@@ -117,16 +114,16 @@ end
 
 group :test do
   gem 'launchy'
-  gem 'factory_bot_rails', '~> 4.10.0'
-  gem 'capybara'
-  gem 'webdrivers'
+  gem 'factory_girl_rails'
+  gem 'capybara-selenium'
+  gem 'chromedriver-helper'
   gem 'mocha'
   gem 'database_cleaner'
+  gem 'codeclimate-test-reporter'
   gem 'simplecov', require: false
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'webmock'
-  gem 'rails-controller-testing'
 end
 
 group :development, :staging do

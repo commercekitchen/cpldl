@@ -1,4 +1,4 @@
-class AddParentIdToCourse < ActiveRecord::Migration[4.2]
+class AddParentIdToCourse < ActiveRecord::Migration
   def change
     add_column :courses, :parent_id, :integer
   end

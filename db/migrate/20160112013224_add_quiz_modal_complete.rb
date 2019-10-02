@@ -1,4 +1,4 @@
-class AddQuizModalComplete < ActiveRecord::Migration[4.2]
+class AddQuizModalComplete < ActiveRecord::Migration
   def change
     add_column :users, :quiz_modal_complete, :boolean, default: false
   end

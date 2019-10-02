@@ -1,4 +1,4 @@
-class CreateLibraryLocations < ActiveRecord::Migration[4.2]
+class CreateLibraryLocations < ActiveRecord::Migration
   def change
     create_table :library_locations do |t|
       t.string :name

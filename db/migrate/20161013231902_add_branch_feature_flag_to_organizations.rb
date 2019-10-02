@@ -1,4 +1,4 @@
-class AddBranchFeatureFlagToOrganizations < ActiveRecord::Migration[4.2]
+class AddBranchFeatureFlagToOrganizations < ActiveRecord::Migration
   def change
     add_column :organizations, :branches, :boolean
   end

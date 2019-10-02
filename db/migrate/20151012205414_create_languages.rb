@@ -1,4 +1,4 @@
-class CreateLanguages < ActiveRecord::Migration[4.2]
+class CreateLanguages < ActiveRecord::Migration
   def change
     create_table :languages do |t|
       t.string :name

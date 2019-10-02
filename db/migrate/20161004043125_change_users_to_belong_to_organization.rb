@@ -1,4 +1,4 @@
-class ChangeUsersToBelongToOrganization < ActiveRecord::Migration[4.2]
+class ChangeUsersToBelongToOrganization < ActiveRecord::Migration
   def change
     add_reference :users, :organization, index: true
     add_foreign_key :users, :organizations

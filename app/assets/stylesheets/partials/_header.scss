@@ -22,8 +22,9 @@
       display: inline-block;
 
       @include media($mobile-large) {
-        font-size: 0.9rem;
+        font-size: .9rem;
       }
+
     }
   }
 
@@ -32,6 +33,7 @@
     float: left;
 
     .logo-icon {
+
       img {
         max-height: 100%;
       }
@@ -79,11 +81,12 @@
       max-width: 100%;
       margin-top: 10px;
     }
+
   }
   .btn {
     @include media($mobile-large) {
-      margin-right: 0.5em;
-      margin-bottom: 0.5em;
+      margin-right: .5em;
+      margin-bottom: .5em;
       float: left;
       display: block;
     }
@@ -101,7 +104,7 @@
 
   top: 0;
   width: 100%;
-  padding: 0.5em 0;
+  padding: .5em 0;
   background-color: $white;
   border-bottom: 1px solid $grey;
   z-index: 100;
@@ -114,8 +117,9 @@
       color: $purple;
 
       @include media($mobile-large) {
-        font-size: 0.9rem;
+          font-size: .9rem;
       }
+
     }
   }
 
@@ -162,10 +166,11 @@
         position: static;
 
         h1 {
-          font-size: 20px;
-          position: relative;
-          top: -2px;
+            font-size: 20px;
+            position: relative;
+            top: -2px;
         }
+
       }
     }
   }
@@ -211,7 +216,7 @@
     @include media($mobile) {
       margin-top: 20px;
       float: none;
-      display: block;
+      display: block
     }
 
     .signup-box {
@@ -223,6 +228,7 @@
         text-align: center;
       }
     }
+
   }
 }
 

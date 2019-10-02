@@ -25,19 +25,19 @@ describe CmsPagesController do
   before(:each) do
     create(:default_organization)
     @request.host = "www.test.host"
-    @english = FactoryBot.create(:language)
-    @spanish = FactoryBot.create(:spanish_lang)
-    @cms_page = FactoryBot.create(:cms_page)
+    @english = FactoryGirl.create(:language)
+    @spanish = FactoryGirl.create(:spanish_lang)
+    @cms_page = FactoryGirl.create(:cms_page)
   end
 
   describe "GET #show" do
     it "assigns the requested page (by id) as @cms_page" do
-      get :show, params: { id: @cms_page.to_param }
+      get :show, id: @cms_page.to_param
       expect(assigns(:cms_page)).to eq(@cms_page)
     end
 
     it "assigns the requested cms_page (by friendly id) as @cms_page" do
-      get :show, params: { id: @cms_page.friendly_id }
+      get :show, id: @cms_page.friendly_id
       expect(assigns(:cms_page)).to eq(@cms_page)
     end
 
@@ -47,11 +47,11 @@ describe CmsPagesController do
       @cms_page.title = "New Title"
       @cms_page.save
 
-      get :show, params: { id: old_url }
+      get :show, id: old_url
       expect(assigns(:cms_page)).to eq(@cms_page)
       expect(response).to have_http_status(:redirect)
 
-      get :show, params: { id: @cms_page.friendly_id }
+      get :show, id: @cms_page.friendly_id
       expect(assigns(:cms_page)).to eq(@cms_page)
     end
   end

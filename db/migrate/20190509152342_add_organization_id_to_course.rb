@@ -1,4 +1,4 @@
-class AddOrganizationIdToCourse < ActiveRecord::Migration[4.2]
+class AddOrganizationIdToCourse < ActiveRecord::Migration
   def change
     add_reference :courses, :organization, index: true
     OrganizationCourse.find_each do |org_course|

@@ -1,4 +1,4 @@
-class AddNotesToCourses < ActiveRecord::Migration[4.2]
+class AddNotesToCourses < ActiveRecord::Migration
   def change
     add_column :courses, :notes, :text
   end

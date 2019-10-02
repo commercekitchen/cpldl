@@ -1,4 +1,4 @@
-class AllowNullEmails < ActiveRecord::Migration[4.2]
+class AllowNullEmails < ActiveRecord::Migration
   def change
     change_column_null :users, :email, true
   end

@@ -109,7 +109,7 @@ module Admin
     end
 
     def propagate_changes?
-      @lesson.propagation_org_ids.delete_if(&:blank?).any? && (attributes_to_change.to_h.any? || lesson_params[:story_line].present?)
+      @lesson.propagation_org_ids.delete_if(&:blank?).any? && (attributes_to_change.any? || lesson_params[:story_line].present?)
     end
 
     def attributes_to_change

@@ -26,7 +26,7 @@ describe CmsPage do
   context "verify validations" do
 
     before(:each) do
-      @page = FactoryBot.build(:cms_page)
+      @page = FactoryGirl.build(:cms_page)
     end
 
     it "is initially valid" do
@@ -35,7 +35,7 @@ describe CmsPage do
 
     it "should not allow two pages with the same title with in an organization" do
       @page.save
-      @page2 = FactoryBot.build(:cms_page, organization: @page.organization)
+      @page2 = FactoryGirl.build(:cms_page, organization: @page.organization)
       expect(@page2).to_not be_valid
       expect(@page2.errors.full_messages.first).to eq("Title has already been taken for the organization")
     end
@@ -65,7 +65,7 @@ describe CmsPage do
       @page.save
       expect(@page).to_not be_valid
 
-      @page.language = Language.first
+      @page.language_id = 1
       @page.save
       expect(@page).to be_valid
     end
@@ -75,7 +75,7 @@ describe CmsPage do
       @page.save
       expect(@page).to_not be_valid
 
-      @page.language = Language.first
+      @page.language_id = 1
       @page.save
       expect(@page).to be_valid
     end

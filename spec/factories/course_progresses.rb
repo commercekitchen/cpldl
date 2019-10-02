@@ -12,10 +12,8 @@
 #  tracked      :boolean          default(FALSE)
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory(:course_progress) do
-    user
-    course
   end
 
   factory(:course_progress_with_completed_lessons) do

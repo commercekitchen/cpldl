@@ -1,4 +1,4 @@
-class AddDisplayOnDlAttribute < ActiveRecord::Migration[4.2]
+class AddDisplayOnDlAttribute < ActiveRecord::Migration
   def change
     add_column :courses, :display_on_dl, :boolean, default: false
   end

@@ -1,4 +1,4 @@
-class CreateCmsPages < ActiveRecord::Migration[4.2]
+class CreateCmsPages < ActiveRecord::Migration
   def change
     create_table :cms_pages do |t|
       t.string   :title, limit: 90

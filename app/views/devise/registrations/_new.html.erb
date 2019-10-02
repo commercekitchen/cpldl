@@ -6,7 +6,7 @@
   <p><%= t('login_signup.want_to_take_a_course') %></p>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render partial: 'devise/shared/error_messages', resource: resource %>
+    <%= devise_error_messages! %>
 
     <% if @library_card_login %>
       <div class="form-group no-bottom-margin">

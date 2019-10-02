@@ -3,14 +3,14 @@ require "feature_helper"
 feature "Admin user creates new course and lesson" do
 
   before(:each) do
-    @topic = FactoryBot.create(:topic)
-    @spanish = FactoryBot.create(:spanish_lang)
+    @topic = FactoryGirl.create(:topic)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 
-    @organization = FactoryBot.create(:organization)
-    @user = FactoryBot.create(:user, organization: @organization)
-    @category = FactoryBot.create(:category, organization: @organization)
-    @disabled_category = FactoryBot.create(:category, :disabled, organization: @organization)
+    @organization = FactoryGirl.create(:organization)
+    @user = FactoryGirl.create(:user, organization: @organization)
+    @category = FactoryGirl.create(:category, organization: @organization)
+    @disabled_category = FactoryGirl.create(:category, :disabled, organization: @organization)
 
     @user.add_role(:admin, @organization)
     switch_to_subdomain("chipublib")
@@ -87,7 +87,7 @@ feature "Admin user creates new course and lesson" do
   end
 
   scenario "attempts to create duplicate category" do
-    @category = FactoryBot.create(:category, organization: @organization)
+    @category = FactoryGirl.create(:category, organization: @organization)
     @organization.reload
 
     visit new_admin_course_path

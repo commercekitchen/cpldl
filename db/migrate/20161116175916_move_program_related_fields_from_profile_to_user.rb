@@ -1,4 +1,4 @@
-class MoveProgramRelatedFieldsFromProfileToUser < ActiveRecord::Migration[4.2]
+class MoveProgramRelatedFieldsFromProfileToUser < ActiveRecord::Migration
   def change
     add_column :users,    :acting_as,           :string
     add_column :users,    :library_card_number, :string

@@ -13,7 +13,7 @@
 #
 
 class LibraryLocation < ActiveRecord::Base
-  belongs_to :organization, required: false
+  belongs_to :organization
   validates :name, :zipcode, presence: true
 
   default_scope { order(:sort_order) }

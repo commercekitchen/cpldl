@@ -9,7 +9,7 @@ feature "User is able to view the courses in their plan" do
     @spanish = create(:spanish_lang)
     @user = create(:user, organization: @org)
     @npl_user = create(:user, organization: @npl)
-    @course1 = create(:course, title: "Course 1", organization: @org, language_id: @english.id)
+    @course1 = create(:course, title: "Course 1", organization: @org, language_id: 1)
     @course2 = create(:course, title: "Course 2", organization: @org)
     @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
     @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)

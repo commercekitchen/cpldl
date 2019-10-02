@@ -1,4 +1,4 @@
-class AddSubdomainToUser < ActiveRecord::Migration[4.2]
+class AddSubdomainToUser < ActiveRecord::Migration
   def change
     add_column :users, :subdomain, :string
   end

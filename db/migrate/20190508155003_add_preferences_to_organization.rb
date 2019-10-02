@@ -1,4 +1,4 @@
-class AddPreferencesToOrganization < ActiveRecord::Migration[4.2]
+class AddPreferencesToOrganization < ActiveRecord::Migration
   def change
     add_column :organizations, :preferences, :jsonb
   end

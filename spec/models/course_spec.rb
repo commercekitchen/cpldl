@@ -33,8 +33,8 @@ describe Course do
 
     let(:org) { create(:organization) }
     before(:each) do
-      @course = FactoryBot.build(:course, organization: org)
-      @draft_course = FactoryBot.create(:draft_course)
+      @course = FactoryGirl.build(:course, organization: org)
+      @draft_course = FactoryGirl.create(:draft_course)
     end
 
     it "is initially valid" do
@@ -42,7 +42,7 @@ describe Course do
     end
 
     it "should not allow two courses with the same title within organization" do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org)
+      existing_course = FactoryGirl.create(:course, title: @course.title, organization: org)
       @course.validate
 
       expect(@course.errors.messages.empty?).to be(false)
@@ -165,8 +165,8 @@ describe Course do
   context "#topics_list" do
 
     before(:each) do
-      @course = FactoryBot.create(:course)
-      @topic = FactoryBot.create(:topic, title: "Existing Topic")
+      @course = FactoryGirl.create(:course)
+      @topic = FactoryGirl.create(:topic, title: "Existing Topic")
     end
 
     it "assigns topics to a course" do
@@ -213,7 +213,7 @@ describe Course do
   context "#next_lesson_id (from old version of next_lesson_id)" do
 
     before :each do
-      @course = FactoryBot.create(:course_with_lessons)
+      @course = FactoryGirl.create(:course_with_lessons)
     end
 
     it "should return the first lesson id if called without an id" do
@@ -243,13 +243,13 @@ describe Course do
 
     it "should raise an error if there are no lessons" do
       expect do
-        @course = FactoryBot.create(:course)
+        @course = FactoryGirl.create(:course)
         @course.next_lesson_id(@course.lessons.first.id)
       end.to raise_error StandardError
     end
 
     it "should return the id of the next lesson in order" do
-      @course = FactoryBot.create(:course_with_lessons)
+      @course = FactoryGirl.create(:course_with_lessons)
       expect(@course.next_lesson_id).to eq @course.lessons.first.id
       expect(@course.next_lesson_id(nil)).to eq @course.lessons.first.id
       expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
@@ -258,7 +258,7 @@ describe Course do
     end
 
     it "should return the next lesson id, even if the lessons are out of order" do
-      @course = FactoryBot.create(:course_with_lessons)
+      @course = FactoryGirl.create(:course_with_lessons)
       @course.lessons.third.update(lesson_order: 5)
       expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
       expect(@course.next_lesson_id(@course.lessons.second.id)).to eq @course.lessons.third.id
@@ -266,7 +266,7 @@ describe Course do
     end
 
     it "should skip unpublished lessons" do
-      @course = FactoryBot.create(:course_with_lessons)
+      @course = FactoryGirl.create(:course_with_lessons)
       @course.lessons.second.update(pub_status: "D")
       @course.lessons.third.update(lesson_order: 5)
       expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.third.id
@@ -278,12 +278,12 @@ describe Course do
   context "#duration" do
 
     before :each do
-      @course = FactoryBot.create(:course)
-      @lesson1 = FactoryBot.create(:lesson, title: "1", duration: 75)
-      @lesson2 = FactoryBot.create(:lesson, title: "2", duration: 150)
-      @lesson3 = FactoryBot.create(:lesson, title: "3", duration: 225)
-      @lesson4 = FactoryBot.create(:lesson, title: "4", duration: 90)
-      @lesson5 = FactoryBot.create(:lesson, title: "5", duration: 9)
+      @course = FactoryGirl.create(:course)
+      @lesson1 = FactoryGirl.create(:lesson, title: "1", duration: 75)
+      @lesson2 = FactoryGirl.create(:lesson, title: "2", duration: 150)
+      @lesson3 = FactoryGirl.create(:lesson, title: "3", duration: 225)
+      @lesson4 = FactoryGirl.create(:lesson, title: "4", duration: 90)
+      @lesson5 = FactoryGirl.create(:lesson, title: "5", duration: 9)
     end
 
     it "should return the sum of the lesson durations" do
@@ -307,7 +307,7 @@ describe Course do
     end
 
     it "should not count draft lessons" do
-      @course = FactoryBot.create(:course_with_lessons)
+      @course = FactoryGirl.create(:course_with_lessons)
       @course.lessons.first.update(pub_status: "D")
       expect(@course.duration).to eq "3 mins" # 90 * 2 = 180 / 60 = 3 mins
     end

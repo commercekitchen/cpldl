@@ -10,9 +10,9 @@
 #  updated_at      :datetime         not null
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory :school do
-    school_name { Faker::Hipster.sentence(word_count: 3) }
+    school_name { Faker::Hipster.sentence(3) }
     organization
 
     trait :disabled do

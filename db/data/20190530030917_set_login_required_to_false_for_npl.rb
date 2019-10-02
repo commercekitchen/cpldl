@@ -1,4 +1,4 @@
-class SetLoginRequiredToFalseForNpl < ActiveRecord::Migration[4.2]
+class SetLoginRequiredToFalseForNpl < ActiveRecord::Migration
   def up
     Organization.find_by(subdomain: "npl").update(login_required: false)
   end

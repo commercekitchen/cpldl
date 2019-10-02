@@ -1,4 +1,4 @@
-class AddLanguageIdToCourses < ActiveRecord::Migration[4.2]
+class AddLanguageIdToCourses < ActiveRecord::Migration
   def change
     add_column :courses, :language_id, :integer
   end

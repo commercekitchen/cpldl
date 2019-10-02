@@ -1,4 +1,4 @@
-class CreateLessons < ActiveRecord::Migration[4.2]
+class CreateLessons < ActiveRecord::Migration
   def change
     create_table :lessons do |t|
       t.integer  :order

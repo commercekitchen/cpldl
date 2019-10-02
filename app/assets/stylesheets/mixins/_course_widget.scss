@@ -32,7 +32,7 @@
       font-size: 1.4em;
       font-weight: 300;
       margin: 0em 0.5em;
-      padding: 0.4em 0.5em 0.5em 0.25em;
+      padding: .4em .5em .5em .25em;
       height: 45px;
       text-align: left;
       line-height: 1.2em;
@@ -56,7 +56,7 @@
       position: relative;
       background-color: $white;
       height: 80px;
-      margin: 0.75em 1em 0;
+      margin: .75em 1em 0;
     }
 
     .duration {
@@ -75,11 +75,7 @@
     }
 
     &.retake-quiz header {
-      background: linear-gradient(
-        to bottom,
-        $retake_color 0%,
-        $retake_color 100%
-      );
+      background: linear-gradient(to bottom, $retake_color 0%, $retake_color 100%);
     }
 
     &.retake-quiz button {
@@ -92,11 +88,7 @@
 
     header {
       background: $purple;
-      background: linear-gradient(
-        to bottom,
-        $retake_color 0%,
-        $gradient_color 100%
-      );
+      background: linear-gradient(to bottom, $retake_color 0%, $gradient_color 100%);
     }
 
     &:hover {

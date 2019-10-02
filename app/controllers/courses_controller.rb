@@ -25,7 +25,7 @@
 #
 
 class CoursesController < ApplicationController
-  include UserCourses
+  include ::UserCourses
 
   before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
 

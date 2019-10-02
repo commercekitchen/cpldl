@@ -1,4 +1,4 @@
-class CreateCourses < ActiveRecord::Migration[4.2]
+class CreateCourses < ActiveRecord::Migration
   def change
     create_table :courses do |t|
       t.string  :title, limit: 90

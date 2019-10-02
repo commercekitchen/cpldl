@@ -11,7 +11,7 @@
 #  parent_type       :integer
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory :program do
     program_name Faker::App.name
     location_required false

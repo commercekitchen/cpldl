@@ -1,4 +1,4 @@
-class AddSubsiteToCourse < ActiveRecord::Migration[4.2]
+class AddSubsiteToCourse < ActiveRecord::Migration
   def change
     add_column :courses, :subsite_course, :boolean, default: false
   end

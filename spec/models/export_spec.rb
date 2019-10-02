@@ -39,7 +39,7 @@ describe Export do
     end
 
     it "translates question_2 response correctly" do
-      expect(csv).to match(/I can use at least one of these technologies, but I'd like to learn more./)
+      expect(csv).to match(/I can use one, but I'd like to learn more./)
     end
 
     it "translates question_3 response correctly" do

@@ -17,8 +17,8 @@ describe Category do
 
   context "validations" do
     before(:each) do
-      @organization = FactoryBot.create(:organization)
-      @category1 = FactoryBot.create(:category, category_order: 1)
+      @organization = FactoryGirl.create(:organization)
+      @category1 = FactoryGirl.create(:category, category_order: 1)
       @category1.organization.reload
       @new_category = Category.new
     end

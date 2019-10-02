@@ -1,4 +1,4 @@
-class AddProfileToUser < ActiveRecord::Migration[4.2]
+class AddProfileToUser < ActiveRecord::Migration
   def change
     add_column :users, :profile_id, :integer
   end

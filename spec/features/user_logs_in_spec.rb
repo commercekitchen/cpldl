@@ -52,7 +52,7 @@ feature "User logs in" do
     end
 
     scenario "first time login non-program org" do
-      user = create(:user, :first_time_user, organization: @org)
+      user = create(:first_time_user, organization: @org)
       past_time = 10.minutes.ago
       user.profile.update_attributes({ created_at: past_time, updated_at: past_time })
       log_in_with(user.email, user.password)
@@ -71,7 +71,7 @@ feature "User logs in" do
     scenario "first time login with program org, with course recommendations" do
       @npl = create(:organization, :accepts_programs, subdomain: "npl")
       @npl_profile = create(:profile, :with_last_name)
-      @npl_user = create(:user, :first_time_user, organization: @npl, profile: @npl_profile)
+      @npl_user = create(:first_time_user, organization: @npl, profile: @npl_profile)
       switch_to_subdomain("npl")
       log_in_with(@npl_user.email, @npl_user.password)
 
@@ -86,8 +86,8 @@ feature "User logs in" do
 
     scenario "first time login with program org, no course recommendations" do
       @npl = create(:organization, :accepts_programs, subdomain: "npl")
-      @npl_profile = build(:profile, :with_last_name)
-      @npl_user = create(:user, :first_time_user, organization: @npl, profile: @npl_profile)
+      @npl_profile = create(:profile, :with_last_name)
+      @npl_user = create(:first_time_user, organization: @npl, profile: @npl_profile)
       switch_to_subdomain("npl")
       log_in_with(@npl_user.email, @npl_user.password)
 
@@ -166,7 +166,7 @@ feature "User logs in" do
 
     context "user already exists" do
       let(:org) { create(:organization, :library_card_login) }
-      let(:user) { create(:user, :library_card_login_user, organization: org) }
+      let(:user) { create(:library_card_login_user, organization: org) }
 
       before(:each) do
         @spanish = create(:spanish_lang)
@@ -189,7 +189,7 @@ feature "User logs in" do
 
     context "spanish language user" do
       let(:org) { create(:organization, :library_card_login) }
-      let(:user) { create(:user, :library_card_login_user, organization: org) }
+      let(:user) { create(:library_card_login_user, organization: org) }
 
       before(:each) do
         @spanish = create(:spanish_lang)

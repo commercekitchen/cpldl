@@ -1,4 +1,4 @@
-class AddLanguageIdToProfile < ActiveRecord::Migration[4.2]
+class AddLanguageIdToProfile < ActiveRecord::Migration
   def change
     add_column :profiles, :language_id, :integer
   end

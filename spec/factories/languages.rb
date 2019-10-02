@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory :language do
     name "English"
   end

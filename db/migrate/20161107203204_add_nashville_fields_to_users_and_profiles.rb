@@ -1,4 +1,4 @@
-class AddNashvilleFieldsToUsersAndProfiles < ActiveRecord::Migration[4.2]
+class AddNashvilleFieldsToUsersAndProfiles < ActiveRecord::Migration
   def change
     add_column :profiles, :library_card_number, :string
     add_column :profiles, :student_or_parent,   :string

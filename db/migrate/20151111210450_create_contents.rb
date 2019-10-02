@@ -1,4 +1,4 @@
-class CreateContents < ActiveRecord::Migration[4.2]
+class CreateContents < ActiveRecord::Migration
   def change
     create_table :contents do |t|
       t.text :body

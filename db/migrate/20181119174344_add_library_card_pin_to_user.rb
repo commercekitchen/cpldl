@@ -1,4 +1,4 @@
-class AddLibraryCardPinToUser < ActiveRecord::Migration[4.2]
+class AddLibraryCardPinToUser < ActiveRecord::Migration
   def change
     add_column :users, :library_card_pin, :string
   end

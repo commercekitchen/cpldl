@@ -41,9 +41,7 @@ feature "Admin create a new organization" do
     user = create(:user, organization: dpl)
     user.add_role(:admin, dpl)
 
-    within ".logo-link-container" do
-      click_on "Admin Dashboard"
-    end
+    click_on "Admin Dashboard"
     click_on "Organizations"
     expect(page).to have_content("amy@example.com")
 
@@ -53,7 +51,6 @@ feature "Admin create a new organization" do
     log_in_with user.email, user.password
 
     visit admin_dashboard_index_path(subdomain: "dpl")
-
     click_on "Admin Dashboard"
     click_on "Manage Library Branches"
     click_on "Add a Library Branch"

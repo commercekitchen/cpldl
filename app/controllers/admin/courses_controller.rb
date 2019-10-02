@@ -174,7 +174,7 @@ module Admin
     end
 
     def propagate_changes?
-      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.to_h.any?
+      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.any?
     end
 
     def attributes_to_change
@@ -182,7 +182,7 @@ module Admin
     end
 
     def propagate_course_changes
-      Course.copied_from_course(@course).update_all(attributes_to_change.to_h)
+      Course.copied_from_course(@course).update_all(attributes_to_change)
     end
   end
 end

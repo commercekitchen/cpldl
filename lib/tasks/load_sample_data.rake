@@ -31,7 +31,7 @@ namespace :db do
         title: Faker::Company.name,
         seo_page_title: Faker::Company.bs,
         meta_desc: Faker::Company.bs,
-        summary: Faker::Lorem.sentence(word_count: 5),
+        summary: Faker::Lorem.sentence(5),
         description: Faker::Lorem.paragraph(3),
         contributor: Faker.name,
         pub_status: %w(P D T).sample,

@@ -3,7 +3,7 @@ require "rails_helper"
 describe CoursesHelper do
 
   before(:each) do
-    @course = FactoryBot.create(:course)
+    @course = FactoryGirl.create(:course)
   end
 
   describe "#pub_status_str" do
@@ -20,10 +20,10 @@ describe CoursesHelper do
   describe "#percent_complete" do
 
     before(:each) do
-      @course2 = FactoryBot.create(:course, title: "Course 2")
-      @user = FactoryBot.create(:user)
+      @course2 = FactoryGirl.create(:course, title: "Course 2")
+      @user = FactoryGirl.create(:user)
       sign_in @user
-      @course_progress = FactoryBot.create(:course_progress, course_id: @course.id)
+      @course_progress = FactoryGirl.create(:course_progress, course_id: @course.id)
       @user.course_progresses << @course_progress
     end
 

@@ -3,7 +3,6 @@
 Organization.create(name: "Chicago Public Library", subdomain: "chipublib")
 Organization.create(name: "Admin", subdomain: "www")
 Organization.create(name: "Nashville Public Library", subdomain: "npl")
-Organization.create(name: "Kansas City Public Library", subdomain: "kclibrary")
 
 class CreateSeedUser
   def self.generate(email, first_name, last_name, subdomain, admin=false)

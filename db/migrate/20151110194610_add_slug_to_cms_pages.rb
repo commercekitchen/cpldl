@@ -1,4 +1,4 @@
-class AddSlugToCmsPages < ActiveRecord::Migration[4.2]
+class AddSlugToCmsPages < ActiveRecord::Migration
   def change
     add_column :cms_pages, :slug, :string
     add_index :cms_pages, :slug

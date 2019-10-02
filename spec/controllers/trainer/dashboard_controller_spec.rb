@@ -45,7 +45,7 @@ describe Trainer::DashboardController do
     end
 
     it "assigns all users as @users" do
-      get :index, params: {}
+      get :index, {}
       expect(response).to have_http_status(:success)
       expect(assigns(:users)).to include(@user, @user1, @user2, @user3)
       expect(assigns(:users).count).to eq(4)
@@ -54,12 +54,12 @@ describe Trainer::DashboardController do
     it "assigns all users as @users with an empty params" do
       # FIXME: This test is flaky and I can't figure out why
       # Seeding the same as a failed run doesn't repeat the issue
-      get :index, params: {}
+      get :index, {}
       expect(assigns(:users)).to include(@user, @user1, @user2, @user3)
     end
 
     it "assigns search results to @users" do
-      get :index, params: { search: "two" }
+      get :index, { search: "two" }
       expect(assigns(:users)).to eq([@user2])
     end
   end

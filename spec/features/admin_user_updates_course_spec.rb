@@ -2,18 +2,18 @@ require "feature_helper"
 
 feature "Admin user updates course" do
   before(:each) do
-    @topic = FactoryBot.create(:topic)
-    @spanish = FactoryBot.create(:spanish_lang)
+    @topic = FactoryGirl.create(:topic)
+    @spanish = FactoryGirl.create(:spanish_lang)
     @story_line = Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/BasicSearch1.zip"), "application/zip")
 
-    @organization = FactoryBot.create(:organization)
-    @user = FactoryBot.create(:user, organization: @organization)
+    @organization = FactoryGirl.create(:organization)
+    @user = FactoryGirl.create(:user, organization: @organization)
     @user.add_role(:admin)
     @user.add_role(:admin, @organization)
 
-    @course = FactoryBot.create(:course, organization: @organization)
-    @category = FactoryBot.create(:category, organization: @organization)
-    @disabled_category = FactoryBot.create(:category, :disabled, organization: @organization)
+    @course = FactoryGirl.create(:course, organization: @organization)
+    @category = FactoryGirl.create(:category, organization: @organization)
+    @disabled_category = FactoryGirl.create(:category, :disabled, organization: @organization)
     switch_to_subdomain("chipublib")
     log_in_with @user.email, @user.password
   end

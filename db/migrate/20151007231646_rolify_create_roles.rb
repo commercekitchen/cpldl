@@ -1,4 +1,4 @@
-class RolifyCreateRoles < ActiveRecord::Migration[4.2]
+class RolifyCreateRoles < ActiveRecord::Migration
   def change
     create_table(:roles) do |t|
       t.string :name

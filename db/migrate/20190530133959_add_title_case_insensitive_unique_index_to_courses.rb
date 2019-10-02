@@ -1,4 +1,4 @@
-class AddTitleCaseInsensitiveUniqueIndexToCourses < ActiveRecord::Migration[4.2]
+class AddTitleCaseInsensitiveUniqueIndexToCourses < ActiveRecord::Migration
   def change
     # NOTICE: Enable below line for local only. This will throw permission error on stagibg & prod. 
     # enable_extension 'citext'

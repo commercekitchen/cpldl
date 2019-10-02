@@ -11,9 +11,9 @@
 #  updated_at      :datetime         not null
 #
 
-FactoryBot.define do
+FactoryGirl.define do
   factory :category do
-    name { Faker::Lorem.words(number: 3).join(" ") }
+    name { Faker::Lorem.words(3).join(" ") }
     organization
 
     trait :disabled do

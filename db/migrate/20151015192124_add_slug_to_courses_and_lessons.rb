@@ -1,4 +1,4 @@
-class AddSlugToCoursesAndLessons < ActiveRecord::Migration[4.2]
+class AddSlugToCoursesAndLessons < ActiveRecord::Migration
   def change
     add_column :courses, :slug, :string
     add_index :courses, :slug

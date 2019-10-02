@@ -1,4 +1,4 @@
-class AddProgramsFlagToOrganizations < ActiveRecord::Migration[4.2]
+class AddProgramsFlagToOrganizations < ActiveRecord::Migration
   def change
     add_column :organizations, :accepts_programs, :boolean
   end

@@ -28,12 +28,12 @@ require "rails_helper"
 
 describe Lesson do
 
-  let(:course) { FactoryBot.create(:course_with_lessons) }
+  let(:course) { FactoryGirl.create(:course_with_lessons) }
 
   context "validations" do
 
     before(:each) do
-      @lesson = FactoryBot.create(:lesson)
+      @lesson = FactoryGirl.create(:lesson)
     end
 
     it "initially it is valid" do
@@ -64,8 +64,8 @@ describe Lesson do
 
     context ".copied_from_lesson" do
 
-      let(:new_org) { FactoryBot.create(:organization) }
-      let(:new_course) { FactoryBot.create(:course_with_lessons, organization: new_org) }
+      let(:new_org) { FactoryGirl.create(:organization) }
+      let(:new_course) { FactoryGirl.create(:course_with_lessons, organization: new_org) }
       let(:original_lesson) { course.lessons.first }
       let(:copied_lesson) { new_course.lessons.first }
 

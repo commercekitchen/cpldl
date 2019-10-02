@@ -20,8 +20,8 @@
 
 class Profile < ActiveRecord::Base
   belongs_to :user, inverse_of: :profile
-  belongs_to :language, required: false
-  belongs_to :library_location, required: false
+  belongs_to :language
+  belongs_to :library_location
 
   validates :first_name, presence: true
   validates :last_name, presence: true, if: :program_organization

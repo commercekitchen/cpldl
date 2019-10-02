@@ -1,4 +1,4 @@
-class AddAccessLevelToCourse < ActiveRecord::Migration[4.2]
+class AddAccessLevelToCourse < ActiveRecord::Migration
   def change
     add_column :courses, :access_level, :integer, default: 0, null: false
   end

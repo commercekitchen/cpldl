@@ -1,4 +1,4 @@
-class RemoveUniquenessFromCourseTitle < ActiveRecord::Migration[4.2]
+class RemoveUniquenessFromCourseTitle < ActiveRecord::Migration
   def change
     remove_index :courses, :title
     add_index :courses, :title

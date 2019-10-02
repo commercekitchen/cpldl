@@ -1,4 +1,4 @@
-class RemoveSubdomainFromUser < ActiveRecord::Migration[4.2]
+class RemoveSubdomainFromUser < ActiveRecord::Migration
   def change
     remove_column :users, :subdomain
   end

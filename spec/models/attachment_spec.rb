@@ -22,7 +22,7 @@ describe Attachment do
   context "verify validations" do
 
     before(:each) do
-      @attachment = FactoryBot.build(:attachment)
+      @attachment = FactoryGirl.build(:attachment)
     end
 
     it "is initially valid" do

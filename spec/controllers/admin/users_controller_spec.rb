@@ -4,19 +4,20 @@ describe Admin::UsersController do
   before(:each) do
     org = create(:default_organization)
     @request.host = "www.test.host"
-    @admin = create(:user, :admin, organization: org)
+    @admin = create(:admin_user, organization: org)
     @user = create(:user, organization: org)
     @user.add_role(:user, org)
+    @admin.add_role(:admin, org)
     sign_in @admin
   end
 
   describe "PATCH #change_user_roles" do
     it "updates the role" do
-      patch :change_user_roles, params: { id: @user.id.to_param, value: "Trainer" }
-      expect(@user.reload.current_roles).to eq("trainer")
+      patch :change_user_roles, { id: @user.id.to_param, value: "Trainer" }
+      expect(@user.current_roles).to eq("trainer")
 
-      patch :change_user_roles, params: { id: @user.id.to_param, value: "Admin" }
-      expect(@user.reload.current_roles).to eq("admin")
+      patch :change_user_roles, { id: @user.id.to_param, value: "Admin" }
+      expect(@user.current_roles).to eq("admin")
     end
   end
 
