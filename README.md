@@ -13,52 +13,52 @@ That said, if you find a bug, please do open an issue!
 
 ## Getting Started
 
-DigitalLearn is built on top of Ruby on Rails.  A basic understanding of working with Rails is
+DigitalLearn is built on top of Ruby on Rails. A basic understanding of working with Rails is
 required to stand up a new DigitalLearn site.
 
 ### Dependencies
 
-* Ruby 2.2.9
-* Rails 4.2.10
-* Postgresql v 9.4.5
+- Ruby 2.6.4
+- Rails 5.2.3
+- Postgresql v 9.4.5
 
 ### Update Secrets
 
-* Update secrets.yml with your values
+- Update secrets.yml with your values
 
 ### Database Creation
 
-* Update database.yml.example with your credentials
-* Run `rake db:create db:migrate db:seed`
+- Update database.yml.example with your credentials
+- Run `rake db:create db:migrate db:seed`
 
 ### Install Gems
 
-* `bundle install`
+- `bundle install`
 
 ### Start Server
 
-* `rails s`
+- `rails s`
 
 ## Adding a new Subsite
 
 ### Necessary information
 
-* New organization name (ex/ "East Baton Rouge Public Library")
-* Subdomain name (ex/ "ebrpl")
-* New organization url (ex/ "https://www.ebrpl.com")
-* Branch information
-* Program information
-* Header logo (full color)
-* Footer logo (white & transparent)
-* Google analytics ID
-* Various site texts in English and Spanish
+- New organization name (ex/ "East Baton Rouge Public Library")
+- Subdomain name (ex/ "ebrpl")
+- New organization url (ex/ "https://www.ebrpl.com")
+- Branch information
+- Program information
+- Header logo (full color)
+- Footer logo (white & transparent)
+- Google analytics ID
+- Various site texts in English and Spanish
   - Banner Greeting
   - Subheader text (user dashboard)
   - (optional) Retake quiz prompt
 
 ### Prior to deploy
 
-* Create necessary color variables in `_vars.scss`:
+- Create necessary color variables in `_vars.scss`:
 
   ```
   /* NEW_SUBDOMAIN */
@@ -67,7 +67,8 @@ required to stand up a new DigitalLearn site.
   $new_subdomain-gray: #716C6B;
   ```
 
-* Create a new file for the subsite styles in `assets/stylesheets/subdomains/`. This file should define a class which matches your new subdomain (ex/ `.new_subdomain {...}` for `new_subdomain.digitallearn.org`). This class should include 6 SASS mixins for different application components:
+- Create a new file for the subsite styles in `assets/stylesheets/subdomains/`. This file should define a class which matches your new subdomain (ex/ `.new_subdomain {...}` for `new_subdomain.digitallearn.org`). This class should include 6 SASS mixins for different application components:
+
   - `color_scheme` The main color scheme options for headings, links and colored text.
   - `banner` Banner background & text colors and font sizes (if specified)
   - `buttons` Defines background and text color for buttons
@@ -77,23 +78,26 @@ required to stand up a new DigitalLearn site.
 
   These components each take several color parameters, for which you'll use the colors defined for the new subsite in `_vars.scss`.
 
-* Add subsite Footer logo and logo link through subsite admin panel customization pages
+- Add subsite Footer logo and logo link through subsite admin panel customization pages
 
-* Customize subsite texts through admin panel
+- Customize subsite texts through admin panel
+
   - Custom banner greeting text
   - Additional banner greeting content
   - User dashboard subheader
   - Retake quiz prompt (usually just 'Retake the Quiz' unless otherwise specified)
   - (misspelled key in yaml file) Explanation of course colors - courses to be completed are displayed with the colors passed to the `course_widget` SASS mixin in the `_new_subdomain.scss` class. Completed courses are displayed in Gray by default. This sentence usually ends with the prompt "To add more to your plan,"
 
-* Create google analytics javascript partial in `views/shared/` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
+- Create google analytics javascript partial in `views/shared/` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
+
   ```
   ga('create', 'new_analytics_id', 'auto', {
     userId: userGaId
   });
   ```
 
-* Create organization to test/adjust subsite styles:
+- Create organization to test/adjust subsite styles:
+
   ```
   Organization.create(name: "New Library", subdomain: "new_subdomain", branches: true, accepts_programs: false)
   ```
@@ -102,5 +106,5 @@ required to stand up a new DigitalLearn site.
 
 ### After deploy
 
-* Create the new organization on appropriate environment(s).
+- Create the new organization on appropriate environment(s).
   - Branches and programs can be managed through the Admin UI
