@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
-  get 'login/new', as: :login
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
     post 'select_program'
@@ -123,7 +122,16 @@ Rails.application.routes.draw do
 
   end
 
-  devise_for :users, controllers: { registrations: 'registrations', invitations: 'admin/invites', sessions: 'sessions' }
+  devise_for :users, controllers: {
+    registrations: 'registrations',
+    invitations: 'admin/invites',
+    sessions: 'sessions'
+  }
+
+  devise_scope :user do
+    get 'login/new', to: 'sessions#new', as: :login
+  end
+  
   get 'users/invitation/accept', to: 'devise/invitations#edit'
   # accept_user_invitation GET    /users/invitation/accept(.:format) devise/invitations#edit
 
