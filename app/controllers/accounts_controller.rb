@@ -35,12 +35,12 @@ class AccountsController < ApplicationController
     if password.blank? && password_confirmation.blank?
       if user.email != email
         if user.update(email: email)
-          sign_in :user, user, bypass: true
+          bypass_sign_in user
         end
       end
     else
       if user.update(params)
-        sign_in :user, user, bypass: true
+        bypass_sign_in user
       end
     end
   end

@@ -1,4 +1,4 @@
-class FixLessonBug < ActiveRecord::Migration
+class FixLessonBug < ActiveRecord::Migration[4.2]
   def change
     u = User.all
     u.each do |u|

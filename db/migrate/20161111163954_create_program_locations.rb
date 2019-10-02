@@ -1,4 +1,4 @@
-class CreateProgramLocations < ActiveRecord::Migration
+class CreateProgramLocations < ActiveRecord::Migration[4.2]
   def change
     create_table :program_locations do |t|
       t.string :location_name

@@ -47,57 +47,33 @@
 #  encrypted_library_card_pin_iv :string
 #
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "jane#{n}@example.com" }
     password "abcd1234"
     confirmed_at Time.zone.now.to_s
     sign_in_count 2
     organization
-    profile
-  end
+    profile { build(:profile, user: nil) }
 
-  factory :library_card_login_user, class: User do
-    library_card_number { Array.new(7) { rand(10) }.join }
-    library_card_pin { Array.new(4) { rand(10) }.join }
-    confirmed_at Time.zone.now.to_s
-    sign_in_count 0
-    organization
-    profile
+    trait :library_card_login_user do
+      email { nil }
+      library_card_number { Array.new(7) { rand(10) }.join }
+      library_card_pin { Array.new(4) { rand(10) }.join }
 
-    before(:create) do |user|
-      user.password = Digest::MD5.hexdigest(user.library_card_pin).first(10)
+      before(:create) do |user|
+        user.password = Digest::MD5.hexdigest(user.library_card_pin).first(10)
+      end
     end
-  end
 
-  factory :first_time_user, class: User do
-    email { Faker::Internet.free_email }
-    password Faker::Internet.password
-    confirmed_at Time.zone.now.to_s
-    sign_in_count 0
-    organization
-    profile
-  end
+    trait :first_time_user do
+      sign_in_count 0
+    end
 
-  factory :unconfirmed_user, class: User do
-    email "unconfirmed@example.com"
-    password "abcd1234"
-    confirmed_at nil
-    organization
-    profile
-  end
-
-  factory :admin_user, class: User do
-    email { Faker::Internet.free_email }
-    password "abcd1234"
-    confirmed_at Time.zone.now.to_s
-    organization
-    profile
-  end
-
-  factory :super_user, class: User do
-    email "super@example.com"
-    password "abcd1234"
-    confirmed_at Time.zone.now.to_s
+    trait :admin do
+      after(:create) do |user|
+        user.add_role(:admin, user.organization)
+      end
+    end
   end
 end

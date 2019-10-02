@@ -4,9 +4,9 @@
   $base-background-color: $white !default;
   $base-font-size: 1em !default;
   $base-line-height: 1.5em !default;
-  $action-color: #477DCA !default;
+  $action-color: #477dca !default;
   $dark-gray: #333 !default;
-  $light-gray: #DDD !default;
+  $light-gray: #ddd !default;
   $medium-screen: em(640) !default;
   $large-screen: em(860) !default;
   $base-font-color: $grey !default;
@@ -46,7 +46,7 @@
   .modal-fade-screen {
     @include transition(opacity 0.25s ease);
     @include position(fixed, 0px 0px 0px 0px);
-    background: rgba(0,0,0, 0.85);
+    background: rgba(0, 0, 0, 0.85);
     opacity: 0;
     padding-top: 0.6em;
     text-align: left;
@@ -64,7 +64,10 @@
   }
 
   .modal-close {
-    @include position(absolute, ($modal-padding /2) ($modal-padding /2) null null);
+    @include position(
+      absolute,
+      ($modal-padding / 2) ($modal-padding / 2) null null
+    );
     @include size(1.5em);
     background: $modal-background;
     cursor: pointer;
@@ -75,7 +78,7 @@
       @include transform(rotate(45deg));
       @include size(0.15em 1.5em);
       background: $modal-close-color;
-      content: '';
+      content: "";
       display: block;
       margin: -3px 0 0 -1px;
     }
@@ -108,7 +111,7 @@
     }
 
     &.narrow {
-      width: 30%
+      width: 30%;
     }
 
     &.quiz-modal-inner {
@@ -137,7 +140,6 @@
       }
     }
 
-
     h1 {
       margin-bottom: 0 0 0.6em 0;
       text-align: left;
@@ -147,7 +149,6 @@
       color: $base-font-color;
       line-height: $base-line-height;
     }
-
   }
 
   .modal-state:checked + .modal-fade-screen {
@@ -165,14 +166,14 @@
 }
 
 #msform {
-	position: relative;
+  position: relative;
 }
 
 #msform fieldset {
-	box-sizing: border-box;
+  box-sizing: border-box;
 
-	/*stacking fieldsets above each other*/
-	position: absolute;
+  /*stacking fieldsets above each other*/
+  position: absolute;
 
   button.next-button {
     float: right;
@@ -186,5 +187,5 @@
 }
 
 #msform fieldset:not(:first-of-type) {
-	display: none;
+  display: none;
 }

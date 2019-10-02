@@ -5,7 +5,7 @@ feature "Admin user logs in" do
     before(:each) do
       @org = create(:organization)
       Capybara.default_host = "http://chipublib.example.com"
-      @user = create(:first_time_user, organization: @org)
+      @user = create(:user, :first_time_user, organization: @org)
       @english = create(:language)
       @spanish = create(:spanish_lang)
       @user.add_role(:admin, @org)
@@ -78,13 +78,13 @@ feature "Admin user logs in" do
       create(:organization, :library_card_login, subdomain: "kclibrary", branches: true,
                        accepts_custom_branches: true, library_locations: [location])
     end
-    let(:user) { create(:admin_user, sign_in_count: 2) }
+    let(:user) { build(:user, sign_in_count: 2) }
 
     before(:each) do
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
       user.add_role(:admin, org)
       user.update!(organization: org)
+      @english = create(:language)
+      @spanish = create(:spanish_lang)
       switch_to_subdomain(org.subdomain)
     end
 

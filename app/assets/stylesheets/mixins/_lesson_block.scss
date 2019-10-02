@@ -1,4 +1,9 @@
-@mixin lesson_block($bg-color, $completed-bg-color, $arrow-color, $check-color) {
+@mixin lesson_block(
+  $bg-color,
+  $completed-bg-color,
+  $arrow-color,
+  $check-color
+) {
   .lesson-blocks {
     .sortable-item {
       @include span-columns(3);
@@ -9,7 +14,6 @@
       @include span-columns(12);
     }
   }
-
 
   .lesson-block {
     @include span-columns(3);
@@ -61,7 +65,8 @@
       bottom: 20px;
       width: 100%;
 
-      [class^="icon-"]:before, [class*=" icon-"]:before {
+      [class^="icon-"]:before,
+      [class*=" icon-"]:before {
         color: $white;
       }
     }
@@ -126,7 +131,7 @@
       }
 
       .lesson-summary {
-        font-size: .8em;
+        font-size: 0.8em;
       }
 
       .btn {
@@ -148,22 +153,21 @@
   //Fix wonky display of lessons on phone view
 
   .lesson-listing {
-
     .lesson-listing-first-row {
-      margin-top: 20px
+      margin-top: 20px;
     }
-   .onecol {
-    width: auto;
-   }
-   .tencol {
-    width: auto;
-   }
-   .extra-padding.extra-padding {
-    padding-left: 20px;
-    margin-top: 0;
-   }
-   .row {
-    margin-bottom: 0;
-   }
+    .onecol {
+      width: auto;
+    }
+    .tencol {
+      width: auto;
+    }
+    .extra-padding.extra-padding {
+      padding-left: 20px;
+      margin-top: 0;
+    }
+    .row {
+      margin-bottom: 0;
+    }
   }
 }

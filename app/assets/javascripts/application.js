@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require select2.full
 //= require html.sortable
-//= require ckeditor/init
-//= require local_time
+//= require local-time
 //= require_tree .

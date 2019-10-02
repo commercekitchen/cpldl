@@ -7,8 +7,7 @@ describe Admin::ProgramLocationsController do
     @request.host = "dpl.test.host"
     @english = create(:language)
     @spanish = create(:spanish_lang)
-    @admin = create(:admin_user, organization: @organization)
-    @admin.add_role(:admin, @organization)
+    @admin = create(:user, :admin, organization: @organization)
     @program1 = create(:program, :location_required, organization: @organization)
     @program2 = create(:program, organization: @organization)
     @location_enabled = create(:program_location, program: @program1)
@@ -24,7 +23,7 @@ describe Admin::ProgramLocationsController do
       }
 
       expect do
-        post :create, { program_location: valid_attributes, format: "js" }
+        post :create, params: { program_location: valid_attributes, format: "js" }
       end.to change(ProgramLocation, :count).by(1)
     end
   end
@@ -32,14 +31,14 @@ describe Admin::ProgramLocationsController do
   describe "POST #toggle" do
     it "should disable enabled program location" do
       expect(@location_enabled.enabled).to be true
-      post :toggle, { program_location_id: @location_enabled, format: "js" }
+      post :toggle, params: { program_location_id: @location_enabled, format: "js" }
       @location_enabled.reload
       expect(@location_enabled.enabled).to be false
     end
 
     it "should enable disabled program location" do
       expect(@location_disabled.enabled).to be false
-      post :toggle, { program_location_id: @location_disabled, format: "js" }
+      post :toggle, params: { program_location_id: @location_disabled, format: "js" }
       @location_disabled.reload
       expect(@location_disabled.enabled).to be true
     end

@@ -65,23 +65,11 @@ end
 
 Capybara.server = :webrick
 
-# Use Selenium and Chromedriver for feature specs because
-# webkit is broken for newer versions of xcode/macOS
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, browser: :chrome)
-end
-
-Capybara.register_driver :headless_chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu] }
-  )
-
-  Capybara::Selenium::Driver.new app,
-    browser: :chrome,
-    desired_capabilities: capabilities
-end
-
-Capybara.javascript_driver = :headless_chrome
+# Use Selenium and Chromedriver for feature specs
+Capybara.javascript_driver = :selenium_chrome_headless
 
 # Configure webmock to disallow network connections
-WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.disable_net_connect!({
+  allow_localhost: true,
+  allow: 'chromedriver.storage.googleapis.com'
+})

@@ -25,7 +25,7 @@ describe Profile do
   context "verify validations" do
 
     before(:each) do
-      @profile = FactoryGirl.create(:profile)
+      @profile = FactoryBot.create(:profile)
     end
 
     it "initially it is valid" do
@@ -53,7 +53,7 @@ describe Profile do
 
   context "delgated metods" do
     describe "no library_location" do
-      let(:profile) { FactoryGirl.create(:profile) }
+      let(:profile) { FactoryBot.create(:profile) }
 
       it "should return nil for location name" do
         expect(profile.library_location_name).to be_nil
@@ -65,8 +65,8 @@ describe Profile do
     end
 
     describe "with library_location" do
-      let(:library_location) { FactoryGirl.create(:library_location) }
-      let(:profile) { FactoryGirl.create(:profile, library_location: library_location) }
+      let(:library_location) { FactoryBot.create(:library_location) }
+      let(:profile) { FactoryBot.create(:profile, library_location: library_location) }
 
       it "should return correct location name" do
         expect(profile.library_location_name).to eq(library_location.name)
@@ -82,9 +82,9 @@ describe Profile do
 
     describe "program_organization" do
       before do
-        @npl = FactoryGirl.create(:organization, :accepts_programs, subdomain: "npl")
-        @profile = FactoryGirl.create(:profile)
-        @user = FactoryGirl.create(:user, profile: @profile, organization: @npl)
+        @npl = FactoryBot.create(:organization, :accepts_programs, subdomain: "npl")
+        @profile = FactoryBot.build(:profile, :with_last_name)
+        @user = FactoryBot.create(:user, profile: @profile, organization: @npl)
       end
 
       it "should return true for organization with programs" do
@@ -99,7 +99,7 @@ describe Profile do
 
     describe "full_name" do
       before do
-        @profile = FactoryGirl.create(:profile)
+        @profile = FactoryBot.create(:profile)
       end
 
       it "displays first name if no last name" do
@@ -115,7 +115,8 @@ describe Profile do
     describe "context_update" do
 
       before(:each) do
-        @profile = FactoryGirl.create(:profile)
+        @profile = FactoryBot.create(:profile)
+        @user = @profile.user
       end
 
       context "user in organization without programs" do
@@ -134,8 +135,8 @@ describe Profile do
       context "user in organization with programs" do
 
         before do
-          @new_org = FactoryGirl.create(:organization, :accepts_programs, subdomain: "new")
-          FactoryGirl.create(:user, profile: @profile, organization: @new_org)
+          @new_org = FactoryBot.create(:organization, :accepts_programs, subdomain: "new")
+          @user.update(organization: @new_org)
         end
 
         it "should not update profile without last name" do

@@ -1,4 +1,4 @@
-class AddParentPrograms < ActiveRecord::Migration
+class AddParentPrograms < ActiveRecord::Migration[4.2]
   def change
     add_column :programs, :parent_type, :integer
 

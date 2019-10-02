@@ -4,7 +4,7 @@ describe Admin::LessonsController do
 
   before(:each) do
     @request.host = "www.test.host"
-    create(:default_organization)
+    @org = create(:default_organization)
     @english = create(:language)
     @spanish = create(:spanish_lang)
     @course1 = create(:course)
@@ -13,8 +13,7 @@ describe Admin::LessonsController do
     @course1.lessons << [@lesson1, @lesson2]
     @course1.save
 
-    @admin = create(:admin_user)
-    @admin.add_role(:admin)
+    @admin = create(:user, :admin, organization: @org)
     sign_in @admin
   end
 
@@ -36,14 +35,14 @@ describe Admin::LessonsController do
 
   describe "GET #edit" do
     it "assigns the requested lesson as @lesson" do
-      get :edit, { course_id: @course1.to_param, id: @lesson1.id.to_param }
+      get :edit, params: { course_id: @course1.to_param, id: @lesson1.id.to_param }
       expect(assigns(:lesson)).to eq(@lesson1)
     end
   end
 
   describe "GET #new" do
     it "assigns a new lesson as @lesson" do
-      get :new, { course_id: @course1.to_param }
+      get :new, params: { course_id: @course1.to_param }
       expect(assigns(:lesson)).to be_a_new(Lesson)
     end
   end
@@ -96,37 +95,37 @@ describe Admin::LessonsController do
     context "with valid params" do
       it "creates a new lesson" do
         expect do
-          post :create, { course_id: @course1.to_param, lesson: valid_attributes }
+          post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
         end.to change(Lesson, :count).by(1)
       end
 
       it "creates a new assessment" do
         expect do
-          post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+          post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
         end.to change(Lesson, :count).by(1)
       end
 
       it "assigns a new assessment to the end of the course lessons" do
-        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
         lesson = Lesson.last
         expect(lesson.lesson_order).to be(3)
       end
 
       it "renders new if an assessment already exists" do
-        post :create, { course_id: @course1.to_param, lesson: assessment_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
         expect(@course1.lessons.count).to eq(3)
-        post :create, { course_id: @course1.to_param, lesson: assessment_attributes, title: "something different" }
+        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes, title: "something different" }
         expect(@course1.lessons.count).to eq(3)
       end
 
       it "assigns a new lesson as @lesson" do
-        post :create, { course_id: @course1.to_param, lesson: valid_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
         expect(assigns(:lesson)).to be_a(Lesson)
         expect(assigns(:lesson)).to be_persisted
       end
 
       it "redirects to the admin edit view of the lesson" do
-        post :create, { course_id: @course1.to_param, lesson: valid_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to("http://www.test.host/admin/courses/#{@course1.slug}/lessons/lesson-your-load-man/edit")
       end
@@ -134,12 +133,12 @@ describe Admin::LessonsController do
 
     context "with invalid params" do
       it "assigns a newly created but unsaved lesson as @lesson" do
-        post :create, { course_id: @course1.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: invalid_attributes }
         expect(assigns(:lesson)).to be_a_new(Lesson)
       end
 
       it "re-renders the 'new' template" do
-        post :create, { course_id: @course1.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: @course1.to_param, lesson: invalid_attributes }
         expect(response).to render_template("new")
       end
     end
@@ -148,16 +147,18 @@ describe Admin::LessonsController do
   describe "POST #update" do
     context "with valid params" do
       it "updates an existing Lesson" do
-        patch :update,
-          { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes, commit: "Save Lesson" }
+        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
+                          lesson: @lesson1.attributes, commit: "Save Lesson" }
+        patch :update, params: update_params
         expect(response).to have_http_status(:redirect)
       end
 
       it "updates with duration as a string" do
         @lesson_attributes = @lesson1.attributes
         @lesson_attributes["duration"] = "1:00"
-        patch :update,
-          { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson_attributes, commit: "Save Lesson" }
+        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
+                          lesson: @lesson_attributes, commit: "Save Lesson" }
+        patch :update, params: update_params
         expect(response).to have_http_status(:redirect)
       end
 
@@ -165,8 +166,10 @@ describe Admin::LessonsController do
         org = create(:organization)
         child_course = create(:course, organization: org)
         lesson1_child = create(:lesson, course: child_course, parent: @lesson1)
-        patch :update,
-              { course_id: @course1.to_param, id: @lesson1.to_param, lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: "Test Lesson"), commit: "Save Lesson" }
+        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
+                          lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: "Test Lesson"),
+                          commit: "Save Lesson" }
+        patch :update, params: update_params
 
         lesson1_child.reload
         expect(lesson1_child.title).to eq("Test Lesson")
