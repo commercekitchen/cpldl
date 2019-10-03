@@ -7,11 +7,14 @@ feature "User signs up" do
   let(:last_name) { Faker::Name.last_name }
   let(:zip_code) { Faker::Address.zip }
 
+  before(:each) do
+    @spanish = create(:spanish_lang)
+    @english = create(:language)
+  end
+
   context "organization has no programs" do
     before(:each) do
       create(:organization, subdomain: 'chipublib')
-      @spanish = create(:spanish_lang)
-      @english = create(:language)
       switch_to_subdomain("chipublib")
     end
 
@@ -24,6 +27,12 @@ feature "User signs up" do
       user = User.last
       expect(user.profile.first_name).to eq("Alejandro")
       expect(user.profile.zip_code).to eq("12345")
+
+      # Log out and back in
+      log_out
+
+      log_in_with("valid@example.com", "password")
+      expect(current_path).to eq(root_path)
     end
 
     scenario "with valid email, password, first name, but no zip code" do
