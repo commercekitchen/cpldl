@@ -7,7 +7,6 @@ class ApplicationController < ActionController::Base
   before_action :set_user_token
   before_action :set_mailer_host
   before_action :require_valid_profile
-  protect_from_forgery with: :exception
 
   helper_method :current_organization
   helper_method :subdomain?
