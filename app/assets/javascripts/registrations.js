@@ -2,8 +2,6 @@
   registrations(window.jQuery, window, document);
 })(function($, window, document) {
   $(function() {
-    console.log("registrations function executed");
-
     $(document).ready(function() {
       var programType = $(
         "input[type=radio][name=program_type][checked='checked']"
