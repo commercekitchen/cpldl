@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-
-  mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
   resource :account, only: [:show, :update]

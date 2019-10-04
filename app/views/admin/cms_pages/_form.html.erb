@@ -1,4 +1,4 @@
-<%= javascript_include_tag Ckeditor.cdn_url %>
+<%= javascript_include_tag "/ckeditor/ckeditor.js" %>
 
 <small>Admin >> Pages >> Edit Page</small>
 
@@ -77,7 +77,7 @@
     <%= f.label :body, class: "text-color" do %>
       Page Content<span class="required"></span>
     <% end %>
-    <%= f.cktext_area :body %>
+    <%= f.text_area :body %>
   </fieldset>
 
   <fieldset>
@@ -104,3 +104,7 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  CKEDITOR.replace("cms_page_body");
+</script>
