@@ -8,7 +8,7 @@
 #  updated_at :datetime         not null
 #
 
-class Language < ActiveRecord::Base
+class Language < ApplicationRecord
   has_many :courses
   has_many :cms_pages
 

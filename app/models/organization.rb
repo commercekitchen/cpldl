@@ -14,7 +14,7 @@
 #  login_required          :boolean          default(TRUE)
 #
 
-class Organization < ActiveRecord::Base
+class Organization < ApplicationRecord
   include Storext.model
 
   resourcify

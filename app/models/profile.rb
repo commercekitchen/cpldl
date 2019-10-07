@@ -18,7 +18,7 @@
 #  opt_out_of_recommendations :boolean          default(FALSE)
 #
 
-class Profile < ActiveRecord::Base
+class Profile < ApplicationRecord
   belongs_to :user, inverse_of: :profile
   belongs_to :language, required: false
   belongs_to :library_location, required: false

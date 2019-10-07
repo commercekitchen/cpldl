@@ -9,7 +9,7 @@
 #  updated_at :datetime         not null
 #
 
-class CourseTopic < ActiveRecord::Base
+class CourseTopic < ApplicationRecord
   belongs_to :topic
   belongs_to :course, touch: true
 end

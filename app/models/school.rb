@@ -10,7 +10,7 @@
 #  updated_at      :datetime         not null
 #
 
-class School < ActiveRecord::Base
+class School < ApplicationRecord
   has_many :profiles
   belongs_to :organization
 

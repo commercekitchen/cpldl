@@ -12,7 +12,7 @@
 #  custom          :boolean          default(FALSE)
 #
 
-class LibraryLocation < ActiveRecord::Base
+class LibraryLocation < ApplicationRecord
   belongs_to :organization, required: false
   validates :name, :zipcode, presence: true
 

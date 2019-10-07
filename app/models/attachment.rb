@@ -15,7 +15,7 @@
 #  file_description      :string
 #
 
-class Attachment < ActiveRecord::Base
+class Attachment < ApplicationRecord
   belongs_to :course
   has_attached_file :document
 

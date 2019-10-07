@@ -47,7 +47,7 @@
 #  encrypted_library_card_pin_iv :string
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   require "securerandom"
   include PgSearch::Model
   # TODO: determine lockable? functionality and add to search

@@ -12,7 +12,7 @@
 #  tracked      :boolean          default(FALSE)
 #
 
-class CourseProgress < ActiveRecord::Base
+class CourseProgress < ApplicationRecord
   belongs_to :user
   belongs_to :course
   has_many :completed_lessons, dependent: :destroy
