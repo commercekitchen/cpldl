@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-
-  mount Ckeditor::Engine => '/ckeditor'
   root 'home#index'
 
+  mount Ckeditor::Engine => '/ckeditor'
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
     post 'select_program'

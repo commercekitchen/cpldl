@@ -44,8 +44,6 @@ gem 'paperclip' # File uploads
 gem 'rubyzip', '~> 1.0' # ASL files
 gem 'friendly_id', '>= 5.1'
 
-gem 'ckeditor'
-
 # PDF generation for completion certificate
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
@@ -77,6 +75,9 @@ gem 'validate_url'
 # Rails 5 gems
 gem 'bootsnap', require: false
 gem 'listen'
+
+# CKEditor
+gem 'ckeditor', '~> 4.3.0'
 
 group :development do
   gem 'rubocop', require: false

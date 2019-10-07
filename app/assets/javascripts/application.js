@@ -15,4 +15,5 @@
 //= require select2.full
 //= require html.sortable
 //= require local-time
+//= require ckeditor/init
 //= require_tree .
