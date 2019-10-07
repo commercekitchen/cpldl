@@ -26,7 +26,7 @@
 
 require "zip"
 
-class Lesson < ActiveRecord::Base
+class Lesson < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :history]
 

@@ -25,7 +25,7 @@
 #  category_id    :integer
 #
 
-class Course < ActiveRecord::Base
+class Course < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :history]
 

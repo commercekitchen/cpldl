@@ -11,7 +11,7 @@
 #  parent_type       :integer
 #
 
-class Program < ActiveRecord::Base
+class Program < ApplicationRecord
   enum parent_type: [:seniors, :adults, :young_adults, :students_and_parents]
   PARENT_TYPES = {
     "Programs for Seniors" => :seniors,

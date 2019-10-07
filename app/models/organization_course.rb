@@ -11,7 +11,7 @@
 
 # TODO: deprecated
 
-class OrganizationCourse < ActiveRecord::Base
+class OrganizationCourse < ApplicationRecord
   belongs_to :organization
   belongs_to :course
 end

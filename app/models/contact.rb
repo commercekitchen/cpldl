@@ -15,7 +15,7 @@
 #  updated_at   :datetime         not null
 #
 
-class Contact < ActiveRecord::Base
+class Contact < ApplicationRecord
   validates :first_name, presence: true, length: { maximum: 30 }
   validates :last_name, presence: true, length: { maximum: 30 }
   validates :organization, presence: true, length: { maximum: 50 }

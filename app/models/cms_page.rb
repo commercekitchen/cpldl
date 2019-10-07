@@ -19,7 +19,7 @@
 #  organization_id :integer
 #
 
-class CmsPage < ActiveRecord::Base
+class CmsPage < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: [:slugged, :history]
 

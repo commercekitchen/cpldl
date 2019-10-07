@@ -11,7 +11,7 @@
 #  updated_at      :datetime         not null
 #
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   belongs_to :organization
   has_many :courses
 

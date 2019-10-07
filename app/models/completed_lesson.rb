@@ -9,6 +9,6 @@
 #  updated_at         :datetime         not null
 #
 
-class CompletedLesson < ActiveRecord::Base
+class CompletedLesson < ApplicationRecord
   belongs_to :course_progress
 end

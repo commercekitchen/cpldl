@@ -10,7 +10,7 @@
 #  program_id    :integer
 #
 
-class ProgramLocation < ActiveRecord::Base
+class ProgramLocation < ApplicationRecord
   belongs_to :program
   has_many :users
   validates :location_name, presence: true
