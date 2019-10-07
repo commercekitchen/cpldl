@@ -76,6 +76,9 @@ gem 'validate_url'
 gem 'bootsnap', require: false
 gem 'listen'
 
+# CKEditor
+gem 'ckeditor', '~> 4.3.0'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false

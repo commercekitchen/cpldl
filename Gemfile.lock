@@ -107,6 +107,9 @@ GEM
       xpath (~> 3.2)
     childprocess (2.0.0)
       rake (< 13.0)
+    ckeditor (4.3.0)
+      orm_adapter (~> 0.5.0)
+      terrapin
     climate_control (0.2.0)
     coderay (1.1.2)
     coercible (1.0.0)
@@ -429,6 +432,7 @@ DEPENDENCIES
   capistrano-rvm
   capistrano-sidekiq
   capybara
+  ckeditor (~> 4.3.0)
   colorize
   data_migrate (~> 5.3.2)
   database_cleaner
