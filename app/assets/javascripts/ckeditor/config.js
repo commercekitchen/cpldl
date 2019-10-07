@@ -36,9 +36,9 @@ CKEDITOR.editorConfig = function(config) {
   config.filebrowserUploadMethod = "form";
 
   // Font plugin
-  config.extraPlugins = "font";
+  //config.extraPlugins = "font";
 
-  config.skin = "moono";
+  //config.skin = "moono";
 
   // Rails CSRF token
   config.filebrowserParams = function() {
