@@ -38,7 +38,7 @@ CKEDITOR.editorConfig = function(config) {
   // Font plugin
   //config.extraPlugins = "font";
 
-  //config.skin = "moono";
+  config.skin = "moono";
 
   // Rails CSRF token
   config.filebrowserParams = function() {
