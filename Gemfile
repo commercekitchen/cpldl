@@ -79,6 +79,9 @@ gem 'listen'
 # CKEditor
 gem 'ckeditor', '~> 4.3.0'
 
+# AWS sdk for s3
+gem 'aws-sdk-s3', '~> 1'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false
