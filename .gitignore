@@ -58,3 +58,6 @@ config/secrets.yml
 
 # Byebug history
 .byebug_history
+
+# Local environment
+/config/local_env.yml
