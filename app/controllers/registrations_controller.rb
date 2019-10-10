@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     @user = User.new(sign_up_params)
+    @library_card_login = current_organization.library_card_login?
     if verify_recaptcha(model: @user)
       super
     else
