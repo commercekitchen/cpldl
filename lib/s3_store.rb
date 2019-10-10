@@ -10,4 +10,11 @@ class S3Store
       key: key
     })
   end
+
+  def read(key:)
+    @client.get_object({
+      bucket: S3_BUCKET_NAME,
+      key: key
+    })
+  end
 end

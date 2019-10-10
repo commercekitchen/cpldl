@@ -40,5 +40,8 @@ module CPLDigitalLearn
       end if File.exists?(env_file)
     end
 
+    # S3 Proxy
+    require Rails.root.join("lib/s3_proxy.rb")
+    config.middleware.use S3Proxy, streaming: false
   end
 end

@@ -82,6 +82,9 @@ gem 'ckeditor', '~> 4.3.0'
 # AWS sdk for s3
 gem 'aws-sdk-s3', '~> 1'
 
+# Rack::Proxy for S3 Proxy middleware
+gem 'rack-proxy'
+
 group :development do
   gem 'rubocop', require: false
   gem 'brakeman', require: false

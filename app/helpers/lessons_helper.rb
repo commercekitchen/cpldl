@@ -32,8 +32,10 @@ module LessonsHelper
         lesson_id = lesson.id
         directory = lesson.story_line_file_name.chomp(".zip")
       end
+
+      #story_line_url = "https://#{S3_BUCKET_NAME}.s3-website-#{ENV['AWS_REGION']}.amazonaws.com/storylines/#{lesson_id}/#{directory}/"
       story_line_url = "/storylines/#{lesson_id}/#{directory}/story.html"
-      content_tag(:iframe, nil, src: "#{story_line_url}", class: "story_line", title: lesson.summary)
+      content_tag(:iframe, nil, src: "#{story_line_url}", class: "story_line", title: lesson.summary, id: 'asl-iframe')
     else
       content_tag(:p, "No lesson available at this point.", class: "note")
     end
