@@ -91,6 +91,13 @@ feature "User signs up" do
       expect(user.profile.zip_code).to eq(zip_code)
     end
 
+    scenario "with no library card number" do
+      library_card_sign_up_with("", lib_card_pin, first_name, zip_code)
+      expect(current_path).to eq(user_registration_path)
+      expect(page).to_not have_css("#signup_email", visible: true)
+      expect(page).to have_css("#library_card_number", visible: true)
+    end
+
     scenario "with short library card number" do
       library_card_sign_up_with(invalid_card_number_short, lib_card_pin, first_name, zip_code)
       expect(current_path).to eq(user_registration_path)
