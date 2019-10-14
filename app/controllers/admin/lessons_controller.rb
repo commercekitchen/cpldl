@@ -57,7 +57,8 @@ module Admin
       @lesson.story_line = nil
       @lesson.save
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
-      render :edit, notice: "Story Line successfully removed, please upload a new story line .zip file."
+      flash[:notice] = "Story Line successfully removed, please upload a new story line .zip file."
+      render :edit
     end
 
     def sort

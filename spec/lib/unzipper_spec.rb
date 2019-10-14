@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe Unzipper do
   let(:temp_root) { File.join(Rails.root, "tmp") }
   let(:lesson) { FactoryBot.create(:lesson) }
-  let(:storyline_path) { "public/storylines/#{lesson.story_line.instance.id}" }
+  let(:storyline_path) { "storylines/#{lesson.story_line.instance.id}" }
   let(:package_file_name) { lesson.story_line.instance.story_line_file_name.chomp(".zip").to_s }
 
   context "initialize" do
@@ -21,14 +21,5 @@ RSpec.describe Unzipper do
   it "unzips a file" do
     Unzipper.new(lesson.story_line, temp_root).unzip_lesson
     expect(File.join(temp_root, "#{storyline_path}/#{package_file_name}")).to_not be(nil)
-  end
-
-  it "overwrites previous contents of destination directory" do
-    test_file = File.join(temp_root, "#{storyline_path}/#{package_file_name}/test_file.txt")
-    FileUtils.mkdir_p(File.dirname(test_file))
-    File.open(test_file, "w")
-    expect(File.exist?(test_file)).to be_truthy
-    Unzipper.new(lesson.story_line, temp_root).unzip_lesson
-    expect(File.exist?(test_file)).to be_falsey
   end
 end
