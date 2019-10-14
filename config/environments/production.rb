@@ -91,4 +91,8 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Use s3 for lesson files
+  config.lesson_store = :s3
+  config.s3_bucket_name = 'dl-prodapp-assets'
 end

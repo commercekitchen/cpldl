@@ -29,8 +29,22 @@ module CPLDigitalLearn
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 
     config.to_prepare do
-        Devise::SessionsController.skip_before_action :require_valid_profile
+      Devise::SessionsController.skip_before_action :require_valid_profile
     end
 
+    # Load local env (aws credentials)
+    config.before_configuration do
+      env_file = File.join(Rails.root, 'config', 'local_env.yml')
+      YAML.load(File.open(env_file)).each do |key, value|
+        ENV[key.to_s] = value
+      end if File.exists?(env_file)
+    end
+
+    # S3 Proxy
+    require Rails.root.join("lib/s3_proxy.rb")
+    config.middleware.use S3Proxy, streaming: false
+
+    # Default to local lesson store
+    config.lesson_store = :local
   end
 end
