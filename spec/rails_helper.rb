@@ -69,6 +69,11 @@ RSpec.configure do |config|
     end
   end
 
+  # Remove test storyline files
+  config.after(:suite) do
+    FileUtils.remove_dir('tmp/storylines')
+  end
+
   include ActionDispatch::TestProcess
 
   # RSpec Rails can automatically mix in different behaviours to your tests

@@ -3,19 +3,12 @@ class S3Store
     @client = Aws::S3::Client.new
   end
 
-  def save(body:, key:, acl:)
+  def save(file:, key:, acl:)
     @client.put_object({
       bucket: S3_BUCKET_NAME,
-      body: body,
+      body: file.get_input_stream.read,
       key: key,
       acl: acl
-    })
-  end
-
-  def read(key:)
-    @client.get_object({
-      bucket: S3_BUCKET_NAME,
-      key: key
     })
   end
 end
