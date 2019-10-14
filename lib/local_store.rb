@@ -8,7 +8,6 @@ class LocalStore
   private
 
   def env_path
-    return 'tmp' if Rails.env.test?
-    return 'public' if Rails.env.development?
+    Rails.configuration.local_lesson_dir
   end
 end

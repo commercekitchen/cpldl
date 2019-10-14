@@ -5,8 +5,8 @@ class S3Proxy < Rack::Proxy
     request = Rack::Request.new(env)
 
     # use rack proxy for anything hitting our host app at /example_service
-    if !local_storage? && request.path =~ %r{^/storylines}
-        @backend = URI('http://dl-development-assets.s3-us-west-2.amazonaws.com')
+    if use_s3? && request.path =~ %r{^/storylines}
+        @backend = URI("https://#{s3_bucket_name}.s3-us-west-2.amazonaws.com")
         # most backends required host set properly, but rack-proxy doesn't set this for you automatically
         # even when a backend host is passed in via the options
         env['HTTP_HOST'] = @backend.host
@@ -24,7 +24,11 @@ class S3Proxy < Rack::Proxy
 
   private
 
-  def local_storage?
-    Rails.env.test? || Rails.env.development?
+  def use_s3?
+    Rails.configuration.lesson_store == :s3
+  end
+
+  def s3_bucket_name
+    Rails.configuration.s3_bucket_name
   end
 end
