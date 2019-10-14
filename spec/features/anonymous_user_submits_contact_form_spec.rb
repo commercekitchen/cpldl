@@ -1,6 +1,6 @@
 require "feature_helper"
 
-feature "Annonymous user submits contact form" do
+feature "Anonymous user submits contact form" do
 
   before(:each) do
     create(:default_organization)

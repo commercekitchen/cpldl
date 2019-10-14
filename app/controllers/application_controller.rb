@@ -17,15 +17,17 @@ class ApplicationController < ActionController::Base
   layout proc { user_signed_in? || top_level_domain? ? "user/logged_in" : "application" }
 
   def current_organization
-    org = if staging?
-      Organization.find_by_subdomain(stage_subdomain)
-    elsif request.subdomain == "" || request.subdomain == "admin"
-      Organization.find_by_subdomain("")
-    else
-      Organization.find_by_subdomain(request.subdomain)
+    find_organization
+  end
+
+  def find_organization
+    org = Organization.find_by_subdomain(current_subdomain) || Organization.find_by_subdomain("www")
+
+    unless current_subdomain == "" || (org.subdomain == current_subdomain)
+      redirect_to_www and return org
     end
 
-    org || Organization.find_by_subdomain("www")
+    org
   end
 
   def set_mailer_host
@@ -42,19 +44,6 @@ class ApplicationController < ActionController::Base
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
       flash[:alert] = "You must have a valid profile before you can continue:"
       redirect_to invalid_profile_path
-    end
-  end
-
-  def staging?
-    request.subdomain.include?("stage")
-  end
-
-  def stage_subdomain
-    subdomain_array = request.subdomain.split(".")
-    if subdomain_array.size == 2
-      subdomain_array.first
-    else
-      "www"
     end
   end
 
@@ -163,6 +152,27 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def current_subdomain
+    if staging?
+      stage_subdomain
+    else
+      request.subdomain
+    end
+  end
+
+  def stage_subdomain
+    subdomain_array = request.subdomain.split(".")
+    if subdomain_array.size == 2
+      subdomain_array.first
+    else
+      "www"
+    end
+  end
+
+  def staging?
+    request.subdomain.include?("stage")
+  end
 
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?

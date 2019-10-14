@@ -1,6 +1,6 @@
 require "feature_helper"
 
-feature "Annonymous visits static pages" do
+feature "Anonymous visits static pages" do
   before(:each) do
     create(:default_organization)
   end
