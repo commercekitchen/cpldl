@@ -17,7 +17,7 @@ class Unzipper
   def unzip_and_upload_asl
     Zip::File.open(zip_file) do |file|
       file.each do |f|
-        S3Store.new.save(body: f.get_input_stream.read, key: s3_object_path(f))
+        S3Store.new.save(body: f.get_input_stream.read, key: s3_object_path(f), acl: 'public-read')
       end
     end
   end
