@@ -1,9 +1,6 @@
 inherit_from:
   - .rubocop_todo.yml
 
-Rails:
-  Enabled: true
-
 AllCops:
   Exclude:
     - "bin/**/*"
@@ -11,6 +8,9 @@ AllCops:
     - "db/schema.rb"
     - "config/**/*"
     - "script/**/*"
+
+Rails:
+  Enabled: true
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
