@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::Custom::BaseController < Admin::BaseController
   before_action :set_sidebar
 

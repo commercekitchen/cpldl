@@ -1,6 +1,8 @@
-require "feature_helper"
+# frozen_string_literal: true
 
-feature "Admin user visits category management page" do
+require 'feature_helper'
+
+feature 'Admin user visits category management page' do
 
   before(:each) do
     @organization = create(:organization)
@@ -16,31 +18,31 @@ feature "Admin user visits category management page" do
     log_in_with @user.email, @user.password
   end
 
-  scenario "sees all categories" do
+  scenario 'sees all categories' do
     visit admin_categories_path
-    expect(page).to have_content("Categories")
+    expect(page).to have_content('Categories')
     expect(page).to have_content(@category1.name)
     expect(page).to have_content(@category2.name)
     expect(page).to have_content(@category3.name)
   end
 
-  scenario "can add new category", js: true do
+  scenario 'can add new category', js: true do
     new_word = Faker::Lorem.word
     visit admin_categories_path
-    fill_in "category_name", with: "#{@category1.name}_#{new_word}"
-    click_on "Add Category"
+    fill_in 'category_name', with: "#{@category1.name}_#{new_word}"
+    click_on 'Add Category'
     expect(page).to have_content "#{@category1.name}_#{new_word}"
   end
 
-  scenario "sees error if category name exists", js: true do
+  scenario 'sees error if category name exists', js: true do
     visit admin_categories_path
-    fill_in "category_name", with: @category1.name
-    click_on "Add Category"
-    expect(page).to have_content("Category Name is already in use by your organization.")
-    expect(page).to have_selector(:css, ".field_with_errors #category_name")
+    fill_in 'category_name', with: @category1.name
+    click_on 'Add Category'
+    expect(page).to have_content('Category Name is already in use by your organization.')
+    expect(page).to have_selector(:css, '.field_with_errors #category_name')
   end
 
-  scenario "can disable category", js: true do
+  scenario 'can disable category', js: true do
     visit admin_categories_path
     click_on "category_toggle_link_#{@category1.id}"
     expect(page).to have_selector(:css, ".table_row_disabled .four-of-twelve #category_toggle_link_#{@category1.id}")

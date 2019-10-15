@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -50,7 +52,7 @@
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "jane#{n}@example.com" }
-    password "abcd1234"
+    password 'abcd1234'
     confirmed_at Time.zone.now.to_s
     sign_in_count 2
     organization

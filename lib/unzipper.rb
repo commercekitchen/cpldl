@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Unzipper
 
   def initialize(asl_package, parent_dir = nil)
@@ -30,7 +32,7 @@ class Unzipper
   end
 
   def package_file_name
-    @package_file_name ||= @package.instance.story_line_file_name.chomp(".zip")
+    @package_file_name ||= @package.instance.story_line_file_name.chomp('.zip')
   end
 
   def storyline_zip_dir

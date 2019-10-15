@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class AccountsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_user
-  layout "user/logged_in_with_sidebar"
+  layout 'user/logged_in_with_sidebar'
 
   def show
   end
@@ -14,7 +16,7 @@ class AccountsController < ApplicationController
         format.html { render :show }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       else
-        format.html { redirect_to account_path, notice: "Account was successfully updated." }
+        format.html { redirect_to account_path, notice: 'Account was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       end
     end

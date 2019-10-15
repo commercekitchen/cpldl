@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseProgressesController < ApplicationController
   before_action :authenticate_user!, except: [:create]
   before_action :assign_course
@@ -9,7 +11,7 @@ class CourseProgressesController < ApplicationController
       if course_progress.save
         redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
       else
-        render :show, alert: "Sorry, we were unable to add this course to your plan."
+        render :show, alert: 'Sorry, we were unable to add this course to your plan.'
       end
     else
       redirect_to course_lesson_path(@course, @course.next_lesson_id)
@@ -17,7 +19,7 @@ class CourseProgressesController < ApplicationController
   end
 
   def update
-    tracked = params[:tracked] == "true"
+    tracked = params[:tracked] == 'true'
     course_progress.tracked = tracked
 
     if course_progress.save
@@ -35,17 +37,17 @@ class CourseProgressesController < ApplicationController
 
   def success_message(tracked)
     if tracked
-      "Successfully added this course to your plan."
+      'Successfully added this course to your plan.'
     else
-      "Successfully removed this course to your plan."
+      'Successfully removed this course to your plan.'
     end
   end
 
   def error_message(tracked)
     if tracked
-      "Sorry, we were unable to add this course to your plan."
+      'Sorry, we were unable to add this course to your plan.'
     else
-      "Sorry, we were unable to remove this course to your plan."
+      'Sorry, we were unable to remove this course to your plan.'
     end
   end
 

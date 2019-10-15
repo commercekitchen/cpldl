@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: organizations
@@ -24,12 +26,12 @@ class Organization < ApplicationRecord
     footer_logo_file_size     Integer
     footer_logo_link          String
     footer_logo_content_type  String
-    user_survey_enabled       Boolean,  default: false
+    user_survey_enabled       Boolean, default: false
     user_survey_link          String
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
-    # :user_survey_enabled, :user_survey_button_text, :user_survey_link
+  # :user_survey_enabled, :user_survey_button_text, :user_survey_link
 
   has_many :cms_pages, dependent: :destroy
   has_many :library_locations, dependent: :destroy
@@ -44,7 +46,7 @@ class Organization < ApplicationRecord
 
   has_attached_file :footer_logo
 
-  validates_attachment_content_type :footer_logo, content_type: ["image/png", "image/jpeg"], message: "should be png or jpeg format."
+  validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
   validates_attachment_size :footer_logo, in: 0.megabytes..2.megabytes
 
   validates :footer_logo_link, url: { allow_blank: true }
@@ -66,7 +68,7 @@ class Organization < ApplicationRecord
   end
 
   def base_site?
-    subdomain == "www"
+    subdomain == 'www'
   end
 
   def authentication_key_field

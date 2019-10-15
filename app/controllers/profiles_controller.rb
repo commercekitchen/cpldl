@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -16,7 +18,7 @@ class ProfilesController < ApplicationController
   skip_before_action :require_valid_profile
   before_action :authenticate_user!
   before_action :set_user
-  layout "user/logged_in_with_sidebar"
+  layout 'user/logged_in_with_sidebar'
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)
@@ -25,14 +27,14 @@ class ProfilesController < ApplicationController
   def invalid_profile
     @profile = Profile.find_or_initialize_by(user: @user)
     @profile.valid?
-    render "show"
+    render 'show'
   end
 
   def update
     @profile = Profile.find_or_initialize_by(user: @user)
 
     if params[:profile][:user].present?
-      new_role = params[:profile][:user][:user_role_string] == "Student" ? "Student" : "Parent"
+      new_role = params[:profile][:user][:user_role_string] == 'Student' ? 'Student' : 'Parent'
       @user.add_role(new_role)
     end
 
@@ -49,7 +51,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.context_update(new_profile_params)
         update_locale if language_changed
-        format.html { redirect_to redirect_path, notice: I18n.t("profile_page.updated") }
+        format.html { redirect_to redirect_path, notice: I18n.t('profile_page.updated') }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :show }
@@ -98,14 +100,14 @@ class ProfilesController < ApplicationController
   def show_quiz?
     current_user.present? &&
       current_user.quiz_modal_complete == false &&
-      !(params[:profile][:opt_out_of_recommendations] == "true") &&
+      !(params[:profile][:opt_out_of_recommendations] == 'true') &&
       !current_user.has_role?(:admin, current_organization)
   end
 
   def update_locale
     language = Language.find_by(id: @profile.language_id) || Language.first
     I18n.locale = case language.name
-                  when "Spanish"
+                  when 'Spanish'
                     :es
                   else
                     :en
@@ -117,7 +119,7 @@ class ProfilesController < ApplicationController
     if profile_params[:library_location_id].present?
       profile_params.except(:library_location_attributes)
     else
-      library_location_zip = profile_params[:zip_code].presence || "00000"
+      library_location_zip = profile_params[:zip_code].presence || '00000'
       profile_params[:library_location_attributes][:zipcode] = library_location_zip
       profile_params
     end

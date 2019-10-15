@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use single quotes within config files.
 # rubocop:disable Style/StringLiterals
 

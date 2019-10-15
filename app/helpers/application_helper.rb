@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ApplicationHelper
   def resource_name
     :user
@@ -13,15 +15,16 @@ module ApplicationHelper
 
   def svg_tag(filename, options = {})
     assets = Rails.application.assets
-    file = assets.find_asset(filename).source.force_encoding("UTF-8")
+    file = assets.find_asset(filename).source.force_encoding('UTF-8')
     doc = Nokogiri::HTML::DocumentFragment.parse file
-    svg = doc.at_css "svg"
-    svg["class"] = options[:class] if options[:class].present?
+    svg = doc.at_css 'svg'
+    svg['class'] = options[:class] if options[:class].present?
     raw doc
   end
 
   def tel_to(number)
-    return "<no phone number>" if number.blank?
+    return '<no phone number>' if number.blank?
+
     link_to number_to_phone(number, area_code: true), "tel:#{number}"
   end
 
@@ -31,14 +34,14 @@ module ApplicationHelper
 
   def footer_logo_link_url
     links = {
-      chipublib: "http://www.chipublib.org/",
-      npl: "http://library.nashville.org",
-      kpl: "http://kpl.gov/",
-      tscpl: "http://tscpl.org/",
-      pima: "https://www.library.pima.gov",
-      ebrpl: "https://www.ebrpl.com",
-      carnegielibrary: "https://www.carnegielibrary.org",
-      kclibrary: "http://www.kclibrary.org/"
+      chipublib: 'http://www.chipublib.org/',
+      npl: 'http://library.nashville.org',
+      kpl: 'http://kpl.gov/',
+      tscpl: 'http://tscpl.org/',
+      pima: 'https://www.library.pima.gov',
+      ebrpl: 'https://www.ebrpl.com',
+      carnegielibrary: 'https://www.carnegielibrary.org',
+      kclibrary: 'http://www.kclibrary.org/'
     }
     current_organization.footer_logo_link.present? ? current_organization.footer_logo_link : links[current_organization.subdomain.to_sym]
   end

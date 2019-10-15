@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: languages
@@ -10,10 +12,10 @@
 
 FactoryBot.define do
   factory :language do
-    name "English"
+    name 'English'
   end
 
   factory :spanish_lang, class: Language do
-    name "Spanish"
+    name 'Spanish'
   end
 end

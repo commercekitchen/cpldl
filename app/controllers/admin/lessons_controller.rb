@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class LessonsController < BaseController
 
@@ -31,7 +33,7 @@ module Admin
 
       if @lesson.save
         Unzipper.new(@lesson.story_line).unzip_lesson
-        redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: "Lesson was successfully created."
+        redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: 'Lesson was successfully created.'
       else
         render :new
       end
@@ -48,7 +50,7 @@ module Admin
         changed = propagate_changes? ? propagate_lesson_changes : 0
         redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated. Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}."
       else
-        render :edit, notice: "Lesson failed to update."
+        render :edit, notice: 'Lesson failed to update.'
       end
     end
 
@@ -57,13 +59,13 @@ module Admin
       @lesson.story_line = nil
       @lesson.save
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
-      flash[:notice] = "Story Line successfully removed, please upload a new story line .zip file."
+      flash[:notice] = 'Story Line successfully removed, please upload a new story line .zip file.'
       render :edit
     end
 
     def sort
       params[:order].each do |_k, v|
-        Lesson.find(v["id"]).update_attribute(:lesson_order, v["position"])
+        Lesson.find(v['id']).update_attribute(:lesson_order, v['position'])
       end
 
       render nothing: true
@@ -101,10 +103,10 @@ module Admin
         @lesson.lesson_order = @lesson.course.lessons.count + 1
         return true
       else
-        warnings = ["There can only be one assessment for a Course.",
-                    "If you are sure you want to <em>replace</em> it, please delete the existing one and try again.",
-                    "Otherwise, please edit the existing assessment for this course."]
-        flash.now[:alert] = warnings.join("<br/>").html_safe
+        warnings = ['There can only be one assessment for a Course.',
+                    'If you are sure you want to <em>replace</em> it, please delete the existing one and try again.',
+                    'Otherwise, please edit the existing assessment for this course.']
+        flash.now[:alert] = warnings.join('<br/>').html_safe
         render :new and return # rubocop:disable Style/AndOr
       end
     end

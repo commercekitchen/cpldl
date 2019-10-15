@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Admin
   class InvitesController < Devise::InvitationsController
     def create
       user = User.find_by(email: params[:user][:email])
       if user
-        flash[:alert] = "The user already exists"
+        flash[:alert] = 'The user already exists'
         redirect_to admin_invites_index_path
       else
         super

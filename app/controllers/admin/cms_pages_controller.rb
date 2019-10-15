@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class CmsPagesController < BaseController
     before_action :set_page, only: [:show, :edit, :update, :destroy]
@@ -12,14 +14,14 @@ module Admin
 
     def create
       @cms_page = CmsPage.new(cms_page_params)
-      if params[:commit] == "Preview Page"
+      if params[:commit] == 'Preview Page'
         @cms_page_body = @cms_page.body.html_safe
         render :new
-      elsif params[:commit] == "Save Page"
-        @cms_page.set_pub_date if params[:cms_page][:pub_status] == "P"
+      elsif params[:commit] == 'Save Page'
+        @cms_page.set_pub_date if params[:cms_page][:pub_status] == 'P'
 
         if @cms_page.save
-          redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully created."
+          redirect_to edit_admin_cms_page_path(@cms_page), notice: 'Page was successfully created.'
         else
           render :new
         end
@@ -37,7 +39,7 @@ module Admin
       if cms_page.save
         render status: 200, json: "#{cms_page.pub_status}"
       else
-        render status: :unprocessable_entity, json: "post failed to update"
+        render status: :unprocessable_entity, json: 'post failed to update'
       end
     end
 
@@ -46,14 +48,14 @@ module Admin
 
       # slug must be set to nil for friendly ID to update
       @cms_page.slug = nil if @cms_page.title != params[:cms_page][:title]
-      if params[:commit] == "Preview Page"
+      if params[:commit] == 'Preview Page'
         @cms_page_body = @cms_page.body.html_safe
         render :new
       else
         @cms_page.update_pub_date(@pub_status) unless @pub_status == @cms_page.pub_status
 
         if @cms_page.update(cms_page_params)
-          redirect_to edit_admin_cms_page_path(@cms_page), notice: "Page was successfully updated."
+          redirect_to edit_admin_cms_page_path(@cms_page), notice: 'Page was successfully updated.'
         else
           render :edit
         end
@@ -70,7 +72,7 @@ module Admin
 
     def destroy
       if @cms_page.destroy
-        redirect_to admin_dashboard_index_path, notice: "Page was successfully deleted."
+        redirect_to admin_dashboard_index_path, notice: 'Page was successfully deleted.'
       else
         render :edit
       end

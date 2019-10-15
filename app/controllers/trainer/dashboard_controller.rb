@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Trainer
   class DashboardController < BaseController
 
@@ -8,7 +10,7 @@ module Trainer
       else
         @users = results & User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :trainer, resource: current_user.organization })
       end
-      render "trainer/dashboard/index", layout: "user/logged_in_with_sidebar"
+      render 'trainer/dashboard/index', layout: 'user/logged_in_with_sidebar'
     end
 
     def manually_confirm_user

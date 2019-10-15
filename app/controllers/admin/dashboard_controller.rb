@@ -1,22 +1,24 @@
+# frozen_string_literal: true
+
 module Admin
   class DashboardController < BaseController
 
     def index
-      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: "A")
+      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
-      render "admin/courses/index", layout: "admin/base_with_sidebar"
+      render 'admin/courses/index', layout: 'admin/base_with_sidebar'
     end
 
     def pages_index
       @cms_pages = CmsPage.where(organization_id: current_organization.id)
-      render "admin/cms_pages/index", layout: "admin/base_with_sidebar"
+      render 'admin/cms_pages/index', layout: 'admin/base_with_sidebar'
     end
 
     def invites_index
-      render "admin/invites/new", layout: "admin/base_with_sidebar"
+      render 'admin/invites/new', layout: 'admin/base_with_sidebar'
     end
 
     def users_index
@@ -27,7 +29,7 @@ module Admin
         @users = results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
       end
 
-      render "admin/users/index", layout: "admin/base_with_sidebar"
+      render 'admin/users/index', layout: 'admin/base_with_sidebar'
     end
 
     def manually_confirm_user
@@ -36,17 +38,17 @@ module Admin
     end
 
     def import_courses
-      @all_subsite_ids = Course.where(pub_status: "P", subsite_course: true).pluck(:id)
-      @previously_imported_ids = current_organization.courses.where.not(pub_status: "A").pluck(:parent_id).compact
+      @all_subsite_ids = Course.where(pub_status: 'P', subsite_course: true).pluck(:id)
+      @previously_imported_ids = current_organization.courses.where.not(pub_status: 'A').pluck(:parent_id).compact
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
       @importable_courses = Course.where(id: @unadded_course_ids)
 
-      @category_ids = Organization.find_by_subdomain("www").categories.map(&:id)
+      @category_ids = Organization.find_by_subdomain('www').categories.map(&:id)
       @uncategorized_courses = @importable_courses.where(category_id: nil)
 
       respond_to do |format|
         format.html do
-          render "admin/courses/import_courses", layout: "admin/base_with_sidebar"
+          render 'admin/courses/import_courses', layout: 'admin/base_with_sidebar'
         end
       end
     end
@@ -55,12 +57,12 @@ module Admin
       new_course = nil
 
       ActiveRecord::Base.transaction do
-        course_to_import = Course.find(params["course_id"].to_i)
+        course_to_import = Course.find(params['course_id'].to_i)
         new_course = course_to_import.dup
         new_course.parent_id = course_to_import.id
         new_course.subsite_course = false
         new_course.pub_date = nil
-        new_course.pub_status = "D"
+        new_course.pub_status = 'D'
         new_course.category_id = new_or_existing_subsite_category_id(course_to_import.category)
         new_course.organization = current_organization
         new_course.save!
@@ -101,6 +103,7 @@ module Admin
 
     def new_or_existing_subsite_category_id(category)
       return nil unless category.present?
+
       current_user.organization.categories.each do |org_category|
         if org_category.name.downcase == category.name.downcase
           @subsite_category_id = org_category.id

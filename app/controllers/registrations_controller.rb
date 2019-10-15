@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RegistrationsController < Devise::RegistrationsController
   after_action :create_organization_user_entry
 
@@ -23,10 +25,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   def sign_up_params
 
-    if params[:user]["date_of_birth(1i)"].present?
-      month = params[:user]["date_of_birth(2i)"].to_i
-      day = params[:user]["date_of_birth(3i)"].to_i
-      year = params[:user]["date_of_birth(1i)"].to_i
+    if params[:user]['date_of_birth(1i)'].present?
+      month = params[:user]['date_of_birth(2i)'].to_i
+      day = params[:user]['date_of_birth(3i)'].to_i
+      year = params[:user]['date_of_birth(1i)'].to_i
       params[:user][:date_of_birth] = Date.new(year, month, day)
     end
 
@@ -55,13 +57,13 @@ class RegistrationsController < Devise::RegistrationsController
     list_params_allowed << [
       :acting_as,
       :student_id
-    ] if params["program_type"] == "students_and_parents"
+    ] if params['program_type'] == 'students_and_parents'
 
     list_params_allowed << [
       :date_of_birth,
       :grade,
       :school_id
-    ] if params[:user][:acting_as] == "Student"
+    ] if params[:user][:acting_as] == 'Student'
 
     list_params_allowed << [
       :library_card_number,
@@ -94,7 +96,7 @@ class RegistrationsController < Devise::RegistrationsController
     if profile_params[:library_location_id].present?
       profile_params.except(:library_location_attributes)
     else
-      library_location_zip = profile_params[:zip_code].presence || "00000"
+      library_location_zip = profile_params[:zip_code].presence || '00000'
       profile_params[:library_location_attributes][:zipcode] = library_location_zip
       profile_params
     end

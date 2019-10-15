@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: organizations
@@ -16,8 +18,8 @@
 
 FactoryBot.define do
   factory :organization do
-    name "Chicago Public Library"
-    subdomain "chipublib"
+    name 'Chicago Public Library'
+    subdomain 'chipublib'
 
     trait :accepts_programs do
       accepts_programs true
@@ -32,8 +34,8 @@ FactoryBot.define do
     end
 
     factory :default_organization do
-      name "Digital Learn"
-      subdomain "www"
+      name 'Digital Learn'
+      subdomain 'www'
       login_required false
     end
   end

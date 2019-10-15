@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: courses
@@ -64,7 +66,7 @@ class Course < ApplicationRecord
   belongs_to :organization, required: true
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
-    reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
+                                reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
   belongs_to :language
   belongs_to :category, required: false
@@ -78,15 +80,15 @@ class Course < ApplicationRecord
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
-    inclusion: { in: %w(M D), message: "%{value} is not a valid format" }
+    inclusion: { in: %w(M D), message: '%{value} is not a valid format' }
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
+    inclusion: { in: %w(P D A), message: '%{value} is not a valid status' }
   validates :level, presence: true,
     inclusion: { in: %w(Beginner Intermediate Advanced),
-      message: "%{value} is not a valid level" }
-  validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == "1" }
+      message: '%{value} is not a valid level' }
+  validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == '1' }
 
-  default_scope { order("course_order ASC") }
+  default_scope { order('course_order ASC') }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
@@ -107,46 +109,48 @@ class Course < ApplicationRecord
   end
 
   def topics_str
-    topics.pluck(:title).join(", ")
+    topics.pluck(:title).join(', ')
   end
 
   def current_pub_status
     case pub_status
-    when "D" then "Draft"
-    when "P" then "Published"
-    when "T" then "Trashed"
+    when 'D' then 'Draft'
+    when 'P' then 'Published'
+    when 'T' then 'Trashed'
     end
   end
 
   def next_lesson_id(current_lesson_id = 0)
-    raise StandardError, "There are no available lessons for this course." if lessons.published.count.zero?
+    raise StandardError, 'There are no available lessons for this course.' if lessons.published.count.zero?
 
     begin
       lesson_order = lessons.published.find(current_lesson_id).lesson_order
-      return lessons.order("lesson_order").last.id if lesson_order >= last_lesson_order
-      self.lessons.published.where("lesson_order > ?", lesson_order).first.id
+      return lessons.order('lesson_order').last.id if lesson_order >= last_lesson_order
+
+      self.lessons.published.where('lesson_order > ?', lesson_order).first.id
     rescue
-      lessons.published.order("lesson_order").first.id
+      lessons.published.order('lesson_order').first.id
     end
   end
 
   def last_lesson_order
-    fail StandardError, "There are no available lessons for this course." if lessons.count == 0
-    lessons.maximum("lesson_order")
+    fail StandardError, 'There are no available lessons for this course.' if lessons.count == 0
+
+    lessons.maximum('lesson_order')
   end
 
-  def duration(format = "mins")
+  def duration(format = 'mins')
     total = 0
     lessons.published.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
 
   def set_pub_date
-    self.pub_date = Time.zone.now unless pub_status != "P"
+    self.pub_date = Time.zone.now unless pub_status != 'P'
   end
 
   def update_pub_date(new_pub_status)
-    if new_pub_status == "P"
+    if new_pub_status == 'P'
       self.pub_date = Time.zone.now
     else
       self.pub_date = nil
@@ -161,10 +165,10 @@ class Course < ApplicationRecord
   end
 
   def post_course_attachments
-    self.attachments.where(doc_type: "post-course")
+    self.attachments.where(doc_type: 'post-course')
   end
 
   def supplemental_attachments
-    self.attachments.where(doc_type: "supplemental")
+    self.attachments.where(doc_type: 'supplemental')
   end
 end

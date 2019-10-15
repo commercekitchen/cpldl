@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -48,7 +50,7 @@
 #
 
 class User < ApplicationRecord
-  require "securerandom"
+  require 'securerandom'
   include PgSearch::Model
   # TODO: determine lockable? functionality and add to search
   pg_search_scope :search_users, against: [:email],
@@ -126,7 +128,7 @@ class User < ApplicationRecord
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if (login = conditions.delete(:login))
-      where(conditions.to_h).where(["library_card_number = :value OR email = :value", { value: login.downcase }]).first
+      where(conditions.to_h).where(['library_card_number = :value OR email = :value', { value: login.downcase }]).first
     elsif conditions.key?(:library_card_number) || conditions.key?(:email)
       where(conditions.to_h).first
     end
@@ -155,7 +157,7 @@ class User < ApplicationRecord
   ###
 
   def organization_id_to_be_deleted
-    roles.find_by_resource_type("Organization").resource_id
+    roles.find_by_resource_type('Organization').resource_id
   end
 
   def tracking_course?(course_id)
@@ -165,22 +167,24 @@ class User < ApplicationRecord
   def completed_lesson_ids(course_id)
     progress = course_progresses.find_by_course_id(course_id)
     return [] if progress.blank?
+
     progress.completed_lessons.collect(&:lesson_id)
   end
 
   def completed_course_ids
     progress = course_progresses.where.not(completed_at: nil)
     return [] if progress.blank?
+
     progress.collect(&:course_id)
   end
 
   def current_roles
-    roles.pluck(:name).join(", ")
+    roles.pluck(:name).join(', ')
   end
 
   def preferred_language
     profile.blank? ? language = nil : language = profile.language
-    language.blank? ? "English" : language.name
+    language.blank? ? 'English' : language.name
   end
 
   def subdomain
@@ -193,24 +197,25 @@ class User < ApplicationRecord
 
   def reportable_role?(org)
     return true if self.has_role?(:user, org) || self.has_role?(:parent, org) || self.has_role?(:student, org)
+
     false
   end
 
   private
 
-    def add_token_to_user
-      self.token = SecureRandom.uuid if self.token.blank?
-    end
+  def add_token_to_user
+    self.token = SecureRandom.uuid if self.token.blank?
+  end
 
-    def set_password_from_pin
-      return unless library_card_pin_changed?
+  def set_password_from_pin
+    return unless library_card_pin_changed?
 
-      hashed_pin = md5_digest(library_card_pin)
-      self.password = hashed_pin
-      self.password_confirmation = hashed_pin
-    end
+    hashed_pin = md5_digest(library_card_pin)
+    self.password = hashed_pin
+    self.password_confirmation = hashed_pin
+  end
 
-    def md5_digest(password, limit=10)
-      Digest::MD5.hexdigest(password).first(limit)
-    end
+  def md5_digest(password, limit = 10)
+    Digest::MD5.hexdigest(password).first(limit)
+  end
 end

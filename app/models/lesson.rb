@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lessons
@@ -24,7 +26,7 @@
 #  parent_id               :integer
 #
 
-require "zip"
+require 'zip'
 
 class Lesson < ApplicationRecord
   extend FriendlyId
@@ -55,18 +57,18 @@ class Lesson < ApplicationRecord
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D A), message: "%{value} is not a valid status" }
+    inclusion: { in: %w(P D A), message: '%{value} is not a valid status' }
 
-  has_attached_file :story_line, url: "/system/lessons/story_lines/:id/:style/:basename.:extension"
+  has_attached_file :story_line, url: '/system/lessons/story_lines/:id/:style/:basename.:extension'
   before_post_process :skip_for_zip
-  validates_attachment_content_type :story_line, content_type: ["application/zip", "application/x-zip"],
-                                                      message: ", Please provide a .zip Articulate StoryLine File."
+  validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
+                                                      message: ', Please provide a .zip Articulate StoryLine File.'
 
   before_destroy :delete_associated_asl_files
   before_destroy :delete_associated_user_completions
 
   default_scope { order(:lesson_order) }
-  scope :published, -> { where(pub_status: "P") }
+  scope :published, -> { where(pub_status: 'P') }
   scope :copied_from_lesson, lambda { |lesson|
     joins(course: :organization)
       .where(parent_id: lesson.id, organizations: { id: lesson.propagation_org_ids })
@@ -94,7 +96,7 @@ class Lesson < ApplicationRecord
   end
 
   def duration_to_int(duration_param)
-    if duration_param.include?(":")
+    if duration_param.include?(':')
       self.duration = Duration.duration_str_to_int(duration_param)
     else
       self.duration = duration_param.to_i
@@ -102,11 +104,12 @@ class Lesson < ApplicationRecord
   end
 
   def published?
-    pub_status == "P"
+    pub_status == 'P'
   end
 
   def published_lesson_order
     return 0 unless self.published?
+
     self.course.lessons.published.map(&:id).index(self.id) + 1
   end
 

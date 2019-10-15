@@ -1,13 +1,15 @@
-require "csv"
+# frozen_string_literal: true
+
+require 'csv'
 
 class Export
   def self.to_csv_for_completion_report(data)
     @data = data
-    if @data[:version] == "zip"
+    if @data[:version] == 'zip'
       generate_csv_for_zip
-    elsif @data[:version] == "lib"
+    elsif @data[:version] == 'lib'
       generate_csv_for_lib
-    elsif @data[:version] == "survey_responses"
+    elsif @data[:version] == 'survey_responses'
       generate_csv_for_survey_responses
     end
   end
@@ -15,7 +17,7 @@ class Export
   def self.generate_csv_for_zip
     @data.delete(:version)
     CSV.generate do |csv|
-      csv << ["Zip Code", "Sign-Ups(total)", "Course Title", "Completions"]
+      csv << ['Zip Code', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |zip_code, info|
         sign_ups = info[:sign_ups]
 
@@ -25,7 +27,7 @@ class Export
         info[:completions].each do |k, v|
           course_title = k
           completions = v
-          more_values = ["", "", course_title, completions]
+          more_values = ['', '', course_title, completions]
           csv.add_row more_values
         end
       end
@@ -35,12 +37,12 @@ class Export
   def self.generate_csv_for_lib
     @data.delete(:version)
     CSV.generate do |csv|
-      csv << ["Library", "Sign-Ups(total)", "Course Title", "Completions"]
+      csv << ['Library', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |library, info|
         if library.present?
           library_name = LibraryLocation.find(library).name
         else
-          library_name = "Unknown"
+          library_name = 'Unknown'
         end
 
         sign_ups = info[:sign_ups]
@@ -51,7 +53,7 @@ class Export
         info[:completions].each do |k, v|
           course_title = k
           completions = v
-          more_values = ["", "", course_title, completions]
+          more_values = ['', '', course_title, completions]
           csv.add_row more_values
         end
       end
@@ -61,12 +63,12 @@ class Export
   def self.generate_csv_for_survey_responses
     @data.delete(:version)
     CSV.generate do |csv|
-      csv << ["How comfortable are you with desktop or laptop computers?",
-              "How comfortable are you using a phone, tablet, or iPad to access the Internet?",
-              "What would you like to do with a computer?",
-              "Total Responses",
-              "Course Title",
-              "Completions"]
+      csv << ['How comfortable are you with desktop or laptop computers?',
+              'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
+              'What would you like to do with a computer?',
+              'Total Responses',
+              'Course Title',
+              'Completions']
       @data.each do |responses_hash, count_data|
         csv_row = [I18n.t("quiz.set_one_#{responses_hash["set_one"]}"),
                    I18n.t("quiz.set_two_#{responses_hash["set_two"]}"),
@@ -78,7 +80,7 @@ class Export
         count_data[:completions].each do |k, v|
           course_title = k
           completions = v
-          more_values = ["", "", "", "", course_title, completions]
+          more_values = ['', '', '', '', course_title, completions]
           csv.add_row more_values
         end
       end

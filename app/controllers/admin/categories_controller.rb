@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class CategoriesController < BaseController
 
@@ -5,7 +7,7 @@ module Admin
       @categories = current_organization.categories
       @new_category = current_organization.categories.new
 
-      render layout: "admin/base_with_sidebar"
+      render layout: 'admin/base_with_sidebar'
     end
 
     def create
@@ -13,7 +15,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}
@@ -35,7 +37,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}

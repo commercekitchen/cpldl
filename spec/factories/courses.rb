@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: courses
@@ -28,42 +30,42 @@
 FactoryBot.define do
 
   factory :course do
-    title { Faker::Lorem.words(number: 3).join(" ") }
-    meta_desc "A first course in computing"
-    summary "In this course you will..."
-    description "Description"
-    contributor "John Doe"
-    level "Beginner"
-    format "D"
+    title { Faker::Lorem.words(number: 3).join(' ') }
+    meta_desc 'A first course in computing'
+    summary 'In this course you will...'
+    description 'Description'
+    contributor 'John Doe'
+    level 'Beginner'
+    format 'D'
     language
     organization
-    pub_status "P"
+    pub_status 'P'
   end
 
   factory :draft_course, class: Course do
-    title { Faker::Lorem.words(number: 3).join(" ") }
-    meta_desc "A draft course in computing"
-    summary "In this course you will..."
-    description "Description"
-    contributor "John Doe"
-    level "Beginner"
-    format "D"
+    title { Faker::Lorem.words(number: 3).join(' ') }
+    meta_desc 'A draft course in computing'
+    summary 'In this course you will...'
+    description 'Description'
+    contributor 'John Doe'
+    level 'Beginner'
+    format 'D'
     language
     organization
-    pub_status "D"
+    pub_status 'D'
   end
 
   factory :course_with_lessons, class: Course do
-    title { Faker::Lorem.words(number: 3).join(" ") }
-    meta_desc "A first course in computing"
-    summary "In this course you will..."
-    description "Description"
-    contributor "John Doe"
-    level "Beginner"
-    format "D"
+    title { Faker::Lorem.words(number: 3).join(' ') }
+    meta_desc 'A first course in computing'
+    summary 'In this course you will...'
+    description 'Description'
+    contributor 'John Doe'
+    level 'Beginner'
+    format 'D'
     language
     organization
-    pub_status "P"
+    pub_status 'P'
 
     after(:create) do |course|
       create(:lesson, course: course, lesson_order: 1)

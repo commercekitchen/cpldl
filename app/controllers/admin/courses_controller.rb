@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class CoursesController < BaseController
 
@@ -6,16 +8,16 @@ module Admin
     before_action :set_category_options, only: [:new, :edit, :create, :update]
 
     def index
-      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: "A")
+      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
-      render layout: "admin/base_with_sidebar"
+      render layout: 'admin/base_with_sidebar'
     end
 
     def show
-      render "courses/show"
+      render 'courses/show'
     end
 
     def new
@@ -28,13 +30,13 @@ module Admin
     end
 
     def create
-      if course_params[:category_id].present? && course_params[:category_id] == "0"
+      if course_params[:category_id].present? && course_params[:category_id] == '0'
         @course = Course.new(course_params)
       else
         @course = Course.new(course_params.except(:category_attributes))
       end
 
-      if params[:course][:pub_status] == "P"
+      if params[:course][:pub_status] == 'P'
         @course.set_pub_date
       end
 
@@ -42,13 +44,13 @@ module Admin
 
       if @course.save
         @course.topics_list(build_topics_list(params))
-        if params[:commit] == "Save Course"
-          redirect_to edit_admin_course_path(@course), notice: "Course was successfully created."
+        if params[:commit] == 'Save Course'
+          redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         else
-          redirect_to new_admin_course_lesson_path(@course), notice: "Course was successfully created. Now add some lessons."
+          redirect_to new_admin_course_lesson_path(@course), notice: 'Course was successfully created. Now add some lessons.'
         end
       else
-        @custom = course_params[:category_id] == "0"
+        @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
         render :new
       end
@@ -63,7 +65,7 @@ module Admin
       if course.save
         render status: 200, json: "#{course.pub_status}"
       else
-        render status: :unprocessable_entity, json: "post failed to update"
+        render status: :unprocessable_entity, json: 'post failed to update'
       end
     end
 
@@ -73,7 +75,7 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      if course_params[:category_id].present? && course_params[:category_id] == "0"
+      if course_params[:category_id].present? && course_params[:category_id] == '0'
         new_course_params = course_params
       else
         new_course_params = course_params.except(:category_attributes)
@@ -85,15 +87,15 @@ module Admin
         @course.topics_list(build_topics_list(params))
         notice = "Course was successfully updated. Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}."
         case params[:commit]
-        when "Save Course"
+        when 'Save Course'
           redirect_to edit_admin_course_path(@course), notice: notice
-        when "Save Course and Edit Lessons"
+        when 'Save Course and Edit Lessons'
           redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: notice
         else
           redirect_to new_admin_course_lesson_path(@course), notice: notice
         end
       else
-        @custom = course_params[:category_id] == "0"
+        @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
 
         render :edit
@@ -110,7 +112,7 @@ module Admin
 
     def destroy
       @course.destroy
-      redirect_to courses_url, notice: "Course was successfully destroyed."
+      redirect_to courses_url, notice: 'Course was successfully destroyed.'
     end
 
     private
@@ -120,7 +122,7 @@ module Admin
         [category.admin_display_name, category.id]
       end
 
-      @category_options << ["Create new category", 0]
+      @category_options << ['Create new category', 0]
     end
 
     def set_maximums
@@ -169,7 +171,7 @@ module Admin
 
     def build_topics_list(params)
       topics_list = params[:course][:topics] || []
-      other_topic = params[:course][:other_topic] == "1" ? [params[:course][:other_topic_text]] : []
+      other_topic = params[:course][:other_topic] == '1' ? [params[:course][:other_topic_text]] : []
       topics_list | other_topic
     end
 

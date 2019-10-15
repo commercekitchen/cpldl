@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: courses
@@ -56,13 +58,13 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:id])
 
     case @course.pub_status
-    when "D"
-      flash[:notice] = "That course is not avaliable at this time."
+    when 'D'
+      flash[:notice] = 'That course is not avaliable at this time.'
       redirect_to root_path
-    when "A"
-      flash[:notice] = "That course is no longer avaliable."
+    when 'A'
+      flash[:notice] = 'That course is no longer avaliable.'
       redirect_to root_path
-    when "P"
+    when 'P'
       respond_to do |format|
         format.html do
           # Need to handle the change of course slug, which should 301 redirect.
@@ -80,12 +82,12 @@ class CoursesController < ApplicationController
   def view_attachment
     @course = Course.friendly.find(params[:course_id])
     extension = File.extname(@course.attachments.find(params[:attachment_id]).document_file_name)
-    if extension == ".pdf"
-      file_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
+    if extension == '.pdf'
+      file_options = { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
     else
-      file_options = { disposition: "attachment", type: ["application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation"],
+      file_options = { disposition: 'attachment', type: ['application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
         x_sendfile: true }
     end
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
@@ -112,9 +114,9 @@ class CoursesController < ApplicationController
 
   def find_language_id_by_session
     case session[:locale]
-    when "en"
+    when 'en'
       1
-    when "es"
+    when 'es'
       2
     end
   end
