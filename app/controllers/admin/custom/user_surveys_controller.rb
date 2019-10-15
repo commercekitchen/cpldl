@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   before_action :load_ogranization
   before_action :load_translations
 
-  layout "admin/base_with_sidebar"
+  layout 'admin/base_with_sidebar'
 
   def show; end
 
@@ -35,7 +37,7 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
 
   def update_translations
     @translation_errors = []
-    params.require(:translation).permit!.each do |locale, values|
+    params.require(:translation).permit!.each do |_locale, values|
       translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
       unless translation.update(values)
         @translation_errors << translation.errors.full_messages

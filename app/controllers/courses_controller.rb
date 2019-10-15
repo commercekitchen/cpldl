@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: courses
@@ -27,7 +29,7 @@
 class CoursesController < ApplicationController
   include UserCourses
 
-  before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
+  before_action :authenticate_user!, except: %i[index show view_attachment skills designing_courses_1 designing_courses_2]
 
   def index
     @courses = authorized_courses
@@ -56,13 +58,13 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:id])
 
     case @course.pub_status
-    when "D"
-      flash[:notice] = "That course is not avaliable at this time."
+    when 'D'
+      flash[:notice] = 'That course is not avaliable at this time.'
       redirect_to root_path
-    when "A"
-      flash[:notice] = "That course is no longer avaliable."
+    when 'A'
+      flash[:notice] = 'That course is no longer avaliable.'
       redirect_to root_path
-    when "P"
+    when 'P'
       respond_to do |format|
         format.html do
           # Need to handle the change of course slug, which should 301 redirect.
@@ -80,19 +82,19 @@ class CoursesController < ApplicationController
   def view_attachment
     @course = Course.friendly.find(params[:course_id])
     extension = File.extname(@course.attachments.find(params[:attachment_id]).document_file_name)
-    if extension == ".pdf"
-      file_options = { disposition: "inline", type: "application/pdf", x_sendfile: true }
-    else
-      file_options = { disposition: "attachment", type: ["application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        "application/vnd.openxmlformats-officedocument.presentationml.presentation"],
-        x_sendfile: true }
-    end
+    file_options = if extension == '.pdf'
+                     { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
+                   else
+                     { disposition: 'attachment', type: ['application/msword',
+                                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                                         'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+                       x_sendfile: true }
+                   end
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
   end
 
   def quiz_submit
-    current_user.update!(quiz_responses_object: quiz_params.to_h) unless current_user.quiz_responses_object.present?
+    current_user.update!(quiz_responses_object: quiz_params.to_h) if current_user.quiz_responses_object.blank?
     recommendation_service = CourseRecommendationService.new(current_organization.id, quiz_params)
     recommendation_service.add_recommended_courses(current_user.id)
     redirect_to my_courses_path
@@ -102,19 +104,17 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:course_id])
   end
 
-  def designing_courses_1
-  end
+  def designing_courses_1; end
 
-  def designing_courses_2
-  end
+  def designing_courses_2; end
 
   private
 
   def find_language_id_by_session
     case session[:locale]
-    when "en"
+    when 'en'
       1
-    when "es"
+    when 'es'
       2
     end
   end

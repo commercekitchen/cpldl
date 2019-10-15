@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: topics
@@ -10,6 +12,6 @@
 
 FactoryBot.define do
   factory(:topic) do
-    title "Topic A"
+    title 'Topic A'
   end
 end
