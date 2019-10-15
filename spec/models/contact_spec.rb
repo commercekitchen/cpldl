@@ -37,8 +37,7 @@ describe Contact do
     end
 
     it 'should require first_name to be less than 30 characters' do
-      str = ''
-      30.times { str << 'a' }
+      str = 'a' * 30
       @contact.update(first_name: str)
       expect(@contact.valid?).to be true
 
@@ -52,8 +51,7 @@ describe Contact do
     end
 
     it 'should require last_name to be less than 30 characters' do
-      str = ''
-      30.times { str << 'a' }
+      str = 'a' * 30
       @contact.update(last_name: str)
       expect(@contact.valid?).to be true
 
@@ -67,8 +65,7 @@ describe Contact do
     end
 
     it 'should require organization to be less than 50 characters' do
-      str = ''
-      50.times { str << 'a' }
+      str = 'a' * 50
       @contact.update(organization: str)
       expect(@contact.valid?).to be true
 
@@ -82,8 +79,7 @@ describe Contact do
     end
 
     it 'should require organization to be less than 50 characters' do
-      str = ''
-      50.times { str << 'a' }
+      str = 'a' * 50
       @contact.update(organization: str)
       expect(@contact.valid?).to be true
 
@@ -117,8 +113,7 @@ describe Contact do
     end
 
     it 'should require phone to be less than 20 characters' do
-      str = ''
-      20.times { str << 'a' }
+      str = 'a' * 20
       @contact.update(phone: str)
       expect(@contact.valid?).to be true
 
@@ -132,8 +127,7 @@ describe Contact do
     end
 
     it 'should require comments to be less than 2048 characters' do
-      str = ''
-      2048.times { str << 'a' }
+      str = 'a' * 2048
       @contact.update(comments: str)
       expect(@contact.valid?).to be true
 
