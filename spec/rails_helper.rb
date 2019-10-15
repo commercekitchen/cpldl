@@ -69,9 +69,14 @@ RSpec.configure do |config|
     end
   end
 
-  # Remove test storyline files
+  # Create test storyline directory if necessary
+  config.before(:suite) do
+    FileUtils.mkdir_p("#{Rails.configuration.local_lesson_dir}/storylines")
+  end
+
+  # Remove test storylines
   config.after(:suite) do
-    FileUtils.remove_dir("#{Rails.configuration.local_lesson_dir}/storylines")
+    FileUtils.rm_rf Dir.glob("#{Rails.configuration.local_lesson_dir}/storylines/*")
   end
 
   include ActionDispatch::TestProcess
