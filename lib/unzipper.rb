@@ -8,7 +8,7 @@ class Unzipper
   end
 
   def unzip_lesson
-    unless @package.blank?
+    if @package.present?
       unzip_and_upload_asl
     end
   end

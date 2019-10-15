@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
   def find_organization
-    org = Organization.find_by_subdomain(current_subdomain) || Organization.find_by_subdomain('www')
+    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
 
     unless current_subdomain == '' || (org.subdomain == current_subdomain)
       redirect_to_www && (return org)
@@ -88,7 +88,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_language
-    @language = Language.first unless Language.all.blank?
+    @language = Language.first if Language.all.present?
   end
 
   def user_audience_list
@@ -103,22 +103,22 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    language_id = I18n.locale == :en ? Language.find_by_name('English').try(:id) : Language.find_by_name('Spanish').try(:id)
+    language_id = I18n.locale == :en ? Language.find_by(name: 'English').try(:id) : Language.find_by(name: 'Spanish').try(:id)
     org_id = current_organization.id
 
     @footer_pages = CmsPage.where(pub_status: 'P', language_id: language_id, organization_id: org_id, audience: user_audience_list)
   end
 
   def set_cms_marketing_pages
-    @overview_page = CmsPage.find_by_title('Get DigitalLearn for Your Library')
-    @customization_page = CmsPage.find_by_title('Pricing & Features')
-    @portfolio_page = CmsPage.find_by_title('See Our Work In Action')
+    @overview_page = CmsPage.find_by(title: 'Get DigitalLearn for Your Library')
+    @customization_page = CmsPage.find_by(title: 'Pricing & Features')
+    @portfolio_page = CmsPage.find_by(title: 'See Our Work In Action')
   end
 
   def set_locale
     if current_user&.profile && current_user.profile.language.present?
       if user_language_override? == true
-        I18n.locale = session[:locale].to_sym unless session[:locale].blank?
+        I18n.locale = session[:locale].to_sym if session[:locale].present?
       else
         case current_user.profile.language.name
         when 'English'

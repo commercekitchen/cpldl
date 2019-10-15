@@ -151,7 +151,7 @@ describe Admin::CoursesController do
       it 'redirects to the admin edit view of the course' do
         post :create, params: { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by_title(valid_attributes[:title])))
+        expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by(title: valid_attributes[:title])))
       end
 
       it 'adds an existing category if provided' do

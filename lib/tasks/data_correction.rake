@@ -5,9 +5,9 @@ namespace :data_correction do
   task add_branches: :environment do
     Organization.all.each do |organization|
       if organization.subdomain == 'www'
-        organization.update_attributes!(branches: false)
+        organization.update!(branches: false)
       else
-        organization.update_attributes!(branches: true)
+        organization.update!(branches: true)
       end
     end
   end

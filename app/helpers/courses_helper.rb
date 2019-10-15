@@ -42,7 +42,7 @@ module CoursesHelper
 
   def percent_complete(course)
     if user_signed_in?
-      course_progress = current_user.course_progresses.find_by_course_id(course.id)
+      course_progress = current_user.course_progresses.find_by(course_id: course.id)
       if course_progress.present?
         return "#{course_progress.percent_complete}#{I18n.t 'lesson_page.percent_complete'}"
       else

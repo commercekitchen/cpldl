@@ -51,25 +51,25 @@ class Course < ApplicationRecord
                                    tsearch: { any_word: true }
                                  }
 
-  enum access_level: %i[everyone authenticated_users]
+  enum access_level: { everyone: 0, authenticated_users: 1 }
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
   attr_writer :propagation_org_ids
 
-  belongs_to :parent, class_name: 'Course', required: false
+  belongs_to :parent, class_name: 'Course', optional: true
   # has_one :assessment
   has_one :course_progress
 
   has_many :course_topics
   has_many :topics, through: :course_topics
   has_many :lessons
-  belongs_to :organization, required: true
+  belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
                                 reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
   belongs_to :language
-  belongs_to :category, required: false
+  belongs_to :category, optional: true
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
 

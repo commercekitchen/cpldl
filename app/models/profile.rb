@@ -22,8 +22,8 @@
 
 class Profile < ApplicationRecord
   belongs_to :user, inverse_of: :profile
-  belongs_to :language, required: false
-  belongs_to :library_location, required: false
+  belongs_to :language, optional: true
+  belongs_to :library_location, optional: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true, if: :program_organization

@@ -61,7 +61,7 @@ module Admin
       course.update_lesson_pub_stats(params[:value])
 
       if course.save
-        render status: 200, json: course.pub_status.to_s
+        render status: :ok, json: course.pub_status.to_s
       else
         render status: :unprocessable_entity, json: 'post failed to update'
       end

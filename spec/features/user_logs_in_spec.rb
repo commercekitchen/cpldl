@@ -56,7 +56,7 @@ feature 'User logs in' do
     scenario 'first time login non-program org' do
       user = create(:user, :first_time_user, organization: @org)
       past_time = 10.minutes.ago
-      user.profile.update_attributes({ created_at: past_time, updated_at: past_time })
+      user.profile.update({ created_at: past_time, updated_at: past_time })
       log_in_with(user.email, user.password)
       expect(current_path).to eq(profile_path)
 

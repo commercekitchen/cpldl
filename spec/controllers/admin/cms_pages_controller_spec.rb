@@ -89,7 +89,7 @@ describe Admin::CmsPagesController do
       it 'redirects to the admin edit view of the page' do
         post :create, params: { cms_page: valid_attributes, commit: 'Save Page' }
         expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(edit_admin_cms_page_path(CmsPage.find_by_title(valid_attributes[:title])))
+        expect(response).to redirect_to(edit_admin_cms_page_path(CmsPage.find_by(title: valid_attributes[:title])))
       end
 
       it 'renders a preview of page' do
@@ -102,7 +102,7 @@ describe Admin::CmsPagesController do
         valid_attributes[:pub_status] = 'P'
         Timecop.freeze do
           post :create, params: { cms_page: valid_attributes, commit: 'Save Page' }
-          page = CmsPage.find_by_title(valid_attributes[:title])
+          page = CmsPage.find_by(title: valid_attributes[:title])
           expect(page.pub_date.to_i).to eq(Time.zone.now.to_i)
         end
       end

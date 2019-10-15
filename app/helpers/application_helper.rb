@@ -43,7 +43,7 @@ module ApplicationHelper
       carnegielibrary: 'https://www.carnegielibrary.org',
       kclibrary: 'http://www.kclibrary.org/'
     }
-    current_organization.footer_logo_link.present? ? current_organization.footer_logo_link : links[current_organization.subdomain.to_sym]
+    current_organization.footer_logo_link.presence || links[current_organization.subdomain.to_sym]
   end
 
   def safe_logo_tag(source, options = {})

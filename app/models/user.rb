@@ -64,9 +64,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   rolify
   belongs_to :organization
-  belongs_to :school, required: false
-  belongs_to :program_location, required: false
-  belongs_to :program, required: false
+  belongs_to :school, optional: true
+  belongs_to :program_location, optional: true
+  belongs_to :program, optional: true
 
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile
@@ -157,7 +157,7 @@ class User < ApplicationRecord
   ###
 
   def organization_id_to_be_deleted
-    roles.find_by_resource_type('Organization').resource_id
+    roles.find_by(resource_type: 'Organization').resource_id
   end
 
   def tracking_course?(course_id)
@@ -165,7 +165,7 @@ class User < ApplicationRecord
   end
 
   def completed_lesson_ids(course_id)
-    progress = course_progresses.find_by_course_id(course_id)
+    progress = course_progresses.find_by(course_id: course_id)
     return [] if progress.blank?
 
     progress.completed_lessons.collect(&:lesson_id)
@@ -187,9 +187,7 @@ class User < ApplicationRecord
     language.blank? ? 'English' : language.name
   end
 
-  def subdomain
-    organization.subdomain
-  end
+  delegate :subdomain, to: :organization
 
   def admin?
     has_role?(:admin, organization)

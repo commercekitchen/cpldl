@@ -43,7 +43,7 @@ module Admin
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
       @importable_courses = Course.where(id: @unadded_course_ids)
 
-      @category_ids = Organization.find_by_subdomain('www').categories.map(&:id)
+      @category_ids = Organization.find_by(subdomain: 'www').categories.map(&:id)
       @uncategorized_courses = @importable_courses.where(category_id: nil)
 
       respond_to do |format|
@@ -102,7 +102,7 @@ module Admin
     private
 
     def new_or_existing_subsite_category_id(category)
-      return nil unless category.present?
+      return nil if category.blank?
 
       current_user.organization.categories.each do |org_category|
         if org_category.name.downcase == category.name.downcase

@@ -14,7 +14,7 @@
 #
 
 class Program < ApplicationRecord
-  enum parent_type: %i[seniors adults young_adults students_and_parents]
+  enum parent_type: { seniors: 0, adults: 1, young_adults: 2, students_and_parents: 3 }
   PARENT_TYPES = {
     'Programs for Seniors' => :seniors,
     'Programs for Adults' => :adults,

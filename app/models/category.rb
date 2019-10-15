@@ -34,7 +34,7 @@ class Category < ApplicationRecord
   private
 
   def unique_org_categories
-    return true unless organization.present?
+    return true if organization.blank?
 
     category_names = organization.categories.map(&:name)
     errors.add(:name, 'is already in use by your organization.') if category_names.include?(name)

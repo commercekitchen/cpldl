@@ -21,8 +21,8 @@ module UserCourses
   end
 
   def current_language_id
-    english_id = Language.find_by_name('English').id || 1
-    spanish_id = Language.find_by_name('Spanish').id || 2
+    english_id = Language.find_by(name: 'English').id || 1
+    spanish_id = Language.find_by(name: 'Spanish').id || 2
 
     I18n.locale == :es ? spanish_id : english_id
   end

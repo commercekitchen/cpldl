@@ -53,7 +53,7 @@ class Organization < ApplicationRecord
   after_validation :clean_up_paperclip_errors
 
   validates :user_survey_link, url: { allow_blank: true }
-  validates_presence_of :user_survey_link, if: :user_survey_enabled?
+  validates :user_survey_link, presence: { if: :user_survey_enabled? }
 
   def user_count
     users.count

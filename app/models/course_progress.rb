@@ -59,7 +59,7 @@ class CourseProgress < ApplicationRecord
       last_completed_lesson_order = lesson_order if lesson_order >= last_completed_lesson_order
     end
     if last_completed_lesson_order > 0
-      course.lessons.find_by_lesson_order(last_completed_lesson_order).id
+      course.lessons.find_by(lesson_order: last_completed_lesson_order).id
     else
       return 0
     end
