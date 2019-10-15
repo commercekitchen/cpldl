@@ -11,6 +11,8 @@ feature 'User clicks through each page' do
     @english = create(:language)
     @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
+
+    switch_to_subdomain(@org.subdomain)
     login_as(@user, scope: :user)
   end
 

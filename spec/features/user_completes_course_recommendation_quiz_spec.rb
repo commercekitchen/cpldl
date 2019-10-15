@@ -6,7 +6,7 @@ feature 'User completes course recommendations quiz' do
 
   before(:each) do
     @english = create(:language)
-    @org = create(:default_organization)
+    @org = create(:organization)
     @user = create(:user, organization: @org)
 
     @core_topic = create(:topic, title: 'Core')
@@ -16,6 +16,7 @@ feature 'User completes course recommendations quiz' do
     @mobile_course = create(:course, language: @english, format: 'M', level: 'Intermediate', topics: [@core_topic], organization: @org)
     @topic_course = create(:course, language: @english, topics: [@topic])
 
+    switch_to_subdomain(@org.subdomain)
     login_as(@user)
   end
 

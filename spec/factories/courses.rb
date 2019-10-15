@@ -30,7 +30,7 @@
 FactoryBot.define do
 
   factory :course do
-    title { Faker::Lorem.words(number: 3).join(' ') }
+    title { Faker::Lorem.characters(number: 25) }
     meta_desc 'A first course in computing'
     summary 'In this course you will...'
     description 'Description'
@@ -43,7 +43,7 @@ FactoryBot.define do
   end
 
   factory :draft_course, class: Course do
-    title { Faker::Lorem.words(number: 3).join(' ') }
+    title { Faker::Lorem.characters(number: 25) }
     meta_desc 'A draft course in computing'
     summary 'In this course you will...'
     description 'Description'
@@ -56,7 +56,7 @@ FactoryBot.define do
   end
 
   factory :course_with_lessons, class: Course do
-    title { Faker::Lorem.words(number: 3).join(' ') }
+    title { Faker::Lorem.characters(number: 25) }
     meta_desc 'A first course in computing'
     summary 'In this course you will...'
     description 'Description'
