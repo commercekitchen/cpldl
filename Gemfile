@@ -96,6 +96,7 @@ group :development do
   gem 'powder'
   gem "pry-remote"
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
   gem 'web-console', '~> 3.7.0'
 end
 

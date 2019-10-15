@@ -9,8 +9,8 @@ AllCops:
     - "config/**/*"
     - "script/**/*"
 
-Rails:
-  Enabled: true
+require:
+  - rubocop-rails
 
 Style/StringLiterals:
   EnforcedStyle: single_quotes
