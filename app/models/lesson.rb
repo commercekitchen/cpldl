@@ -30,12 +30,12 @@ require 'zip'
 
 class Lesson < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :history]
+  friendly_id :slug_candidates, use: %i[slugged history]
 
   def slug_candidates
     [
       :title,
-      [:title, :subdomain_for_slug]
+      %i[title subdomain_for_slug]
     ]
   end
 
@@ -57,7 +57,7 @@ class Lesson < ApplicationRecord
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D A), message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
 
   has_attached_file :story_line, url: '/system/lessons/story_lines/:id/:style/:basename.:extension'
   before_post_process :skip_for_zip
@@ -79,7 +79,7 @@ class Lesson < ApplicationRecord
   end
 
   def skip_for_zip
-    %w(application/zip application/x-zip).include?(story_line_content_type)
+    %w[application/zip application/x-zip].include?(story_line_content_type)
   end
 
   def delete_associated_asl_files
@@ -96,11 +96,11 @@ class Lesson < ApplicationRecord
   end
 
   def duration_to_int(duration_param)
-    if duration_param.include?(':')
-      self.duration = Duration.duration_str_to_int(duration_param)
-    else
-      self.duration = duration_param.to_i
-    end
+    self.duration = if duration_param.include?(':')
+                      Duration.duration_str_to_int(duration_param)
+                    else
+                      duration_param.to_i
+                    end
   end
 
   def published?

@@ -162,7 +162,7 @@ describe Admin::CoursesController do
 
       it 'creates and adds category if new category selected' do
         expect do
-          post :create, params: { 
+          post :create, params: {
             course: valid_attributes.merge(
               category_id: '0',
               category_attributes: {

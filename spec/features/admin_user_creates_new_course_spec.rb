@@ -85,7 +85,7 @@ feature 'Admin user creates new course and lesson' do
 
   scenario 'can see which categories are disabled' do
     visit new_admin_course_path
-    expect(page).to have_select('course_category_id', with_options: ["#{@category.name}", "#{@disabled_category.name} (disabled)"])
+    expect(page).to have_select('course_category_id', with_options: [@category.name.to_s, "#{@disabled_category.name} (disabled)"])
   end
 
   scenario 'attempts to create duplicate category' do

@@ -61,7 +61,7 @@ class CourseRecommendationService
   end
 
   def language_string
-     @language ||= (I18n.locale == :es ? 'Spanish' : 'English')
+    @language ||= (I18n.locale == :es ? 'Spanish' : 'English')
   end
 
   def org_courses

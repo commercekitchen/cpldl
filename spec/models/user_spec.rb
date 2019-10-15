@@ -64,11 +64,11 @@ describe User do
     end
 
     it 'should return true for a tracked course' do
-      expect(@user.tracking_course? @course1.id).to be true
+      expect(@user.tracking_course?(@course1.id)).to be true
     end
 
     it 'should return false for an un-tracked course' do
-      expect(@user.tracking_course? @course2.id).to be false
+      expect(@user.tracking_course?(@course2.id)).to be false
     end
 
   end

@@ -23,12 +23,12 @@
 
 class CmsPage < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :history]
+  friendly_id :slug_candidates, use: %i[slugged history]
 
   def slug_candidates
     [
       :title,
-      [:title, :subdomain_for_slug]
+      %i[title subdomain_for_slug]
     ]
   end
 
@@ -49,9 +49,9 @@ class CmsPage < ApplicationRecord
   validates :meta_desc, length: { maximum: 156 }
   validates :author, presence: true
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D A), message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
   validates :audience, presence: true,
-    inclusion: { in: %w(Unauth Auth Admin All), message: '%{value} in not a valid audience' }
+    inclusion: { in: %w[Unauth Auth Admin All], message: '%{value} in not a valid audience' }
 
   default_scope { order('cms_page_order ASC') }
 
@@ -68,10 +68,8 @@ class CmsPage < ApplicationRecord
   end
 
   def update_pub_date(new_pub_status)
-    if new_pub_status == 'P'
-      self.pub_date = Time.zone.now
-    else
-      self.pub_date = nil
-    end
+    self.pub_date = if new_pub_status == 'P'
+                      Time.zone.now
+                    end
   end
 end

@@ -2,11 +2,10 @@
 
 module Admin
   class CmsPagesController < BaseController
-    before_action :set_page, only: [:show, :edit, :update, :destroy]
-    before_action :set_maximums, only: [:new, :edit]
+    before_action :set_page, only: %i[show edit update destroy]
+    before_action :set_maximums, only: %i[new edit]
 
-    def show
-    end
+    def show; end
 
     def new
       @cms_page = CmsPage.new
@@ -28,8 +27,7 @@ module Admin
       end
     end
 
-    def edit
-    end
+    def edit; end
 
     def update_pub_status
       cms_page            = CmsPage.find(params[:cms_page_id])
@@ -37,7 +35,7 @@ module Admin
       cms_page.update_pub_date(params[:value])
 
       if cms_page.save
-        render status: 200, json: "#{cms_page.pub_status}"
+        render status: 200, json: cms_page.pub_status.to_s
       else
         render status: :unprocessable_entity, json: 'post failed to update'
       end

@@ -71,25 +71,25 @@ class ProfilesController < ApplicationController
   end
 
   def allowed_profile_params
-    allowed_params = [
-      :language_id,
-      :first_name,
-      :last_name,
-      :phone,
-      :street_address,
-      :city,
-      :state,
-      :zip_code,
-      :opt_out_of_recommendations,
-      :library_location_id
+    allowed_params = %i[
+      language_id
+      first_name
+      last_name
+      phone
+      street_address
+      city
+      state
+      zip_code
+      opt_out_of_recommendations
+      library_location_id
     ]
 
     if current_organization.accepts_custom_branches?
       allowed_params << [
-        library_location_attributes: [
-          :name,
-          :custom,
-          :zipcode
+        library_location_attributes: %i[
+          name
+          custom
+          zipcode
         ]
       ]
     end
@@ -100,7 +100,7 @@ class ProfilesController < ApplicationController
   def show_quiz?
     current_user.present? &&
       current_user.quiz_modal_complete == false &&
-      !(params[:profile][:opt_out_of_recommendations] == 'true') &&
+      params[:profile][:opt_out_of_recommendations] != 'true' &&
       !current_user.has_role?(:admin, current_organization)
   end
 

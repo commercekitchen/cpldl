@@ -39,11 +39,11 @@ class Export
     CSV.generate do |csv|
       csv << ['Library', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |library, info|
-        if library.present?
-          library_name = LibraryLocation.find(library).name
-        else
-          library_name = 'Unknown'
-        end
+        library_name = if library.present?
+                         LibraryLocation.find(library).name
+                       else
+                         'Unknown'
+                       end
 
         sign_ups = info[:sign_ups]
 
@@ -70,9 +70,9 @@ class Export
               'Course Title',
               'Completions']
       @data.each do |responses_hash, count_data|
-        csv_row = [I18n.t("quiz.set_one_#{responses_hash["set_one"]}"),
-                   I18n.t("quiz.set_two_#{responses_hash["set_two"]}"),
-                   I18n.t("quiz.set_three_#{responses_hash["set_three"]}"),
+        csv_row = [I18n.t("quiz.set_one_#{responses_hash['set_one']}"),
+                   I18n.t("quiz.set_two_#{responses_hash['set_two']}"),
+                   I18n.t("quiz.set_three_#{responses_hash['set_three']}"),
                    count_data[:responses]]
 
         csv.add_row csv_row

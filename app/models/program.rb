@@ -14,13 +14,13 @@
 #
 
 class Program < ApplicationRecord
-  enum parent_type: [:seniors, :adults, :young_adults, :students_and_parents]
+  enum parent_type: %i[seniors adults young_adults students_and_parents]
   PARENT_TYPES = {
     'Programs for Seniors' => :seniors,
     'Programs for Adults' => :adults,
     'Programs for Young Adults' => :young_adults,
     'Programs for Students and Parents' => :students_and_parents
-  }
+  }.freeze
 
   has_many :users
   has_many :program_locations, dependent: :destroy
@@ -29,5 +29,5 @@ class Program < ApplicationRecord
 
   accepts_nested_attributes_for :program_locations
 
-  scope :for_subdomain, -> (subdomain) { joins(:organization).where('organizations.subdomain = ?', subdomain) }
+  scope :for_subdomain, ->(subdomain) { joins(:organization).where('organizations.subdomain = ?', subdomain) }
 end

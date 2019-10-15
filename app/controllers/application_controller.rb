@@ -33,13 +33,13 @@ class ApplicationController < ActionController::Base
   end
 
   def set_mailer_host
-    if staging?
-      ActionMailer::Base.default_url_options[:host] = "#{stage_subdomain}.stage.digitallearn.org"
-    elsif Rails.env.production?
-      ActionMailer::Base.default_url_options[:host] = "#{current_organization.subdomain}.digitallearn.org"
-    else
-      ActionMailer::Base.default_url_options[:host] = request.host
-    end
+    ActionMailer::Base.default_url_options[:host] = if staging?
+                                                      "#{stage_subdomain}.stage.digitallearn.org"
+                                                    elsif Rails.env.production?
+                                                      "#{current_organization.subdomain}.digitallearn.org"
+                                                    else
+                                                      request.host
+                                                    end
   end
 
   def require_valid_profile
@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
 
     return custom_action if custom_action.present?
 
-    if (user.is_super? || org_admin?(user))
+    if user.is_super? || org_admin?(user)
       admin_after_sign_in_path_for(user)
     else
       user_after_sign_in_path_for(user)
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
       user.update_attribute(:sign_in_count, 0) if user.sign_in_count == 1
       sign_out
       user_subdomain = user.organization.subdomain
-      flash[:alert] = %Q[Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>]
+      flash[:alert] = %(Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>)
       login_path
     end
   end
@@ -218,7 +218,7 @@ class ApplicationController < ActionController::Base
       user_lang_abbrv2 = current_user.profile.language_id == 1 ? 'en' : 'es'
       return true if session[:locale] != user_lang_abbrv2
     else
-      return false
+      false
     end
   end
 

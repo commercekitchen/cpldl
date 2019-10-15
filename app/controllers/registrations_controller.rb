@@ -47,47 +47,57 @@ class RegistrationsController < Devise::RegistrationsController
       profile_attributes: profile_attributes
     ]
 
-    list_params_allowed << [
-      :parent_type,
-      :program_id,
-      :program_location_id,
-      :library_card_number
-    ] if current_organization.accepts_programs?
+    if current_organization.accepts_programs?
+      list_params_allowed << %i[
+        parent_type
+        program_id
+        program_location_id
+        library_card_number
+      ]
+    end
 
-    list_params_allowed << [
-      :acting_as,
-      :student_id
-    ] if params['program_type'] == 'students_and_parents'
+    if params['program_type'] == 'students_and_parents'
+      list_params_allowed << %i[
+        acting_as
+        student_id
+      ]
+    end
 
-    list_params_allowed << [
-      :date_of_birth,
-      :grade,
-      :school_id
-    ] if params[:user][:acting_as] == 'Student'
+    if params[:user][:acting_as] == 'Student'
+      list_params_allowed << %i[
+        date_of_birth
+        grade
+        school_id
+      ]
+    end
 
-    list_params_allowed << [
-      :library_card_number,
-      :library_card_pin
-    ] if current_organization.library_card_login?
+    if current_organization.library_card_login?
+      list_params_allowed << %i[
+        library_card_number
+        library_card_pin
+      ]
+    end
 
     list_params_allowed
   end
 
   def profile_attributes
-    allowed_attrs = [
-      :first_name,
-      :last_name,
-      :zip_code,
-      :library_location_id
+    allowed_attrs = %i[
+      first_name
+      last_name
+      zip_code
+      library_location_id
     ]
 
-    allowed_attrs << [
-      library_location_attributes: [
-        :name,
-        :custom,
-        :zipcode
+    if current_organization.accepts_custom_branches?
+      allowed_attrs << [
+        library_location_attributes: %i[
+          name
+          custom
+          zipcode
+        ]
       ]
-    ] if current_organization.accepts_custom_branches?
+    end
 
     allowed_attrs
   end

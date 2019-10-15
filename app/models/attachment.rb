@@ -32,6 +32,6 @@ class Attachment < ApplicationRecord
                                                     message: ', Only PDF, Word, PowerPoint, or Excel files are allowed.'
 
   validates :doc_type, allow_blank: true,
-                         inclusion: { in: %w(supplemental post-course),
+                         inclusion: { in: %w[supplemental post-course],
                            message: '%{value} is not a doc_type' }
 end

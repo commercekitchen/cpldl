@@ -93,7 +93,7 @@ describe CmsPage do
     end
 
     it 'can only have listed statuses' do
-      allowed_statuses = %w(P D A)
+      allowed_statuses = %w[P D A]
       allowed_statuses.each do |status|
         @page.pub_status = status
         expect(@page).to be_valid

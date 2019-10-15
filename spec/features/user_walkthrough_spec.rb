@@ -11,7 +11,7 @@ feature 'User clicks through each page' do
     @english = create(:language)
     @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
-    login_as(@user, :scope => :user)
+    login_as(@user, scope: :user)
   end
 
   scenario 'can visit each link in the header' do

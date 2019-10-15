@@ -15,11 +15,11 @@ module Admin
     private
 
     def invite_resource
-      if params[:user][:organization_id]
-        organization = Organization.find(params[:user][:organization_id])
-      else
-        organization = current_organization
-      end
+      organization = if params[:user][:organization_id]
+                       Organization.find(params[:user][:organization_id])
+                     else
+                       current_organization
+                     end
       User.invite!({ email: params[:user][:email] }, current_user) do |u|
         u.organization = organization
         u.skip_invitation = true

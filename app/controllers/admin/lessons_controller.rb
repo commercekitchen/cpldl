@@ -4,15 +4,11 @@ module Admin
   class LessonsController < BaseController
 
     before_action :set_course, except: [:sort]
-    before_action :set_maximums, only: [:new, :edit]
+    before_action :set_maximums, only: %i[new edit]
 
-    def index
+    def index; end
 
-    end
-
-    def show
-
-    end
+    def show; end
 
     def new
       @lesson = Lesson.new
@@ -101,7 +97,7 @@ module Admin
     def validate_assessment
       if @course.lessons.where(is_assessment: true).blank?
         @lesson.lesson_order = @lesson.course.lessons.count + 1
-        return true
+        true
       else
         warnings = ['There can only be one assessment for a Course.',
                     'If you are sure you want to <em>replace</em> it, please delete the existing one and try again.',

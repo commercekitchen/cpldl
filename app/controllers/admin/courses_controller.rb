@@ -3,9 +3,9 @@
 module Admin
   class CoursesController < BaseController
 
-    before_action :set_course, only: [:show, :edit, :update, :destroy]
-    before_action :set_maximums, only: [:new, :edit]
-    before_action :set_category_options, only: [:new, :edit, :create, :update]
+    before_action :set_course, only: %i[show edit update destroy]
+    before_action :set_maximums, only: %i[new edit]
+    before_action :set_category_options, only: %i[new edit create update]
 
     def index
       @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
@@ -25,16 +25,14 @@ module Admin
       @category = @course.category.build if params[:category].present?
     end
 
-    def edit
-
-    end
+    def edit; end
 
     def create
-      if course_params[:category_id].present? && course_params[:category_id] == '0'
-        @course = Course.new(course_params)
-      else
-        @course = Course.new(course_params.except(:category_attributes))
-      end
+      @course = if course_params[:category_id].present? && course_params[:category_id] == '0'
+                  Course.new(course_params)
+                else
+                  Course.new(course_params.except(:category_attributes))
+                end
 
       if params[:course][:pub_status] == 'P'
         @course.set_pub_date
@@ -63,7 +61,7 @@ module Admin
       course.update_lesson_pub_stats(params[:value])
 
       if course.save
-        render status: 200, json: "#{course.pub_status}"
+        render status: 200, json: course.pub_status.to_s
       else
         render status: :unprocessable_entity, json: 'post failed to update'
       end
@@ -75,11 +73,11 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      if course_params[:category_id].present? && course_params[:category_id] == '0'
-        new_course_params = course_params
-      else
-        new_course_params = course_params.except(:category_attributes)
-      end
+      new_course_params = if course_params[:category_id].present? && course_params[:category_id] == '0'
+                            course_params
+                          else
+                            course_params.except(:category_attributes)
+                          end
 
       if @course.update(new_course_params)
         changed = propagate_changes? ? propagate_course_changes : 0
@@ -162,8 +160,8 @@ module Admin
         :organization_id,
         :category_id,
         propagation_org_ids: [],
-        category_attributes: [:name, :organization_id],
-        attachments_attributes: [:course_id, :document, :title, :doc_type, :file_description, :_destroy]
+        category_attributes: %i[name organization_id],
+        attachments_attributes: %i[course_id document title doc_type file_description _destroy]
       ]
 
       params.require(:course).permit(permitted_attributes)

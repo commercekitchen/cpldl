@@ -61,8 +61,7 @@ describe Admin::CmsPagesController do
         pub_date: nil,
         seo_page_title: 'A New Page',
         meta_desc: 'Meta This and That',
-        organization_id: @organization.id
-      }
+        organization_id: @organization.id }
     end
 
     let(:invalid_attributes) do
@@ -71,8 +70,7 @@ describe Admin::CmsPagesController do
         audience: '',
         pub_status: '',
         seo_page_title: '',
-        meta_desc: 'Meta This and That'
-      }
+        meta_desc: 'Meta This and That' }
     end
 
     context 'with valid params' do

@@ -6,8 +6,7 @@ class AccountsController < ApplicationController
   before_action :set_user
   layout 'user/logged_in_with_sidebar'
 
-  def show
-  end
+  def show; end
 
   def update
     update_user(user_params)

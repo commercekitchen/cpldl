@@ -5,8 +5,8 @@ module Admin::Custom
     include TranslationsHelper
 
     before_action :find_locale
-    before_action :retrieve_key, only: [:create, :update]
-    before_action :find_translation, only: [:edit, :update]
+    before_action :retrieve_key, only: %i[create update]
+    before_action :find_translation, only: %i[edit update]
 
     def index
       @translations = Translation.locale(@locale)

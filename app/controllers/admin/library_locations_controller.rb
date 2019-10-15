@@ -17,7 +17,7 @@ module Admin
       if @library_location.errors.any?
         render :new
       else @library_location.update(library_location_params)
-        redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
+           redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
       end
     end
 

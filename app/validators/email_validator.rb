@@ -9,7 +9,7 @@ class EmailValidator < ActiveModel::EachValidator
       # We must check that value contains a domain, the domain has at least
       # one '.' and that value is an email address
       r = !m.domain.nil? && m.domain.match('\.') && m.address == value
-    rescue
+    rescue StandardError
       r = false
     end
     record.errors[attribute] << (options[:message] || 'is invalid') unless r

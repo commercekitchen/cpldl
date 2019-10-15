@@ -149,7 +149,7 @@ describe Profile do
             }
           )
           @profile.reload
-          expect(@profile.first_name).to eq "#{old_first_name}"
+          expect(@profile.first_name).to eq old_first_name.to_s
         end
 
         it 'should update profile with last name' do

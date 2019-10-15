@@ -29,7 +29,7 @@
 class CoursesController < ApplicationController
   include UserCourses
 
-  before_action :authenticate_user!, except: [:index, :show, :view_attachment, :skills, :designing_courses_1, :designing_courses_2]
+  before_action :authenticate_user!, except: %i[index show view_attachment skills designing_courses_1 designing_courses_2]
 
   def index
     @courses = authorized_courses
@@ -82,14 +82,14 @@ class CoursesController < ApplicationController
   def view_attachment
     @course = Course.friendly.find(params[:course_id])
     extension = File.extname(@course.attachments.find(params[:attachment_id]).document_file_name)
-    if extension == '.pdf'
-      file_options = { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
-    else
-      file_options = { disposition: 'attachment', type: ['application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-        x_sendfile: true }
-    end
+    file_options = if extension == '.pdf'
+                     { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
+                   else
+                     { disposition: 'attachment', type: ['application/msword',
+                                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                                                         'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
+                       x_sendfile: true }
+                   end
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
   end
 
@@ -104,11 +104,9 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:course_id])
   end
 
-  def designing_courses_1
-  end
+  def designing_courses_1; end
 
-  def designing_courses_2
-  end
+  def designing_courses_2; end
 
   private
 

@@ -23,11 +23,11 @@ module Admin
 
     def users_index
       results = User.search_users(params[:search])
-      if params[:search].blank?
-        @users = User.includes(profile: [:language]).where(organization_id: current_organization.id)
-      else
-        @users = results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
-      end
+      @users = if params[:search].blank?
+                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               else
+                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               end
 
       render 'admin/users/index', layout: 'admin/base_with_sidebar'
     end

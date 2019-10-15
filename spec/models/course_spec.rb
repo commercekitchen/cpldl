@@ -52,7 +52,7 @@ describe Course do
     end
 
     it 'can only have listed statuses' do
-      allowed_statuses = %w(P D A)
+      allowed_statuses = %w[P D A]
       allowed_statuses.each do |status|
         @course.pub_status = status
         expect(@course).to be_valid
@@ -69,7 +69,7 @@ describe Course do
     end
 
     it 'can only have listed formats' do
-      allowed_formats = %w(D M)
+      allowed_formats = %w[D M]
       allowed_formats.each do |format|
         @course.format = format
         expect(@course).to be_valid

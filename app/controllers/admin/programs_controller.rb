@@ -33,8 +33,8 @@ module Admin
 
     def program_params
       params.require(:program)
-        .permit(:program_name, :location_required, :parent_type,
-                :program_location_attributes => [:id, :location_name])
+            .permit(:program_name, :location_required, :parent_type,
+                    program_location_attributes: %i[id location_name])
     end
 
   end

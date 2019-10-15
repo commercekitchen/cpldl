@@ -46,7 +46,7 @@ class CourseProgress < ApplicationRecord
   end
 
   def next_lesson_id
-    fail StandardError, 'There are no available lessons for this course.' if course.lessons.count == 0
+    raise StandardError, 'There are no available lessons for this course.' if course.lessons.count == 0
 
     course.next_lesson_id(last_completed_lesson_id_by_order)
   end

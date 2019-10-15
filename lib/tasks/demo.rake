@@ -21,7 +21,7 @@ namespace :demo do
                                   pub_date: cpl_course.pub_status == 'P' ? Time.zone.today : nil,
                                   display_on_dl: false)
 
-      @new_course.organization = (Organization.find(3))
+      @new_course.organization = Organization.find(3)
 
       cpl_course.topics.each do |topic|
         @new_course.topics << topic
@@ -58,9 +58,7 @@ namespace :demo do
   task remove_courses: :environment do
     courses = Course.where_exists(:organization, subdomain: 'demo')
     courses.each do |course|
-      course.lessons.each do |lesson|
-        lesson.destroy
-      end
+      course.lessons.each(&:destroy)
       course.destroy
     end
   end

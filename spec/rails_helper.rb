@@ -41,7 +41,7 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :helper
 
-  [:controller, :view].each do |type|
+  %i[controller view].each do |type|
     # Devise controller helpers
     config.include Devise::Test::ControllerHelpers, type: type
 

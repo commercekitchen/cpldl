@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe CourseRecommendationService do
 
-  let(:topics) {
+  let(:topics) do
     {
       1 => 'Job Search',
       2 => 'Education: Child',
@@ -15,7 +15,7 @@ describe CourseRecommendationService do
       7 => 'Software Apps',
       8 => 'Information Searching'
     }
-  }
+  end
 
   before(:each) do
     @spanish = create(:spanish_lang)
@@ -28,14 +28,14 @@ describe CourseRecommendationService do
     @other_topic = create(:topic)
 
     # Create applicable courses
-    ['M', 'D'].each do |format|
-      ['Beginner', 'Intermediate'].each do |level|
+    %w[M D].each do |format|
+      %w[Beginner Intermediate].each do |level|
         en_course = create(:course, language: @english, format: format, level: level, topics: [@core_topic], organization: @organization)
         es_course = create(:course, language: @spanish, format: format, level: level, topics: [@core_topic], organization: @organization)
       end
     end
 
-    topics.each do |k, v|
+    topics.each do |_k, v|
       topic = create(:topic, title: v)
       en_course = create(:course, language: @english, topics: [topic], organization: @organization)
       es_course = create(:course, language: @spanish, topics: [topic], organization: @organization)
@@ -70,7 +70,7 @@ describe CourseRecommendationService do
   describe 'add recommended courses' do
     it 'should create a course progress for each desktop level' do
       expect do
-        ['1', '2'].each do |d_level|
+        %w[1 2].each do |d_level|
           responses = {
             'set_two' => d_level
           }
@@ -83,7 +83,7 @@ describe CourseRecommendationService do
 
     it 'should create a course progress for each mobile level' do
       expect do
-        ['1', '2'].each do |m_level|
+        %w[1 2].each do |m_level|
           responses = {
             'set_one' => m_level
           }
@@ -96,7 +96,7 @@ describe CourseRecommendationService do
 
     it 'should create a course progress for each topic' do
       expect do
-        topics.each do |topic_int, topic_string|
+        topics.each do |topic_int, _topic_string|
           responses = {
             'set_three' => topic_int
           }

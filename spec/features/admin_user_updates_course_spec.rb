@@ -60,6 +60,6 @@ feature 'Admin user updates course' do
 
   scenario 'can see which categories are disabled' do
     visit edit_admin_course_path(@course)
-    expect(page).to have_select('course_category_id', with_options: ["#{@category.name}", "#{@disabled_category.name} (disabled)"])
+    expect(page).to have_select('course_category_id', with_options: [@category.name.to_s, "#{@disabled_category.name} (disabled)"])
   end
 end

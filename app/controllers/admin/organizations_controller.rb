@@ -16,7 +16,7 @@ module Admin
       if @organization.errors.any?
         render :new
       else @organization.save
-        redirect_to admin_organizations_path, notice: 'Organization was successfully created.'
+           redirect_to admin_organizations_path, notice: 'Organization was successfully created.'
       end
     end
 

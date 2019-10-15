@@ -66,8 +66,7 @@ describe Admin::LessonsController do
         summary:  'Sum-tings-smelly',
         is_assessment: false,
         story_line: @story_line,
-        pub_status: 'P'
-      }
+        pub_status: 'P' }
     end
 
     let(:assessment_attributes) do
@@ -78,8 +77,7 @@ describe Admin::LessonsController do
         summary:  'Sum-tings-smelly',
         is_assessment: true,
         story_line: @story_line,
-        pub_status: 'P'
-      }
+        pub_status: 'P' }
     end
 
     let(:invalid_attributes) do
@@ -90,8 +88,7 @@ describe Admin::LessonsController do
         summary:  '',
         is_assessment: '',
         story_line: nil,
-        pub_status: nil
-      }
+        pub_status: nil }
     end
 
     context 'with valid params' do

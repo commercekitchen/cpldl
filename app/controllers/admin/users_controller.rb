@@ -13,7 +13,7 @@ module Admin
       user.add_role(new_role, org)
 
       if user.save
-        render status: 200, json: "#{user.current_roles}"
+        render status: 200, json: user.current_roles.to_s
       else
         render status: :unprocessable_entity, json: 'roles failed to update'
       end

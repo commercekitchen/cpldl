@@ -29,12 +29,12 @@
 
 class Course < ApplicationRecord
   extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :history]
+  friendly_id :slug_candidates, use: %i[slugged history]
 
   def slug_candidates
     [
       :title,
-      [:title, :subdomain_for_slug]
+      %i[title subdomain_for_slug]
     ]
   end
 
@@ -44,14 +44,14 @@ class Course < ApplicationRecord
 
   # PgSearch gem config
   include PgSearch::Model
-  multisearchable against: [:title, :summary, :description, :topics_str, :level]
+  multisearchable against: %i[title summary description topics_str level]
 
   pg_search_scope :topic_search, associated_against: { topics: :title },
                                  using: {
                                    tsearch: { any_word: true }
                                  }
 
-  enum access_level: [:everyone, :authenticated_users]
+  enum access_level: %i[everyone authenticated_users]
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
   attr_writer :propagation_org_ids
@@ -80,11 +80,11 @@ class Course < ApplicationRecord
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
-    inclusion: { in: %w(M D), message: '%{value} is not a valid format' }
+    inclusion: { in: %w[M D], message: '%{value} is not a valid format' }
   validates :pub_status, presence: true,
-    inclusion: { in: %w(P D A), message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
   validates :level, presence: true,
-    inclusion: { in: %w(Beginner Intermediate Advanced),
+    inclusion: { in: %w[Beginner Intermediate Advanced],
       message: '%{value} is not a valid level' }
   validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == '1' }
 
@@ -128,13 +128,13 @@ class Course < ApplicationRecord
       return lessons.order('lesson_order').last.id if lesson_order >= last_lesson_order
 
       self.lessons.published.where('lesson_order > ?', lesson_order).first.id
-    rescue
+    rescue StandardError
       lessons.published.order('lesson_order').first.id
     end
   end
 
   def last_lesson_order
-    fail StandardError, 'There are no available lessons for this course.' if lessons.count == 0
+    raise StandardError, 'There are no available lessons for this course.' if lessons.count == 0
 
     lessons.maximum('lesson_order')
   end
@@ -150,11 +150,9 @@ class Course < ApplicationRecord
   end
 
   def update_pub_date(new_pub_status)
-    if new_pub_status == 'P'
-      self.pub_date = Time.zone.now
-    else
-      self.pub_date = nil
-    end
+    self.pub_date = if new_pub_status == 'P'
+                      Time.zone.now
+                    end
   end
 
   def update_lesson_pub_stats(new_pub_status)

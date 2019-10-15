@@ -36,7 +36,7 @@ module LessonsHelper
       end
 
       story_line_url = "/storylines/#{lesson_id}/#{directory}/story.html"
-      content_tag(:iframe, nil, src: "#{story_line_url}", class: 'story_line', title: lesson.summary, id: 'asl-iframe')
+      content_tag(:iframe, nil, src: story_line_url.to_s, class: 'story_line', title: lesson.summary, id: 'asl-iframe')
     else
       content_tag(:p, 'No lesson available at this point.', class: 'note')
     end
