@@ -15,18 +15,7 @@
 
 <div class="row">
   <div class="sixcol border-right">
-    <header class="lesson-listing">
-      <h2 class="text-color"><%= @course.title %></h2>
-      <div>
-        <i class="icon-book-open grey"></i>
-        <small class="padding-right"><%= @course.lessons.published.count %> <%= t("course_page.lessons") %></small>
-        <i class="icon-clock grey"></i>
-        <small><%= @course.duration %></small>
-      </div>
-    </header>
-
-      <%= render partial: "shared/lessons/listing", locals: { course: @course, lesson: @lesson } %>
-
+    <%= render partial: "listing" %>
   </div>
 
   <div class="sixcol last">

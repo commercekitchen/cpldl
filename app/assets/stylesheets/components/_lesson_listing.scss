@@ -1,0 +1,18 @@
+.lesson-listing_header {
+  padding-left: 66px;
+  height: 45px;
+  position: relative;
+
+  h3 {
+    margin-bottom: 5px;
+  }
+
+  &:before {
+    content: "\e80c";
+    font-family: "fontello";
+    font-size: 2.5em;
+    left: 0;
+    position: absolute;
+    color: $grey;
+  }
+}

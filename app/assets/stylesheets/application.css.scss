@@ -31,12 +31,7 @@
 @import "partials/header";
 @import "partials/footer";
 @import "partials/errors";
-@import "components/modal";
-@import "components/course_progress";
-@import "components/search_box";
-@import "components/sortable_list";
-@import "components/congratulation_banner";
-@import "components/custom_branch_form";
+@import "components/*";
 @import "mixins/*";
 @import "subdomains/*";
 @import "admin/custom/*";

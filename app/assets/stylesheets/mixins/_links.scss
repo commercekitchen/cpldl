@@ -1,8 +1,14 @@
-a:hover, a:focus {
+a:hover,
+a:focus {
   text-decoration: underline;
 }
 
 a {
+  &.text_link {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   &.block_link {
     display: block;
   }
