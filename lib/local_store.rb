@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LocalStore
   def save(file:, key:, acl:, zip_file:)
     path = File.join(Rails.root, env_path, key)

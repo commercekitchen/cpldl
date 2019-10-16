@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: organizations
@@ -14,31 +16,31 @@
 #  login_required          :boolean          default(TRUE)
 #
 
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
   before do
     @org = create(:organization)
     other_org = create(:default_organization)
     @user1 = create(:user, organization: @org)
-    @user1.add_role("admin", @org)
+    @user1.add_role('admin', @org)
 
     @user2 = create(:user, organization: @org)
-    @user2.add_role("admin", @org)
+    @user2.add_role('admin', @org)
 
     @user3 = create(:user, organization: @org)
-    @user3.add_role("user", @org)
+    @user3.add_role('user', @org)
 
     @user4 = create(:user, organization: other_org)
-    @user4.add_role("user", other_org)
+    @user4.add_role('user', other_org)
   end
 
   it { should have_many(:cms_pages) }
   it { should have_many(:library_locations) }
 
-  describe "scopes" do
-    describe "using_lesson" do
-      it "includes only orgs using the passed lesson" do
+  describe 'scopes' do
+    describe 'using_lesson' do
+      it 'includes only orgs using the passed lesson' do
         lesson_org = create(:organization)
         create(:organization)
         parent = create(:lesson)
@@ -49,8 +51,8 @@ RSpec.describe Organization, type: :model do
       end
     end
 
-    describe "using_course" do
-      it "includes only orgs using the passed course" do
+    describe 'using_course' do
+      it 'includes only orgs using the passed course' do
         course_org = create(:organization)
         create(:organization)
         parent_course = create(:course)
@@ -62,14 +64,14 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe "#users_count" do
-    it "returns the count of its users" do
+  describe '#users_count' do
+    it 'returns the count of its users' do
       expect(@org.user_count).to eq(3)
     end
   end
 
-  describe "#admin_user_emails" do
-    it "returns emails of the admins" do
+  describe '#admin_user_emails' do
+    it 'returns emails of the admins' do
       expect(@org.admin_user_emails).to include(@user1.email)
       expect(@org.admin_user_emails).to include(@user2.email)
       expect(@org.admin_user_emails).not_to include(@user3.email)
@@ -77,13 +79,13 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe "#base_site?" do
-    it "returns true if the org has the www subdomain" do
-      subject.update(subdomain: "www")
+  describe '#base_site?' do
+    it 'returns true if the org has the www subdomain' do
+      subject.update(subdomain: 'www')
       expect(subject.base_site?).to eq(true)
     end
 
-    it "returns false if the org does not have the www subdomain" do
+    it 'returns false if the org does not have the www subdomain' do
       expect(subject.base_site?).to eq(false)
     end
   end

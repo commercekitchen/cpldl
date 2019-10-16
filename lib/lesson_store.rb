@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LessonStore
   delegate :save, to: :@store
 

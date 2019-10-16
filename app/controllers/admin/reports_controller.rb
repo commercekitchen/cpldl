@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Admin
   class ReportsController < BaseController
 
     def show
-      render layout: "admin/base_with_sidebar"
+      render layout: 'admin/base_with_sidebar'
     end
 
   end

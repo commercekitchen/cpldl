@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 # Use single quotes within config files.
 # rubocop:disable Style/StringLiterals
 
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'rails', '>= 5.2.0', '< 6.0'
+gem 'jquery-rails', '>= 4.3.0'
 gem 'pg'
+gem 'rails', '>= 5.2.0', '< 6.0'
 gem 'sass-rails', '>= 6.0.0'
 gem 'uglifier'
-gem 'jquery-rails', '>= 4.3.0'
 
 gem 'sprockets-rails', '>= 3.0'
 
@@ -21,8 +23,8 @@ gem 'where_exists', '>= 1.0.0'
 # Authentication and authorization
 gem 'devise', '>= 4.6.0'
 gem 'devise_invitable', '>= 2.0.0'
-gem 'rolify'
 gem 'recaptcha', require: 'recaptcha/rails'
+gem 'rolify'
 
 # Bourbon for sass mixins, and neat for the grid framework
 gem 'bourbon', '< 5.0'
@@ -34,15 +36,15 @@ gem 'redis-namespace'
 
 # Background processing
 gem 'sidekiq', '>= 5.0', '< 6.0'
-gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
 gem 'sidekiq-failures'
+gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
 
 # Error reporting
 gem 'rollbar'
 
+gem 'friendly_id', '>= 5.1'
 gem 'paperclip' # File uploads
 gem 'rubyzip', '~> 1.0' # ASL files
-gem 'friendly_id', '>= 5.1'
 
 # PDF generation for completion certificate
 gem 'wicked_pdf'
@@ -86,27 +88,28 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'rack-proxy'
 
 group :development do
-  gem 'rubocop', require: false
-  gem 'brakeman', require: false
-  gem 'letter_opener'
   gem 'annotate'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem "pry-remote"
-  gem 'web-console', '~> 3.7.0'
+  gem 'brakeman', require: false
+  gem 'letter_opener'
   gem 'powder'
+  gem "pry-remote"
+  gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'web-console', '~> 3.7.0'
 end
 
 group :development, :test do
+  gem 'awesome_print', require: 'ap'
+  gem 'bullet'
   gem 'bundler-audit', require: false
+  gem 'byebug'
   gem 'faker'
   gem 'pry'
   gem 'pry-nav'
-  gem 'byebug'
-  gem 'sunspot_solr'
-  gem 'awesome_print', require: 'ap'
   gem 'rspec-rails', '>= 3.8.0'
-  gem 'bullet'
+  gem 'sunspot_solr'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end
@@ -114,26 +117,26 @@ end
 # Capistrano Deployment
 group :development, :deployment do
   gem 'capistrano', '3.4.0', require: false # Deploy is locked to this version.
+  gem 'capistrano-db-tasks', '~> 0.4', require: false
+  gem 'capistrano-faster-assets', '~> 1.0', require: false
   gem 'capistrano-rails', '~> 1.1.3', require: false
   gem 'capistrano-rvm', require: false
-  gem 'capistrano-faster-assets', '~> 1.0', require: false
-  gem 'capistrano-db-tasks', '~> 0.4', require: false
   gem 'capistrano-sidekiq', require: false
   gem 'colorize'
 end
 
 group :test do
-  gem 'launchy'
-  gem 'factory_bot_rails', '~> 4.10.0'
   gem 'capybara'
-  gem 'webdrivers'
-  gem 'mocha'
   gem 'database_cleaner'
-  gem 'simplecov', require: false
-  gem 'shoulda-matchers'
-  gem 'timecop'
-  gem 'webmock'
+  gem 'factory_bot_rails', '~> 4.10.0'
+  gem 'launchy'
+  gem 'mocha'
   gem 'rails-controller-testing'
+  gem 'shoulda-matchers'
+  gem 'simplecov', require: false
+  gem 'timecop'
+  gem 'webdrivers'
+  gem 'webmock'
 end
 
 group :development, :staging do

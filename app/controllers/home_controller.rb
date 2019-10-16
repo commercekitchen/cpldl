@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HomeController < ApplicationController
   include UserCourses
 
@@ -9,7 +11,7 @@ class HomeController < ApplicationController
   end
 
   def language_toggle
-    session[:locale] = params["lang"]
+    session[:locale] = params['lang']
     redirect_back(fallback_location: root_path)
   end
 end

@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Admin::Custom::TranslationsHelper
   def translation_keys(i18n_locale)
     send("#{i18n_locale}_keys")
   end
 
   def translation_for_key(translations, key)
-    hits = translations.to_a.select{ |t| t.key == key }
+    hits = translations.to_a.select { |t| t.key == key }
     hits.first
   end
 
@@ -17,11 +19,11 @@ module Admin::Custom::TranslationsHelper
       'completed_courses_page.%{subdomain}.retake_the_quiz' => 'Retake the Quiz Button',
       'my_courses_page.%{subdomain}.course_color_explaination' => 'User Course Tile Color Explanation'
     }
-    
+
     # texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
 
     texts.each_with_object({}) do |(k, v), obj|
-      key = k % { subdomain: current_organization.subdomain }
+      key = format(k, subdomain: current_organization.subdomain)
       obj[key] = v
     end
   end

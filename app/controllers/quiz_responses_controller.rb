@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class QuizResponsesController < ApplicationController
   def new; end
 
@@ -11,7 +13,7 @@ class QuizResponsesController < ApplicationController
   private
 
   def quiz_params
-    params.permit("set_one", "set_two", "set_three")
+    params.permit('set_one', 'set_two', 'set_three')
   end
 
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class SchoolsController < BaseController
 
@@ -5,7 +7,7 @@ module Admin
       @schools = current_organization.schools
       @new_school = current_organization.schools.new
 
-      render layout: "admin/base_with_sidebar"
+      render layout: 'admin/base_with_sidebar'
     end
 
     def create
@@ -13,7 +15,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}
@@ -27,7 +29,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}
