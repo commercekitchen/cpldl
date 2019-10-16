@@ -1,9 +1,0 @@
-a:hover, a:focus {
-  text-decoration: underline;
-}
-
-a {
-  &.block_link {
-    display: block;
-  }
-}

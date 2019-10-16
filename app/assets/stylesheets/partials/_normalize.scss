@@ -8,18 +8,18 @@
  * Correct `block` display not defined in IE 8/9.
  */
 
- article,
- aside,
- details,
- figcaption,
- figure,
- footer,
- header,
- hgroup,
- main,
- nav,
- section,
- summary {
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section,
+summary {
   display: block;
 }
 
@@ -27,9 +27,9 @@
  * Correct `inline-block` display not defined in IE 8/9.
  */
 
- audio,
- canvas,
- video {
+audio,
+canvas,
+video {
   display: inline-block;
 }
 
@@ -38,7 +38,7 @@
  * Remove excess height in iOS 5 devices.
  */
 
- audio:not([controls]) {
+audio:not([controls]) {
   display: none;
   height: 0;
 }
@@ -48,8 +48,8 @@
  * Hide the `template` element in IE, Safari, and Firefox < 22.
  */
 
- [hidden],
- template {
+[hidden],
+template {
   display: none;
 }
 
@@ -63,7 +63,7 @@
  *    user zoom.
  */
 
- html {
+html {
   font-family: sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
@@ -73,7 +73,7 @@
  * Remove default margin.
  */
 
- body {
+body {
   margin: 0;
 }
 
@@ -85,25 +85,27 @@
  * Remove the gray background color from active links in IE 10.
  */
 
- a {
+a {
   background: transparent;
+  display: inline-block;
 }
 
 /**
  * Address `outline` inconsistency between Chrome and other browsers.
  */
 
- a:focus {
-  outline: thin dotted;
+a:focus {
+  outline: thin outset;
+  outline-offset: 0.15rem;
 }
 
 /**
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 
- a:active,
- a:hover {
-  outline: 0;
+a:active,
+a:hover {
+  //outline: 0;
 }
 
 /* ==========================================================================
@@ -115,7 +117,7 @@
  * contexts in Firefox 4+, Safari 5, and Chrome.
  */
 
- h1 {
+h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
@@ -124,7 +126,7 @@
  * Address styling not present in IE 8/9, Safari 5, and Chrome.
  */
 
- abbr[title] {
+abbr[title] {
   border-bottom: 1px dotted;
 }
 
@@ -132,8 +134,8 @@
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
 
- b,
- strong {
+b,
+strong {
   font-weight: bold;
 }
 
@@ -141,7 +143,7 @@
  * Address styling not present in Safari 5 and Chrome.
  */
 
- dfn {
+dfn {
   font-style: italic;
 }
 
@@ -149,7 +151,7 @@
  * Address differences between Firefox and other browsers.
  */
 
- hr {
+hr {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   height: 0;
@@ -159,7 +161,7 @@
  * Address styling not present in IE 8/9.
  */
 
- mark {
+mark {
   background: #ff0;
   color: #000;
 }
@@ -168,10 +170,10 @@
  * Correct font family set oddly in Safari 5 and Chrome.
  */
 
- code,
- kbd,
- pre,
- samp {
+code,
+kbd,
+pre,
+samp {
   font-family: monospace, serif;
   font-size: 1em;
 }
@@ -180,7 +182,7 @@
  * Improve readability of pre-formatted text in all browsers.
  */
 
- pre {
+pre {
   white-space: pre-wrap;
 }
 
@@ -188,15 +190,15 @@
  * Set consistent quote types.
  */
 
- q {
-  quotes: "\201C" "\201D" "\2018" "\2019";
+q {
+  quotes: "\201C""\201D""\2018""\2019";
 }
 
 /**
  * Address inconsistent and variable font size in all browsers.
  */
 
- small {
+small {
   font-size: 80%;
 }
 
@@ -204,8 +206,8 @@
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
 
- sub,
- sup {
+sub,
+sup {
   font-size: 75%;
   line-height: 0;
   position: relative;
@@ -228,7 +230,7 @@ sub {
  * Remove border when inside `a` element in IE 8/9.
  */
 
- img {
+img {
   border: 0;
 }
 
@@ -236,7 +238,7 @@ sub {
  * Correct overflow displayed oddly in IE 9.
  */
 
- svg:not(:root) {
+svg:not(:root) {
   overflow: hidden;
 }
 
@@ -248,7 +250,7 @@ sub {
  * Address margin not present in IE 8/9 and Safari 5.
  */
 
- figure {
+figure {
   margin: 0;
 }
 
@@ -260,7 +262,7 @@ sub {
  * Define consistent border, margin, and padding.
  */
 
- fieldset {
+fieldset {
   border: none;
   margin: 0;
   padding: 0;
@@ -271,7 +273,7 @@ sub {
  * 2. Remove padding so people aren't caught out if they zero out fieldsets.
  */
 
- legend {
+legend {
   border: 0; /* 1 */
   padding: 0; /* 2 */
 }
@@ -282,10 +284,10 @@ sub {
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  */
 
- button,
- input,
- select,
- textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit; /* 1 */
   font-size: 100%; /* 2 */
   margin: 0; /* 3 */
@@ -296,8 +298,8 @@ sub {
  * the UA stylesheet.
  */
 
- button,
- input {
+button,
+input {
   line-height: normal;
 }
 
@@ -308,8 +310,8 @@ sub {
  * Correct `select` style inheritance in Firefox 4+ and Opera.
  */
 
- button,
- select {
+button,
+select {
   text-transform: none;
 }
 
@@ -321,7 +323,7 @@ sub {
  *    `input` and others.
  */
 
- button,
+button,
  html input[type="button"], /* 1 */
  input[type="reset"],
  input[type="submit"] {
@@ -333,8 +335,8 @@ sub {
  * Re-set default cursor for disabled elements.
  */
 
- button[disabled],
- html input[disabled] {
+button[disabled],
+html input[disabled] {
   cursor: default;
 }
 
@@ -343,8 +345,8 @@ sub {
  * 2. Remove excess padding in IE 8/9/10.
  */
 
- input[type="checkbox"],
- input[type="radio"] {
+input[type="checkbox"],
+input[type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
@@ -355,7 +357,7 @@ sub {
  *    (include `-moz` to future-proof).
  */
 
- input[type="search"] {
+input[type="search"] {
   -webkit-appearance: textfield; /* 1 */
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box; /* 2 */
@@ -367,8 +369,8 @@ sub {
  * on OS X.
  */
 
- input[type="search"]::-webkit-search-cancel-button,
- input[type="search"]::-webkit-search-decoration {
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -376,8 +378,8 @@ sub {
  * Remove inner padding and border in Firefox 4+.
  */
 
- button::-moz-focus-inner,
- input::-moz-focus-inner {
+button::-moz-focus-inner,
+input::-moz-focus-inner {
   border: 0;
   padding: 0;
 }
@@ -387,7 +389,7 @@ sub {
  * 2. Improve readability and alignment in all browsers.
  */
 
- textarea {
+textarea {
   overflow: auto; /* 1 */
   vertical-align: top; /* 2 */
 }
@@ -400,7 +402,7 @@ sub {
  * Remove most spacing between table cells.
  */
 
- table {
+table {
   border-collapse: collapse;
   border-spacing: 0;
 }
