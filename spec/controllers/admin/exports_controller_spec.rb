@@ -21,14 +21,13 @@ describe Admin::ExportsController do
 
   describe '#data_for_completions_report_by' do
     before(:each) do
-      @user = create(:user, quiz_responses_object: { 'set_one' => '1', 'set_two' => '3', 'set_three' => '3' })
-      @user.add_role(:user, @organization)
+      @user = create(:user, organization: @organization,
+        quiz_responses_object: { 'set_one' => '1', 'set_two' => '3', 'set_three' => '3' })
 
-      @user2 = create(:user, quiz_responses_object: { 'set_one' => '2', 'set_three' => '2' })
-      @user2.add_role(:user, @organization)
+      @user2 = create(:user, organization: @organization,
+        quiz_responses_object: { 'set_one' => '2', 'set_three' => '2' })
 
-      @user3 = create(:user)
-      @user3.add_role(:user, @organization)
+      @user3 = create(:user, organization: @organization)
 
       @language = create(:language)
       @course1 = create(:course, title: 'Course 1',
