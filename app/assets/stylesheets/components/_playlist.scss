@@ -1,10 +1,10 @@
 .playlist {
   display: grid;
-  grid-template-columns: 5rem auto auto 5rem;
+  grid-template-columns: 5rem auto 2rem;
   align-items: center;
   grid-template-areas:
-    "header-icon header header header"
-    "lessons lessons lessons .";
+    "header-icon header header"
+    "lessons lessons .";
 
   .header-icon {
     grid-area: header-icon;
