@@ -1,4 +1,5 @@
-<%= content_for :callout do %>
+<%= render partial: "shared/courses/metas" %>
+<%= content_for :callout, flush: true do %>
   <h1><%="#{@lesson.published_lesson_order}. #{@lesson.title}" %></h1>
   <small><i class="icon-clock white"></i><%= @lesson.duration_str %></small>
 <% end %>

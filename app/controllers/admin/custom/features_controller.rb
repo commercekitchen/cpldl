@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 class Admin::Custom::FeaturesController < Admin::Custom::BaseController
   before_action :load_ogranization
-  layout "admin/base_with_sidebar"
+  layout 'admin/base_with_sidebar'
 
-  def show
-  end
+  def show; end
 
   def update
     if @organization.update(org_params)

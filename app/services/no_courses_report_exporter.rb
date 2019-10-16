@@ -1,4 +1,6 @@
-require "csv"
+# frozen_string_literal: true
+
+require 'csv'
 
 class NoCoursesReportExporter
 
@@ -10,7 +12,7 @@ class NoCoursesReportExporter
   def to_csv
     users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number)
     CSV.generate do |csv|
-      csv << [User.human_attribute_name(@primary_id_field), "Registration Date"]
+      csv << [User.human_attribute_name(@primary_id_field), 'Registration Date']
       users.each do |user|
         if user.course_progresses.size.zero? && user.reportable_role?(@org)
           values = [user.send(@primary_id_field), user.created_at]

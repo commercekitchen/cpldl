@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: completed_lessons
@@ -9,7 +11,7 @@
 #  updated_at         :datetime         not null
 #
 
-require "rails_helper"
+require 'rails_helper'
 
 describe CompletedLesson do
 

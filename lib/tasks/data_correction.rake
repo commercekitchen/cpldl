@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 namespace :data_correction do
-  desc "add branches flag to existing orgs"
+  desc 'add branches flag to existing orgs'
   task add_branches: :environment do
     Organization.all.each do |organization|
-      if organization.subdomain == "www"
-        organization.update_attributes!(branches: false)
+      if organization.subdomain == 'www'
+        organization.update!(branches: false)
       else
-        organization.update_attributes!(branches: true)
+        organization.update!(branches: true)
       end
     end
   end

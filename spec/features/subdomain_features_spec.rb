@@ -1,17 +1,19 @@
-require "feature_helper"
+# frozen_string_literal: true
 
-feature "User lands on subdomain" do
+require 'feature_helper'
+
+feature 'User lands on subdomain' do
   let(:subdomain) { 'chipublib' }
   before do
     create(:spanish_lang)
     create(:language)
-    @dpl = create(:organization, subdomain: subdomain, name: "Denver Public Library")
+    @dpl = create(:organization, subdomain: subdomain, name: 'Denver Public Library')
     switch_to_subdomain(subdomain)
   end
 
-  context "and they fill out the registration form" do
-    it "should log them in and display a message" do
-      sign_up_with "valid@example.com", "password", "Alejandro", "12345"
+  context 'and they fill out the registration form' do
+    it 'should log them in and display a message' do
+      sign_up_with 'valid@example.com', 'password', 'Alejandro', '12345'
       expect(User.last.subdomain).to eq(subdomain)
     end
   end
