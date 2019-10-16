@@ -1,5 +1,5 @@
 <div class="lesson-block hover<% if completed %> completed<% end %>"
-  onclick="window.location='<%= course_lesson_path(course, lesson) %>'" data-cpl-ga-event="on" data-cpl-ga-value="user-click-lesson">
+  onclick="window.location='<%= course_lesson_path(@course, lesson) %>'" data-cpl-ga-event="on" data-cpl-ga-value="user-click-lesson" tabindex=0>
   <div class="default-state">
     <% if completed %>
       <i class="icon-ok"></i>
@@ -19,7 +19,7 @@
     </div>
     <h2 class="lesson-title"><%= lesson.title.truncate(23) %></h2>
     <p class="lesson-summary"><%= lesson.summary.truncate(85) %></p>
-    <%= link_to course_lesson_path(course, lesson), data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } do %>
+    <%= link_to course_lesson_path(@course, lesson), data: { cpl_ga_event: "on", cpl_ga_value: "user-start-lesson" } do %>
       <% if I18n.locale == :es %>
         <div class="btn small-lesson-button spanish-small button-color">
           <%= t("course_page.start_lesson") %>

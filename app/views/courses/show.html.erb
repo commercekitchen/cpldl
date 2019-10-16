@@ -30,7 +30,7 @@
 <hr>
 
 <h2 class="text-color"><%= t('course_page.lessons_in_this_course') %></h2>
-<%= render partial: "shared/lessons/grid", locals: { course: @course } %>
+  <%= render partial: "shared/lessons/grid" %>
 <hr>
 
 <%= render partial: "shared/courses/supplemental_materials", locals: { course: @course } %>
