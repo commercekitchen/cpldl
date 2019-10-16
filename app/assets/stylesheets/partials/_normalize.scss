@@ -95,6 +95,11 @@ a {
 
 a:focus {
   outline: thin outset;
+  outline-offset: 0.15rem;
+
+  &.btn {
+    outline: none;
+  }
 }
 
 /**

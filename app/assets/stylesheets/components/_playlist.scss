@@ -1,20 +1,20 @@
 .playlist {
   display: grid;
-  grid-template-columns: 5% 15% 75% 5%;
-  grid-template-rows: auto;
+  grid-template-columns: 5rem auto auto 5rem;
+  align-items: center;
   grid-template-areas:
-    "header-icon header-icon header header"
-    ". lessons lessons .";
+    "header-icon header header header"
+    "lessons lessons lessons .";
 
   .header-icon {
     grid-area: header-icon;
-    font-size: 4rem;
+    font-size: 3rem;
   }
 }
 
 .playlist-header {
   grid-area: header;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1rem;
 }
 
 .lesson-playlist-grid {
@@ -23,8 +23,8 @@
 
 .lesson-listing {
   display: grid;
-  grid-template-columns: 5% 95%;
-  padding: 0.75rem 0.5rem;
+  grid-template-columns: 1.5rem auto 1.5rem;
+  padding: 0.75rem 0 0.75rem 2rem;
 
   &_link {
     &:focus,
@@ -45,14 +45,16 @@
 
 .lesson-info {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-areas: "lesson-info-item lesson-info-item";
 }
 
 .lesson-listing-item {
   .lesson-number {
+    grid-area: lesson-info-item;
     display: inline-block;
   }
   .lesson-link {
+    grid-area: lesson-info-item;
     display: inline-block;
   }
 }
