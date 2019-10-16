@@ -17,4 +17,8 @@ class S3Store
   def bucket_name
     Rails.configuration.s3_bucket_name
   end
+
+  def s3_region
+    Rails.configuration.s3_region
+  end
 end
