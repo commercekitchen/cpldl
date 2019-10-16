@@ -74,8 +74,9 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :category, reject_if: :all_blank
 
   validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 40 }, presence: true,
-    uniqueness: { scope: :organization_id, message: 'has already been taken for the organization' }
+  validates :title, length: { maximum: 40 }, presence: true
+  validates_uniqueness_of :title, scope: :organization_id,
+    conditions: -> { where.not(pub_status: 'A') }, message: 'has already been taken for the organization'
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
@@ -110,14 +111,6 @@ class Course < ApplicationRecord
 
   def topics_str
     topics.pluck(:title).join(', ')
-  end
-
-  def current_pub_status
-    case pub_status
-    when 'D' then 'Draft'
-    when 'P' then 'Published'
-    when 'T' then 'Trashed'
-    end
   end
 
   def next_lesson_id(current_lesson_id = 0)
