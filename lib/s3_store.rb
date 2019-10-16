@@ -6,12 +6,10 @@ class S3Store
   end
 
   def save(file:, key:, acl:, zip_file: nil)
-    @client.put_object({
-                         bucket: bucket_name,
-      body: file.get_input_stream.read,
-      key: key,
-      acl: acl
-                       })
+    @client.put_object({ bucket: bucket_name,
+                         body: file.get_input_stream.read,
+                         key: key,
+                         acl: acl })
   end
 
   private
