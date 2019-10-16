@@ -1,9 +1,9 @@
-a:hover,
-a:focus {
-  text-decoration: underline;
-}
-
 a {
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+
   &.text_link {
     padding-left: 1rem;
     padding-right: 1rem;
