@@ -1,6 +1,8 @@
-require "feature_helper"
+# frozen_string_literal: true
 
-feature "Admin user clicks through each page" do
+require 'feature_helper'
+
+feature 'Admin user clicks through each page' do
 
   before(:each) do
     @spanish = FactoryBot.create(:spanish_lang)
@@ -12,26 +14,26 @@ feature "Admin user clicks through each page" do
     @course = FactoryBot.create(:course_with_lessons, category: @category, organization: @user.organization)
     @user.add_role(:admin, @organization)
     @user.organization.reload
-    switch_to_subdomain("chipublib")
+    switch_to_subdomain('chipublib')
     log_in_with @user.email, @user.password
   end
 
-  scenario "can visit each link in the header" do
-    visit admin_dashboard_index_path(subdomain: "chipublib")
-    expect(page).to have_content("Hi Admin!")
+  scenario 'can visit each link in the header' do
+    visit admin_dashboard_index_path(subdomain: 'chipublib')
+    expect(page).to have_content('Hi Admin!')
 
     visit admin_dashboard_index_path
-    within(:css, ".header-logged-in") do
-      click_link "Admin Dashboard"
+    within(:css, '.header-logged-in') do
+      click_link 'Admin Dashboard'
     end
     expect(current_path).to eq(admin_dashboard_index_path)
 
     visit admin_dashboard_index_path
-    within(:css, ".header-logged-in") do
-      click_link "Sign Out"
+    within(:css, '.header-logged-in') do
+      click_link 'Sign Out'
     end
     expect(current_path).to eq(root_path)
-    expect(page).to have_content("Signed out successfully.")
+    expect(page).to have_content('Signed out successfully.')
   end
 
 end

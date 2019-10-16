@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ExportsController < BaseController
 
@@ -9,7 +11,7 @@ module Admin
     end
 
     def data_for_completions_report_by_zip
-      grouped = { version: "zip" }
+      grouped = { version: 'zip' }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
       zip_codes = course_progs.merge(User.with_role(:user, current_site)).pluck(:zip_code).uniq
@@ -37,7 +39,7 @@ module Admin
     end
 
     def data_for_completions_report_by_lib
-      grouped = { version: "lib" }
+      grouped = { version: 'lib' }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
       lib_ids = course_progs.merge(User.with_role(:user, current_site)).pluck(:library_location_id).uniq
@@ -57,20 +59,20 @@ module Admin
 
         data = { sign_ups: users_by_lib, completions: progresses }
 
-        grouped.merge!(version: "lib", l_id => data)
+        grouped.merge!(version: 'lib', l_id => data)
       end
 
       grouped
     end
 
     def data_for_completions_report_by_survey_responses
-      grouped = { version: "survey_responses" }
+      grouped = { version: 'survey_responses' }
       current_site = current_organization
       course_progs = CourseProgress.completed_with_profile
       quiz_response_combinations = course_progs.merge(User.with_role(:user, current_site)).map { |prog| prog.user.quiz_responses_object }.compact.uniq
 
       quiz_response_combinations.each do |responses_hash|
-        users_with_responses = User.with_role(:user, current_site).where("users.quiz_responses_object = ?", responses_hash.to_yaml)
+        users_with_responses = User.with_role(:user, current_site).where('users.quiz_responses_object = ?', responses_hash.to_yaml)
         progresses_by_quiz_responses = course_progs.merge(users_with_responses)
 
         progresses = {}
@@ -82,7 +84,7 @@ module Admin
         end
 
         data = { responses: users_with_responses.count, completions: progresses }
-        grouped.merge!(version: "survey_responses", responses_hash => data)
+        grouped.merge!(version: 'survey_responses', responses_hash => data)
       end
 
       grouped

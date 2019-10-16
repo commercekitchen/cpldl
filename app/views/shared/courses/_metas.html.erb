@@ -1,0 +1,9 @@
+<% content_for :meta_title do %>
+  <%= @course.seo_page_title.present? ? @course.seo_page_title : @course.title  %>
+<% end %>
+<% content_for :meta_description do %>
+  <%= @course.meta_desc.present? ? @course.meta_desc : @course.summary %>
+<% end %>
+<% content_for :callout do %>
+  <h1><%= @course.title %></h1>
+<% end %>

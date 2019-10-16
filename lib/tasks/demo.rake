@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 namespace :demo do
-  desc "duplicate courses so that they show up on the demo site"
+  desc 'duplicate courses so that they show up on the demo site'
   task add_courses: :environment do
-    courses = Course.where_exists(:organization, subdomain: "chipublib")
+    courses = Course.where_exists(:organization, subdomain: 'chipublib')
     courses.each do |cpl_course|
       @new_course = Course.create(title: cpl_course.title,
                                   course_order: cpl_course.course_order,
@@ -16,10 +18,10 @@ namespace :demo do
                                   notes: cpl_course.notes,
                                   format: cpl_course.format,
                                   subsite_course: true,
-                                  pub_date: cpl_course.pub_status == "P" ? Time.zone.today : nil,
+                                  pub_date: cpl_course.pub_status == 'P' ? Time.zone.today : nil,
                                   display_on_dl: false)
 
-      @new_course.organization = (Organization.find(3))
+      @new_course.organization = Organization.find(3)
 
       cpl_course.topics.each do |topic|
         @new_course.topics << topic
@@ -52,13 +54,11 @@ namespace :demo do
     end
   end
 
-  desc "duplicate courses so that they show up on the demo site"
+  desc 'duplicate courses so that they show up on the demo site'
   task remove_courses: :environment do
-    courses = Course.where_exists(:organization, subdomain: "demo")
+    courses = Course.where_exists(:organization, subdomain: 'demo')
     courses.each do |course|
-      course.lessons.each do |lesson|
-        lesson.destroy
-      end
+      course.lessons.each(&:destroy)
       course.destroy
     end
   end

@@ -1,8 +1,10 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-describe "/admin should be a valid route" do
+require 'rails_helper'
 
-  it "routes /admin to /admin/dashboard" do
-    expect(get: "/admin").to route_to(controller: "admin/dashboard", action: "index")
+describe '/admin should be a valid route' do
+
+  it 'routes /admin to /admin/dashboard' do
+    expect(get: '/admin').to route_to(controller: 'admin/dashboard', action: 'index')
   end
 end

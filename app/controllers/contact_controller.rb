@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ContactController < ApplicationController
-  layout "application" # Force this layout, which has the needed sub_callout.
+  layout 'application' # Force this layout, which has the needed sub_callout.
   before_action :redirect_to_www
 
   def new
@@ -10,7 +12,7 @@ class ContactController < ApplicationController
     @contact = Contact.new
     if @contact.update(contact_params)
       ContactMailer.email(@contact.id).deliver_later
-      redirect_to root_path(subdomain: "www"), notice: "Thank you for your interest!  We will be in contact shortly."
+      redirect_to root_path(subdomain: 'www'), notice: 'Thank you for your interest!  We will be in contact shortly.'
     else
       render :new
     end

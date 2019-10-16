@@ -1,6 +1,8 @@
-require "feature_helper"
+# frozen_string_literal: true
 
-feature "unknown subdomain redirect" do
+require 'feature_helper'
+
+feature 'unknown subdomain redirect' do
   before do
     create(:default_organization)
     create(:language)
@@ -8,17 +10,17 @@ feature "unknown subdomain redirect" do
 
   end
 
-  scenario "user visits unknown subdomain" do
-    switch_to_subdomain("foobar")
+  scenario 'user visits unknown subdomain' do
+    switch_to_subdomain('foobar')
     visit root_path
-    expect(current_url).to_not include("foobar")
-    expect(current_url).to include("www")
+    expect(current_url).to_not include('foobar')
+    expect(current_url).to include('www')
   end
 
-  scenario "user visits unknown stage subdomain" do
-    switch_to_subdomain("foobar.stage")
+  scenario 'user visits unknown stage subdomain' do
+    switch_to_subdomain('foobar.stage')
     visit root_path
-    expect(current_url).to_not include("foobar")
-    expect(current_url).to include("www.stage.")
+    expect(current_url).to_not include('foobar')
+    expect(current_url).to include('www.stage.')
   end
 end

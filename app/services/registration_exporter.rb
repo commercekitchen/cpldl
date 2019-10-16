@@ -1,4 +1,6 @@
-require "csv"
+# frozen_string_literal: true
+
+require 'csv'
 
 class RegistrationExporter
 
@@ -14,7 +16,8 @@ class RegistrationExporter
 
       users.each do |user|
         next unless user.reportable_role?(@org)
-        program_name = user.program.present? ? user.program.program_name : ""
+
+        program_name = user.program.present? ? user.program.program_name : ''
         values = [user.send(@primary_id_field), program_name, user.created_at]
         values.concat([user.library_location_name, user.library_location_zipcode])
         csv.add_row values
@@ -25,8 +28,8 @@ class RegistrationExporter
   private
 
   def column_headers
-    headers = [User.human_attribute_name(@primary_id_field), "Program Name", "Registration Date"]
-    headers.concat(["Branch Name", "Zip"]) if @org.accepts_custom_branches?
+    headers = [User.human_attribute_name(@primary_id_field), 'Program Name', 'Registration Date']
+    headers.concat(['Branch Name', 'Zip']) if @org.accepts_custom_branches?
     headers
   end
 
