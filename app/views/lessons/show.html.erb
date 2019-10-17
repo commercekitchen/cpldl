@@ -1,9 +1,13 @@
-<%= render partial: "shared/courses/metas" %>
+<%= content_for :meta_title do %>
+  <%= @lesson.title %>
+<% end %>
+<%= content_for :meta_description do %>
+  <%= @lesson.summary %>
+<% end %>
 <%= content_for :callout, flush: true do %>
   <h1><%="#{@lesson.published_lesson_order}. #{@lesson.title}" %></h1>
   <small><i class="icon-clock white"></i><%= @lesson.duration_str %></small>
 <% end %>
-
 <%= content_for :course_progress do %>
   <%= render partial: "shared/courses/course_progress",
     locals: { course: @course, lesson: @lesson, course_progress: @course_progress } %>
