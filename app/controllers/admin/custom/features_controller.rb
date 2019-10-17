@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Admin::Custom::FeaturesController < Admin::Custom::BaseController
-  before_action :load_ogranization
   layout 'admin/base_with_sidebar'
 
   def show; end
@@ -17,10 +16,6 @@ class Admin::Custom::FeaturesController < Admin::Custom::BaseController
   end
 
   private
-
-  def load_ogranization
-    @organization = current_organization
-  end
 
   def org_params
     params.require(:organization).permit(:login_required)

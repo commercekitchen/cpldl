@@ -6,13 +6,11 @@ feature 'Admin user visits category management page' do
 
   before(:each) do
     @organization = create(:organization)
-    @user = create(:user, organization: @organization)
+    @user = create(:user, :admin, organization: @organization)
 
     @category1 = create(:category, organization: @organization)
     @category2 = create(:category, organization: @organization)
     @category3 = create(:category, organization: @organization)
-
-    @user.add_role(:admin, @organization)
 
     switch_to_subdomain(@organization.subdomain)
     log_in_with @user.email, @user.password
