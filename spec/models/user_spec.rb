@@ -137,7 +137,7 @@ describe User do
 
     it 'returns current_roles' do
       @user.add_role(:admin)
-      expect(@user.current_roles).to eq('admin')
+      expect(@user.current_roles).to include('admin')
     end
 
     it 'returns preferred language' do

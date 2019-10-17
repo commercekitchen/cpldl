@@ -58,6 +58,10 @@ FactoryBot.define do
     organization
     profile { build(:profile, user: nil) }
 
+    after(:create) do |user|
+      user.add_role(:user, user.organization)
+    end
+
     trait :library_card_login_user do
       email { nil }
       library_card_number { Array.new(7) { rand(10) }.join }
@@ -74,6 +78,7 @@ FactoryBot.define do
 
     trait :admin do
       after(:create) do |user|
+        user.roles.destroy_all
         user.add_role(:admin, user.organization)
       end
     end

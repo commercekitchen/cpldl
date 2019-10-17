@@ -1,10 +1,4 @@
 <%= render partial: "shared/courses/metas" %>
-<% content_for :meta_description do %>
-  <%= @course.meta_desc.present? ? @course.meta_desc : @course.summary %>
-<% end %>
-<% content_for :callout do %>
-  <h1><%= @course.title %></h1>
-<% end %>
 
 <div><small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small></div>
 

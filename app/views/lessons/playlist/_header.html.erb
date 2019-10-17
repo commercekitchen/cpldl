@@ -1,0 +1,13 @@
+<section class="playlist-header">
+  <h2 class="text-color"><%= @course.title %></h2>
+  <div class="lesson-info">
+    <div>
+      <i class="icon-book-open grey"></i>
+      <small><%= @course.lessons.published.count %> <%= t("course_page.lessons") %></small>
+    </div>
+    <div>
+      <i class="icon-clock grey"></i>
+      <small><%= @course.duration %></small>
+    </div>
+  </div>
+</section>

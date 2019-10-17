@@ -1,0 +1,60 @@
+.playlist {
+  display: grid;
+  grid-template-columns: 5rem auto 2rem;
+  align-items: center;
+  grid-template-areas:
+    "header-icon header header"
+    "lessons lessons .";
+
+  .header-icon {
+    grid-area: header-icon;
+    font-size: 3rem;
+  }
+}
+
+.playlist-header {
+  grid-area: header;
+  padding-bottom: 1rem;
+}
+
+.lesson-playlist-grid {
+  grid-area: lessons;
+}
+
+.lesson-listing {
+  display: grid;
+  grid-template-columns: 1.5rem auto 1.5rem;
+  padding: 0.75rem 0 0.75rem 2rem;
+
+  &_link {
+    &:focus,
+    &:hover {
+      .lesson-listing-item {
+        text-decoration: underline;
+
+        .lesson-number {
+          text-decoration: underline;
+        }
+        .lesson-link {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.lesson-info {
+  display: grid;
+  grid-template-areas: "lesson-info-item lesson-info-item";
+}
+
+.lesson-listing-item {
+  .lesson-number {
+    grid-area: lesson-info-item;
+    display: inline-block;
+  }
+  .lesson-link {
+    grid-area: lesson-info-item;
+    display: inline-block;
+  }
+}
