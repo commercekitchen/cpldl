@@ -84,7 +84,7 @@ feature 'User visits course listing page' do
       click_link 'Start Course'
       lesson = @course_with_lessons.lessons.first
       expect(current_path).to eq(course_lesson_path(@course_with_lessons, lesson))
-      expect(page.title).to eq(@course_with_lessons.title)
+      expect(page.title).to eq(lesson.title)
       expect(page).to_not have_selector('h1', text: @course_with_lessons.title)
       expect(page).to have_content("#{lesson.published_lesson_order}. #{lesson.title}")
     end
