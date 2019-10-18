@@ -1,95 +1,6 @@
 @import "bourbon";
 @import "neat";
 
-.header-logged-out {
-  margin-bottom: 2em;
-  padding: 1em 0 1em 0;
-  min-height: 100px;
-  background-color: $teal;
-  z-index: 100;
-
-  @include media($mobile-large) {
-    margin-bottom: 1em;
-  }
-
-  .language-links {
-    color: $white;
-    padding-bottom: 1em;
-    @include clearfix;
-
-    a {
-      color: $white;
-      display: inline-block;
-
-      @include media($mobile-large) {
-        font-size: 0.9rem;
-      }
-    }
-  }
-
-  .logo {
-    display: inline-block;
-    float: left;
-
-    .logo-icon {
-      img {
-        max-height: 100%;
-      }
-
-      @include media($mobile-large) {
-        width: 70px;
-        float: left;
-      }
-
-      position: relative;
-    }
-  }
-
-  .dark-logo {
-    width: 55px;
-    height: auto;
-  }
-
-  h1 {
-    font-family: $font-secondary;
-    color: $white;
-    font-size: 1.7em;
-    font-weight: 100;
-    margin-top: 0.2em;
-    line-height: 1.05em;
-    padding-left: 0.5em;
-    text-transform: uppercase;
-    max-width: 500px;
-    display: inline-block;
-    float: left;
-    text-align: center;
-    @include media($mobile-large) {
-      font-size: 1.2rem;
-      float: left;
-      display: block;
-      width: 39%;
-      max-width: 100%;
-      margin-top: 10px;
-    }
-    @include media($tablet) {
-      font-size: 1.3rem;
-      float: left;
-      display: block;
-      width: 67%;
-      max-width: 100%;
-      margin-top: 10px;
-    }
-  }
-  .btn {
-    @include media($mobile-large) {
-      margin-right: 0.5em;
-      margin-bottom: 0.5em;
-      float: left;
-      display: block;
-    }
-  }
-}
-
 .header-logged-in {
   position: relative;
 
@@ -120,7 +31,6 @@
   }
 
   .logo {
-    display: inline-block;
     float: left;
 
     @include media($mobile) {
@@ -199,12 +109,10 @@
 }
 
 .logo-link-container {
-  vertical-align: top;
   display: block;
   @include clearfix;
 
   .search-container {
-    display: inline-block;
     float: right;
     min-width: 300px;
 

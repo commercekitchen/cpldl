@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale.to_s %>">
   <head>
-    <%= render "shared/meta_tags" %>
+    <%= render "shared/layout/meta_tags" %>
   </head>
   <body class="<%= current_organization.subdomain %>">
     <%= render "shared/admin/header" %>
@@ -27,6 +27,6 @@
         </div>
       </div>
     </main>
-    <%= render "shared/footer" %>
+    <%= render "shared/layout/footer" %>
   </body>
 </html>

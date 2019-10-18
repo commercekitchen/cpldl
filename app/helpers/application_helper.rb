@@ -51,4 +51,8 @@ module ApplicationHelper
   rescue Sprockets::Rails::Helper::AssetNotFound
     nil
   end
+
+  def is_org_admin?(user)
+    user.has_role?(:admin, current_organization)
+  end
 end

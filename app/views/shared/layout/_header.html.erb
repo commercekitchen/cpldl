@@ -1,4 +1,4 @@
-<% if current_user && org_admin?(current_user) %>
+<% if current_user && is_org_admin?(current_user) %>
   <%= render "shared/admin/header" %>
 <% elsif current_user %>
   <%= render "shared/user/header" %>
