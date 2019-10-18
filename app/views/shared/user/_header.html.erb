@@ -9,16 +9,16 @@
       <div class="search-container">
         <div class="signup-box">
           <nav class="left-or-rignt header-top-nav">
-            <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path %> |
+            <%= link_to "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!", profile_path, class: "inline_link" %> |
             <% if current_user.has_role?(:trainer, current_organization) %>
-              <%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %> |
+              <%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path, class: "inline_link" %> |
             <% end %>
             <% unless current_organization.library_card_login? %>
-              <%= link_to "#{t('logged_in_user.my_account')}", account_path %> |
+              <%= link_to "#{t('logged_in_user.my_account')}", account_path, class: "inline_link" %> |
             <% end %>
-            <%= link_to "#{t('logged_in_user.my_courses')}", my_courses_path %> |
-            <%= link_to "#{t('logged_in_user.all_courses')}", root_path %> |
-            <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete" %>
+            <%= link_to "#{t('logged_in_user.my_courses')}", my_courses_path, class: "inline_link" %> |
+            <%= link_to "#{t('logged_in_user.all_courses')}", root_path, class: "inline_link" %> |
+            <%= link_to "#{t('logged_in_user.sign_out')}", destroy_user_session_path, method: "delete", class: "inline_link" %>
           </nav>
         </div>
 
