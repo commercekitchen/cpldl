@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale.to_s %>">
-<head>
-  <%= render "shared/meta_tags" %>
-</head>
-<body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
-  <%= render "shared/header" %>
-  <main class="container">
-    <%= render "shared/flashes" %>
-    <%= yield %>
-  </main>
-  <%= render "shared/footer" %>
-</body>
+  <head>
+    <%= render "shared/meta_tags" %>
+  </head>
+  <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
+    <%= render "shared/header" %>
+    <main class="container">
+      <%= render "shared/flashes" %>
+      <%= yield %>
+    </main>
+    <%= render "shared/footer" %>
+  </body>
 </html>

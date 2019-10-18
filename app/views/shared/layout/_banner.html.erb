@@ -1,0 +1,26 @@
+<div class="banner color">
+  <div class="container">
+    <% if content_for?(:course_progress) %>
+      <div class="eightcol">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <%= render "shared/logo_banner" %>
+        <% end %>
+      </div>
+      <div class="fourcol last">
+        <% if content_for?(:course_progress) %>
+          <%= yield :course_progress %>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="twelvecol">
+        <% if content_for?(:callout) %>
+          <%= yield :callout %>
+        <% else %>
+          <%= render "shared/logo_banner" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

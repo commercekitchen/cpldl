@@ -1,0 +1,9 @@
+<% if current_user && org_admin?(current_user) %>
+  <%= render "shared/admin/header" %>
+<% elsif current_user %>
+  <%= render "shared/user/header" %>
+<% elsif top_level_domain? %>
+  <%= render "shared/dl_header" %>
+<% else %>
+  <%= render "shared/layout/logged_out_header" %>
+<% end %>
