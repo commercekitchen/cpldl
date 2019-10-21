@@ -1,7 +1,0 @@
-<% if current_user && current_user.has_role?(:admin, current_organization) %>
-  <%= render "shared/admin/header" %>
-<% elsif current_user %>
-  <%= render "shared/user/header" %>
-<% elsif top_level_domain? %>
-  <%= render "shared/dl_header" %>
-<% end %>

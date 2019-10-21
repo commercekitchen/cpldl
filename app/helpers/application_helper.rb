@@ -55,4 +55,8 @@ module ApplicationHelper
   def is_org_admin?(user)
     user.has_role?(:admin, current_organization)
   end
+
+  def include_search?
+    !(current_user.blank? && top_level_domain?)
+  end
 end

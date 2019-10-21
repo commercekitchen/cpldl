@@ -1,7 +1,7 @@
 @import "bourbon";
 @import "neat";
 
-.header-logged-in {
+.application-header {
   position: relative;
 
   @include media($mobile-large) {
