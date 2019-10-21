@@ -19,12 +19,7 @@ $(document).ready(function() {
   };
 
   handleLessonCompleted = function(event) {
-    if (event.origin !== window.location.origin) {
-      console.log("Event origin doesn't match window");
-      return;
-    } else {
-      sendLessonCompletedEvent();
-    }
+    sendLessonCompletedEvent();
   };
 
   window.addEventListener("message", handleLessonCompleted, true);
