@@ -16,10 +16,9 @@ class S3Proxy < Rack::Proxy
       # This is the only path that needs to be set currently on Rails 5 & greater
       env['PATH_INFO'] = request.fullpath
 
-      Rails.logger.debug("SERVER_PORT: #{env['SERVER_PORT']}")
-
       # don't send your sites cookies to target service, unless it is a trusted internal service that can parse all your cookies
       env['HTTP_COOKIE'] = ''
+
       super(env)
     else
       @app.call(env)

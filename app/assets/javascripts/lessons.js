@@ -19,7 +19,9 @@ $(document).ready(function() {
   };
 
   handleLessonCompleted = function(event) {
-    sendLessonCompletedEvent();
+    if (event.data === "lesson_completed") {
+      sendLessonCompletedEvent();
+    }
   };
 
   window.addEventListener("message", handleLessonCompleted, true);
