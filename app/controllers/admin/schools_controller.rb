@@ -2,12 +2,11 @@
 
 module Admin
   class SchoolsController < BaseController
+    before_action :enable_sidebar
 
     def index
       @schools = current_organization.schools
       @new_school = current_organization.schools.new
-
-      render layout: 'admin/base_with_sidebar'
     end
 
     def create

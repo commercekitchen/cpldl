@@ -2,9 +2,9 @@
 
 module Admin
   class ReportsController < BaseController
+    before_action :enable_sidebar
 
     def show
-      render layout: 'admin/base_with_sidebar'
     end
 
   end

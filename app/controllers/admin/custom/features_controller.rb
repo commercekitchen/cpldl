@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::Custom::FeaturesController < Admin::Custom::BaseController
-  layout 'admin/base_with_sidebar'
+  before_action :enable_sidebar
 
   def show; end
 

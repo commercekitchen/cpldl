@@ -2,8 +2,7 @@
 
 class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   before_action :load_translations
-
-  layout 'admin/base_with_sidebar'
+  before_action :enable_sidebar
 
   def show; end
 

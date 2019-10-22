@@ -2,6 +2,7 @@
 
 module Admin
   class DashboardController < BaseController
+    before_action :enable_sidebar
 
     def index
       @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
@@ -9,16 +10,16 @@ module Admin
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
-      render 'admin/courses/index', layout: 'admin/base_with_sidebar'
+      render 'admin/courses/index'
     end
 
     def pages_index
       @cms_pages = CmsPage.where(organization_id: current_organization.id)
-      render 'admin/cms_pages/index', layout: 'admin/base_with_sidebar'
+      render 'admin/cms_pages/index'
     end
 
     def invites_index
-      render 'admin/invites/new', layout: 'admin/base_with_sidebar'
+      render 'admin/invites/new'
     end
 
     def users_index
@@ -29,7 +30,7 @@ module Admin
                  results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
                end
 
-      render 'admin/users/index', layout: 'admin/base_with_sidebar'
+      render 'admin/users/index'
     end
 
     def manually_confirm_user
@@ -48,7 +49,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          render 'admin/courses/import_courses', layout: 'admin/base_with_sidebar'
+          render 'admin/courses/import_courses'
         end
       end
     end

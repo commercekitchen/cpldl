@@ -9,7 +9,12 @@
     <%= render "shared/layout/banner" %>
     <main class="container">
       <%= render "shared/flashes" %>
-      <%= yield %>
+      <div class=<%= @show_sidebar ? "content-grid-with-sidebar" : "content-grid" %>>
+        <%= user_sidebar %>
+        <div class="main-content">
+          <%= yield %>
+        </div>
+      </div>
     </main>
     <%= render "shared/layout/footer" %>
   </body>

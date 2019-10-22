@@ -11,7 +11,7 @@ module Admin::Custom
     def index
       @translations = Translation.locale(@locale)
 
-      render layout: 'admin/base_with_sidebar'
+      enable_sidebar
     end
 
     def new

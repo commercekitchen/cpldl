@@ -1,5 +1,5 @@
 class Admin::Custom::ProgramsController < Admin::Custom::BaseController
-  layout 'admin/base_with_sidebar'
+  before_action :enable_sidebar
 
   def show
   end

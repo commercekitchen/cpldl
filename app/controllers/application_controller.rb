@@ -152,6 +152,12 @@ class ApplicationController < ActionController::Base
     current_organization.subdomain == subdomain
   end
 
+  protected
+
+  def enable_sidebar
+    @show_sidebar = true
+  end
+
   private
 
   def current_subdomain
