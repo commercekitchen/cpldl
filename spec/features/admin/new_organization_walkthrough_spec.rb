@@ -29,7 +29,7 @@ feature 'Admin create a new organization' do
 
     expect(page).to have_content('Organization was successfully created.')
     expect(page).to have_content('true')
-    click_on 'Admin Dashboard'
+    click_on 'Dashboard'
     click_on 'Invite Admin'
     fill_in :user_email, with: 'amy@example.com'
     select 'Denver Public Library', from: :user_organization_id
@@ -44,7 +44,7 @@ feature 'Admin create a new organization' do
     user.add_role(:admin, dpl)
 
     within '.logo-link-container' do
-      click_on 'Admin Dashboard'
+      click_on 'Dashboard'
     end
     click_on 'Organizations'
     expect(page).to have_content('amy@example.com')
@@ -56,7 +56,7 @@ feature 'Admin create a new organization' do
 
     visit admin_dashboard_index_path(subdomain: 'dpl')
 
-    click_on 'Admin Dashboard'
+    click_on 'Dashboard'
     click_on 'Manage Library Branches'
     click_on 'Add a Library Branch'
 
@@ -99,7 +99,7 @@ feature 'Admin create a new organization' do
 
     click_on 'Save Organization'
 
-    click_on 'Admin Dashboard'
+    click_on 'Dashboard'
     click_on 'Invite Admin'
     fill_in :user_email, with: 'amy@example.com'
     select 'Denver Public Library', from: :user_organization_id

@@ -23,7 +23,7 @@ feature 'Admin user clicks through each page' do
     expect(page).to have_content('Hi Admin!')
 
     visit admin_dashboard_index_path
-    click_link 'Admin Dashboard'
+    click_link 'Dashboard'
     expect(current_path).to eq(admin_dashboard_index_path)
 
     visit admin_dashboard_index_path
