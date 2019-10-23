@@ -21,15 +21,9 @@ feature 'User clicks through each page' do
     click_link "Dashboard"
     expect(current_path).to eq(profile_path)
 
-    visit root_path
-    click_link 'My Account'
-    expect(current_path).to eq(account_path)
-
-    visit root_path
     click_link 'My Courses'
     expect(current_path).to eq(my_courses_path)
 
-    visit root_path
     click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')

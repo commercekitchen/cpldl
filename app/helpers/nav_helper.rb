@@ -20,7 +20,7 @@ module NavHelper
     if is_org_admin?(current_user)
       admin_dashboard_index_path
     else
-      account_path
+      profile_path
     end
   end
 
