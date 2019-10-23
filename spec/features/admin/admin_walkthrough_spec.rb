@@ -23,15 +23,11 @@ feature 'Admin user clicks through each page' do
     expect(page).to have_content('Hi Admin!')
 
     visit admin_dashboard_index_path
-    within(:css, '.header-logged-in') do
-      click_link 'Admin Dashboard'
-    end
+    click_link 'Admin Dashboard'
     expect(current_path).to eq(admin_dashboard_index_path)
 
     visit admin_dashboard_index_path
-    within(:css, '.header-logged-in') do
-      click_link 'Sign Out'
-    end
+    click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')
   end

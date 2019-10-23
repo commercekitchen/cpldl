@@ -18,48 +18,34 @@ feature 'User clicks through each page' do
 
   scenario 'can visit each link in the header' do
     visit root_path
-    within(:css, '.header-logged-in') do
-      click_link "Hi #{@user.profile.first_name}!"
-    end
+    click_link "Dashboard"
     expect(current_path).to eq(profile_path)
 
     visit root_path
-    within(:css, '.header-logged-in') do
-      click_link 'My Account'
-    end
+    click_link 'My Account'
     expect(current_path).to eq(account_path)
 
     visit root_path
-    within(:css, '.header-logged-in') do
-      click_link 'My Courses'
-    end
+    click_link 'My Courses'
     expect(current_path).to eq(my_courses_path)
 
     visit root_path
-    within(:css, '.header-logged-in') do
-      click_link 'Sign Out'
-    end
+    click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')
   end
 
   scenario 'can visit each link in sidebar' do
     visit profile_path
-    within(:css, '.sidebar') do
-      click_link 'Change Login Information'
-    end
+    click_link 'Change Login Information'
     expect(current_path).to eq(account_path)
 
     visit profile_path
-    within(:css, '.sidebar') do
-      click_link 'Update Profile'
-    end
+    click_link 'Update Profile'
     expect(current_path).to eq(profile_path)
 
     visit profile_path
-    within(:css, '.sidebar') do
-      click_link 'My Completed Courses'
-    end
+    click_link 'My Completed Courses'
     expect(current_path).to eq(course_completions_path)
   end
 
