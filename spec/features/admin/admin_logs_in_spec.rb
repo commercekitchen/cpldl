@@ -14,6 +14,19 @@ feature 'Admin user logs in' do
       switch_to_subdomain('chipublib')
     end
 
+    context 'with valid profile' do
+      scenario 'is sent to admin home page' do
+        log_in_with @user.email, @user.password
+        expect(current_path).to eq(admin_dashboard_index_path)
+      end
+
+      scenario "isn't prompted for quiz" do
+        @user.update_attribute(:quiz_modal_complete, false)
+        log_in_with @user.email, @user.password
+        expect(page).not_to have_css('#quiz-start-modal')
+      end
+    end
+
     context 'with invalid profile' do
       before(:each) do
         @user.profile.update_attribute(:first_name, nil)
@@ -52,24 +65,6 @@ feature 'Admin user logs in' do
         expect(current_path).to eq(invalid_profile_path)
         expect(page).to have_content('You must have a valid profile before you can continue:')
         expect(page).to have_content("First name can't be blank")
-      end
-    end
-
-    context 'with valid profile' do
-      before(:each) do
-        @user.profile = create(:profile)
-        @user.reload
-      end
-
-      scenario 'is sent to admin home page' do
-        log_in_with @user.email, @user.password
-        expect(current_path).to eq(admin_dashboard_index_path)
-      end
-
-      scenario "isn't prompted for quiz" do
-        @user.update_attribute(:quiz_modal_complete, false)
-        log_in_with @user.email, @user.password
-        expect(page).not_to have_css('#quiz-start-modal')
       end
     end
   end
