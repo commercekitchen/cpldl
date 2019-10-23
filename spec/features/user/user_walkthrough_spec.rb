@@ -18,7 +18,7 @@ feature 'User clicks through each page' do
 
   scenario 'can visit each link in the header' do
     visit root_path
-    click_link "Dashboard"
+    click_link "Account"
     expect(current_path).to eq(profile_path)
 
     click_link 'My Courses'

@@ -1,6 +1,6 @@
 module NavHelper
   def nav_links
-    [user_greeting, dashboard_link, www_trainers_link, org_trainers_link,
+    [user_greeting, dashboard_link, account_link, www_trainers_link, org_trainers_link,
      my_courses_link, all_courses_link, sign_out_link].compact.join(' | ').html_safe
   end
 
@@ -13,15 +13,13 @@ module NavHelper
   end
 
   def dashboard_link
-    link_to t('logged_in_user.dashboard'), dashboard_location, class: "inline_link"
+    if is_org_admin?(current_user)
+      link_to t('admin.dashboard'), admin_dashboard_index_path, class: "inline_link"
+    end
   end
 
-  def dashboard_location
-    if is_org_admin?(current_user)
-      admin_dashboard_index_path
-    else
-      profile_path
-    end
+  def account_link
+    link_to t('logged_in_user.account'), profile_path, class: "inline_link"
   end
 
   def www_trainers_link

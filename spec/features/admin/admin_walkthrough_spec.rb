@@ -22,11 +22,12 @@ feature 'Admin user clicks through each page' do
     visit admin_dashboard_index_path(subdomain: 'chipublib')
     expect(page).to have_content('Hi Admin!')
 
-    visit admin_dashboard_index_path
     click_link 'Dashboard'
     expect(current_path).to eq(admin_dashboard_index_path)
 
-    visit admin_dashboard_index_path
+    click_link 'Account'
+    expect(current_path).to eq(profile_path)
+
     click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')
