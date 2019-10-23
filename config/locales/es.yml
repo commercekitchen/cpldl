@@ -125,23 +125,24 @@ es:
     my_courses: "Mis Cursos"
     all_courses: "Ver todos los cursos"
     sign_out: "Salir"
-  profile_page:
-    preferred_language: "Idioma de preferencia"
-    library_location: "¿Cómo se llama su biblioteca?"
-    save: "Guardar"
-    change_login_information: "Cambiar Información de Ingreso"
-    update_profile: "Actualizar Perfil"
-    my_completed_courses: "Mis Cursos Terminados"
+  account:
+    login_information: "Información de Ingreso"
+    profile: "Perfil"
+    my_completed_courses: "Cursos Terminados"
     no_completed_courses: "No tienes cursos terminados."
+  profile:
     last_name: "Apellido"
     phone: "Teléfono"
     street_address: "Dirección"
     city: "Ciudad"
     state: "Estado"
+    preferred_language: "Idioma de preferencia"
+    library_location: "¿Cómo se llama su biblioteca?"
     opt_out_of_recommendations: "¿Quiere que ayudemos a elegir sus cursos?"
     # These are backward because of the question phrasing:
     opt_out_false: "Si"
     opt_out_true: "No"
+    save: "Guardar"
     updated: "El perfil se actualizó correctamente."
   programs_form:
     parent_type: "Seleccione el tipo de programa..."

@@ -18,9 +18,9 @@ feature 'Registered user visits account page' do
 
     scenario 'can view their account options' do
       visit account_path
-      expect(page).to have_content('Change Login Information')
-      expect(page).to have_content('Update Profile')
-      expect(page).to have_content('My Completed Courses')
+      expect(page).to have_content('Login Information')
+      expect(page).to have_content('Profile')
+      expect(page).to have_content('Completed Courses')
     end
 
     scenario 'can change login information' do
@@ -84,9 +84,9 @@ feature 'Registered user visits account page' do
 
     scenario 'can view their account options' do
       visit account_path
-      expect(page).to have_content('Change Login Information')
-      expect(page).to have_content('Update Profile')
-      expect(page).to have_content('My Completed Courses')
+      expect(page).to have_content('Login Information')
+      expect(page).to have_content('Profile')
+      expect(page).to have_content('Completed Courses')
     end
 
     scenario 'can change login information' do
@@ -141,10 +141,11 @@ feature 'Registered user visits account page' do
     end
 
     scenario 'can view their account options' do
-      visit account_path
-      expect(page).to_not have_content('Change Login Information') # Library Card login users shouldn't see this
-      expect(page).to have_content('Update Profile')
-      expect(page).to have_content('My Completed Courses')
+      visit root_path
+      click_link "Account"
+      expect(page).to_not have_content('Login Information') # Library Card login users shouldn't see this
+      expect(page).to have_content('Profile')
+      expect(page).to have_content('Completed Courses')
     end
 
     scenario 'can update their profile information' do

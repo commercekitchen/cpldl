@@ -31,15 +31,15 @@ feature 'User clicks through each page' do
 
   scenario 'can visit each link in sidebar' do
     visit profile_path
-    click_link 'Change Login Information'
+    click_link 'Login Information'
     expect(current_path).to eq(account_path)
 
     visit profile_path
-    click_link 'Update Profile'
+    click_link 'Profile'
     expect(current_path).to eq(profile_path)
 
     visit profile_path
-    click_link 'My Completed Courses'
+    click_link 'Completed Courses'
     expect(current_path).to eq(course_completions_path)
   end
 

@@ -120,16 +120,16 @@ en:
     my_courses: "My Courses"
     all_courses: "See All Courses"
     sign_out: "Sign Out"
-  profile_page:
-    preferred_language: "Preferred Language"
-    library_location: "What is your library called?"
-    save: "Save"
-    change_login_information: "Change Login Information"
-    update_profile: "Update Profile"
-    my_completed_courses: "My Completed Courses"
+  account:
+    login_information: "Login Information"
+    profile: "Profile"
+    my_completed_courses: "Completed Courses"
     no_completed_courses: "You have no completed courses."
+  profile:
     last_name: "Last Name"
     phone: "Phone Number"
+    preferred_language: "Preferred Language"
+    library_location: "What is your library called?"
     street_address: "Street Address"
     city: "City"
     state: "State"
@@ -137,6 +137,7 @@ en:
     # These are backward because of the question phrasing:
     opt_out_false: "Yes"
     opt_out_true: "No"
+    save: "Save"
     updated: "Profile was successfully updated."
   programs_form:
     parent_type: "Select Program Type..."
