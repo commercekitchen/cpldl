@@ -67,6 +67,11 @@ describe Course do
       expect(@course).to be_valid
     end
 
+    it 'should save new course with duplicate name if original is archived' do
+      existing_course = FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
+      expect(@course.save).to be_truthy
+    end
+
     it 'can only have listed statuses' do
       allowed_statuses = %w[P D A]
       allowed_statuses.each do |status|
