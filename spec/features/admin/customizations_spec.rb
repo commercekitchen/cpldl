@@ -18,7 +18,8 @@ feature 'Subsite admin customizes organization' do
       'Footer' => admin_custom_footers_path,
       'Login Requirement' => admin_custom_features_path,
       'Manage Programs' => admin_custom_programs_path,
-      'Manage Library Branches' => admin_custom_branches_path }.each do |link, path|
+      'Manage Library Branches' => admin_custom_branches_path,
+      '<< Dashboard' => admin_dashboard_index_path }.each do |link, path|
       expect(page).to have_link(link)
       click_link(link)
       expect(current_path).to eq(path)
