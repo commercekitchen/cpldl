@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Admin::Custom::FeaturesController < Admin::Custom::BaseController
-  before_action :enable_sidebar
-
   def show; end
 
   def update

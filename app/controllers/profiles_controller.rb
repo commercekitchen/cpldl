@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
   skip_before_action :require_valid_profile
   before_action :authenticate_user!
   before_action :set_user
-  before_action :enable_sidebar
+  before_action -> { enable_sidebar('shared/user/sidebar') }
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)

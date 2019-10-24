@@ -154,8 +154,9 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  def enable_sidebar
+  def enable_sidebar(sidebar = nil)
     @show_sidebar = true
+    @sidebar = sidebar
   end
 
   private

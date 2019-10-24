@@ -10,8 +10,6 @@ module Admin::Custom
 
     def index
       @translations = Translation.locale(@locale)
-
-      enable_sidebar
     end
 
     def new

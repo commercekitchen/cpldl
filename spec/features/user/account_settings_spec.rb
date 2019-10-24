@@ -2,9 +2,9 @@
 
 require 'feature_helper'
 
-feature 'Registered user visits account page' do
+feature 'Registered user visits account pages' do
 
-  context 'belongs to non-npl subdomain' do
+  context 'belongs to non-program subdomain' do
 
     before(:each) do
       switch_to_subdomain('chipublib')
@@ -16,11 +16,11 @@ feature 'Registered user visits account page' do
       login_as(@user)
     end
 
-    scenario 'can view their account options' do
+    scenario 'sees the correct sidebar options' do
       visit account_path
-      expect(page).to have_content('Login Information')
-      expect(page).to have_content('Profile')
-      expect(page).to have_content('Completed Courses')
+      expect(page).to have_link('Login Information')
+      expect(page).to have_link('Profile')
+      expect(page).to have_link('Completed Courses')
     end
 
     scenario 'can change login information' do
@@ -69,36 +69,17 @@ feature 'Registered user visits account page' do
 
   end
 
-  context 'belongs to Nashville subdomain' do
+  context 'belongs to program subdomain' do
 
     before(:each) do
-      @npl_organization = create(:organization, :accepts_programs, subdomain: 'npl')
-      @npl_profile = build(:profile, :with_last_name)
-      @npl_user = create(:user, organization: @npl_organization, profile: @npl_profile)
+      @program_organization = create(:organization, :accepts_programs, subdomain: 'npl')
+      @program_profile = build(:profile, :with_last_name)
+      @program_user = create(:user, organization: @program_organization, profile: @program_profile)
       Language.all.each(&:destroy)
       @english = create(:language)
       @spanish = create(:spanish_lang)
-      switch_to_subdomain('npl')
-      login_as(@npl_user)
-    end
-
-    scenario 'can view their account options' do
-      visit account_path
-      expect(page).to have_content('Login Information')
-      expect(page).to have_content('Profile')
-      expect(page).to have_content('Completed Courses')
-    end
-
-    scenario 'can change login information' do
-      original_encrypted_pw = @npl_user.encrypted_password
-      visit account_path
-      fill_in 'Email', with: 'alex@commercekitchen.com'
-      fill_in 'user_password', with: 'password'
-      fill_in 'user_password_confirmation', with: 'password'
-      click_button 'Save'
-
-      @npl_user.reload
-      expect(@npl_user.encrypted_password).not_to eq original_encrypted_pw
+      switch_to_subdomain(@program_organization.subdomain)
+      login_as(@program_user)
     end
 
     scenario 'can update profile information' do
@@ -110,11 +91,11 @@ feature 'Registered user visits account page' do
       select('English', from: 'profile_language_id')
       click_button 'Save'
 
-      @npl_user.reload
-      expect(@npl_user.profile.first_name).to eq('Alex')
-      expect(@npl_user.profile.last_name).to eq('Monroe')
-      expect(@npl_user.profile.zip_code).to eq('12345')
-      expect(@npl_user.profile.language.name).to eq('English')
+      @program_user.reload
+      expect(@program_user.profile.first_name).to eq('Alex')
+      expect(@program_user.profile.last_name).to eq('Monroe')
+      expect(@program_user.profile.zip_code).to eq('12345')
+      expect(@program_user.profile.language.name).to eq('English')
     end
 
     scenario 'last name required' do
@@ -143,9 +124,9 @@ feature 'Registered user visits account page' do
     scenario 'can view their account options' do
       visit root_path
       click_link "Account"
-      expect(page).to_not have_content('Login Information') # Library Card login users shouldn't see this
-      expect(page).to have_content('Profile')
-      expect(page).to have_content('Completed Courses')
+      expect(page).to_not have_link('Login Information') # Library Card login users shouldn't see this
+      expect(page).to have_link('Profile')
+      expect(page).to have_link('Completed Courses')
     end
 
     scenario 'can update their profile information' do

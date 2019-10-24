@@ -2,7 +2,6 @@
 
 class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   before_action :load_translations
-  before_action :enable_sidebar
 
   def show; end
 
