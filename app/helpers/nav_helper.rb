@@ -23,10 +23,12 @@ module NavHelper
   end
 
   def www_trainers_link
-    link_to t('home.trainer_link'),
-      "https://training.digitallearn.org",
-      target: "_blank",
-      class: "inline_link"
+    if is_org_admin?(current_user)
+      link_to t('home.trainer_link'),
+        "https://training.digitallearn.org",
+        target: "_blank",
+        class: "inline_link"
+    end
   end
 
   def org_trainers_link
