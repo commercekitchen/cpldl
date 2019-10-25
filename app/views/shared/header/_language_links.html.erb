@@ -1,8 +1,8 @@
-<small>
+<div class="language-links">
   <% if hide_language_links? %>
     &nbsp;
   <% else %>
     <%= link_to "English", home_language_toggle_path(lang: "en") %> |
     <%= link_to "Espa&ntilde;ol".html_safe, home_language_toggle_path(lang: "es") %>
   <% end %>
-</small>
+</div>

@@ -41,9 +41,7 @@ feature 'Admin create a new organization' do
     user = create(:user, organization: dpl)
     user.add_role(:admin, dpl)
 
-    within '.logo-link-container' do
-      click_on 'Dashboard'
-    end
+    click_on 'Dashboard'
     click_on 'Organizations'
     expect(page).to have_content('amy@example.com')
 

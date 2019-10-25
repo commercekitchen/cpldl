@@ -1,27 +1,8 @@
 <header class="application-header">
-  <div class="container">
-    <div class="language-links">
-      <%= render "shared/header/language_links" %>
-      <%= render "shared/header/trainers_link" %>
-    </div>
-    <div class="logo-link-container">
-      <%= render "shared/header/logo_purple" %>
-      <div class="search-container">
-        <div class="signup-box">
-          <% if current_user.present? %>
-            <%= render "shared/header/nav" %>
-          <% else %>
-            <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "btn" %>
-          <% end %>
-        </div>
-        <div>
-          <% if include_search? %>
-            <div class="search-box">
-              <%= render "shared/header/search_box" %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-    </div>
+  <div class="container header-grid">
+    <%= render "shared/header/language_links" %>
+    <%= render "shared/header/trainers_link" %>
+    <%= render "shared/header/logo_purple" %>
+    <%= render "shared/header/nav_and_search" %>
   </div>
 </header>
