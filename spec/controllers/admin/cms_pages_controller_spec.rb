@@ -7,8 +7,6 @@ describe Admin::CmsPagesController do
   before(:each) do
     @organization = create(:organization)
     request.host = 'chipublib.example.com'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @page1   = create(:cms_page, title: 'Page1', organization: @organization)
     @page2   = create(:cms_page, title: 'Page2', organization: @organization)
     @page3   = create(:cms_page, title: 'Page3', organization: @organization)

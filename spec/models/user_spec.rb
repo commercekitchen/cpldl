@@ -141,7 +141,7 @@ describe User do
     end
 
     it 'returns preferred language' do
-      @user.profile = FactoryBot.create(:profile, user: @user, language: FactoryBot.create(:language))
+      @user.profile = FactoryBot.create(:profile, user: @user, language: @english)
       expect(@user.preferred_language).to eq('English')
     end
   end

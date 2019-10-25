@@ -7,8 +7,6 @@ describe Admin::DashboardController do
     @org = create(:default_organization)
     @request.host = 'www.test.host'
     @user = create(:user, organization: @org)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     sign_in @user
   end
 

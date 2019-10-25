@@ -8,8 +8,6 @@ feature 'User visits course complete page' do
     @org = create(:organization)
     create(:default_organization)
     @course1 = create(:course, title: 'Title 1')
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
   end
 
   context 'as a logged in user' do

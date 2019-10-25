@@ -7,8 +7,6 @@ feature 'User clicks through each page' do
   before(:each) do
     create(:default_organization)
     @org = create(:organization)
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
     @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
 
@@ -44,9 +42,6 @@ feature 'User clicks through each page' do
   end
 
   describe 'Header' do
-    let!(:language) { create(:language) }
-    let!(:spanish_lang) { create(:spanish_lang) }
-
     shared_examples 'trainer link' do
       it 'trainer link should exist on landing page' do
         visit root_path

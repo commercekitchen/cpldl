@@ -5,7 +5,6 @@ require 'feature_helper'
 feature 'User completes course recommendations quiz' do
 
   before(:each) do
-    @english = create(:language)
     @org = create(:organization)
     @user = create(:user, organization: @org)
 

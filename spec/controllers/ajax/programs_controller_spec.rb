@@ -7,8 +7,6 @@ describe Ajax::ProgramsController do
   before do
     @organization = create(:organization, subdomain: 'dpl')
     @request.host = 'dpl.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @program = create(:program, organization: @organization)
     @program_location = create(:program_location, program: @program)
     @student_program1 = create(:program, :student_program, organization: @organization)

@@ -32,26 +32,20 @@ describe CoursesController do
 
   before(:each) do
     request.host = 'chipublib.example.com'
-    @language = create(:language)
-    @spanish = create(:spanish_lang)
     @organization = create(:organization)
     @category1 = create(:category, organization: @organization)
     @category2 = create(:category, :disabled, organization: @organization)
 
     @course1 = create(:course, title: 'Course 1',
-                               language: @language,
                                description: 'Mocha Java Scripta',
                                organization: @organization,
                                category: @category1)
     @course2 = create(:course, title: 'Course 2',
-                               language: @language,
                                organization: @organization)
     @course3 = create(:course, title: 'Course 3',
-                               language: @language,
                                description: 'Ruby on Rails',
                                organization: @organization)
     @disabled_category_course = create(:course, title: 'Disabled Category Course',
-                                                language: @language,
                                                 description: 'Foo Bar Baz',
                                                 organization: @organization,
                                                 category: @category2)

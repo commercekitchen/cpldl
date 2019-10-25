@@ -4,8 +4,6 @@ require 'feature_helper'
 
 feature 'Admin create a new organization' do
   before(:each) do
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
     @course = create(:course_with_lessons)
     @www = create(:default_organization)
     @www_admin_user = create(:user, organization: @www)

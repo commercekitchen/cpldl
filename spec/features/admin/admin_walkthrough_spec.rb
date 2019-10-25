@@ -5,8 +5,6 @@ require 'feature_helper'
 feature 'Admin user clicks through each page' do
 
   before(:each) do
-    @spanish = FactoryBot.create(:spanish_lang)
-    @english = FactoryBot.create(:language)
     @user = FactoryBot.create(:user)
     @user.add_role(:admin)
     @organization = FactoryBot.create(:organization)

@@ -10,9 +10,6 @@ feature 'Registered user visits account pages' do
       switch_to_subdomain('chipublib')
       @organization = create(:organization)
       @user = create(:user, organization: @organization)
-      Language.all.each(&:destroy)
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
       login_as(@user)
     end
 
@@ -75,9 +72,6 @@ feature 'Registered user visits account pages' do
       @program_organization = create(:organization, :accepts_programs, subdomain: 'npl')
       @program_profile = build(:profile, :with_last_name)
       @program_user = create(:user, organization: @program_organization, profile: @program_profile)
-      Language.all.each(&:destroy)
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
       switch_to_subdomain(@program_organization.subdomain)
       login_as(@program_user)
     end
@@ -114,9 +108,6 @@ feature 'Registered user visits account pages' do
 
     before(:each) do
       switch_to_subdomain(org.subdomain)
-      Language.all.each(&:destroy)
-      @spanish = create(:spanish_lang)
-      # English gets created from factories
       user.update(sign_in_count: 2) # To prevent first time sign in events
       library_card_log_in_with(user.library_card_number, user.library_card_pin)
     end
@@ -166,9 +157,6 @@ feature 'Registered user visits account pages' do
     let(:user) { FactoryBot.create(:user, organization: org, profile: profile) }
 
     before(:each) do
-      Language.all.each(&:destroy)
-      @spanish = create(:spanish_lang)
-
       org.library_locations << library_location1
       org.library_locations << library_location2
 

@@ -9,11 +9,6 @@ feature 'User signs up' do
   let(:last_name) { Faker::Name.last_name }
   let(:zip_code) { Faker::Address.zip }
 
-  before(:each) do
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
-  end
-
   context 'organization has no programs' do
     before(:each) do
       create(:organization, subdomain: 'chipublib')

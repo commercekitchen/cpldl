@@ -7,8 +7,6 @@ feature 'User is able to add and remove a course from their plan' do
     switch_to_subdomain('chipublib')
     @org = create(:organization)
     @course1 = create(:course, title: 'Title 1')
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @user = create(:user, organization: @org)
     login_as(@user)
   end

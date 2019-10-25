@@ -8,8 +8,6 @@ describe Trainer::DashboardController do
     @org = create(:organization)
     @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     sign_in @user
   end
 

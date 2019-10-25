@@ -7,8 +7,6 @@ feature 'User logs in' do
   context 'normal email and password' do
     before(:each) do
       @org = create(:organization)
-      @spanish = create(:spanish_lang)
-      @english = create(:language)
       switch_to_subdomain('chipublib')
     end
 
@@ -144,8 +142,6 @@ feature 'User logs in' do
       let(:zip_code) { Array.new(5) { rand(10) }.join }
 
       before(:each) do
-        @spanish = create(:spanish_lang)
-        @english = create(:language)
         switch_to_subdomain(organization.subdomain)
       end
 
@@ -171,8 +167,6 @@ feature 'User logs in' do
       let(:user) { create(:user, :library_card_login_user, organization: org) }
 
       before(:each) do
-        @spanish = create(:spanish_lang)
-        @english = create(:language)
         switch_to_subdomain(org.subdomain)
       end
 
@@ -194,8 +188,6 @@ feature 'User logs in' do
       let(:user) { create(:user, :library_card_login_user, organization: org) }
 
       before(:each) do
-        @spanish = create(:spanish_lang)
-        @english = create(:language)
         switch_to_subdomain(org.subdomain)
         visit root_path
         click_link('Español')

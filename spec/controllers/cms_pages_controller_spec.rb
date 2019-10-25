@@ -27,8 +27,6 @@ describe CmsPagesController do
   before(:each) do
     create(:default_organization)
     @request.host = 'www.test.host'
-    @english = FactoryBot.create(:language)
-    @spanish = FactoryBot.create(:spanish_lang)
     @cms_page = FactoryBot.create(:cms_page)
   end
 

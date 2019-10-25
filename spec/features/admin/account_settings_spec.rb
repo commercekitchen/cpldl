@@ -12,8 +12,6 @@ feature 'Admin visits account pages' do
   let(:admin) { FactoryBot.create(:user, :admin) }
 
   before do
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     switch_to_subdomain(admin.organization.subdomain)
     login_as admin
     visit root_path

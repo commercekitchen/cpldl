@@ -31,8 +31,6 @@ describe LessonsController do
   before(:each) do
     create(:default_organization)
     @request.host = 'www.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @course1 = create(:course)
     @lesson1 = create(:lesson, title: 'Lesson1', lesson_order: 1, course: @course1)
     @lesson2 = create(:lesson, title: 'Lesson2', lesson_order: 2, course: @course1)

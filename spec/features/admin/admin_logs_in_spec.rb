@@ -8,8 +8,6 @@ feature 'Admin user logs in' do
       @org = create(:organization)
       Capybara.default_host = 'http://chipublib.example.com'
       @user = create(:user, :first_time_user, organization: @org)
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
       @user.add_role(:admin, @org)
       switch_to_subdomain('chipublib')
     end
@@ -80,8 +78,6 @@ feature 'Admin user logs in' do
     before(:each) do
       user.add_role(:admin, org)
       user.update!(organization: org)
-      @english = create(:language)
-      @spanish = create(:spanish_lang)
       switch_to_subdomain(org.subdomain)
     end
 

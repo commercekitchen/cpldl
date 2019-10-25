@@ -5,8 +5,6 @@ require 'feature_helper'
 feature 'User lands on subdomain' do
   let(:subdomain) { 'chipublib' }
   before do
-    create(:spanish_lang)
-    create(:language)
     @dpl = create(:organization, subdomain: subdomain, name: 'Denver Public Library')
     switch_to_subdomain(subdomain)
   end

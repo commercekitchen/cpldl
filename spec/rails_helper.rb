@@ -59,6 +59,11 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:each) do
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+  end
+
   # Set language to english unless
   config.before(:each) do
     I18n.locale = :en

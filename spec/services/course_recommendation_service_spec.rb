@@ -18,8 +18,6 @@ describe CourseRecommendationService do
   end
 
   before(:each) do
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
     @organization = create(:organization)
     @other_organization = create(:organization)
     @user = create(:user, organization: @organization)

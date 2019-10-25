@@ -5,8 +5,6 @@ require 'feature_helper'
 feature 'Subdomain admin program management' do
 
   before(:each) do
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
     @dpl = create(:organization, :accepts_programs, subdomain: 'dpl')
     valid_profile = create(:profile, :with_last_name)
     @dpl_admin = create(:user, organization: @dpl, profile: valid_profile)

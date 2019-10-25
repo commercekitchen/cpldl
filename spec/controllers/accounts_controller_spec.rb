@@ -6,8 +6,6 @@ describe AccountsController do
 
   before(:each) do
     create(:default_organization)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @request.host = 'www.test.host'
   end
 

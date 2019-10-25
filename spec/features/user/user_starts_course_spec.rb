@@ -3,14 +3,11 @@
 require 'feature_helper'
 
 feature 'User visits course listing page' do
-
-  let(:language) { create(:language) }
-  let!(:spanish) { create(:spanish_lang) }
   let(:organization) { create(:organization) }
   let(:www) { create(:default_organization) }
-  let!(:course1) { create(:course_with_lessons, title: 'Course 1', course_order: 1, language: language, organization: organization) }
-  let!(:course2) { create(:course, title: 'Course 2', course_order: 2, language: language, organization: organization) }
-  let!(:course3) { create(:course, title: 'Course 3', course_order: 3, language: language, organization: organization) }
+  let!(:course1) { create(:course_with_lessons, title: 'Course 1', course_order: 1, organization: organization) }
+  let!(:course2) { create(:course, title: 'Course 2', course_order: 2, organization: organization) }
+  let!(:course3) { create(:course, title: 'Course 3', course_order: 3, organization: organization) }
 
   before(:each) do
     switch_to_subdomain(organization.subdomain)
