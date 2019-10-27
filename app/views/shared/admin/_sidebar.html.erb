@@ -1,26 +1,38 @@
 <ul class="sidebar-links">
-  <li><%= link_to "Change Login Information", account_path %></li>
-  <li><%= link_to "Update Profile", profile_path %></li>
-  <li><%= link_to "Courses", admin_root_path %></li>
-  <% if subdomain? %>
-    <li><%= link_to "Import DigitalLearn Courses", admin_import_courses_path %></li>
+  <div class='sidebar-section'>
+  <div class='sidebar-section__header'>Site Administration</div>
+    <li><%= link_to "User Accounts", admin_users_index_path %></li>
+    <li><%= link_to "Invite Admin", admin_invites_index_path %></li>
+    <li><%= link_to "Reports", admin_reports_path %></li>
+    <% if top_level_domain? %>
+      <li><%= link_to "Organizations", admin_organizations_path %></li>
     <% end %>
-  <li><%= link_to "Reports", admin_reports_path %></li>
-  <li><%= link_to "User Accounts", admin_users_index_path %></li>
-  <li><%= link_to "CMS Pages", admin_pages_index_path %></li>
-  <li><%= link_to "Invite Admin", admin_invites_index_path %></li>
-  <% if top_level_domain? %>
-    <li><%= link_to "Organizations", admin_organizations_path %></li>
-  <% end %>
-  <% if current_organization.branches %>
-    <li><%= link_to "Manage Library Branches", admin_library_locations_path %></li>
-  <% end %>
-  <% if current_organization.accepts_programs %>
-    <li><%= link_to "Manage Programs", admin_programs_path %></li>
-  <% end %>
-  <% if current_organization.has_student_programs? %>
-    <li><%= link_to "Manage Schools", admin_schools_path %></li>
-  <% end %>
-  <li><%= link_to "Categories", admin_categories_path %></li>
-  <li><%= link_to "Customization", admin_customization_path %></li>
+  </div>
+
+  <div class='sidebar-section'>
+    <div class='sidebar-section__header'>Content Management</div>
+    <li><%= link_to "Courses", admin_root_path %></li>
+    <% if subdomain? %>
+      <li><%= link_to "Import DigitalLearn Courses", admin_import_courses_path %></li>
+      <% end %>
+    <li><%= link_to "CMS Pages", admin_pages_index_path %></li>
+    <li><%= link_to "Categories", admin_categories_path %></li>
+  </div>
+
+  <div class='sidebar-section'>
+    <div class='sidebar-section__header'>Subsite Customization</div>
+    <% if current_organization.accepts_programs %>
+      <li><%= link_to "Manage Programs", admin_programs_path %></li>
+    <% end %>
+      <% if current_organization.has_student_programs? %>
+      <li><%= link_to "Manage Schools", admin_schools_path %></li>
+    <% end %>
+    <li><%= link_to "Customizable Text Sections", admin_custom_translations_path %></li>
+    <li><%= link_to "User Survey", admin_custom_user_surveys_path %></li>
+    <% if subdomain? %>
+      <li><%= link_to "Footer", admin_custom_footers_path %></li>
+      <li><%= link_to "Login Requirement", admin_custom_features_path %></li>
+      <li><%= link_to "Manage Library Branches", admin_custom_branches_path %></li>
+    <% end %>
+  </div>
 </ul>

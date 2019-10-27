@@ -1,13 +1,5 @@
 require 'feature_helper'
 
-RSpec.shared_examples 'User Sidebar Links' do
-  scenario 'contains correct links' do
-    expect(page).to have_link('Profile')
-    expect(page).to have_link('Login Information')
-    expect(page).to have_link('Completed Courses')
-  end
-end
-
 feature 'Admin visits account pages' do
   let(:admin) { FactoryBot.create(:user, :admin) }
 
@@ -39,13 +31,17 @@ feature 'Admin visits account pages' do
 
   scenario 'does not see admin dashboard sidebar' do
     click_link 'Account'
-    expect(page).to_not have_link('Courses', exact: true)
-    expect(page).to_not have_link('Reports')
-    expect(page).to_not have_link('User Accounts')
-    expect(page).to_not have_link('CMS Pages')
-    expect(page).to_not have_link('Invite Admin')
-    expect(page).to_not have_link('Organizations')
-    expect(page).to_not have_link('Categories')
-    expect(page).to_not have_link('Customization')
+    [ 'Courses',
+      'Import DigitalLearn Courses',
+      'Reports',
+      'User Accounts',
+      'CMS Pages',
+      'Invite Admin',
+      'Manage Library Branches',
+      'Organizations',
+      'Categories',
+      'Customization' ].each do |link|
+      expect(page).to_not have_link(link, exact: true)
+    end
   end
 end
