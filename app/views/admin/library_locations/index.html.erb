@@ -1,35 +1,51 @@
 <%= content_for(:callout) { %><h1>Library Branches</h1><% } %>
 
-<div class="row">
-  <div class="sixcol">
-    <p class="emphasis no-top-margin">
-      Re-order library branches by clicking on the arrow icon to drag and drop. Edit by clicking the appropriate location name.
-    </p>
-  </div>
-  <div class="sixcol last left-or-right">
-    <%= link_to "Add a Library Branch", new_admin_library_location_path, class: "btn button-color" %>
-  </div>
+<div class="toggle-branches">
+  <p class="emphasis">
+    Accepting library branches turns on this feature for your subsite, meaning that new users registering for an account will be given the option to select their library branch upon account creation. When turning this feature on, be sure to add library branches below from which users can select their branch.
+  </p>
+  <%= form_for [:admin, current_organization], remote: true, format: :js, html: { id: "org_branches_form" } do |f| %>
+    <fieldset>
+      <%= f.check_box :branches %>
+      <%= f.label :branches, class: "text-color inline-label" do %>
+        Accept Library Branches?
+      <% end %>
+    </fieldset>
+  <% end %>
 </div>
-
-<div class="sortable-list" data-page="library_locations">
-  <div class="list-titles">
-    <div class="wide-cell text-color align-left">Name</div>
-    <div class="wide-cell text-color">Zipcode</div>
-    <div class="wide-cell text-color left-or-right">Actions</div>
+<br />
+<div id="branch-management">
+  <div class="row">
+    <div class="sixcol">
+      <p class="emphasis no-top-margin">
+        Re-order library branches by clicking on the arrow icon to drag and drop. Edit by clicking the appropriate location name.
+      </p>
+    </div>
+    <div class="sixcol last left-or-right">
+      <%= link_to "Add a Library Branch", new_admin_library_location_path, class: "btn button-color" %>
+    </div>
   </div>
-  <ul class="objects sortable reorderable">
-    <% @library_locations.each do |location| %>
-      <li class="sortable-item table-row" data-id="<%= location.id %>">
-        <div class="wide-cell align-left">
-          <%= link_to location.name, edit_admin_library_location_path(location), class: "no-drag-link" %>
-        </div>
-        <div class="wide-cell left-or-center"><%= location.zipcode %></div>
-        <div class="wide-cell left-or-right">
 
-          <%= link_to "Delete", admin_library_location_path(location),
-            class: "no-drag-link", method: :delete, data: { confirm: "Are you sure you want to delete this library branch?" } %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+  <div class="sortable-list" data-page="library_locations">
+    <div class="list-titles">
+      <div class="wide-cell text-color align-left">Name</div>
+      <div class="wide-cell text-color">Zipcode</div>
+      <div class="wide-cell text-color left-or-right">Actions</div>
+    </div>
+    <ul class="objects sortable reorderable">
+      <% @library_locations.each do |location| %>
+        <li class="sortable-item table-row" data-id="<%= location.id %>">
+          <div class="wide-cell align-left">
+            <%= link_to location.name, edit_admin_library_location_path(location), class: "no-drag-link" %>
+          </div>
+          <div class="wide-cell left-or-center"><%= location.zipcode %></div>
+          <div class="wide-cell left-or-right">
+
+            <%= link_to "Delete", admin_library_location_path(location),
+              class: "no-drag-link", method: :delete, data: { confirm: "Are you sure you want to delete this library branch?" } %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>

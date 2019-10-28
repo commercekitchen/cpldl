@@ -8,7 +8,6 @@ describe CourseCompletionsController do
   let(:course1) { FactoryBot.create(:course, organization: organization) }
   let(:course2) { FactoryBot.create(:course, organization: organization) }
   let(:course3) { FactoryBot.create(:course, organization: organization) }
-  let!(:language) { FactoryBot.create(:language) }
 
   before(:each) do
     request.host = "#{organization.subdomain}.example.com"

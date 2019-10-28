@@ -5,9 +5,6 @@ require 'feature_helper'
 feature 'unknown subdomain redirect' do
   before do
     create(:default_organization)
-    create(:language)
-    create(:spanish_lang)
-
   end
 
   scenario 'user visits unknown subdomain' do

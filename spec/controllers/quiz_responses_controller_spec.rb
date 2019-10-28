@@ -5,7 +5,6 @@ require 'rails_helper'
 describe QuizResponsesController do
   let(:organization) { FactoryBot.create(:organization) }
   let(:user) { FactoryBot.create(:user, organization: organization) }
-  let(:language) { FactoryBot.create(:language) }
 
   before(:each) do
     request.host = "#{organization.subdomain}.example.com"
@@ -44,9 +43,9 @@ describe QuizResponsesController do
 
     let(:core_topic) { FactoryBot.create(:topic, title: 'Core') }
     let(:topic) { FactoryBot.create(:topic, title: 'Government') }
-    let!(:desktop_course) { create(:course, language: language, format: 'D', level: 'Intermediate', topics: [core_topic], organization: organization) }
-    let!(:mobile_course) { create(:course, language: language, format: 'M', level: 'Intermediate', topics: [core_topic], organization: organization) }
-    let!(:topic_course) { create(:course, language: language, topics: [topic], organization: organization) }
+    let!(:desktop_course) { create(:course, format: 'D', level: 'Intermediate', topics: [core_topic], organization: organization) }
+    let!(:mobile_course) { create(:course, format: 'M', level: 'Intermediate', topics: [core_topic], organization: organization) }
+    let!(:topic_course) { create(:course, topics: [topic], organization: organization) }
 
     context 'when logged in' do
 

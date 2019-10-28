@@ -10,7 +10,8 @@ module Trainer
                else
                  results & User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :trainer, resource: current_user.organization })
                end
-      render 'trainer/dashboard/index', layout: 'user/logged_in_with_sidebar'
+      enable_sidebar
+      render 'trainer/dashboard/index'
     end
 
     def manually_confirm_user

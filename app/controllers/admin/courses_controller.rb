@@ -13,7 +13,7 @@ module Admin
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
-      render layout: 'admin/base_with_sidebar'
+      enable_sidebar
     end
 
     def show

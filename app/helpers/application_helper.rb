@@ -51,4 +51,23 @@ module ApplicationHelper
   rescue Sprockets::Rails::Helper::AssetNotFound
     nil
   end
+
+  def is_org_admin?(user)
+    user.has_role?(:admin, current_organization)
+  end
+
+  def include_search?
+    !(current_user.blank? && top_level_domain?)
+  end
+
+  def user_sidebar
+    return unless @show_sidebar
+
+    if is_org_admin?(current_user)
+      @sidebar ||= 'shared/admin/sidebar'
+    else
+      @sidebar = 'shared/user/sidebar'
+    end
+    render @sidebar
+  end
 end

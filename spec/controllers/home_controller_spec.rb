@@ -7,8 +7,6 @@ describe HomeController do
   before(:each) do
     @www = create(:default_organization)
     @request.host = 'www.test.host'
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
 
     @category1 = create(:category, organization: @www)
     @category2 = create(:category, organization: @www)

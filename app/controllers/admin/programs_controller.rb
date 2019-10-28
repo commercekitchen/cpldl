@@ -2,10 +2,10 @@
 
 module Admin
   class ProgramsController < BaseController
+    before_action :enable_sidebar
 
     def new
       @program = current_organization.programs.build
-      render layout: 'admin/base_with_sidebar'
     end
 
     def create
@@ -20,13 +20,11 @@ module Admin
 
     def index
       @programs = current_organization.programs
-      render layout: 'admin/base_with_sidebar'
     end
 
     def edit
       @program = Program.find(params[:id])
       @program_location = @program.program_locations.new
-      render layout: 'admin/base_with_sidebar'
     end
 
     private

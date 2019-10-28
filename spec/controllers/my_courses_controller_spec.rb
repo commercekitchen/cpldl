@@ -4,13 +4,12 @@ require 'rails_helper'
 
 describe MyCoursesController do
   let(:organization) { FactoryBot.create(:organization) }
-  let(:language) { FactoryBot.create(:language) }
   let(:category) { FactoryBot.create(:category, organization: organization) }
   let(:disabled_category) { FactoryBot.create(:category, :disabled, organization: organization) }
-  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: language, category: category, organization: organization) }
-  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: language, organization: organization) }
-  let(:course3) { FactoryBot.create(:course, title: 'Course 3', language: language, organization: organization) }
-  let(:course4) { FactoryBot.create(:course, title: 'Course 4', language: language, category: disabled_category, organization: organization) }
+  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: @english, category: category, organization: organization) }
+  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: @english, organization: organization) }
+  let(:course3) { FactoryBot.create(:course, title: 'Course 3', language: @english, organization: organization) }
+  let(:course4) { FactoryBot.create(:course, title: 'Course 4', language: @english, category: disabled_category, organization: organization) }
   let(:user) { FactoryBot.create(:user, organization: organization) }
 
   context 'authenticated user' do

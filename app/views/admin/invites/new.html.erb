@@ -3,15 +3,15 @@
 <%= form_for resource, as: resource_name, url: invitation_path(resource_name), html: {method: :post} do |f| %>
   <%= render partial: 'devise/shared/error_messages', resource: resource %>
 
-<% resource.class.invite_key_fields.each do |field| -%>
-  <p><%= f.label field, class: "text-color" %><br />
-  <%= f.text_field field %></p>
-<% end -%>
+  <% resource.class.invite_key_fields.each do |field| -%>
+    <p><%= f.label field, class: "text-color" %><br />
+    <%= f.text_field field %></p>
+  <% end -%>
 
-<% if top_level_domain? %>
-  <%= f.collection_select(:organization_id, Organization.all, :id, "name" ) %>
-<% end %>
-  <p>
-    <%= f.submit t("devise.invitations.new.submit_button"), class: "button-color" %>
-  </p>
+  <% if top_level_domain? %>
+    <%= f.collection_select(:organization_id, Organization.all, :id, "name" ) %>
+  <% end %>
+    <p>
+      <%= f.submit t("devise.invitations.new.submit_button"), class: "button-color" %>
+    </p>
 <% end %>

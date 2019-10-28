@@ -4,6 +4,17 @@ require 'csv'
 
 module Admin
   class UsersController < BaseController
+    before_action :enable_sidebar
+
+    def index
+      results = User.search_users(params[:search])
+      @users = if params[:search].blank?
+                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               else
+                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               end
+    end
+
     def change_user_roles
       user     = User.find(params[:id])
       org      = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization

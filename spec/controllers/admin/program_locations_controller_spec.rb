@@ -7,8 +7,6 @@ describe Admin::ProgramLocationsController do
   before(:each) do
     @organization = create(:organization, subdomain: 'dpl')
     @request.host = 'dpl.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @admin = create(:user, :admin, organization: @organization)
     @program1 = create(:program, :location_required, organization: @organization)
     @program2 = create(:program, organization: @organization)
