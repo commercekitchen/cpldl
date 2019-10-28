@@ -17,4 +17,12 @@ $(document).ready(function() {
   getDLCTransition = function(_) {
     sendLessonCompletedEvent();
   };
+
+  handleLessonCompleted = function(event) {
+    if (event.data === "lesson_completed") {
+      sendLessonCompletedEvent();
+    }
+  };
+
+  window.addEventListener("message", handleLessonCompleted, true);
 });
