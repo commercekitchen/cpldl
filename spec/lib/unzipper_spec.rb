@@ -24,4 +24,12 @@ RSpec.describe Unzipper do
     Unzipper.new(lesson.story_line, temp_root).unzip_lesson
     expect(File.join(temp_root, "#{storyline_path}/#{package_file_name}")).to_not be(nil)
   end
+
+  it 'replaces javascript' do
+    Unzipper.new(lesson.story_line, temp_root).unzip_lesson
+    js_filename = File.join(temp_root, storyline_path, package_file_name, 'story_content', 'user.js')
+    expect(File.read(js_filename)).to_not include("getDLCTransition('lesson')")
+    expect(File.read(js_filename)).to_not include('window.parent.sendLessonCompletedEvent()')
+    expect(File.read(js_filename)).to include('window.parent.postMessage("lesson_completed", "*")')
+  end
 end
