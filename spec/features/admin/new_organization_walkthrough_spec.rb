@@ -83,7 +83,7 @@ feature 'Admin create a new organization' do
   end
 
   scenario 'can not add an admin that already exists in the system anywhere' do
-    user = create(:user, email: 'amy@example.com', organization: @www)
+    create(:user, email: 'amy@example.com', organization: @www)
     visit admin_dashboard_index_path
     expect(page).to have_content('Hi Admin!')
 

@@ -7,7 +7,7 @@ feature 'Admin user creates new course and lesson' do
   before(:each) do
     @topic = FactoryBot.create(:topic)
     @spanish = FactoryBot.create(:spanish_lang)
-    @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/BasicSearch1.zip'), 'application/zip')
+    @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip')
 
     @organization = FactoryBot.create(:organization)
     @user = FactoryBot.create(:user, organization: @organization)

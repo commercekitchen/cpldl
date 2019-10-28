@@ -104,7 +104,8 @@ feature 'User logs in' do
       @npl = create(:organization, :accepts_programs, subdomain: 'npl')
       @npl_profile = create(:profile, :with_last_name)
       @npl_user = create(:user, organization: @npl, profile: @npl_profile)
-      @npl_profile.update_attribute(:last_name, nil)
+      @npl_profile.last_name = nil
+      @npl_profile.save(validate: false)
       switch_to_subdomain('npl')
       log_in_with(@npl_user.email, @npl_user.password)
 

@@ -19,7 +19,7 @@ feature 'Admin user logs in' do
       end
 
       scenario "isn't prompted for quiz" do
-        @user.update_attribute(:quiz_modal_complete, false)
+        @user.update(quiz_modal_complete: false)
         log_in_with @user.email, @user.password
         expect(page).not_to have_css('#quiz-start-modal')
       end
@@ -27,7 +27,8 @@ feature 'Admin user logs in' do
 
     context 'with invalid profile' do
       before(:each) do
-        @user.profile.update_attribute(:first_name, nil)
+        @user.profile.first_name = nil
+        @user.profile.save(validate: false)
       end
 
       scenario 'is sent to profile page' do
