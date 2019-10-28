@@ -56,7 +56,7 @@ describe Admin::OrganizationsController do
       context 'invalid attributes' do
         it 'should return error' do
           post :create, params: { organization: invalid_org_params }
-          expect(flash[:error]).to include("Name can't be blank")
+          expect(assigns[:organization].errors.full_messages).to include("Name can't be blank")
         end
       end
     end
