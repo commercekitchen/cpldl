@@ -8,8 +8,6 @@ describe Trainer::DashboardController do
     @org = create(:organization)
     @user = create(:user, organization: @org)
     @user.add_role(:user, @org)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     sign_in @user
   end
 
@@ -37,12 +35,9 @@ describe Trainer::DashboardController do
   describe 'get#index' do
     before(:each) do
       @user.add_role(:trainer, @org)
-      @user1 = create(:user, email: 'one@example.com')
-      @user2 = create(:user, email: 'two@example.com')
-      @user3 = create(:user, email: 'three@example.com')
-      @user1.add_role(:user, @org)
-      @user2.add_role(:user, @org)
-      @user3.add_role(:user, @org)
+      @user1 = create(:user, email: 'one@example.com', organization: @org)
+      @user2 = create(:user, email: 'two@example.com', organization: @org)
+      @user3 = create(:user, email: 'three@example.com', organization: @org)
       sign_in @user
     end
 

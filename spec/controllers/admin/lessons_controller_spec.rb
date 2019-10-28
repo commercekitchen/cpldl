@@ -7,8 +7,6 @@ describe Admin::LessonsController do
   before(:each) do
     @request.host = 'www.test.host'
     @org = create(:default_organization)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @course1 = create(:course)
     @lesson1 = create(:lesson, title: 'Lesson1')
     @lesson2 = create(:lesson, title: 'Lesson2')

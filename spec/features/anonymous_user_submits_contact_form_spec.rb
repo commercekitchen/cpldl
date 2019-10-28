@@ -7,8 +7,6 @@ feature 'Anonymous user submits contact form' do
   before(:each) do
     create(:default_organization)
     switch_to_subdomain('www')
-    create(:spanish_lang)
-    create(:language)
   end
 
   scenario 'fills out all required information' do

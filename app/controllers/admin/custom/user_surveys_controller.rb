@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
-  before_action :load_ogranization
   before_action :load_translations
-
-  layout 'admin/base_with_sidebar'
 
   def show; end
 
@@ -20,10 +17,6 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
   end
 
   private
-
-  def load_ogranization
-    @organization = current_organization
-  end
 
   def load_translations
     key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"

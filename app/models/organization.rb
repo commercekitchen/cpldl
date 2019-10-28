@@ -46,6 +46,9 @@ class Organization < ApplicationRecord
 
   has_attached_file :footer_logo
 
+  validates :name, presence: true
+  validates :subdomain, presence: true
+
   validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
   validates_attachment_size :footer_logo, in: 0.megabytes..2.megabytes
 

@@ -8,8 +8,6 @@ describe Admin::AttachmentsController do
     @organization = create(:default_organization)
     @request.host = 'www.test.host'
     @attachment = create(:attachment)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @admin = create(:user, :admin, organization: @organization)
     sign_in @admin
 

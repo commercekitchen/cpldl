@@ -4,7 +4,7 @@ class AccountsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_user
-  layout 'user/logged_in_with_sidebar'
+  before_action -> { enable_sidebar('shared/user/sidebar') }
 
   def show; end
 
@@ -49,5 +49,4 @@ class AccountsController < ApplicationController
   def user_params
     params.required(:user).permit(:email, :password, :password_confirmation)
   end
-
 end

@@ -64,6 +64,18 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe 'validations' do
+    it 'requires a name' do
+      @org.name = nil
+      expect(@org).to_not be_valid
+    end
+
+    it 'requires a subdomain' do
+      @org.subdomain = nil
+      expect(@org).to_not be_valid
+    end
+  end
+
   describe '#users_count' do
     it 'returns the count of its users' do
       expect(@org.user_count).to eq(3)

@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale.to_s %>">
   <head>
-    <%= render "shared/meta_tags" %>
-    <% begin %>
-      <%= render "shared/ga_#{current_organization.subdomain}" if Rails.env.production? %>
-    <% end %>
-    <%= render "shared/ga_event_tracking" if Rails.env.production? %>
+    <%= render "shared/layout/meta_tags" %>
+    <%= render "shared/layout/analytics" %>
   </head>
   <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
-    <%= render "shared/alternate_cpl_header" %>
-    <div class="banner color">
-      <div class="container">
-        <%= render partial: "shared/layout/callout_banner"%>
-      </div>
-    </div>
-    <% if content_for?(:sub_nav) %>
-      <%= yield :sub_nav %>
-    <% end %>
-    <% if content_for?(:sub_callout) %>
-      <%= yield :sub_callout %>
-    <% end %>
+    <%= render "shared/layout/header" %>
+    <%= render "shared/layout/banner" %>
     <main class="container">
       <%= render "shared/flashes" %>
-      <%= yield %>
+      <div class=<%= @show_sidebar ? "content-grid-with-sidebar" : "content-grid" %>>
+        <%= user_sidebar %>
+        <div class="main-content">
+          <%= yield %>
+        </div>
+      </div>
     </main>
-    <%= render "shared/footer" %>
+    <%= render "shared/layout/footer" %>
   </body>
 </html>

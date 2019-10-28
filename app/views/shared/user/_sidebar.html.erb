@@ -1,10 +1,12 @@
-<ul class="sidebar-links">
-  <% if current_user.has_role?(:trainer, current_organization) %>
-    <li><%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %></li>
-  <% end %>
-  <% if !current_organization.library_card_login? || current_user.has_role?(:admin, current_organization) %>
-    <li><%= link_to "#{t('profile_page.change_login_information')}", account_path %></li>
-  <% end %>
-  <li><%= link_to "#{t('profile_page.update_profile')}", profile_path %></li>
-  <li><%= link_to "#{t('profile_page.my_completed_courses')}", course_completions_path %></li>
-</ul>
+<div class="sidebar">
+  <ul class="sidebar-links">
+    <li><%= link_to "#{t('account.profile')}", profile_path %></li>
+    <% if current_user.has_role?(:trainer, current_organization) %>
+      <li><%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %></li>
+    <% end %>
+    <% if !current_organization.library_card_login? || current_user.has_role?(:admin, current_organization) %>
+      <li><%= link_to "#{t('account.login_information')}", account_path %></li>
+    <% end %>
+    <li><%= link_to "#{t('account.my_completed_courses')}", course_completions_path %></li>
+  </ul>
+</div>

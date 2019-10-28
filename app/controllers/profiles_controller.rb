@@ -18,7 +18,7 @@ class ProfilesController < ApplicationController
   skip_before_action :require_valid_profile
   before_action :authenticate_user!
   before_action :set_user
-  layout 'user/logged_in_with_sidebar'
+  before_action -> { enable_sidebar('shared/user/sidebar') }
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)
@@ -51,7 +51,7 @@ class ProfilesController < ApplicationController
     respond_to do |format|
       if @profile.context_update(new_profile_params)
         update_locale if language_changed
-        format.html { redirect_to redirect_path, notice: I18n.t('profile_page.updated') }
+        format.html { redirect_to redirect_path, notice: I18n.t('profile.updated') }
         format.json { render :show, status: :ok, location: @profile }
       else
         format.html { render :show }

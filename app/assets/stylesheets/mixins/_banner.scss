@@ -5,6 +5,10 @@
     padding: 1em 0 2em 0;
     min-height: 2em;
 
+    .callout {
+      float: left;
+    }
+
     h1 {
       font-family: $font-secondary;
       color: $text_color;

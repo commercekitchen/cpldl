@@ -1,6 +1,18 @@
-@mixin color_scheme($primary_color, $negative_color, $action_color, $text_alignment: left, $footer-color: $primary_color, $underline-color: $purple, $footer-nav-link: $white) {
-  
-  h1, h2, h3, h4, h5, h6 {
+@mixin color_scheme(
+  $primary_color,
+  $negative_color,
+  $action_color,
+  $text_alignment: left,
+  $footer-color: $primary_color,
+  $underline-color: $primary_color,
+  $footer-nav-link: $white
+) {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: $primary_color;
   }
 
@@ -57,7 +69,7 @@
     margin-top: 1.5em;
 
     &-no-margin {
-      margin-top: 0; 
+      margin-top: 0;
     }
   }
 
@@ -90,5 +102,4 @@
     padding: 10px 10px 10px 0;
     border-bottom: 1px solid $underline-color;
   }
-
 }

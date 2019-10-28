@@ -29,13 +29,12 @@ describe Admin::ExportsController do
 
       @user3 = create(:user, organization: @organization)
 
-      @language = create(:language)
       @course1 = create(:course, title: 'Course 1',
-                                             language: @language,
+                                             language: @english,
                                              description: 'Mocha Java Scripta',
                                              organization: @organization)
       @course2 = create(:course, title: 'Course 2',
-                                             language: @language,
+                                             language: @english,
                                              organization: @organization)
       @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
       @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)

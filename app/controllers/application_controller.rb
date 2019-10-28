@@ -16,8 +16,6 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  layout proc { user_signed_in? || top_level_domain? ? 'user/logged_in' : 'application' }
-
   def current_organization
     find_organization
   end
@@ -70,7 +68,7 @@ class ApplicationController < ActionController::Base
 
     return custom_action if custom_action.present?
 
-    if user.is_super? || org_admin?(user)
+    if org_admin?(user)
       admin_after_sign_in_path_for(user)
     else
       user_after_sign_in_path_for(user)
@@ -152,6 +150,13 @@ class ApplicationController < ActionController::Base
 
   def in_subdomain?(subdomain)
     current_organization.subdomain == subdomain
+  end
+
+  protected
+
+  def enable_sidebar(sidebar = nil)
+    @show_sidebar = true
+    @sidebar = sidebar
   end
 
   private

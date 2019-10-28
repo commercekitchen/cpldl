@@ -1,4 +1,4 @@
-<h2 class="text-color">Your Profile</h2>
+<h2 class="text-color"><%= t('account.profile') %></h2>
 
 <%= form_for @profile, url: profile_path, method: :put do |f| %>
 
@@ -15,7 +15,7 @@
 
   <fieldset>
     <%= f.label :language_id, class: "text-color" do %>
-      <%= t('profile_page.preferred_language') %><span class="required text-color"></span>
+      <%= t('profile.preferred_language') %><span class="required text-color"></span>
     <% end %>
     <%= f.collection_select(:language_id, Language.all, :id, "name", {}, class: "style-select2" ) %>
   </fieldset>
@@ -23,7 +23,7 @@
   <fieldset>
     <% if true || current_organization.branches? && current_organization.library_locations.present? %>
       <%= f.label :library_location_id, class: "text-color" do %>
-        <%= t('profile_page.library_location') %>
+        <%= t('profile.library_location') %>
       <% end %>
       <%= f.select(:library_location_id, branch_options_for(current_organization, profile: @profile, selected: @profile.library_location_id), {include_blank: "#{t('login_signup.your_library')}"}, class: "style-select2", id: "chzn" ) %>
 
@@ -57,16 +57,16 @@
     <br/>
     <fieldset>
       <%= f.label :opt_out_of_recommendations, class: "text-color" do %>
-        <span><%= t('profile_page.opt_out_of_recommendations') %></span>
+        <span><%= t('profile.opt_out_of_recommendations') %></span>
       <% end %>
       <div class="inline-radio-group">
         <div class="radio-option">
           <%= f.radio_button :opt_out_of_recommendations, false %>
-          <label class="signup-label"><%= t('profile_page.opt_out_false') %></label>
+          <label class="signup-label"><%= t('profile.opt_out_false') %></label>
         </div>
         <div class="radio-option">
           <%= f.radio_button :opt_out_of_recommendations, true %>
-          <label class="signup-label"><%= t('profile_page.opt_out_true') %></label>
+          <label class="signup-label"><%= t('profile.opt_out_true') %></label>
         </div>
       </div>
     </fieldset>
@@ -74,7 +74,7 @@
   <% end %>
 
   <fieldset>
-    <%= f.submit "#{t('profile_page.save')}", class: "button-color" %>
+    <%= f.submit "#{t('profile.save')}", class: "button-color" %>
   </fieldset>
 
 <% end %>

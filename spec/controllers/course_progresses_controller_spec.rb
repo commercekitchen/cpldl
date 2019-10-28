@@ -4,9 +4,8 @@ require 'rails_helper'
 
 describe CourseProgressesController do
   let(:organization) { FactoryBot.create(:organization) }
-  let(:language) { FactoryBot.create(:language) }
-  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: language) }
-  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: language) }
+  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: @english) }
+  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: @english) }
   let(:user) { FactoryBot.create(:user, organization: organization) }
   let(:lesson1) { create(:lesson, lesson_order: 1) }
   let(:lesson2) { create(:lesson, lesson_order: 2) }

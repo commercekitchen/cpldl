@@ -8,8 +8,6 @@ describe Admin::CoursesController do
     @organization = create(:organization)
     @other_organization = create(:organization)
     @request.host = 'chipublib.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @category1 = create(:category, organization: @organization)
     @category2 = create(:category, organization: @organization)
     @category3 = create(:category, organization: @other_organization)
@@ -104,7 +102,7 @@ describe Admin::CoursesController do
         pub_status:  'P',
         format: 'D',
         other_topic_text: 'Learning',
-        language_id: create(:language),
+        language_id: @english.id,
         level: 'Advanced',
         course_order: '',
         organization_id: @organization.id }
@@ -119,7 +117,7 @@ describe Admin::CoursesController do
         contributor: '',
         pub_status: '',
         format: '',
-        language: '',
+        language_id: '',
         level: '',
         other_topic_text: '',
         course_order: '',
