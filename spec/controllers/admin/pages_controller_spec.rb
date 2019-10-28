@@ -15,11 +15,14 @@ describe Admin::PagesController do
     let(:page2) { create(:cms_page, title: 'Page 2', organization: org) }
     let(:page3) { create(:cms_page, title: 'Page 3', organization: org) }
 
-    it 'assigns all cms_pages to @cms_pages' do
+    it 'should have a successful response' do
       get :index
       expect(response).to have_http_status(:success)
-      expect(assigns(:cms_pages)).to include(page1, page2, page3)
-      expect(assigns(:cms_pages).count).to eq(3)
+    end
+
+    it 'assigns all cms_pages to @cms_pages' do
+      get :index
+      expect(assigns(:cms_pages)).to contain_exactly(page1, page2, page3)
     end
   end
 end

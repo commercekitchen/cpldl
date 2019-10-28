@@ -17,14 +17,12 @@ feature 'Admin visits dashboard' do
       'User Accounts' => admin_users_path,
       'CMS Pages' => admin_pages_path,
       'Invite Admin' => admin_dashboard_admin_invitation_path,
-      'Manage Library Branches' => admin_custom_branches_path,
+      'Manage Library Branches' => admin_library_locations_path,
       'Categories' => admin_categories_path,
       'Customizable Text Sections' => admin_custom_translations_path,
       'User Survey' => admin_custom_user_surveys_path,
       'Footer' => admin_custom_footers_path,
-      'Login Requirement' => admin_custom_features_path,
-      'Manage Programs' => admin_custom_programs_path,
-      'Manage Library Branches' => admin_custom_branches_path }.each do |link, path|
+      'Login Requirement' => admin_custom_features_path }.each do |link, path|
       expect(page).to have_link(link)
       click_link(link)
       expect(current_path).to eq(path)

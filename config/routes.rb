@@ -58,7 +58,7 @@ Rails.application.routes.draw do
   namespace :admin do
     root 'dashboard#index'
     put 'lessons/sort', to: 'lessons#sort'
-    resources :organizations, only: [:new, :create, :index]
+    resources :organizations, only: [:new, :create, :index, :update]
     resources :library_locations do
       put :sort, on: :collection
     end
