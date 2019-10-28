@@ -2,7 +2,7 @@
 
 class Admin::Custom::BaseController < Admin::BaseController
   before_action :load_organization
-  before_action -> { enable_sidebar('shared/admin/customization_sidebar') }
+  before_action -> { enable_sidebar('shared/admin/sidebar') }
 
   private
 
