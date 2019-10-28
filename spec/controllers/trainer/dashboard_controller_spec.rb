@@ -35,9 +35,9 @@ describe Trainer::DashboardController do
   describe 'get#index' do
     before(:each) do
       @user.add_role(:trainer, @org)
-      @user1 = create(:user, email: 'one@example.com', organization: @org))
-      @user2 = create(:user, email: 'two@example.com', organization: @org))
-      @user3 = create(:user, email: 'three@example.com', organization: @org))
+      @user1 = create(:user, email: 'one@example.com', organization: @org)
+      @user2 = create(:user, email: 'two@example.com', organization: @org)
+      @user3 = create(:user, email: 'three@example.com', organization: @org)
       sign_in @user
     end
 

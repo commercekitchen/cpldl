@@ -13,29 +13,13 @@ module Admin
       render 'admin/courses/index'
     end
 
-    def pages_index
-      @cms_pages = CmsPage.where(organization_id: current_organization.id)
-      render 'admin/cms_pages/index'
-    end
-
-    def invites_index
+    def admin_invitation
       render 'admin/invites/new'
-    end
-
-    def users_index
-      results = User.search_users(params[:search])
-      @users = if params[:search].blank?
-                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
-               else
-                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
-               end
-
-      render 'admin/users/index'
     end
 
     def manually_confirm_user
       User.find(params[:user_id]).confirm if current_user.has_role?(:admin, current_organization)
-      redirect_to admin_users_index_path
+      redirect_to admin_users_path
     end
 
     def import_courses

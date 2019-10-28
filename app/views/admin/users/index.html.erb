@@ -5,7 +5,7 @@
 <div class="row">
   <div class="sixcol">
     <div class="users-search-box">
-      <%= form_tag admin_users_index_path, method: :get do %>
+      <%= form_tag admin_users_path, method: :get do %>
         <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
         <i class="icon-search grey"></i>
         <%= submit_tag "Search", id: "search_btn" %>

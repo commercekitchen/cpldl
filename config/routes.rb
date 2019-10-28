@@ -82,9 +82,10 @@ Rails.application.routes.draw do
     end
 
     resources :dashboard, only: [:index]
-    get 'dashboard/invites_index', to: 'dashboard#invites_index', as: :invites_index
-    get 'dashboard/pages_index', to: 'dashboard#pages_index', as: :pages_index
-    get 'dashboard/users_index', to: 'dashboard#users_index', as: :users_index
+    resources :users, only: [:index]
+    resources :pages, only: [:index]
+
+    get 'dashboard/admin_invitation', to: 'dashboard#admin_invitation'
     get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
     post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
 
@@ -134,7 +135,6 @@ Rails.application.routes.draw do
   end
   
   get 'users/invitation/accept', to: 'devise/invitations#edit'
-  # accept_user_invitation GET    /users/invitation/accept(.:format) devise/invitations#edit
 
   match '/404', to: 'errors#error404', via: [:get, :post, :patch, :delete]
   match '/500', to: 'errors#error500', via: [:get, :post, :patch, :delete]

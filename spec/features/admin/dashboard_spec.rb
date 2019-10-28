@@ -1,6 +1,7 @@
 require 'feature_helper'
 
 feature 'Admin visits dashboard' do
+  let!(:default_organization) { FactoryBot.create(:default_organization) }
   let(:admin) { FactoryBot.create(:user, :admin) }
 
   before do
@@ -10,12 +11,12 @@ feature 'Admin visits dashboard' do
   end
 
   scenario 'visits sidebar pages' do
-    { 'Courses' => admin_courses_path,
+    { 'Courses' => admin_root_path,
       'Import DigitalLearn Courses' => admin_import_courses_path,
       'Reports' => admin_reports_path,
       'User Accounts' => admin_users_path,
-      'CMS Pages' => admin_cms_pages_path,
-      'Invite Admin' => admin_invites_path,
+      'CMS Pages' => admin_pages_path,
+      'Invite Admin' => admin_dashboard_admin_invitation_path,
       'Manage Library Branches' => admin_custom_branches_path,
       'Categories' => admin_categories_path,
       'Customizable Text Sections' => admin_custom_translations_path,
