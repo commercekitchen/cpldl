@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'feature_helper'
 
 feature 'Admin visits account pages' do
@@ -31,16 +33,16 @@ feature 'Admin visits account pages' do
 
   scenario 'does not see admin dashboard sidebar' do
     click_link 'Account'
-    [ 'Courses',
-      'Import DigitalLearn Courses',
-      'Reports',
-      'User Accounts',
-      'CMS Pages',
-      'Invite Admin',
-      'Manage Library Branches',
-      'Organizations',
-      'Categories',
-      'Customization' ].each do |link|
+    ['Courses',
+     'Import DigitalLearn Courses',
+     'Reports',
+     'User Accounts',
+     'CMS Pages',
+     'Invite Admin',
+     'Manage Library Branches',
+     'Organizations',
+     'Categories',
+     'Customization'].each do |link|
       expect(page).to_not have_link(link, exact: true)
     end
   end

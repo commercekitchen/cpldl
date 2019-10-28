@@ -75,8 +75,8 @@ class Course < ApplicationRecord
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 40 }, presence: true
-  validates_uniqueness_of :title, scope: :organization_id,
-    conditions: -> { where.not(pub_status: 'A') }, message: 'has already been taken for the organization'
+  validates :title, uniqueness: { scope: :organization_id,
+    conditions: -> { where.not(pub_status: 'A') }, message: 'has already been taken for the organization' }
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }

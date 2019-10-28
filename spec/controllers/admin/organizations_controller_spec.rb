@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Admin::OrganizationsController do
@@ -16,7 +18,7 @@ describe Admin::OrganizationsController do
       let(:org1) { create(:organization) }
       let(:org2) { create(:organization) }
       let(:org3) { create(:organization) }
-      
+
       it 'should have a successful response' do
         get :index
         expect(response).to have_http_status(:success)

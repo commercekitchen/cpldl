@@ -4,8 +4,7 @@ module Admin
   class ReportsController < BaseController
     before_action :enable_sidebar
 
-    def show
-    end
+    def show; end
 
   end
 end

@@ -114,7 +114,7 @@ feature 'Registered user visits account pages' do
 
     scenario 'can view their account options' do
       visit root_path
-      click_link "Account"
+      click_link 'Account'
       expect(page).to_not have_link('Login Information') # Library Card login users shouldn't see this
       expect(page).to have_link('Profile')
       expect(page).to have_link('Completed Courses')

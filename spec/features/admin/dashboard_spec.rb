@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'feature_helper'
 
 feature 'Admin visits dashboard' do
@@ -30,9 +32,9 @@ feature 'Admin visits dashboard' do
   end
 
   scenario 'does not see account links' do
-    [ 'Profile',
-      'Login Information',
-      'Completed Courses' ].each do |link|
+    ['Profile',
+     'Login Information',
+     'Completed Courses'].each do |link|
       expect(page).to_not have_link(link)
     end
   end
