@@ -83,7 +83,8 @@ class User < ApplicationRecord
 
   before_validation :set_password_from_pin, if: :library_card_login?
   # Validate card number and pin for library card logins
-  validates :library_card_number, format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
+  validates :library_card_number, uniqueness: { scope: :organization_id, if: :library_card_login? },
+                                  format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
 
   # Serialized hash of quiz responses

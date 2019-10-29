@@ -184,6 +184,7 @@ feature 'User signs up' do
       switch_to_subdomain(org.subdomain)
 
       visit login_path
+
       find('#signup_email').set(email)
       find('#signup_password').set(password)
       find('#user_profile_attributes_first_name').set(first_name)
