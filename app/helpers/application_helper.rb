@@ -53,7 +53,7 @@ module ApplicationHelper
   end
 
   def is_org_admin?(user)
-    user.has_role?(:admin, current_organization)
+    user.present? && user.has_role?(:admin, current_organization)
   end
 
   def include_search?

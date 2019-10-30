@@ -1,4 +1,7 @@
-<h2 class="text-color">Admin Reports</h2>
+<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+
+<h2>Reports</h2>
+
 <% if subdomain? %>
   <li><%= link_to "Completions Report (by Library)", admin_export_completions_path(format: "csv", version: "lib") %></li>
 <% end %>

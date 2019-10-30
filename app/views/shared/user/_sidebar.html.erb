@@ -1,7 +1,7 @@
 <div class="sidebar">
   <ul class="sidebar-links">
     <li><%= link_to "#{t('account.profile')}", profile_path %></li>
-    <% if current_user.has_role?(:trainer, current_organization) %>
+    <% if current_user && current_user.has_role?(:trainer, current_organization) %>
       <li><%= link_to "Cyber Navigator Dashboard", trainer_dashboard_index_path %></li>
     <% end %>
     <% if !current_organization.library_card_login? || current_user.has_role?(:admin, current_organization) %>

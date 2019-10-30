@@ -27,10 +27,10 @@
       <% if current_organization.has_student_programs? %>
       <li><%= link_to "Manage Schools", admin_schools_path %></li>
     <% end %>
-    <li><%= link_to "Customizable Text Sections", admin_custom_translations_path %></li>
+    <li><%= link_to "Custom Text", admin_custom_translations_path %></li>
     <li><%= link_to "User Survey", admin_custom_user_surveys_path %></li>
     <% if subdomain? %>
-      <li><%= link_to "Footer", admin_custom_footers_path %></li>
+      <li><%= link_to "Footer Logo", admin_custom_footers_path %></li>
       <li><%= link_to "Login Requirement", admin_custom_features_path %></li>
       <li><%= link_to "Manage Library Branches", admin_library_locations_path %></li>
     <% end %>
