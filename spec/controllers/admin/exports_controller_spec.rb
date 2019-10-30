@@ -36,13 +36,10 @@ describe Admin::ExportsController do
       @course2 = create(:course, title: 'Course 2',
                                              language: @english,
                                              organization: @organization)
-      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress3 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress4 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)
-      @user.course_progresses << [@course_progress1, @course_progress2]
-      @user2.course_progresses << [@course_progress3]
-      @user3.course_progresses << [@course_progress4]
+      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now, user: @user)
+      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now, user: @user)
+      @course_progress3 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now, user: @user2)
+      @course_progress4 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now, user: @user3)
     end
 
     it 'return completions by zip' do
