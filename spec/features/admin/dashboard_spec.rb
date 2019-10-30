@@ -21,13 +21,19 @@ feature 'Admin visits dashboard' do
       'Invite Admin' => admin_dashboard_admin_invitation_path,
       'Manage Library Branches' => admin_library_locations_path,
       'Categories' => admin_categories_path,
-      'Customizable Text Sections' => admin_custom_translations_path,
+      'Custom Text' => admin_custom_translations_path,
       'User Survey' => admin_custom_user_surveys_path,
-      'Footer' => admin_custom_footers_path,
+      'Footer Logo' => admin_custom_footers_path,
       'Login Requirement' => admin_custom_features_path }.each do |link, path|
       expect(page).to have_link(link)
       click_link(link)
       expect(current_path).to eq(path)
+      within(:css, '.callout') do
+        expect(page).to have_content('Admin Dashboard')
+      end
+      within(:css, '.main-content') do
+        expect(page).to have_css('h2', text: link)
+      end
     end
   end
 

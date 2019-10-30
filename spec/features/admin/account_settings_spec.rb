@@ -27,7 +27,7 @@ feature 'Admin visits account pages' do
   end
 
   context 'sees correct sidebar options at /my_courses' do
-    before { visit my_courses_path }
+    before { visit course_completions_path }
     it_behaves_like 'User Sidebar Links'
   end
 
