@@ -7,8 +7,9 @@ class CourseCompletionsController < ApplicationController
     completed_ids = current_user.course_progresses.completed.collect(&:course_id)
     @courses = Course.where(id: completed_ids)
 
+    enable_sidebar('shared/user/sidebar')
+
     respond_to do |format|
-      enable_sidebar
       format.html
       format.json { render json: @courses }
     end

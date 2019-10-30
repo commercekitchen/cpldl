@@ -33,7 +33,7 @@ feature 'Admin create a new organization' do
     select 'Denver Public Library', from: :user_organization_id
 
     count_before = User.count
-    click_on 'Send an invitation'
+    click_on 'Send Invitation'
     count_after = User.count
     expect(count_after).to eq(count_before + 1)
 
@@ -99,7 +99,7 @@ feature 'Admin create a new organization' do
     click_on 'Invite Admin'
     fill_in :user_email, with: 'amy@example.com'
     select 'Denver Public Library', from: :user_organization_id
-    click_on 'Send an invitation'
+    click_on 'Send Invitation'
 
     expect(page).to have_content('The user already exists')
     expect(current_path).to eq(admin_dashboard_admin_invitation_path)
