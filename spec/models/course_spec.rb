@@ -72,6 +72,16 @@ describe Course do
       expect(@course.save).to be_truthy
     end
 
+    it 'should allow 50 character titles' do
+      @course.title = 'a' * 50
+      expect(@course).to be_valid
+    end
+
+    it 'should not allow >50 character titles' do
+      @course.title = 'a' * 51
+      expect(@course).to_not be_valid
+    end
+
     it 'can only have listed statuses' do
       allowed_statuses = %w[P D A]
       allowed_statuses.each do |status|

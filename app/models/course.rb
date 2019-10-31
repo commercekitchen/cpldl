@@ -74,7 +74,7 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :category, reject_if: :all_blank
 
   validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 40 }, presence: true
+  validates :title, length: { maximum: 50 }, presence: true
   validates :title, uniqueness: { scope: :organization_id,
     conditions: -> { where.not(pub_status: 'A') }, message: 'has already been taken for the organization' }
   validates :seo_page_title, length: { maximum: 90 }
