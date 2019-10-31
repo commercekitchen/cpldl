@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseRecommendationService
 
   def initialize(org_id, responses)
@@ -22,51 +24,51 @@ class CourseRecommendationService
   end
 
   def desktop_courses
-    response = @responses["set_one"]
-    core_courses.where(format: "D", level: level_string(response), pub_status: "P")
+    response = @responses['set_one']
+    core_courses.where(format: 'D', level: level_string(response), pub_status: 'P')
   end
 
   def mobile_courses
-    response = @responses["set_two"]
-    core_courses.where(format: "M", level: level_string(response), pub_status: "P")
+    response = @responses['set_two']
+    core_courses.where(format: 'M', level: level_string(response), pub_status: 'P')
   end
 
   def topic_courses
-    response = @responses["set_three"]
-    Course.topic_search(topics[response.to_i]).where(pub_status: "P")
+    response = @responses['set_three']
+    Course.topic_search(topics[response.to_i]).where(pub_status: 'P')
   end
 
   def topics
     {
-      1 => "Job Search",
-      2 => "Education: Child",
-      3 => "Government",
-      4 => "Education: Adult",
-      5 => "Communication Social Media",
-      6 => "Security",
-      7 => "Software Apps",
-      8 => "Information Searching"
+      1 => 'Job Search',
+      2 => 'Education: Child',
+      3 => 'Government',
+      4 => 'Education: Adult',
+      5 => 'Communication Social Media',
+      6 => 'Security',
+      7 => 'Software Apps',
+      8 => 'Information Searching'
     }
   end
 
   def level_string(level)
     case level
-    when "1"
-      "Beginner"
-    when "2"
-      "Intermediate"
+    when '1'
+      'Beginner'
+    when '2'
+      'Intermediate'
     end
   end
 
   def language_string
-     @language ||= (I18n.locale == :es ? "Spanish" : "English")
+    @language ||= (I18n.locale == :es ? 'Spanish' : 'English')
   end
 
   def org_courses
-    @org_courses ||= Course.where(organization: @org).where(language_id: Language.find_by_name(language_string).id)
+    @org_courses ||= Course.where(organization: @org).where(language_id: Language.find_by(name: language_string).id)
   end
 
   def core_courses
-    Course.topic_search("Core")
+    Course.topic_search('Core')
   end
 end

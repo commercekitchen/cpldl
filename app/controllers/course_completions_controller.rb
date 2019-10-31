@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CourseCompletionsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
@@ -5,8 +7,10 @@ class CourseCompletionsController < ApplicationController
     completed_ids = current_user.course_progresses.completed.collect(&:course_id)
     @courses = Course.where(id: completed_ids)
 
+    enable_sidebar('shared/user/sidebar')
+
     respond_to do |format|
-      format.html { render layout: 'user/logged_in_with_sidebar' }
+      format.html
       format.json { render json: @courses }
     end
   end
@@ -18,20 +22,20 @@ class CourseCompletionsController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        @pdf = render_to_string pdf: "file_name",
-               template: "course_completions/show.pdf.erb",
-               layout: "pdf.html.erb",
-               orientation: "Landscape",
-               page_size: "Letter",
+        @pdf = render_to_string pdf: 'file_name',
+               template: 'course_completions/show.pdf.erb',
+               layout: 'pdf.html.erb',
+               orientation: 'Landscape',
+               page_size: 'Letter',
                show_as_html: params[:debug].present?
         if current_user
           send_data(@pdf,
                     filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",
-                    type: "application/pdf")
+                    type: 'application/pdf')
         else
           send_data(@pdf,
                     filename: "#{@course.title} completion certificate.pdf",
-                    type: "application/pdf")
+                    type: 'application/pdf')
         end
       end
     end

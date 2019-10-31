@@ -1,4 +1,4 @@
-<h2 class="text-color"><%= t('profile_page.my_completed_courses') %></h2>
+<h2 class="text-color"><%= t('account.my_completed_courses') %></h2>
 
 <% if @courses.any? %>
   <div class="row no-margin">
@@ -27,7 +27,7 @@
     </div>
   <% end %>
 <% else %>
-  <p><%= t('profile_page.no_completed_courses') %></p>
+  <p><%= t('account.no_completed_courses') %></p>
 <% end %>
 
 <h2 class="text-color"><%= t('completed_courses_page.update_course_recommendations') %></h2>

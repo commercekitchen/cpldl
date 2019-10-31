@@ -1,0 +1,13 @@
+<div class="nav-and-search">
+  <% if current_user.present? %>
+    <%= render "shared/header/nav" %>
+  <% else %>
+    <div class="login-button-container">
+      <%= link_to "#{t('home.signup')} / #{t('home.login')}", login_path, class: "login-button btn" %>
+    </div>
+  <% end %>
+
+  <% if include_search? %>
+    <%= render "shared/header/search_box" %>
+  <% end %>
+</div>

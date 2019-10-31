@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class MyCoursesController < ApplicationController
   before_action :authenticate_user!
+  before_action -> { enable_sidebar('shared/user/sidebar') }
 
   def index
     tracked_course_ids = current_user.course_progresses.tracked.collect(&:course_id)

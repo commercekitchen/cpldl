@@ -58,4 +58,13 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  # Enable to use s3 in dev, must specify s3_bucket_name
+  # config.lesson_store = :s3
+
+  # S3 bucket name (optional, use with :s3 lesson_store)
+  # config.s3_bucket_name = 'dl-development-assets'
+
+  # Local lesson directory
+  config.local_lesson_dir = 'public'
 end

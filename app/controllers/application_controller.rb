@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   before_action :current_organization
   before_action :set_locale
@@ -14,64 +16,51 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  layout proc { user_signed_in? || top_level_domain? ? "user/logged_in" : "application" }
-
   def current_organization
-    org = if staging?
-      Organization.find_by_subdomain(stage_subdomain)
-    elsif request.subdomain == "" || request.subdomain == "admin"
-      Organization.find_by_subdomain("")
-    else
-      Organization.find_by_subdomain(request.subdomain)
+    find_organization
+  end
+
+  def find_organization
+    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
+
+    unless current_subdomain == '' || (org.subdomain == current_subdomain)
+      redirect_to_www && (return org)
     end
 
-    org || Organization.find_by_subdomain("www")
+    org
   end
 
   def set_mailer_host
-    if staging?
-      ActionMailer::Base.default_url_options[:host] = "#{stage_subdomain}.stage.digitallearn.org"
-    elsif Rails.env.production?
-      ActionMailer::Base.default_url_options[:host] = "#{current_organization.subdomain}.digitallearn.org"
-    else
-      ActionMailer::Base.default_url_options[:host] = request.host
-    end
+    ActionMailer::Base.default_url_options[:host] = if staging?
+                                                      "#{stage_subdomain}.stage.digitallearn.org"
+                                                    elsif Rails.env.production?
+                                                      "#{current_organization.subdomain}.digitallearn.org"
+                                                    else
+                                                      request.host
+                                                    end
   end
 
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
-      flash[:alert] = "You must have a valid profile before you can continue:"
+      flash[:alert] = 'You must have a valid profile before you can continue:'
       redirect_to invalid_profile_path
     end
   end
 
-  def staging?
-    request.subdomain.include?("stage")
-  end
-
-  def stage_subdomain
-    subdomain_array = request.subdomain.split(".")
-    if subdomain_array.size == 2
-      subdomain_array.first
-    else
-      "www"
-    end
-  end
-
   def base_url
-    if request.host.include?("stage")
-      "stage.digitallearn.org"
+    if request.host.include?('stage')
+      'stage.digitallearn.org'
     else
-      "digitallearn.org"
+      'digitallearn.org'
     end
   end
 
   def top_level_domain?
-    current_organization.subdomain == "www"
+    current_organization.subdomain == 'www'
   end
 
   def subdomain?
-    !(current_organization.subdomain == "www" || current_organization.subdomain == "")
+    !(current_organization.subdomain == 'www' || current_organization.subdomain == '')
   end
 
   def after_sign_in_path_for(user)
@@ -79,7 +68,7 @@ class ApplicationController < ActionController::Base
 
     return custom_action if custom_action.present?
 
-    if (user.is_super? || org_admin?(user))
+    if org_admin?(user)
       admin_after_sign_in_path_for(user)
     else
       user_after_sign_in_path_for(user)
@@ -91,13 +80,13 @@ class ApplicationController < ActionController::Base
       user.update_attribute(:sign_in_count, 0) if user.sign_in_count == 1
       sign_out
       user_subdomain = user.organization.subdomain
-      flash[:alert] = %Q[Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>]
+      flash[:alert] = %(Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>)
       login_path
     end
   end
 
   def set_language
-    @language = Language.first unless Language.all.blank?
+    @language = Language.first if Language.all.present?
   end
 
   def user_audience_list
@@ -112,27 +101,27 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    language_id = I18n.locale == :en ? Language.find_by_name("English").try(:id) : Language.find_by_name("Spanish").try(:id)
+    language_id = I18n.locale == :en ? Language.find_by(name: 'English').try(:id) : Language.find_by(name: 'Spanish').try(:id)
     org_id = current_organization.id
 
-    @footer_pages = CmsPage.where(pub_status: "P", language_id: language_id, organization_id: org_id, audience: user_audience_list)
+    @footer_pages = CmsPage.where(pub_status: 'P', language_id: language_id, organization_id: org_id, audience: user_audience_list)
   end
 
   def set_cms_marketing_pages
-    @overview_page = CmsPage.find_by_title("Get DigitalLearn for Your Library")
-    @customization_page = CmsPage.find_by_title("Pricing & Features")
-    @portfolio_page = CmsPage.find_by_title("See Our Work In Action")
+    @overview_page = CmsPage.find_by(title: 'Get DigitalLearn for Your Library')
+    @customization_page = CmsPage.find_by(title: 'Pricing & Features')
+    @portfolio_page = CmsPage.find_by(title: 'See Our Work In Action')
   end
 
   def set_locale
-    if current_user && current_user.profile && current_user.profile.language.present?
+    if current_user&.profile && current_user.profile.language.present?
       if user_language_override? == true
-        I18n.locale = session[:locale].to_sym unless session[:locale].blank?
+        I18n.locale = session[:locale].to_sym if session[:locale].present?
       else
         case current_user.profile.language.name
-        when "English"
+        when 'English'
           I18n.locale = :en
-        when "Spanish"
+        when 'Spanish'
           I18n.locale = :es
         end
         session[:locale] = I18n.locale.to_s
@@ -147,26 +136,55 @@ class ApplicationController < ActionController::Base
   end
 
   def hide_language_links?
-    return true if params[:controller] == "courses" && params[:action] != "index"
-    return true if params[:controller] == "lessons"
-    return true if params[:controller].starts_with? "static"
+    return true if params[:controller] == 'courses' && params[:action] != 'index'
+    return true if params[:controller] == 'lessons'
+    return true if params[:controller].starts_with? 'static'
+
     false
   end
 
   def redirect_to_www
     first_subdomain = request.subdomains.first
-    redirect_to request.url.sub(first_subdomain, "www") if first_subdomain != "www"
+    redirect_to request.url.sub(first_subdomain, 'www') if first_subdomain != 'www'
   end
 
   def in_subdomain?(subdomain)
     current_organization.subdomain == subdomain
   end
 
+  protected
+
+  def enable_sidebar(sidebar = nil)
+    @show_sidebar = true
+    @sidebar = sidebar
+  end
+
   private
+
+  def current_subdomain
+    if staging?
+      stage_subdomain
+    else
+      request.subdomain
+    end
+  end
+
+  def stage_subdomain
+    subdomain_array = request.subdomain.split('.')
+    if subdomain_array.size == 2
+      subdomain_array.first
+    else
+      'www'
+    end
+  end
+
+  def staging?
+    request.subdomain.include?('stage')
+  end
 
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?
-      flash[:notice] = "This is the first time you have logged in, please update your profile."
+      flash[:notice] = 'This is the first time you have logged in, please update your profile.'
       profile_path
     elsif invalid_user_profile?(user)
       profile_path
@@ -179,7 +197,7 @@ class ApplicationController < ActionController::Base
 
   def user_after_sign_in_path_for(user)
     if first_time_login?
-      flash[:notice] = "This is the first time you have logged in, please update your profile."
+      flash[:notice] = 'This is the first time you have logged in, please update your profile.'
       profile_path
     elsif invalid_user_profile?(user)
       profile_path
@@ -202,22 +220,22 @@ class ApplicationController < ActionController::Base
 
   def user_language_override?
     if current_user.profile.language.present?
-      user_lang_abbrv2 = current_user.profile.language_id == 1 ? "en" : "es"
+      user_lang_abbrv2 = current_user.profile.language_id == 1 ? 'en' : 'es'
       return true if session[:locale] != user_lang_abbrv2
     else
-      return false
+      false
     end
   end
 
   def set_user_token
-    if current_user && current_user.token
+    if current_user&.token
       session[:user_ga_id] = current_user.token
     elsif current_user && current_user.token.blank?
       current_user.send(:add_token_to_user)
       current_user.save(validate: false)
       session[:user_ga_id] = current_user.token
     else
-      session[:user_ga_id] = "guest"
+      session[:user_ga_id] = 'guest'
     end
   end
 

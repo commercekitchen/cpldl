@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: course_progresses
@@ -19,12 +21,13 @@ class CourseProgress < ApplicationRecord
 
   has_one :profile, through: :user
 
-  scope :completed, -> { where("completed_at IS NOT NULL") }
+  scope :completed, -> { where('completed_at IS NOT NULL') }
   scope :tracked, -> { where(tracked: true) }
   scope :completed_with_profile, -> { joins(:user).joins(:profile).where.not(completed_at: nil) }
 
   def complete?
     return true if completed_at.present?
+
     false
   end
 
@@ -32,6 +35,7 @@ class CourseProgress < ApplicationRecord
     total = course.lessons.published.count
     completed = lessons_completed
     return 0 if total == 0
+
     percent = (completed.to_f / total) * 100
     percent = 100 if percent > 100
     percent.round
@@ -42,7 +46,8 @@ class CourseProgress < ApplicationRecord
   end
 
   def next_lesson_id
-    fail StandardError, "There are no available lessons for this course." if course.lessons.count == 0
+    raise StandardError, 'There are no available lessons for this course.' if course.lessons.count == 0
+
     course.next_lesson_id(last_completed_lesson_id_by_order)
   end
 
@@ -54,7 +59,7 @@ class CourseProgress < ApplicationRecord
       last_completed_lesson_order = lesson_order if lesson_order >= last_completed_lesson_order
     end
     if last_completed_lesson_order > 0
-      course.lessons.find_by_lesson_order(last_completed_lesson_order).id
+      course.lessons.find_by(lesson_order: last_completed_lesson_order).id
     else
       return 0
     end

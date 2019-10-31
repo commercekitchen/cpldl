@@ -1,15 +1,15 @@
+# frozen_string_literal: true
+
 module Admin::Custom
   class TranslationsController < BaseController
     include TranslationsHelper
 
     before_action :find_locale
-    before_action :retrieve_key, only: [:create, :update]
-    before_action :find_translation, only: [:edit, :update]
+    before_action :retrieve_key, only: %i[create update]
+    before_action :find_translation, only: %i[edit update]
 
     def index
       @translations = Translation.locale(@locale)
-
-      render layout: "admin/base_with_sidebar"
     end
 
     def new
@@ -19,7 +19,7 @@ module Admin::Custom
     def create
       @translation = Translation.new(translation_params)
       if @translation.value == default_translation_value
-        flash[:alert] = "Your new translation is the same as the default."
+        flash[:alert] = 'Your new translation is the same as the default.'
         render :new
       else
         if @translation.save
@@ -32,8 +32,7 @@ module Admin::Custom
       end
     end
 
-    def edit
-    end
+    def edit; end
 
     def update
       if @translation.update(translation_params)
@@ -67,7 +66,7 @@ module Admin::Custom
 
     def translation_params
       params.require(:i18n_backend_active_record_translation).permit(:locale,
-        :key, :value)
+                                                                     :key, :value)
     end
 
     def default_translation_value

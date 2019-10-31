@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: lessons
@@ -27,7 +29,7 @@ class LessonsController < ApplicationController
   before_action :set_course
 
   def index
-    @lessons = @course.lessons.all.where(pub_status: "P")
+    @lessons = @course.lessons.all.where(pub_status: 'P')
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @lessons }
@@ -38,13 +40,13 @@ class LessonsController < ApplicationController
     @lesson = @course.lessons.friendly.find(params[:id])
 
     case @lesson.pub_status
-    when "D"
-      flash[:notice] = "That lesson is not avaliable at this time."
+    when 'D'
+      flash[:notice] = 'That lesson is not avaliable at this time.'
       redirect_to root_path
-    when "A"
-      flash[:notice] = "That lesson is no longer avaliable."
+    when 'A'
+      flash[:notice] = 'That lesson is no longer avaliable.'
       redirect_to root_path
-    when "P"
+    when 'P'
       unless current_user
         session[:lessons_done] = [] if session[:lessons_done].blank?
         session[:lessons_done] << @lesson.id unless session[:lessons_done].include?(@lesson.id)

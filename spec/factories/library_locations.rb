@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: library_locations
@@ -14,8 +16,8 @@
 
 FactoryBot.define do
   factory :library_location do
-    name { Faker::Lorem.words(number: 2).join(" ") }
-    zipcode "87654"
+    name { Faker::Lorem.words(number: 2).join(' ') }
+    zipcode '87654'
     organization
   end
 end

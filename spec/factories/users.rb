@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -50,11 +52,15 @@
 FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "jane#{n}@example.com" }
-    password "abcd1234"
+    password 'abcd1234'
     confirmed_at Time.zone.now.to_s
     sign_in_count 2
     organization
     profile { build(:profile, user: nil) }
+
+    after(:create) do |user|
+      user.add_role(:user, user.organization)
+    end
 
     trait :library_card_login_user do
       email { nil }
@@ -72,6 +78,7 @@ FactoryBot.define do
 
     trait :admin do
       after(:create) do |user|
+        user.roles.destroy_all
         user.add_role(:admin, user.organization)
       end
     end

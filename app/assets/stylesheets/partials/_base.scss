@@ -15,15 +15,16 @@ a {
   color: $purple;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 a.inverted {
   color: $white;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: $teal;
 }
 
@@ -43,7 +44,7 @@ p {
 }
 
 small {
-  font-size: .8em;
+  font-size: 0.8em;
   padding-bottom: 1em;
 }
 
@@ -59,10 +60,6 @@ ul {
 
   &.extra-padding {
     padding-left: 45px;
-  }
-
-  &.sidebar-links {
-    padding-left: 0;
   }
 
   &.no-padding {

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class ReportExportsController < BaseController
 
@@ -12,13 +14,13 @@ module Admin
 
     def run_exporter(exporter)
       case exporter
-      when "registrations"
+      when 'registrations'
         RegistrationExporter.new(current_organization).to_csv
-      when "completed_courses"
+      when 'completed_courses'
         CompletedCoursesExporter.new(current_organization).to_csv
-      when "incomplete_courses"
+      when 'incomplete_courses'
         UnfinishedCoursesExporter.new(current_organization).to_csv
-      when "no_courses"
+      when 'no_courses'
         NoCoursesReportExporter.new(current_organization).to_csv
       end
     end

@@ -1,12 +1,12 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 describe HomeController do
 
   before(:each) do
     @www = create(:default_organization)
-    @request.host = "www.test.host"
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
+    @request.host = 'www.test.host'
 
     @category1 = create(:category, organization: @www)
     @category2 = create(:category, organization: @www)
@@ -18,28 +18,28 @@ describe HomeController do
     @uncategorized_course = create(:course_with_lessons, organization: @www, display_on_dl: true, language: @english)
   end
 
-  describe "#index" do
+  describe '#index' do
     before(:each) do
       get :index
     end
 
-    it "responds successfully" do
+    it 'responds successfully' do
       expect(response).to have_http_status(:success)
     end
 
-    it "assigns enabled category ids" do
+    it 'assigns enabled category ids' do
       expect(assigns(:category_ids)).to include(@category1.id, @category2.id)
     end
 
-    it "only assigns enabled category ids" do
+    it 'only assigns enabled category ids' do
       expect(assigns(:category_ids).length).to eq(2)
     end
 
-    it "assigns uncategorized and disabled category courses to uncategorized" do
+    it 'assigns uncategorized and disabled category courses to uncategorized' do
       expect(assigns(:uncategorized_courses)).to include(@disabled_category_course, @uncategorized_course)
     end
 
-    it "assigns correct number of uncategorized courses" do
+    it 'assigns correct number of uncategorized courses' do
       expect(assigns(:uncategorized_courses).count).to eq(2)
     end
   end

@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 module Admin
   class LibraryLocationsController < BaseController
+    before_action :enable_sidebar
+
     def index
       @library_locations = current_organization.library_locations
-      render layout: "admin/base_with_sidebar"
     end
 
     def new
@@ -15,7 +18,7 @@ module Admin
       if @library_location.errors.any?
         render :new
       else @library_location.update(library_location_params)
-        redirect_to admin_library_locations_path, notice: "Library Branch was successfully created."
+           redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
       end
     end
 
@@ -26,7 +29,7 @@ module Admin
     def update
       @library_location = LibraryLocation.find(params[:id])
       if @library_location.update(library_location_params)
-        redirect_to admin_library_locations_path, notice: "Library Branch was successfully updated."
+        redirect_to admin_library_locations_path, notice: 'Library Branch was successfully updated.'
       else
         render :edit
       end
@@ -35,15 +38,15 @@ module Admin
     def destroy
       @library_location = LibraryLocation.find(params[:id])
       if @library_location.destroy
-        redirect_to admin_library_locations_path, notice: "Library Branch was successfully deleted."
+        redirect_to admin_library_locations_path, notice: 'Library Branch was successfully deleted.'
       else
-        redirect_to admin_library_locations_path, alert: "Sorry, we were unable to remove this library branch."
+        redirect_to admin_library_locations_path, alert: 'Sorry, we were unable to remove this library branch.'
       end
     end
 
     def sort
       params[:order].each_value do |v|
-        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position]) # rubocop:disable Rails/SkipsModelValidations
+        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position])
       end
       render nothing: true
     end

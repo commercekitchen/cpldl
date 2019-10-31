@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 # Code coverage - configuration is in .simplecov file
 require 'simplecov'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-ENV["RAILS_ENV"] ||= "test"
-require File.expand_path("../../config/environment", __FILE__)
+ENV['RAILS_ENV'] ||= 'test'
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
-require "pry"
-require "spec_helper"
-require "rspec/rails"
+abort('The Rails environment is running in production mode!') if Rails.env.production?
+require 'pry'
+require 'spec_helper'
+require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -25,7 +27,7 @@ require "rspec/rails"
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -37,10 +39,9 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = false # Set to false when using database_cleaner
 
-
   config.include Devise::Test::ControllerHelpers, type: :helper
 
-  [:controller, :view].each do |type|
+  %i[controller view].each do |type|
     # Devise controller helpers
     config.include Devise::Test::ControllerHelpers, type: type
 
@@ -58,6 +59,11 @@ RSpec.configure do |config|
     end
   end
 
+  config.before(:each) do
+    @english = create(:language)
+    @spanish = create(:spanish_lang)
+  end
+
   # Set language to english unless
   config.before(:each) do
     I18n.locale = :en
@@ -67,6 +73,16 @@ RSpec.configure do |config|
     config.mock_with :rspec do |mocks|
       mocks.verify_partial_doubles = true
     end
+  end
+
+  # Create test storyline directory if necessary
+  config.before(:suite) do
+    FileUtils.mkdir_p("#{Rails.configuration.local_lesson_dir}/storylines")
+  end
+
+  # Remove test storylines
+  config.after(:suite) do
+    FileUtils.rm_rf Dir.glob("#{Rails.configuration.local_lesson_dir}/storylines/*")
   end
 
   include ActionDispatch::TestProcess

@@ -7,7 +7,7 @@ es:
       no_invitations_remaining: "No quedan más invitaciones"
       new:
         header: "Enviar Invitación"
-        submit_button: "Envia una invitación"
+        submit_button: "Envia la invitación"
       edit:
         header: "Establecer contraseña"
         submit_button: "Guardar mi contraseña"

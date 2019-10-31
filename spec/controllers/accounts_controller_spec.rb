@@ -1,16 +1,16 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 describe AccountsController do
 
   before(:each) do
     create(:default_organization)
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
-    @request.host = "www.test.host"
+    @request.host = 'www.test.host'
   end
 
-  describe "#show" do
-    context "when logged in" do
+  describe '#show' do
+    context 'when logged in' do
       it "should show the user's account information" do
         user = create(:user)
         sign_in user
@@ -19,8 +19,8 @@ describe AccountsController do
       end
     end
 
-    context "when logged out" do
-      it "should redirect any action to login page" do
+    context 'when logged out' do
+      it 'should redirect any action to login page' do
         get :show
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)
@@ -28,18 +28,18 @@ describe AccountsController do
     end
   end
 
-  describe "#update" do
+  describe '#update' do
 
-    context "when logged in" do
+    context 'when logged in' do
 
       before(:each) do
         @user = create(:user)
         sign_in @user
       end
 
-      it "allows the user to update just their email" do
-        update_params = { id: @user.profile, 
-                          user: { email: "new@commercekitchen.com", password: "", password_confirmation: "" },
+      it 'allows the user to update just their email' do
+        update_params = { id: @user.profile,
+                          user: { email: 'new@commercekitchen.com', password: '', password_confirmation: '' },
                           authenticity_token: set_authenticity_token }
         put :update, params: update_params
         @user.reload
@@ -47,17 +47,17 @@ describe AccountsController do
         expect(flash[:notice]).to be_present
       end
 
-      it "should not allow invalid user information" do
+      it 'should not allow invalid user information' do
         update_params = { id: @user.profile,
-                          user: { email: @user.email, password: @user.password, password_confirmation: "something else" },
+                          user: { email: @user.email, password: @user.password, password_confirmation: 'something else' },
                           authenticity_token: set_authenticity_token }
         put :update, params: update_params
         expect(assigns(:user).errors.any?).to be true
       end
     end
 
-    context "when logged out" do
-      it "should redirect any action to login page" do
+    context 'when logged out' do
+      it 'should redirect any action to login page' do
         put :update
         expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(user_session_path)

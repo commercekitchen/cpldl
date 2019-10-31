@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module Admin
   class InvitesController < Devise::InvitationsController
     def create
       user = User.find_by(email: params[:user][:email])
       if user
-        flash[:alert] = "The user already exists"
-        redirect_to admin_invites_index_path
+        flash[:alert] = 'The user already exists'
+        redirect_to admin_dashboard_admin_invitation_path
       else
         super
       end
@@ -13,11 +15,11 @@ module Admin
     private
 
     def invite_resource
-      if params[:user][:organization_id]
-        organization = Organization.find(params[:user][:organization_id])
-      else
-        organization = current_organization
-      end
+      organization = if params[:user][:organization_id]
+                       Organization.find(params[:user][:organization_id])
+                     else
+                       current_organization
+                     end
       User.invite!({ email: params[:user][:email] }, current_user) do |u|
         u.organization = organization
         u.skip_invitation = true

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: profiles
@@ -20,12 +22,12 @@
 
 class Profile < ApplicationRecord
   belongs_to :user, inverse_of: :profile
-  belongs_to :language, required: false
-  belongs_to :library_location, required: false
+  belongs_to :language, optional: true
+  belongs_to :library_location, optional: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true, if: :program_organization
-  validates :zip_code, format: { with: /\A\d{5}-\d{4}|\A\d{5}\z/, message: "should be ##### or #####-####" },
+  validates :zip_code, format: { with: /\A\d{5}-\d{4}|\A\d{5}\z/, message: 'should be ##### or #####-####' },
     allow_blank: true
 
   accepts_nested_attributes_for :library_location

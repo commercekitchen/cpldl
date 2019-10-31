@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 module Admin
   class SchoolsController < BaseController
+    before_action :enable_sidebar
 
     def index
       @schools = current_organization.schools
       @new_school = current_organization.schools.new
-
-      render layout: "admin/base_with_sidebar"
     end
 
     def create
@@ -13,7 +14,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}
@@ -27,7 +28,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          redirect_to action: "index"
+          redirect_to action: 'index'
         end
 
         format.js {}

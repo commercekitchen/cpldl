@@ -1,8 +1,7 @@
-class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
-  before_action :load_ogranization
-  before_action :load_translations
+# frozen_string_literal: true
 
-  layout "admin/base_with_sidebar"
+class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
+  before_action :load_translations
 
   def show; end
 
@@ -19,10 +18,6 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
 
   private
 
-  def load_ogranization
-    @organization = current_organization
-  end
-
   def load_translations
     key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
     @en_translation = Translation.find_or_initialize_by(locale: 'en', key: key)
@@ -35,7 +30,7 @@ class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
 
   def update_translations
     @translation_errors = []
-    params.require(:translation).permit!.each do |locale, values|
+    params.require(:translation).permit!.each do |_locale, values|
       translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
       unless translation.update(values)
         @translation_errors << translation.errors.full_messages
