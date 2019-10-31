@@ -59,7 +59,6 @@ describe Course do
     it 'should allow duplicate course titles across organizations' do
       existing_course = FactoryBot.create(:course, title: @course.title)
       expect(@course).to be_valid
-
     end
 
     it 'should allow a new course with duplicate name if original is archived' do
