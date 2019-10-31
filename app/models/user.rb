@@ -128,7 +128,10 @@ class User < ApplicationRecord
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
-    conditions[:organization_id] = Organization.find_by(subdomain: conditions.delete(:subdomain)).id
+    subdomain = conditions.delete(:subdomain).gsub(/\.|stage/, '')
+    subdomain = 'www' if subdomain.blank?
+
+    conditions[:organization_id] = Organization.find_by(subdomain: subdomain)&.id
     if (login = conditions.delete(:login))
       where(conditions.to_h).where(['library_card_number = :value OR email = :value', { value: login.downcase }]).first
     elsif conditions.key?(:library_card_number) || conditions.key?(:email)
