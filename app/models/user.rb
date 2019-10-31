@@ -83,7 +83,8 @@ class User < ApplicationRecord
 
   before_validation :set_password_from_pin, if: :library_card_login?
   # Validate card number and pin for library card logins
-  validates :library_card_number, format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
+  validates :library_card_number, uniqueness: { scope: :organization_id, if: :library_card_login? },
+                                  format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
 
   # Serialized hash of quiz responses
@@ -127,6 +128,7 @@ class User < ApplicationRecord
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
+    conditions[:organization_id] = Organization.find_by(subdomain: conditions.delete(:subdomain)).id
     if (login = conditions.delete(:login))
       where(conditions.to_h).where(['library_card_number = :value OR email = :value', { value: login.downcase }]).first
     elsif conditions.key?(:library_card_number) || conditions.key?(:email)
