@@ -94,7 +94,7 @@ module Admin
           @subsite_category_id = org_category.id
         end
       end
-      @subsite_category_id ||= current_user.organization.categories.create(name: category.name).id
+      @subsite_category_id || current_user.organization.categories.create(name: category.name).id
     end
 
   end

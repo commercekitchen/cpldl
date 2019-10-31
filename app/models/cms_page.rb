@@ -49,9 +49,9 @@ class CmsPage < ApplicationRecord
   validates :meta_desc, length: { maximum: 156 }
   validates :author, presence: true
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
   validates :audience, presence: true,
-    inclusion: { in: %w[Unauth Auth Admin All], message: '%{value} in not a valid audience' }
+    inclusion: { in: %w[Unauth Auth Admin All], message: '%<value>s in not a valid audience' }
 
   default_scope { order('cms_page_order ASC') }
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'feature_helper'
 
 feature 'User registration and login with library card number' do
@@ -38,7 +40,7 @@ feature 'User registration and login with library card number' do
     scenario 'attempts to register and log in with number already in use at org' do
       FactoryBot.create(:user, :library_card_login_user, library_card_number: card_number, organization: organization)
       library_card_sign_up_with(card_number, card_pin, first_name, zip_code)
-      
+
       expect(page).to have_content('Library Card Number has already been taken')
     end
 

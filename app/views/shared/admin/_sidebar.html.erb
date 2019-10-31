@@ -24,7 +24,7 @@
     <% if current_organization.accepts_programs %>
       <li><%= link_to "Manage Programs", admin_programs_path %></li>
     <% end %>
-      <% if current_organization.has_student_programs? %>
+      <% if current_organization.student_programs? %>
       <li><%= link_to "Manage Schools", admin_schools_path %></li>
     <% end %>
     <li><%= link_to "Custom Text", admin_custom_translations_path %></li>
