@@ -129,8 +129,8 @@ feature 'User logs in' do
       user = create(:user, organization: @org)
       user.add_role(:user, @org)
       log_in_with(user.email, user.password)
-      expect(current_path).to eq(login_path)
-      expect(page).to have_content("Oops! You’re a member of #{@org.name}")
+      expect(current_path).to eq(user_session_path)
+      expect(page).to have_content("Invalid Email or Password")
     end
   end
 end
