@@ -76,3 +76,8 @@ Rails/HasAndBelongsToMany:
 Rails/Output:
   Exclude:
     - "db/seeds.rb"
+
+# Don't worry about this in the spec helper
+Style/MixinUsage:
+  Exclude:
+    - "spec/support/features/warden_helpers.rb"

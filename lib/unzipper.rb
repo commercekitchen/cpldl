@@ -50,7 +50,7 @@ class Unzipper
   end
 
   def storyline_zip_dir
-    @zip_dir ||= 'public/system/lessons/story_lines'
+    'public/system/lessons/story_lines'
   end
 
   def import_path
