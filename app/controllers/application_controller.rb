@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+
   before_action :current_organization
   before_action :set_locale
   before_action :set_language
@@ -190,10 +192,6 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
-  end
-
-  def org_admin?(user)
-    user.has_role?(:admin, current_organization)
   end
 
   def invalid_user_profile?(user)

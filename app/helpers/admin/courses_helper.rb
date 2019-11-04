@@ -2,11 +2,11 @@
 
 module Admin
   module CoursesHelper
-    def link_to_add_fields(name, f, association, prefix)
+    def link_to_add_fields(name, form, association, prefix)
 
-      new_object = f.object.class.reflect_on_association(association).klass.new
+      new_object = form.object.class.reflect_on_association(association).klass.new
 
-      fields = f.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
+      fields = form.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
         render('admin/courses/forms/' + prefix + '_' + association.to_s.singularize + '_fields', f: builder)
       end
 

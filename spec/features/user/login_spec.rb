@@ -129,7 +129,7 @@ feature 'User logs in' do
       user.add_role(:user, @org)
       log_in_with(user.email, user.password)
       expect(current_path).to eq(user_session_path)
-      expect(page).to have_content("Invalid Email or Password")
+      expect(page).to have_content('Invalid Email or Password')
     end
 
     scenario 'on a subdomain on staging' do

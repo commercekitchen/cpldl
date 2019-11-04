@@ -22,7 +22,7 @@ class Program < ApplicationRecord
     'Programs for Students and Parents' => :students_and_parents
   }.freeze
 
-  has_many :users
+  has_many :users, dependent: :nullify
   has_many :program_locations, dependent: :destroy
   belongs_to :organization
   validates :program_name, presence: true

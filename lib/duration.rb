@@ -4,7 +4,7 @@ class Duration
 
   def self.duration_str(seconds)
     seconds = seconds.to_i
-    return '00:00' if seconds < 0
+    return '00:00' if seconds.negative?
 
     m = ((seconds / 60) % 60).to_s.rjust(2, '0')
     s = (seconds % 60).to_s.rjust(2, '0')
@@ -13,7 +13,7 @@ class Duration
 
   def self.minutes_str(seconds, format = 'mins')
     seconds = seconds.to_i
-    return "0 #{format}" if seconds.to_i < 0
+    return "0 #{format}" if seconds.to_i.negative?
 
     m = (seconds / 60) % 60
     return "1 #{format.chomp('s')}" if m == 1

@@ -166,7 +166,7 @@ class User < ApplicationRecord
   end
 
   def tracking_course?(course_id)
-    course_progresses.where(course_id: course_id, tracked: true).count > 0
+    course_progresses.where(course_id: course_id, tracked: true).count.positive?
   end
 
   def completed_lesson_ids(course_id)

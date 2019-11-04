@@ -56,7 +56,7 @@ module CoursesHelper
     session[:completed_lessons] ||= []
     total_lessons = course.lessons.published.count
     completed = (session[:completed_lessons] & course.lessons.pluck(:id)).count
-    return 0 if total_lessons == 0
+    return 0 if total_lessons.zero?
 
     percent = (completed.to_f / total_lessons) * 100
     percent = 100 if percent > 100

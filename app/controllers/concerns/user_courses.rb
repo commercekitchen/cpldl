@@ -4,13 +4,11 @@ module UserCourses
   extend ActiveSupport::Concern
 
   def authorized_courses
-    @courses ||= begin
-      courses = Course.includes(:lessons)
-                      .where(pub_status: 'P', language_id: current_language_id, organization: current_organization)
-      courses = courses.everyone unless user_signed_in?
-      courses = courses.where(display_on_dl: true) if top_level_domain?
-      courses
-    end
+    courses = Course.includes(:lessons)
+                    .where(pub_status: 'P', language_id: current_language_id, organization: current_organization)
+    courses = courses.everyone unless user_signed_in?
+    courses = courses.where(display_on_dl: true) if top_level_domain?
+    courses
   end
 
   def load_category_courses

@@ -15,9 +15,9 @@ feature 'Subdomain admin program management' do
 
   scenario 'subdomain admin can manage program locations' do
     program = create(:program, :location_required, organization: @dpl)
-    program_location1 = create(:program_location, program: program)
-    program_location2 = create(:program_location, program: program)
-    program_location3 = create(:program_location, program: program)
+    create(:program_location, program: program)
+    create(:program_location, program: program)
+    create(:program_location, program: program)
     visit admin_dashboard_index_path(subdomain: 'dpl')
     click_on 'Dashboard'
     click_on 'Manage Programs'
