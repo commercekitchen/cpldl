@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   def find_organization
     org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
 
-    unless current_subdomain == '' || (org.subdomain == current_subdomain)
+    unless org.subdomain == current_subdomain
       redirect_to_www && (return org)
     end
 
@@ -132,8 +132,11 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_www
-    first_subdomain = request.subdomains.first
-    redirect_to request.url.sub(first_subdomain, 'www') if first_subdomain != 'www'
+    if staging?
+      redirect_to subdomain: 'www.stage'
+    else
+      redirect_to subdomain: 'www'
+    end
   end
 
   def in_subdomain?(subdomain)
@@ -162,7 +165,7 @@ class ApplicationController < ActionController::Base
     if subdomain_array.size == 2
       subdomain_array.first
     else
-      'www'
+      ''
     end
   end
 

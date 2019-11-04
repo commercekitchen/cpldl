@@ -8,7 +8,7 @@ describe Admin::PagesController do
   let(:admin) { create(:user, :admin, organization: org) }
 
   before do
-    switch_to_subdomain(org.subdomain)
+    @request.host = "#{org.subdomain}.test.host"
     sign_in admin
   end
 

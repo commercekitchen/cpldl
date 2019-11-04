@@ -7,7 +7,7 @@ describe Admin::UsersController do
   let(:admin) { create(:user, :admin, organization: org) }
 
   before do
-    switch_to_subdomain(org.subdomain)
+    @request.host = "#{org.subdomain}.test.host"
     sign_in admin
   end
 
@@ -29,7 +29,7 @@ describe Admin::UsersController do
     end
 
     it 'assigns search results to @users' do
-      get :index, params: { search: 'two' }
+      get :index, params: { users_search: 'two' }
       expect(assigns(:users)).to eq([user2])
     end
   end
