@@ -7,8 +7,8 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      results = User.search_users(params[:search])
-      @users = if params[:search].blank?
+      results = User.search_users(params[:users_search])
+      @users = if params[:users_search].blank?
                  User.includes(profile: [:language]).where(organization_id: current_organization.id)
                else
                  results & User.includes(profile: [:language]).where(organization_id: current_organization.id)

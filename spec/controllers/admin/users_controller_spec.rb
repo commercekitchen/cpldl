@@ -29,7 +29,7 @@ describe Admin::UsersController do
     end
 
     it 'assigns search results to @users' do
-      get :index, params: { search: 'two' }
+      get :index, params: { users_search: 'two' }
       expect(assigns(:users)).to eq([user2])
     end
   end
