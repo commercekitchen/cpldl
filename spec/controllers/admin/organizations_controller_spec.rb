@@ -10,7 +10,7 @@ describe Admin::OrganizationsController do
 
   context 'as a DL admin' do
     before do
-      switch_to_subdomain(www_org.subdomain)
+      @request.host = "#{www_org.subdomain}.test.host"
       sign_in www_admin
     end
 
@@ -69,15 +69,11 @@ describe Admin::OrganizationsController do
     let(:update_params) { { branches: true } }
 
     before do
-      switch_to_subdomain(org.subdomain)
+      @request.host = "#{org.subdomain}.test.host"
       sign_in subsite_admin
     end
 
     describe 'POST update' do
-      before do
-        request.host = "#{org.subdomain}.example.com"
-      end
-
       it 'should return ok for correct subsite' do
         patch :update, params: { id: org.id, organization: update_params, format: :json }
         expect(response).to have_http_status(:ok)
