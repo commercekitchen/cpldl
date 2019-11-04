@@ -3,7 +3,7 @@
 module Ajax
   class ProgramsController < ApplicationController
 
-    def get_sub_programs
+    def sub_programs
       @programs = Program.where(parent_type: Program.parent_types[params[:parent_type].to_sym])
 
       respond_to do |format|

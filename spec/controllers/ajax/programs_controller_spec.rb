@@ -14,24 +14,24 @@ describe Ajax::ProgramsController do
     @young_adult_program = create(:program, :young_adult_program, organization: @organization)
   end
 
-  describe 'POST #get_sub_programs' do
+  describe 'POST #sub_programs' do
     it 'should assign senior programs' do
-      post :get_sub_programs, params: { parent_type: 'seniors', format: 'json' }
+      post :sub_programs, params: { parent_type: 'seniors', format: 'json' }
       expect(assigns(:programs)).to include(@program)
     end
 
     it 'should assign school programs' do
-      post :get_sub_programs, params: { parent_type: 'students_and_parents', format: 'json' }
+      post :sub_programs, params: { parent_type: 'students_and_parents', format: 'json' }
       expect(assigns(:programs)).to include(@student_program1, @student_program2)
     end
 
     it 'should assign young adult programs' do
-      post :get_sub_programs, params: { parent_type: 'young_adults', format: 'json' }
+      post :sub_programs, params: { parent_type: 'young_adults', format: 'json' }
       expect(assigns(:programs)).to include(@young_adult_program)
     end
 
     it 'should respond with correct programs' do
-      post :get_sub_programs, params: { parent_type: 'students_and_parents', format: 'json' }
+      post :sub_programs, params: { parent_type: 'students_and_parents', format: 'json' }
       expect(response.body).to include(@student_program1.program_name)
     end
   end

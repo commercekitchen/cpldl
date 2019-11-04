@@ -15,7 +15,7 @@
 
 class Category < ApplicationRecord
   belongs_to :organization
-  has_many :courses
+  has_many :courses, dependent: :nullify
 
   validates :name, presence: true
   validates :organization_id, presence: true

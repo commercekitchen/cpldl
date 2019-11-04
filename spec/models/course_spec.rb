@@ -44,7 +44,7 @@ describe Course do
     end
 
     it 'should not allow two published courses with the same title within organization' do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'P')
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'P')
       @course.validate
 
       expect(@course.errors.messages.empty?).to be(false)
@@ -52,22 +52,22 @@ describe Course do
     end
 
     it 'should not allow two draft courses with the same title within organization' do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'D')
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'D')
       expect(@course).to_not be_valid
     end
 
     it 'should allow duplicate course titles across organizations' do
-      existing_course = FactoryBot.create(:course, title: @course.title)
+      FactoryBot.create(:course, title: @course.title)
       expect(@course).to be_valid
     end
 
     it 'should allow a new course with duplicate name if original is archived' do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
       expect(@course).to be_valid
     end
 
     it 'should save new course with duplicate name if original is archived' do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
       expect(@course.save).to be_truthy
     end
 

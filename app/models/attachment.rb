@@ -33,5 +33,5 @@ class Attachment < ApplicationRecord
 
   validates :doc_type, allow_blank: true,
                          inclusion: { in: %w[supplemental post-course],
-                           message: '%{value} is not a doc_type' }
+                           message: '%<value>s is not a doc_type' }
 end
