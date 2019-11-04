@@ -13,12 +13,11 @@ module Admin
     end
 
     def create
-      @library_location = current_organization.library_locations.build
-
-      if @library_location.errors.any?
+      @library_location = current_organization.library_locations.build(library_location_params)
+      if @library_location.save
+        redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
+      else
         render :new
-      else @library_location.update(library_location_params)
-           redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
       end
     end
 

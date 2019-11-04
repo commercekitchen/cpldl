@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   get '/invalid_profile', to: 'profiles#invalid_profile', as: :invalid_profile
 
   namespace :ajax do
-    post 'programs/get_sub_programs'
+    post 'programs/sub_programs'
     post 'programs/select_program'
   end
 

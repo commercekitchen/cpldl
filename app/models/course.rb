@@ -58,11 +58,11 @@ class Course < ApplicationRecord
 
   belongs_to :parent, class_name: 'Course', optional: true
   # has_one :assessment
-  has_one :course_progress
+  has_one :course_progress, dependent: :restrict_with_exception
 
-  has_many :course_topics
+  has_many :course_topics, dependent: :restrict_with_exception
   has_many :topics, through: :course_topics
-  has_many :lessons
+  has_many :lessons, dependent: :destroy
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
@@ -81,12 +81,12 @@ class Course < ApplicationRecord
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
-    inclusion: { in: %w[M D], message: '%{value} is not a valid format' }
+    inclusion: { in: %w[M D], message: '%<value>s is not a valid format' }
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
   validates :level, presence: true,
     inclusion: { in: %w[Beginner Intermediate Advanced],
-      message: '%{value} is not a valid level' }
+      message: '%<value>s is not a valid level' }
   validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == '1' }
 
   default_scope { order('course_order ASC') }
@@ -127,7 +127,7 @@ class Course < ApplicationRecord
   end
 
   def last_lesson_order
-    raise StandardError, 'There are no available lessons for this course.' if lessons.count == 0
+    raise StandardError, 'There are no available lessons for this course.' if lessons.count.zero?
 
     lessons.maximum('lesson_order')
   end

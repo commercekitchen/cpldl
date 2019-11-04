@@ -11,9 +11,8 @@ feature 'User is able to view the courses in their plan' do
     @npl_user = create(:user, organization: @npl)
     @course1 = create(:course, title: 'Course 1', organization: @org)
     @course2 = create(:course, title: 'Course 2', organization: @org, language: @spanish)
-    @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true)
-    @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false)
-    @user.course_progresses << [@course_progress1, @course_progress2]
+    @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, user: @user)
+    @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false, user: @user)
     login_as(@user)
   end
 

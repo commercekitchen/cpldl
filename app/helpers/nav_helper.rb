@@ -7,7 +7,7 @@ module NavHelper
   end
 
   def user_greeting
-    if is_org_admin?(current_user)
+    if org_admin?
       "#{t('logged_in_user.hi')} Admin!"
     else
       "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!"
@@ -15,7 +15,7 @@ module NavHelper
   end
 
   def dashboard_link
-    if is_org_admin?(current_user)
+    if org_admin?
       link_to t('admin.dashboard'), admin_dashboard_index_path, class: 'inline_link'
     end
   end
@@ -25,7 +25,7 @@ module NavHelper
   end
 
   def www_trainers_link
-    if is_org_admin?(current_user)
+    if org_admin?
       link_to t('home.trainer_link'),
               'https://training.digitallearn.org',
               target: '_blank',
@@ -40,13 +40,13 @@ module NavHelper
   end
 
   def my_courses_link
-    unless is_org_admin?(current_user)
+    unless org_admin?
       link_to t('logged_in_user.my_courses'), my_courses_path, class: 'inline_link'
     end
   end
 
   def all_courses_link
-    unless is_org_admin?(current_user)
+    unless org_admin?
       link_to t('logged_in_user.all_courses'), root_path, class: 'inline_link'
     end
   end

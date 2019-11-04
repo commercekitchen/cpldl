@@ -42,7 +42,6 @@ module Admin
 
     def users_csv(users)
       CSV.generate do |csv|
-        attributes = []
         csv << ['User Name', 'User Last Name', 'User Email', 'User Role', 'Registration Date', 'Branch', 'Zip Code', 'Courses User has Started', 'Courses User has Completed']
 
         users.each do |user|
@@ -69,7 +68,7 @@ module Admin
     end
 
     def current_date_string
-      Date.today.strftime('%m-%d-%Y')
+      Time.zone.now.strftime('%m-%d-%Y')
     end
   end
 end
