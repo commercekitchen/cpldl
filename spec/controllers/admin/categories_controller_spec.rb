@@ -22,6 +22,7 @@ describe Admin::CategoriesController do
 
   context 'www admin' do
     before(:each) do
+      @request.host = 'www.test.host'
       sign_in @www_admin
     end
 
