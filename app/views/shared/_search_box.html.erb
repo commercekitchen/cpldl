@@ -1,0 +1,9 @@
+<%= form_tag search_path, method: :get do %>
+  <%= label_tag search_param, "Search", class: "screen-reader-text" %>
+  <div class="search-box">
+    <%= search_field_tag search_param, params[search_param], placeholder: placeholder_text, class: 'search-input' %>
+    <%= button_tag :submit, class: 'icon-button' do %>
+      <i class="icon-search grey" id="search-icon"></i>
+    <% end %>
+  </div>
+<% end %>

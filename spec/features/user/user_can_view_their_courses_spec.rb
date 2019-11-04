@@ -25,8 +25,8 @@ feature 'User is able to view the courses in their plan' do
 
     scenario 'can view matching search results' do
       visit courses_path
-      fill_in('Search Courses by Keyword', with: 'Course')
-      click_button('Search')
+      fill_in('Search Courses', with: 'Course')
+      find('.icon-button').click
       expect(page).to have_content('Course 1')
     end
 

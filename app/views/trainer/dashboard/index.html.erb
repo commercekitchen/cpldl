@@ -1,13 +1,7 @@
 <%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
 
 <h1>Users</h1>
-<div class="users-search-box">
-  <%= form_tag trainer_dashboard_index_path, method: :get do %>
-    <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
-    <i class="icon-search grey"></i>
-    <%= submit_tag "Search", id: "search_btn" %>
-  <% end %>
-</div>
+<%= render partial: "shared/search_box", locals: { search_path: admin_users_path, placeholder_text: "Search users by keyword", search_param: :users_search } %>
 
 <div class="row twelvecol underlined">
   <div class="two-of-twelve">
