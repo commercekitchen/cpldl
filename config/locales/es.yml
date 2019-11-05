@@ -43,6 +43,8 @@ es:
     submit: "Enviar"
     save: "Guardar"
     cancel: "Cancelar"
+  admin:
+    dashboard: "Panel de control"
   home:
     default_org:
       custom_banner_greeting: ""
