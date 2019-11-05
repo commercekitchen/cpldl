@@ -1,5 +1,5 @@
 <div class="sortable-item flex-list" data-id="<%= lesson.id %>">
-  <%= link_to edit_admin_course_lesson_path(course, lesson), class: "lesson-block" do %>
+  <%= link_to edit_admin_course_lesson_path(course, lesson), class: "lesson-tile" do %>
     <%= render partial: "shared/lessons/lesson_tile", locals: { completed: false, lesson: lesson } %>
   <% end %>
 </div>

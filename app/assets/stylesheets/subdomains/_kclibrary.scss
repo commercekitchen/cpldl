@@ -1,9 +1,17 @@
 .kclibrary {
-  @include color_scheme($kc-blue, $white, $kc-grey, left, $kc-light-grey, $kc-grey, $kc-grey);
+  @include color_scheme(
+    $kc-blue,
+    $white,
+    $kc-grey,
+    left,
+    $kc-light-grey,
+    $kc-grey,
+    $kc-grey
+  );
   @include banner($kc-blue, $white, 2.5em);
   @include buttons($kc-grey, $white);
   @include course_widget($kc-grey, $kc-grey);
-  @include lesson_block($kc-grey, $kc-blue, $kc-blue, $kc-blue);
+  @include lesson_tile($kc-grey, $kc-blue, $kc-blue, $kc-blue);
   @include icons($kc-blue, $kc-blue);
 
   .icon-search,
@@ -30,14 +38,14 @@
 
   .license {
     color: $kc-grey;
-  }  
+  }
 
   .course-widget.completed header {
     background: linear-gradient(to bottom, $kc-blue 0%, $kc-blue 100%);
   }
 
-  .lesson-block:hover,
-  .lesson-block:hover .lesson-title {
+  .lesson-tile:hover,
+  .lesson-tile:hover .lesson-title {
     color: $kc-blue;
   }
 }
