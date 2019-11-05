@@ -7,8 +7,6 @@ describe Admin::SchoolsController do
   before(:each) do
     @organization = create(:organization, subdomain: 'dpl')
     @request.host = 'dpl.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
     @admin = create(:user, :admin, organization: @organization)
 
     @school_enabled = create(:school, organization: @organization)

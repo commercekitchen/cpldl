@@ -4,7 +4,7 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   # config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_files = true
 
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -12,6 +12,9 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = true
+
+  # Do not fallback to assets pipeline if a precompiled asset is missed.
+  config.assets.compile = false
 
   # Eager load code on boot.
   config.eager_load = true
@@ -36,9 +39,7 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
-  config.assets.paths << "#{Rails.root}/app/assets/fonts"
-  config.assets.precompile += %w( .svg .eot .woff .ttf )
+  config.assets.debug = false
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.

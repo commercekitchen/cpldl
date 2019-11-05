@@ -1,0 +1,6 @@
+<% unless org_admin? %>
+  <% begin %>
+    <%= render "shared/analytics/ga_#{current_organization.subdomain}" if Rails.env.production? %>
+  <% end %>
+  <%= render "shared/analytics/ga_event_tracking" if Rails.env.production? %>
+<% end %>

@@ -60,12 +60,13 @@ class CourseRecommendationService
     end
   end
 
-  def language_string
-    @language ||= (I18n.locale == :es ? 'Spanish' : 'English')
+  def language
+    language_string = I18n.locale == :es ? 'Spanish' : 'English'
+    Language.find_by(name: language_string)
   end
 
   def org_courses
-    @org_courses ||= Course.where(organization: @org).where(language_id: Language.find_by(name: language_string).id)
+    @org_courses ||= Course.where(organization: @org).where(language_id: language.id)
   end
 
   def core_courses

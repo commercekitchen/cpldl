@@ -13,10 +13,23 @@ module Admin
     def create
       @organization = Organization.new(organization_params)
 
-      if @organization.errors.any?
+      if @organization.save
+        redirect_to admin_organizations_path, notice: 'Organization was successfully created.'
+      else
         render :new
-      else @organization.save
-           redirect_to admin_organizations_path, notice: 'Organization was successfully created.'
+      end
+    end
+
+    def update
+      @organization = Organization.find(params[:id])
+
+      if !current_user.has_role?(:admin, @organization)
+        flash.now[:error] = 'You do not have access to this subdomain'
+        render json: { errors: ['You do not have access to this subdomain'] }, status: :forbidden
+      elsif @organization.update(organization_params)
+        render json: { organization: @organization }, status: :ok
+      else
+        render json: { errors: @organization.errors }, status: :unprocessable_entity
       end
     end
 

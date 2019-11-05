@@ -37,7 +37,7 @@ class Organization < ApplicationRecord
   has_many :library_locations, dependent: :destroy
   has_many :programs, dependent: :destroy
   has_many :schools, dependent: :destroy
-  has_many :courses
+  has_many :courses, dependent: :destroy
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
 
@@ -45,6 +45,9 @@ class Organization < ApplicationRecord
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
 
   has_attached_file :footer_logo
+
+  validates :name, presence: true
+  validates :subdomain, presence: true
 
   validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
   validates_attachment_size :footer_logo, in: 0.megabytes..2.megabytes
@@ -63,7 +66,7 @@ class Organization < ApplicationRecord
     users.select { |u| u.has_role?(:admin, self) }.map(&:email)
   end
 
-  def has_student_programs?
+  def student_programs?
     programs.map(&:parent_type).any? { |p| p.to_sym == :students_and_parents }
   end
 

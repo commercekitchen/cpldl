@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  include ApplicationHelper
+
   before_action :current_organization
   before_action :set_locale
   before_action :set_language
@@ -16,8 +18,6 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  layout proc { user_signed_in? || top_level_domain? ? 'user/logged_in' : 'application' }
-
   def current_organization
     find_organization
   end
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
   def find_organization
     org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
 
-    unless current_subdomain == '' || (org.subdomain == current_subdomain)
+    unless org.subdomain == current_subdomain
       redirect_to_www && (return org)
     end
 
@@ -66,24 +66,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    custom_action = check_user_subdomain(user)
-
-    return custom_action if custom_action.present?
-
-    if user.is_super? || org_admin?(user)
+    if org_admin?(user)
       admin_after_sign_in_path_for(user)
     else
       user_after_sign_in_path_for(user)
-    end
-  end
-
-  def check_user_subdomain(user)
-    if user.organization != current_organization
-      user.update_attribute(:sign_in_count, 0) if user.sign_in_count == 1
-      sign_out
-      user_subdomain = user.organization.subdomain
-      flash[:alert] = %(Oops! You’re a member of #{user.organization.name}. Sign in at <a href="http://#{user_subdomain}.#{base_url}">#{user_subdomain}.#{base_url}</a>)
-      login_path
     end
   end
 
@@ -146,12 +132,22 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_www
-    first_subdomain = request.subdomains.first
-    redirect_to request.url.sub(first_subdomain, 'www') if first_subdomain != 'www'
+    if staging?
+      redirect_to subdomain: 'www.stage'
+    else
+      redirect_to subdomain: 'www'
+    end
   end
 
   def in_subdomain?(subdomain)
     current_organization.subdomain == subdomain
+  end
+
+  protected
+
+  def enable_sidebar(sidebar = nil)
+    @show_sidebar = true
+    @sidebar = sidebar
   end
 
   private
@@ -169,7 +165,7 @@ class ApplicationController < ActionController::Base
     if subdomain_array.size == 2
       subdomain_array.first
     else
-      'www'
+      ''
     end
   end
 
@@ -199,10 +195,6 @@ class ApplicationController < ActionController::Base
     else
       root_path
     end
-  end
-
-  def org_admin?(user)
-    user.has_role?(:admin, current_organization)
   end
 
   def invalid_user_profile?(user)

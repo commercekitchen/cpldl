@@ -78,6 +78,7 @@ es:
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses: "¿Qué le gustaría aprender?"
     trainer_link: "Herramientas y recursos para instructores"
+    org_trainer_link: "Cyber Navigator Dashboard"
     mins_abbr: "min"
     more_courses: "Hay mas cursos disponible si se inscribe - lo puede hacer facilmente"
     here: "aquí"
@@ -120,27 +121,28 @@ es:
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
     my_courses_link: "Mis Cursos"
     view_your_customized_plan: "para revisar los cursos en su plan personal."
-    my_account: "Mi Cuenta"
+    account: "Cuenta"
     my_courses: "Mis Cursos"
     all_courses: "Ver todos los cursos"
     sign_out: "Salir"
-  profile_page:
-    preferred_language: "Idioma de preferencia"
-    library_location: "¿Cómo se llama su biblioteca?"
-    save: "Guardar"
-    change_login_information: "Cambiar Información de Ingreso"
-    update_profile: "Actualizar Perfil"
-    my_completed_courses: "Mis Cursos Terminados"
+  account:
+    login_information: "Información de Ingreso"
+    profile: "Perfil"
+    my_completed_courses: "Cursos Terminados"
     no_completed_courses: "No tienes cursos terminados."
+  profile:
     last_name: "Apellido"
     phone: "Teléfono"
     street_address: "Dirección"
     city: "Ciudad"
     state: "Estado"
+    preferred_language: "Idioma de preferencia"
+    library_location: "¿Cómo se llama su biblioteca?"
     opt_out_of_recommendations: "¿Quiere que ayudemos a elegir sus cursos?"
     # These are backward because of the question phrasing:
     opt_out_false: "Si"
     opt_out_true: "No"
+    save: "Guardar"
     updated: "El perfil se actualizó correctamente."
   programs_form:
     parent_type: "Seleccione el tipo de programa..."
@@ -167,11 +169,11 @@ es:
       retake_the_quiz: "Añadir más cursos"
     kpl:
       retake_the_quiz: "Repite el Cuestionario"
-    tscpl: 
+    tscpl:
       retake_the_quiz: "Repite el Cuestionario"
-    pima: 
+    pima:
       retake_the_quiz: "Repite el Cuestionario"
-    ebrpl: 
+    ebrpl:
       retake_the_quiz: "Repite el Cuestionario"
     carnegielibrary:
       retake_the_quiz: "Repite el Cuestionario"
@@ -269,7 +271,7 @@ es:
     set_three_2: "Ayude a mi hijo con la escuela."
     set_three_3: "Acceda a información y beneficios en línea del gobierno."
     set_three_4: "Utilice herramientas en línea para mejorar mi educación."
-    set_three_5: "Comunicarse con amigos y familiares por correo electrónico y video." 
+    set_three_5: "Comunicarse con amigos y familiares por correo electrónico y video."
     set_three_6: "Usar internet de manera más segura."
     set_three_7: "Aprender una aplicación específica como Microsoft Word."
     set_three_8: "Usar Internet para encontrar información."

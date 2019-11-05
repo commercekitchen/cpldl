@@ -57,7 +57,7 @@ class Lesson < ApplicationRecord
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%{value} is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
 
   has_attached_file :story_line, url: '/system/lessons/story_lines/:id/:style/:basename.:extension'
   before_post_process :skip_for_zip

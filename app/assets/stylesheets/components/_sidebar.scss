@@ -1,0 +1,14 @@
+.sidebar-links {
+  padding-left: 0;
+  padding-right: 3rem;
+}
+
+.sidebar-section {
+  margin-bottom: 1rem;
+
+  &__header {
+    color: gray;
+    border-bottom: 1px solid gray;
+    margin-bottom: 0.25rem;
+  }
+}

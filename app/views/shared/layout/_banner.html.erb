@@ -1,0 +1,14 @@
+<div class="banner color">
+  <div class="container row clearfix">
+    <div class="callout">
+      <% if content_for?(:callout) %>
+        <%= yield :callout %>
+      <% else %>
+        <%= render "shared/logo_banner" %>
+      <% end %>
+    </div>
+    <% if content_for?(:course_progress) %>
+      <%= yield :course_progress %>
+    <% end %>
+  </div>
+</div>

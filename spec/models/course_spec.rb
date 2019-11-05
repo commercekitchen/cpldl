@@ -43,12 +43,42 @@ describe Course do
       expect(@course).to be_valid
     end
 
-    it 'should not allow two courses with the same title within organization' do
-      existing_course = FactoryBot.create(:course, title: @course.title, organization: org)
+    it 'should not allow two published courses with the same title within organization' do
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'P')
       @course.validate
 
       expect(@course.errors.messages.empty?).to be(false)
       expect(@course.errors.messages[:title].first).to eq('has already been taken for the organization')
+    end
+
+    it 'should not allow two draft courses with the same title within organization' do
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'D')
+      expect(@course).to_not be_valid
+    end
+
+    it 'should allow duplicate course titles across organizations' do
+      FactoryBot.create(:course, title: @course.title)
+      expect(@course).to be_valid
+    end
+
+    it 'should allow a new course with duplicate name if original is archived' do
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
+      expect(@course).to be_valid
+    end
+
+    it 'should save new course with duplicate name if original is archived' do
+      FactoryBot.create(:course, title: @course.title, organization: org, pub_status: 'A')
+      expect(@course.save).to be_truthy
+    end
+
+    it 'should allow 50 character titles' do
+      @course.title = 'a' * 50
+      expect(@course).to be_valid
+    end
+
+    it 'should not allow >50 character titles' do
+      @course.title = 'a' * 51
+      expect(@course).to_not be_valid
     end
 
     it 'can only have listed statuses' do
@@ -109,14 +139,6 @@ describe Course do
         @course.pub_status = 'P'
         expect(@course.update_pub_date(@course.pub_status).to_i).to be(Time.zone.now.to_i)
       end
-    end
-
-    it 'humanizes publication status' do
-      expect(@course.current_pub_status).to eq('Published')
-      @course.pub_status = 'D'
-      expect(@course.current_pub_status).to eq('Draft')
-      @course.pub_status = 'T'
-      expect(@course.current_pub_status).to eq('Trashed')
     end
 
     it 'should not require the seo page title' do

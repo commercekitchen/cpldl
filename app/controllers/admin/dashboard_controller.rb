@@ -2,6 +2,7 @@
 
 module Admin
   class DashboardController < BaseController
+    before_action :enable_sidebar
 
     def index
       @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
@@ -9,32 +10,16 @@ module Admin
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
 
-      render 'admin/courses/index', layout: 'admin/base_with_sidebar'
+      render 'admin/courses/index'
     end
 
-    def pages_index
-      @cms_pages = CmsPage.where(organization_id: current_organization.id)
-      render 'admin/cms_pages/index', layout: 'admin/base_with_sidebar'
-    end
-
-    def invites_index
-      render 'admin/invites/new', layout: 'admin/base_with_sidebar'
-    end
-
-    def users_index
-      results = User.search_users(params[:search])
-      @users = if params[:search].blank?
-                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
-               else
-                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
-               end
-
-      render 'admin/users/index', layout: 'admin/base_with_sidebar'
+    def admin_invitation
+      render 'admin/invites/new'
     end
 
     def manually_confirm_user
       User.find(params[:user_id]).confirm if current_user.has_role?(:admin, current_organization)
-      redirect_to admin_users_index_path
+      redirect_to admin_users_path
     end
 
     def import_courses
@@ -48,7 +33,7 @@ module Admin
 
       respond_to do |format|
         format.html do
-          render 'admin/courses/import_courses', layout: 'admin/base_with_sidebar'
+          render 'admin/courses/import_courses'
         end
       end
     end
@@ -109,7 +94,7 @@ module Admin
           @subsite_category_id = org_category.id
         end
       end
-      @subsite_category_id ||= current_user.organization.categories.create(name: category.name).id
+      @subsite_category_id || current_user.organization.categories.create(name: category.name).id
     end
 
   end

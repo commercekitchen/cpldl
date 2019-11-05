@@ -17,14 +17,28 @@ class Unzipper
 
   def unzip_and_upload_asl
     Zip::File.open(zip_file) do |zip_file|
+      update_javascript(zip_file)
       zip_file.each do |file|
         LessonStore.new.save(file: file, key: object_path(file), acl: 'public-read', zip_file: zip_file)
       end
     end
   end
 
+  def update_javascript(zip_file)
+    js_file_location = 'story_content/user.js'
+    user_js = zip_file.read(js_file_location)
+    dlc_transition_string = "getDLCTransition('lesson')"
+    old_event_string = 'window.parent.sendLessonCompletedEvent()'
+    new_event_string = 'window.parent.postMessage("lesson_completed", "*")'
+    new_contents = user_js.gsub(dlc_transition_string, new_event_string).gsub(old_event_string, new_event_string)
+    zip_file.get_output_stream(js_file_location) { |f| f.puts new_contents }
+    zip_file.commit
+  rescue Errno::ENOENT
+    Rails.logger.info('No user.js file found')
+  end
+
   def zip_file
-    @zip_file ||= File.join(Rails.root, "#{import_path}/original/#{package_file_name}.zip")
+    @zip_file ||= File.join(Rails.root, import_path, 'original', "#{package_file_name}.zip")
   end
 
   def object_path(file)
@@ -36,7 +50,7 @@ class Unzipper
   end
 
   def storyline_zip_dir
-    @zip_dir ||= 'public/system/lessons/story_lines'
+    'public/system/lessons/story_lines'
   end
 
   def import_path

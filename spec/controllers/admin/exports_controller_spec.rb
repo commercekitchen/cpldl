@@ -5,8 +5,8 @@ require 'rails_helper'
 describe Admin::ExportsController do
   before(:each) do
     @organization = create(:organization)
-    @request.host = 'chipublib.test.host'
     @admin = create(:user, :admin, organization: @organization)
+    @request.host = "#{@organization.subdomain}.test.host"
     sign_in @admin
     @zip_csv = { format: 'csv', version: 'zip' }
   end
@@ -21,30 +21,25 @@ describe Admin::ExportsController do
 
   describe '#data_for_completions_report_by' do
     before(:each) do
-      @user = create(:user, quiz_responses_object: { 'set_one' => '1', 'set_two' => '3', 'set_three' => '3' })
-      @user.add_role(:user, @organization)
+      @user = create(:user, organization: @organization,
+        quiz_responses_object: { 'set_one' => '1', 'set_two' => '3', 'set_three' => '3' })
 
-      @user2 = create(:user, quiz_responses_object: { 'set_one' => '2', 'set_three' => '2' })
-      @user2.add_role(:user, @organization)
+      @user2 = create(:user, organization: @organization,
+        quiz_responses_object: { 'set_one' => '2', 'set_three' => '2' })
 
-      @user3 = create(:user)
-      @user3.add_role(:user, @organization)
+      @user3 = create(:user, organization: @organization)
 
-      @language = create(:language)
       @course1 = create(:course, title: 'Course 1',
-                                             language: @language,
+                                             language: @english,
                                              description: 'Mocha Java Scripta',
                                              organization: @organization)
       @course2 = create(:course, title: 'Course 2',
-                                             language: @language,
+                                             language: @english,
                                              organization: @organization)
-      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress3 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now)
-      @course_progress4 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now)
-      @user.course_progresses << [@course_progress1, @course_progress2]
-      @user2.course_progresses << [@course_progress3]
-      @user3.course_progresses << [@course_progress4]
+      @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now, user: @user)
+      @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now, user: @user)
+      @course_progress3 = create(:course_progress, course_id: @course1.id, tracked: true, completed_at: Time.zone.now, user: @user2)
+      @course_progress4 = create(:course_progress, course_id: @course2.id, tracked: true, completed_at: Time.zone.now, user: @user3)
     end
 
     it 'return completions by zip' do

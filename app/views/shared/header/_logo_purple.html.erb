@@ -1,0 +1,10 @@
+<div class="main-logo">
+  <%= link_to root_path do %>
+      <% case  current_organization.subdomain %>
+      <% when "www" %>
+        <%= image_tag "dl_logo.png" %>
+      <% else %>
+        <%= safe_logo_tag "#{current_organization.subdomain}_logo_black.png" %>
+      <% end %>
+  <% end %>
+</div>

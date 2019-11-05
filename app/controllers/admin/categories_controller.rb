@@ -7,7 +7,7 @@ module Admin
       @categories = current_organization.categories
       @new_category = current_organization.categories.new
 
-      render layout: 'admin/base_with_sidebar'
+      enable_sidebar
     end
 
     def create

@@ -1,49 +1,46 @@
 # frozen_string_literal: true
 
-class Admin::Custom::UserSurveysController < Admin::Custom::BaseController
-  before_action :load_ogranization
-  before_action :load_translations
+module Admin
+  module Custom
+    class UserSurveysController < Admin::Custom::BaseController
+      before_action :load_translations
 
-  layout 'admin/base_with_sidebar'
+      def show; end
 
-  def show; end
+      def update
+        if @organization.update(org_params) & update_translations
+          flash[:info] = 'Organization user survey updated.'
+          I18n.backend.reload!
+          redirect_to admin_custom_user_surveys_path
+        else
+          flash[:error] = @organization.invalid? ? @organization.errors.full_messages : @translation_errors.flatten
+          render :show
+        end
+      end
 
-  def update
-    if @organization.update(org_params) & update_translations
-      flash[:info] = 'Organization user survey updated.'
-      I18n.backend.reload!
-      redirect_to admin_custom_user_surveys_path
-    else
-      flash[:error] = @organization.invalid? ? @organization.errors.full_messages : @translation_errors.flatten
-      render :show
-    end
-  end
+      private
 
-  private
+      def load_translations
+        key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
+        @en_translation = Translation.find_or_initialize_by(locale: 'en', key: key)
+        @es_translation = Translation.find_or_initialize_by(locale: 'es', key: key)
+      end
 
-  def load_ogranization
-    @organization = current_organization
-  end
+      def org_params
+        params.require(:organization).permit(:user_survey_link, :user_survey_button_text, :user_survey_enabled)
+      end
 
-  def load_translations
-    key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
-    @en_translation = Translation.find_or_initialize_by(locale: 'en', key: key)
-    @es_translation = Translation.find_or_initialize_by(locale: 'es', key: key)
-  end
-
-  def org_params
-    params.require(:organization).permit(:user_survey_link, :user_survey_button_text, :user_survey_enabled)
-  end
-
-  def update_translations
-    @translation_errors = []
-    params.require(:translation).permit!.each do |_locale, values|
-      translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
-      unless translation.update(values)
-        @translation_errors << translation.errors.full_messages
-        return false
+      def update_translations
+        @translation_errors = []
+        params.require(:translation).permit!.each do |_locale, values|
+          translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
+          unless translation.update(values)
+            @translation_errors << translation.errors.full_messages
+            return false
+          end
+        end
+        true
       end
     end
-    true
   end
 end

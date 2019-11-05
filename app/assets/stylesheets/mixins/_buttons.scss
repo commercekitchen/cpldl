@@ -1,5 +1,5 @@
 @mixin buttons($button_color, $text_color) {
-  button,
+  button:not(.icon-button),
   input[type="submit"],
   .btn {
     display: inline-block;
@@ -67,5 +67,12 @@
     &.btn-orange {
       background-color: $dark-orange;
     }
+  }
+
+  .icon-button {
+    padding: 0;
+    background: none;
+    border: none;
+    height: 100%;
   }
 }

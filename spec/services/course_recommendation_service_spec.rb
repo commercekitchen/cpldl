@@ -18,8 +18,6 @@ describe CourseRecommendationService do
   end
 
   before(:each) do
-    @spanish = create(:spanish_lang)
-    @english = create(:language)
     @organization = create(:organization)
     @other_organization = create(:organization)
     @user = create(:user, organization: @organization)
@@ -30,15 +28,15 @@ describe CourseRecommendationService do
     # Create applicable courses
     %w[M D].each do |format|
       %w[Beginner Intermediate].each do |level|
-        en_course = create(:course, language: @english, format: format, level: level, topics: [@core_topic], organization: @organization)
-        es_course = create(:course, language: @spanish, format: format, level: level, topics: [@core_topic], organization: @organization)
+        create(:course, language: @english, format: format, level: level, topics: [@core_topic], organization: @organization)
+        create(:course, language: @spanish, format: format, level: level, topics: [@core_topic], organization: @organization)
       end
     end
 
     topics.each do |_k, v|
       topic = create(:topic, title: v)
-      en_course = create(:course, language: @english, topics: [topic], organization: @organization)
-      es_course = create(:course, language: @spanish, topics: [topic], organization: @organization)
+      create(:course, language: @english, topics: [topic], organization: @organization)
+      create(:course, language: @spanish, topics: [topic], organization: @organization)
     end
 
     # Create non-applicable course

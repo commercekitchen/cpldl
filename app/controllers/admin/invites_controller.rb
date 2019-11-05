@@ -6,7 +6,7 @@ module Admin
       user = User.find_by(email: params[:user][:email])
       if user
         flash[:alert] = 'The user already exists'
-        redirect_to admin_invites_index_path
+        redirect_to admin_dashboard_admin_invitation_path
       else
         super
       end

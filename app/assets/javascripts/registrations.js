@@ -101,7 +101,7 @@
   function getProgramsOfType(type) {
     return $.ajax({
       method: "post",
-      url: "/ajax/programs/get_sub_programs",
+      url: "/ajax/programs/sub_programs",
       data: { parent_type: type }
     });
   }

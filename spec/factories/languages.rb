@@ -12,10 +12,10 @@
 
 FactoryBot.define do
   factory :language do
-    name 'English'
+    initialize_with { Language.find_or_create_by(name: 'English') }
   end
 
   factory :spanish_lang, class: Language do
-    name 'Spanish'
+    initialize_with { Language.find_or_create_by(name: 'Spanish') }
   end
 end

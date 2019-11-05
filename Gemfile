@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-# Use single quotes within config files.
-# rubocop:disable Style/StringLiterals
-
 source 'https://rubygems.org'
 
 # Base set of gems
@@ -94,7 +91,7 @@ group :development do
   gem 'brakeman', require: false
   gem 'letter_opener'
   gem 'powder'
-  gem "pry-remote"
+  gem 'pry-remote'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'web-console', '~> 3.7.0'

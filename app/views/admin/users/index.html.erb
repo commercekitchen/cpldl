@@ -1,16 +1,10 @@
 <%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
 
-<h1>Users</h1>
+<h2>User Accounts</h2>
 
 <div class="row">
   <div class="sixcol">
-    <div class="users-search-box">
-      <%= form_tag admin_users_index_path, method: :get do %>
-        <%= search_field_tag :search, params[:search], placeholder: "Search users by keyword" %>
-        <i class="icon-search grey"></i>
-        <%= submit_tag "Search", id: "search_btn" %>
-      <% end %>
-    </div>
+    <%= render partial: "shared/search_box", locals: { search_path: admin_users_path, placeholder_text: "Search users by keyword", search_param: :users_search } %>
   </div>
   <div class="sixcol last left-or-right">
     <%= link_to "Export User Information", admin_export_user_info_path(format: :csv), class: "btn button-color" %>

@@ -4,7 +4,7 @@ class AccountsController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_user
-  layout 'user/logged_in_with_sidebar'
+  before_action -> { enable_sidebar('shared/user/sidebar') }
 
   def show; end
 
@@ -34,20 +34,15 @@ class AccountsController < ApplicationController
     user = current_user
 
     if password.blank? && password_confirmation.blank?
-      if user.email != email
-        if user.update(email: email)
-          bypass_sign_in user
-        end
-      end
-    else
-      if user.update(params)
+      if user.email != email && user.update(email: email)
         bypass_sign_in user
       end
+    elsif user.update(params)
+      bypass_sign_in user
     end
   end
 
   def user_params
     params.required(:user).permit(:email, :password, :password_confirmation)
   end
-
 end

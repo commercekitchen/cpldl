@@ -8,8 +8,6 @@ describe SessionsController do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     create(:default_organization)
     @request.host = 'www.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
   end
 
   describe 'GET #new' do

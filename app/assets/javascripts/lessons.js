@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
   // NOTE: this method name should not be changed, it must
   // match the event from the ASL file:
   // window.parent.sendLessonCompletedEvent();
@@ -15,8 +14,15 @@ $(document).ready(function() {
     });
   };
 
-  getDLCTransition = function(_){
+  getDLCTransition = function(_) {
     sendLessonCompletedEvent();
   };
 
+  handleLessonCompleted = function(event) {
+    if (event.data === "lesson_completed") {
+      sendLessonCompletedEvent();
+    }
+  };
+
+  window.addEventListener("message", handleLessonCompleted, true);
 });

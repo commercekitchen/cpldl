@@ -137,11 +137,11 @@ describe User do
 
     it 'returns current_roles' do
       @user.add_role(:admin)
-      expect(@user.current_roles).to eq('admin')
+      expect(@user.current_roles).to include('admin')
     end
 
     it 'returns preferred language' do
-      @user.profile = FactoryBot.create(:profile, user: @user, language: FactoryBot.create(:language))
+      @user.profile = FactoryBot.create(:profile, user: @user, language: @english)
       expect(@user.preferred_language).to eq('English')
     end
   end
@@ -176,10 +176,12 @@ describe User do
 
   context 'library card login user' do
     let(:org) { FactoryBot.create(:organization, :library_card_login) }
+    let(:other_org) { FactoryBot.create(:organization, :library_card_login) }
     let(:pin) { Array.new(4) { rand(10) }.join }
+    let(:card_number) { Array.new(7) { rand(10) }.join }
     let(:user_params) do
       {
-        library_card_number: Array.new(7) { rand(10) }.join,
+        library_card_number: card_number,
         library_card_pin: pin,
         organization_id: org.id,
         password: Digest::MD5.hexdigest(pin).first(10),
@@ -192,11 +194,29 @@ describe User do
       expect(user).to be_valid
     end
 
-    it 'should be valid for second user' do
+    it 'should strip whitespace from library card number' do
+      whitespace_params = user_params.merge(library_card_number: '  1234567890  ')
+      user = User.new(whitespace_params)
+      user.save
+      expect(user.reload.library_card_number).to eq('1234567890')
+    end
+
+    it 'should be invalid with duplicate library card number' do
       User.create(user_params)
-      user2 = User.new(user_params.merge(library_card_number: Array.new(7) { rand(10) }.join))
+      user2 = User.new(user_params)
+      expect(user2).to_not be_valid
+    end
+
+    it 'should be invalid with duplicate library card number plus whitespace' do
+      User.create(user_params)
+      user2 = User.new(user_params.merge(library_card_number: " #{card_number} "))
+      expect(user2).to_not be_valid
+    end
+
+    it 'should be valid with duplicate card number at another organization' do
+      User.create(user_params)
+      user2 = User.new(user_params.merge(organization_id: other_org.id))
       expect(user2).to be_valid
-      expect(user2.save).to be_truthy
     end
   end
 

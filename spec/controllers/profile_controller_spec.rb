@@ -7,8 +7,6 @@ describe ProfilesController do
   before(:each) do
     create(:default_organization)
     @request.host = 'www.test.host'
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
   end
 
   describe '#show' do
@@ -39,7 +37,7 @@ describe ProfilesController do
 
       it 'allows the user to update their profile information' do
         profile_params = { first_name: 'Robby', zip_code: '12345',
-                           language_id: create(:language), opt_out_of_recommendations: true }
+                           language: @english, opt_out_of_recommendations: true }
         put :update, params: { id: @user.profile, profile: profile_params, authenticity_token: set_authenticity_token }
         @user.reload
         expect(@user.profile.first_name).to eq('Robby')

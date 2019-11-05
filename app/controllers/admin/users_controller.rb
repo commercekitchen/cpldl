@@ -4,6 +4,17 @@ require 'csv'
 
 module Admin
   class UsersController < BaseController
+    before_action :enable_sidebar
+
+    def index
+      results = User.search_users(params[:users_search])
+      @users = if params[:users_search].blank?
+                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               else
+                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
+               end
+    end
+
     def change_user_roles
       user     = User.find(params[:id])
       org      = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
@@ -31,7 +42,6 @@ module Admin
 
     def users_csv(users)
       CSV.generate do |csv|
-        attributes = []
         csv << ['User Name', 'User Last Name', 'User Email', 'User Role', 'Registration Date', 'Branch', 'Zip Code', 'Courses User has Started', 'Courses User has Completed']
 
         users.each do |user|
@@ -58,7 +68,7 @@ module Admin
     end
 
     def current_date_string
-      Date.today.strftime('%m-%d-%Y')
+      Time.zone.now.strftime('%m-%d-%Y')
     end
   end
 end

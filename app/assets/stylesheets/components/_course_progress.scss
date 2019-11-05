@@ -1,16 +1,17 @@
 .course-progress {
-
   color: $white;
+  float: right;
+  min-width: 33%;
 
   header {
     margin-top: 30px;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
     font-size: 1.5em;
   }
 
   footer {
-    margin-top: .8em;
-    font-size: .8em;
+    margin-top: 0.8em;
+    font-size: 0.8em;
 
     .percent-complete {
       display: inline-block;
@@ -53,7 +54,7 @@
       background-color: $progress-meter-color;
       background-repeat: repeat-x;
       background-size: 40px 40px;
-      border-radius: $base-border-radius /1.5;
+      border-radius: $base-border-radius / 1.5;
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       border: $progress-meter-border;
