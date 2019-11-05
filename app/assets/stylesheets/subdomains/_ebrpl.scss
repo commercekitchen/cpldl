@@ -1,8 +1,20 @@
 .ebrpl {
-  @include color_scheme($ebrpl-dark-blue, $white, $ebrpl-light-blue, left, $ebrpl-dark-blue, $ebrpl-light-blue);
+  @include color_scheme(
+    $ebrpl-dark-blue,
+    $white,
+    $ebrpl-light-blue,
+    left,
+    $ebrpl-dark-blue,
+    $ebrpl-light-blue
+  );
   @include banner($ebrpl-dark-blue, $white, 2.2em);
   @include buttons($ebrpl-light-blue, $white);
   @include course_widget($ebrpl-light-blue, $ebrpl-light-blue);
-  @include lesson_block($ebrpl-dark-blue, $grey, $ebrpl-light-blue, $ebrpl-light-blue);
+  @include lesson_tile(
+    $ebrpl-dark-blue,
+    $grey,
+    $ebrpl-light-blue,
+    $ebrpl-light-blue
+  );
   @include icons($ebrpl-dark-blue, $ebrpl-light-blue);
 }

@@ -1,0 +1,18 @@
+<div class="lesson-header">
+  <% if completed %>
+    <i class="icon-ok"></i>
+  <% else %>
+    <span class="lesson-order"><%= lesson.published_lesson_order %></span>
+  <% end %>
+  <span class="lesson-title"><%= lesson.title %></span>
+</div>
+<div class="lesson-tile-body">
+  <div class="duration-info">
+    <i class="icon-clock"></i>
+    <div class="lesson-duration"><%= Duration.duration_str(lesson.duration) %></div>
+  </div>
+  <p class="lesson-summary"><%= lesson.summary %></p>
+  <div class="btn start-lesson-button">
+    <%= t("course_page.start_lesson") %>
+  </div>
+</div>

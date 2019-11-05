@@ -73,7 +73,7 @@ required to stand up a new DigitalLearn site.
   - `banner` Banner background & text colors and font sizes (if specified)
   - `buttons` Defines background and text color for buttons
   - `course_widget` Course widget boxes
-  - `lesson_block` Lesson widget boxes, including arrow and check icon colors
+  - `lesson_tile` Lesson widget boxes, including arrow and check icon colors
   - `icons` All other site icons
 
   These components each take several color parameters, for which you'll use the colors defined for the new subsite in `_vars.scss`.
