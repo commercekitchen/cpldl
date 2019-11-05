@@ -6,10 +6,10 @@
 <p class="emphasis">
   Drag and drop the lessons to reorder them. Click on a lesson to edit it in the form above.
 </p>
-<div class="sortable-list" data-page="lessons">
+<div class="sortable_list_wrapper sortable-list sortable-lessons" data-page="lessons">
   <div class="objects sortable grid reorderable flex-list">
     <% @course.lessons.where.not(pub_status: "A").each do |lesson| %>
-      <%= render partial: "shared/lessons/admin_lesson_block", locals: { course: @course, lesson: lesson } %>
+      <%= render partial: "shared/lessons/admin_lesson_tile_link", locals: { course: @course, lesson: lesson } %>
     <% end %>
   </div>
 </div>

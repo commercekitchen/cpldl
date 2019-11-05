@@ -124,4 +124,17 @@
       }
     }
   }
+
+  .sortable-lessons {
+    .sortable-placeholder {
+      border: 1px dashed #ccc;
+      background-color: #f9f9f9;
+      height: 240px;
+      width: 240px;
+      color: $white;
+      cursor: pointer;
+      margin: 0.5em;
+      border-radius: 5px;
+    }
+  }
 }
