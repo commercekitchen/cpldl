@@ -35,6 +35,8 @@ en:
     submit: "Submit"
     save: "Save"
     cancel: "Cancel"
+  admin:
+    dashboard: "Dashboard"
   home:
     default_org:
       custom_banner_greeting: ""
