@@ -18,6 +18,7 @@
 .cell {
   display: table-cell;
   width: 15%;
+  vertical-align: middle;
   @include media($mobile-large) {
     display: block;
   }
