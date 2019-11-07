@@ -20,10 +20,6 @@
     <%= f.email_field :email, autofocus: true %>
   </fieldset>
 
-  <% if devise_mapping.confirmable? && @user.pending_reconfirmation? %>
-    <div class="text-color">Currently waiting confirmation for: <%= @user.unconfirmed_email %></div>
-  <% end %>
-
   <fieldset>
     <%= f.label :password, class: "text-color" do %>
       <%= t('login_signup.password') %> <i class="note"><%= t('change_login_page.leave_blank_to_not_change_password') %></i>

@@ -53,7 +53,6 @@ FactoryBot.define do
   factory :user do
     sequence(:email) { |n| "jane#{n}@example.com" }
     password 'abcd1234'
-    confirmed_at Time.zone.now.to_s
     sign_in_count 2
     organization
     profile { build(:profile, user: nil) }
