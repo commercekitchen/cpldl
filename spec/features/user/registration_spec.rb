@@ -19,11 +19,8 @@ feature 'User signs up' do
       sign_up_with 'valid@example.com', 'password', 'Alejandro', '12345'
       expect(page).to have_content('This is the first time you have logged in, please update your profile.')
 
-      # TODO: I'm not sure this is the best place for this expectation, but I'm not
-      # sure where else to put it.  I just want to be sure the profile is created too.
-      user = User.last
-      expect(user.profile.first_name).to eq('Alejandro')
-      expect(user.profile.zip_code).to eq('12345')
+      expect(page).to have_selector("input[value='Alejandro']")
+      expect(page).to have_selector("input[value='12345']")
 
       # Log out and back in
       log_out
@@ -44,6 +41,9 @@ feature 'User signs up' do
     scenario 'with out first name' do
       sign_up_with 'valid@example.com', 'password', '', ''
       expect(page).to have_content("Profile first name can't be blank")
+      
+      # Should still display login options
+      expect(page).to have_selector('h2', text: 'Log In')
     end
 
     scenario 'with invalid email' do
