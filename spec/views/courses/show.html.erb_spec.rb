@@ -50,6 +50,12 @@ describe 'courses/show.html.erb' do
       expect(rendered).to have_link 'Add to your plan'
       expect(rendered).to_not have_link 'Remove from your plan'
     end
+
+    it 'displays activity instructions on page' do
+      sign_in @user
+      render
+      expect(rendered).to have_content 'Click on a lesson below to begin'
+    end
   end
 
   context 'as logged out user (and search engine)' do
