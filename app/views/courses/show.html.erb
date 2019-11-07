@@ -9,7 +9,6 @@
       <div><i class="icon-clock"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
       <div><i class="icon-plus"></i><%= t("course_page.#{@course.level.downcase}") %></div>
     </div>
-    <%# TODO: Fill in dynamic link when ready %>
     <div><small><%= t('course_page.contributed_by') %> <%= @course.contributor %></small></div>
     <div><small><%= t('course_page.topics') %>: <%= @course.topics_str %></small></div>
   </div>
@@ -30,7 +29,8 @@
 <hr>
 
 <h2 class="text-color"><%= t('course_page.lessons_in_this_course') %></h2>
-  <%= render partial: "shared/lessons/grid" %>
+<div class="lesson-start-instructions"><%= t('course_page.start_lesson_instructions') %></div>
+<%= render partial: "shared/lessons/grid" %>
 <hr>
 
 <%= render partial: "shared/courses/supplemental_materials", locals: { course: @course } %>

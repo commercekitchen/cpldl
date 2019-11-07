@@ -28,14 +28,6 @@ class LessonsController < ApplicationController
   before_action :auth_subsites
   before_action :set_course
 
-  def index
-    @lessons = @course.lessons.all.where(pub_status: 'P')
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render json: @lessons }
-    end
-  end
-
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
 
