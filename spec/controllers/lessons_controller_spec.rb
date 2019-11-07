@@ -41,21 +41,6 @@ describe LessonsController do
     sign_in @user
   end
 
-  describe 'GET #index' do
-    it 'assigns all lessons for a given course as @lessons' do
-      get :index, params: { course_id: @course1.to_param }
-      expect(assigns(:lessons).count).to eq(3)
-      expect(assigns(:lessons).first).to eq(@lesson1)
-      expect(assigns(:lessons).second).to eq(@lesson2)
-      expect(assigns(:lessons).third).to eq(@lesson3)
-    end
-
-    it 'responds to json' do
-      get :index, params: { course_id: @course1.to_param }, format: :json
-      expect(response).to have_http_status(:success)
-    end
-  end
-
   describe 'GET #show' do
     it 'assigns the requested lesson as @lesson' do
       get :show, params: { course_id: @course1.to_param, id: @lesson1.id }
