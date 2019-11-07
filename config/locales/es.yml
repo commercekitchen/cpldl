@@ -233,6 +233,7 @@ es:
     lessons_in_this_course: "Actividades en este curso"
     start_lesson: "Empezar"
     lesson: "Actividad"
+    start_lesson_instructions: "Da click en una actividad debajo para empezar."
   lesson_page:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"
