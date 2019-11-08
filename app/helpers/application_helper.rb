@@ -29,7 +29,7 @@ module ApplicationHelper
   end
 
   def footer_logo_url
-    current_organization.footer_logo.exists? ? current_organization.footer_logo.url : "#{current_organization.subdomain}_logo_white"
+    current_organization.footer_logo.exists? ? current_organization.footer_logo.url : "#{current_organization.subdomain}_logo_white.png"
   end
 
   def footer_logo_link_url
