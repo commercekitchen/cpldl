@@ -3,7 +3,7 @@
     <div class="ninecol right-logo">
       <% if subdomain? %>
         <%= link_to footer_logo_link_url || '#', target: "_blank" do %>
-          <%= safe_logo_tag footer_logo_url, class: "medium-logo link-#{current_organization.subdomain}" %>
+          <%= safe_image_tag footer_logo_url, class: "medium-logo link-#{current_organization.subdomain}" %>
         <% end %>
       <% end %>
 

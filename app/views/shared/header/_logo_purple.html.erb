@@ -4,7 +4,7 @@
       <% when "www" %>
         <%= image_tag "dl_logo.png" %>
       <% else %>
-        <%= safe_logo_tag "#{current_organization.subdomain}_logo_black.png" %>
+        <%= safe_image_tag "#{current_organization.subdomain}_logo_black" %>
       <% end %>
   <% end %>
 </div>
