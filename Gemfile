@@ -85,7 +85,7 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'rack-proxy'
 
 group :development do
-  gem 'annotate'
+  gem 'rails-erd'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'brakeman', require: false
