@@ -1,9 +1,9 @@
 module AssetHelper
   def asset_exists?(path)
     if Rails.env.production? || Rails.env.staging?
-      Rails.application.assets_manifest.find_sources(path) != nil
+      Rails.application.assets_manifest.assets[path].present?
     else
-      Rails.application.assets.find_asset(path) != nil
+      Rails.application.assets.find_asset(path).present?
     end
   end
 
