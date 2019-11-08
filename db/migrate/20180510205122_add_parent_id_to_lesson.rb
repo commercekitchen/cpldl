@@ -2,7 +2,10 @@ class AddParentIdToLesson < ActiveRecord::Migration[4.2]
   def change
     add_column :lessons, :parent_id, :integer, index: true
     add_index :lessons, :parent_id
-    backfill_lessons
+
+    # This should be unnecessary in a development environment.
+    # It should have been implemented as a data migration when it was needed.
+    # backfill_lessons
   end
 
   def backfill_lessons

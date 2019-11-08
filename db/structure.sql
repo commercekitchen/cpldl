@@ -104,7 +104,7 @@ CREATE TABLE public.attachments (
     updated_at timestamp without time zone NOT NULL,
     document_file_name character varying,
     document_content_type character varying,
-    document_file_size integer,
+    document_file_size bigint,
     document_updated_at timestamp without time zone,
     doc_type character varying,
     file_description character varying
@@ -116,6 +116,7 @@ CREATE TABLE public.attachments (
 --
 
 CREATE SEQUENCE public.attachments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -150,6 +151,7 @@ CREATE TABLE public.categories (
 --
 
 CREATE SEQUENCE public.categories_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -188,6 +190,7 @@ CREATE TABLE public.ckeditor_assets (
 --
 
 CREATE SEQUENCE public.ckeditor_assets_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -230,6 +233,7 @@ CREATE TABLE public.cms_pages (
 --
 
 CREATE SEQUENCE public.cms_pages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -262,6 +266,7 @@ CREATE TABLE public.completed_lessons (
 --
 
 CREATE SEQUENCE public.completed_lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -300,6 +305,7 @@ CREATE TABLE public.contacts (
 --
 
 CREATE SEQUENCE public.contacts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -335,6 +341,7 @@ CREATE TABLE public.course_progresses (
 --
 
 CREATE SEQUENCE public.course_progresses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -367,6 +374,7 @@ CREATE TABLE public.course_topics (
 --
 
 CREATE SEQUENCE public.course_topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -417,6 +425,7 @@ CREATE TABLE public.courses (
 --
 
 CREATE SEQUENCE public.courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -429,15 +438,6 @@ CREATE SEQUENCE public.courses_id_seq
 --
 
 ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
-
-
---
--- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.data_migrations (
-    version character varying NOT NULL
-);
 
 
 --
@@ -459,6 +459,7 @@ CREATE TABLE public.friendly_id_slugs (
 --
 
 CREATE SEQUENCE public.friendly_id_slugs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -490,6 +491,7 @@ CREATE TABLE public.languages (
 --
 
 CREATE SEQUENCE public.languages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -524,7 +526,7 @@ CREATE TABLE public.lessons (
     is_assessment boolean,
     story_line_file_name character varying,
     story_line_content_type character varying,
-    story_line_file_size integer,
+    story_line_file_size bigint,
     story_line_updated_at timestamp without time zone,
     pub_status character varying,
     parent_lesson_id integer,
@@ -537,6 +539,7 @@ CREATE TABLE public.lessons (
 --
 
 CREATE SEQUENCE public.lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -572,6 +575,7 @@ CREATE TABLE public.library_locations (
 --
 
 CREATE SEQUENCE public.library_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -604,6 +608,7 @@ CREATE TABLE public.organization_courses (
 --
 
 CREATE SEQUENCE public.organization_courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -642,6 +647,7 @@ CREATE TABLE public.organizations (
 --
 
 CREATE SEQUENCE public.organizations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -663,8 +669,8 @@ ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
 CREATE TABLE public.pg_search_documents (
     id integer NOT NULL,
     content text,
-    searchable_id integer,
     searchable_type character varying,
+    searchable_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -675,6 +681,7 @@ CREATE TABLE public.pg_search_documents (
 --
 
 CREATE SEQUENCE public.pg_search_documents_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -716,6 +723,7 @@ CREATE TABLE public.profiles (
 --
 
 CREATE SEQUENCE public.profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -749,6 +757,7 @@ CREATE TABLE public.program_locations (
 --
 
 CREATE SEQUENCE public.program_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -783,6 +792,7 @@ CREATE TABLE public.programs (
 --
 
 CREATE SEQUENCE public.programs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -804,8 +814,8 @@ ALTER SEQUENCE public.programs_id_seq OWNED BY public.programs.id;
 CREATE TABLE public.roles (
     id integer NOT NULL,
     name character varying,
-    resource_id integer,
     resource_type character varying,
+    resource_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -816,6 +826,7 @@ CREATE TABLE public.roles (
 --
 
 CREATE SEQUENCE public.roles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -858,6 +869,7 @@ CREATE TABLE public.schools (
 --
 
 CREATE SEQUENCE public.schools_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -889,6 +901,7 @@ CREATE TABLE public.topics (
 --
 
 CREATE SEQUENCE public.topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -924,6 +937,7 @@ CREATE TABLE public.translations (
 --
 
 CREATE SEQUENCE public.translations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -963,8 +977,8 @@ CREATE TABLE public.users (
     invitation_sent_at timestamp without time zone,
     invitation_accepted_at timestamp without time zone,
     invitation_limit integer,
-    invited_by_id integer,
     invited_by_type character varying,
+    invited_by_id integer,
     invitations_count integer DEFAULT 0,
     token character varying,
     organization_id integer,
@@ -987,6 +1001,7 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1348,6 +1363,14 @@ ALTER TABLE ONLY public.roles
 
 
 --
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: schools schools_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1587,20 +1610,6 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USING btree (user_id, role_id);
-
-
---
--- Name: unique_data_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_data_migrations ON public.data_migrations USING btree (version);
-
-
---
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
