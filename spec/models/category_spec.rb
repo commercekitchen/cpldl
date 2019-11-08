@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: categories
-#
-#  id              :integer          not null, primary key
-#  name            :string
-#  category_order  :integer
-#  organization_id :integer
-#  enabled         :boolean          default(TRUE)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#
-
 require 'rails_helper'
 
 describe Category do
