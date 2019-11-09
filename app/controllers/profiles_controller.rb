@@ -1,19 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: profiles
-#
-#  id                  :integer          not null, primary key
-#  first_name          :string
-#  zip_code            :string
-#  user_id             :integer
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
-#  language_id         :integer
-#  library_location_id :integer
-#
-
 class ProfilesController < ApplicationController
   skip_before_action :require_valid_profile
   before_action :authenticate_user!

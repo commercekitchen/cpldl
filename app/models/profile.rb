@@ -1,25 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: profiles
-#
-#  id                         :integer          not null, primary key
-#  first_name                 :string
-#  zip_code                   :string
-#  user_id                    :integer
-#  created_at                 :datetime         not null
-#  updated_at                 :datetime         not null
-#  language_id                :integer
-#  library_location_id        :integer
-#  last_name                  :string
-#  phone                      :string
-#  street_address             :string
-#  city                       :string
-#  state                      :string
-#  opt_out_of_recommendations :boolean          default(FALSE)
-#
-
 class Profile < ApplicationRecord
   belongs_to :user, inverse_of: :profile
   belongs_to :language, optional: true

@@ -1,22 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: contacts
-#
-#  id           :integer          not null, primary key
-#  first_name   :string(30)       not null
-#  last_name    :string(30)       not null
-#  organization :string(50)       not null
-#  city         :string(30)       not null
-#  state        :string(2)        not null
-#  email        :string(30)       not null
-#  phone        :string(20)
-#  comments     :text             not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#
-
 require 'rails_helper'
 
 describe Contact do
