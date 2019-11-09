@@ -41,7 +41,7 @@ feature 'User signs up' do
     scenario 'with out first name' do
       sign_up_with 'valid@example.com', 'password', '', ''
       expect(page).to have_content("Profile first name can't be blank")
-      
+
       # Should still display login options
       expect(page).to have_selector('h2', text: 'Log In')
     end

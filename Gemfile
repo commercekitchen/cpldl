@@ -85,13 +85,13 @@ gem 'aws-sdk-s3', '~> 1'
 gem 'rack-proxy'
 
 group :development do
-  gem 'rails-erd'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'brakeman', require: false
   gem 'letter_opener'
   gem 'powder'
   gem 'pry-remote'
+  gem 'rails-erd'
   gem 'rubocop', require: false
   gem 'rubocop-rails', require: false
   gem 'web-console', '~> 3.7.0'
