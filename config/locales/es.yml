@@ -33,6 +33,8 @@ es:
         library_card_pin: "PIN de tarjeta de biblioteca"
         email: "Email"
         password: "Contraseña"
+      course:
+        pub_status: "Estado de la publicación"
     errors:
       models:
         profile:

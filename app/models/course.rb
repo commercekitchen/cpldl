@@ -54,9 +54,9 @@ class Course < ApplicationRecord
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
-    inclusion: { in: %w[M D], message: '%<value>s is not a valid format' }
+    inclusion: { in: %w[M D], message: '%<value>s is not a valid format', allow_nil: true, allow_blank: true }
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_nil: true, allow_blank: true }
   validates :level, presence: true,
     inclusion: { in: %w[Beginner Intermediate Advanced],
       message: '%<value>s is not a valid level' }
