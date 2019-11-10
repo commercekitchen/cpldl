@@ -28,6 +28,7 @@ es:
         name: "Nombre de la Categoría"
       cms_page:
         meta_desc: "Metadescripción"
+        pub_status: "Estado de la publicación"
       user:
         library_card_number: "Número de tarjeta de biblioteca"
         library_card_pin: "PIN de tarjeta de biblioteca"

@@ -71,8 +71,7 @@ describe Course do
       end
 
       it 'has correct error message with empty string publication status' do
-        course.pub_status = ''
-        course.save
+        course.update(pub_status: '')
         expect(course.errors.full_messages).to contain_exactly("Publication Status can't be blank")
       end
 
@@ -82,8 +81,7 @@ describe Course do
       end
 
       it 'has correct error message for nil publication status' do
-        course.pub_status = nil
-        course.save
+        course.update(pub_status: nil)
         expect(course.errors.full_messages).to contain_exactly("Publication Status can't be blank")
       end
 
@@ -93,8 +91,7 @@ describe Course do
       end
 
       it 'has correct error message for invalid publication status' do
-        course.pub_status = 'X'
-        course.save
+        course.update(pub_status: 'X')
         expect(course.errors.full_messages).to contain_exactly("Publication Status X is not a valid status")
       end
     end
