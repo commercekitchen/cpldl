@@ -151,15 +151,12 @@ feature 'Registered user visits account pages' do
 
   context 'belongs to custom branch organization', js: true do
     let(:org) { FactoryBot.create(:organization, branches: true, accepts_custom_branches: true) }
-    let(:library_location1) { FactoryBot.create(:library_location) }
-    let(:library_location2) { FactoryBot.create(:library_location) }
+    let!(:library_location1) { FactoryBot.create(:library_location, organization: org) }
+    let!(:library_location2) { FactoryBot.create(:library_location, organization: org) }
     let(:profile) { FactoryBot.build(:profile, library_location: library_location1) }
     let(:user) { FactoryBot.create(:user, organization: org, profile: profile) }
 
     before(:each) do
-      org.library_locations << library_location1
-      org.library_locations << library_location2
-
       switch_to_subdomain(org.subdomain)
       log_in_with(user.email, user.password)
 
