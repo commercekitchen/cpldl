@@ -1,22 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: contacts
-#
-#  id           :integer          not null, primary key
-#  first_name   :string(30)       not null
-#  last_name    :string(30)       not null
-#  organization :string(50)       not null
-#  city         :string(30)       not null
-#  state        :string(2)        not null
-#  email        :string(30)       not null
-#  phone        :string(20)
-#  comments     :text             not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#
-
 require 'rails_helper'
 
 describe Contact do
@@ -95,6 +78,11 @@ describe Contact do
     it 'should require email' do
       @contact.update(email: '')
       expect(@contact.valid?).to be false
+    end
+
+    it 'should have correct errors without email' do
+      @contact.update(email: '')
+      expect(@contact.errors.full_messages).to contain_exactly("Email can't be blank")
     end
 
     it 'should require an email extension' do

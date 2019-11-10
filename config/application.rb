@@ -14,7 +14,6 @@ module CPLDigitalLearn
     # This is needed to allow the test DB to load the functions needed for
     # pg_search from what we've done in the development.
     config.active_record.schema_format = :sql
-
     
     config.assets.unknown_asset_fallback = false
 

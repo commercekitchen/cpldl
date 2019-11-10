@@ -7,7 +7,6 @@
 <% end %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
   <% if @library_card_login %>
     <div class="form-group">
       <%= label_tag "login_library_card_number", "Library Card Number", class: "screen-reader-text" %>
@@ -44,6 +43,6 @@
   <%= f.submit "#{t('login_signup.access_courses')}", class: "button-color"%>
 <% end %>
 
-<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' && !@library_card_login %>
+<% if !@library_card_login %>
   <p><%= link_to "#{t('login_signup.forgot_password')}", new_password_path(resource_name) %></p>
-<% end -%>
+<% end %>

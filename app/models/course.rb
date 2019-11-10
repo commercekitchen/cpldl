@@ -1,32 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: courses
-#
-#  id             :integer          not null, primary key
-#  title          :string(90)
-#  seo_page_title :string(90)
-#  meta_desc      :string(156)
-#  summary        :string(156)
-#  description    :text
-#  contributor    :string
-#  pub_status     :string           default("D")
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  language_id    :integer
-#  level          :string
-#  notes          :text
-#  slug           :string
-#  course_order   :integer
-#  pub_date       :datetime
-#  format         :string
-#  subsite_course :boolean          default(FALSE)
-#  parent_id      :integer
-#  display_on_dl  :boolean          default(FALSE)
-#  category_id    :integer
-#
-
 class Course < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: %i[slugged history]
@@ -81,9 +54,9 @@ class Course < ApplicationRecord
   validates :summary, length: { maximum: 74 }, presence: true
   validates :meta_desc, length: { maximum: 156 }
   validates :format, presence: true,
-    inclusion: { in: %w[M D], message: '%<value>s is not a valid format' }
+    inclusion: { in: %w[M D], message: '%<value>s is not a valid format', allow_blank: true }
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
   validates :level, presence: true,
     inclusion: { in: %w[Beginner Intermediate Advanced],
       message: '%<value>s is not a valid level' }

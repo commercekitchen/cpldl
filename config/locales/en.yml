@@ -26,11 +26,16 @@ en:
         name: "Category Name"
       cms_page:
         meta_desc: "Meta Description"
+        pub_status: "Publication Status"
       user:
         library_card_number: "Library Card Number"
         library_card_pin: "Library Card PIN"
         email: "Email"
         password: "Password"
+      course:
+        pub_status: "Publication Status"
+      lesson:
+        pub_status: "Publication Status"
   common:
     submit: "Submit"
     save: "Save"
