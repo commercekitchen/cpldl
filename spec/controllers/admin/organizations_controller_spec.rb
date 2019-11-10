@@ -65,7 +65,7 @@ describe Admin::OrganizationsController do
   end
 
   context 'as a subsite admin' do
-    let(:org2) { create(:organization) }
+    let(:org2) { create(:organization, subdomain: "#{org.subdomain}diff") }
     let(:update_params) { { branches: true } }
 
     before do

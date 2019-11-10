@@ -23,14 +23,14 @@ class CmsPage < ApplicationRecord
   validates :title, length: { maximum: 90 }, presence: true,
     uniqueness: { scope: :organization_id, message: 'has already been taken for the organization' }
   validates :body, presence: true
-  validates :language_id, presence: true, numericality: true
+  validates :language_id, numericality: true, allow_nil: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :author, presence: true
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
   validates :audience, presence: true,
-    inclusion: { in: %w[Unauth Auth Admin All], message: '%<value>s in not a valid audience' }
+    inclusion: { in: %w[Unauth Auth Admin All], message: '%<value>s is not a valid audience', allow_blank: true }
 
   default_scope { order('cms_page_order ASC') }
 

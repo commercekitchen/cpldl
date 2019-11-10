@@ -6,7 +6,8 @@ class Contact < ApplicationRecord
   validates :organization, presence: true, length: { maximum: 50 }
   validates :city, presence: true, length: { maximum: 30 }
   validates :state, presence: true, length: { maximum: 2 }
-  validates :email, email: true, presence: true, length: { maximum: 50 }
+  validates :email, presence: true, length: { maximum: 50 }
+  validates :email, email: true, if: proc { |c| c.email.present? }
   validates :phone, length: { maximum: 20 }
   validates :comments, presence: true, length: { maximum: 2048 }
 

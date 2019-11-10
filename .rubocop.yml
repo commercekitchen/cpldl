@@ -12,6 +12,13 @@ AllCops:
 require:
   - rubocop-rails
 
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - staging
+    - development
+    - test
+
 Style/StringLiterals:
   EnforcedStyle: single_quotes
   SupportedStyles:
