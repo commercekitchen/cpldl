@@ -80,6 +80,11 @@ describe Contact do
       expect(@contact.valid?).to be false
     end
 
+    it 'should have correct errors without email' do
+      @contact.update(email: '')
+      expect(@contact.errors.full_messages).to contain_exactly("Email can't be blank")
+    end
+
     it 'should require an email extension' do
       @contact.update(email: 'alex@commercekitchen')
       expect(@contact.valid?).to be false
