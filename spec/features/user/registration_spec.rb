@@ -241,6 +241,7 @@ feature 'User signs up' do
       find('#user_profile_attributes_zip_code').set(zip_code)
       fill_in 'user_password_confirmation', with: password
 
+      choose('Programs for Seniors')
       expect(page).to have_css('#user_program_id', visible: true)
 
       expect do
