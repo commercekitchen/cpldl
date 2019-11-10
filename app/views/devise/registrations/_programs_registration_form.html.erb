@@ -26,9 +26,9 @@
 </div>
 
 <div class="form-group">
-  <%= hidden_field_tag "previously_selected_program", params["program_id"] %>
+  <%= hidden_field_tag "previously_selected_program", params["user"]["program_id"] %>
   <%= f.label :program_id, "Organization Program", class: "screen-reader-text" %>
-  <%= f.select :program_id, options_for_select([]), include_blank: "#{t('login_signup.no_program_selected')}", class: "hideUntilActive" %>
+  <%= f.select :program_id, options_for_select([]), { include_blank: "#{t('login_signup.no_program_selected')}" }, { class: "hideUntilActive" } %>
 </div>
 
 <div id="program_location_fields" class="hideUntilActive">

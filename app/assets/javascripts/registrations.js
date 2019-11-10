@@ -38,14 +38,11 @@
 
     $("#chzn").change(function(e) {
       var selection = $(this).val();
-      console.log(selection);
 
       if (selection) {
-        console.log("selection present");
         $("#custom_branch_name").val("");
         $("#custom_branch_form").hide();
       } else {
-        console.log("selection not present");
         $("#custom_branch_form").show();
       }
     });
