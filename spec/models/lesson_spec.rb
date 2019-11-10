@@ -175,7 +175,7 @@ describe Lesson do
 
       it 'has correct error message for invalid publication status' do
         lesson.update(pub_status: 'X')
-        expect(lesson.errors.full_messages).to contain_exactly("Publication Status X is not a valid status")
+        expect(lesson.errors.full_messages).to contain_exactly('Publication Status X is not a valid status')
       end
     end
   end

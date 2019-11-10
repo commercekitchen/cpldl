@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe Course do
@@ -92,7 +94,7 @@ describe Course do
 
       it 'has correct error message for invalid publication status' do
         course.update(pub_status: 'X')
-        expect(course.errors.full_messages).to contain_exactly("Publication Status X is not a valid status")
+        expect(course.errors.full_messages).to contain_exactly('Publication Status X is not a valid status')
       end
     end
 
@@ -127,7 +129,7 @@ describe Course do
       it 'has correct error message for invalid format' do
         course.format = 'Y'
         course.save
-        expect(course.errors.full_messages).to contain_exactly("Format Y is not a valid format")
+        expect(course.errors.full_messages).to contain_exactly('Format Y is not a valid format')
       end
     end
 

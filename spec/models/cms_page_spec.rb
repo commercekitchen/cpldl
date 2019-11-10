@@ -35,7 +35,7 @@ describe CmsPage do
 
     it 'should have correct error message without language' do
       page.update(language_id: nil)
-      expect(page.errors.full_messages).to contain_exactly("Language must exist")
+      expect(page.errors.full_messages).to contain_exactly('Language must exist')
     end
 
     it 'should require language id to numerical' do
@@ -84,7 +84,7 @@ describe CmsPage do
 
       it 'has correct error message for invalid publication status' do
         page.update(pub_status: 'X')
-        expect(page.errors.full_messages).to contain_exactly("Publication Status X is not a valid status")
+        expect(page.errors.full_messages).to contain_exactly('Publication Status X is not a valid status')
       end
     end
 
@@ -154,7 +154,7 @@ describe CmsPage do
 
       it 'has correct error message for invalid audience' do
         page.update(audience: 'foobar')
-        expect(page.errors.full_messages).to contain_exactly("Audience foobar is not a valid audience")
+        expect(page.errors.full_messages).to contain_exactly('Audience foobar is not a valid audience')
       end
     end
 
