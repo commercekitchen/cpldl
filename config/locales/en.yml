@@ -34,6 +34,8 @@ en:
         password: "Password"
       course:
         pub_status: "Publication Status"
+      lesson:
+        pub_status: "Publication Status"
   common:
     submit: "Submit"
     save: "Save"
