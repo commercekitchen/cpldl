@@ -5,7 +5,7 @@ FactoryBot.define do
     program_name Faker::App.name
     location_required false
     parent_type Program.parent_types['seniors']
-    organization
+    organization { create(:organization, :accepts_programs) }
 
     trait :student_program do
       parent_type Program.parent_types['students_and_parents']
