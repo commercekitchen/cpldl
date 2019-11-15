@@ -33,7 +33,7 @@ class Course < ApplicationRecord
   # has_one :assessment
   has_one :course_progress, dependent: :restrict_with_exception
 
-  has_many :course_topics, dependent: :restrict_with_exception
+  has_many :course_topics, dependent: :destroy
   has_many :topics, through: :course_topics
   has_many :lessons, dependent: :destroy
   belongs_to :organization, optional: false
