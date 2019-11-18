@@ -25,7 +25,7 @@
 
 ### Prior to deploy
 
-- [Set up the subsite styles and mixins](docs/subsite_styles.md)
+- [Set up the subsite styles and mixins](subsite_styles.md)
 
 - Add subsite Footer logo and logo link through subsite admin panel customization pages
 
