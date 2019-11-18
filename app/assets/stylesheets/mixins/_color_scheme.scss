@@ -1,11 +1,9 @@
 @mixin color_scheme(
   $primary_color,
-  $negative_color,
   $action_color,
-  $text_alignment: left,
-  $footer-color: $primary_color,
-  $underline-color: $primary_color,
-  $footer-nav-link: $white
+  $footer_color: $primary_color,
+  $underline_color: $primary_color,
+  $cms_link_color: $white
 ) {
   h1,
   h2,
@@ -29,14 +27,14 @@
   }
 
   .footer-primary {
-    background-color: $footer-color;
+    background-color: $footer_color;
   }
 
   a {
     color: $action_color;
 
     &.cms_nav--link {
-      color: $footer-nav-link !important;
+      color: $cms_link_color !important;
     }
   }
 
@@ -56,11 +54,6 @@
 
   a.inverted {
     color: $white;
-  }
-
-  .slogan {
-    color: $negative_color;
-    text-align: $text_alignment;
   }
 
   .signup-label {
@@ -93,13 +86,13 @@
 
   .underlined {
     border-bottom: solid;
-    border-color: $underline-color;
+    border-color: $underline_color;
     border-width: 1px;
     padding-bottom: 1em;
   }
 
   ul.objects li {
     padding: 10px 10px 10px 0;
-    border-bottom: 1px solid $underline-color;
+    border-bottom: 1px solid $underline_color;
   }
 }

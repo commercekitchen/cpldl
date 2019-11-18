@@ -1,4 +1,4 @@
-@mixin lesson_tile($bg-color, $completed-bg-color, $arrow-color, $check-color) {
+@mixin lesson_tile($bg_color, $completed_bg_color, $check_color) {
   .lesson-tile {
     height: 240px;
     width: 240px;
@@ -19,7 +19,7 @@
 
     .lesson-header {
       color: $white;
-      background-color: $bg-color;
+      background-color: $bg_color;
       padding: 0.4em;
       height: 60px;
       overflow: hidden;
@@ -29,7 +29,7 @@
 
     &.completed {
       .lesson-header {
-        background-color: $completed-bg-color;
+        background-color: $completed_bg_color;
       }
     }
 
@@ -55,7 +55,7 @@
       align-self: center;
 
       &::before {
-        color: $check-color;
+        color: $check_color;
         margin-right: 0;
         margin-left: 0.3em;
       }

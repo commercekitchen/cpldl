@@ -1,19 +1,16 @@
 .carnegielibrary {
   @include color_scheme(
     $carnegielibrary-blue,
-    $white,
     $carnegielibrary-purple,
-    left,
     $carnegielibrary-gray,
     $carnegielibrary-purple
   );
-  @include banner($carnegielibrary-blue, $white);
-  @include buttons($carnegielibrary-purple, $white);
-  @include course_widget($carnegielibrary-purple, $carnegielibrary-purple);
+  @include banner($carnegielibrary-blue);
+  @include buttons($carnegielibrary-purple);
+  @include course_widget($carnegielibrary-purple);
   @include lesson_tile(
     $carnegielibrary-blue,
     $carnegielibrary-gray,
-    $carnegielibrary-purple,
     $carnegielibrary-purple
   );
   @include icons($carnegielibrary-blue, $carnegielibrary-purple);

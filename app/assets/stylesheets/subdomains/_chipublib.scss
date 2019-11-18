@@ -1,8 +1,8 @@
 .chipublib {
-  @include color_scheme($cpl-blue, $white, $cpl-purple, center);
-  @include banner($cpl-blue, $white);
-  @include buttons($mustard, $white);
+  @include color_scheme($cpl-blue, $cpl-purple);
+  @include banner($cpl-blue, 3.3em, center);
+  @include buttons($mustard);
   @include course_widget($mustard, $mustard-2);
-  @include lesson_tile($cpl-blue, $grey, $cpl-purple, $orange);
+  @include lesson_tile($cpl-blue, $grey, $orange);
   @include icons($cpl-blue, $orange);
 }
