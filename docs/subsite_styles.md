@@ -21,7 +21,7 @@ This file should define a single class which matches your new subdomain name, wh
 
 ```
   .new_subdomain {
-    @include color_scheme($new_subdomain-blue, $white, $new_subdomain-orange);
+    @include color_scheme($new_subdomain-blue, $new_subdomain-orange, center);
     @include banner($new_subdomain-blue, $white, 2.5em);
     @include buttons($new_subdomain-orange, $white);
     @include course_widget($new_subdomain-orange, $new_subdomain-orange);
@@ -39,32 +39,22 @@ The main color scheme options for headings, links and colored text.
   - Text for headings & form input labels.
   - Required.
 
-- `$negative_color`
-
-  - Text in sections with colored background (ex/ header).
-  - Required.
-
 - `$action_color`
 
   - Links and download icons.
   - Required.
 
-- `$text_alignment`
-
-  - How to align text in header.
-  - Default: `left`.
-
-- `$footer-color`
+- `$footer_color`
 
   - Background color for footer.
   - Default: `$primary_color`.
 
-- `$underline-color`
+- `$underline_color`
 
   - Underline for some table rows. Ex/ course completion rows.
   - Deafult: `$primary_color`.
 
-- `$footer-nav-link`
+- `$cms_link_color`
 
   - Color of cms page links in footer.
   - Deafult: `$white`.
@@ -78,15 +68,20 @@ Banner background & text colors and font sizes (if specified)
   - Background of the main header banner
   - Required
 
-- `$text_color`
-
-  - Text color in main banner
-  - Required
-
 - `$custom_banner_font`
 
   - Banner text font size
-  - Default: 3.3em
+  - Default: `3.3em`
+
+- `$slogan_alignment`
+
+  - Text alignment of header slogan (unauthenticated landing page)
+  - Default: `left`
+
+- `$text_color`
+
+  - Text color in main banner
+  - Default: `$white`
 
 ### `buttons`
 
@@ -100,43 +95,37 @@ Defines background and text color for buttons
 - `$text_color`
 
   - Text color for buttons
-  - Required
+  - Default: `$white`
 
 ### `course_widget`
 
 Course widget header background. Two colors are provided, and the result is a gradient between them.
 
-- `$retake_color`
+- `$primary_bg_color`
 
   - Primary course widget header background color
   - Required
 
-- `$gradient_color`
+- `$secondary_bg_color`
 
   - Secondary course widget header background color
-  - Required.
-  - Provide the same color if no gradient is desired.
+  - Default: `$primary_background`
 
 ### `lesson_tile`
 
 Lesson widget boxes
 
-- `$bg-color`
+- `$bg_color`
 
   - Header background color for incomplete lesson tiles
   - Required
 
-- `$completed-bg-color`
+- `$completed_bg_color`
 
   - Header background color for completed lesson tiles
   - Required
 
-- `$arrow-color`
-
-  - Unused
-  - Required
-
-- `$check-color`
+- `$check_color`
 
   - Color of checkmark on completed lesson tiles
   - Required

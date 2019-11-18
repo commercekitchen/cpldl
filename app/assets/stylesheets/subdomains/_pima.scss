@@ -1,20 +1,8 @@
 .pima {
-  @include color_scheme(
-    $pima-blue,
-    $white,
-    $pima-light-blue,
-    left,
-    $pima-gray,
-    $pima-blue
-  );
-  @include banner($pima-blue, $white, 2.7em);
-  @include buttons($pima-light-blue, $white);
-  @include course_widget($pima-light-blue, $pima-light-blue);
-  @include lesson_tile(
-    $pima-blue,
-    $pima-gray,
-    $pima-light-blue,
-    $pima-light-blue
-  );
+  @include color_scheme($pima-blue, $pima-light-blue, $pima-gray, $pima-blue);
+  @include banner($pima-blue, 2.7em);
+  @include buttons($pima-light-blue);
+  @include course_widget($pima-light-blue);
+  @include lesson_tile($pima-blue, $pima-gray, $pima-light-blue);
   @include icons($pima-blue, $pima-light-blue);
 }

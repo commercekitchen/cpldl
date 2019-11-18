@@ -1,4 +1,7 @@
-@mixin course-widget($retake_color, $gradient_color) {
+@mixin course-widget(
+  $primary_bg_color,
+  $secondary_bg_color: $primary_bg_color
+) {
   .course-widget {
     display: block;
     width: 329px;
@@ -75,11 +78,7 @@
     }
 
     &.retake-quiz header {
-      background: linear-gradient(
-        to bottom,
-        $retake_color 0%,
-        $retake_color 100%
-      );
+      background: $primary_bg_color;
     }
 
     &.retake-quiz button {
@@ -91,23 +90,15 @@
     text-decoration: none;
 
     header {
-      background: $purple;
       background: linear-gradient(
         to bottom,
-        $retake_color 0%,
-        $gradient_color 100%
+        $primary_bg_color 0%,
+        $secondary_bg_color 100%
       );
     }
 
     &:hover {
       box-shadow: 0 0 10px $grey;
-    }
-  }
-
-  div.course-widget {
-    header {
-      background-color: $light-grey;
-      background: linear-gradient(to bottom, $light-grey 0%, $medium-grey 100%);
     }
   }
 }
