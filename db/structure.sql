@@ -638,7 +638,8 @@ CREATE TABLE public.organizations (
     library_card_login boolean DEFAULT false,
     accepts_custom_branches boolean DEFAULT false,
     login_required boolean DEFAULT true,
-    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
+    accepts_partners boolean DEFAULT false
 );
 
 
@@ -1846,6 +1847,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191023160710'),
 ('20191107234014'),
 ('20191119184844'),
-('20191119185434');
+('20191119185434'),
+('20191119190714');
 
 

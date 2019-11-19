@@ -1,0 +1,4 @@
+<div class="form-group">
+  <%= f.label :partner, t("login_signup.choose_partner") %>
+  <%= f.collection_select :partner, current_organization.partners, :id, :name, { include_blank: t("login_signup.partner_placholder") } %>
+</div>
