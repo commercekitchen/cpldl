@@ -53,4 +53,6 @@
 
   Notes: Set branches to `false` if subsite doesn't require branch specification on login. Set accepts_programs to `false` unless the new subsite requires program information on login.
 
+### Deployment
+
 - To deploy a new subsite, use a data migration to create the organization with given preferences and associated users. Branch names and program info can be managed through the Admin UI.
