@@ -1,0 +1,8 @@
+.cleveland {
+  @include color_scheme($cleveland-blue, $cleveland-blue);
+  @include banner($cleveland-blue);
+  @include buttons($cleveland-blue);
+  @include course_widget($cleveland-blue);
+  @include lesson_tile($cleveland-blue, $cleveland-gray, $orange);
+  @include icons($cleveland-blue, $orange);
+}
