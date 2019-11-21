@@ -64,6 +64,7 @@ Rails.application.routes.draw do
     end
     resource :reports, only: [:show]
     resource :report_export, only: [:show]
+    resource :completion_report, only: [:show]
 
     resources :programs, only: [:new, :create, :index, :edit] do
     end
@@ -108,8 +109,6 @@ Rails.application.routes.draw do
         end
       end
     end
-
-    get 'export_completions', to: 'exports#completions', as: :export_completions
 
     resources :attachments, only: [:destroy]
 
