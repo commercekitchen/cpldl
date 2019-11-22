@@ -58,4 +58,22 @@ describe RegistrationsController do
       end
     end
   end
+
+  describe 'partner registration' do
+    let(:partner) { FactoryBot.create(:partner) }
+    let(:organization) { partner.organization }
+
+    before do
+      @request.host = "#{organization.subdomain}.test.host"
+    end
+
+    describe '#create' do
+      it 'should attach partner if selected' do
+        user_params = { email: email, password: password, password_confirmation: password,
+                        profile_attributes: profile_attributes, partner_id: partner.id }
+        post :create, params: { user: user_params }
+        expect(assigns(:user).partner_id).to eq(partner.id)
+      end
+    end
+  end
 end

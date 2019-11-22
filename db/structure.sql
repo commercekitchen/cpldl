@@ -441,6 +441,15 @@ ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
 
 
 --
+-- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.data_migrations (
+    version character varying NOT NULL
+);
+
+
+--
 -- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -638,7 +647,8 @@ CREATE TABLE public.organizations (
     library_card_login boolean DEFAULT false,
     accepts_custom_branches boolean DEFAULT false,
     login_required boolean DEFAULT true,
-    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
+    accepts_partners boolean DEFAULT false
 );
 
 
@@ -660,6 +670,38 @@ CREATE SEQUENCE public.organizations_id_seq
 --
 
 ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
+
+
+--
+-- Name: partners; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.partners (
+    id bigint NOT NULL,
+    organization_id bigint,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: partners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.partners_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: partners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.partners_id_seq OWNED BY public.partners.id;
 
 
 --
@@ -992,7 +1034,8 @@ CREATE TABLE public.users (
     quiz_responses_object text,
     program_id integer,
     encrypted_library_card_pin character varying,
-    encrypted_library_card_pin_iv character varying
+    encrypted_library_card_pin_iv character varying,
+    partner_id bigint
 );
 
 
@@ -1129,6 +1172,13 @@ ALTER TABLE ONLY public.organization_courses ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.organizations ALTER COLUMN id SET DEFAULT nextval('public.organizations_id_seq'::regclass);
+
+
+--
+-- Name: partners id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.partners ALTER COLUMN id SET DEFAULT nextval('public.partners_id_seq'::regclass);
 
 
 --
@@ -1275,6 +1325,14 @@ ALTER TABLE ONLY public.courses
 
 
 --
+-- Name: data_migrations data_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.data_migrations
+    ADD CONSTRAINT data_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1320,6 +1378,14 @@ ALTER TABLE ONLY public.organization_courses
 
 ALTER TABLE ONLY public.organizations
     ADD CONSTRAINT organizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: partners partners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.partners
+    ADD CONSTRAINT partners_pkey PRIMARY KEY (id);
 
 
 --
@@ -1515,6 +1581,13 @@ CREATE INDEX index_organizations_on_preferences ON public.organizations USING gi
 
 
 --
+-- Name: index_partners_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_partners_on_organization_id ON public.partners USING btree (organization_id);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1592,6 +1665,13 @@ CREATE INDEX index_users_on_organization_id ON public.users USING btree (organiz
 
 
 --
+-- Name: index_users_on_partner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_partner_id ON public.users USING btree (partner_id);
+
+
+--
 -- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1642,6 +1722,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.program_locations
     ADD CONSTRAINT fk_rails_684ed17f10 FOREIGN KEY (program_id) REFERENCES public.programs(id);
+
+
+--
+-- Name: users fk_rails_b517ecf66a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_b517ecf66a FOREIGN KEY (partner_id) REFERENCES public.partners(id);
 
 
 --
@@ -1774,6 +1862,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190617025929'),
 ('20190617034333'),
 ('20191023160710'),
-('20191107234014');
+('20191107234014'),
+('20191119184844'),
+('20191119185434'),
+('20191119190714');
 
 

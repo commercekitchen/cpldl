@@ -17,6 +17,10 @@ FactoryBot.define do
       login_required false
     end
 
+    trait :accepts_partners do
+      accepts_partners true
+    end
+
     factory :default_organization do
       name 'Digital Learn'
       subdomain 'www'
