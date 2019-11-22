@@ -6,15 +6,15 @@ class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
 
     AdminInvitationService.invite(email: 'cwilliams@clevefdn.org', organization: cleveland)
 
-    ['Cleveland Public Library',
-     'Cuyahoga County Public Library',
-     'East Cleveland Public Library',
-     'Cuyahoga Metropolitan Housing Authority',
-     'CHN Housing Partners',
-     'DigitalC',
-     'Ashbury Senior Computer Community Center',
-     'PCs for People',
-     'Other'].each do |partner|
+    [ 'Ashbury Senior Computer Community Center',
+      'CHN Housing Partners',
+      'Cleveland Public Library',
+      'Cuyahoga County Public Library',
+      'Cuyahoga Metropolitan Housing Authority',
+      'DigitalC',
+      'East Cleveland Public Library',
+      'PCs for People',
+      'Other' ].each do |partner|
       cleveland.partners.create!(name: partner)
     end
   end
