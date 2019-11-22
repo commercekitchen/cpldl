@@ -47,18 +47,5 @@ module Admin
       redirect_to admin_import_courses_path, alert: e.record.errors.full_messages
     end
 
-    private
-
-    def new_or_existing_subsite_category_id(category)
-      return nil if category.blank?
-
-      current_user.organization.categories.each do |org_category|
-        if org_category.name.downcase == category.name.downcase
-          @subsite_category_id = org_category.id
-        end
-      end
-      @subsite_category_id || current_user.organization.categories.create(name: category.name).id
-    end
-
   end
 end
