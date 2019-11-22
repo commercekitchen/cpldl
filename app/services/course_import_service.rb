@@ -23,7 +23,6 @@ class CourseImportService
         new_lesson.parent_id = imported_lesson.id
         new_lesson.course_id = @new_course.id
         new_lesson.story_line = nil
-        new_lesson.story_line = imported_lesson.story_line
         new_lesson.save!
       end
 
