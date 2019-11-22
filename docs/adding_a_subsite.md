@@ -55,4 +55,27 @@
 
 ### Deployment
 
-- To deploy a new subsite, use a data migration to create the organization with given preferences and associated users. Branch names and program info can be managed through the Admin UI.
+To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data-migrate) like the following example:
+
+```
+class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
+  def up
+    # Create the subdomain organization
+    cleveland = Organization.create!(name: 'Cleveland Foundation', subdomain: 'cleveland', accepts_partners: true)
+
+    # Invite an admin user
+    AdminInvitationService.invite(email: 'cwilliams@clevefdn.org', organization: cleveland)
+
+    # Custom setup for branches, partners, etc. would go here...
+
+    # Import all subsite courses
+    Course.where(pub_status: 'P', subsite_course: true).each do |course|
+      CourseImportService.new(organization: cleveland, course_id: course.id)
+    end
+  end
+
+  def down
+    raise ActiveRecord::IrreversibleMigration
+  end
+end
+```
