@@ -81,10 +81,6 @@
       <%= render partial: 'devise/registrations/programs_registration_form', locals: { f: f } %>
     <% end %>
 
-    <% if current_organization.accepts_partners? && !current_organization.partners.empty? %>
-      <%= render partial: 'devise/registrations/partners_registration_form', locals: { f: f } %>
-    <% end %>
-
     <%= hidden_field(:user, :subdomain, value: current_organization.subdomain) %>
 
     <div class="form-group">

@@ -121,8 +121,6 @@ en:
     library_card_pin: "Library Card PIN"
     your_library: "What's your library called?"
     custom_branch: "Community Partner Name"
-    choose_partner: "Where did you find out about DigitalLearn?"
-    partner_placeholder: "Select Partner..."
   logged_in_user:
     hi: Hi
     choose_a_course: "Choose a course below to start learning, or visit"

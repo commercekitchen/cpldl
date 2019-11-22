@@ -7,6 +7,7 @@ describe Admin::CoursesController do
   before(:each) do
     @organization = create(:organization)
     @other_organization = create(:organization)
+    @request.host = 'chipublib.test.host'
     @category1 = create(:category, organization: @organization)
     @category2 = create(:category, organization: @organization)
     @category3 = create(:category, organization: @other_organization)
@@ -16,7 +17,6 @@ describe Admin::CoursesController do
     @course_for_different_org = create(:course, title: 'Different Org', organization: @other_organization)
     @admin = create(:user, :admin, organization: @organization)
 
-    @request.host = "#{@organization.subdomain}.test.host"
     sign_in @admin
   end
 

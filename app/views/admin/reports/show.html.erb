@@ -2,14 +2,11 @@
 
 <h2>Reports</h2>
 
-<% if current_organization.branches? %>
-  <li><%= link_to "Completions Report (by Library)", admin_completion_report_path(group_by: "library", format: :csv) %></li>
-  <li><%= link_to "Completions Report (by Zipcode)", admin_completion_report_path(group_by: "zip_code", format: :csv) %></li>
+<% if subdomain? %>
+  <li><%= link_to "Completions Report (by Library)", admin_export_completions_path(format: "csv", version: "lib") %></li>
 <% end %>
-<% if current_organization.accepts_partners? %>
-  <li><%= link_to "Completions Report (by Partner)", admin_completion_report_path(group_by: "partner", format: :csv) %></li>
-<% end %>
-<li><%= link_to "Completions Report (by Survey Answers)", admin_completion_report_path(group_by: "survey_responses", format: :csv) %></li>
+<li><%= link_to "Completions Report (by Zipcode)", admin_export_completions_path(format: "csv", version: "zip") %></li>
+<li><%= link_to "Completions Report (by Survey Answers)", admin_export_completions_path(format: "csv", version: "survey_responses") %></li>
 <li><%= link_to "Incomplete Courses", admin_report_export_path(report: :incomplete_courses, format: :csv) %></li>
 <li><%= link_to "Completed Courses", admin_report_export_path(report: :completed_courses, format: :csv) %></li>
 <li><%= link_to "Users that have not started a course", admin_report_export_path(report: :no_courses, format: :csv) %></li>

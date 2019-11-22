@@ -20,8 +20,12 @@ module Admin
                      else
                        current_organization
                      end
-
-      AdminInvitationService.invite(email: params[:user][:email], organization: organization, inviter: current_user)
+      User.invite!({ email: params[:user][:email] }, current_user) do |u|
+        u.organization = organization
+        u.skip_invitation = true
+        u.add_role(:admin, organization)
+        u.deliver_invitation
+      end
     end
   end
 end

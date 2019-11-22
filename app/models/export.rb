@@ -5,32 +5,17 @@ require 'csv'
 class Export
   def self.to_csv_for_completion_report(data)
     @data = data
-    case @data.delete(:version)
-    when 'zip_code'
+    if @data[:version] == 'zip'
       generate_csv_for_zip
-    when 'library'
+    elsif @data[:version] == 'lib'
       generate_csv_for_lib
-    when 'survey_responses'
+    elsif @data[:version] == 'survey_responses'
       generate_csv_for_survey_responses
-    when 'partner'
-      generate_csv_for_partner
-    end
-  end
-
-  def self.generate_csv_for_partner
-    CSV.generate do |csv|
-      csv << ['Partner', 'Sign-Ups(total)', 'Course Title', 'Completions']
-      @data.each do |partner, data|
-        csv.add_row [partner, data[:sign_ups]]
-
-        data[:completions].each do |k, v|
-          csv.add_row ['', '', k, v]
-        end
-      end
     end
   end
 
   def self.generate_csv_for_zip
+    @data.delete(:version)
     CSV.generate do |csv|
       csv << ['Zip Code', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |zip_code, info|
@@ -50,6 +35,7 @@ class Export
   end
 
   def self.generate_csv_for_lib
+    @data.delete(:version)
     CSV.generate do |csv|
       csv << ['Library', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |library, info|
@@ -75,6 +61,7 @@ class Export
   end
 
   def self.generate_csv_for_survey_responses
+    @data.delete(:version)
     CSV.generate do |csv|
       csv << ['How comfortable are you with desktop or laptop computers?',
               'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
