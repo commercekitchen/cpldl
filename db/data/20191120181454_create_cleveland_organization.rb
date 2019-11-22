@@ -19,7 +19,7 @@ class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
     end
 
     Course.where(pub_status: 'P', subsite_course: true).each do |course|
-      CourseImportService.new(organization: cleveland, course_id: course.id)
+      CourseImportService.new(organization: cleveland, course_id: course.id).import!
     end
   end
 
