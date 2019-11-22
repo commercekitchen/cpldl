@@ -74,6 +74,8 @@ Rails.application.routes.draw do
       post 'toggle'
     end
 
+    resources :partners, only: [:index, :create, :destroy]
+
     resources :program_locations, only: [:create] do
       post 'toggle'
     end

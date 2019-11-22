@@ -1,0 +1,22 @@
+<%= content_for(:callout) do %>
+  <h1>Admin Dashboard</h1>
+<% end %>
+
+<h2>Partners</h2>
+
+<table id="partner_list">
+  <% @partners.each do |partner| %>
+    <%= render partial: 'partner_row', locals: { partner: partner } %>
+  <% end %>
+</table>
+
+<%= form_for [:admin, @new_partner], remote: true do |f| %>
+  <div class="row">
+    <div class="sixcol category_name_input">
+      <%= f.text_field :name %>
+    </div>
+    <div class="sixcol">
+      <%= f.submit "Add Partner" %>
+    </div>
+  </div>
+<% end %>
