@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'csv'
 
@@ -55,7 +57,7 @@ describe CompletionReportService do
     let(:parsed_report) { CSV.parse(report, headers: true) }
 
     it 'should generate correct column headers' do
-      expect(parsed_report.headers).to eq(["Zip Code", "Sign-Ups(total)", "Course Title", "Completions"])
+      expect(parsed_report.headers).to eq(['Zip Code', 'Sign-Ups(total)', 'Course Title', 'Completions'])
     end
 
     it 'should include correct count for zip code 1' do
@@ -80,7 +82,7 @@ describe CompletionReportService do
     let(:parsed_report) { CSV.parse(report, headers: true) }
 
     it 'should generate correct column headers' do
-      expect(parsed_report.headers).to eq(["Partner", "Sign-Ups(total)", "Course Title", "Completions"])
+      expect(parsed_report.headers).to eq(['Partner', 'Sign-Ups(total)', 'Course Title', 'Completions'])
     end
 
     it 'should include correct count for partner 1' do
@@ -105,7 +107,7 @@ describe CompletionReportService do
     let(:parsed_report) { CSV.parse(report, headers: true) }
 
     it 'should generate correct column headers' do
-      expect(parsed_report.headers).to eq(["Library", "Sign-Ups(total)", "Course Title", "Completions"])
+      expect(parsed_report.headers).to eq(['Library', 'Sign-Ups(total)', 'Course Title', 'Completions'])
     end
 
     it 'should include correct count for library 1' do

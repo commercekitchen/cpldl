@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CompletionReportService
   def initialize(organization:)
     @organization = organization
@@ -15,7 +17,7 @@ class CompletionReportService
     data = { version: 'partner' }
 
     partner_counts.each do |partner_name, partner_id, user_count|
-      key = partner_name ? partner_name : 'No Partner Selected'
+      key = partner_name || 'No Partner Selected'
       completions_data = partner_completions(partner_id)
       data[key] = { sign_ups: user_count, completions: completions_data }
     end
