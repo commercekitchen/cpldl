@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class PartnersController < BaseController
     before_action :enable_sidebar

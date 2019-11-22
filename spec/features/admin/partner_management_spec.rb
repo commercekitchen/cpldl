@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'feature_helper'
 
 feature 'Admin manages partners' do

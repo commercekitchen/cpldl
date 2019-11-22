@@ -39,44 +39,8 @@ module Admin
     end
 
     def add_imported_course
-      new_course = nil
-
-      ActiveRecord::Base.transaction do
-        course_to_import = Course.find(params['course_id'].to_i)
-        new_course = course_to_import.dup
-        new_course.parent_id = course_to_import.id
-        new_course.subsite_course = false
-        new_course.pub_date = nil
-        new_course.pub_status = 'D'
-        new_course.category_id = new_or_existing_subsite_category_id(course_to_import.category)
-        new_course.organization = current_organization
-        new_course.save!
-
-        # Create copies of the lessons and ASLs
-        course_to_import.lessons.each do |imported_lesson|
-          new_lesson = imported_lesson.dup
-          new_lesson.parent_id = imported_lesson.id
-          new_lesson.course_id = new_course.id
-          new_lesson.story_line = nil
-          new_lesson.story_line = imported_lesson.story_line
-          new_lesson.save!
-        end
-
-        # Create copies of the attachments
-        course_to_import.attachments.each do |attachment|
-          new_attachment = attachment.dup
-          new_attachment.document = attachment.document
-          new_attachment.course_id = new_course.id
-          new_attachment.save!
-        end
-
-        # Create copies of the topics
-        course_to_import.course_topics.each do |course_topic|
-          new_topic = course_topic.dup
-          new_topic.course_id = new_course.id
-          new_topic.save!
-        end
-      end
+      import_service = CourseImportService.new(organization: current_organization, course_id: params['course_id'].to_i)
+      new_course = import_service.import!
 
       redirect_to edit_admin_course_path(new_course)
     rescue ActiveRecord::RecordInvalid => e
