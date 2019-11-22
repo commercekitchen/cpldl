@@ -1,15 +1,8 @@
 .kpl {
-  @include color_scheme(
-    $kpl-green,
-    $white,
-    $kpl-blue,
-    left,
-    $kpl-gray,
-    $kpl-blue
-  );
-  @include banner($kpl-green, $white, 2.7em);
-  @include buttons($kpl-blue, $white);
-  @include course_widget($kpl-blue, $kpl-blue);
-  @include lesson_tile($kpl-green, $grey, $kpl-blue, $kpl-blue);
+  @include color_scheme($kpl-green, $kpl-blue, $kpl-gray, $kpl-blue);
+  @include banner($kpl-green, 2.7em);
+  @include buttons($kpl-blue);
+  @include course_widget($kpl-blue);
+  @include lesson_tile($kpl-green, $grey, $kpl-blue);
   @include icons($kpl-green, $kpl-blue);
 }

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Export do
   let(:library) { create(:library_location) }
-  let(:lib_data) { { :version => 'lib', library.id => { sign_ups: 1, completions: { 'Sample Course 3' => 1 } } } }
+  let(:lib_data) { { :version => 'library', library.id => { sign_ups: 1, completions: { 'Sample Course 3' => 1 } } } }
   let(:survey_responses_data) do
     { :version => 'survey_responses',
       { 'set_one' => '3', 'set_two' => '3', 'set_three' => '5' } => { responses: 3, completions: { 'Test Course' => 3 } },
@@ -35,6 +35,29 @@ describe Export do
 
     it 'translates lone question_8 correctly' do
       expect(csv).to match(/Search for information./)
+    end
+  end
+
+  context 'partners export' do
+    let(:partner_data) do
+      {
+        version: 'partner',
+        'Partner 1' => { sign_ups: 3, completions: { 'Some Course' => 2 } },
+        'Partner 2' => { sign_ups: 2, completions: { 'Another Course' => 4 } }
+      }
+    end
+    let(:csv) { Export.to_csv_for_completion_report(partner_data) }
+
+    it 'should match partner names' do
+      ['Partner 1', 'Partner 2'].each do |partner_name|
+        expect(csv).to match(partner_name)
+      end
+    end
+
+    it 'shoud match course names' do
+      ['Some Course', 'Another Course'].each do |course_title|
+        expect(csv).to match(course_title)
+      end
     end
   end
 end

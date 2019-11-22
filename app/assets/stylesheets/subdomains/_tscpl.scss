@@ -1,20 +1,13 @@
 .tscpl {
   @include color_scheme(
     $tscpl-blue,
-    $white,
     $tscpl-action-gray,
-    left,
     $tscpl-gray,
     $tscpl-orange
   );
-  @include banner($tscpl-blue, $white);
-  @include buttons($tscpl-action-gray, $white);
-  @include course_widget($tscpl-action-gray, $tscpl-action-gray);
-  @include lesson_tile(
-    $tscpl-blue,
-    $grey,
-    $tscpl-action-gray,
-    $tscpl-action-gray
-  );
+  @include banner($tscpl-blue);
+  @include buttons($tscpl-action-gray);
+  @include course_widget($tscpl-action-gray);
+  @include lesson_tile($tscpl-blue, $grey, $tscpl-action-gray);
   @include icons($tscpl-blue, $tscpl-action-gray);
 }

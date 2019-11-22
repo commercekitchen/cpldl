@@ -17,6 +17,7 @@ class User < ApplicationRecord
   belongs_to :school, optional: true
   belongs_to :program_location, optional: true
   belongs_to :program, optional: true
+  belongs_to :partner, optional: true
 
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile

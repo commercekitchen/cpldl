@@ -20,18 +20,19 @@
     <%= f.collection_select(:language_id, Language.all, :id, "name", {}, class: "style-select2" ) %>
   </fieldset>
 
-  <fieldset>
-    <% if true || current_organization.branches? && current_organization.library_locations.present? %>
+  
+  <% if current_organization.branches? && current_organization.library_locations.present? %>
+    <fieldset>
       <%= f.label :library_location_id, class: "text-color" do %>
         <%= t('profile.library_location') %>
       <% end %>
       <%= f.select(:library_location_id, branch_options_for(current_organization, profile: @profile, selected: @profile.library_location_id), {include_blank: "#{t('login_signup.your_library')}"}, class: "style-select2", id: "chzn" ) %>
 
       <% if current_organization.accepts_custom_branches? %>
-          <%= render partial: 'shared/custom_branch_form', locals: { profile: @profile, profile_form: f } %>
-        <% end %>
-    <% end %>
-  </fieldset>
+        <%= render partial: 'shared/custom_branch_form', locals: { profile: @profile, profile_form: f } %>
+      <% end %>
+    </fieldset>
+  <% end %>
 
   <% if current_organization.accepts_programs? %>
     <%= render partial: 'programs_profile_form', locals: { f: f } %>

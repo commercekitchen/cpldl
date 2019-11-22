@@ -1,8 +1,8 @@
 .npl {
-  @include color_scheme($npl-blue, $white, $npl-orange);
-  @include banner($npl-blue, $white, 2.5em);
-  @include buttons($npl-orange, $white);
-  @include course_widget($npl-orange, $npl-orange);
-  @include lesson_tile($npl-blue, $grey, $npl-orange, $npl-orange);
+  @include color_scheme($npl-blue, $npl-orange);
+  @include banner($npl-blue, 2.5em);
+  @include buttons($npl-orange);
+  @include course_widget($npl-orange);
+  @include lesson_tile($npl-blue, $grey, $npl-orange);
   @include icons($npl-blue, $npl-orange);
 }

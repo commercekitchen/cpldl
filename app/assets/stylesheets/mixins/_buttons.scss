@@ -1,4 +1,4 @@
-@mixin buttons($button_color, $text_color) {
+@mixin buttons($button_color, $text_color: $white) {
   button:not(.icon-button),
   input[type="submit"],
   .btn {
