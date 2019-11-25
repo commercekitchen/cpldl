@@ -2,7 +2,7 @@
 
 module NavHelper
   def nav_links
-    [user_greeting, dashboard_link, account_link, www_trainers_link, org_trainers_link,
+    [user_greeting, dashboard_link, account_link, org_trainers_link,
      my_courses_link, all_courses_link, sign_out_link].compact.join(' | ').html_safe
   end
 
@@ -22,15 +22,6 @@ module NavHelper
 
   def account_link
     link_to t('logged_in_user.account'), profile_path, class: 'inline_link'
-  end
-
-  def www_trainers_link
-    if org_admin?
-      link_to t('home.trainer_link'),
-              'https://training.digitallearn.org',
-              target: '_blank',
-              class: 'inline_link', rel: 'noopener'
-    end
   end
 
   def org_trainers_link

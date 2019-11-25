@@ -10,7 +10,6 @@ module Trainer
                else
                  results & User.includes(profile: [:language]).with_any_role({ name: :user, resource: current_user.organization }, { name: :trainer, resource: current_user.organization })
                end
-      enable_sidebar
       render 'trainer/dashboard/index'
     end
 

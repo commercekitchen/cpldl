@@ -51,6 +51,10 @@
   text-align: right;
   padding-left: 3rem;
 
+  a {
+    white-space: nowrap;
+  }
+
   @include media($mobile-xlarge) {
     padding-left: 0;
   }
