@@ -41,7 +41,9 @@ feature 'Admin create a new organization' do
     user = create(:user, organization: dpl)
     user.add_role(:admin, dpl)
 
-    click_on 'Dashboard'
+    within '.nav-and-search' do
+      click_on 'Dashboard'
+    end
     click_on 'Organizations'
     expect(page).to have_content('amy@example.com')
 

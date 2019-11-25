@@ -1,0 +1,36 @@
+<table class="users-table">
+  <tr>
+    <th>
+      <h2>Name</h2>
+    </th>
+    <th>
+      <h2 class="inline-heading"><%= t('login_signup.email') %></h2>
+    </th>
+    <th>
+      <h2>Language</h2>
+    </th>
+    <th>
+      <h2>User Role</h2>
+    </th>
+  </tr>
+  <% users.each do |user| %>
+    <tr>
+      <td>
+        <%= user.profile.try(:first_name) %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+      <td>
+        <%= user.preferred_language %>
+      </td>
+      <td>
+        <% if current_user.has_role?(:admin, current_organization) %>
+          <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
+        <% else %>
+          <%= user.current_roles.empty? ? "user" : user.current_roles %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
