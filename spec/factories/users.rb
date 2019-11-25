@@ -32,5 +32,12 @@ FactoryBot.define do
         user.add_role(:admin, user.organization)
       end
     end
+
+    trait :trainer do
+      after(:create) do |user|
+        user.roles.destroy_all
+        user.add_role(:trainer, user.organization)
+      end
+    end
   end
 end

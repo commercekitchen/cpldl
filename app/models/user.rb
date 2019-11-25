@@ -140,7 +140,7 @@ class User < ApplicationRecord
   end
 
   def current_roles
-    roles.pluck(:name).join(', ')
+    roles.pluck(:name).uniq.join(', ')
   end
 
   def preferred_language
