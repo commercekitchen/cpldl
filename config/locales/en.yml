@@ -41,7 +41,7 @@ en:
     save: "Save"
     cancel: "Cancel"
   admin:
-    dashboard: "Dashboard"
+    dashboard: "Admin Dashboard"
   home:
     default_org:
       custom_banner_greeting: ""

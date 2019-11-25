@@ -1,4 +1,6 @@
-<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+<%= content_for(:callout) do %>
+  <h1>Cyber Navigator Dashboard</h1>
+<% end %>
 
 <h1>Users</h1>
 <%= render partial: "shared/search_box", locals: { search_path: admin_users_path, placeholder_text: "Search users by keyword", search_param: :users_search } %>
