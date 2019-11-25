@@ -26,7 +26,7 @@ feature 'Admin create a new organization' do
     click_on 'Save Organization'
 
     expect(page).to have_content('Organization was successfully created.')
-    expect(page).to have_content('true')
+    expect(page).to have_selector('i.icon-ok')
     click_on 'Dashboard'
     click_on 'Invite Admin'
     fill_in :user_email, with: 'amy@example.com'
@@ -118,7 +118,6 @@ feature 'Admin create a new organization' do
     click_on 'Save Organization'
 
     expect(page).to have_content('Organization was successfully created.')
-    expect(page).to have_content('false')
-    expect(page).to have_content('true')
+    expect(page).to have_selector('i.icon-ok')
   end
 end
