@@ -45,6 +45,18 @@
   });
   ```
 
+- Add google analytics home page url and datastudio link (when created) to en.yml and es.yml
+
+  ```
+  google_analytics_url:
+    ...
+    new_subdomain: "https://analytics.google.com/analytics/web/#embed/report-home/_ANALYTICS_HOMEPAGE_ID_/"
+
+  google_studio_url:
+    ...
+    new_subdomain: "https://datastudio.google.com/open/_STUDIO_PAGE_ID_"
+  ```
+
 - Create the organization locally to test/adjust subsite styles:
 
   ```

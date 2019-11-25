@@ -1,4 +1,6 @@
-<%= content_for(:callout) { %><h1>Admin Dashboard</h1><% } %>
+<%= content_for(:callout) do %>
+  <h1>Admin Dashboard</h1>
+<% end %>
 
 <h2>User Accounts</h2>
 
@@ -11,34 +13,35 @@
   </div>
 </div>
 
-<div class="row twelvecol underlined">
-  <div class="two-of-twelve">
-    <h2>Name</h2>
-  </div>
-  <div class="four-of-twelve">
-    <h2 class="inline-heading"><%= t('login_signup.email') %></h2>
-  </div>
-  <div class="two-of-twelve">
-    <h2>Language</h2>
-  </div>
-  <div class="two-of-twelve">
-    <h2>User Role</h2>
-  </div>
-</div>
-
-<% @users.each do |user| %>
-  <div class="row twelvecol underlined">
-    <div class="two-of-twelve">
-      <%= user.profile.try(:first_name) %>
-    </div>
-    <div class="four-of-twelve">
-      <%= user.email %>
-    </div>
-    <div class="two-of-twelve">
-      <%= user.preferred_language %>
-    </div>
-    <div class="two-of-twelve">
-      <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
-    </div>
-  </div>
-<% end %>
+<table class="users-table">
+  <tr>
+    <th>
+      <h2>Name</h2>
+    </th>
+    <th>
+      <h2 class="inline-heading"><%= t('login_signup.email') %></h2>
+    </th>
+    <th>
+      <h2>Language</h2>
+    </th>
+    <th>
+      <h2>User Role</h2>
+    </th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td>
+        <%= user.profile.try(:first_name) %>
+      </td>
+      <td>
+        <%= user.email %>
+      </td>
+      <td>
+        <%= user.preferred_language %>
+      </td>
+      <td>
+        <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
+      </td>
+    </tr>
+  <% end %>
+</table>
