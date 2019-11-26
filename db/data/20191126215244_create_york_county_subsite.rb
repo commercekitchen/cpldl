@@ -1,6 +1,6 @@
 class CreateYorkCountySubsite < ActiveRecord::Migration[5.2]
   def up
-    org = Organization.create!(name: 'York County Library', subdomain: 'yclibrary')
+    org = Organization.create!(name: 'York County Library', subdomain: 'yclibrary', footer_logo_link: 'https://www.yclibrary.org/')
 
     [ 'susie+yclibraryadmin@ckdtech.co',
       'julie.ward@yclibrary.org',
