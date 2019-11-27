@@ -1,0 +1,8 @@
+.yclibrary {
+  @include color_scheme($yclibrary-blue, $yclibrary-blue);
+  @include banner($yclibrary-blue);
+  @include buttons($yclibrary-blue);
+  @include course_widget($yclibrary-blue);
+  @include lesson_tile($yclibrary-blue, $grey, $yclibrary-light-blue);
+  @include icons($yclibrary-blue, $yclibrary-light-blue);
+}
