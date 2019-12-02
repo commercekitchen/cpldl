@@ -1,10 +1,10 @@
 <div class="main-logo">
   <%= link_to root_path do %>
-      <% case  current_organization.subdomain %>
-      <% when "www" %>
-        <%= image_tag "dl_logo.png", alt: "DigitalLearn Logo" %>
-      <% else %>
-        <%= safe_image_tag "#{current_organization.subdomain}_logo_header", alt: "#{current_organization.name} Logo" %>
-      <% end %>
+    <% case  current_organization.subdomain %>
+    <% when "www" %>
+      <%= image_tag "dl_logo.png", alt: "DigitalLearn Logo" %>
+    <% else %>
+      <%= safe_image_tag "#{current_organization.subdomain}_logo_header", alt: "#{current_organization.name} Logo" %>
+    <% end %>
   <% end %>
 </div>

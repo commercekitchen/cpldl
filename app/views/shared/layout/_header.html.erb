@@ -1,4 +1,7 @@
 <header class="application-header">
+  <% if !Rails.env.production? %>
+    <div class="environment-notice"><%= "Currently viewing DL #{Rails.env} environment." %> <%= link_to "View Production Site", "https://www.digitallearn.org" %></div>
+  <% end %>
   <div class="container header-grid">
     <%= render "shared/header/language_links" %>
     <%= render "shared/header/trainers_link" %>
