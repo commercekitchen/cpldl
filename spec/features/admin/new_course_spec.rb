@@ -116,8 +116,7 @@ feature 'Admin user creates new course and lesson' do
 
   pending 'Admin should be able to add both course supl materials and post-course supl materials'
 
-  # File uploader is the issue here
-  pending 'adds a lesson' do
+  scenario 'adds a lesson' do
     @course = create(:course)
     visit edit_admin_course_path(course_id: @course, id: @course.id)
     click_button 'Save Course and Add Lessons'
@@ -126,9 +125,14 @@ feature 'Admin user creates new course and lesson' do
       fill_in :lesson_title, with: 'New Lesson Title'
       fill_in :lesson_summary, with: 'Summary for new lesson'
       fill_in :lesson_duration, with: '05:15'
-      File.open('spec/fixtures/BasicSearch1.zip') { |file| @story_line.upload = file }
+      attach_file 'Articulate Storyline Package', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+      select 'Published', from: 'Publication Status'
       click_button 'Save Lesson'
     end
-    expect(current_path).to eq(edit_admin_course_lesson_path(@course, Lesson.last))
+    expect(page).to have_content('Lesson was successfully created.')
+    expect(current_path).to eq(edit_admin_course_lesson_path(@course.to_param, Lesson.last.to_param))
+
+    click_link 'Add Another Lesson'
+    expect(current_path).to eq(new_admin_course_lesson_path(@course.to_param))
   end
 end

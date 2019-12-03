@@ -22,6 +22,17 @@
     color: $primary_color;
   }
 
+  table {
+    th {
+      color: $primary_color;
+    }
+
+    th,
+    td {
+      border-color: $underline_color;
+    }
+  }
+
   .footer-primary {
     background-color: $footer_color;
   }
@@ -64,10 +75,6 @@
 
   .text-color {
     color: $primary_color;
-  }
-
-  .download-color {
-    color: $action_color;
   }
 
   .cert-color {
