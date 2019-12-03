@@ -1,17 +1,9 @@
 <table class="users-table">
   <tr>
-    <th>
-      <h2>Name</h2>
-    </th>
-    <th>
-      <h2 class="inline-heading"><%= t('login_signup.email') %></h2>
-    </th>
-    <th>
-      <h2>Language</h2>
-    </th>
-    <th>
-      <h2>User Role</h2>
-    </th>
+    <th>Name</th>
+    <th><%= t('login_signup.email') %></th>
+    <th>Language</th>
+    <th>User Role</th>
   </tr>
   <% users.each do |user| %>
     <tr>
