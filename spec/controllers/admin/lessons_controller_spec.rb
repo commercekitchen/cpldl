@@ -49,11 +49,7 @@ describe Admin::LessonsController do
 
   describe 'POST #create' do
     before(:each) do
-      @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/BasicSearch1.zip'), 'application/zip')
-    end
-
-    after(:each) do
-      FileUtils.remove_dir "#{Rails.root}/public/storylines/3", true
+      @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip')
     end
 
     let(:valid_attributes) do
