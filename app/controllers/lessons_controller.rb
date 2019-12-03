@@ -59,6 +59,7 @@ class LessonsController < ApplicationController
       course_progress.completed_at = Time.zone.now if lesson.is_assessment
       course_progress.save
     else
+      session[:completed_lessons] ||= []
       session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)
     end
 
