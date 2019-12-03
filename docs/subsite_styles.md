@@ -36,28 +36,28 @@ The main color scheme options for headings, links and colored text.
 
 - `$primary_color`
 
-  - Text for headings & form input labels.
-  - Required.
+  - Text for headings & form input labels
+  - Required
 
 - `$action_color`
 
-  - Links and download icons.
-  - Required.
+  - Color for all links
+  - Required
 
 - `$footer_color`
 
-  - Background color for footer.
-  - Default: `$primary_color`.
+  - Background color for footer
+  - Default: `$primary_color`
 
 - `$underline_color`
 
-  - Underline for some table rows. Ex/ course completion rows.
-  - Deafult: `$primary_color`.
+  - Underline for some table rows. Ex/ course completion rows
+  - Deafult: `$primary_color`
 
 - `$cms_link_color`
 
-  - Color of cms page links in footer.
-  - Deafult: `$white`.
+  - Color of cms page links in footer
+  - Deafult: `$white`
 
 ### `banner`
 
