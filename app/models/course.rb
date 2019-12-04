@@ -93,7 +93,7 @@ class Course < ApplicationRecord
       lesson_order = lessons.published.find(current_lesson_id).lesson_order
       return lessons.order('lesson_order').last.id if lesson_order >= last_lesson_order
 
-      self.lessons.published.where('lesson_order > ?', lesson_order).first.id
+      self.lessons.published.where('lesson_order > ?', lesson_order).order(:lesson_order).take.id
     rescue StandardError
       lessons.published.order('lesson_order').first.id
     end
