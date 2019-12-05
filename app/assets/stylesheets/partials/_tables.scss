@@ -7,9 +7,17 @@ table {
 
 table th,
 table td {
-  padding: 10px 0px;
+  padding: 15px 15px;
   text-align: left;
   border-bottom: 1px solid $purple;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
 
   &.align-right {
     text-align: right;
@@ -18,8 +26,8 @@ table td {
 
 table th {
   border-width: 2px;
-  font-size: 1.5em;
-  font-weight: 100;
+  font-size: 1em;
+  font-weight: 400;
 }
 
 table tr.strong {
