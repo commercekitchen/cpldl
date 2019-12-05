@@ -47,7 +47,7 @@ module Admin
       params[:order].each_value do |v|
         LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position])
       end
-      render nothing: true
+      head :ok
     end
 
     private

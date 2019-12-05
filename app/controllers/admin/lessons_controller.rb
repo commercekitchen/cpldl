@@ -64,7 +64,7 @@ module Admin
         Lesson.find(v['id']).update_attribute(:lesson_order, v['position'])
       end
 
-      render nothing: true
+      head :ok
     end
 
     private
