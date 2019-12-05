@@ -44,8 +44,3 @@ Rails/SkipsModelValidations:
     - "app/controllers/admin/lessons_controller.rb"
     - "app/controllers/admin/library_locations_controller.rb"
     - "app/controllers/lessons_controller.rb"
-
-# Offense count: 1
-Style/MixinUsage:
-  Exclude:
-    - "spec/support/features/warden_helpers.rb"
