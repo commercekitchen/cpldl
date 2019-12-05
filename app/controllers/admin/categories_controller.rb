@@ -27,7 +27,7 @@ module Admin
         Category.find(v[:id]).update_attribute(:category_order, v[:position])
       end
 
-      render nothing: true
+      head :ok
     end
 
     def toggle
