@@ -1,4 +1,4 @@
 <div class="form-group">
   <%= f.label :partner_id, t("login_signup.choose_partner"), class: 'signup-label' %>
-  <%= f.collection_select :partner_id, current_organization.partners, :id, :name, include_blank: t("login_signup.partner_placeholder") %>
+  <%= f.collection_select :partner_id, current_organization.partners, :id, :name, { include_blank: t("login_signup.partner_placeholder") }, required: true %>
 </div>
