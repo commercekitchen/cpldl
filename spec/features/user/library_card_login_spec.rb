@@ -75,6 +75,12 @@ feature 'User registration and login with library card number' do
       expect(current_path).to eq(new_user_session_path)
       expect(page).to have_content('Invalid Library Card Number or Library Card PIN')
     end
+
+    scenario 'attempts to log in with extra spaces' do
+      library_card_log_in_with(" #{user.library_card_number}  ", user.library_card_pin)
+      expect(current_path).to eq(root_path)
+      expect(page).to_not have_content('Signed in successfully.')
+    end
   end
 
   context 'spanish language user' do

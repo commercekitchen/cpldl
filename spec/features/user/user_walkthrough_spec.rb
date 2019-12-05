@@ -3,15 +3,12 @@
 require 'feature_helper'
 
 feature 'User clicks through each page' do
+  let(:org) { FactoryBot.create(:organization) }
+  let(:user) { create(:user, organization: org) }
 
   before(:each) do
-    create(:default_organization)
-    @org = create(:organization)
-    @user = create(:user, organization: @org)
-    @user.add_role(:user, @org)
-
-    switch_to_subdomain(@org.subdomain)
-    login_as(@user, scope: :user)
+    switch_to_subdomain(org.subdomain)
+    login_as(user, scope: :user)
   end
 
   scenario 'can visit each link in the header' do
@@ -21,6 +18,7 @@ feature 'User clicks through each page' do
 
     click_link 'My Courses'
     expect(current_path).to eq(my_courses_path)
+    expect(page).to_not have_link('Profile')
 
     click_link 'Sign Out'
     expect(current_path).to eq(root_path)
@@ -50,14 +48,17 @@ feature 'User clicks through each page' do
     end
 
     context 'under main domain' do
+      let(:default_org) { FactoryBot.create(:default_organization) }
+
       before do
-        switch_to_main_domain
+        switch_to_subdomain(default_org.subdomain)
       end
       include_examples 'trainer link'
     end
 
     context 'under sub domain' do
-      let(:dpl) { create(:organization, subdomain: 'dpl', name: 'Denver Public Library') }
+      let(:dpl) { FactoryBot.create(:organization, subdomain: 'dpl', name: 'Denver Public Library') }
+
       before do
         switch_to_subdomain(dpl.subdomain)
       end

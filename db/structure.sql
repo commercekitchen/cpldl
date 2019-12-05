@@ -104,7 +104,7 @@ CREATE TABLE public.attachments (
     updated_at timestamp without time zone NOT NULL,
     document_file_name character varying,
     document_content_type character varying,
-    document_file_size integer,
+    document_file_size bigint,
     document_updated_at timestamp without time zone,
     doc_type character varying,
     file_description character varying
@@ -116,6 +116,7 @@ CREATE TABLE public.attachments (
 --
 
 CREATE SEQUENCE public.attachments_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -150,6 +151,7 @@ CREATE TABLE public.categories (
 --
 
 CREATE SEQUENCE public.categories_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -188,6 +190,7 @@ CREATE TABLE public.ckeditor_assets (
 --
 
 CREATE SEQUENCE public.ckeditor_assets_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -230,6 +233,7 @@ CREATE TABLE public.cms_pages (
 --
 
 CREATE SEQUENCE public.cms_pages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -262,6 +266,7 @@ CREATE TABLE public.completed_lessons (
 --
 
 CREATE SEQUENCE public.completed_lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -300,6 +305,7 @@ CREATE TABLE public.contacts (
 --
 
 CREATE SEQUENCE public.contacts_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -335,6 +341,7 @@ CREATE TABLE public.course_progresses (
 --
 
 CREATE SEQUENCE public.course_progresses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -367,6 +374,7 @@ CREATE TABLE public.course_topics (
 --
 
 CREATE SEQUENCE public.course_topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -417,6 +425,7 @@ CREATE TABLE public.courses (
 --
 
 CREATE SEQUENCE public.courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -459,6 +468,7 @@ CREATE TABLE public.friendly_id_slugs (
 --
 
 CREATE SEQUENCE public.friendly_id_slugs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -490,6 +500,7 @@ CREATE TABLE public.languages (
 --
 
 CREATE SEQUENCE public.languages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -524,7 +535,7 @@ CREATE TABLE public.lessons (
     is_assessment boolean,
     story_line_file_name character varying,
     story_line_content_type character varying,
-    story_line_file_size integer,
+    story_line_file_size bigint,
     story_line_updated_at timestamp without time zone,
     pub_status character varying,
     parent_lesson_id integer,
@@ -537,6 +548,7 @@ CREATE TABLE public.lessons (
 --
 
 CREATE SEQUENCE public.lessons_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -572,6 +584,7 @@ CREATE TABLE public.library_locations (
 --
 
 CREATE SEQUENCE public.library_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -604,6 +617,7 @@ CREATE TABLE public.organization_courses (
 --
 
 CREATE SEQUENCE public.organization_courses_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -633,7 +647,8 @@ CREATE TABLE public.organizations (
     library_card_login boolean DEFAULT false,
     accepts_custom_branches boolean DEFAULT false,
     login_required boolean DEFAULT true,
-    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
+    accepts_partners boolean DEFAULT false
 );
 
 
@@ -642,6 +657,7 @@ CREATE TABLE public.organizations (
 --
 
 CREATE SEQUENCE public.organizations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -657,14 +673,46 @@ ALTER SEQUENCE public.organizations_id_seq OWNED BY public.organizations.id;
 
 
 --
+-- Name: partners; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.partners (
+    id bigint NOT NULL,
+    organization_id bigint,
+    name character varying DEFAULT ''::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: partners_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.partners_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: partners_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.partners_id_seq OWNED BY public.partners.id;
+
+
+--
 -- Name: pg_search_documents; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE public.pg_search_documents (
     id integer NOT NULL,
     content text,
-    searchable_id integer,
     searchable_type character varying,
+    searchable_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -675,6 +723,7 @@ CREATE TABLE public.pg_search_documents (
 --
 
 CREATE SEQUENCE public.pg_search_documents_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -716,6 +765,7 @@ CREATE TABLE public.profiles (
 --
 
 CREATE SEQUENCE public.profiles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -749,6 +799,7 @@ CREATE TABLE public.program_locations (
 --
 
 CREATE SEQUENCE public.program_locations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -783,6 +834,7 @@ CREATE TABLE public.programs (
 --
 
 CREATE SEQUENCE public.programs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -804,8 +856,8 @@ ALTER SEQUENCE public.programs_id_seq OWNED BY public.programs.id;
 CREATE TABLE public.roles (
     id integer NOT NULL,
     name character varying,
-    resource_id integer,
     resource_type character varying,
+    resource_id integer,
     created_at timestamp without time zone,
     updated_at timestamp without time zone
 );
@@ -816,6 +868,7 @@ CREATE TABLE public.roles (
 --
 
 CREATE SEQUENCE public.roles_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -858,6 +911,7 @@ CREATE TABLE public.schools (
 --
 
 CREATE SEQUENCE public.schools_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -889,6 +943,7 @@ CREATE TABLE public.topics (
 --
 
 CREATE SEQUENCE public.topics_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -924,6 +979,7 @@ CREATE TABLE public.translations (
 --
 
 CREATE SEQUENCE public.translations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -954,13 +1010,6 @@ CREATE TABLE public.users (
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip character varying,
     last_sign_in_ip character varying,
-    confirmation_token character varying,
-    confirmed_at timestamp without time zone,
-    confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying,
-    failed_attempts integer DEFAULT 0 NOT NULL,
-    unlock_token character varying,
-    locked_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     profile_id integer,
@@ -970,8 +1019,8 @@ CREATE TABLE public.users (
     invitation_sent_at timestamp without time zone,
     invitation_accepted_at timestamp without time zone,
     invitation_limit integer,
-    invited_by_id integer,
     invited_by_type character varying,
+    invited_by_id integer,
     invitations_count integer DEFAULT 0,
     token character varying,
     organization_id integer,
@@ -985,7 +1034,8 @@ CREATE TABLE public.users (
     quiz_responses_object text,
     program_id integer,
     encrypted_library_card_pin character varying,
-    encrypted_library_card_pin_iv character varying
+    encrypted_library_card_pin_iv character varying,
+    partner_id bigint
 );
 
 
@@ -994,6 +1044,7 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1121,6 +1172,13 @@ ALTER TABLE ONLY public.organization_courses ALTER COLUMN id SET DEFAULT nextval
 --
 
 ALTER TABLE ONLY public.organizations ALTER COLUMN id SET DEFAULT nextval('public.organizations_id_seq'::regclass);
+
+
+--
+-- Name: partners id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.partners ALTER COLUMN id SET DEFAULT nextval('public.partners_id_seq'::regclass);
 
 
 --
@@ -1267,6 +1325,14 @@ ALTER TABLE ONLY public.courses
 
 
 --
+-- Name: data_migrations data_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.data_migrations
+    ADD CONSTRAINT data_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1315,6 +1381,14 @@ ALTER TABLE ONLY public.organizations
 
 
 --
+-- Name: partners partners_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.partners
+    ADD CONSTRAINT partners_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: pg_search_documents pg_search_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1352,6 +1426,14 @@ ALTER TABLE ONLY public.programs
 
 ALTER TABLE ONLY public.roles
     ADD CONSTRAINT roles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
@@ -1499,6 +1581,13 @@ CREATE INDEX index_organizations_on_preferences ON public.organizations USING gi
 
 
 --
+-- Name: index_partners_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_partners_on_organization_id ON public.partners USING btree (organization_id);
+
+
+--
 -- Name: index_pg_search_documents_on_searchable_type_and_searchable_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1541,13 +1630,6 @@ CREATE INDEX index_schools_on_organization_id ON public.schools USING btree (org
 
 
 --
--- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_confirmation_token ON public.users USING btree (confirmation_token);
-
-
---
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1583,6 +1665,13 @@ CREATE INDEX index_users_on_organization_id ON public.users USING btree (organiz
 
 
 --
+-- Name: index_users_on_partner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_partner_id ON public.users USING btree (partner_id);
+
+
+--
 -- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1597,31 +1686,10 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
--- Name: index_users_on_unlock_token; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unlock_token);
-
-
---
 -- Name: index_users_roles_on_user_id_and_role_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_users_roles_on_user_id_and_role_id ON public.users_roles USING btree (user_id, role_id);
-
-
---
--- Name: unique_data_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_data_migrations ON public.data_migrations USING btree (version);
-
-
---
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
@@ -1654,6 +1722,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.program_locations
     ADD CONSTRAINT fk_rails_684ed17f10 FOREIGN KEY (program_id) REFERENCES public.programs(id);
+
+
+--
+-- Name: users fk_rails_b517ecf66a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_b517ecf66a FOREIGN KEY (partner_id) REFERENCES public.partners(id);
 
 
 --
@@ -1785,6 +1861,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190530133959'),
 ('20190617025929'),
 ('20190617034333'),
-('20191023160710');
+('20191023160710'),
+('20191107234014'),
+('20191119184844'),
+('20191119185434'),
+('20191119190714');
 
 

@@ -105,7 +105,7 @@ module Admin
         Course.find(v[:id]).update_attribute(:course_order, v[:position])
       end
 
-      render nothing: true
+      head :ok
     end
 
     def destroy

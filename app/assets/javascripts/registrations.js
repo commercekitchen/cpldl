@@ -38,14 +38,11 @@
 
     $("#chzn").change(function(e) {
       var selection = $(this).val();
-      console.log(selection);
 
       if (selection) {
-        console.log("selection present");
         $("#custom_branch_name").val("");
         $("#custom_branch_form").hide();
       } else {
-        console.log("selection not present");
         $("#custom_branch_form").show();
       }
     });
@@ -56,8 +53,9 @@
       $("#user_program_id.hideUntilActive").show();
       getProgramsOfType(programType).done(updateProgramSelection);
     } else {
-      $("#user_program_id.hideUntilActive").hide();
-      $("#program_location_fields.hideUntilActive").hide();
+      $("#user_program_id").val(null);
+      $("#user_program_location_id").val(null);
+      $(".hideUntilActive").hide();
     }
     $("#program_location_fields.hideUntilActive").hide();
     updateSchoolsSection(programType);

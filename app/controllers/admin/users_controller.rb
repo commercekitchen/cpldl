@@ -4,15 +4,19 @@ require 'csv'
 
 module Admin
   class UsersController < BaseController
-    before_action :enable_sidebar
+    before_action :enable_sidebar, except: [:index]
+
+    skip_before_action :authorize_admin, only: [:index]
 
     def index
-      results = User.search_users(params[:search])
-      @users = if params[:search].blank?
+      authorize_admin_or_trainer
+      results = User.search_users(params[:users_search])
+      @users = if params[:users_search].blank?
                  User.includes(profile: [:language]).where(organization_id: current_organization.id)
                else
                  results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
                end
+      enable_sidebar if current_user.admin?
     end
 
     def change_user_roles

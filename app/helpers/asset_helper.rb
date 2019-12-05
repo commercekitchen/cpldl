@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module AssetHelper
   def asset_exists?(path)
     if Rails.env.production? || Rails.env.staging?
@@ -8,7 +10,7 @@ module AssetHelper
   end
 
   def asset_with_extension(path)
-    ['png', 'svg', 'jpg'].each do |extension|
+    %w[png svg jpg].each do |extension|
       candidate = "#{path}.#{extension}"
       return candidate if asset_exists?(candidate)
     end

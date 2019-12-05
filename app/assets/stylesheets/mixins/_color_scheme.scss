@@ -1,11 +1,9 @@
 @mixin color_scheme(
   $primary_color,
-  $negative_color,
   $action_color,
-  $text_alignment: left,
-  $footer-color: $primary_color,
-  $underline-color: $primary_color,
-  $footer-nav-link: $white
+  $footer_color: $primary_color,
+  $underline_color: $primary_color,
+  $cms_link_color: $white
 ) {
   h1,
   h2,
@@ -24,19 +22,26 @@
     color: $primary_color;
   }
 
-  .color {
-    background-color: $primary_color;
+  table {
+    th {
+      color: $primary_color;
+    }
+
+    th,
+    td {
+      border-color: $underline_color;
+    }
   }
 
   .footer-primary {
-    background-color: $footer-color;
+    background-color: $footer_color;
   }
 
   a {
     color: $action_color;
 
     &.cms_nav--link {
-      color: $footer-nav-link !important;
+      color: $cms_link_color !important;
     }
   }
 
@@ -58,11 +63,6 @@
     color: $white;
   }
 
-  .slogan {
-    color: $negative_color;
-    text-align: $text_alignment;
-  }
-
   .signup-label {
     font-size: 1.1em;
     color: $primary_color;
@@ -77,10 +77,6 @@
     color: $primary_color;
   }
 
-  .download-color {
-    color: $action_color;
-  }
-
   .cert-color {
     color: $primary_color;
   }
@@ -93,13 +89,13 @@
 
   .underlined {
     border-bottom: solid;
-    border-color: $underline-color;
+    border-color: $underline_color;
     border-width: 1px;
     padding-bottom: 1em;
   }
 
   ul.objects li {
     padding: 10px 10px 10px 0;
-    border-bottom: 1px solid $underline-color;
+    border-bottom: 1px solid $underline_color;
   }
 }

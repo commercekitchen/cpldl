@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ContactController < ApplicationController
-  before_action :redirect_to_www
+  before_action :ensure_www
 
   def new
     @contact = Contact.new
@@ -21,5 +21,9 @@ class ContactController < ApplicationController
 
   def contact_params
     params.require(:contact).permit(:first_name, :last_name, :organization, :city, :state, :email, :phone, :comments)
+  end
+
+  def ensure_www
+    redirect_to_www unless request.subdomains.first == 'www'
   end
 end

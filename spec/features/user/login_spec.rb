@@ -3,15 +3,15 @@
 require 'feature_helper'
 
 feature 'User logs in' do
+  let(:org) { create(:organization) }
 
-  context 'normal email and password' do
+  context 'non-program subdomain' do
     before(:each) do
-      @org = create(:organization)
-      switch_to_subdomain('chipublib')
+      switch_to_subdomain(org.subdomain)
     end
 
     scenario 'with valid email and password' do
-      user = create(:user, organization: @org)
+      user = create(:user, organization: org)
       log_in_with(user.email, user.password)
       expect(current_path).to eq(root_path)
       expect(page).to_not have_content('Signed in successfully.')
@@ -39,8 +39,7 @@ feature 'User logs in' do
     end
 
     scenario 'spanish language user with invalid email' do
-      user = create(:user, organization: @org)
-      user.add_role(:user, @org)
+      create(:user, organization: org)
 
       visit root_path
 
@@ -51,7 +50,7 @@ feature 'User logs in' do
     end
 
     scenario 'first time login non-program org' do
-      user = create(:user, :first_time_user, organization: @org)
+      user = create(:user, :first_time_user, organization: org)
       past_time = 10.minutes.ago
       user.profile.update({ created_at: past_time, updated_at: past_time })
       log_in_with(user.email, user.password)
@@ -66,13 +65,16 @@ feature 'User logs in' do
 
       expect(current_path).to eq(profile_path)
     end
+  end
+
+  context 'program subdomains' do
+    let(:program_org) { create(:organization, :accepts_programs) }
+    let(:profile) { create(:profile, :with_last_name) }
 
     scenario 'first time login with program org, with course recommendations' do
-      @npl = create(:organization, :accepts_programs, subdomain: 'npl')
-      @npl_profile = create(:profile, :with_last_name)
-      @npl_user = create(:user, :first_time_user, organization: @npl, profile: @npl_profile)
-      switch_to_subdomain('npl')
-      log_in_with(@npl_user.email, @npl_user.password)
+      @user = create(:user, :first_time_user, organization: program_org, profile: profile)
+      switch_to_subdomain(program_org.subdomain)
+      log_in_with(@user.email, @user.password)
 
       expect(current_path).to eq(profile_path)
 
@@ -84,11 +86,9 @@ feature 'User logs in' do
     end
 
     scenario 'first time login with program org, no course recommendations' do
-      @npl = create(:organization, :accepts_programs, subdomain: 'npl')
-      @npl_profile = build(:profile, :with_last_name)
-      @npl_user = create(:user, :first_time_user, organization: @npl, profile: @npl_profile)
-      switch_to_subdomain('npl')
-      log_in_with(@npl_user.email, @npl_user.password)
+      @user = create(:user, :first_time_user, organization: program_org, profile: profile)
+      switch_to_subdomain(program_org.subdomain)
+      log_in_with(@user.email, @user.password)
 
       expect(current_path).to eq(profile_path)
 
@@ -100,50 +100,44 @@ feature 'User logs in' do
     end
 
     scenario 'with an invalid profile for a program org' do
-      @npl = create(:organization, :accepts_programs, subdomain: 'npl')
-      @npl_profile = create(:profile, :with_last_name)
-      @npl_user = create(:user, organization: @npl, profile: @npl_profile)
-      @npl_profile.last_name = nil
-      @npl_profile.save(validate: false)
-      switch_to_subdomain('npl')
-      log_in_with(@npl_user.email, @npl_user.password)
+      @user = create(:user, organization: program_org, profile: profile)
+      profile.last_name = nil
+      profile.save(validate: false)
+      switch_to_subdomain(program_org.subdomain)
+      log_in_with(@user.email, @user.password)
 
       expect(current_path).to eq(profile_path)
     end
 
     scenario 'with a valid profile for a program org' do
-      @npl = create(:organization, :accepts_programs, subdomain: 'npl')
-      @npl_profile = create(:profile, :with_last_name)
-      @npl_user = create(:user, organization: @npl, profile: @npl_profile)
-      switch_to_subdomain('npl')
-      log_in_with(@npl_user.email, @npl_user.password)
+      @user = create(:user, organization: program_org, profile: profile)
+      switch_to_subdomain(program_org.subdomain)
+      log_in_with(@user.email, @user.password)
 
       expect(current_path).to eq(root_path)
     end
+  end
 
-    scenario 'for incorrect organization' do
-      other_org = create(:organization, subdomain: 'foobar')
-      switch_to_subdomain(other_org.subdomain)
+  scenario 'for incorrect organization' do
+    other_org = create(:organization, subdomain: 'foobar')
+    switch_to_subdomain(other_org.subdomain)
+    user = create(:user, organization: org)
+    log_in_with(user.email, user.password)
+    expect(current_path).to eq(user_session_path)
+    expect(page).to have_content('Invalid Email or Password')
+  end
 
-      user = create(:user, organization: @org)
-      user.add_role(:user, @org)
-      log_in_with(user.email, user.password)
-      expect(current_path).to eq(user_session_path)
-      expect(page).to have_content('Invalid Email or Password')
-    end
+  scenario 'on a subdomain on staging' do
+    user = create(:user, organization: org)
+    switch_to_subdomain("#{org.subdomain}.stage")
+    log_in_with(user.email, user.password)
+    expect(current_path).to eq(root_path)
+  end
 
-    scenario 'on a subdomain on staging' do
-      user = create(:user, organization: @org)
-      switch_to_subdomain("#{@org.subdomain}.stage")
-      log_in_with(user.email, user.password)
-      expect(current_path).to eq(root_path)
-    end
-
-    scenario 'empty www subdomain for staging' do
-      user = create(:user, organization: create(:default_organization))
-      switch_to_subdomain('stage')
-      log_in_with(user.email, user.password)
-      expect(current_path).to eq(root_path)
-    end
+  scenario 'empty www subdomain for staging' do
+    user = create(:user, organization: create(:default_organization))
+    switch_to_subdomain('stage')
+    log_in_with(user.email, user.password)
+    expect(current_path).to eq(root_path)
   end
 end

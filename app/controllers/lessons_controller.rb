@@ -1,40 +1,8 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: lessons
-#
-#  id                      :integer          not null, primary key
-#  lesson_order            :integer
-#  title                   :string(90)
-#  duration                :integer
-#  course_id               :integer
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  slug                    :string
-#  summary                 :string(156)
-#  story_line              :string(156)
-#  seo_page_title          :string(90)
-#  meta_desc               :string(156)
-#  is_assessment           :boolean
-#  story_line_file_name    :string
-#  story_line_content_type :string
-#  story_line_file_size    :integer
-#  story_line_updated_at   :datetime
-#  pub_status              :string
-#
-
 class LessonsController < ApplicationController
   before_action :auth_subsites
   before_action :set_course
-
-  def index
-    @lessons = @course.lessons.all.where(pub_status: 'P')
-    respond_to do |format|
-      format.html { render :index }
-      format.json { render json: @lessons }
-    end
-  end
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
@@ -91,6 +59,7 @@ class LessonsController < ApplicationController
       course_progress.completed_at = Time.zone.now if lesson.is_assessment
       course_progress.save
     else
+      session[:completed_lessons] ||= []
       session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)
     end
 

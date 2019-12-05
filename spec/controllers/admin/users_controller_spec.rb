@@ -5,9 +5,10 @@ require 'rails_helper'
 describe Admin::UsersController do
   let(:org) { create(:default_organization) }
   let(:admin) { create(:user, :admin, organization: org) }
+  let(:trainer) { create(:user, :trainer, organization: org) }
 
   before do
-    switch_to_subdomain(org.subdomain)
+    @request.host = "#{org.subdomain}.test.host"
     sign_in admin
   end
 
@@ -29,8 +30,14 @@ describe Admin::UsersController do
     end
 
     it 'assigns search results to @users' do
-      get :index, params: { search: 'two' }
+      get :index, params: { users_search: 'two' }
       expect(assigns(:users)).to eq([user2])
+    end
+
+    it 'allows trainer to view users index' do
+      sign_in trainer
+      get :index
+      expect(assigns(:users)).to include(user1, user2, user3)
     end
   end
 

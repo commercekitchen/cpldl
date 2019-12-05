@@ -1,8 +1,8 @@
 .www {
-  @include color_scheme($teal, $white, $purple);
-  @include banner($teal, $white);
-  @include buttons($purple, $white);
+  @include color_scheme($teal, $purple);
+  @include banner($teal);
+  @include buttons($purple);
   @include course_widget($purple, $purple-2);
-  @include lesson_block($teal, $grey, $purple, $orange);
+  @include lesson_tile($teal, $grey, $orange);
   @include icons($teal, $orange);
 }

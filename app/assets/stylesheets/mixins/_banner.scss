@@ -1,13 +1,18 @@
-@mixin banner($background_color, $text_color, $custom_banner_font: 3.3em) {
+@mixin banner(
+  $background_color,
+  $custom_banner_font: 3.3em,
+  $slogan_alignment: left,
+  $text_color: $white
+) {
+  .slogan {
+    text-align: $slogan_alignment;
+  }
+
   .banner {
     background-color: $background_color;
     margin-bottom: 2em;
     padding: 1em 0 2em 0;
     min-height: 2em;
-
-    .callout {
-      float: left;
-    }
 
     h1 {
       font-family: $font-secondary;

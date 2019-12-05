@@ -56,6 +56,10 @@ class RegistrationsController < Devise::RegistrationsController
       ]
     end
 
+    if current_organization.accepts_partners?
+      list_params_allowed << :partner_id
+    end
+
     if params['program_type'] == 'students_and_parents'
       list_params_allowed << %i[
         acting_as

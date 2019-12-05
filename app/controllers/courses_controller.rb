@@ -1,31 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: courses
-#
-#  id             :integer          not null, primary key
-#  title          :string(90)
-#  seo_page_title :string(90)
-#  meta_desc      :string(156)
-#  summary        :string(156)
-#  description    :text
-#  contributor    :string
-#  pub_status     :string           default("D")
-#  created_at     :datetime         not null
-#  updated_at     :datetime         not null
-#  language_id    :integer
-#  level          :string
-#  notes          :text
-#  slug           :string
-#  course_order   :integer
-#  pub_date       :datetime
-#  format         :string
-#  subsite_course :boolean          default(FALSE)
-#  parent_id      :integer
-#  display_on_dl  :boolean          default(FALSE)
-#
-
 class CoursesController < ApplicationController
   include UserCourses
 

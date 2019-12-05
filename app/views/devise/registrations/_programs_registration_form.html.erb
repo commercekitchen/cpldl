@@ -4,29 +4,33 @@
 </div>
 
 <p class="small-14 grey">
-  <%= t('login_signup.dont_have_library_card') %> <%= link_to "#{t('login_signup.click_here')}", "https://library.nashville.org/get-card", target: "_blank" %> <%= t('login_signup.register_for_library_card') %>
+  <%= t('login_signup.dont_have_library_card') %> <%= link_to "#{t('login_signup.register_for_library_card_link')}", "https://library.nashville.org/get-card", target: "_blank" %> <%= t('login_signup.register_for_library_card') %>
 </p>
 
 <div class="form-group">
   <h3><%= t('login_signup.program_type_prompt') %></h3>
-  <div class="inline-radio-group">
-    <div class="radio-option">
-      <%= radio_button_tag(:program_type, "none", !params["program_type"] || params["program_type"] == "none") %>
-      <%= label_tag("program_type_none", "No Program", class: "signup-label") %>
-    </div>
-    <% Program::PARENT_TYPES.each do |label, value| %>
+  <%= field_set_tag t('login_signup.program_type_label'), class: 'signup-label' do %>
+    <div class="inline-radio-group">
       <div class="radio-option">
-        <%= radio_button_tag(:program_type, value, params["program_type"] == value.to_s) %>
-        <%= label_tag("program_type_#{value}", label, class: "signup-label") %>
+        <%= radio_button_tag(:program_type, "none", !params["program_type"] || params["program_type"] == "none") %>
+        <%= label_tag("program_type_none", "No Program", class: "signup-label") %>
       </div>
+      <% Program::PARENT_TYPES.each do |label, value| %>
+        <div class="radio-option">
+          <%= radio_button_tag(:program_type, value, params["program_type"] == value.to_s) %>
+          <%= label_tag("program_type_#{value}", label, class: "signup-label") %>
+        </div>
+      <% end %>
+    </div>
     <% end %>
-  </div>
 </div>
 
 <div class="form-group">
-  <%= hidden_field_tag "previously_selected_program", params["program_id"] %>
+  <% if params["user"] %>
+    <%= hidden_field_tag "previously_selected_program", params["user"]["program_id"] %>
+  <% end %>
   <%= f.label :program_id, "Organization Program", class: "screen-reader-text" %>
-  <%= f.select :program_id, options_for_select([]), include_blank: "#{t('login_signup.no_program_selected')}", class: "hideUntilActive" %>
+  <%= f.select :program_id, options_for_select([]), { include_blank: "#{t('login_signup.no_program_selected')}" }, { class: "hideUntilActive" } %>
 </div>
 
 <div id="program_location_fields" class="hideUntilActive">

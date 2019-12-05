@@ -1,7 +1,7 @@
-$white: #FFF;
-$light-grey: #EEE;
-$medium-grey: #DDD;
-$grey: #797677;
+$white: #fff;
+$light-grey: #eee;
+$medium-grey: #ddd;
+$grey: #666;
 $dark-grey: #666;
 $black: #000;
 
@@ -15,50 +15,59 @@ $mustard: #ae8208;
 $mustard-2: #795b05;
 
 /* NPL */
-$npl-blue: #004E95;
-$npl-orange: #C64918;
+$npl-blue: #004e95;
+$npl-orange: #c64918;
 
 /* KPL */
 $kpl-blue: #155999;
-$kpl-green: #0B840B;
-$kpl-gray: #4C4C4C;
+$kpl-green: #0b840b;
+$kpl-gray: #4c4c4c;
 
 /* TSCPL */
-$tscpl-blue: #0073CF;
-$tscpl-orange: #A66401;
+$tscpl-blue: #0073cf;
+$tscpl-orange: #a66401;
 $tscpl-gray: #464646;
 $tscpl-action-gray: #333333;
 
 /* PIMA */
-$pima-blue: #2C3590;
-$pima-light-blue: #147BBA;
-$pima-gray: #716C6B;
+$pima-blue: #2c3590;
+$pima-light-blue: #147bba;
+$pima-gray: #716c6b;
 
 /* EBRPL */
-$ebrpl-dark-blue: #2E388F;
-$ebrpl-light-blue: #0A57A2;
+$ebrpl-dark-blue: #2e388f;
+$ebrpl-light-blue: #0a57a2;
 
 /* carnegielibrary */
-$carnegielibrary-purple: #7B2986;
-$carnegielibrary-blue: #37617A;
+$carnegielibrary-purple: #7b2986;
+$carnegielibrary-blue: #37617a;
 $carnegielibrary-gray: #525151;
 
 /* kclibrary */
 $kc-blue: #337ab4;
 $kc-grey: #545555;
-$kc-light-grey: #D1D2D4;
+$kc-light-grey: #d1d2d4;
 
+/* Cleveland */
+$cleveland-blue: #4169e1;
+$cleveland-gray: #808080;
+$cleveland-purple: #57317d;
+$cleveland-red: #b22234;
+
+/* York County */
+$yclibrary-blue: #235ba8;
+$yclibrary-light-blue: #c7dbf6;
 
 $purple: #8945a1;
 $purple-2: #7b439b;
-$dark-purple: #7D3191;
+$dark-purple: #7d3191;
 $red: #f0502c;
 $orange: #fa8c28;
 $dark-orange: darken($orange, 10%);
 
 $error-font-color: #c32500;
 $error-border-color: #c32500;
-$error-color: #FCF5F4;
+$error-color: #fcf5f4;
 
 $notice-font-color: #444;
 $notice-border-color: #9dbc89;

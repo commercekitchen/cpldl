@@ -1,31 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: lessons
-#
-#  id                      :integer          not null, primary key
-#  lesson_order            :integer
-#  title                   :string(90)
-#  duration                :integer
-#  course_id               :integer
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  slug                    :string
-#  summary                 :string(156)
-#  story_line              :string(156)
-#  seo_page_title          :string(90)
-#  meta_desc               :string(156)
-#  is_assessment           :boolean
-#  story_line_file_name    :string
-#  story_line_content_type :string
-#  story_line_file_size    :integer
-#  story_line_updated_at   :datetime
-#  pub_status              :string
-#  parent_lesson_id        :integer
-#  parent_id               :integer
-#
-
 require 'zip'
 
 class Lesson < ApplicationRecord
@@ -52,12 +26,12 @@ class Lesson < ApplicationRecord
   # TODO: We need to make lesson titles unique per course, but not site-wide.
   validates :title, length: { maximum: 90 }, presence: true # , uniqueness: true
   validates :summary, length: { maximum: 156 }, presence: true
-  validates :duration, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :duration, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
+  validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
 
   has_attached_file :story_line, url: '/system/lessons/story_lines/:id/:style/:basename.:extension'
   before_post_process :skip_for_zip

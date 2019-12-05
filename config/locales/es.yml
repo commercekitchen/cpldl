@@ -28,11 +28,16 @@ es:
         name: "Nombre de la Categoría"
       cms_page:
         meta_desc: "Metadescripción"
+        pub_status: "Estado de la publicación"
       user:
         library_card_number: "Número de tarjeta de biblioteca"
         library_card_pin: "PIN de tarjeta de biblioteca"
         email: "Email"
         password: "Contraseña"
+      course:
+        pub_status: "Estado de la publicación"
+      lesson:
+        pub_status: "Estado de la publicación"
     errors:
       models:
         profile:
@@ -43,6 +48,8 @@ es:
     submit: "Enviar"
     save: "Guardar"
     cancel: "Cancelar"
+  admin:
+    dashboard: "Panel de control"
   home:
     default_org:
       custom_banner_greeting: ""
@@ -95,17 +102,19 @@ es:
     want_to_take_a_course: "¿Quiere tomar un curso, pero no tiene una cuenta con nosotros? Es fácil crearla. Sólo llene los espacios indicados abajo."
     notice_to_users: "Lo sentimos, pero los usuarios no pueden crear nuevas cuentas en este momento. Si ya ha creado una cuenta, iniciar sesión. Si no es así, acaba de elegir un curso para empezar a aprender! Para mantener un registro de sus cursos, por favor imprima el certificado que recibe al final."
     dont_have_email: "¿No tiene una cuenta de correo electrónico?"
-    click_here: "De clic aquí"
+    click_here_for_tutorial: "De clic aquí para ver un video"
     tutorial_link: "https://www.digitallearn.org/courses/introduccion-a-correo-electronico"
-    open_a_tutorial: "para ver un video que le enseñará cómo crear una."
+    tutorial_description: "que le enseñará cómo crear una."
     dont_have_library_card: "¿No tiene una tarjeta de biblioteca?"
-    register_for_library_card: "para registrarse en una tarjeta de biblioteca en línea que puede utilizar de inmediato."
+    register_for_library_card_link: "Regístrese para obtener una tarjeta de biblioteca en línea"
+    register_for_library_card: "que puede utilizar de inmediato."
     first_name: "Nombre"
     last_name: "Apellido"
     zip_code: "Código Postal"
     your_password: "Contraseña (debe tener al menos 8 caracteres de longitud)"
     re_enter_password: "Re-escriba su contraseña"
     parent_student: "¿Padre o Estudiante?"
+    student_id: "Carné de estudiante"
     birthday: "Fecha de Nacimiento"
     grade: "Grado"
     school: "Escuela"
@@ -113,9 +122,12 @@ es:
     library_card_pin: "PIN de tarjeta de biblioteca"
     program: "Información de la tarjeta de biblioteca"
     program_type_prompt: "¿Es usted un participante en uno de los Programas de Capacitación Tecnológica de la Biblioteca?"
+    program_type_label: "Seleccione tipo de programa"
     no_program_selected: "Seleccione el programa..."
     your_library: "¿Cómo se llama su biblioteca?"
     custom_branch: "Nombre de Community Partner"
+    choose_partner: "Where did you find out about DigitalLearn?"
+    partner_placeholder: "Select Partner..."
   logged_in_user:
     hi: "Hola"
     choose_a_course: "Escoja un curso para empezar; o visite la sección"
@@ -231,6 +243,7 @@ es:
     lessons_in_this_course: "Actividades en este curso"
     start_lesson: "Empezar"
     lesson: "Actividad"
+    start_lesson_instructions: "Da click en una actividad debajo para empezar."
   lesson_page:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"
@@ -285,6 +298,8 @@ es:
     pima: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w141655195p146188645/"
     ebrpl: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w142229276p146794222/"
     carnegielibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w160560212p161760560/"
+    cleveland: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216325566p206666986/"
+    yclibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216335491p206727926"
   google_studio_url:
     chipublib: "https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik"
     npl: "https://datastudio.google.com/open/1Z4sv_djbM53ZRAkcGOOlq8tjVM3AS8gb"

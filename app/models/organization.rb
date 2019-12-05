@@ -1,21 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: organizations
-#
-#  id                      :integer          not null, primary key
-#  name                    :string
-#  subdomain               :string
-#  created_at              :datetime         not null
-#  updated_at              :datetime         not null
-#  branches                :boolean
-#  accepts_programs        :boolean
-#  library_card_login      :boolean          default(FALSE)
-#  accepts_custom_branches :boolean          default(FALSE)
-#  login_required          :boolean          default(TRUE)
-#
-
 class Organization < ApplicationRecord
   include Storext.model
 
@@ -40,6 +24,7 @@ class Organization < ApplicationRecord
   has_many :courses, dependent: :destroy
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
+  has_many :partners, dependent: :destroy
 
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }

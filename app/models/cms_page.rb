@@ -1,26 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: cms_pages
-#
-#  id              :integer          not null, primary key
-#  title           :string(90)
-#  author          :string
-#  audience        :string
-#  pub_status      :string           default("D")
-#  pub_date        :datetime
-#  seo_page_title  :string(90)
-#  meta_desc       :string(156)
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  slug            :string
-#  cms_page_order  :integer
-#  language_id     :integer
-#  body            :text
-#  organization_id :integer
-#
-
 class CmsPage < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: %i[slugged history]
@@ -44,14 +23,14 @@ class CmsPage < ApplicationRecord
   validates :title, length: { maximum: 90 }, presence: true,
     uniqueness: { scope: :organization_id, message: 'has already been taken for the organization' }
   validates :body, presence: true
-  validates :language_id, presence: true, numericality: true
+  validates :language_id, numericality: true, allow_nil: true
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
   validates :author, presence: true
   validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status' }
+    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
   validates :audience, presence: true,
-    inclusion: { in: %w[Unauth Auth Admin All], message: '%<value>s in not a valid audience' }
+    inclusion: { in: %w[Unauth Auth Admin All], message: '%<value>s is not a valid audience', allow_blank: true }
 
   default_scope { order('cms_page_order ASC') }
 

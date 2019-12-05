@@ -12,12 +12,13 @@
       </div>
       <ul class="objects sortable reorderable">
         <% courses.each do |course| %>
-          <li class="sortable-item table-row" data-id="<%= course.id %>">
+          <li class="sortable-item table-row import-table-row" data-id="<%= course.id %>">
             <div class="cell"><%= course.title %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
             <div class="cell">
-              <%= link_to "Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post %>
+              <%= link_to "Import Course", admin_dashboard_add_imported_course_path(course_id: course.id), method: :post, class: "load-on-click" %>
+              <%= render 'shared/loader' %>
             </div>
           </li>
         <% end %>

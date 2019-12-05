@@ -1,18 +1,5 @@
 # frozen_string_literal: true
 
-# == Schema Information
-#
-# Table name: programs
-#
-#  id                :integer          not null, primary key
-#  program_name      :string
-#  location_required :boolean          default(FALSE)
-#  organization_id   :integer
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
-#  parent_type       :integer
-#
-
 class Program < ApplicationRecord
   enum parent_type: { seniors: 0, adults: 1, young_adults: 2, students_and_parents: 3 }
   PARENT_TYPES = {

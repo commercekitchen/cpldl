@@ -4,8 +4,11 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 Organization.create(name: 'Chicago Public Library', subdomain: 'chipublib')
 Organization.create(name: 'Admin', subdomain: 'www')
-Organization.create(name: 'Nashville Public Library', subdomain: 'npl')
-Organization.create(name: 'Kansas City Public Library', subdomain: 'kclibrary')
+Organization.create(name: 'Kansas City Public Library', subdomain: 'kclibrary', library_card_login: true)
+npl = Organization.create(name: 'Nashville Public Library', subdomain: 'npl', accepts_programs: true)
+
+Program.create(organization: npl, parent_type: 0, program_name: 'Senior Program',
+               program_locations_attributes: [{ location_name: 'Westchester', enabled: true }])
 
 class CreateSeedUser
   def self.generate(email, first_name, last_name, subdomain, admin = false)
@@ -16,7 +19,7 @@ class CreateSeedUser
       library_card_pin = '1234'
       password = Digest::MD5.hexdigest(library_card_pin).first(10)
     end
-    user = User.create(email: email, password: password, confirmed_at: Time.zone.now,
+    user = User.create(email: email, password: password,
       organization: org, library_card_number: library_card_number, library_card_pin: library_card_pin)
     Profile.create(first_name: first_name, last_name: last_name, zip_code: '80206', user: user)
     user.add_role(:admin, org) if admin

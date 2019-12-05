@@ -65,7 +65,7 @@ module Admin
         CmsPage.find(v[:id]).update_attribute(:cms_page_order, v[:position])
       end
 
-      render nothing: true
+      head :ok
     end
 
     def destroy

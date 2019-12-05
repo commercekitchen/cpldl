@@ -1,0 +1,135 @@
+@mixin lesson_tile($bg_color, $completed_bg_color, $check_color) {
+  .lesson-tile {
+    height: 240px;
+    width: 240px;
+    margin: 0.5em;
+    cursor: pointer;
+    background-color: $white;
+    color: $grey;
+    border: 1px solid $grey;
+    border-radius: 5px;
+    display: block;
+    text-decoration: none;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 0 10px $grey;
+      outline: none;
+    }
+
+    .lesson-header {
+      color: $white;
+      background-color: $bg_color;
+      padding: 0.4em;
+      height: 60px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 20% 80%;
+    }
+
+    &.completed {
+      .lesson-header {
+        background-color: $completed_bg_color;
+      }
+    }
+
+    .lesson-order {
+      font-size: 2em;
+      font-weight: 300;
+      align-self: center;
+      justify-self: center;
+    }
+
+    .lesson-title {
+      font-size: 1.2em;
+      color: $white;
+      font-weight: 300;
+      max-height: 50px;
+      overflow: hidden;
+      align-self: center;
+    }
+
+    .icon-ok {
+      font-size: 1.5em;
+      justify-self: left;
+      align-self: center;
+
+      &::before {
+        color: $check_color;
+        margin-right: 0;
+        margin-left: 0.3em;
+      }
+    }
+
+    .lesson-tile-body {
+      padding: 0em 1em 1em 1em;
+      height: 180px;
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 80% 20%;
+      grid-template-areas:
+        "summary summary"
+        "duration start";
+    }
+
+    .duration-info {
+      grid-area: duration;
+      align-self: center;
+      text-align: left;
+    }
+
+    .icon-clock {
+      font-size: 1em;
+
+      &::before {
+        color: $grey;
+        margin-right: 0;
+      }
+    }
+
+    .lesson-duration {
+      display: inline-block;
+      font-size: 1em;
+    }
+
+    .lesson-summary {
+      grid-area: summary;
+      font-size: 0.8em;
+      overflow: hidden;
+    }
+
+    .start-lesson-button {
+      grid-area: start;
+      align-self: center;
+      min-width: 0;
+      min-height: 0;
+      padding: 0.2em;
+    }
+
+    &:hover {
+      .start-lesson-button {
+        text-decoration: underline;
+        box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 10px 4px;
+      }
+    }
+
+    &:focus {
+      .start-lesson-button {
+        box-shadow: rgba(0, 0, 0, 0.298039) 0px 2px 10px 4px;
+      }
+    }
+  }
+
+  .sortable-lessons {
+    .sortable-placeholder {
+      border: 1px dashed #ccc;
+      background-color: #f9f9f9;
+      height: 240px;
+      width: 240px;
+      color: $white;
+      cursor: pointer;
+      margin: 0.5em;
+      border-radius: 5px;
+    }
+  }
+}

@@ -44,17 +44,23 @@
 }
 
 .lesson-info {
-  display: grid;
-  grid-template-areas: "lesson-info-item lesson-info-item";
+  display: flex;
+
+  .lesson-info-duration {
+    margin-left: 2em;
+  }
 }
 
 .lesson-listing-item {
+  display: grid;
+  grid-template-columns: 20px auto;
+  grid-template-areas: "lesson-number lesson-title";
+
   .lesson-number {
-    grid-area: lesson-info-item;
-    display: inline-block;
+    grid-area: lesson-number;
   }
-  .lesson-link {
-    grid-area: lesson-info-item;
-    display: inline-block;
+
+  .lesson-title {
+    grid-area: lesson-title;
   }
 }

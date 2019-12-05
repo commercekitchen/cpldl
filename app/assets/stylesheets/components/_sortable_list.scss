@@ -4,9 +4,8 @@
 
 .list-titles {
   border-width: 2px;
-  color: $teal;
-  font-size: 1.5em;
-  font-weight: 100;
+  font-size: 1em;
+  font-weight: 400;
 }
 
 .table-row {
@@ -18,6 +17,7 @@
 .cell {
   display: table-cell;
   width: 15%;
+  vertical-align: middle;
   @include media($mobile-large) {
     display: block;
   }
@@ -49,19 +49,6 @@ li.sortable-placeholder {
   background-color: #f9f9f9;
   height: 50px;
   margin-bottom: 10px;
-}
-
-div.sortable-placeholder {
-  border: 1px dashed #ccc;
-  background-color: #f9f9f9;
-  height: 222px;
-  width: 222px;
-  color: $white;
-  margin-bottom: 2em;
-  margin-right: 2.8em;
-  position: relative;
-  cursor: pointer;
-  float: left;
 }
 
 .category_row {
