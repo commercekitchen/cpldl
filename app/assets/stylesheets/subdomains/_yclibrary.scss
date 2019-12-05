@@ -3,6 +3,6 @@
   @include banner($yclibrary-blue);
   @include buttons($yclibrary-blue);
   @include course_widget($yclibrary-blue);
-  @include lesson_tile($yclibrary-blue, $grey, $yclibrary-light-blue);
-  @include icons($yclibrary-blue, $yclibrary-light-blue);
+  @include lesson_tile($yclibrary-blue, $grey, $orange);
+  @include icons($yclibrary-blue, $orange);
 }
