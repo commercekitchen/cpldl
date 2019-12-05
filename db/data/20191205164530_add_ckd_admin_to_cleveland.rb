@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddCkdAdminToCleveland < ActiveRecord::Migration[5.2]
   def up
     cleveland = Organization.find_by(subdomain: 'cleveland')
