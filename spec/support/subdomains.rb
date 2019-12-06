@@ -4,10 +4,11 @@
 # Make sure this file is required by spec_helper.rb
 # (e.g. save as spec/support/subdomains.rb)
 
-def switch_to_subdomain(subdomain)
+def switch_to_subdomain(subdomain, tld = nil)
   # lvh.me always resolves to 127.0.0.1
-  hostname = subdomain ? "#{subdomain}.lvh.me" : 'lvh.me'
-  Capybara.app_host = "http://#{hostname}"
+  tld ||= 'lvh.me'
+  host = subdomain ? "#{subdomain}.#{tld}" : tld
+  Capybara.app_host = "http://#{host}"
 end
 
 def switch_to_main_domain

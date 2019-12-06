@@ -23,6 +23,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Include stage component of tld
+  config.action_dispatch.tld_length = 2
+
   # => to send email from local host
   #https://chipublib.digitallearn.org/
   config.action_mailer.default_url_options = { host: "stage.digitallearn.org" }

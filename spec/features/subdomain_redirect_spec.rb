@@ -15,21 +15,24 @@ feature 'subdomain redirect' do
   end
 
   scenario 'user visits unknown stage subdomain' do
-    switch_to_subdomain('foobar.stage')
+    ActionDispatch::Http::URL.tld_length = 2
+    switch_to_subdomain('foobar', 'stage.lvh.me')
     visit root_path
     expect(current_url).to_not include('foobar')
     expect(current_url).to include('www.stage.')
+    ActionDispatch::Http::URL.tld_length = 1
   end
 
   scenario 'user visits with no subdomain' do
-    switch_to_subdomain('')
     visit root_path
     expect(current_url).to include('www.')
   end
 
   scenario 'user visits staging with no subdomain' do
-    switch_to_subdomain('stage')
+    ActionDispatch::Http::URL.tld_length = 2
+    switch_to_subdomain('', 'stage.lvh.me')
     visit(root_path)
     expect(current_url).to include('www.stage.')
+    ActionDispatch::Http::URL.tld_length = 1
   end
 end
