@@ -13,5 +13,20 @@ describe Devise::Mailer, type: :mailer do
       expect(mail.body.encoded).to match("#{organization.subdomain}.test.host")
     end
 
+    describe 'custom host' do
+      before do
+        ActionMailer::Base.default_url_options[:host] = 'new.custom.host'
+        ActionDispatch::Http::URL.tld_length = 2
+      end
+
+      after do
+        ActionMailer::Base.default_url_options[:host] = 'test.host'
+        ActionDispatch::Http::URL.tld_length = 1
+      end
+
+      it 'should include correct link in body with different host' do
+        expect(mail.body.encoded).to match("#{organization.subdomain}.new.custom.host")
+      end
+    end
   end
 end

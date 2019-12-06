@@ -62,11 +62,12 @@ RSpec.configure do |config|
   config.before(:each) do
     @english = create(:language)
     @spanish = create(:spanish_lang)
+    I18n.locale = :en
   end
 
-  # Set language to english unless
+  # Reset test host
   config.before(:each) do
-    I18n.locale = :en
+    switch_to_subdomain('')
   end
 
   config.after(:each, type: :view) do
