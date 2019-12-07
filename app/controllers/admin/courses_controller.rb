@@ -180,7 +180,7 @@ module Admin
     end
 
     def propagate_course_changes
-      Course.copied_from_course(@course).update_all(attributes_to_change.to_h)
+      Course.copied_from_course(@course).update(attributes_to_change.to_h)
     end
   end
 end
