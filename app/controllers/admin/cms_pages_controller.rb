@@ -61,9 +61,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        CmsPage.find(v[:id]).update_attribute(:cms_page_order, v[:position])
-      end
+      SortService.sort(model: CmsPage, order_params: params[:order], attribute_key: :cms_page_order)
 
       head :ok
     end

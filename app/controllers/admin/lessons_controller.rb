@@ -60,9 +60,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        Lesson.find(v['id']).update_attribute(:lesson_order, v['position'])
-      end
+      SortService.sort(model: Lesson, order_params: params[:order], attribute_key: :lesson_order)
 
       head :ok
     end

@@ -101,9 +101,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        Course.find(v[:id]).update_attribute(:course_order, v[:position])
-      end
+      SortService.sort(model: Course, order_params: params[:order], attribute_key: :course_order)
 
       head :ok
     end
