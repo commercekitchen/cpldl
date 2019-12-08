@@ -41,6 +41,7 @@ module Admin
       @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
+
       if @lesson.update(@lesson_params)
         Unzipper.new(@lesson.story_line).unzip_lesson if lesson_params[:story_line].present?
         changed = propagate_changes? ? propagate_lesson_changes : 0
@@ -98,9 +99,9 @@ module Admin
         true
       else
         warnings = ['There can only be one assessment for a Course.',
-                    'If you are sure you want to <em>replace</em> it, please delete the existing one and try again.',
+                    'If you are sure you want to replace it, please delete the existing one and try again.',
                     'Otherwise, please edit the existing assessment for this course.']
-        flash.now[:alert] = warnings.join('<br/>').html_safe
+        flash.now[:alert] = warnings
         render :new and return # rubocop:disable Style/AndOr
       end
     end

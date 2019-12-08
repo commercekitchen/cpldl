@@ -14,7 +14,7 @@ module Admin
     def create
       @cms_page = CmsPage.new(cms_page_params)
       if params[:commit] == 'Preview Page'
-        @cms_page_body = @cms_page.body.html_safe
+        @cms_page_body = unescaped_cms_content
         render :new
       elsif params[:commit] == 'Save Page'
         @cms_page.set_pub_date if params[:cms_page][:pub_status] == 'P'
@@ -30,7 +30,7 @@ module Admin
     def edit; end
 
     def update_pub_status
-      cms_page            = CmsPage.find(params[:cms_page_id])
+      cms_page = CmsPage.find(params[:cms_page_id])
       cms_page.pub_status = params[:value]
       cms_page.update_pub_date(params[:value])
 
@@ -47,7 +47,7 @@ module Admin
       # slug must be set to nil for friendly ID to update
       @cms_page.slug = nil if @cms_page.title != params[:cms_page][:title]
       if params[:commit] == 'Preview Page'
-        @cms_page_body = @cms_page.body.html_safe
+        @cms_page_body = unescaped_cms_content
         render :new
       else
         @cms_page.update_pub_date(@pub_status) unless @pub_status == @cms_page.pub_status
@@ -84,6 +84,10 @@ module Admin
       @max_title = CmsPage.validators_on(:title).first.options[:maximum]
       @max_seo   = CmsPage.validators_on(:seo_page_title).first.options[:maximum]
       @max_meta  = CmsPage.validators_on(:meta_desc).first.options[:maximum]
+    end
+
+    def unescaped_cms_content
+      @cms_page.body.html_safe
     end
 
     def cms_page_params

@@ -97,10 +97,10 @@
         Assessment<span class="required"></span>
       <% end %>
       <p class="note">Is this lesson the final assessment for the course?</p>
-      <%=  f.radio_button :is_assessment, true %>
-      <%= f.label :is_assessment_yes, "Yes", class: "plain" %>
+      <%= f.radio_button :is_assessment, true %>
+      <%= f.label :is_assessment_true, "Yes", class: "plain" %>
       <%= f.radio_button :is_assessment, false %>
-      <%= f.label :is_assessment_no, "No", class: "plain" %>
+      <%= f.label :is_assessment_false, "No", class: "plain" %>
     </fieldset>
   </div>
 
