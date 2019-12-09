@@ -24,7 +24,7 @@ class LessonsController < ApplicationController
 
       if current_user
         @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
-        @course_progress.update_attribute(:tracked, true)
+        @course_progress.update(tracked: true)
       else
         session[:course_id] = @course.id if session[:course_id].blank?
         @course_progress = CourseProgress.new(course_id: session[:course_id], tracked: true)

@@ -44,9 +44,8 @@ module Admin
     end
 
     def sort
-      params[:order].each_value do |v|
-        LibraryLocation.find(v[:id]).update_attribute(:sort_order, v[:position])
-      end
+      SortService.sort(model: LibraryLocation, order_params: params[:order], attribute_key: :sort_order)
+
       head :ok
     end
 

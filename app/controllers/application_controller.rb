@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   before_action :set_cms_footer_pages
   before_action :set_cms_marketing_pages
   before_action :set_user_token
-  before_action :set_mailer_host
   before_action :require_valid_profile
 
   helper_method :current_organization
@@ -30,16 +29,6 @@ class ApplicationController < ActionController::Base
     end
 
     org
-  end
-
-  def set_mailer_host
-    ActionMailer::Base.default_url_options[:host] = if staging?
-                                                      "#{stage_subdomain}.stage.digitallearn.org"
-                                                    elsif Rails.env.production?
-                                                      "#{current_organization.subdomain}.digitallearn.org"
-                                                    else
-                                                      request.host
-                                                    end
   end
 
   def require_valid_profile
@@ -132,11 +121,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_www
-    if staging?
-      redirect_to subdomain: 'www.stage'
-    else
-      redirect_to subdomain: 'www'
-    end
+    redirect_to subdomain: 'www'
   end
 
   def in_subdomain?(subdomain)
@@ -153,11 +138,7 @@ class ApplicationController < ActionController::Base
   private
 
   def current_subdomain
-    if staging?
-      stage_subdomain
-    else
-      request.subdomain
-    end
+    request.subdomain
   end
 
   def stage_subdomain
@@ -167,10 +148,6 @@ class ApplicationController < ActionController::Base
     else
       ''
     end
-  end
-
-  def staging?
-    request.subdomain.include?('stage')
   end
 
   def admin_after_sign_in_path_for(user)

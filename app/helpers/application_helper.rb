@@ -1,27 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def resource_name
-    :user
-  end
-
-  def resource
-    @resource ||= User.new
-  end
-
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
-  end
-
-  def svg_tag(filename, options = {})
-    assets = Rails.application.assets
-    file = assets.find_asset(filename).source.force_encoding('UTF-8')
-    doc = Nokogiri::HTML::DocumentFragment.parse file
-    svg = doc.at_css 'svg'
-    svg['class'] = options[:class] if options[:class].present?
-    raw doc
-  end
-
   def tel_to(number)
     return '<no phone number>' if number.blank?
 
@@ -50,15 +29,13 @@ module ApplicationHelper
     !(current_user.blank? && top_level_domain?)
   end
 
-  def user_sidebar
-    return unless @show_sidebar
-
+  def user_sidebar(sidebar)
     if org_admin?
-      @sidebar ||= 'shared/admin/sidebar'
+      sidebar ||= 'shared/admin/sidebar'
     else
-      @sidebar = 'shared/user/sidebar'
+      sidebar = 'shared/user/sidebar'
     end
-    render @sidebar
+    render sidebar
   end
 
   def org_admin?(user = current_user)

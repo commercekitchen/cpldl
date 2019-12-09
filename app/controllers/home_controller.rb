@@ -11,7 +11,9 @@ class HomeController < ApplicationController
   end
 
   def language_toggle
-    session[:locale] = params['lang']
+    requested_locale = params['lang']
+    whitelisted_locales = I18n.available_locales.map(&:to_s)
+    session[:locale] = requested_locale if whitelisted_locales.include?(requested_locale)
     redirect_back(fallback_location: root_path)
   end
 end

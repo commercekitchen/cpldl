@@ -23,9 +23,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        Category.find(v[:id]).update_attribute(:category_order, v[:position])
-      end
+      SortService.sort(model: Category, order_params: params[:order], attribute_key: :category_order)
 
       head :ok
     end
