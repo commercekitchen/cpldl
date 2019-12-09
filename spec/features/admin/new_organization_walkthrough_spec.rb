@@ -104,7 +104,7 @@ feature 'Admin create a new organization' do
     click_on 'Send Invitation'
 
     expect(page).to have_content('The user already exists')
-    expect(current_path).to eq(admin_dashboard_admin_invitation_path)
+    expect(current_path).to eq(new_user_invitation_path)
   end
 
   scenario 'with programs' do

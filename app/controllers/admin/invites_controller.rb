@@ -2,11 +2,13 @@
 
 module Admin
   class InvitesController < Devise::InvitationsController
+    before_action :enable_sidebar
+
     def create
       user = User.find_by(email: params[:user][:email])
       if user
         flash[:alert] = 'The user already exists'
-        redirect_to admin_dashboard_admin_invitation_path
+        redirect_to new_user_invitation_path
       else
         super
       end
