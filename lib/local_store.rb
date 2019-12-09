@@ -3,7 +3,7 @@
 class LocalStore
   def save(file:, key:, **opts)
     zip_file = opts[:zip_file]
-    path = File.join(Rails.root, env_path, key)
+    path = Rails.root.join(env_path, key)
     FileUtils.mkdir_p(File.dirname(path))
     zip_file.extract(file, path)
   end

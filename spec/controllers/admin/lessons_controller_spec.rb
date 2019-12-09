@@ -3,58 +3,33 @@
 require 'rails_helper'
 
 describe Admin::LessonsController do
+  let(:org) { FactoryBot.create(:organization) }
+  let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
+  let(:course) { FactoryBot.create(:course, organization: org) }
+  let(:lesson1) { FactoryBot.create(:lesson, title: 'Lesson1', course: course, lesson_order: 1) }
+  let(:lesson2) { FactoryBot.create(:lesson, title: 'Lesson2', course: course, lesson_order: 2) }
 
   before(:each) do
-    @request.host = 'www.test.host'
-    @org = create(:default_organization)
-    @course1 = create(:course)
-    @lesson1 = create(:lesson, title: 'Lesson1')
-    @lesson2 = create(:lesson, title: 'Lesson2')
-    @course1.lessons << [@lesson1, @lesson2]
-    @course1.save
-
-    @admin = create(:user, :admin, organization: @org)
-    sign_in @admin
+    @request.host = "#{org.subdomain}.test.host"
+    sign_in admin
   end
-
-  # => not yet implemented <=
-
-  # describe "GET #index" do
-  #   it "assigns all lessons for a given course as @lessons" do
-  #     get :index, course_id: @course1.to_param
-  #     expect(assigns(:lessons).count).to eq(2)
-  #     expect(assigns(:lessons).first).to eq(@lesson1)
-  #     expect(assigns(:lessons).second).to eq(@lesson2)
-  #   end
-
-  #   it "responds to json" do
-  #     get :index, course_id: @course1.to_param, format: :json
-  #     expect(response).to have_http_status(:success)
-  #   end
-  # end
 
   describe 'GET #edit' do
     it 'assigns the requested lesson as @lesson' do
-      get :edit, params: { course_id: @course1.to_param, id: @lesson1.id.to_param }
-      expect(assigns(:lesson)).to eq(@lesson1)
+      get :edit, params: { course_id: course.to_param, id: lesson1.id.to_param }
+      expect(assigns(:lesson)).to eq(lesson1)
     end
   end
 
   describe 'GET #new' do
     it 'assigns a new lesson as @lesson' do
-      get :new, params: { course_id: @course1.to_param }
+      get :new, params: { course_id: course.to_param }
       expect(assigns(:lesson)).to be_a_new(Lesson)
     end
   end
 
   describe 'POST #create' do
-    before(:each) do
-      @story_line = Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/BasicSearch1.zip'), 'application/zip')
-    end
-
-    after(:each) do
-      FileUtils.remove_dir "#{Rails.root}/public/storylines/3", true
-    end
+    let(:story_line) { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip') }
 
     let(:valid_attributes) do
       { duration: '01:20',
@@ -63,7 +38,7 @@ describe Admin::LessonsController do
         meta_desc:  'Its good to Meta-Tate',
         summary:  'Sum-tings-smelly',
         is_assessment: false,
-        story_line: @story_line,
+        story_line: story_line,
         pub_status: 'P' }
     end
 
@@ -74,7 +49,7 @@ describe Admin::LessonsController do
         meta_desc:  'is this like inception',
         summary:  'Sum-tings-smelly',
         is_assessment: true,
-        story_line: @story_line,
+        story_line: story_line,
         pub_status: 'P' }
     end
 
@@ -92,50 +67,50 @@ describe Admin::LessonsController do
     context 'with valid params' do
       it 'creates a new lesson' do
         expect do
-          post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
+          post :create, params: { course_id: course.to_param, lesson: valid_attributes }
         end.to change(Lesson, :count).by(1)
       end
 
       it 'creates a new assessment' do
         expect do
-          post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
+          post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
         end.to change(Lesson, :count).by(1)
       end
 
       it 'assigns a new assessment to the end of the course lessons' do
-        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
+        FactoryBot.create(:lesson, course: course)
+        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
         lesson = Lesson.last
-        expect(lesson.lesson_order).to be(3)
+        expect(lesson.lesson_order).to eq(2)
       end
 
-      it 'renders new if an assessment already exists' do
-        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes }
-        expect(@course1.lessons.count).to eq(3)
-        post :create, params: { course_id: @course1.to_param, lesson: assessment_attributes, title: 'something different' }
-        expect(@course1.lessons.count).to eq(3)
+      it 'does not create a second assessment' do
+        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
+        expect do
+          post :create, params: { course_id: course.to_param, lesson: assessment_attributes, title: 'something different' }
+        end.to_not change(Lesson, :count)
       end
 
       it 'assigns a new lesson as @lesson' do
-        post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: valid_attributes }
         expect(assigns(:lesson)).to be_a(Lesson)
         expect(assigns(:lesson)).to be_persisted
       end
 
       it 'redirects to the admin edit view of the lesson' do
-        post :create, params: { course_id: @course1.to_param, lesson: valid_attributes }
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to("http://www.test.host/admin/courses/#{@course1.slug}/lessons/lesson-your-load-man/edit")
+        post :create, params: { course_id: course.to_param, lesson: valid_attributes }
+        expect(response).to redirect_to(edit_admin_course_lesson_path(course, 'lesson-your-load-man'))
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved lesson as @lesson' do
-        post :create, params: { course_id: @course1.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }
         expect(assigns(:lesson)).to be_a_new(Lesson)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: { course_id: @course1.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }
         expect(response).to render_template('new')
       end
     end
@@ -144,16 +119,16 @@ describe Admin::LessonsController do
   describe 'POST #update' do
     context 'with valid params' do
       it 'updates an existing Lesson' do
-        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
-                          lesson: @lesson1.attributes, commit: 'Save Lesson' }
+        update_params = { course_id: course.to_param, id: lesson1.to_param,
+                          lesson: lesson1.attributes, commit: 'Save Lesson' }
         patch :update, params: update_params
         expect(response).to have_http_status(:redirect)
       end
 
       it 'updates with duration as a string' do
-        @lesson_attributes = @lesson1.attributes
+        @lesson_attributes = lesson1.attributes
         @lesson_attributes['duration'] = '1:00'
-        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
+        update_params = { course_id: course.to_param, id: lesson1.to_param,
                           lesson: @lesson_attributes, commit: 'Save Lesson' }
         patch :update, params: update_params
         expect(response).to have_http_status(:redirect)
@@ -162,9 +137,9 @@ describe Admin::LessonsController do
       it 'propagates updates to child lessons' do
         org = create(:organization)
         child_course = create(:course, organization: org)
-        lesson1_child = create(:lesson, course: child_course, parent: @lesson1)
-        update_params = { course_id: @course1.to_param, id: @lesson1.to_param,
-                          lesson: @lesson1.attributes.merge(propagation_org_ids: [org.id], title: 'Test Lesson'),
+        lesson1_child = create(:lesson, course: child_course, parent: lesson1)
+        update_params = { course_id: course.to_param, id: lesson1.to_param,
+                          lesson: lesson1.attributes.merge(propagation_org_ids: [org.id], title: 'Test Lesson'),
                           commit: 'Save Lesson' }
         patch :update, params: update_params
 
@@ -174,4 +149,13 @@ describe Admin::LessonsController do
     end
   end
 
+  describe 'POST #sort' do
+    it 'should change course order' do
+      order_params = { '0' => { id: lesson2.id, position: 1 }, '1' => { id: lesson1.id, position: 2 } }
+      post :sort, params: { order: order_params }
+
+      expect(lesson1.reload.lesson_order).to eq(2)
+      expect(lesson2.reload.lesson_order).to eq(1)
+    end
+  end
 end

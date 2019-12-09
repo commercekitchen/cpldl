@@ -3,21 +3,16 @@
 require 'feature_helper'
 
 feature 'Admin user clicks through each page' do
+  let(:org) { FactoryBot.create(:organization) }
+  let(:user) { FactoryBot.create(:user, :admin, organization: org) }
 
   before(:each) do
-    @user = FactoryBot.create(:user)
-    @user.add_role(:admin)
-    @organization = FactoryBot.create(:organization)
-    @category = FactoryBot.create(:category, organization: @user.organization)
-    @course = FactoryBot.create(:course_with_lessons, category: @category, organization: @user.organization)
-    @user.add_role(:admin, @organization)
-    @user.organization.reload
-    switch_to_subdomain('chipublib')
-    log_in_with @user.email, @user.password
+    switch_to_subdomain(org.subdomain)
+    login_as user
   end
 
   scenario 'can visit each link in the header' do
-    visit admin_dashboard_index_path(subdomain: 'chipublib')
+    visit admin_dashboard_index_path
     expect(page).to have_content('Hi Admin!')
 
     click_link 'Dashboard'

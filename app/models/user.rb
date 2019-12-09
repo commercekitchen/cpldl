@@ -89,9 +89,9 @@ class User < ApplicationRecord
     conditions[:organization_id] = Organization.find_by(subdomain: subdomain)&.id
 
     if (login = conditions.delete(:login))
-      where(conditions.to_h).where(['library_card_number = :value OR email = :value', { value: login }]).first
+      where(conditions.to_h).find_by(['library_card_number = :value OR email = :value', { value: login }])
     elsif conditions.key?(:library_card_number) || conditions.key?(:email)
-      where(conditions.to_h).first
+      find_by(conditions.to_h)
     end
   end
 

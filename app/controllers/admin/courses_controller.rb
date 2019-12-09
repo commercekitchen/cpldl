@@ -101,9 +101,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        Course.find(v[:id]).update_attribute(:course_order, v[:position])
-      end
+      SortService.sort(model: Course, order_params: params[:order], attribute_key: :course_order)
 
       head :ok
     end
@@ -182,7 +180,7 @@ module Admin
     end
 
     def propagate_course_changes
-      Course.copied_from_course(@course).update_all(attributes_to_change.to_h)
+      Course.copied_from_course(@course).update(attributes_to_change.to_h)
     end
   end
 end

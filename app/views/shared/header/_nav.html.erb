@@ -1,3 +1,6 @@
 <nav class="header-nav">
-  <%= nav_links %>
+  <% nav_links.each_with_index do |link, i| %>
+    <%= link %>
+    <%= " | " unless i == nav_links.count - 1 %>
+  <% end %>
 </nav>

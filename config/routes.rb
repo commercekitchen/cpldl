@@ -88,7 +88,6 @@ Rails.application.routes.draw do
     resources :users, only: [:index]
     resources :pages, only: [:index]
 
-    get 'dashboard/admin_invitation', to: 'dashboard#admin_invitation'
     get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
     post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
 

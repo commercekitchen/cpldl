@@ -10,7 +10,7 @@
     <main class="container">
       <%= render "shared/flashes" %>
       <div class=<%= @show_sidebar ? "content-grid-with-sidebar" : "content-grid" %>>
-        <%= user_sidebar %>
+        <%= user_sidebar(@sidebar) if @show_sidebar %>
         <div class="main-content">
           <%= yield %>
         </div>

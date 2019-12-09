@@ -14,6 +14,7 @@ module Admin
     end
 
     def admin_invitation
+      self.resource = resource_class.new
       render 'admin/invites/new'
     end
 

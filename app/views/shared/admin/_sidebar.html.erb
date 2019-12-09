@@ -2,7 +2,7 @@
   <div class='sidebar-section'>
   <div class='sidebar-section__header'>Site Administration</div>
     <li><%= link_to "User Accounts", admin_users_path %></li>
-    <li><%= link_to "Invite Admin", admin_dashboard_admin_invitation_path %></li>
+    <li><%= link_to "Invite Admin", new_user_invitation_path %></li>
     <li><%= link_to "Reports", admin_reports_path %></li>
     <% if top_level_domain? %>
       <li><%= link_to "Organizations", admin_organizations_path %></li>

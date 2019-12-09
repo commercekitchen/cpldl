@@ -38,7 +38,7 @@ class Unzipper
   end
 
   def zip_file
-    @zip_file ||= File.join(Rails.root, import_path, 'original', "#{package_file_name}.zip")
+    @zip_file ||= Rails.root.join(import_path, 'original', "#{package_file_name}.zip")
   end
 
   def object_path(file)
