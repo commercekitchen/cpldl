@@ -3,19 +3,30 @@
 require 'rails_helper'
 
 describe HomeController do
+  let(:org) { FactoryBot.create(:default_organization) }
+  let(:category1) { FactoryBot.create(:category, organization: org) }
+  let(:category2) { FactoryBot.create(:category, organization: org) }
+  let(:disabled_category) { FactoryBot.create(:category, :disabled, organization: org) }
+
+  let!(:category1_course) do
+    FactoryBot.create(:course_with_lessons, organization: org, category: category1, display_on_dl: true, language: @english)
+  end
+
+  let!(:category2_course) do
+    FactoryBot.create(:course_with_lessons, organization: org, category: category2, display_on_dl: true, language: @english)
+  end
+
+  let!(:disabled_category_course) do
+    FactoryBot.create(:course_with_lessons, organization: org, category: disabled_category, display_on_dl: true, language: @english)
+  end
+
+  let!(:uncategorized_course) do
+    FactoryBot.create(:course_with_lessons, organization: org, display_on_dl: true, language: @english)
+  end
+
 
   before(:each) do
-    @www = create(:default_organization)
-    @request.host = 'www.test.host'
-
-    @category1 = create(:category, organization: @www)
-    @category2 = create(:category, organization: @www)
-    @disabled_category = create(:category, :disabled, organization: @www)
-
-    @category1_course = create(:course_with_lessons, organization: @www, category: @category1, display_on_dl: true, language: @english)
-    @category2_course = create(:course_with_lessons, organization: @www, category: @category2, display_on_dl: true, language: @english)
-    @disabled_category_course = create(:course_with_lessons, organization: @www, category: @disabled_category, display_on_dl: true, language: @english)
-    @uncategorized_course = create(:course_with_lessons, organization: @www, display_on_dl: true, language: @english)
+    @request.host = "#{org.subdomain}.test.host"
   end
 
   describe '#index' do
@@ -28,7 +39,7 @@ describe HomeController do
     end
 
     it 'assigns enabled category ids' do
-      expect(assigns(:category_ids)).to include(@category1.id, @category2.id)
+      expect(assigns(:category_ids)).to include(category1.id, category2.id)
     end
 
     it 'only assigns enabled category ids' do
@@ -36,11 +47,23 @@ describe HomeController do
     end
 
     it 'assigns uncategorized and disabled category courses to uncategorized' do
-      expect(assigns(:uncategorized_courses)).to include(@disabled_category_course, @uncategorized_course)
+      expect(assigns(:uncategorized_courses)).to include(disabled_category_course, uncategorized_course)
     end
 
     it 'assigns correct number of uncategorized courses' do
       expect(assigns(:uncategorized_courses).count).to eq(2)
+    end
+  end
+
+  describe 'GET #home_language_toggle' do
+    it 'should set session locale to valid language' do
+      get :language_toggle, params: { lang: 'es' }
+      expect(controller.session[:locale]).to eq('es')
+    end
+
+    it 'should not set session locale to invalid language' do
+      get :language_toggle, params: { lang: 'es UNION ALL SELECT NULL#' }
+      expect(controller.session[:locale]).to be_nil
     end
   end
 
