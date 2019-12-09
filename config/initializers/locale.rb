@@ -14,3 +14,6 @@ unless defined?(Rake::Application)
     I18n.backend = I18n::Backend::Chain.new(I18n.backend, I18n::Backend::Simple.new)
   end
 end
+
+I18n.available_locales = [:en, :es]
+I18n.default_locale = :en
