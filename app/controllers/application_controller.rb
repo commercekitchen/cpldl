@@ -11,25 +11,10 @@ class ApplicationController < ActionController::Base
   before_action :set_user_token
   before_action :require_valid_profile
 
-  helper_method :current_organization
   helper_method :subdomain?
   helper_method :top_level_domain?
   helper_method :hide_language_links?
   helper_method :in_subdomain?
-
-  def current_organization
-    find_organization
-  end
-
-  def find_organization
-    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
-
-    unless org.subdomain == current_subdomain
-      redirect_to_www && (return org)
-    end
-
-    org
-  end
 
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
@@ -120,10 +105,6 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def redirect_to_www
-    redirect_to subdomain: 'www'
-  end
-
   def in_subdomain?(subdomain)
     current_organization.subdomain == subdomain
   end
@@ -136,10 +117,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def current_subdomain
-    request.subdomain
-  end
 
   def stage_subdomain
     subdomain_array = request.subdomain.split('.')

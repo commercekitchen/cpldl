@@ -12,6 +12,18 @@ module Admin
         hits.first
       end
 
+      def locale_string(i18n_locale)
+        i18n_locale.to_s == 'es' ? 'Spanish' : 'English'
+      end
+
+      def default_org_i18n_key(key)
+        key.gsub(current_organization.subdomain, 'default_org')
+      end
+
+      def i18n_with_default(key)
+        t(key, default: t(default_org_i18n_key(key)))
+      end
+
       private
 
       def en_keys
@@ -32,18 +44,6 @@ module Admin
 
       def es_keys
         en_keys
-      end
-
-      def locale_string(i18n_locale)
-        i18n_locale.to_s == 'en' ? 'English' : 'Spanish'
-      end
-
-      def default_org_i18n_key(key)
-        key.gsub(current_organization.subdomain, 'default_org')
-      end
-
-      def i18n_with_default(key)
-        t(key, default: t(default_org_i18n_key(key)))
       end
     end
   end
