@@ -27,7 +27,7 @@ feature 'Anonymous user submits contact form' do
   scenario 'displays errors if not all required fields are entered' do
     visit new_contact_path(subdomain: 'www')
     click_button 'Submit'
-    expect(current_path).to eq contact_index_path
+    expect(current_path).to eq contacts_path
     expect(page).to have_content 'The following errors'
   end
 

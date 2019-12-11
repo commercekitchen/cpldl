@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ContactController < ApplicationController
+class ContactsController < ApplicationController
   before_action :ensure_www
 
   def new
@@ -8,8 +8,8 @@ class ContactController < ApplicationController
   end
 
   def create
-    @contact = Contact.new
-    if @contact.update(contact_params)
+    @contact = Contact.new(contact_params)
+    if @contact.save
       ContactMailer.email(@contact.id).deliver_later
       redirect_to root_path(subdomain: 'www'), notice: 'Thank you for your interest!  We will be in contact shortly.'
     else

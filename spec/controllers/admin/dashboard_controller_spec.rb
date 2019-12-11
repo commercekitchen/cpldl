@@ -57,7 +57,7 @@ describe Admin::DashboardController do
 
     it 'should correctly assign importable courses' do
       get :import_courses
-      expect(assigns(:importable_courses)).to eq([dl_course2, dl_course4])
+      expect(assigns(:importable_courses)).to include(dl_course2, dl_course4)
     end
   end
 
