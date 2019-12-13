@@ -8,4 +8,5 @@ SimpleCov.start "rails" do
   add_group "Services", "app/services"
 
   add_filter "lib/s3_store.rb"
+  add_filter "models/ckeditor"
 end
