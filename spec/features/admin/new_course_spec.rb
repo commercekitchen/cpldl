@@ -67,7 +67,15 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{category.name}']")
   end
 
-  pending 'Admin should be able to add both course supl materials and post-course supl materials'
+  scenario 'adds supplemental materials and post-course supplemental materials' do
+    fill_basic_course_info
+    attach_file 'Text copies of the course', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_1.pdf')
+    attach_file 'Additional Resources (post-completion)', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_Worksheet.pdf')
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully created.')
+    expect(page).to have_content('Why_Use_a_Computer_1.pdf')
+    expect(page).to have_content('Why_Use_a_Computer_Worksheet.pdf')
+  end
 
   scenario 'adds a lesson' do
     visit edit_admin_course_path(course_id: course, id: course.id)

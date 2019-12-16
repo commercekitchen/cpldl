@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     post 'programs/select_program'
   end
 
-  resources :contact, only: [:new, :create]
+  resources :contacts, only: [:new, :create]
 
   get 'home_language_toggle', to: 'home#language_toggle'
 

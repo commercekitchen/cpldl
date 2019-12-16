@@ -24,7 +24,6 @@ describe HomeController do
     FactoryBot.create(:course_with_lessons, organization: org, display_on_dl: true, language: @english)
   end
 
-
   before(:each) do
     @request.host = "#{org.subdomain}.test.host"
   end

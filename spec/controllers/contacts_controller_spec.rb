@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe ContactController do
+describe ContactsController do
 
   before(:each) do
     @www = create(:default_organization)
@@ -69,13 +69,10 @@ describe ContactController do
       expect(contact.comments).to eq "We'd like one too!"
     end
 
-    xit 'sends the contact email on successful submission' do
-      # TODO: I don't know how to do this with rspec mocks, here's how to do it in Mocha.
-      # I'd like to switch this project over to mocha for consistency, but other tests would need
-      # fixed too.
-      success_object = stub(deliver_later: true)
-      ContactMailer.expects(:email).once.returns(success_object)
-      post :create, params: { contact: valid_attributes }
+    it 'sends the contact email on successful submission' do
+      expect do
+        post :create, params: { contact: valid_attributes }
+      end.to have_enqueued_job.on_queue('mailers')
     end
 
     it 'renders the new view if there is missing information' do
