@@ -23,14 +23,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def base_url
-    if request.host.include?('stage')
-      'stage.digitallearn.org'
-    else
-      'digitallearn.org'
-    end
-  end
-
   def top_level_domain?
     current_organization.subdomain == 'www'
   end
@@ -117,15 +109,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def stage_subdomain
-    subdomain_array = request.subdomain.split('.')
-    if subdomain_array.size == 2
-      subdomain_array.first
-    else
-      ''
-    end
-  end
 
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?
