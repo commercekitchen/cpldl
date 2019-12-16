@@ -12,7 +12,7 @@ describe CompletedCoursesExporter do
 
     let(:user) { FactoryBot.create(:user, organization: organization, profile: profile) }
     let!(:user_course_progress) { FactoryBot.create(:course_progress, user: user, completed_at: Time.zone.now) }
-    
+
     let(:parent_user) { FactoryBot.create(:user, :parent, organization: organization) }
     let!(:parent_user_course_progress) { FactoryBot.create(:course_progress, user: parent_user, completed_at: Time.zone.now) }
 
@@ -24,7 +24,7 @@ describe CompletedCoursesExporter do
 
     let(:trainer_user) { FactoryBot.create(:user, :trainer, organization: organization) }
     let!(:trainer_user_course_progress) { FactoryBot.create(:course_progress, user: trainer_user, completed_at: Time.zone.now) }
-    
+
     let(:user_with_program) { FactoryBot.create(:user, program: program, organization: organization) }
     let!(:user_with_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_program, completed_at: Time.zone.now) }
 

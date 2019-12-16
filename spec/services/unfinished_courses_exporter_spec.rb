@@ -10,7 +10,7 @@ describe UnfinishedCoursesExporter do
 
     let(:user) { FactoryBot.create(:user, organization: organization) }
     let!(:user_course_progress) { FactoryBot.create(:course_progress, user: user) }
-    
+
     let(:parent_user) { FactoryBot.create(:user, :parent, organization: organization) }
     let!(:parent_user_course_progress) { FactoryBot.create(:course_progress, user: parent_user) }
 
@@ -22,7 +22,7 @@ describe UnfinishedCoursesExporter do
 
     let(:trainer_user) { FactoryBot.create(:user, :trainer, organization: organization) }
     let!(:trainer_user_course_progress) { FactoryBot.create(:course_progress, user: trainer_user) }
-    
+
     let(:user_with_program) { FactoryBot.create(:user, program: program, organization: organization) }
     let!(:user_with_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_program) }
 
