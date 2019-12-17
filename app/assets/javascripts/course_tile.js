@@ -1,6 +1,6 @@
 $(document).ready(function() {
-  var $el = $(".lesson-title");
-  var height = 50;
+  var $el = $(".course-title");
+  var height = 75;
   $el.shave(height);
   bindResizeEvent($el, height);
 });

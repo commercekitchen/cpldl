@@ -13,11 +13,6 @@ module Admin
       render 'admin/courses/index'
     end
 
-    def admin_invitation
-      self.resource = resource_class.new
-      render 'admin/invites/new'
-    end
-
     def manually_confirm_user
       User.find(params[:user_id]).confirm if current_user.has_role?(:admin, current_organization)
       redirect_to admin_users_path

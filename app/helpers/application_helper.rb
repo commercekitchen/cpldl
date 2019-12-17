@@ -1,6 +1,24 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def current_organization
+    find_organization
+  end
+
+  def find_organization
+    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
+
+    unless org.subdomain == current_subdomain
+      redirect_to_www && (return org)
+    end
+
+    org
+  end
+
+  def redirect_to_www
+    redirect_to subdomain: 'www'
+  end
+
   def tel_to(number)
     return '<no phone number>' if number.blank?
 
@@ -40,5 +58,11 @@ module ApplicationHelper
 
   def org_admin?(user = current_user)
     user.present? && user.has_role?(:admin, current_organization)
+  end
+
+  protected
+
+  def current_subdomain
+    request.subdomain
   end
 end
