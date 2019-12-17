@@ -17,6 +17,6 @@ class S3Store
   private
 
   def bucket_name
-    Rails.configuration.s3_bucket_name
+    Rails.configuration.zip_bucket_name
   end
 end
