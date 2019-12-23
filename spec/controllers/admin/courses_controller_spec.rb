@@ -212,6 +212,11 @@ describe Admin::CoursesController do
         expect(response).to redirect_to(edit_admin_course_path(course1))
       end
 
+      it 'displays appropriate notice for successful course update' do
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course' }
+        expect(flash[:notice]).to eq('Course was successfully updated.')
+      end
+
       it 'updates an existing Course, and moves on to lessons' do
         patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course and Add Lessons' }
         expect(response).to redirect_to(new_admin_course_lesson_path(course1, course1.lessons.first))
@@ -225,16 +230,29 @@ describe Admin::CoursesController do
         expect(assigns(:course).topics.last.title).to include('Another new topic')
       end
 
-      it 'propagates changes to selected courses' do
-        org = create(:organization)
-        course2.update(organization: org, parent_id: course1.id)
-        course1.propagation_org_ids = [org.id]
-        update_params = { id: course1.to_param,
-                          course: course1_attributes.merge(propagation_org_ids: [org.id], title: 'Test Course'),
-                          commit: 'Save Course' }
-        patch :update, params: update_params
-        course2.reload
-        expect(course2.title).to eq('Test Course')
+      describe 'propagation' do
+        let(:org2) { FactoryBot.create(:organization) }
+        let(:update_params) do
+          { id: course1.to_param,
+            course: course1_attributes.merge(propagation_org_ids: [org2.id], title: 'Test Course'),
+            commit: 'Save Course' }
+        end
+
+        before do
+          course2.update(organization: org2, parent_id: course1.id)
+          course1.propagation_org_ids = [org2.id]
+        end
+
+        it 'propagates changes to selected courses' do
+          patch :update, params: update_params
+          course2.reload
+          expect(course2.title).to eq('Test Course')
+        end
+
+        it 'displays propagation success message' do
+          patch :update, params: update_params
+          expect(flash[:notice]).to eq('Course was successfully updated. Changes propagated to courses for 1 subsite.')
+        end
       end
     end
   end
