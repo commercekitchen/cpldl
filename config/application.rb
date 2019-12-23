@@ -46,6 +46,8 @@ module CPLDigitalLearn
     # Default to local lesson store
     config.lesson_store = :local
 
+    config.s3_region = 'us-west-2'
+
     config.storyline_paperclip_opts = {
       url: '/system/lessons/story_lines/:id/:basename.:extension'
     }

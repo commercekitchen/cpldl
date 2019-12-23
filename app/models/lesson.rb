@@ -34,6 +34,7 @@ class Lesson < ApplicationRecord
     inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
 
   has_attached_file :story_line, Rails.configuration.storyline_paperclip_opts
+  before_post_process :skip_for_zip
   validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
@@ -49,6 +50,10 @@ class Lesson < ApplicationRecord
 
   def propagation_org_ids
     @propagation_org_ids ||= []
+  end
+
+  def skip_for_zip
+    %w[application/zip application/x-zip].include?(story_line_content_type)
   end
 
   def delete_associated_asl_files
