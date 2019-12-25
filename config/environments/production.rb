@@ -98,7 +98,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  # Use s3 for lesson files
+  ### S3 Configuration ###
+  # Enable to use s3 in dev, must specify s3_bucket_name
   config.lesson_store = :s3
-  config.s3_bucket_name = 'dl-prodapp-assets'
+
+  # S3 bucket name
+  config.zip_bucket_name = 'dl-prodapp-lessons-zipped'
+  config.s3_bucket_name = 'dl-prodapp-lessons'
+
+  config.storyline_paperclip_opts = {
+    storage: :s3,
+    path: 'storylines/:id/:basename.:extension',
+    bucket: 'dl-development-lessons-zipped',
+    s3_region: config.s3_region
+  }
 end

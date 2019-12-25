@@ -61,23 +61,25 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   ### S3 Configuration ###
-  # Enable to use s3 in dev, must specify s3_bucket_name
-  config.lesson_store = :s3
+  # Enable and update the following configuration
+
+  # Lesson storage type
+  # config.lesson_store = :s3
 
   # Region
-  config.s3_region = 'us-east-2'
+  # config.s3_region = 'us-east-2'
 
   # S3 bucket name
-  config.zip_bucket_name = 'dl-development-lessons-zipped'
-  config.s3_bucket_name = 'dl-development-lessons'
+  # config.zip_bucket_name = 'dl-development-lessons-zipped'
+  # config.s3_bucket_name = 'dl-development-lessons'
 
   # Local lesson directory
-  config.local_lesson_dir = 'public'
+  # config.local_lesson_dir = 'public'
 
-  config.storyline_paperclip_opts = {
-    storage: :s3,
-    path: 'storylines/:id/:basename.:extension',
-    bucket: 'dl-development-lessons-zipped',
-    s3_region: 'us-east-2'
-  }
+  # config.storyline_paperclip_opts = {
+  #   storage: :s3,
+  #   path: 'storylines/:id/:basename.:extension',
+  #   bucket: 'dl-development-lessons-zipped',
+  #   s3_region: config.s3_region
+  # }
 end
