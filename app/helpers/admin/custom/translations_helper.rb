@@ -30,8 +30,7 @@ module Admin
         texts = {
           'home.%<subdomain>s.custom_banner_greeting' => 'Homepage Greeting',
           'home.choose_a_course.%<subdomain>s' => 'Course Selection Greeting',
-          'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button',
-          'my_courses_page.%<subdomain>s.course_color_explaination' => 'User Course Tile Color Explanation'
+          'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button'
         }
 
         # texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
