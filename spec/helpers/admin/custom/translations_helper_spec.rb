@@ -14,20 +14,15 @@ describe Admin::Custom::TranslationsHelper do
     let(:expected_keys) do
       ["home.#{subdomain}.custom_banner_greeting",
        "home.choose_a_course.#{subdomain}",
-       "completed_courses_page.#{subdomain}.retake_the_quiz",
-       "my_courses_page.#{subdomain}.course_color_explaination"]
+       "completed_courses_page.#{subdomain}.retake_the_quiz"]
     end
 
     it 'should return correct english translation keys' do
-      expected_keys.each do |key|
-        expect(helper.translation_keys('en').keys).to include(key)
-      end
+      expect(helper.translation_keys('en').keys).to match_array(expected_keys)
     end
 
     it 'should return correct spanish translation keys' do
-      expected_keys.each do |key|
-        expect(helper.translation_keys('es').keys).to include(key)
-      end
+      expect(helper.translation_keys('es').keys).to match_array(expected_keys)
     end
   end
 
