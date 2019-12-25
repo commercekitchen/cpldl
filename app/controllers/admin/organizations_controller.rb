@@ -6,20 +6,6 @@ module Admin
       @organizations = Organization.all
     end
 
-    def new
-      @organization = Organization.new
-    end
-
-    def create
-      @organization = Organization.new(organization_params)
-
-      if @organization.save
-        redirect_to admin_organizations_path, notice: 'Organization was successfully created.'
-      else
-        render :new
-      end
-    end
-
     def update
       @organization = Organization.find(params[:id])
 
