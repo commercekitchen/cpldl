@@ -43,10 +43,6 @@ module ApplicationHelper
     current_organization.footer_logo_link.presence || links[current_organization.subdomain.to_sym]
   end
 
-  def include_search?
-    !(current_user.blank? && top_level_domain?)
-  end
-
   def user_sidebar(sidebar)
     if org_admin?
       sidebar ||= 'shared/admin/sidebar'
