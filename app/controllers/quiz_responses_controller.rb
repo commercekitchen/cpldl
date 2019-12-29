@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuizResponsesController < ApplicationController
+  before_action :authenticate_user!
+
   def new; end
 
   def create
