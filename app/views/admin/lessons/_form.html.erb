@@ -123,5 +123,8 @@
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 
-  <%= f.submit "Save Lesson", class: "btn button-color" %>
+  <%= f.button :submit, class: "btn button-color loading-button" do %>
+    <span class='loader-label'>Save Lesson</span>
+    <%= render 'shared/loader' %>
+  <% end %>
 <% end %>

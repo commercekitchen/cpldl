@@ -27,10 +27,14 @@ describe QuizResponsesController do
 
     context 'when not logged in' do
 
-      it 'should have a valid route and template' do
+      it 'should redirect to sign in path' do
         get :new
-        expect(response).to have_http_status(:success)
-        expect(response).to render_template(:new)
+        expect(response).to redirect_to(new_user_session_path)
+      end
+
+      it 'should alert user they must be signed in' do
+        get :new
+        expect(flash[:alert]).to eq('You need to sign in or sign up before continuing.')
       end
 
     end
