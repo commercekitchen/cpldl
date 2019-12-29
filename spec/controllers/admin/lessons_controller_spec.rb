@@ -67,50 +67,50 @@ describe Admin::LessonsController do
     context 'with valid params' do
       it 'creates a new lesson' do
         expect do
-          post :create, params: { course_id: course.to_param, lesson: valid_attributes }
+          post :create, params: { course_id: course.to_param, lesson: valid_attributes }, format: :js
         end.to change(Lesson, :count).by(1)
       end
 
       it 'creates a new assessment' do
         expect do
-          post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
+          post :create, params: { course_id: course.to_param, lesson: assessment_attributes }, format: :js
         end.to change(Lesson, :count).by(1)
       end
 
       it 'assigns a new assessment to the end of the course lessons' do
         FactoryBot.create(:lesson, course: course)
-        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
+        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }, format: :js
         lesson = Lesson.last
         expect(lesson.lesson_order).to eq(2)
       end
 
       it 'does not create a second assessment' do
-        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }
+        post :create, params: { course_id: course.to_param, lesson: assessment_attributes }, format: :js
         expect do
           post :create, params: { course_id: course.to_param, lesson: assessment_attributes, title: 'something different' }
         end.to_not change(Lesson, :count)
       end
 
       it 'assigns a new lesson as @lesson' do
-        post :create, params: { course_id: course.to_param, lesson: valid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: valid_attributes }, format: :js
         expect(assigns(:lesson)).to be_a(Lesson)
         expect(assigns(:lesson)).to be_persisted
       end
 
       it 'redirects to the admin edit view of the lesson' do
-        post :create, params: { course_id: course.to_param, lesson: valid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: valid_attributes, format: :js }
         expect(response).to redirect_to(edit_admin_course_lesson_path(course, 'lesson-your-load-man'))
       end
     end
 
     context 'with invalid params' do
       it 'assigns a newly created but unsaved lesson as @lesson' do
-        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }, format: :js
         expect(assigns(:lesson)).to be_a_new(Lesson)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }
+        post :create, params: { course_id: course.to_param, lesson: invalid_attributes }, format: :js
         expect(response).to render_template('new')
       end
     end

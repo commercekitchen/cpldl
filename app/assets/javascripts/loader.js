@@ -4,6 +4,17 @@ $(document).ready(function() {
     $(this)
       .parent()
       .find(".loader")
-      .show();
+      .css("display", "inline-block");
+  });
+});
+
+$(document).ready(function() {
+  $(".loading-button").click(function() {
+    $(this)
+      .find(".loader-label")
+      .hide();
+    $(this)
+      .find(".loader")
+      .css("display", "inline-block");
   });
 });
