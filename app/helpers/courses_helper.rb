@@ -42,29 +42,12 @@ module CoursesHelper
   end
 
   def categorized_courses(courses)
-    category_map = {}
-
-    (categories || []).each do |category|
-      category_courses = courses.with_category(category.id)
-
-      if category_courses.present?
-        category_map[category.name] = category_courses
+    courses.group_by do |course|
+      if course.category&.enabled?
+        course.category.name
+      else
+        'Uncategorized'
       end
     end
-
-    disabled_category_courses = courses.where(category_id: current_organization.categories.disabled.map(&:id))
-    uncategorized_courses = courses.where(category_id: nil) + disabled_category_courses
-
-    if uncategorized_courses.present?
-      category_map['Uncategorized'] = uncategorized_courses
-    end
-
-    category_map
-  end
-
-  private
-
-  def categories
-    current_organization.categories.enabled
   end
 end
