@@ -1,19 +1,8 @@
-<% (@category_ids || []).each do |category_id| %>
-  <% unless @courses.with_category(category_id).blank? %>
-    <h3><%= Category.find_by_id(category_id).name %></h3>
-  <% end %>
+<% categorized_courses(@courses).each do |category_name, courses| %>
+  <h3><%= category_name %></h3>
   <div class="container">
-    <% @courses.with_category(category_id).each do |c| %>
-      <%= render partial: 'shared/courses/course_widget', locals: { course: c } %>
-    <% end %>
-  </div>
-<% end %>
-
-<% if @uncategorized_courses.present? %>
-  <h3>Uncategorized</h3>
-  <div class="container">
-    <% @uncategorized_courses.each do |c| %>
-      <%= render partial: 'shared/courses/course_widget', locals: { course: c } %>
+    <% courses.each do |course| %>
+      <%= render partial: 'shared/courses/course_widget', locals: { course: course } %>
     <% end %>
   </div>
 <% end %>
