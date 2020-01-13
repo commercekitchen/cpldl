@@ -36,4 +36,8 @@ module CoursesHelper
     percent = 100 if percent > 100
     percent.round
   end
+
+  def courses_completed
+    user_signed_in? ? current_user.completed_course_ids : []
+  end
 end
