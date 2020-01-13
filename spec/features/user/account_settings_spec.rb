@@ -59,11 +59,6 @@ feature 'Registered user visits account pages' do
       expect(page).to have_content 'Profile was successfully updated.'
       expect(page).to have_content 'Preferred Language'
     end
-
-    scenario 'can view completed courses' do
-      # visit courses_completed_path
-    end
-
   end
 
   context 'belongs to program subdomain' do

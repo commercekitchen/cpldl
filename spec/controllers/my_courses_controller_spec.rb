@@ -45,18 +45,7 @@ describe MyCoursesController do
         get :index, params: { search: 'java' }
         expect(assigns(:courses)).to eq([course1])
       end
-
-      it 'assigns categories' do
-        get :index
-        expect(assigns(:category_ids)).to eq([category.id])
-      end
-
-      it 'assigns uncategorized courses including courses with a disabled category' do
-        get :index
-        expect(assigns(:uncategorized_courses)).to include(course3, course4)
-      end
     end
-
   end
 
   context 'non-authenticated user' do

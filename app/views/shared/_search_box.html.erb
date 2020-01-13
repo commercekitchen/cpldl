@@ -2,7 +2,7 @@
   <div class="search-box">
     <%= label_tag search_param, "Search", class: "screen-reader-text" %>
     <%= search_field_tag search_param, params[search_param], placeholder: placeholder_text, class: 'search-input' %>
-    <%= button_tag :submit, class: 'icon-button', 'aria-label' => 'search' do %>
+    <%= button_tag :submit, class: 'icon-button', id: 'submit-search', 'aria-label' => 'search' do %>
       <i class="icon-search grey" id="search-icon"></i>
     <% end %>
   </div>

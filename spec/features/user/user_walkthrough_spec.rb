@@ -20,6 +20,12 @@ feature 'User clicks through each page' do
     expect(current_path).to eq(my_courses_path)
     expect(page).to_not have_link('Profile')
 
+    within('.main-logo') do
+      find('a').click
+    end
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content('Choose a course below to start learning')
+
     click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')

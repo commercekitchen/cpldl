@@ -7,7 +7,6 @@ class HomeController < ApplicationController
 
   def index
     @courses = authorized_courses
-    load_category_courses
   end
 
   def language_toggle

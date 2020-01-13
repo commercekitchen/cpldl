@@ -11,7 +11,7 @@
   <% end %>
 </p>
 
-<%= render partial: "shared/courses/listing" %>
+<%= render "shared/courses/listing" %>
 
 <% if @results && @results.blank? %>
   <p>No courses match your search. <%= link_to "View all your courses", my_courses_path %></p>

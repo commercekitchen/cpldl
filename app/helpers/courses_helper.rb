@@ -36,4 +36,18 @@ module CoursesHelper
     percent = 100 if percent > 100
     percent.round
   end
+
+  def courses_completed
+    user_signed_in? ? current_user.completed_course_ids : []
+  end
+
+  def categorized_courses(courses)
+    courses.group_by do |course|
+      if course.category&.enabled?
+        course.category.name
+      else
+        'Uncategorized'
+      end
+    end
+  end
 end

@@ -11,13 +11,6 @@ module UserCourses
     courses
   end
 
-  def load_category_courses
-    @category_ids = current_organization.categories.enabled.map(&:id)
-    @disabled_category_ids = current_organization.categories.disabled.map(&:id)
-    @disabled_category_courses = @courses.where(category_id: @disabled_category_ids)
-    @uncategorized_courses = @courses.where(category_id: nil) + @disabled_category_courses
-  end
-
   def current_language_id
     english_id = Language.find_by(name: 'English').id || 1
     spanish_id = Language.find_by(name: 'Spanish').id || 2

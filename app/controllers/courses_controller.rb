@@ -20,8 +20,6 @@ class CoursesController < ApplicationController
       @courses = @courses.merge(published_results)
     end
 
-    load_category_courses
-
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @courses }
