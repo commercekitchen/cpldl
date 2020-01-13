@@ -13,7 +13,7 @@ feature 'Admin user logs in' do
     end
 
     context 'with valid profile' do
-      scenario 'is sent to admin home page' do
+      scenario 'is sent to admin dashboard page' do
         log_in_with @user.email, @user.password
         expect(current_path).to eq(admin_dashboard_index_path)
       end

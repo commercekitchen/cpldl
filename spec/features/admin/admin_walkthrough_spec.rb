@@ -21,6 +21,12 @@ feature 'Admin user clicks through each page' do
     click_link 'Account'
     expect(current_path).to eq(profile_path)
 
+    within('.main-logo') do
+      find('a').click
+    end
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content('Edit a course by clicking on a course below,')
+
     click_link 'Sign Out'
     expect(current_path).to eq(root_path)
     expect(page).to have_content('Signed out successfully.')

@@ -46,7 +46,7 @@ module CoursesHelper
 
     (categories || []).each do |category|
       category_courses = courses.with_category(category.id)
-      
+
       if category_courses.present?
         category_map[category.name] = category_courses
       end
@@ -56,7 +56,7 @@ module CoursesHelper
     uncategorized_courses = courses.where(category_id: nil) + disabled_category_courses
 
     if uncategorized_courses.present?
-      category_map["Uncategorized"] = uncategorized_courses
+      category_map['Uncategorized'] = uncategorized_courses
     end
 
     category_map

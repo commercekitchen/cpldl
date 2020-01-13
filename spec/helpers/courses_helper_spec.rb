@@ -53,7 +53,7 @@ describe CoursesHelper do
 
     context 'with authenticated user' do
       let!(:completion) { FactoryBot.create(:course_progress, user: user, course: course, completed_at: Time.zone.now) }
-      let!(:unfinished_course){ FactoryBot.create(:course_progress, user: user, course: course) }
+      let!(:unfinished_course) { FactoryBot.create(:course_progress, user: user, course: course) }
 
       before do
         sign_in user
@@ -71,7 +71,7 @@ describe CoursesHelper do
     let!(:course_with_category) { FactoryBot.create(:course, category: category, organization: organization) }
     let!(:uncategorized_course) { FactoryBot.create(:course, organization: organization) }
     let!(:course_with_disabled_category) { FactoryBot.create(:course, category: disabled_category, organization: organization) }
-    
+
     let(:result) { helper.categorized_courses(organization.courses) }
 
     before do
