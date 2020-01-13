@@ -45,21 +45,6 @@ describe CoursesController do
       get :index, format: :json
       expect(response).to have_http_status(:success)
     end
-
-    it 'assigns categories' do
-      get :index
-      expect(assigns(:category_ids)).to eq([@category1.id])
-    end
-
-    it 'assigns uncategorized courses' do
-      get :index
-      expect(assigns(:uncategorized_courses)).to include(@course2, @course3, @disabled_category_course)
-    end
-
-    it 'has correct number of uncategorized courses' do
-      get :index
-      expect(assigns(:uncategorized_courses).count).to eq(3)
-    end
   end
 
   describe 'GET #show' do

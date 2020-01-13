@@ -1,0 +1,12 @@
+<a class="course-widget<% if courses_completed.include?(course.id) %> completed<% end %>" href="<%= course_path(course) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
+  <header>
+    <h3 class='course-title'><%= course.title %></h3>
+  </header>
+  <div class="description">
+    <p><%= course.summary %></p>
+    <div class="percent-complete"><%= percent_complete(course) %></div>
+    <div class="duration">
+      <i class="icon-clock grey"></i><%= course.duration %>
+    </div>
+  </div>
+</a>

@@ -7,6 +7,11 @@ feature 'Anonymous visits static pages' do
     create(:default_organization)
   end
 
+  scenario 'visits root path' do
+    visit root_path
+    expect(page).to have_content('Choose a course below to start learning or search courses.')
+  end
+
   scenario 'can visit the customization page' do
     page = create(:cms_page, title: 'Pricing & Features')
     visit cms_page_path(page)
