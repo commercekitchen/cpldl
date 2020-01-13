@@ -73,24 +73,20 @@ module Admin
 
       @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
 
-      new_course_params = if course_params[:category_id].present? && course_params[:category_id] == '0'
-                            course_params
-                          else
-                            course_params.except(:category_attributes)
-                          end
-
       if @course.update(new_course_params)
-        changed = propagate_changes? ? propagate_course_changes : 0
-
         @course.topics_list(build_topics_list(params))
-        notice = "Course was successfully updated. Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}."
+
+        changed = propagate_changes? ? propagate_course_changes.count : 0
+        success_message = 'Course was successfully updated.'
+        success_message += " Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
+
         case params[:commit]
         when 'Save Course'
-          redirect_to edit_admin_course_path(@course), notice: notice
+          redirect_to edit_admin_course_path(@course), notice: success_message
         when 'Save Course and Edit Lessons'
-          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: notice
+          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
         else
-          redirect_to new_admin_course_lesson_path(@course), notice: notice
+          redirect_to new_admin_course_lesson_path(@course), notice: success_message
         end
       else
         @custom = course_params[:category_id] == '0'
@@ -163,6 +159,14 @@ module Admin
       ]
 
       params.require(:course).permit(permitted_attributes)
+    end
+
+    def new_course_params
+      if course_params[:category_id].present? && course_params[:category_id] == '0'
+        course_params
+      else
+        course_params.except(:category_attributes)
+      end
     end
 
     def build_topics_list(params)
