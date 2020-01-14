@@ -73,9 +73,6 @@ Rails.application.configure do
   # config.zip_bucket_name = 'dl-development-lessons-zipped'
   # config.s3_bucket_name = 'dl-development-lessons'
 
-  # Local lesson directory
-  # config.local_lesson_dir = 'public'
-
   # config.storyline_paperclip_opts = {
   #   storage: :s3,
   #   path: 'storylines/:id/:basename.:extension',

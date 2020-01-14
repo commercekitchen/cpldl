@@ -48,7 +48,4 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-
-  # Local lesson storage directory
-  config.local_lesson_dir = 'tmp'
 end
