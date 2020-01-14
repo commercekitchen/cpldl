@@ -99,17 +99,15 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   ### S3 Configuration ###
-  # Enable to use s3 in dev, must specify s3_bucket_name
   config.lesson_store = :s3
 
-  # S3 bucket name
   config.zip_bucket_name = 'dl-prodapp-lessons-zipped'
   config.s3_bucket_name = 'dl-prodapp-lessons'
 
   config.storyline_paperclip_opts = {
     storage: :s3,
     path: 'storylines/:id/:basename.:extension',
-    bucket: 'dl-development-lessons-zipped',
+    bucket: config.zip_bucket_name,
     s3_region: config.s3_region
   }
 end
