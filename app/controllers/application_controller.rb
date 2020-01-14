@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  include Pundit
 
   before_action :current_organization
   before_action :set_locale
@@ -15,6 +16,8 @@ class ApplicationController < ActionController::Base
   helper_method :top_level_domain?
   helper_method :hide_language_links?
   helper_method :in_subdomain?
+
+  after_action :verify_authorized
 
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
