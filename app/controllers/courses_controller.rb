@@ -3,10 +3,10 @@
 class CoursesController < ApplicationController
   include UserCourses
 
-  before_action :authenticate_user!, except: %i[index show view_attachment skills designing_courses_1 designing_courses_2]
+  before_action :authenticate_user!, only: :quiz_submit
 
   def index
-    @courses = authorized_courses
+    @courses = policy_scope(Course)
 
     if params[:search].present?
       result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
@@ -28,6 +28,7 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.friendly.find(params[:id])
+    authorize @course
 
     case @course.pub_status
     when 'D'
@@ -53,6 +54,8 @@ class CoursesController < ApplicationController
 
   def view_attachment
     @course = Course.friendly.find(params[:course_id])
+    authorize @course, :show?
+
     extension = File.extname(@course.attachments.find(params[:attachment_id]).document_file_name)
     file_options = if extension == '.pdf'
                      { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
@@ -63,13 +66,6 @@ class CoursesController < ApplicationController
                        x_sendfile: true }
                    end
     send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
-  end
-
-  def quiz_submit
-    current_user.update!(quiz_responses_object: quiz_params.to_h) if current_user.quiz_responses_object.blank?
-    recommendation_service = CourseRecommendationService.new(current_organization.id, quiz_params)
-    recommendation_service.add_recommended_courses(current_user.id)
-    redirect_to my_courses_path
   end
 
   def skills

@@ -3,156 +3,138 @@
 require 'rails_helper'
 
 describe Course do
-  context '#topics_list' do
+  let(:course) { FactoryBot.create(:course) }
 
-    before(:each) do
-      @course = FactoryBot.create(:course)
-      @topic = FactoryBot.create(:topic, title: 'Existing Topic')
-    end
+  describe '#topics_list' do
+    let!(:topic) { FactoryBot.create(:topic, title: 'Existing Topic') }
 
     it 'assigns topics to a course' do
       topics = ['Topic 1', 'Topic2']
-      @course.topics_list(topics)
-      @course.reload
-      expect(@course.topics.count).to eq(2)
+      expect do
+        course.topics_list(topics)
+      end.to change { course.topics.count }.by(2)
     end
 
     it 'returns a topic list as a string' do
       topics = ['Topic 1', 'Topic 2']
-      @course.topics_list(topics)
-      @course.reload
-      expect(@course.topics_str).to eq('Topic 1, Topic 2')
+      course.topics_list(topics)
+      expect(course.topics_str).to eq('Topic 1, Topic 2')
     end
 
     it 'skips blank topics when assigning to a course' do
       topics = ['Topic 1', 'Topic2', '']
-      @course.topics_list(topics)
-      @course.reload
-      expect(@course.topics.count).to eq(2)
+      expect do
+        course.topics_list(topics)
+      end.to change { course.topics.count }.by(2)
     end
 
     it 'adds new topics to the list, if not previously there' do
-      topics = ['Topic 1', 'Topic2', 'Topic3', '']
-      @course.topics_list(topics)
-      expect(Topic.count).to eq(4) # The exising + the 3 non-empty topics.
+      topics = ['Topic 1', 'Topic2', 'Existing Topic', '']
+      expect do
+        course.topics_list(topics)
+      end.to change(Topic, :count).by(2)
     end
 
-    it 'does nothing if the topics list is blank' do
+    it 'does not add nil topics' do
       topics = nil
-      @course.topics_list(topics)
-      @course.reload
-      expect(@course.topics.count).to eq(0)
-
-      topics = []
-      @course.topics_list(topics)
-      @course.reload
-      expect(@course.topics.count).to eq(0)
+      expect do
+        course.topics_list(topics)
+      end.to_not change { course.topics.count }
     end
 
+    it 'does not add topics from empty topics list' do
+      topics = []
+      expect do
+        course.topics_list(topics)
+      end.to_not change { course.topics.count }
+    end
   end
 
-  context '#next_lesson_id (from old version of next_lesson_id)' do
-
-    before :each do
-      @course = FactoryBot.create(:course_with_lessons)
-    end
+  describe '#next_lesson_id' do
+    let(:course_with_lessons) { FactoryBot.create(:course_with_lessons) }
+    let(:first_lesson) { course_with_lessons.lessons.first }
+    let(:second_lesson) { course_with_lessons.lessons.second }
+    let(:third_lesson) { course_with_lessons.lessons.third }
 
     it 'should return the first lesson id if called without an id' do
-      expect(@course.next_lesson_id).to be(@course.lessons.first.id)
+      expect(course_with_lessons.next_lesson_id).to eq(first_lesson.id)
     end
 
     it 'should return the second lesson id if called with the first lesson id' do
-      expect(@course.next_lesson_id(@course.lessons.first.id)).to be(@course.lessons.second.id)
+      expect(course_with_lessons.next_lesson_id(first_lesson.id)).to eq(second_lesson.id)
+    end
+
+    it 'should return next lesson id if lesson order is skipped' do
+      third_lesson.update(lesson_order: 5)
+      expect(course_with_lessons.next_lesson_id(second_lesson.id)).to eq(third_lesson.id)
     end
 
     it 'should return the last lesson id if called with the last lesson id' do
-      expect(@course.next_lesson_id(@course.lessons.last.id)).to be(@course.lessons.last.id)
+      expect(course_with_lessons.next_lesson_id(third_lesson.id)).to be(third_lesson.id)
     end
 
     it 'should return the first lesson id if called with an invalid lesson id' do
-      expect(@course.next_lesson_id(123)).to be(@course.lessons.first.id)
-    end
-
-    it 'should raise an error if called when there are no lessons' do
-      @course.lessons.destroy_all
-      expect { @course.next_lesson_id }.to raise_error(StandardError)
-    end
-
-  end
-
-  context '#next_lesson_id' do
-
-    it 'should raise an error if there are no lessons' do
-      expect do
-        @course = FactoryBot.create(:course)
-        @course.next_lesson_id(@course.lessons.first.id)
-      end.to raise_error StandardError
-    end
-
-    it 'should return the id of the next lesson in order' do
-      @course = FactoryBot.create(:course_with_lessons)
-      expect(@course.next_lesson_id).to eq @course.lessons.first.id
-      expect(@course.next_lesson_id(nil)).to eq @course.lessons.first.id
-      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
-      expect(@course.next_lesson_id(@course.lessons.second.id)).to eq @course.lessons.third.id
-      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
-    end
-
-    it 'should return the next lesson id, even if the lessons are out of order' do
-      @course = FactoryBot.create(:course_with_lessons)
-      @course.lessons.third.update(lesson_order: 5)
-      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.second.id
-      expect(@course.next_lesson_id(@course.lessons.second.id)).to eq @course.lessons.third.id
-      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
+      expect(course_with_lessons.next_lesson_id(123)).to be(first_lesson.id)
     end
 
     it 'should skip unpublished lessons' do
-      @course = FactoryBot.create(:course_with_lessons)
-      @course.lessons.second.update(pub_status: 'D')
-      @course.lessons.third.update(lesson_order: 5)
-      expect(@course.next_lesson_id(@course.lessons.first.id)).to eq @course.lessons.third.id
-      expect(@course.next_lesson_id(@course.lessons.third.id)).to eq @course.lessons.third.id
+      second_lesson.update(pub_status: 'D')
+      expect(course_with_lessons.next_lesson_id(first_lesson.id)).to eq(third_lesson.id)
     end
 
+    it 'should raise an error if called when there are no lessons' do
+      expect { course.next_lesson_id }.to raise_error(StandardError)
+    end
   end
 
-  context '#duration' do
+  describe '#duration' do
+    let(:lesson1) { FactoryBot.create(:lesson, title: '1', duration: 75) }
+    let(:lesson2) { FactoryBot.create(:lesson, title: '2', duration: 150) }
+    let(:lesson3) { FactoryBot.create(:lesson, title: '3', duration: 225) }
+    let(:lesson4) { FactoryBot.create(:lesson, title: '4', duration: 90) }
+    let(:lesson5) { FactoryBot.create(:lesson, title: '5', duration: 9) }
 
-    before :each do
-      @course = FactoryBot.create(:course)
-      @lesson1 = FactoryBot.create(:lesson, title: '1', duration: 75)
-      @lesson2 = FactoryBot.create(:lesson, title: '2', duration: 150)
-      @lesson3 = FactoryBot.create(:lesson, title: '3', duration: 225)
-      @lesson4 = FactoryBot.create(:lesson, title: '4', duration: 90)
-      @lesson5 = FactoryBot.create(:lesson, title: '5', duration: 9)
+    it 'should return the sum of the lesson durations' do
+      course.lessons << [lesson1, lesson2, lesson3]
+      expect(course.duration).to eq('7 mins')
     end
 
     it 'should return the sum of the lesson durations' do
-      @course.lessons << [@lesson1, @lesson2, @lesson3]
-      expect(@course.duration).to eq('7 mins')
+      course.lessons << [lesson4]
+      expect(course.duration).to eq('1 min')
     end
 
     it 'should return the sum of the lesson durations' do
-      @course.lessons << [@lesson4]
-      expect(@course.duration).to eq('1 min')
-    end
-
-    it 'should return the sum of the lesson durations' do
-      @course.lessons << [@lesson5]
-      expect(@course.duration).to eq('0 mins')
+      course.lessons << [lesson5]
+      expect(course.duration).to eq('0 mins')
     end
 
     it 'should return duration in format if one is passed' do
-      @course.lessons << [@lesson1, @lesson2, @lesson3]
-      expect(@course.duration('minutes')).to eq('7 minutes')
+      course.lessons << [lesson1, lesson2, lesson3]
+      expect(course.duration('minutes')).to eq('7 minutes')
     end
 
     it 'should not count draft lessons' do
-      @course = FactoryBot.create(:course_with_lessons)
-      @course.lessons.first.update(pub_status: 'D')
-      expect(@course.duration).to eq '3 mins' # 90 * 2 = 180 / 60 = 3 mins
+      lesson1.update(pub_status: 'D')
+      course.lessons << [lesson1, lesson2, lesson3]
+      expect(course.duration).to eq '6 mins'
     end
-
   end
 
+  describe '#published?' do
+    let(:draft_course) { FactoryBot.create(:draft_course) }
+    let(:archived_course) { FactoryBot.create(:archived_course) }
+
+    it 'should return true if course is published' do
+      expect(course.published?).to be_truthy
+    end
+
+    it 'should return false if course is in draft status' do
+      expect(draft_course.published?).to be_falsey
+    end
+
+    it 'should return false if course is archived' do
+      expect(archived_course.published?).to be_falsey
+    end
+  end
 end

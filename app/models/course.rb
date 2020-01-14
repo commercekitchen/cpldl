@@ -135,4 +135,8 @@ class Course < ApplicationRecord
   def supplemental_attachments
     self.attachments.where(doc_type: 'supplemental')
   end
+
+  def published?
+    pub_status == 'P'
+  end
 end

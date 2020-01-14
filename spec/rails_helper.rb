@@ -11,6 +11,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'pry'
 require 'spec_helper'
 require 'rspec/rails'
+require 'pundit/rspec'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

@@ -17,7 +17,12 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  after_action :verify_authorized
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
+
+  def pundit_user
+    current_user || GuestUser.new(organization: current_organization)
+  end
 
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
