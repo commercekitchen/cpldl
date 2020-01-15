@@ -57,7 +57,16 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
-  # Use s3 for lesson files
+  ### S3 Configuration ###
   config.lesson_store = :s3
-  config.s3_bucket_name = 'dl-stageapp-assets'
+
+  config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
+  config.s3_bucket_name = 'dl-stageapp-lessons'
+
+  config.storyline_paperclip_opts = {
+    storage: :s3,
+    path: 'storylines/:id/:basename.:extension',
+    bucket: config.zip_bucket_name,
+    s3_region: config.s3_region
+  }
 end
