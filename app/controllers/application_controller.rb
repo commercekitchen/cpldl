@@ -9,51 +9,17 @@ class ApplicationController < ActionController::Base
   before_action :set_cms_footer_pages
   before_action :set_cms_marketing_pages
   before_action :set_user_token
-  before_action :set_mailer_host
   before_action :require_valid_profile
 
-  helper_method :current_organization
   helper_method :subdomain?
   helper_method :top_level_domain?
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  def current_organization
-    find_organization
-  end
-
-  def find_organization
-    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
-
-    unless org.subdomain == current_subdomain
-      redirect_to_www && (return org)
-    end
-
-    org
-  end
-
-  def set_mailer_host
-    ActionMailer::Base.default_url_options[:host] = if staging?
-                                                      "#{stage_subdomain}.stage.digitallearn.org"
-                                                    elsif Rails.env.production?
-                                                      "#{current_organization.subdomain}.digitallearn.org"
-                                                    else
-                                                      request.host
-                                                    end
-  end
-
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
       flash[:alert] = 'You must have a valid profile before you can continue:'
       redirect_to invalid_profile_path
-    end
-  end
-
-  def base_url
-    if request.host.include?('stage')
-      'stage.digitallearn.org'
-    else
-      'digitallearn.org'
     end
   end
 
@@ -131,14 +97,6 @@ class ApplicationController < ActionController::Base
     false
   end
 
-  def redirect_to_www
-    if staging?
-      redirect_to subdomain: 'www.stage'
-    else
-      redirect_to subdomain: 'www'
-    end
-  end
-
   def in_subdomain?(subdomain)
     current_organization.subdomain == subdomain
   end
@@ -151,27 +109,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def current_subdomain
-    if staging?
-      stage_subdomain
-    else
-      request.subdomain
-    end
-  end
-
-  def stage_subdomain
-    subdomain_array = request.subdomain.split('.')
-    if subdomain_array.size == 2
-      subdomain_array.first
-    else
-      ''
-    end
-  end
-
-  def staging?
-    request.subdomain.include?('stage')
-  end
 
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?

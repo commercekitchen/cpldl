@@ -7,7 +7,5 @@
     </div>
   <% end %>
 
-  <% if include_search? %>
-    <%= render partial: "shared/search_box", locals: { search_path: courses_path, placeholder_text: t("home.search_courses"), search_param: :search }  %>
-  <% end %>
+  <%= render partial: "shared/search_box", locals: { search_path: courses_path, placeholder_text: t("home.search_courses"), search_param: :search }  %>
 </div>

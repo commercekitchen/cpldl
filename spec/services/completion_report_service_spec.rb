@@ -31,6 +31,10 @@ describe CompletionReportService do
                       profile_attributes: { zip_code: other_zip, library_location: library2 })
   end
 
+  let(:admin) do
+    FactoryBot.create(:user, :admin, organization: organization)
+  end
+
   let(:course1) { FactoryBot.create(:course, organization: organization) }
   let(:course2) { FactoryBot.create(:course, organization: organization) }
 
@@ -48,6 +52,10 @@ describe CompletionReportService do
 
   let!(:course_progress4) do
     FactoryBot.create(:course_progress, course_id: course2.id, tracked: true, completed_at: Time.zone.now, user: user3)
+  end
+
+  let!(:admin_course_progress) do
+    FactoryBot.create(:course_progress, course_id: course1.id, tracked: true, completed_at: Time.zone.now, user: admin)
   end
 
   let(:report_service) { CompletionReportService.new(organization: organization) }
@@ -83,6 +91,10 @@ describe CompletionReportService do
 
     it 'should generate correct column headers' do
       expect(parsed_report.headers).to eq(['Partner', 'Sign-Ups(total)', 'Course Title', 'Completions'])
+    end
+
+    it 'should not include no partner option from admin completion' do
+      expect(parsed_report.to_s).to_not match('No Partner Selected')
     end
 
     it 'should include correct count for partner 1' do

@@ -1,25 +1,22 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def resource_name
-    :user
+  def current_organization
+    find_organization
   end
 
-  def resource
-    @resource ||= User.new
+  def find_organization
+    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
+
+    unless org.subdomain == current_subdomain
+      redirect_to_www && (return org)
+    end
+
+    org
   end
 
-  def devise_mapping
-    @devise_mapping ||= Devise.mappings[:user]
-  end
-
-  def svg_tag(filename, options = {})
-    assets = Rails.application.assets
-    file = assets.find_asset(filename).source.force_encoding('UTF-8')
-    doc = Nokogiri::HTML::DocumentFragment.parse file
-    svg = doc.at_css 'svg'
-    svg['class'] = options[:class] if options[:class].present?
-    raw doc
+  def redirect_to_www
+    redirect_to subdomain: 'www'
   end
 
   def tel_to(number)
@@ -46,22 +43,22 @@ module ApplicationHelper
     current_organization.footer_logo_link.presence || links[current_organization.subdomain.to_sym]
   end
 
-  def include_search?
-    !(current_user.blank? && top_level_domain?)
-  end
-
-  def user_sidebar
-    return unless @show_sidebar
-
+  def user_sidebar(sidebar)
     if org_admin?
-      @sidebar ||= 'shared/admin/sidebar'
+      sidebar ||= 'shared/admin/sidebar'
     else
-      @sidebar = 'shared/user/sidebar'
+      sidebar = 'shared/user/sidebar'
     end
-    render @sidebar
+    render sidebar
   end
 
   def org_admin?(user = current_user)
     user.present? && user.has_role?(:admin, current_organization)
+  end
+
+  protected
+
+  def current_subdomain
+    request.subdomain
   end
 end

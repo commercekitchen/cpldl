@@ -1,49 +1,8 @@
-<% if user_signed_in? %>
-  <% courses_completed = current_user.completed_course_ids %>
-<% else %>
-  <% courses_completed = [] %>
-<% end %>
-
-<% (@category_ids || []).each do |category_id| %>
-  <% unless @courses.with_category(category_id).blank? %>
-    <h3><%= Category.find_by_id(category_id).name %></h3>
-  <% end %>
+<% categorized_courses(@courses).each do |category_name, courses| %>
+  <h3><%= category_name %></h3>
   <div class="container">
-    <% @courses.with_category(category_id).each do |c| %>
-      <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
-          href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
-          <header>
-            <h3><%= c.title %></h3>
-          </header>
-          <div class="description">
-            <p><%= c.summary %></p>
-            <div class="percent-complete"><%= percent_complete(c) %></div>
-            <div class="duration">
-              <i class="icon-clock grey"></i><%= c.duration %>
-            </div>
-          </div>
-        </a>
-    <% end %>
-  </div>
-<% end %>
-
-<% if @uncategorized_courses.present? %>
-  <h3>Uncategorized</h3>
-  <div class="container">
-    <% @uncategorized_courses.each do |c| %>
-      <a class="course-widget<% if courses_completed.include?(c.id) %> completed<% end %>"
-        href="<%= course_path(c) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
-        <header>
-          <h3><%= c.title %></h3>
-        </header>
-        <div class="description">
-          <p><%= c.summary %></p>
-          <div class="percent-complete"><%= percent_complete(c) %></div>
-          <div class="duration">
-            <i class="icon-clock grey"></i><%= c.duration %>
-          </div>
-        </div>
-      </a>
+    <% courses.each do |course| %>
+      <%= render partial: 'shared/courses/course_widget', locals: { course: course } %>
     <% end %>
   </div>
 <% end %>

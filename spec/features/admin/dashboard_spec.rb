@@ -18,7 +18,7 @@ feature 'Admin visits dashboard' do
       'Reports' => admin_reports_path,
       'User Accounts' => admin_users_path,
       'CMS Pages' => admin_pages_path,
-      'Invite Admin' => admin_dashboard_admin_invitation_path,
+      'Invite Admin' => new_user_invitation_path,
       'Manage Library Branches' => admin_library_locations_path,
       'Categories' => admin_categories_path,
       'Custom Text' => admin_custom_translations_path,

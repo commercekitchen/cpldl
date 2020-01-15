@@ -6,14 +6,14 @@ feature 'Admin user logs in' do
   context 'traditional log in organization' do
     before(:each) do
       @org = create(:organization)
-      Capybara.default_host = 'http://chipublib.example.com'
+      switch_to_subdomain(@org.subdomain)
       @user = create(:user, :first_time_user, organization: @org)
       @user.add_role(:admin, @org)
       switch_to_subdomain('chipublib')
     end
 
     context 'with valid profile' do
-      scenario 'is sent to admin home page' do
+      scenario 'is sent to admin dashboard page' do
         log_in_with @user.email, @user.password
         expect(current_path).to eq(admin_dashboard_index_path)
       end

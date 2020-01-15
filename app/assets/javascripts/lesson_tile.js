@@ -1,3 +1,6 @@
 $(document).ready(function() {
-  $(".lesson-title").shave(50);
+  var $el = $(".lesson-title");
+  var height = 50;
+  $el.shave(height);
+  bindResizeEvent($el, height);
 });

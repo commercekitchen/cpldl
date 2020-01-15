@@ -28,7 +28,6 @@ module Admin
       end
 
       if @lesson.save
-        Unzipper.new(@lesson.story_line).unzip_lesson
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: 'Lesson was successfully created.'
       else
         render :new
@@ -41,10 +40,12 @@ module Admin
       @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
+
       if @lesson.update(@lesson_params)
-        Unzipper.new(@lesson.story_line).unzip_lesson if lesson_params[:story_line].present?
         changed = propagate_changes? ? propagate_lesson_changes : 0
-        redirect_to edit_admin_course_lesson_path, notice: "Lesson successfully updated. Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}."
+        success_message = 'Lesson successfully updated.'
+        success_message += "Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
+        redirect_to edit_admin_course_lesson_path, notice: success_message
       else
         render :edit, notice: 'Lesson failed to update.'
       end
@@ -60,9 +61,7 @@ module Admin
     end
 
     def sort
-      params[:order].each do |_k, v|
-        Lesson.find(v['id']).update_attribute(:lesson_order, v['position'])
-      end
+      SortService.sort(model: Lesson, order_params: params[:order], attribute_key: :lesson_order)
 
       head :ok
     end
@@ -100,9 +99,9 @@ module Admin
         true
       else
         warnings = ['There can only be one assessment for a Course.',
-                    'If you are sure you want to <em>replace</em> it, please delete the existing one and try again.',
+                    'If you are sure you want to replace it, please delete the existing one and try again.',
                     'Otherwise, please edit the existing assessment for this course.']
-        flash.now[:alert] = warnings.join('<br/>').html_safe
+        flash.now[:alert] = warnings
         render :new and return # rubocop:disable Style/AndOr
       end
     end
@@ -120,10 +119,6 @@ module Admin
 
       lessons.find_each do |lesson|
         lesson.update(attributes_to_change)
-        if lesson_params[:story_line].present?
-          lesson.story_line = lesson_params[:story_line]
-          Unzipper.new(lesson.story_line).unzip_lesson if lesson.save
-        end
       end
 
       lessons.size

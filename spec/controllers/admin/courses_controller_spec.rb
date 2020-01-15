@@ -3,21 +3,20 @@
 require 'rails_helper'
 
 describe Admin::CoursesController do
+  let(:org) { FactoryBot.create(:organization) }
+  let(:other_org) { FactoryBot.create(:organization, subdomain: 'dpl') }
+  let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
+  let(:category1) { FactoryBot.create(:category, organization: org) }
+  let(:category2) { FactoryBot.create(:category, organization: org) }
+  let(:category3) { FactoryBot.create(:category, organization: other_org) }
+  let!(:course1) { FactoryBot.create(:course, title: 'Course1', course_order: 1, category: category1, organization: org) }
+  let!(:course2) { FactoryBot.create(:course, title: 'Course2', course_order: 2, category: category2, organization: org) }
+  let!(:course3) { FactoryBot.create(:course, title: 'Course3', course_order: 3, organization: org) }
+  let!(:course_for_different_org) { create(:course, title: 'Different Org', organization: other_org) }
 
   before(:each) do
-    @organization = create(:organization)
-    @other_organization = create(:organization)
-    @category1 = create(:category, organization: @organization)
-    @category2 = create(:category, organization: @organization)
-    @category3 = create(:category, organization: @other_organization)
-    @course1 = create(:course, title: 'Course1', course_order: 1, category: @category1, organization: @organization)
-    @course2 = create(:course, title: 'Course2', course_order: 2, category: @category2, organization: @organization)
-    @course3 = create(:course, title: 'Course3', course_order: 3, organization: @organization)
-    @course_for_different_org = create(:course, title: 'Different Org', organization: @other_organization)
-    @admin = create(:user, :admin, organization: @organization)
-
-    @request.host = "#{@organization.subdomain}.test.host"
-    sign_in @admin
+    @request.host = "#{org.subdomain}.test.host"
+    sign_in admin
   end
 
   describe 'GET #index' do
@@ -26,7 +25,7 @@ describe Admin::CoursesController do
     end
 
     it 'assigns all courses as @courses' do
-      expect(assigns(:courses)).to include(@course1, @course2, @course3)
+      expect(assigns(:courses)).to include(course1, course2, course3)
     end
 
     it 'only assigns correct number of courses' do
@@ -34,7 +33,7 @@ describe Admin::CoursesController do
     end
 
     it 'assigns category_ids' do
-      expect(assigns(:category_ids)).to include(@category1.id, @category2.id)
+      expect(assigns(:category_ids)).to include(category1.id, category2.id)
     end
 
     it 'only assigns proper category ids' do
@@ -42,7 +41,7 @@ describe Admin::CoursesController do
     end
 
     it 'assigns uncategorized_courses' do
-      expect(assigns(:uncategorized_courses)).to include(@course3)
+      expect(assigns(:uncategorized_courses)).to include(course3)
     end
 
     it 'only assigns uncategorized courses' do
@@ -52,8 +51,8 @@ describe Admin::CoursesController do
 
   describe 'GET #show' do
     it 'assigns the requested course as @course' do
-      get :show, params: { id: @course1.to_param }
-      expect(assigns(:course)).to eq(@course1)
+      get :show, params: { id: course1.to_param }
+      expect(assigns(:course)).to eq(course1)
     end
   end
 
@@ -66,28 +65,28 @@ describe Admin::CoursesController do
 
   describe 'PATCH #update_pub_status' do
     it 'updates the status' do
-      patch :update_pub_status, params: { course_id: @course1.id.to_param, value: 'P' }
-      @course1.reload
-      expect(@course1.pub_status).to eq('P')
+      patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'P' }
+      course1.reload
+      expect(course1.pub_status).to eq('P')
     end
 
     it 'updates the pub_date if status is published' do
       Timecop.freeze do
-        patch :update_pub_status, params: { course_id: @course1.id.to_param, value: 'A' }
-        @course1.reload
-        expect(@course1.pub_date).to be(nil)
+        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'A' }
+        course1.reload
+        expect(course1.pub_date).to be(nil)
 
-        patch :update_pub_status, params: { course_id: @course1.id.to_param, value: 'P' }
-        @course1.reload
-        expect(@course1.pub_date.to_i).to eq(Time.zone.now.to_i)
+        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'P' }
+        course1.reload
+        expect(course1.pub_date.to_i).to eq(Time.zone.now.to_i)
       end
     end
   end
 
   describe 'GET #edit' do
     it 'assigns the requested course as @course' do
-      get :edit, params: { id: @course1.to_param }
-      expect(assigns(:course)).to eq(@course1)
+      get :edit, params: { id: course1.to_param }
+      expect(assigns(:course)).to eq(course1)
     end
   end
 
@@ -105,7 +104,7 @@ describe Admin::CoursesController do
         language_id: @english.id,
         level: 'Advanced',
         course_order: '',
-        organization_id: @organization.id }
+        organization_id: org.id }
     end
 
     let(:invalid_attributes) do
@@ -121,7 +120,7 @@ describe Admin::CoursesController do
         level: '',
         other_topic_text: '',
         course_order: '',
-        organization_id: @organization.id }
+        organization_id: org.id }
     end
 
     context 'with valid params' do
@@ -153,9 +152,9 @@ describe Admin::CoursesController do
       end
 
       it 'adds an existing category if provided' do
-        @category = FactoryBot.create(:category, organization: @organization)
-        post :create, params: { course: valid_attributes.merge(category_id: @category.id) }
-        expect(assigns(:course).category).to eq(@category)
+        category = FactoryBot.create(:category, organization: org)
+        post :create, params: { course: valid_attributes.merge(category_id: category.id) }
+        expect(assigns(:course).category).to eq(category)
       end
 
       it 'creates and adds category if new category selected' do
@@ -165,7 +164,7 @@ describe Admin::CoursesController do
               category_id: '0',
               category_attributes: {
                 name: Faker::Lorem.word,
-                organization_id: @organization.id
+                organization_id: org.id
               }
             )
           }
@@ -175,13 +174,13 @@ describe Admin::CoursesController do
       end
 
       it 're-reders new if repeat category name' do
-        @existing_category = FactoryBot.create(:category, organization: @organization)
+        @existing_category = FactoryBot.create(:category, organization: org)
         post :create, params: {
           course: valid_attributes.merge(
             category_id: '0',
             category_attributes: {
               name: @existing_category.name,
-              organization_id: @organization.id
+              organization_id: org.id
             }
           )
         }
@@ -205,38 +204,65 @@ describe Admin::CoursesController do
   describe 'POST #update' do
     context 'with valid params' do
       let(:course1_attributes) do
-        @course1.attributes.merge(access_level: 'everyone')
+        course1.attributes.merge(access_level: 'everyone')
       end
 
       it 'updates an existing Course' do
-        patch :update, params: { id: @course1.to_param, course: course1_attributes, commit: 'Save Course' }
-        expect(response).to redirect_to(edit_admin_course_path(@course1))
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course' }
+        expect(response).to redirect_to(edit_admin_course_path(course1))
+      end
+
+      it 'displays appropriate notice for successful course update' do
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course' }
+        expect(flash[:notice]).to eq('Course was successfully updated.')
       end
 
       it 'updates an existing Course, and moves on to lessons' do
-        patch :update, params: { id: @course1.to_param, course: course1_attributes, commit: 'Save Course and Add Lessons' }
-        expect(response).to redirect_to(new_admin_course_lesson_path(@course1, @course1.lessons.first))
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course and Add Lessons' }
+        expect(response).to redirect_to(new_admin_course_lesson_path(course1, course1.lessons.first))
       end
 
       it 'creates a new topic, if given' do
         valid_attributes = course1_attributes
         valid_attributes[:other_topic] = '1'
         valid_attributes[:other_topic_text] = 'Another new topic'
-        patch :update, params: { id: @course1.to_param, course: valid_attributes }
+        patch :update, params: { id: course1.to_param, course: valid_attributes }
         expect(assigns(:course).topics.last.title).to include('Another new topic')
       end
 
-      it 'propagates changes to selected courses' do
-        org = create(:organization)
-        @course2.update(organization: org, parent_id: @course1.id)
-        @course1.propagation_org_ids = [org.id]
-        update_params = { id: @course1.to_param,
-                          course: course1_attributes.merge(propagation_org_ids: [org.id], title: 'Test Course'),
-                          commit: 'Save Course' }
-        patch :update, params: update_params
-        @course2.reload
-        expect(@course2.title).to eq('Test Course')
+      describe 'propagation' do
+        let(:org2) { FactoryBot.create(:organization) }
+        let(:update_params) do
+          { id: course1.to_param,
+            course: course1_attributes.merge(propagation_org_ids: [org2.id], title: 'Test Course'),
+            commit: 'Save Course' }
+        end
+
+        before do
+          course2.update(organization: org2, parent_id: course1.id)
+          course1.propagation_org_ids = [org2.id]
+        end
+
+        it 'propagates changes to selected courses' do
+          patch :update, params: update_params
+          course2.reload
+          expect(course2.title).to eq('Test Course')
+        end
+
+        it 'displays propagation success message' do
+          patch :update, params: update_params
+          expect(flash[:notice]).to eq('Course was successfully updated. Changes propagated to courses for 1 subsite.')
+        end
       end
+    end
+  end
+
+  describe 'POST #sort' do
+    it 'should change course order' do
+      order_params = { '0' => { id: course2.id, position: 1 }, '1' => { id: course1.id, position: 2 } }
+      post :sort, params: { order: order_params }
+      expect(course1.reload.course_order).to eq(2)
+      expect(course2.reload.course_order).to eq(1)
     end
   end
 end

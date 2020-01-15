@@ -24,7 +24,6 @@ describe HomeController do
     FactoryBot.create(:course_with_lessons, organization: org, display_on_dl: true, language: @english)
   end
 
-
   before(:each) do
     @request.host = "#{org.subdomain}.test.host"
   end
@@ -36,22 +35,6 @@ describe HomeController do
 
     it 'responds successfully' do
       expect(response).to have_http_status(:success)
-    end
-
-    it 'assigns enabled category ids' do
-      expect(assigns(:category_ids)).to include(category1.id, category2.id)
-    end
-
-    it 'only assigns enabled category ids' do
-      expect(assigns(:category_ids).length).to eq(2)
-    end
-
-    it 'assigns uncategorized and disabled category courses to uncategorized' do
-      expect(assigns(:uncategorized_courses)).to include(disabled_category_course, uncategorized_course)
-    end
-
-    it 'assigns correct number of uncategorized courses' do
-      expect(assigns(:uncategorized_courses).count).to eq(2)
     end
   end
 

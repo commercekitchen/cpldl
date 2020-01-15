@@ -11,8 +11,9 @@ class RegistrationExporter
 
   def to_csv
     users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number)
+
     CSV.generate do |csv|
-      csv << headers
+      csv << column_headers
 
       users.each do |user|
         next unless user.reportable_role?(@org)
@@ -20,7 +21,7 @@ class RegistrationExporter
         program_name = user.program.present? ? user.program.program_name : ''
         values = [user.send(@primary_id_field), program_name, user.created_at]
         values.concat([user.library_location_name, user.library_location_zipcode])
-        csv.add_row values
+        csv.add_row values.compact
       end
     end
   end
@@ -29,8 +30,8 @@ class RegistrationExporter
 
   def column_headers
     headers = [User.human_attribute_name(@primary_id_field), 'Program Name', 'Registration Date']
-    headers.concat(['Branch Name', 'Zip']) if @org.accepts_custom_branches?
-    headers
+    headers.concat(['Branch Name', 'Zip']) if @org.branches?
+    headers.compact
   end
 
 end

@@ -36,53 +36,13 @@ class RegistrationsController < Devise::RegistrationsController
       params[:user][:profile_attributes] = convert_branch_params(params[:user][:profile_attributes])
     end
 
-    params.require(:user).permit(list_params).merge(organization_id: current_organization.id)
+    params.require(:user).permit(whitelisted_params).merge(organization_id: current_organization.id)
   end
 
-  def list_params
-    list_params_allowed = [
-      :email,
-      :password,
-      :password_confirmation,
-      profile_attributes: profile_attributes
-    ]
+  def whitelisted_params
+    base_params = [:email, :password, :password_confirmation, profile_attributes: profile_attributes]
 
-    if current_organization.accepts_programs?
-      list_params_allowed << %i[
-        parent_type
-        program_id
-        program_location_id
-        library_card_number
-      ]
-    end
-
-    if current_organization.accepts_partners?
-      list_params_allowed << :partner_id
-    end
-
-    if params['program_type'] == 'students_and_parents'
-      list_params_allowed << %i[
-        acting_as
-        student_id
-      ]
-    end
-
-    if params[:user][:acting_as] == 'Student'
-      list_params_allowed << %i[
-        date_of_birth
-        grade
-        school_id
-      ]
-    end
-
-    if current_organization.library_card_login?
-      list_params_allowed << %i[
-        library_card_number
-        library_card_pin
-      ]
-    end
-
-    list_params_allowed
+    base_params + programs_params + partner_params + library_card_params
   end
 
   def profile_attributes
@@ -104,6 +64,36 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     allowed_attrs
+  end
+
+  def programs_params
+    allowed_programs_params = []
+
+    if current_organization.accepts_programs?
+      allowed_programs_params << %i[parent_type program_id program_location_id library_card_number]
+
+      if params['program_type'] == 'students_and_parents'
+        allowed_programs_params << %i[acting_as student_id]
+      end
+
+      if params[:user][:acting_as] == 'Student'
+        allowed_programs_params << %i[date_of_birth grade school_id]
+      end
+    end
+
+    allowed_programs_params
+  end
+
+  def partner_params
+    current_organization.accepts_partners? ? [:partner_id] : []
+  end
+
+  def library_card_params
+    if current_organization.library_card_login?
+      %i[library_card_number library_card_pin]
+    else
+      []
+    end
   end
 
   def convert_branch_params(profile_params)

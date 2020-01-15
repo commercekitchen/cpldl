@@ -3,7 +3,7 @@
 module NavHelper
   def nav_links
     [user_greeting, dashboard_link, account_link, org_trainers_link,
-     my_courses_link, all_courses_link, sign_out_link].compact.join(' | ').html_safe
+     my_courses_link, all_courses_link, sign_out_link].compact
   end
 
   def user_greeting

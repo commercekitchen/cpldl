@@ -600,39 +600,6 @@ ALTER SEQUENCE public.library_locations_id_seq OWNED BY public.library_locations
 
 
 --
--- Name: organization_courses; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.organization_courses (
-    id integer NOT NULL,
-    organization_id integer,
-    course_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: organization_courses_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.organization_courses_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: organization_courses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.organization_courses_id_seq OWNED BY public.organization_courses.id;
-
-
---
 -- Name: organizations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1161,13 +1128,6 @@ ALTER TABLE ONLY public.library_locations ALTER COLUMN id SET DEFAULT nextval('p
 
 
 --
--- Name: organization_courses id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.organization_courses ALTER COLUMN id SET DEFAULT nextval('public.organization_courses_id_seq'::regclass);
-
-
---
 -- Name: organizations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1362,14 +1322,6 @@ ALTER TABLE ONLY public.lessons
 
 ALTER TABLE ONLY public.library_locations
     ADD CONSTRAINT library_locations_pkey PRIMARY KEY (id);
-
-
---
--- Name: organization_courses organization_courses_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.organization_courses
-    ADD CONSTRAINT organization_courses_pkey PRIMARY KEY (id);
 
 
 --
@@ -1865,6 +1817,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191107234014'),
 ('20191119184844'),
 ('20191119185434'),
-('20191119190714');
+('20191119190714'),
+('20191211193827');
 
 
