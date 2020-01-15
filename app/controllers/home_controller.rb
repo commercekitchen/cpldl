@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class HomeController < ApplicationController
-  include UserCourses
-
   skip_before_action :require_valid_profile, only: [:language_toggle]
 
   def index
-    @courses = authorized_courses
+    @courses = policy_scope(Course).where(language: current_language)
   end
 
   def language_toggle

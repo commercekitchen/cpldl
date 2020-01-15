@@ -63,10 +63,9 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    language_id = I18n.locale == :en ? Language.find_by(name: 'English').try(:id) : Language.find_by(name: 'Spanish').try(:id)
     org_id = current_organization.id
 
-    @footer_pages = CmsPage.where(pub_status: 'P', language_id: language_id, organization_id: org_id, audience: user_audience_list)
+    @footer_pages = CmsPage.where(pub_status: 'P', language: current_language, organization_id: org_id, audience: user_audience_list)
   end
 
   def set_cms_marketing_pages

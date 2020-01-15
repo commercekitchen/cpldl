@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  include UserCourses
-
   before_action :authenticate_user!, only: :quiz_submit
 
   def index
-    @courses = policy_scope(Course)
+    @courses = policy_scope(Course).where(language: current_language)
 
     if params[:search].present?
       result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
@@ -75,16 +73,4 @@ class CoursesController < ApplicationController
   def designing_courses_1; end
 
   def designing_courses_2; end
-
-  private
-
-  def find_language_id_by_session
-    case session[:locale]
-    when 'en'
-      1
-    when 'es'
-      2
-    end
-  end
-
 end
