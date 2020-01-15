@@ -3,10 +3,6 @@
 class HomeController < ApplicationController
   skip_before_action :require_valid_profile, only: [:language_toggle]
 
-  def index
-    @courses = policy_scope(Course).where(language: current_language)
-  end
-
   def language_toggle
     requested_locale = params['lang']
     whitelisted_locales = I18n.available_locales.map(&:to_s)

@@ -39,14 +39,14 @@ describe Course do
       topics = nil
       expect do
         course.topics_list(topics)
-      end.to_not change { course.topics.count }
+      end.to_not(change { course.topics.count })
     end
 
     it 'does not add topics from empty topics list' do
       topics = []
       expect do
         course.topics_list(topics)
-      end.to_not change { course.topics.count }
+      end.to_not(change { course.topics.count })
     end
   end
 

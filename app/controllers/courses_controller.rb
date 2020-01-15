@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class CoursesController < ApplicationController
-  before_action :authenticate_user!, only: :quiz_submit
-
   def index
     @courses = policy_scope(Course).where(language: current_language)
 

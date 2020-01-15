@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 describe User do
+
   context '#tracking_course?' do
 
     before(:each) do

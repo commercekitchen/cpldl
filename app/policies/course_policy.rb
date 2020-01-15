@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CoursePolicy < ApplicationPolicy
   def show?
     return false unless record.organization == user.organization

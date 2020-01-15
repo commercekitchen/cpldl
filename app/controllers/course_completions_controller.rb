@@ -5,7 +5,7 @@ class CourseCompletionsController < ApplicationController
 
   def index
     completed_ids = current_user.course_progresses.completed.collect(&:course_id)
-    @courses = Course.where(id: completed_ids)
+    @courses = policy_scope(Course).where(id: completed_ids)
 
     enable_sidebar('shared/user/sidebar')
 
@@ -19,6 +19,8 @@ class CourseCompletionsController < ApplicationController
     # TODO: Do we want to ensure that the assessment was completed to get here?
     # TODO: Yes, we do - the page errors if there's no completed_at date
     @course = Course.friendly.find(params[:course_id])
+    authorize @course
+
     respond_to do |format|
       format.html
       format.pdf do
