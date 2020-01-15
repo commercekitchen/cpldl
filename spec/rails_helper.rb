@@ -76,14 +76,8 @@ RSpec.configure do |config|
     end
   end
 
-  # Create test storyline directory if necessary
-  config.before(:suite) do
-    FileUtils.mkdir_p("#{Rails.configuration.local_lesson_dir}/storylines")
-  end
-
   # Remove test storylines
   config.after(:suite) do
-    FileUtils.rm_rf Dir.glob("#{Rails.configuration.local_lesson_dir}/storylines/*")
     FileUtils.rm_rf Rails.root.join('public', 'system', 'lessons', 'story_lines')
   end
 
