@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class AccountsController < ApplicationController
-
   before_action :authenticate_user!
   before_action :set_user
   before_action -> { enable_sidebar('shared/user/sidebar') }
 
-  def show; end
+  def show;
+    authorize @user
+  end
 
   def update
+    authorize @user
     update_user(user_params)
     respond_to do |format|
       if @user.errors.any?
