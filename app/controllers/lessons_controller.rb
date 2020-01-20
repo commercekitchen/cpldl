@@ -6,13 +6,14 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
+    authorize @lesson
 
     case @lesson.pub_status
     when 'D'
-      flash[:notice] = 'That lesson is not avaliable at this time.'
+      flash[:notice] = 'That lesson is not available at this time.'
       redirect_to root_path
     when 'A'
-      flash[:notice] = 'That lesson is no longer avaliable.'
+      flash[:notice] = 'That lesson is no longer available.'
       redirect_to root_path
     when 'P'
       unless current_user
@@ -45,6 +46,7 @@ class LessonsController < ApplicationController
   end
 
   def lesson_complete
+    authorize @course, :show?
     @current_lesson = @course.lessons.friendly.find(params[:lesson_id])
     @next_lesson = @course.lessons.find(@course.next_lesson_id(@current_lesson.id))
   end

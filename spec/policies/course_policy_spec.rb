@@ -80,6 +80,52 @@ describe CoursePolicy, type: :policy do
     end
   end
 
+  permissions :track? do
+    context 'guest user' do
+      it 'denies access if course is only for authorized users' do
+        expect(subject).to_not permit(guest_user, authorized_user_course)
+      end
+
+      it 'denies access even if course is public' do
+        expect(subject).to_not permit(guest_user, everyone_course)
+      end
+
+      it 'denies access for courses from another subsite' do
+        expect(subject).to_not permit(guest_user, other_subsite_course)
+      end
+
+      it 'denies access for draft courses' do
+        expect(subject).to_not permit(guest_user, draft_course)
+      end
+
+      it 'denies access for archived courses' do
+        expect(subject).to_not permit(guest_user, archived_course)
+      end
+    end
+
+    context 'authenticated user' do
+      it 'allows tracking if course is public' do
+        expect(subject).to permit(user, everyone_course)
+      end
+
+      it 'allows tracking if course is only for authorized users' do
+        expect(subject).to permit(user, authorized_user_course)
+      end
+
+      it 'denies tracking for courses from another subsite' do
+        expect(subject).to_not permit(user, other_subsite_course)
+      end
+
+      it 'denies tracking for draft courses' do
+        expect(subject).to_not permit(user, draft_course)
+      end
+
+      it 'denies tracking for archived courses' do
+        expect(subject).to_not permit(user, archived_course)
+      end
+    end
+  end
+
   permissions :create? do
     pending "add some examples to (or delete) #{__FILE__}"
   end

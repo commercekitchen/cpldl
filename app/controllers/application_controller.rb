@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  after_action :verify_authorized, except: :index
-  after_action :verify_policy_scoped, only: :index
+  #after_action :verify_authorized, except: :index
+  #after_action :verify_policy_scoped, only: :index
 
   ### TODO: Rework language settings to be more conventional
 

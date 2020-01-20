@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 describe CourseProgressesController do
-  let(:organization) { FactoryBot.create(:organization) }
-  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: @english) }
-  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: @english) }
-  let(:user) { FactoryBot.create(:user, organization: organization) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:organization) { user.organization }
+  let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: @english, organization: organization) }
+  let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: @english, organization: organization) }
   let(:lesson1) { create(:lesson, lesson_order: 1) }
   let(:lesson2) { create(:lesson, lesson_order: 2) }
   let(:lesson3) { create(:lesson, lesson_order: 3) }
@@ -45,48 +45,9 @@ describe CourseProgressesController do
         expect(progress.reload.tracked).to be false
       end
     end
-
-    describe 'POST #start' do
-      it 'records that a user started a course' do
-        post :create, params: { course_id: course1 }
-        progress = user.course_progresses.last
-        expect(progress.course_id).to eq(course1.id)
-        expect(progress.tracked).to be true
-        expect(response).to redirect_to(course_lesson_path(course1, course1.lessons.where(lesson_order: 1).first.id))
-      end
-
-      it 'sends a user to the correct lesson if the course was already started' do
-        user.course_progresses.create({ course_id: course1.id })
-        user.course_progresses.first.completed_lessons.create({ lesson_id: lesson1.id })
-        user.course_progresses.first.completed_lessons.create({ lesson_id: lesson2.id })
-        post :create, params: { course_id: course1 }
-        expect(response).to redirect_to(course_lesson_path(course1, lesson3.id))
-      end
-
-      it 'only creates one course progress record per user per course' do
-        expect(user.course_progresses.count).to eq(0)
-        post :create, params: { course_id: course1 }
-        expect(user.course_progresses.count).to eq(1)
-        post :create, params: { course_id: course1 }
-        expect(user.course_progresses.count).to eq(1)
-        post :create, params: { course_id: course2 }
-        expect(user.course_progresses.count).to eq(2)
-        post :create, params: { course_id: course2 }
-        expect(user.course_progresses.count).to eq(2)
-      end
-    end
-
   end
 
   context 'non-authenticated user' do
-    describe 'POST #start' do
-      it 'should redirect to login page' do
-        post :create, params: { course_id: course1 }
-        expect(response).to have_http_status(:redirect)
-        expect(response).to redirect_to(course_lesson_path(course1, lesson1.id))
-      end
-    end
-
     describe 'PUT #update' do
       it 'should redirect to the login page' do
         put :update, params: { course_id: course1.id, tracked: 'true' }

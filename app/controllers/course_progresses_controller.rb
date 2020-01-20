@@ -4,21 +4,9 @@ class CourseProgressesController < ApplicationController
   before_action :authenticate_user!, except: [:create]
   before_action :assign_course
 
-  def create
-    if current_user
-      course_progress = current_user.course_progresses.find_or_create_by(course_id: @course.id)
-      course_progress.tracked = true
-      if course_progress.save
-        redirect_to course_lesson_path(@course, course_progress.next_lesson_id)
-      else
-        render :show, alert: 'Sorry, we were unable to add this course to your plan.'
-      end
-    else
-      redirect_to course_lesson_path(@course, @course.next_lesson_id)
-    end
-  end
-
   def update
+    authorize @course, :track?
+
     tracked = params[:tracked] == 'true'
     course_progress.tracked = tracked
 

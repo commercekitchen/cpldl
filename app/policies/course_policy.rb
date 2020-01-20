@@ -3,12 +3,19 @@
 class CoursePolicy < ApplicationPolicy
   def show?
     return false unless record.organization == user.organization
-
-    if user.is_a? GuestUser
-      record.everyone? && record.published?
+    return false unless record.published?
+    
+    if user.is_a?(GuestUser)
+      record.everyone?
     else
-      record.published?
+      true
     end
+  end
+
+  def track?
+    return false if user.is_a?(GuestUser)
+
+    record.organization == user.organization && record.published?
   end
 
   class Scope < Scope
