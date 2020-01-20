@@ -6,4 +6,8 @@ class GuestUser
   def initialize(organization:)
     @organization = organization
   end
+
+  def admin?
+    false
+  end
 end

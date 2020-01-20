@@ -67,6 +67,7 @@ class Course < ApplicationRecord
   scope :with_category, ->(category_id) { where(category_id: category_id) }
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
   scope :org, ->(org) { where(organization: org) }
+  scope :published, -> { where(pub_status: 'P') }
 
   def propagation_org_ids
     @propagation_org_ids ||= []

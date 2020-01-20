@@ -7,6 +7,7 @@ describe CoursePolicy, type: :policy do
   let(:organization) { user.organization }
   let(:main_site) { FactoryBot.create(:default_organization) }
   let(:guest_user) { GuestUser.new(organization: organization) }
+  let(:admin_user) { FactoryBot.create(:user, :admin, organization: organization) }
 
   let!(:everyone_course) { FactoryBot.create(:course, organization: organization) }
   let!(:authorized_user_course) { FactoryBot.create(:course, organization: organization, access_level: :authenticated_users) }
@@ -30,6 +31,14 @@ describe CoursePolicy, type: :policy do
 
       it 'should display public and authorized-user-only courses' do
         expect(scope).to contain_exactly(everyone_course, authorized_user_course)
+      end
+    end
+
+    context 'subsite admin' do
+      let(:scope) { Pundit.policy_scope!(admin_user, Course) }
+
+      it 'should display all courses' do
+        expect(scope).to contain_exactly(everyone_course, authorized_user_course, draft_course)
       end
     end
   end
@@ -127,14 +136,44 @@ describe CoursePolicy, type: :policy do
   end
 
   permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'does not allow guest user to create' do
+      expect(subject).to_not permit(guest_user, Course.new(organization: organization))
+    end
+
+    it 'does not allow authenticated user to create' do
+      expect(subject).to_not permit(user, Course.new(organization: organization))
+    end
+
+    it 'does allow subsite admin to create' do
+      expect(subject).to permit(admin_user, Course.new(organization: organization))
+    end
   end
 
   permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'does not allow guest user to update' do
+      expect(subject).to_not permit(guest_user, everyone_course)
+    end
+
+    it 'does not allow authenticated user to update' do
+      expect(subject).to_not permit(user, everyone_course)
+    end
+
+    it 'does allow subsite admin to update' do
+      expect(subject).to permit(admin_user, everyone_course)
+    end
   end
 
   permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    it 'does not allow guest user to destroy' do
+      expect(subject).to_not permit(guest_user, everyone_course)
+    end
+
+    it 'does not allow authenticated user to destroy' do
+      expect(subject).to_not permit(user, everyone_course)
+    end
+
+    it 'does allow subsite admin to destroy' do
+      expect(subject).to permit(admin_user, everyone_course)
+    end
   end
 end

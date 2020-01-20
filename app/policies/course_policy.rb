@@ -18,14 +18,28 @@ class CoursePolicy < ApplicationPolicy
     record.organization == user.organization && record.published?
   end
 
+  def create?
+    user.admin? && user.organization == record.organization
+  end
+
+  def update?
+    user.admin? && user.organization == record.organization
+  end
+
+  def destroy?
+    user.admin? && user.organization == record.organization
+  end
+
   class Scope < Scope
     def resolve
-      courses = scope.includes(:lessons).where(pub_status: 'P', organization: user.organization)
+      courses = scope.includes(:lessons).where(organization: user.organization)
 
       if user.is_a? GuestUser
-        courses.everyone
+        courses.published.everyone
+      elsif user.admin?
+        courses.where.not(pub_status: 'A')
       else
-        courses
+        courses.published
       end
     end
   end
