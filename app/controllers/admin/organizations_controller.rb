@@ -3,20 +3,21 @@
 module Admin
   class OrganizationsController < BaseController
     def index
-      @organizations = Organization.all
+      @organizations = policy_scope(Organization)
     end
 
     def update
       @organization = Organization.find(params[:id])
+      authorize @organization
 
-      if !current_user.has_role?(:admin, @organization)
-        flash.now[:error] = 'You do not have access to this subdomain'
-        render json: { errors: ['You do not have access to this subdomain'] }, status: :forbidden
-      elsif @organization.update(organization_params)
+      if @organization.update(organization_params)
         render json: { organization: @organization }, status: :ok
       else
         render json: { errors: @organization.errors }, status: :unprocessable_entity
       end
+    rescue Pundit::NotAuthorizedError
+      flash.now[:error] = 'You do not have access to this subdomain'
+      render json: { errors: ['You do not have access to this subdomain'] }, status: :forbidden
     end
 
     private

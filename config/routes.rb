@@ -91,7 +91,7 @@ Rails.application.routes.draw do
     get 'dashboard/import_courses', to: 'dashboard#import_courses', as: :import_courses
     post 'dashboard/add_imported_course', to: 'dashboard#add_imported_course'
 
-    resources :cms_pages do
+    resources :cms_pages, except: :show do
       put :sort, on: :collection
       patch 'update_pub_status'
     end

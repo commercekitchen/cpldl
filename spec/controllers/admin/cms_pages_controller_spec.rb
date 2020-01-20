@@ -12,6 +12,22 @@ describe Admin::CmsPagesController do
     sign_in admin
   end
 
+  describe 'get#index' do
+    let(:page2) { FactoryBot.create(:cms_page, organization: org) }
+    let(:page3) { FactoryBot.create(:cms_page, organization: org) }
+    let(:other_org_page) { FactoryBot.create(:cms_page) }
+
+    it 'should have a successful response' do
+      get :index
+      expect(response).to have_http_status(:success)
+    end
+
+    it 'assigns all cms_pages to @cms_pages' do
+      get :index
+      expect(assigns(:cms_pages)).to contain_exactly(cms_page, page2, page3)
+    end
+  end
+
   describe 'GET #new' do
     it 'assigns a new page as page' do
       get :new
