@@ -35,7 +35,7 @@ class Course < ApplicationRecord
 
   has_many :course_topics, dependent: :destroy
   has_many :topics, through: :course_topics
-  has_many :lessons, dependent: :destroy
+  has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
@@ -86,16 +86,16 @@ class Course < ApplicationRecord
     topics.pluck(:title).join(', ')
   end
 
-  def next_lesson_id(current_lesson_id = 0)
+  def lesson_after(lesson = nil)
     raise StandardError, 'There are no available lessons for this course.' if lessons.published.count.zero?
 
     begin
-      lesson_order = lessons.published.find(current_lesson_id).lesson_order
-      return lessons.order('lesson_order').last.id if lesson_order >= last_lesson_order
+      lesson_order = lesson.lesson_order
+      return lessons.published.last if lesson_order >= last_lesson_order
 
-      self.lessons.published.where('lesson_order > ?', lesson_order).order(:lesson_order).take.id
+      lessons.published.where('lesson_order > ?', lesson_order).take
     rescue StandardError
-      lessons.published.order('lesson_order').first.id
+      lessons.published.first
     end
   end
 

@@ -107,6 +107,15 @@ describe LessonsController do
       post :complete, params: { course_id: course.to_param, lesson_id: lesson2.to_param }, format: :json
       expect(response).to have_http_status(:ok)
     end
+
+    it 'does not create a duplicate lesson completion' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, lesson: lesson1, course_progress: course_progress)
+
+      expect do
+        post :complete, params: { course_id: course.to_param, lesson_id: lesson1.to_param }, format: :json
+      end.to_not change(LessonCompletion, :count)
+    end
   end
 
   describe 'GET #lesson_complete' do

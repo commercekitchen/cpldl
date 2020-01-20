@@ -21,7 +21,7 @@ class LessonsController < ApplicationController
         session[:lessons_done] << @lesson.id unless session[:lessons_done].include?(@lesson.id)
       end
 
-      @next_lesson = @course.lessons.find(@course.next_lesson_id(@lesson.id))
+      @next_lesson = @course.lesson_after(@lesson)
 
       if current_user
         @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
@@ -48,18 +48,15 @@ class LessonsController < ApplicationController
   def lesson_complete
     authorize @course, :show?
     @current_lesson = @course.lessons.friendly.find(params[:lesson_id])
-    @next_lesson = @course.lessons.find(@course.next_lesson_id(@current_lesson.id))
+    @next_lesson = @course.lesson_after(@current_lesson)
   end
 
   def complete
     lesson = @course.lessons.friendly.find(params[:lesson_id])
 
-    # TODO: move to user model?
     if current_user
-      course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
-      course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
-      course_progress.completed_at = Time.zone.now if lesson.is_assessment
-      course_progress.save
+      course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
+      LessonCompletion.find_or_create_by!(course_progress: course_progress, lesson: lesson)
     else
       session[:completed_lessons] ||= []
       session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)

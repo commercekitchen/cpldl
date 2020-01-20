@@ -50,40 +50,40 @@ describe Course do
     end
   end
 
-  describe '#next_lesson_id' do
+  describe '#lesson_after' do
     let(:course_with_lessons) { FactoryBot.create(:course_with_lessons) }
     let(:first_lesson) { course_with_lessons.lessons.first }
     let(:second_lesson) { course_with_lessons.lessons.second }
     let(:third_lesson) { course_with_lessons.lessons.third }
 
     it 'should return the first lesson id if called without an id' do
-      expect(course_with_lessons.next_lesson_id).to eq(first_lesson.id)
+      expect(course_with_lessons.lesson_after).to eq(first_lesson)
     end
 
     it 'should return the second lesson id if called with the first lesson id' do
-      expect(course_with_lessons.next_lesson_id(first_lesson.id)).to eq(second_lesson.id)
+      expect(course_with_lessons.lesson_after(first_lesson)).to eq(second_lesson)
     end
 
     it 'should return next lesson id if lesson order is skipped' do
       third_lesson.update(lesson_order: 5)
-      expect(course_with_lessons.next_lesson_id(second_lesson.id)).to eq(third_lesson.id)
+      expect(course_with_lessons.lesson_after(second_lesson)).to eq(third_lesson)
     end
 
     it 'should return the last lesson id if called with the last lesson id' do
-      expect(course_with_lessons.next_lesson_id(third_lesson.id)).to be(third_lesson.id)
+      expect(course_with_lessons.lesson_after(third_lesson)).to eq(third_lesson)
     end
 
     it 'should return the first lesson id if called with an invalid lesson id' do
-      expect(course_with_lessons.next_lesson_id(123)).to be(first_lesson.id)
+      expect(course_with_lessons.lesson_after(123)).to eq(first_lesson)
     end
 
     it 'should skip unpublished lessons' do
       second_lesson.update(pub_status: 'D')
-      expect(course_with_lessons.next_lesson_id(first_lesson.id)).to eq(third_lesson.id)
+      expect(course_with_lessons.lesson_after(first_lesson)).to eq(third_lesson)
     end
 
     it 'should raise an error if called when there are no lessons' do
-      expect { course.next_lesson_id }.to raise_error(StandardError)
+      expect { course.lesson_after }.to raise_error(StandardError)
     end
   end
 

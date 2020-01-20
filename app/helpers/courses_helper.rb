@@ -56,9 +56,9 @@ module CoursesHelper
     course_progress = current_user&.course_progresses&.find_by(course_id: course.id)
 
     lesson_path = if course_progress
-                    course_lesson_path(course, course_progress.next_lesson_id)
+                    course_lesson_path(course, course_progress.next_lesson)
                   else
-                    course_lesson_path(course, course.next_lesson_id)
+                    course_lesson_path(course, course.lessons.first)
                   end
 
     link_to "#{t('course_page.start_course')}", lesson_path, class: "btn button-color", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" }

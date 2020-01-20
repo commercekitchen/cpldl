@@ -101,14 +101,14 @@ describe CoursesHelper do
     end
 
     it 'should render link to first lesson with no course progress' do
-      expected_path = course_lesson_path(course, course.lessons.first.id)
+      expected_path = course_lesson_path(course, course.lessons.first)
       expect(helper.start_or_resume_course_link(course)).to include(expected_path)
     end
 
     it 'should render link to latest incomplete lesson if course progress exists' do
       course_progress = FactoryBot.create(:course_progress, course: course, user: user)
-      FactoryBot.create(:completed_lesson, course_progress: course_progress, lesson_id: course.lessons.first.id)
-      expected_path = course_lesson_path(course, course.lessons.second.id)
+      FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: course.lessons.first)
+      expected_path = course_lesson_path(course, course.lessons.second)
       expect(helper.start_or_resume_course_link(course)).to include(expected_path)
     end
   end

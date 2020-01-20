@@ -87,8 +87,7 @@ feature 'User visits course listing page' do
     end
 
     scenario 'can click to start a course and be taken to the first not-completed lesson' do
-      completed_lesson = create(:completed_lesson, lesson_id: course1.lessons.first.id)
-      course_progress.completed_lessons << completed_lesson
+      FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: course1.lessons.first)
       visit course_path(course1)
       click_link 'Start Course'
       expect(current_path).to eq(course_lesson_path(course1, course1.lessons.second))
