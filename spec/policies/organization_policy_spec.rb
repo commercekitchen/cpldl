@@ -132,4 +132,28 @@ RSpec.describe OrganizationPolicy, type: :policy do
       end
     end
   end
+
+  permissions :download_reports? do
+    context 'guest user' do
+      it 'denies access' do
+        expect(subject).to_not permit(guest_user, organization)
+      end
+    end
+
+    context 'user' do
+      it 'denies access' do
+        expect(subject).to_not permit(user, organization)
+      end
+    end
+
+    context 'subsite admin' do
+      it 'allows access for user subsite' do
+        expect(subject).to permit(subsite_admin, organization)
+      end
+
+      it 'denies access for another organization' do
+        expect(subject).to_not permit(subsite_admin, Organization.new)
+      end
+    end
+  end
 end

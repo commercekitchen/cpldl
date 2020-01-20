@@ -3,6 +3,10 @@ class OrganizationPolicy < ApplicationPolicy
     matches_user_org?
   end
 
+  def download_reports?
+    matches_user_org? && user.admin?
+  end
+
   def update?
     matches_user_org? && user.admin?
   end
