@@ -5,15 +5,18 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      @library_locations = current_organization.library_locations
+      @library_locations = policy_scope(LibraryLocation)
     end
 
     def new
       @library_location = current_organization.library_locations.build
+      authorize @library_location
     end
 
     def create
       @library_location = current_organization.library_locations.build(library_location_params)
+      authorize @library_location
+
       if @library_location.save
         redirect_to admin_library_locations_path, notice: 'Library Branch was successfully created.'
       else
@@ -23,10 +26,13 @@ module Admin
 
     def edit
       @library_location = LibraryLocation.find(params[:id])
+      authorize @library_location
     end
 
     def update
       @library_location = LibraryLocation.find(params[:id])
+      authorize @library_location
+
       if @library_location.update(library_location_params)
         redirect_to admin_library_locations_path, notice: 'Library Branch was successfully updated.'
       else
@@ -36,6 +42,8 @@ module Admin
 
     def destroy
       @library_location = LibraryLocation.find(params[:id])
+      authorize @library_location
+
       if @library_location.destroy
         redirect_to admin_library_locations_path, notice: 'Library Branch was successfully deleted.'
       else
@@ -44,7 +52,8 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: LibraryLocation, order_params: params[:order], attribute_key: :sort_order)
+      library_locations = policy_scope(LibraryLocation)
+      SortService.sort(model: library_locations, order_params: params[:order], attribute_key: :sort_order)
 
       head :ok
     end
