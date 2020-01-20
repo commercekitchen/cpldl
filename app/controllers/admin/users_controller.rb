@@ -10,18 +10,22 @@ module Admin
 
     def index
       authorize_admin_or_trainer
-      results = User.search_users(params[:users_search])
+      users = policy_scope(User).includes(profile: [:language])
+
       @users = if params[:users_search].blank?
-                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
+                 users
                else
-                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
+                 users.search_users(params[:users_search])
                end
-      enable_sidebar if current_user.admin?
+
+      enable_sidebar
     end
 
     def change_user_roles
-      user     = User.find(params[:id])
-      org      = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
+      user = User.find(params[:id])
+      authorize user, :update?
+  
+      org = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
       new_role = params[:value].downcase.to_sym
 
       user.roles = []

@@ -5,7 +5,7 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
+      @courses = policy_scope(Course).includes(:language)
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
@@ -14,11 +14,15 @@ module Admin
     end
 
     def manually_confirm_user
-      User.find(params[:user_id]).confirm if current_user.has_role?(:admin, current_organization)
+      @user = User.find(params[:user_id])
+      authorize @user, :update?
+
+      @user.confirm
       redirect_to admin_users_path
     end
 
     def import_courses
+      authorize current_organization, :import_courses?
       @all_subsite_ids = Course.where(pub_status: 'P', subsite_course: true).pluck(:id)
       @previously_imported_ids = current_organization.courses.where.not(pub_status: 'A').pluck(:parent_id).compact
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
@@ -35,6 +39,7 @@ module Admin
     end
 
     def add_imported_course
+      authorize current_organization, :import_courses?
       import_service = CourseImportService.new(organization: current_organization, course_id: params['course_id'].to_i)
       new_course = import_service.import!
 

@@ -154,6 +154,10 @@ class User < ApplicationRecord
     has_role?(:admin, organization)
   end
 
+  def trainer?
+    has_role?(:trainer, organization)
+  end
+
   def reportable_role?(org)
     return true if self.has_role?(:user, org) || self.has_role?(:parent, org) || self.has_role?(:student, org)
 

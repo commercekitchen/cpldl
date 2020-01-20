@@ -10,4 +10,8 @@ class GuestUser
   def admin?
     false
   end
+
+  def trainer?
+    false
+  end
 end
