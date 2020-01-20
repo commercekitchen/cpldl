@@ -5,7 +5,7 @@ require 'rails_helper'
 describe CourseProgress do
 
   context '#complete?' do
-    let(:course_progress) { FactoryBot.create(:course_progress)}
+    let(:course_progress) { FactoryBot.create(:course_progress) }
 
     it 'should be false if there is no completed date' do
       expect(course_progress.complete?).to be false
@@ -26,7 +26,7 @@ describe CourseProgress do
     let(:course_progress1) do
       FactoryBot.create(:course_progress, course: course1, tracked: true, completed_at: Time.zone.now, user: user)
     end
-    
+
     let(:course_progress2) do
       FactoryBot.create(:course_progress, course: course2, tracked: true, user: user)
     end

@@ -53,6 +53,7 @@ module CoursesHelper
 
   def start_or_resume_course_link(course)
     return if course.lessons.empty?
+
     course_progress = current_user&.course_progresses&.find_by(course_id: course.id)
 
     lesson_path = if course_progress
@@ -61,6 +62,6 @@ module CoursesHelper
                     course_lesson_path(course, course.lessons.first)
                   end
 
-    link_to "#{t('course_page.start_course')}", lesson_path, class: "btn button-color", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" }
+    link_to t('course_page.start_course').to_s, lesson_path, class: 'btn button-color', data: { cpl_ga_event: 'on', cpl_ga_value: 'user-start-course' }
   end
 end

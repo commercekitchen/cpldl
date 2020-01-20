@@ -16,11 +16,6 @@ class LessonsController < ApplicationController
       flash[:notice] = 'That lesson is no longer available.'
       redirect_to root_path
     when 'P'
-      unless current_user
-        session[:lessons_done] = [] if session[:lessons_done].blank?
-        session[:lessons_done] << @lesson.id unless session[:lessons_done].include?(@lesson.id)
-      end
-
       @next_lesson = @course.lesson_after(@lesson)
 
       if current_user

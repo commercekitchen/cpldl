@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CourseProgressesController < ApplicationController
-  before_action :authenticate_user!, except: [:create]
+  before_action :authenticate_user!
   before_action :assign_course
 
   def update

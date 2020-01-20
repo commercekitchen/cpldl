@@ -5,7 +5,7 @@ class AccountsController < ApplicationController
   before_action :set_user
   before_action -> { enable_sidebar('shared/user/sidebar') }
 
-  def show;
+  def show
     authorize @user
   end
 

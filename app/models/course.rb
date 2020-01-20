@@ -35,7 +35,7 @@ class Course < ApplicationRecord
 
   has_many :course_topics, dependent: :destroy
   has_many :topics, through: :course_topics
-  has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy
+  has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy, inverse_of: :course
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
   accepts_nested_attributes_for :attachments,
@@ -93,7 +93,7 @@ class Course < ApplicationRecord
       lesson_order = lesson.lesson_order
       return lessons.published.last if lesson_order >= last_lesson_order
 
-      lessons.published.where('lesson_order > ?', lesson_order).take
+      lessons.published.find_by('lesson_order > ?', lesson_order)
     rescue StandardError
       lessons.published.first
     end

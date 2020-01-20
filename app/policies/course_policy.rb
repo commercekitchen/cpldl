@@ -4,7 +4,7 @@ class CoursePolicy < ApplicationPolicy
   def show?
     return false unless record.organization == user.organization
     return false unless record.published?
-    
+
     if user.is_a?(GuestUser)
       record.everyone?
     else
