@@ -39,7 +39,7 @@ module Admin
     end
 
     def export_user_info
-      @users = User.where(organization_id: current_organization.id)
+      @users = policy_scope(User)
 
       respond_to do |format|
         format.csv { send_data users_csv(@users), filename: "#{subdomain_name}_users_#{current_date_string}.csv" }

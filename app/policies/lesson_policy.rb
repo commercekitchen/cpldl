@@ -13,4 +13,12 @@ class LessonPolicy < ApplicationPolicy
       true
     end
   end
+
+  def create?
+    user.admin? && record.course.organization == user.organization
+  end
+
+  def update?
+    user.admin? && record.course.organization == user.organization
+  end
 end

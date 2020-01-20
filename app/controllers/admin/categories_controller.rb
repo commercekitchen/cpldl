@@ -23,7 +23,7 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: Category, order_params: params[:order], attribute_key: :category_order)
+      SortService.sort(model: Category, order_params: params[:order], attribute_key: :category_order, user: current_user)
 
       head :ok
     end

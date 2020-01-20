@@ -104,7 +104,7 @@ Rails.application.routes.draw do
       put :sort, on: :collection
       patch 'update_pub_status'
 
-      resources :lessons do
+      resources :lessons, except: [:index, :show] do
         collection do
           delete :destroy_asl_attachment
         end

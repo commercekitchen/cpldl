@@ -71,8 +71,7 @@ module Admin
     end
 
     def sort
-      cms_pages = policy_scope(CmsPage)
-      SortService.sort(model: cms_pages, order_params: params[:order], attribute_key: :cms_page_order)
+      SortService.sort(model: CmsPage, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
 
       head :ok
     end

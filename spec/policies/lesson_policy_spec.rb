@@ -7,6 +7,7 @@ RSpec.describe LessonPolicy, type: :policy do
   let(:organization) { user.organization }
   let(:main_site) { FactoryBot.create(:default_organization) }
   let(:guest_user) { GuestUser.new(organization: organization) }
+  let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
   let(:no_auth_organization) { FactoryBot.create(:organization, :no_login_required) }
   let(:no_auth_guest_user) { GuestUser.new(organization: no_auth_organization) }
 
@@ -83,14 +84,42 @@ RSpec.describe LessonPolicy, type: :policy do
   end
 
   permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    context 'guest user' do
+      it 'should not be permitted' do
+        expect(subject).to_not permit(guest_user, Lesson.new(course: everyone_course))
+      end
+    end
+
+    context 'subsite user' do
+      it 'should not be permitted' do
+        expect(subject).to_not permit(user, Lesson.new(course: everyone_course))
+      end
+    end
+
+    context 'subsite admin' do
+      it 'should be permitted' do
+        expect(subject).to permit(admin, Lesson.new(course: everyone_course))
+      end
+    end
   end
 
   permissions :update? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
+    context 'guest user' do
+      it 'should not be permitted' do
+        expect(subject).to_not permit(guest_user, everyone_lesson)
+      end
+    end
 
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
+    context 'subsite user' do
+      it 'should not be permitted' do
+        expect(subject).to_not permit(user, everyone_lesson)
+      end
+    end
+
+    context 'subsite admin' do
+      it 'should be permitted' do
+        expect(subject).to permit(admin, everyone_lesson)
+      end
+    end
   end
 end

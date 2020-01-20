@@ -48,6 +48,7 @@ class LessonsController < ApplicationController
 
   def complete
     lesson = @course.lessons.friendly.find(params[:lesson_id])
+    authorize lesson, :show?
 
     if current_user
       course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
