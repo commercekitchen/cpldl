@@ -6,10 +6,12 @@ module Admin
 
     def new
       @program = current_organization.programs.build
+      authorize @program
     end
 
     def create
       @program = current_organization.programs.build
+      authorize @program
 
       if @program.update(program_params)
         redirect_to admin_programs_path, notice: 'Program created successfully'
@@ -19,11 +21,13 @@ module Admin
     end
 
     def index
-      @programs = current_organization.programs
+      @programs = policy_scope(Program)
     end
 
     def edit
       @program = Program.find(params[:id])
+      authorize @program
+
       @program_location = @program.program_locations.new
     end
 
