@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-class SchoolPolicy < SubsiteAdminPolicy
+class SchoolPolicy < AdminOnlyPolicy
 end

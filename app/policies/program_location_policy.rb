@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ProgramLocationPolicy < SubsiteAdminPolicy
+class ProgramLocationPolicy < AdminOnlyPolicy
   private
 
   def organization

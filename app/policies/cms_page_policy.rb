@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CmsPagePolicy < SubsiteAdminPolicy
+class CmsPagePolicy < AdminOnlyPolicy
   def show?
     record.organization == user.organization
   end

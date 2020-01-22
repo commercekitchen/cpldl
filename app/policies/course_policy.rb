@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CoursePolicy < SubsiteAdminPolicy
+class CoursePolicy < AdminOnlyPolicy
   def show?
     return false unless record.organization == user.organization
     return false unless record.published?

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-class SubsiteAdminPolicy < ApplicationPolicy
+class AdminOnlyPolicy < ApplicationPolicy
   def show?
-    subsite_admin?(organization)
+    admin_user?
   end
 
   def create?
-    subsite_admin?(organization)
+    admin_user?
   end
 
   def destroy?
-    subsite_admin?(organization)
+    admin_user?
   end
 
   def update?
-    subsite_admin?(organization)
+    admin_user?
   end
 
   class Scope < Scope
@@ -28,7 +28,19 @@ class SubsiteAdminPolicy < ApplicationPolicy
 
   protected
 
+  def admin_user?
+    subsite_admin?(organization)
+  end
+
   def organization
     record.organization
+  end
+
+  def subsite_admin?(subsite)
+    user.admin? && user.organization == subsite
+  end
+
+  def trainer?(subsite)
+    user.trainer? && user.organization == subsite
   end
 end

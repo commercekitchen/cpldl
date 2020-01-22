@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AttachmentPolicy < SubsiteAdminPolicy
+class AttachmentPolicy < AdminOnlyPolicy
   private
 
   def organization

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LessonPolicy < ApplicationPolicy
+class LessonPolicy < AdminOnlyPolicy
   def show?
     course = record.course
 
@@ -14,11 +14,17 @@ class LessonPolicy < ApplicationPolicy
     end
   end
 
-  def create?
-    subsite_admin?(record.course.organization)
+  class Scope < Scope
+    def resolve
+      raise Pundit::NotAuthorizedError unless user.admin?
+
+      user.organization.lessons
+    end
   end
 
-  def update?
-    subsite_admin?(record.course.organization)
+  private
+
+  def organization
+    record.course.organization
   end
 end

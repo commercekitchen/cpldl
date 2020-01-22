@@ -1,28 +1,24 @@
 # frozen_string_literal: true
 
-class OrganizationPolicy < ApplicationPolicy
+class OrganizationPolicy < AdminOnlyPolicy
   def get_recommendations?
     record == user.organization
   end
 
   def download_reports?
-    subsite_admin?(record)
-  end
-
-  def update?
-    subsite_admin?(record)
+    admin_user?
   end
 
   def customize?
-    subsite_admin?(record)
+    admin_user?
   end
 
   def import_courses?
-    subsite_admin?(record)
+    admin_user?
   end
 
   def invite_user?
-    subsite_admin?(record)
+    admin_user?
   end
 
   class Scope < Scope
@@ -32,5 +28,11 @@ class OrganizationPolicy < ApplicationPolicy
 
       scope.all
     end
+  end
+
+  private
+
+  def organization
+    record
   end
 end
