@@ -62,7 +62,9 @@ module Admin
     end
 
     def update_pub_status
-      course            = Course.find(params[:course_id])
+      course = Course.find(params[:course_id])
+      authorize course, :update?
+
       course.pub_status = params[:value]
       course.update_pub_date(params[:value])
       course.update_lesson_pub_stats(params[:value])
@@ -106,7 +108,8 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: Course, order_params: params[:order], attribute_key: :course_order, user: current_user)
+      courses = policy_scope(Course)
+      SortService.sort(model: courses, order_params: params[:order], attribute_key: :course_order, user: current_user)
 
       head :ok
     end

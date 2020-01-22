@@ -52,7 +52,8 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: LibraryLocation, order_params: params[:order], attribute_key: :sort_order, user: current_user)
+      library_locations = policy_scope(LibraryLocation)
+      SortService.sort(model: library_locations, order_params: params[:order], attribute_key: :sort_order, user: current_user)
 
       head :ok
     end

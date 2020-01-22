@@ -39,6 +39,8 @@ module Admin
 
     def update_pub_status
       cms_page = CmsPage.find(params[:cms_page_id])
+      authorize cms_page, :update?
+
       cms_page.pub_status = params[:value]
       cms_page.update_pub_date(params[:value])
 
@@ -71,6 +73,7 @@ module Admin
     end
 
     def sort
+      pages = policy_scope(CmsPage)
       SortService.sort(model: CmsPage, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
 
       head :ok

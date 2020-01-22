@@ -2,11 +2,15 @@
 
 class UserPolicy < ApplicationPolicy
   def show?
-    record == user || admin_at_org?
+    record == user || subsite_admin?(record.organization)
   end
 
   def update?
-    record == user || admin_at_org?
+    record == user || subsite_admin?(record.organization)
+  end
+
+  def confirm?
+    user.is_a?(User) && (subsite_admin?(record.organization) || user.has_role?(:trainer, record.organization))
   end
 
   class Scope < Scope

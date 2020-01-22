@@ -12,13 +12,11 @@ RSpec.describe LibraryLocationPolicy, type: :policy do
 
   permissions ".scope" do
     it 'should return organization library locations for guest user' do
-      scope = Pundit.policy_scope!(guest_user, LibraryLocation)
-      expect(scope).to contain_exactly(library_location)
+      expect { Pundit.policy_scope!(guest_user, LibraryLocation) }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it 'should return organization library locations for non admin user' do
-      scope = Pundit.policy_scope!(user, LibraryLocation)
-      expect(scope).to contain_exactly(library_location)
+      expect { Pundit.policy_scope!(user, LibraryLocation) }.to raise_error(Pundit::NotAuthorizedError)
     end
 
     it 'should return organization library locations for admin' do

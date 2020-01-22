@@ -13,6 +13,8 @@ class ProfilesController < ApplicationController
 
   def invalid_profile
     @profile = Profile.find_or_initialize_by(user: @user)
+    authorize @profile, :show?
+
     @profile.valid?
     render 'show'
   end

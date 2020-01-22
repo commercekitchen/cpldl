@@ -1,0 +1,2 @@
+class SchoolPolicy < SubsiteAdminPolicy
+end

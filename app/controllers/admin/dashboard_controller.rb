@@ -15,7 +15,7 @@ module Admin
 
     def manually_confirm_user
       @user = User.find(params[:user_id])
-      authorize @user, :update?
+      authorize @user, :confirm?
 
       @user.confirm
       redirect_to admin_users_path

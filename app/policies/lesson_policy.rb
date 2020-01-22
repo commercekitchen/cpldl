@@ -15,10 +15,10 @@ class LessonPolicy < ApplicationPolicy
   end
 
   def create?
-    user.admin? && record.course.organization == user.organization
+    subsite_admin?(record.course.organization)
   end
 
   def update?
-    user.admin? && record.course.organization == user.organization
+    subsite_admin?(record.course.organization)
   end
 end

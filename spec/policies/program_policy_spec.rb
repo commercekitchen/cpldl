@@ -19,7 +19,7 @@ RSpec.describe ProgramPolicy, type: :policy do
       expect { Pundit.policy_scope!(user, Program) }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it 'should list correct partners for admin' do
+    it 'should list correct programs for admin' do
       expect(Pundit.policy_scope!(admin, Program)).to contain_exactly(program)
     end
   end

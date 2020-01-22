@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CoursePolicy < ApplicationPolicy
+class CoursePolicy < SubsiteAdminPolicy
   def show?
     return false unless record.organization == user.organization
     return false unless record.published?
@@ -16,18 +16,6 @@ class CoursePolicy < ApplicationPolicy
     return false if user.is_a?(GuestUser)
 
     record.organization == user.organization && record.published?
-  end
-
-  def create?
-    user.admin? && user.organization == record.organization
-  end
-
-  def update?
-    user.admin? && user.organization == record.organization
-  end
-
-  def destroy?
-    user.admin? && user.organization == record.organization
   end
 
   class Scope < Scope

@@ -1,22 +1,22 @@
 class OrganizationPolicy < ApplicationPolicy
   def get_recommendations?
-    matches_user_org?
+    record == user.organization
   end
 
   def download_reports?
-    matches_user_org? && user.admin?
+    subsite_admin?(record)
   end
 
   def update?
-    matches_user_org? && user.admin?
+    subsite_admin?(record)
   end
 
   def customize?
-    matches_user_org? && user.admin?
+    subsite_admin?(record)
   end
 
   def import_courses?
-    matches_user_org? && user.admin?
+    subsite_admin?(record)
   end
 
   class Scope < Scope
@@ -25,11 +25,5 @@ class OrganizationPolicy < ApplicationPolicy
       raise Pundit::NotAuthorizedError, "must be a PLA admin" unless user.admin? && user.has_role?(:admin, www_subsite)
       scope.all
     end
-  end
-
-  private
-
-  def matches_user_org?
-    record == user.organization
   end
 end

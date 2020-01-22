@@ -8,6 +8,7 @@ describe UserPolicy, type: :policy do
   let(:profile) { user.profile }
   let(:user2) { FactoryBot.create(:user) }
   let(:guest_user) { GuestUser.new(organization: organization) }
+  let(:other_subsite_user) { FactoryBot.create(:user) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
   let(:trainer) { FactoryBot.create(:user, :trainer, organization: organization) }
 
@@ -76,6 +77,36 @@ describe UserPolicy, type: :policy do
 
     it 'should allow an admin to update a user in their subsite' do
       expect(subject).to permit(admin, user)
+    end
+  end
+
+  permissions :confirm? do
+    it 'should not allow user to manually confirm their account' do
+      expect(subject).to_not permit(user, user)
+    end
+
+    it 'should not allow a user to confirm another user account' do
+      expect(subject).to_not permit(user2, user)
+    end
+
+    it 'should not allow guest user to confirm an account' do
+      expect(subject).to_not permit(guest_user, user)
+    end
+
+    it 'should allow an admin to confirm a user in their subsite' do
+      expect(subject).to permit(admin, user)
+    end
+
+    it 'should not allow an admin to confirm a user in another subsite' do
+      expect(subject).to_not permit(admin, other_subsite_user)
+    end
+
+    it 'should allow a trainer to confirm a user in their subsite' do
+      expect(subject).to permit(trainer, user)
+    end
+
+    it 'should not allow a trainer to confirm a user in another subsite' do
+      expect(subject).to_not permit(trainer, other_subsite_user)
     end
   end
 end

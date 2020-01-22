@@ -3,14 +3,14 @@
 require 'rails_helper'
 
 describe Admin::AttachmentsController do
+  let(:organization) { FactoryBot.create(:default_organization) }
+  let(:course) { FactoryBot.create(:course, organization: organization) }
+  let(:attachment) { FactoryBot.create(:attachment, course: course) }
+  let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
 
   before(:each) do
-    @organization = create(:default_organization)
     @request.host = 'www.test.host'
-    @attachment = create(:attachment)
-    @admin = create(:user, :admin, organization: @organization)
-    sign_in @admin
-
+    sign_in admin
     @request.env['HTTP_REFERER'] = 'http://test.com/admin/courses/new'
   end
 

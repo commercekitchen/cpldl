@@ -48,4 +48,10 @@ class ApplicationPolicy
       scope.all
     end
   end
+
+  protected
+
+    def subsite_admin?(subsite)
+      user.admin? && user.organization == subsite
+    end
 end
