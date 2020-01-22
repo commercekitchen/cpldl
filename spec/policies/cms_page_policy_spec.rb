@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CmsPagePolicy, type: :policy do
@@ -10,7 +12,7 @@ RSpec.describe CmsPagePolicy, type: :policy do
 
   subject { described_class }
 
-  permissions ".scope" do
+  permissions '.scope' do
     context 'guest user' do
       let(:scope) { Pundit.policy_scope!(guest_user, CmsPage) }
 

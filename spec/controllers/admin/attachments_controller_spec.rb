@@ -4,9 +4,9 @@ require 'rails_helper'
 
 describe Admin::AttachmentsController do
   let(:organization) { FactoryBot.create(:default_organization) }
-  let(:course) { FactoryBot.create(:course, organization: organization) }
-  let(:attachment) { FactoryBot.create(:attachment, course: course) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+  let(:course) { FactoryBot.create(:course, organization: organization) }
+  let!(:attachment) { FactoryBot.create(:attachment, course: course) }
 
   before(:each) do
     @request.host = 'www.test.host'
@@ -17,7 +17,7 @@ describe Admin::AttachmentsController do
   describe 'DELETE #destroy' do
     context 'success' do
       it 'deletes and attachment' do
-        expect { delete :destroy, params: { id: @attachment.to_param } }.to change(Attachment, :count).by(-1)
+        expect { delete :destroy, params: { id: attachment.to_param } }.to change(Attachment, :count).by(-1)
       end
     end
   end

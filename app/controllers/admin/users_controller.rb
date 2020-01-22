@@ -6,10 +6,10 @@ module Admin
   class UsersController < BaseController
     before_action :enable_sidebar, except: [:index]
 
-    skip_before_action :authorize_admin, only: [:index]
+    skip_before_action :authorize_admin, only: :index
+    before_action :authorize_admin_or_trainer, only: :index
 
     def index
-      authorize_admin_or_trainer
       users = policy_scope(User).includes(profile: [:language])
 
       @users = if params[:users_search].blank?
@@ -24,7 +24,7 @@ module Admin
     def change_user_roles
       user = User.find(params[:id])
       authorize user, :update?
-  
+
       org = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
       new_role = params[:value].downcase.to_sym
 

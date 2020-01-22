@@ -10,8 +10,7 @@ module Admin
       before_action :find_translation, only: %i[edit update]
 
       def index
-        authorize current_organization, :customize?
-        @translations = Translation.locale(@locale)
+        @translations = policy_scope(:translation).locale(@locale)
       end
 
       def new

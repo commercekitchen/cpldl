@@ -51,7 +51,7 @@ class ApplicationPolicy
 
   protected
 
-    def subsite_admin?(subsite)
-      user.admin? && user.organization == subsite
-    end
+  def subsite_admin?(subsite)
+    user.admin? && user.organization == subsite
+  end
 end

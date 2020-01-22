@@ -19,7 +19,7 @@ describe UserPolicy, type: :policy do
       let(:scope) { Pundit.policy_scope!(guest_user, User) }
 
       it 'should raise an authorization error' do
-        expect { scope }.to raise_error(Pundit::NotAuthorizedError) 
+        expect { scope }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
 
@@ -27,7 +27,7 @@ describe UserPolicy, type: :policy do
       let(:scope) { Pundit.policy_scope!(user, User) }
 
       it 'should raise an authorization error' do
-        expect { scope }.to raise_error(Pundit::NotAuthorizedError) 
+        expect { scope }.to raise_error(Pundit::NotAuthorizedError)
       end
     end
 

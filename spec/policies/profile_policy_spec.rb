@@ -25,10 +25,6 @@ describe ProfilePolicy, type: :policy do
     end
   end
 
-  permissions :create? do
-    pending "add some examples to (or delete) #{__FILE__}"
-  end
-
   permissions :update? do
     it 'should allow user to update their profile' do
       expect(subject).to permit(user, profile)
@@ -41,9 +37,5 @@ describe ProfilePolicy, type: :policy do
     it 'should not allow guest user to update a profile' do
       expect(subject).to_not permit(guest_user, profile)
     end
-  end
-
-  permissions :destroy? do
-    pending "add some examples to (or delete) #{__FILE__}"
   end
 end

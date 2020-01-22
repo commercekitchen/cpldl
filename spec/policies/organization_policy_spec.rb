@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OrganizationPolicy, type: :policy do
@@ -10,7 +12,7 @@ RSpec.describe OrganizationPolicy, type: :policy do
 
   subject { described_class }
 
-  permissions ".scope" do
+  permissions '.scope' do
     it 'should raise authorization error for guest user' do
       expect { Pundit.policy_scope!(guest_user, Organization) }.to raise_error(Pundit::NotAuthorizedError)
     end
@@ -19,7 +21,7 @@ RSpec.describe OrganizationPolicy, type: :policy do
       expect { Pundit.policy_scope!(user, Organization) }.to raise_error(Pundit::NotAuthorizedError)
     end
 
-    it 'should raise authorization error for subsite admin' do 
+    it 'should raise authorization error for subsite admin' do
       expect { Pundit.policy_scope!(subsite_admin, Organization) }.to raise_error(Pundit::NotAuthorizedError)
     end
 
@@ -134,6 +136,30 @@ RSpec.describe OrganizationPolicy, type: :policy do
   end
 
   permissions :download_reports? do
+    context 'guest user' do
+      it 'denies access' do
+        expect(subject).to_not permit(guest_user, organization)
+      end
+    end
+
+    context 'user' do
+      it 'denies access' do
+        expect(subject).to_not permit(user, organization)
+      end
+    end
+
+    context 'subsite admin' do
+      it 'allows access for user subsite' do
+        expect(subject).to permit(subsite_admin, organization)
+      end
+
+      it 'denies access for another organization' do
+        expect(subject).to_not permit(subsite_admin, Organization.new)
+      end
+    end
+  end
+
+  permissions :invite_user? do
     context 'guest user' do
       it 'denies access' do
         expect(subject).to_not permit(guest_user, organization)

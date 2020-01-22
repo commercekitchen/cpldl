@@ -16,8 +16,10 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  after_action :verify_authorized, except: [:index, :export_user_info, :sort]
-  after_action :verify_policy_scoped, only: [:index, :export_user_info, :sort]
+  after_action :verify_authorized, except: %i[index export_user_info sort]
+  after_action :verify_policy_scoped, only: %i[index export_user_info sort]
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   ### TODO: Rework language settings to be more conventional
 
@@ -181,6 +183,11 @@ class ApplicationController < ActionController::Base
     else
       session[:user_ga_id] = 'guest'
     end
+  end
+
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+    redirect_to(request.referer || root_path)
   end
 
 end

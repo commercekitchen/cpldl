@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ProgramPolicy, type: :policy do
@@ -10,7 +12,7 @@ RSpec.describe ProgramPolicy, type: :policy do
 
   subject { described_class }
 
-  permissions ".scope" do
+  permissions '.scope' do
     it 'should raise error for guest user' do
       expect { Pundit.policy_scope!(guest_user, Program) }.to raise_error(Pundit::NotAuthorizedError)
     end

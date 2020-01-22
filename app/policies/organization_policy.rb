@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrganizationPolicy < ApplicationPolicy
   def get_recommendations?
     record == user.organization
@@ -19,10 +21,15 @@ class OrganizationPolicy < ApplicationPolicy
     subsite_admin?(record)
   end
 
+  def invite_user?
+    subsite_admin?(record)
+  end
+
   class Scope < Scope
     def resolve
       www_subsite = Organization.find_by(subdomain: 'www')
-      raise Pundit::NotAuthorizedError, "must be a PLA admin" unless user.admin? && user.has_role?(:admin, www_subsite)
+      raise Pundit::NotAuthorizedError, 'must be a PLA admin' unless user.admin? && user.has_role?(:admin, www_subsite)
+
       scope.all
     end
   end

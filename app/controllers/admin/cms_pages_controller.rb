@@ -2,7 +2,7 @@
 
 module Admin
   class CmsPagesController < BaseController
-    before_action :set_page, only: %i[show edit update destroy]
+    before_action :set_page, only: %i[edit update destroy]
     before_action :set_maximums, only: %i[new edit]
 
     def index
@@ -74,7 +74,7 @@ module Admin
 
     def sort
       pages = policy_scope(CmsPage)
-      SortService.sort(model: CmsPage, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
+      SortService.sort(model: pages, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
 
       head :ok
     end

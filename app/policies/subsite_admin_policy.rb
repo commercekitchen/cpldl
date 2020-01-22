@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SubsiteAdminPolicy < ApplicationPolicy
   def show?
     subsite_admin?(organization)
@@ -18,6 +20,7 @@ class SubsiteAdminPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       raise Pundit::NotAuthorizedError unless user.admin?
+
       association_name = scope.name.pluralize.underscore
       user.organization.send(association_name)
     end

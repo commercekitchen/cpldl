@@ -1,4 +1,6 @@
-RSpec.shared_examples "Subsite Admin Examples" do |tested_class|
+# frozen_string_literal: true
+
+RSpec.shared_examples 'Subsite Admin Examples' do |tested_class|
   let(:model_symbol) { tested_class.name.underscore.to_sym }
   let(:user) { FactoryBot.create(:user) }
   let(:organization) { user.organization }
@@ -9,7 +11,7 @@ RSpec.shared_examples "Subsite Admin Examples" do |tested_class|
 
   subject { described_class }
 
-  permissions ".scope" do
+  permissions '.scope' do
     it 'should raise error for guest user' do
       expect { Pundit.policy_scope!(guest_user, tested_class) }.to raise_error(Pundit::NotAuthorizedError)
     end
