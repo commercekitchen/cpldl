@@ -14,7 +14,7 @@ describe CoursePolicy, type: :policy do
 
   subject { described_class }
 
-  it_behaves_like "AdminOnly Policy", { skip_actions: [:show?] }
+  it_behaves_like 'AdminOnly Policy', { skip_actions: [:show?], skip_scope: true }
 
   describe 'Scope' do
     let(:guest_user) { GuestUser.new(organization: organization) }

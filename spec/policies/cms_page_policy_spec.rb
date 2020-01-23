@@ -10,43 +10,13 @@ RSpec.describe CmsPagePolicy, type: :policy do
 
   subject { described_class }
 
-  it_behaves_like "AdminOnly Policy", { skip_actions: [:show?] }
-
-  permissions '.scope' do
-    let(:guest_user) { GuestUser.new(organization: organization) }
-    let(:user) { FactoryBot.create(:user, organization: organization) }
-    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
-
-    context 'guest user' do
-      let(:scope) { Pundit.policy_scope!(guest_user, CmsPage) }
-
-      it 'should be empty' do
-        expect { scope }.to raise_error(Pundit::NotAuthorizedError)
-      end
-    end
-
-    context 'authenticated user' do
-      let(:scope) { Pundit.policy_scope!(user, CmsPage) }
-
-      it 'should be empty' do
-        expect { scope }.to raise_error(Pundit::NotAuthorizedError)
-      end
-    end
-
-    context 'admin user' do
-      let(:scope) { Pundit.policy_scope!(admin, CmsPage) }
-
-      it 'should contain all cms pages for organization' do
-        expect(scope).to contain_exactly(subsite_record)
-      end
-    end
-  end
+  it_behaves_like 'AdminOnly Policy', { model: CmsPage, skip_actions: [:show?] }
 
   permissions :show? do
     let(:guest_user) { GuestUser.new(organization: organization) }
     let(:user) { FactoryBot.create(:user, organization: organization) }
     let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
-    
+
     context 'guest user' do
       it 'should be permitted for current organization' do
         expect(subject).to permit(guest_user, subsite_record)

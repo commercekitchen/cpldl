@@ -3,18 +3,23 @@
 require 'rails_helper'
 
 describe UserPolicy, type: :policy do
-  let(:user) { FactoryBot.create(:user) }
-  let(:organization) { user.organization }
-  let(:profile) { user.profile }
+  let(:organization) { FactoryBot.create(:organization) }
   let(:user2) { FactoryBot.create(:user) }
-  let(:guest_user) { GuestUser.new(organization: organization) }
   let(:other_subsite_user) { FactoryBot.create(:user) }
-  let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
   let(:trainer) { FactoryBot.create(:user, :trainer, organization: organization) }
 
   subject { described_class }
 
+  let!(:subsite_record) { user }
+  let!(:other_subsite_record) { other_subsite_user }
+
+  it_behaves_like 'AdminOnly Policy', { skip_scope: true, skip_actions: %i[show? update?] }
+
   describe 'Scope' do
+    let(:guest_user) { GuestUser.new(organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+
     context 'guest user' do
       let(:scope) { Pundit.policy_scope!(guest_user, User) }
 
@@ -49,6 +54,10 @@ describe UserPolicy, type: :policy do
   end
 
   permissions :show? do
+    let(:guest_user) { GuestUser.new(organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+
     it 'should allow user to view their account' do
       expect(subject).to permit(user, user)
     end
@@ -60,9 +69,17 @@ describe UserPolicy, type: :policy do
     it 'should not allow guest user to view an account' do
       expect(subject).to_not permit(guest_user, user)
     end
+
+    it 'should allow admin to view an account' do
+      expect(subject).to permit(admin, user)
+    end
   end
 
   permissions :update? do
+    let(:guest_user) { GuestUser.new(organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+
     it 'should allow user to update their account' do
       expect(subject).to permit(user, user)
     end
@@ -81,6 +98,10 @@ describe UserPolicy, type: :policy do
   end
 
   permissions :confirm? do
+    let(:guest_user) { GuestUser.new(organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+
     it 'should not allow user to manually confirm their account' do
       expect(subject).to_not permit(user, user)
     end
