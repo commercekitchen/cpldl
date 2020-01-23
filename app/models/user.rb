@@ -129,7 +129,7 @@ class User < ApplicationRecord
     progress = course_progresses.find_by(course_id: course_id)
     return [] if progress.blank?
 
-    progress.completed_lessons.collect(&:lesson_id)
+    progress.completed_lessons.collect(&:id)
   end
 
   def completed_course_ids
@@ -152,6 +152,10 @@ class User < ApplicationRecord
 
   def admin?
     has_role?(:admin, organization)
+  end
+
+  def trainer?
+    has_role?(:trainer, organization)
   end
 
   def reportable_role?(org)

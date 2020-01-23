@@ -4,6 +4,7 @@ module Admin
   class ReportExportsController < BaseController
 
     def show
+      authorize current_organization, :download_reports?
       csv = run_exporter(params[:report])
       respond_to do |format|
         format.csv { send_data csv, filename: "#{params[:report]}.csv" }

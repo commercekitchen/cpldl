@@ -5,12 +5,13 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      @schools = current_organization.schools
+      @schools = policy_scope(School)
       @new_school = current_organization.schools.new
     end
 
     def create
       @school = current_organization.schools.create(school_params)
+      authorize @school
 
       respond_to do |format|
         format.html do
@@ -23,6 +24,7 @@ module Admin
 
     def toggle
       @school = School.find(params[:school_id])
+      authorize @school, :update?
       currently_enabled = @school.enabled?
       @school.update(enabled: !currently_enabled)
 

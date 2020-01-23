@@ -33,7 +33,7 @@ describe Profile do
 
   end
 
-  context 'delgated metods' do
+  context 'delgated methods' do
     describe 'no library_location' do
       let(:profile) { FactoryBot.create(:profile) }
 

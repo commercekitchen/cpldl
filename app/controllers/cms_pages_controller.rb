@@ -4,6 +4,7 @@ class CmsPagesController < ApplicationController
   before_action :find_cms_page
 
   def show
+    skip_authorization
     @cms_page_body = @cms_page.body.html_safe
   end
 

@@ -3,17 +3,18 @@
 require 'feature_helper'
 
 feature 'User is able to view the courses in their plan' do
+  let(:user) { FactoryBot.create(:user) }
+  let(:org) { user.organization }
+  let(:npl) { FactoryBot.create(:organization, subdomain: 'npl') }
+  let(:npl_user) { FactoryBot.create(:user, organization: npl) }
+  let(:course1) { FactoryBot.create(:course, title: 'Course 1', organization: org) }
+  let(:course2) { FactoryBot.create(:course, title: 'Course 2', organization: org, language: @spanish) }
+  let!(:course_progress1) { FactoryBot.create(:course_progress, course: course1, tracked: true, user: user) }
+  let!(:course_progress2) { FactoryBot.create(:course_progress, course: course2, tracked: false, user: user) }
+
   before(:each) do
-    @org = create(:organization)
-    @npl = create(:organization, subdomain: 'npl')
-    switch_to_subdomain('chipublib')
-    @user = create(:user, organization: @org)
-    @npl_user = create(:user, organization: @npl)
-    @course1 = create(:course, title: 'Course 1', organization: @org)
-    @course2 = create(:course, title: 'Course 2', organization: @org, language: @spanish)
-    @course_progress1 = create(:course_progress, course_id: @course1.id, tracked: true, user: @user)
-    @course_progress2 = create(:course_progress, course_id: @course2.id, tracked: false, user: @user)
-    login_as(@user)
+    switch_to_subdomain(org.subdomain)
+    login_as(user)
   end
 
   context 'as a logged in user' do
@@ -47,7 +48,7 @@ feature 'User is able to view the courses in their plan' do
   context 'npl user' do
     before do
       switch_to_subdomain('npl')
-      login_as(@npl_user)
+      login_as(npl_user)
     end
 
     scenario 'should have correct quiz retake button text' do

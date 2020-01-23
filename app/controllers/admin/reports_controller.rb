@@ -4,7 +4,9 @@ module Admin
   class ReportsController < BaseController
     before_action :enable_sidebar
 
-    def show; end
+    def show
+      authorize current_organization, :download_reports?
+    end
 
   end
 end

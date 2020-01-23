@@ -5,10 +5,13 @@ class ContactsController < ApplicationController
 
   def new
     @contact = Contact.new
+    authorize @contact
   end
 
   def create
     @contact = Contact.new(contact_params)
+    authorize @contact
+
     if @contact.save
       ContactMailer.email(@contact.id).deliver_later
       redirect_to root_path(subdomain: 'www'), notice: 'Thank you for your interest!  We will be in contact shortly.'

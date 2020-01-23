@@ -23,7 +23,7 @@ describe Admin::DashboardController do
     it 'redirects nil users to the root of the site' do
       get :index
       expect(response).to have_http_status(:redirect)
-      expect(response).to redirect_to(root_path)
+      expect(response).to redirect_to(new_user_session_path)
     end
 
     it 'allows admin users' do

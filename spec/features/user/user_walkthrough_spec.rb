@@ -45,6 +45,15 @@ feature 'User clicks through each page' do
     expect(current_path).to eq(course_completions_path)
   end
 
+  scenario 'can change their language preference' do
+    visit root_path
+    expect(page).to have_content('Choose a course below to start learning')
+
+    click_link 'Español'
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content('Escoja un curso para empezar')
+  end
+
   describe 'Header' do
     shared_examples 'trainer link' do
       it 'trainer link should exist on landing page' do

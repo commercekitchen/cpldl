@@ -249,39 +249,6 @@ ALTER SEQUENCE public.cms_pages_id_seq OWNED BY public.cms_pages.id;
 
 
 --
--- Name: completed_lessons; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.completed_lessons (
-    id integer NOT NULL,
-    course_progress_id integer,
-    lesson_id integer,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
-);
-
-
---
--- Name: completed_lessons_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.completed_lessons_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: completed_lessons_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.completed_lessons_id_seq OWNED BY public.completed_lessons.id;
-
-
---
 -- Name: contacts; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -513,6 +480,39 @@ CREATE SEQUENCE public.languages_id_seq
 --
 
 ALTER SEQUENCE public.languages_id_seq OWNED BY public.languages.id;
+
+
+--
+-- Name: lesson_completions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.lesson_completions (
+    id integer NOT NULL,
+    course_progress_id integer,
+    lesson_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: lesson_completions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.lesson_completions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: lesson_completions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.lesson_completions_id_seq OWNED BY public.lesson_completions.id;
 
 
 --
@@ -1065,13 +1065,6 @@ ALTER TABLE ONLY public.cms_pages ALTER COLUMN id SET DEFAULT nextval('public.cm
 
 
 --
--- Name: completed_lessons id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.completed_lessons ALTER COLUMN id SET DEFAULT nextval('public.completed_lessons_id_seq'::regclass);
-
-
---
 -- Name: contacts id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1111,6 +1104,13 @@ ALTER TABLE ONLY public.friendly_id_slugs ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.languages ALTER COLUMN id SET DEFAULT nextval('public.languages_id_seq'::regclass);
+
+
+--
+-- Name: lesson_completions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lesson_completions ALTER COLUMN id SET DEFAULT nextval('public.lesson_completions_id_seq'::regclass);
 
 
 --
@@ -1245,14 +1245,6 @@ ALTER TABLE ONLY public.cms_pages
 
 
 --
--- Name: completed_lessons completed_lessons_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.completed_lessons
-    ADD CONSTRAINT completed_lessons_pkey PRIMARY KEY (id);
-
-
---
 -- Name: contacts contacts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1306,6 +1298,14 @@ ALTER TABLE ONLY public.friendly_id_slugs
 
 ALTER TABLE ONLY public.languages
     ADD CONSTRAINT languages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: lesson_completions lesson_completions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lesson_completions
+    ADD CONSTRAINT lesson_completions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1505,6 +1505,13 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON public.friendly_id_slu
 
 
 --
+-- Name: index_lesson_completions_on_lesson_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lesson_completions_on_lesson_id ON public.lesson_completions USING btree (lesson_id);
+
+
+--
 -- Name: index_lessons_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1685,6 +1692,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: lesson_completions fk_rails_d03dba97f9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lesson_completions
+    ADD CONSTRAINT fk_rails_d03dba97f9 FOREIGN KEY (lesson_id) REFERENCES public.lessons(id);
+
+
+--
 -- Name: users fk_rails_d7b9ff90af; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1818,6 +1833,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191119184844'),
 ('20191119185434'),
 ('20191119190714'),
-('20191211193827');
+('20191211193827'),
+('20200120023743');
 
 

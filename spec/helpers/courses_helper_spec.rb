@@ -91,4 +91,25 @@ describe CoursesHelper do
       expect(result['Uncategorized']).to include(course_with_disabled_category)
     end
   end
+
+  describe '#start_or_resume_course_link' do
+    let(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+
+    before do
+      @request.host = "#{organization.subdomain}.test.host"
+      sign_in user
+    end
+
+    it 'should render link to first lesson with no course progress' do
+      expected_path = course_lesson_path(course, course.lessons.first)
+      expect(helper.start_or_resume_course_link(course)).to include(expected_path)
+    end
+
+    it 'should render link to latest incomplete lesson if course progress exists' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: course.lessons.first)
+      expected_path = course_lesson_path(course, course.lessons.second)
+      expect(helper.start_or_resume_course_link(course)).to include(expected_path)
+    end
+  end
 end

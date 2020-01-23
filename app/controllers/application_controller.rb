@@ -2,10 +2,10 @@
 
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  include Pundit
 
   before_action :current_organization
   before_action :set_locale
-  before_action :set_language
   before_action :set_cms_footer_pages
   before_action :set_cms_marketing_pages
   before_action :set_user_token
@@ -15,6 +15,60 @@ class ApplicationController < ActionController::Base
   helper_method :top_level_domain?
   helper_method :hide_language_links?
   helper_method :in_subdomain?
+
+  after_action :verify_authorized, except: %i[index export_user_info sort]
+  after_action :verify_policy_scoped, only: %i[index export_user_info sort]
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  ### TODO: Rework language settings to be more conventional
+
+  #  around_action :switch_locale
+
+  #  def default_url_options
+  #    { locale: I18n.locale } unless I18n.locale == I18n.default_locale
+  #  end
+  #
+  #  def switch_locale(&action)
+  #    locale = language_preference || I18n.default_locale
+  #    I18n.with_locale(locale, &action)
+  #  end
+  #
+  #  def language_preference
+  #    current_user&.locale || session[:locale]
+  #  end
+
+  def set_locale
+    if current_user&.profile && current_user.profile.language.present?
+      if user_language_override? == true
+        I18n.locale = session[:locale].to_sym if session[:locale].present?
+      else
+        case current_user.profile.language.name
+        when 'English'
+          I18n.locale = :en
+        when 'Spanish'
+          I18n.locale = :es
+        end
+        session[:locale] = I18n.locale.to_s
+      end
+    else
+      I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
+    end
+  end
+
+  def user_language_override?
+    if current_user.profile.language.present?
+      user_lang_abbrv2 = current_user.profile.language.name == 'English' ? 'en' : 'es'
+      return true if session[:locale] != user_lang_abbrv2
+    else
+      false
+    end
+  end
+  #########################
+
+  def pundit_user
+    current_user || GuestUser.new(organization: current_organization)
+  end
 
   def require_valid_profile
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
@@ -39,10 +93,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def set_language
-    @language = Language.first if Language.all.present?
-  end
-
   def user_audience_list
     list = ['All']
     if user_signed_in?
@@ -55,34 +105,15 @@ class ApplicationController < ActionController::Base
   end
 
   def set_cms_footer_pages
-    language_id = I18n.locale == :en ? Language.find_by(name: 'English').try(:id) : Language.find_by(name: 'Spanish').try(:id)
     org_id = current_organization.id
 
-    @footer_pages = CmsPage.where(pub_status: 'P', language_id: language_id, organization_id: org_id, audience: user_audience_list)
+    @footer_pages = CmsPage.where(pub_status: 'P', language: current_language, organization_id: org_id, audience: user_audience_list)
   end
 
   def set_cms_marketing_pages
     @overview_page = CmsPage.find_by(title: 'Get DigitalLearn for Your Library')
     @customization_page = CmsPage.find_by(title: 'Pricing & Features')
     @portfolio_page = CmsPage.find_by(title: 'See Our Work In Action')
-  end
-
-  def set_locale
-    if current_user&.profile && current_user.profile.language.present?
-      if user_language_override? == true
-        I18n.locale = session[:locale].to_sym if session[:locale].present?
-      else
-        case current_user.profile.language.name
-        when 'English'
-          I18n.locale = :en
-        when 'Spanish'
-          I18n.locale = :es
-        end
-        session[:locale] = I18n.locale.to_s
-      end
-    else
-      I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
-    end
   end
 
   def first_time_login?
@@ -142,15 +173,6 @@ class ApplicationController < ActionController::Base
     user.present? && user.profile.nil?
   end
 
-  def user_language_override?
-    if current_user.profile.language.present?
-      user_lang_abbrv2 = current_user.profile.language_id == 1 ? 'en' : 'es'
-      return true if session[:locale] != user_lang_abbrv2
-    else
-      false
-    end
-  end
-
   def set_user_token
     if current_user&.token
       session[:user_ga_id] = current_user.token
@@ -161,6 +183,11 @@ class ApplicationController < ActionController::Base
     else
       session[:user_ga_id] = 'guest'
     end
+  end
+
+  def user_not_authorized
+    flash[:alert] = 'You are not authorized to perform this action.'
+    redirect_to(request.referer || root_path)
   end
 
 end

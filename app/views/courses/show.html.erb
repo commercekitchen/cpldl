@@ -20,7 +20,7 @@
       <%= render partial: 'courses/course_progress_actions', locals: { course: @course } %>
     <% end %>
 
-    <%= link_to "#{t('course_page.start_course')}", course_progresses_path(course_id: @course.id), method: :post, class: "btn button-color", data: { cpl_ga_event: "on", cpl_ga_value: "user-start-course" } %>
+    <%= start_or_resume_course_link(@course) %>
   </div>
 </div>
 

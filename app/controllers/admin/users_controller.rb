@@ -6,22 +6,26 @@ module Admin
   class UsersController < BaseController
     before_action :enable_sidebar, except: [:index]
 
-    skip_before_action :authorize_admin, only: [:index]
+    skip_before_action :authorize_admin, only: :index
+    before_action :authorize_admin_or_trainer, only: :index
 
     def index
-      authorize_admin_or_trainer
-      results = User.search_users(params[:users_search])
+      users = policy_scope(User).includes(profile: [:language])
+
       @users = if params[:users_search].blank?
-                 User.includes(profile: [:language]).where(organization_id: current_organization.id)
+                 users
                else
-                 results & User.includes(profile: [:language]).where(organization_id: current_organization.id)
+                 users.search_users(params[:users_search])
                end
-      enable_sidebar if current_user.admin?
+
+      enable_sidebar
     end
 
     def change_user_roles
-      user     = User.find(params[:id])
-      org      = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
+      user = User.find(params[:id])
+      authorize user, :update?
+
+      org = user.roles.find_by(resource_type: 'Organization').nil? ? current_organization : user.organization
       new_role = params[:value].downcase.to_sym
 
       user.roles = []
@@ -35,7 +39,7 @@ module Admin
     end
 
     def export_user_info
-      @users = User.where(organization_id: current_organization.id)
+      @users = policy_scope(User)
 
       respond_to do |format|
         format.csv { send_data users_csv(@users), filename: "#{subdomain_name}_users_#{current_date_string}.csv" }

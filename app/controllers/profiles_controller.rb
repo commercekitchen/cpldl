@@ -8,16 +8,20 @@ class ProfilesController < ApplicationController
 
   def show
     @profile = Profile.find_or_initialize_by(user: @user)
+    authorize @profile
   end
 
   def invalid_profile
     @profile = Profile.find_or_initialize_by(user: @user)
+    authorize @profile, :show?
+
     @profile.valid?
     render 'show'
   end
 
   def update
     @profile = Profile.find_or_initialize_by(user: @user)
+    authorize @profile
 
     if params[:profile][:user].present?
       new_role = params[:profile][:user][:user_role_string] == 'Student' ? 'Student' : 'Parent'
