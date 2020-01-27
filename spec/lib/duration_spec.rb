@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require 'unzipper'
 require 'rails_helper'
 
 RSpec.describe Duration do
