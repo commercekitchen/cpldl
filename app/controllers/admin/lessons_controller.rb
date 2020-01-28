@@ -6,20 +6,20 @@ module Admin
     before_action :set_course, except: [:sort]
     before_action :set_maximums, only: %i[new edit]
 
-    def index; end
-
-    def show; end
-
     def new
-      @lesson = Lesson.new
+      @lesson = @course.lessons.new
+      authorize @lesson
     end
 
     def edit
       @lesson = @course.lessons.friendly.find(params[:id])
+      authorize @lesson
     end
 
     def create
       @lesson = @course.lessons.build(lesson_params)
+      authorize @lesson
+
       @lesson.duration_to_int(lesson_params[:duration])
       @lesson.lesson_order = @course.lessons.count + 1
 
@@ -36,6 +36,8 @@ module Admin
 
     def update
       @lesson ||= @course.lessons.friendly.find(params[:id])
+      authorize @lesson
+
       # set slug to nil to regenerate if title changes
       @lesson.slug = nil if @lesson.title != params[:lesson][:title]
       @lesson_params = lesson_params
@@ -53,6 +55,8 @@ module Admin
 
     def destroy_asl_attachment
       @lesson = @course.lessons.friendly.find(params[:format])
+      authorize @lesson, :update?
+
       @lesson.story_line = nil
       @lesson.save
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
@@ -61,7 +65,8 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: Lesson, order_params: params[:order], attribute_key: :lesson_order)
+      lessons = policy_scope(Lesson)
+      SortService.sort(model: lessons, order_params: params[:order], attribute_key: :lesson_order, user: current_user)
 
       head :ok
     end

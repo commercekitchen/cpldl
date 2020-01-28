@@ -6,21 +6,17 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
+    authorize @lesson
 
     case @lesson.pub_status
     when 'D'
-      flash[:notice] = 'That lesson is not avaliable at this time.'
+      flash[:notice] = 'That lesson is not available at this time.'
       redirect_to root_path
     when 'A'
-      flash[:notice] = 'That lesson is no longer avaliable.'
+      flash[:notice] = 'That lesson is no longer available.'
       redirect_to root_path
     when 'P'
-      unless current_user
-        session[:lessons_done] = [] if session[:lessons_done].blank?
-        session[:lessons_done] << @lesson.id unless session[:lessons_done].include?(@lesson.id)
-      end
-
-      @next_lesson = @course.lessons.find(@course.next_lesson_id(@lesson.id))
+      @next_lesson = @course.lesson_after(@lesson)
 
       if current_user
         @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
@@ -45,19 +41,18 @@ class LessonsController < ApplicationController
   end
 
   def lesson_complete
+    authorize @course, :show?
     @current_lesson = @course.lessons.friendly.find(params[:lesson_id])
-    @next_lesson = @course.lessons.find(@course.next_lesson_id(@current_lesson.id))
+    @next_lesson = @course.lesson_after(@current_lesson)
   end
 
   def complete
     lesson = @course.lessons.friendly.find(params[:lesson_id])
+    authorize lesson, :show?
 
-    # TODO: move to user model?
     if current_user
-      course_progress = current_user.course_progresses.where(course_id: @course).first_or_create
-      course_progress.completed_lessons.where(lesson_id: lesson.id).first_or_create
-      course_progress.completed_at = Time.zone.now if lesson.is_assessment
-      course_progress.save
+      course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
+      LessonCompletion.find_or_create_by!(course_progress: course_progress, lesson: lesson)
     else
       session[:completed_lessons] ||= []
       session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)

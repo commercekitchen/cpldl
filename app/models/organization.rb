@@ -26,6 +26,8 @@ class Organization < ApplicationRecord
   has_many :categories, dependent: :destroy
   has_many :partners, dependent: :destroy
 
+  has_many :lessons, through: :courses
+
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
 

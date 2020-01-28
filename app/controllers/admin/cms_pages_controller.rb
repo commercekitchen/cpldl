@@ -2,17 +2,23 @@
 
 module Admin
   class CmsPagesController < BaseController
-    before_action :set_page, only: %i[show edit update destroy]
+    before_action :set_page, only: %i[edit update destroy]
     before_action :set_maximums, only: %i[new edit]
 
-    def show; end
+    def index
+      @cms_pages = policy_scope(CmsPage)
+      enable_sidebar
+    end
 
     def new
-      @cms_page = CmsPage.new
+      @cms_page = CmsPage.new(organization: current_organization)
+      authorize @cms_page
     end
 
     def create
-      @cms_page = CmsPage.new(cms_page_params)
+      @cms_page = CmsPage.new(cms_page_params.merge(organization: current_organization))
+      authorize @cms_page
+
       if params[:commit] == 'Preview Page'
         @cms_page_body = unescaped_cms_content
         render :new
@@ -27,10 +33,14 @@ module Admin
       end
     end
 
-    def edit; end
+    def edit
+      authorize @cms_page
+    end
 
     def update_pub_status
       cms_page = CmsPage.find(params[:cms_page_id])
+      authorize cms_page, :update?
+
       cms_page.pub_status = params[:value]
       cms_page.update_pub_date(params[:value])
 
@@ -42,6 +52,8 @@ module Admin
     end
 
     def update
+      authorize @cms_page
+
       @pub_status = params[:cms_page][:pub_status]
 
       # slug must be set to nil for friendly ID to update
@@ -61,12 +73,15 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: CmsPage, order_params: params[:order], attribute_key: :cms_page_order)
+      pages = policy_scope(CmsPage)
+      SortService.sort(model: pages, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
 
       head :ok
     end
 
     def destroy
+      authorize @cms_page
+
       if @cms_page.destroy
         redirect_to admin_dashboard_index_path, notice: 'Page was successfully deleted.'
       else
@@ -100,8 +115,7 @@ module Admin
                                        :pub_status,
                                        :pub_date,
                                        :seo_page_title,
-                                       :seo_meta_desc,
-                                       :organization_id)
+                                       :seo_meta_desc)
     end
   end
 end

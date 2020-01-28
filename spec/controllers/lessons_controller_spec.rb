@@ -5,10 +5,12 @@ require 'rails_helper'
 describe LessonsController do
   let(:org) { FactoryBot.create(:default_organization) }
   let(:user) { FactoryBot.create(:user, organization: org) }
-  let(:course) { FactoryBot.create(:course) }
+  let(:course) { FactoryBot.create(:course, organization: org) }
   let!(:lesson1) { FactoryBot.create(:lesson, lesson_order: 1, course: course) }
   let!(:lesson2) { FactoryBot.create(:lesson, lesson_order: 2, course: course) }
   let!(:lesson3) { FactoryBot.create(:lesson, lesson_order: 3, course: course) }
+  let!(:draft_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'D') }
+  let!(:archived_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'A') }
 
   before(:each) do
     @request.host = 'www.test.host'
@@ -55,6 +57,26 @@ describe LessonsController do
       get :show, params: { course_id: course.to_param, id: lesson2.id }, format: :json
       expect(response).to have_http_status(:success)
     end
+
+    it 'sets correct flash for draft lessons' do
+      get :show, params: { course_id: course.to_param, id: draft_lesson.id }, format: :json
+      expect(flash[:notice]).to eq('That lesson is not available at this time.')
+    end
+
+    it 'redirects to root for archived lessons' do
+      get :show, params: { course_id: course.to_param, id: draft_lesson.id }, format: :json
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'sets correct flash for archived lessons' do
+      get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
+      expect(flash[:notice]).to eq('That lesson is no longer available.')
+    end
+
+    it 'redirects to root for archived lessons' do
+      get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe 'POST #complete' do
@@ -84,6 +106,15 @@ describe LessonsController do
       sign_out user
       post :complete, params: { course_id: course.to_param, lesson_id: lesson2.to_param }, format: :json
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'does not create a duplicate lesson completion' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, lesson: lesson1, course_progress: course_progress)
+
+      expect do
+        post :complete, params: { course_id: course.to_param, lesson_id: lesson1.to_param }, format: :json
+      end.to_not change(LessonCompletion, :count)
     end
   end
 

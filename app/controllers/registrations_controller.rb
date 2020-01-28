@@ -4,6 +4,7 @@ class RegistrationsController < Devise::RegistrationsController
   after_action :create_organization_user_entry
 
   def create
+    skip_authorization
     @user = User.new(sign_up_params)
     @library_card_login = current_organization.library_card_login?
     if verify_recaptcha(model: @user)

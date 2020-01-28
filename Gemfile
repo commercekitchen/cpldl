@@ -20,6 +20,7 @@ gem 'where_exists', '>= 1.0.0'
 # Authentication and authorization
 gem 'devise', '>= 4.6.0'
 gem 'devise_invitable', '>= 2.0.0'
+gem 'pundit'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rolify'
 

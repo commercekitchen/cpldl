@@ -3,11 +3,12 @@
 require 'feature_helper'
 
 feature 'User visits course listing page' do
-  let(:organization) { create(:organization) }
-  let(:www) { create(:default_organization) }
-  let!(:course1) { create(:course_with_lessons, title: 'Course 1', course_order: 1, organization: organization) }
-  let!(:course2) { create(:course, title: 'Course 2', course_order: 2, organization: organization) }
-  let!(:course3) { create(:course, title: 'Course 3', course_order: 3, organization: organization) }
+  let(:organization) { FactoryBot.create(:organization) }
+  let(:www) { FactoryBot.create(:default_organization) }
+  let!(:course1) { FactoryBot.create(:course_with_lessons, title: 'Course 1', course_order: 1, organization: organization) }
+  let!(:course2) { FactoryBot.create(:course, title: 'Course 2', course_order: 2, organization: organization) }
+  let!(:course3) { FactoryBot.create(:course, title: 'Course 3', course_order: 3, organization: organization) }
+  let(:www_course) { FactoryBot.create(:course_with_lessons, organization: www) }
 
   before(:each) do
     switch_to_subdomain(organization.subdomain)
@@ -60,38 +61,36 @@ feature 'User visits course listing page' do
     context 'on www' do
       scenario 'can click to start a course and is not required to sign in' do
         switch_to_subdomain(www.subdomain)
-        visit course_path(course1)
+        visit course_path(www_course)
         click_link 'Start Course'
-        expect(current_path).to eq(course_lesson_path(course1, course1.lessons.first))
+        expect(current_path).to eq(course_lesson_path(www_course, www_course.lessons.first))
       end
     end
   end
 
   context 'as a logged in user' do
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let!(:course_progress) { FactoryBot.create(:course_progress, course: course1, user: user) }
+
     before(:each) do
-      @user = create(:user)
-      @course_with_lessons = create(:course_with_lessons)
-      @course_progress1 = create(:course_progress, course_id: @course_with_lessons.id)
-      @user.course_progresses << [@course_progress1]
-      login_as(@user)
+      login_as(user)
     end
 
     scenario 'can click to start a course and be taken to the first lesson' do
-      visit course_path(@course_with_lessons)
+      visit course_path(course1)
       click_link 'Start Course'
-      lesson = @course_with_lessons.lessons.first
-      expect(current_path).to eq(course_lesson_path(@course_with_lessons, lesson))
+      lesson = course1.lessons.first
+      expect(current_path).to eq(course_lesson_path(course1, lesson))
       expect(page.title).to eq(lesson.title)
-      expect(page).to_not have_selector('h1', text: @course_with_lessons.title)
+      expect(page).to_not have_selector('h1', text: course1.title)
       expect(page).to have_content("#{lesson.published_lesson_order}. #{lesson.title}")
     end
 
     scenario 'can click to start a course and be taken to the first not-completed lesson' do
-      @completed_lesson1 = create(:completed_lesson, lesson_id: @course_with_lessons.lessons.first.id)
-      @course_progress1.completed_lessons << @completed_lesson1
-      visit course_path(@course_with_lessons)
+      FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: course1.lessons.first)
+      visit course_path(course1)
       click_link 'Start Course'
-      expect(current_path).to eq(course_lesson_path(@course_with_lessons, @course_with_lessons.lessons.second))
+      expect(current_path).to eq(course_lesson_path(course1, course1.lessons.second))
     end
 
     # scenario "page should pop the modal box when a lesson finishes", js: true do

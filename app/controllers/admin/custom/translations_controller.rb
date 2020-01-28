@@ -10,14 +10,16 @@ module Admin
       before_action :find_translation, only: %i[edit update]
 
       def index
-        @translations = Translation.locale(@locale)
+        @translations = policy_scope(:translation).locale(@locale)
       end
 
       def new
+        authorize current_organization, :customize?
         @translation = Translation.new(locale: @locale, key: params[:key])
       end
 
       def create
+        authorize current_organization, :customize?
         @translation = Translation.new(translation_params)
         if @translation.value == default_translation_value
           flash[:alert] = 'Your new translation is the same as the default.'
@@ -31,9 +33,13 @@ module Admin
         end
       end
 
-      def edit; end
+      def edit
+        authorize current_organization, :customize?
+      end
 
       def update
+        authorize current_organization, :customize?
+
         if @translation.update(translation_params)
           flash[:notice] = "Text for #{translation_keys(@locale)[@key]} updated."
           I18n.backend.reload!
@@ -44,6 +50,8 @@ module Admin
       end
 
       def destroy
+        authorize current_organization, :customize?
+
         Translation.destroy(params[:id])
         I18n.backend.reload!
         redirect_to admin_custom_translations_url(@locale)

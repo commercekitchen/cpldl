@@ -8,7 +8,7 @@ module Admin
     before_action :set_category_options, only: %i[new edit create update]
 
     def index
-      @courses = Course.org(current_organization).includes(:language).where.not(pub_status: 'A')
+      @courses = policy_scope(Course)
 
       @category_ids = current_organization.categories.map(&:id)
       @uncategorized_courses = @courses.where(category_id: nil)
@@ -17,15 +17,20 @@ module Admin
     end
 
     def show
+      authorize @course
       render 'courses/show'
     end
 
     def new
-      @course = Course.new
+      @course = Course.new(organization: current_organization)
+      authorize @course
+
       @category = @course.category.build if params[:category].present?
     end
 
-    def edit; end
+    def edit
+      authorize @course
+    end
 
     def create
       @course = if course_params[:category_id].present? && course_params[:category_id] == '0'
@@ -33,6 +38,8 @@ module Admin
                 else
                   Course.new(course_params.except(:category_attributes))
                 end
+
+      authorize @course
 
       if params[:course][:pub_status] == 'P'
         @course.set_pub_date
@@ -55,7 +62,9 @@ module Admin
     end
 
     def update_pub_status
-      course            = Course.find(params[:course_id])
+      course = Course.find(params[:course_id])
+      authorize course, :update?
+
       course.pub_status = params[:value]
       course.update_pub_date(params[:value])
       course.update_lesson_pub_stats(params[:value])
@@ -68,6 +77,8 @@ module Admin
     end
 
     def update
+      authorize @course
+
       # The slug must be set to nil for the friendly_id to update on title change
       @course.slug = nil if @course.title != params[:course][:title]
 
@@ -97,7 +108,8 @@ module Admin
     end
 
     def sort
-      SortService.sort(model: Course, order_params: params[:order], attribute_key: :course_order)
+      courses = policy_scope(Course)
+      SortService.sort(model: courses, order_params: params[:order], attribute_key: :course_order, user: current_user)
 
       head :ok
     end
