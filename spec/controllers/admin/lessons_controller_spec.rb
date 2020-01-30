@@ -5,6 +5,7 @@ require 'rails_helper'
 describe Admin::LessonsController do
   let(:org) { FactoryBot.create(:organization) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
+  let(:other_subsite_admin) { FactoryBot.create(:user, :admin) }
   let(:course) { FactoryBot.create(:course, organization: org) }
   let(:lesson1) { FactoryBot.create(:lesson, title: 'Lesson1', course: course, lesson_order: 1) }
   let(:lesson2) { FactoryBot.create(:lesson, title: 'Lesson2', course: course, lesson_order: 2) }
@@ -62,6 +63,24 @@ describe Admin::LessonsController do
         is_assessment: '',
         story_line: nil,
         pub_status: nil }
+    end
+
+    context 'unauthorized user' do
+      before do
+        sign_out admin
+        sign_in other_subsite_admin
+      end
+
+      it 'should respond with unauthorized flash' do
+        post :create, params: { course_id: course.to_param, lesson: valid_attributes }, format: :js
+        expect(flash[:alert]).to eq('You are not authorized to perform this action.')
+      end
+
+      it 'should not create a lesson' do
+        expect do
+          post :create, params: { course_id: course.to_param, lesson: valid_attributes }, format: :js
+        end.to_not change(Lesson, :count)
+      end
     end
 
     context 'with valid params' do

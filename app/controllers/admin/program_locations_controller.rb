@@ -4,9 +4,10 @@ module Admin
   class ProgramLocationsController < BaseController
 
     def create
-      @program_location = ProgramLocation.create(location_params)
+      @program_location = ProgramLocation.new(location_params)
       authorize @program_location
 
+      @program_location.save
       @program = @program_location.program
 
       respond_to do |format|
