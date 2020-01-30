@@ -10,9 +10,10 @@ module Admin
     end
 
     def create
-      @school = current_organization.schools.create(school_params)
+      @school = current_organization.schools.new(school_params)
       authorize @school
 
+      @school.save
       respond_to do |format|
         format.html do
           redirect_to action: 'index'
