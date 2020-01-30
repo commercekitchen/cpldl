@@ -12,9 +12,10 @@ module Admin
     end
 
     def create
-      @category = current_organization.categories.create(category_params)
+      @category = current_organization.categories.build(category_params)
       authorize @category
 
+      @category.save
       respond_to do |format|
         format.html do
           redirect_to action: 'index'
@@ -29,6 +30,8 @@ module Admin
       SortService.sort(model: categories, order_params: params[:order], attribute_key: :category_order, user: current_user)
 
       head :ok
+    rescue ActiveRecord::RecordNotFound
+      raise Pundit::NotAuthorizedError
     end
 
     def toggle
