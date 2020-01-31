@@ -127,7 +127,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'registrations',
     invitations: 'admin/invites',
-    sessions: 'sessions'
+    sessions: 'sessions',
+    passwords: 'passwords'
   }
 
   devise_scope :user do
