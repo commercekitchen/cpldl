@@ -10,7 +10,7 @@ module Admin
     end
 
     def create
-      @school = current_organization.schools.new(school_params)
+      @school = current_organization.schools.build(school_params)
       authorize @school
 
       @school.save

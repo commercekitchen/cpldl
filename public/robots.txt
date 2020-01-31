@@ -1,5 +1,16 @@
 # See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
-#
-# To ban all spiders from the entire site uncomment the next two lines:
-# User-agent: *
-# Disallow:
+
+User-agent: *
+Disallow: /course_progresses
+Disallow: *.php
+Disallow: /sitemap.xml
+Disallow: /dialogs*
+
+User-agent: archiver
+Disallow:
+
+User-agent: TprAdsTxtCrawler
+Disallow:
+
+User-agent: AhrefsBot
+Disallow:

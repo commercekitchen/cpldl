@@ -36,7 +36,7 @@ describe Admin::SchoolsController do
 
       expect do
         post :create, params: { school: valid_attributes, format: 'js' }
-      end.to change(School, :count).by(1)
+      end.to change { organization.schools.count }.by(1)
     end
 
     it 'should not create a school for another subsite' do
