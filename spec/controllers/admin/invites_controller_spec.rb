@@ -36,4 +36,30 @@ describe Admin::InvitesController do
       end
     end
   end
+
+  describe '#edit' do
+    before do
+      @invited_user = AdminInvitationService.invite(email: 'test_invite@example.com', organization: organization, inviter: admin)
+      sign_out admin
+    end
+
+    it 'should have an ok response' do
+      token = @invited_user.raw_invitation_token
+      get :edit, params: { invitation_token: token }
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
+  describe '#update' do
+    before do
+      @invited_user = AdminInvitationService.invite(email: 'test_invite@example.com', organization: organization, inviter: admin)
+      sign_out admin
+    end
+
+    it 'should have an ok response' do
+      token = @invited_user.raw_invitation_token
+      put :update, params: { invitation_token: token, password: 'password', password_confirmation: 'password' }
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end
