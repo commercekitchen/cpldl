@@ -66,6 +66,7 @@ class CoursesController < ApplicationController
 
   def skills
     @course = Course.friendly.find(params[:course_id])
+    authorize @course, :show?
   end
 
   def designing_courses_1; end
