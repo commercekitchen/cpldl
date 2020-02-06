@@ -96,11 +96,44 @@ describe CoursesController do
     end
 
     context 'when not logged in' do
-      it 'should all view' do
+      it 'should allow view' do
         file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
         course1.attachments.create(document: file, doc_type: 'post-course')
         get :view_attachment, params: { course_id: course1, attachment_id: course1.attachments.first.id }
         expect(response).to have_http_status(:success)
+      end
+    end
+  end
+
+  describe 'GET #skills' do
+    context 'when logged in' do
+      before(:each) do
+        sign_in user
+      end
+
+      it 'allows the user to view skills' do
+        get :skills, params: { course_id: course1 }
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context 'when not logged in' do
+      it 'should allow view' do
+        get :skills, params: { course_id: course1 }
+        expect(response).to have_http_status(:success)
+      end
+    end
+
+    context 'when viewing another subsite' do
+      let(:other_subsite) { FactoryBot.create(:organization, subdomain: 'foobar') }
+
+      before do
+        request.host = "#{other_subsite.subdomain}.example.com"
+      end
+
+      it 'should not allow view' do
+        get :skills, params: { course_id: course1 }
+        expect(flash[:alert]).to eq('You are not authorized to perform this action.')
       end
     end
   end
