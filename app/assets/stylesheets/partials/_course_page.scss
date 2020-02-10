@@ -4,7 +4,7 @@
   margin: 1em 0 0.5em 0;
   font-weight: 200;
 
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     font-size: 1.6em;
   }
 }

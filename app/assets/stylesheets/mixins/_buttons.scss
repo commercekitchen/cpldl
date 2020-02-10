@@ -28,7 +28,7 @@
       // Combined state
     }
 
-    @include media($tablet) {
+    @media (max-width: $breakpoint-tablet) {
       min-width: 0;
     }
 

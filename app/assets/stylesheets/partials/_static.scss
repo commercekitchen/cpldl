@@ -82,42 +82,42 @@ div.static-page {
 
   // Ugg, hacky, but what's the alternative?
   .vertical-center-1 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: -18px;
     }
   }
 
   .vertical-center-2 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: 23px;
     }
   }
 
   .vertical-center-3 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: 0px;
     }
   }
 
   .vertical-center-4 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: 0px;
     }
   }
 
   .vertical-center-5 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: -30px;
     }
   }
 
   .vertical-center-6 {
-    @include media($desktop) {
+    @media (min-width: $breakpoint-tablet) {
       position: relative;
       top: -32px;
     }

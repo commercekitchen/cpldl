@@ -1,6 +1,3 @@
-@import "bourbon";
-@import "neat";
-
 .header-grid {
   display: grid;
   align-items: center;
@@ -11,7 +8,7 @@
     "language-links trainer-link"
     "logo nav-and-search";
 
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     grid-template-columns: 30% 70%;
     grid-template-areas:
       "language-links trainer-link"
@@ -32,7 +29,7 @@
 .main-logo {
   grid-area: logo;
 
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     text-align: center;
   }
 
@@ -41,7 +38,7 @@
     max-height: 120px;
     margin: 0.2em;
 
-    @include media($mobile-xlarge) {
+    @media (max-width: $breakpoint-mobile-xlarge) {
     }
   }
 }
@@ -55,14 +52,14 @@
     white-space: nowrap;
   }
 
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     padding-left: 0;
   }
 }
 
 .header-nav {
   margin-bottom: 0.5rem;
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     margin: 0.5rem 0;
     text-align: center;
   }
@@ -71,7 +68,7 @@
 .login-button-container {
   margin-bottom: 0.5rem;
 
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     width: 80%;
     margin: 0.5rem auto;
     .login-button {
@@ -79,7 +76,7 @@
     }
   }
 
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     width: 100%;
     margin: 0.5rem auto;
   }

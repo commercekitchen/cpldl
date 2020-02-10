@@ -70,7 +70,7 @@ textarea {
     &:nth-child(1) {
       width: 45%;
 
-      @include media($tablet) {
+      @media (max-width: $breakpoint-tablet) {
         width: 100%;
         margin-bottom: 0.5em;
       }
@@ -79,7 +79,7 @@ textarea {
     &:nth-child(2) {
       width: 20%;
 
-      @include media($tablet) {
+      @media (max-width: $breakpoint-tablet) {
         width: 100%;
         margin-bottom: 0.5em;
       }
@@ -88,7 +88,7 @@ textarea {
     &:nth-child(3) {
       width: 30%;
 
-      @include media($tablet) {
+      @media (max-width: $breakpoint-tablet) {
         width: 100%;
       }
     }

@@ -1,12 +1,12 @@
-@import "bourbon";
-@import "neat";
-
 .container {
-  @include outer-container;
+  max-width: $container-max-width;
+  margin-left: auto;
+  margin-right: auto;
+
   padding-left: 1em;
   padding-right: 1em;
 
-  @include media($desktop) {
+  @media (min-width: $breakpoint-tablet) {
     padding-left: 0;
     padding-right: 0;
   }
@@ -79,7 +79,7 @@
 }
 
 small {
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     font-size: 1rem;
   }
 }
@@ -92,11 +92,11 @@ small {
 
 .large-top-padding {
   margin-top: 185px;
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     margin-top: 202px;
     // 157px
   }
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     margin-top: 80px;
     // 35px
   }
@@ -132,14 +132,14 @@ small {
 
 .left-or-right {
   text-align: right;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     text-align: left;
   }
 }
 
 .left-or-center {
   text-align: center;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     text-align: left;
   }
 }
@@ -154,14 +154,14 @@ small {
 
 .border-left {
   border-left: 1px solid $grey;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     border-left: none;
   }
 }
 
 .border-right {
   border-right: 1px solid $grey;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     border-right: none;
   }
 }
@@ -176,7 +176,7 @@ small {
 
 .extra-padding-left {
   padding-left: 5em;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     padding-left: 0em;
   }
 }
@@ -187,19 +187,19 @@ small {
 
 .extra-padding-right {
   padding-right: 4em;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     padding-right: 0em;
   }
 }
 
 .hide-on-mobile {
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     display: none;
   }
 }
 
 .hide-on-tablet {
-  @include media($tablet) {
+  @media (max-width: $breakpoint-tablet) {
     display: none;
   }
 }
@@ -221,16 +221,6 @@ small {
 .cke_contents.cke_reset {
   border: 2px solid $grey;
   border-radius: 6px;
-}
-
-.right-third {
-  @include media($desktop) {
-    @include span-columns(4);
-    @include shift(8);
-  }
-  @include media($mobile) {
-    @include span-columns(12);
-  }
 }
 
 .left-two-thirds {
@@ -264,7 +254,7 @@ ul.less-padding {
   padding-left: 1.5em;
 }
 
-@include media($mobile) {
+@media (max-width: $breakpoint-mobile) {
   .mobile-tweak.align-right {
     text-align: left;
   }

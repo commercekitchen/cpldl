@@ -11,11 +11,11 @@
   align-items: center;
   margin: auto;
 
-  @include media($mobile-xlarge) {
+  @media (max-width: $breakpoint-mobile-xlarge) {
     width: 80%;
   }
 
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     width: 100%;
   }
 

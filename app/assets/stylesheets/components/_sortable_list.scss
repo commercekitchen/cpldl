@@ -18,7 +18,7 @@
   display: table-cell;
   width: 15%;
   vertical-align: middle;
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     display: block;
   }
 }
@@ -26,7 +26,7 @@
 .wide-cell {
   display: table-cell;
   width: 50%;
-  @include media($mobile-large) {
+  @media (max-width: $breakpoint-mobile-large) {
     display: block;
   }
 }

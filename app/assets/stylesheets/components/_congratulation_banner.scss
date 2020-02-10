@@ -6,7 +6,7 @@
   border-color: $grey;
   border-width: 0.3em;
   padding: 5em;
-  @include media($mobile) {
+  @media (max-width: $breakpoint-mobile) {
     padding: 2em;
   }
 
@@ -15,17 +15,17 @@
   }
 
   .congrats-button {
-    @include media($mobile) {
-      @include span-columns(12);
+    @media (max-width: $breakpoint-mobile) {
+      //@include span-columns(12);
       padding: 0.25em;
     }
   }
 
   .bottom-button {
-    @include media($mobile) {
+    @media (max-width: $breakpoint-mobile) {
       margin-bottom: 0.5em;
     }
-    @include media($tablet) {
+    @media (max-width: $breakpoint-tablet) {
       margin-bottom: 0.5em;
     }
   }
@@ -34,7 +34,7 @@
     color: $white;
     font-size: 2em;
     margin: 0 0 1em 0;
-    @include media($mobile) {
+    @media (max-width: $breakpoint-mobile) {
       font-size: 1.5em;
     }
     &.small-margin {
