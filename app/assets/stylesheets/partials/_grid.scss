@@ -45,13 +45,6 @@
   }
 }
 
-.fivecol {
-  //@include span-columns(5);
-  @media (max-width: $breakpoint-mobile) {
-    //@include span-columns(12);
-  }
-}
-
 .sixcol {
   //@include span-columns(6);
   @media (max-width: $breakpoint-mobile) {
@@ -62,13 +55,6 @@
   }
   .four-of-six {
     //@include span-columns(4 of 6);
-  }
-}
-
-.sevencol {
-  //@include span-columns(7);
-  @media (max-width: $breakpoint-mobile) {
-    //@include span-columns(12);
   }
 }
 
@@ -83,9 +69,6 @@
   //@include span-columns(9);
   @media (max-width: $breakpoint-mobile) {
     //@include span-columns(12);
-  }
-  .one-third {
-    //@include span-columns(3 of 9);
   }
 }
 
@@ -107,9 +90,6 @@
   //@include span-columns(12);
   @media (max-width: $breakpoint-mobile) {
     //@include span-columns(12);
-  }
-  .two-of-twelve {
-    //@include span-columns(2 of 12);
   }
   .four-of-twelve {
     //@include span-columns(4 of 12);

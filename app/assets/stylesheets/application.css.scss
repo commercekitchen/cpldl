@@ -14,24 +14,8 @@
 
  */
 
-@import "partials/grid_settings";
-@import "partials/select2";
-@import "partials/vars";
-@import "partials/normalize";
-@import "partials/screen_reader";
-@import "partials/static";
-@import "partials/base";
-@import "partials/fonts";
-@import "partials/grid";
-@import "partials/forms";
-@import "partials/tables";
-@import "partials/classes";
-@import "partials/header";
-@import "partials/footer";
-@import "partials/errors";
-@import "partials/links";
-@import "partials/layout";
-@import "partials/course_page";
+@import "vars";
+@import "partials/*";
 @import "components/*";
 @import "mixins/*";
 @import "subdomains/*";

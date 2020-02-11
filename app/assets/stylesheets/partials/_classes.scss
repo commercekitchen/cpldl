@@ -5,11 +5,6 @@
 
   padding-left: 1em;
   padding-right: 1em;
-
-  @media (min-width: $breakpoint-tablet) {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 .flash-message {
@@ -185,13 +180,6 @@ small {
   padding-right: 1em;
 }
 
-.extra-padding-right {
-  padding-right: 4em;
-  @media (max-width: $breakpoint-mobile) {
-    padding-right: 0em;
-  }
-}
-
 .hide-on-mobile {
   @media (max-width: $breakpoint-mobile) {
     display: none;
@@ -268,12 +256,6 @@ ul.less-padding {
   ul {
     list-style: initial;
   }
-}
-
-.file-description {
-  margin-top: 1px;
-  margin-bottom: 5px;
-  padding-left: 2em;
 }
 
 .cleared-float {

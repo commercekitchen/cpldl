@@ -13,6 +13,14 @@
         <%= user_sidebar(@sidebar) if @show_sidebar %>
         <div class="main-content">
           <%= yield %>
+          <div class="two-column-grid">
+            <section class="left">
+              <%= yield :left %>
+            </section>
+            <section class="right">
+              <%= yield :right %>
+            </section>
+          </div>
         </div>
       </div>
     </main>

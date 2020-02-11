@@ -33,4 +33,9 @@
 <%= render partial: "shared/lessons/grid" %>
 <hr>
 
-<%= render partial: "shared/courses/supplemental_materials", locals: { course: @course } %>
+<% content_for :left do %>
+  <%= render partial: "shared/courses/text_copies" %>
+<% end %>
+<% content_for :right do %>
+  <%= render partial: "shared/courses/supplemental_materials" %>
+<% end %>
