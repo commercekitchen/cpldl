@@ -4,7 +4,10 @@ module Admin
   class ProgramLocationsController < BaseController
 
     def create
-      @program_location = ProgramLocation.create(location_params)
+      @program_location = ProgramLocation.new(location_params)
+      authorize @program_location
+
+      @program_location.save
       @program = @program_location.program
 
       respond_to do |format|
@@ -14,6 +17,8 @@ module Admin
 
     def toggle
       @program_location = ProgramLocation.find(params[:program_location_id])
+      authorize @program_location, :update?
+
       currently_enabled = @program_location.enabled?
       @program_location.update(enabled: !currently_enabled)
 

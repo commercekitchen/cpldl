@@ -10,7 +10,7 @@ describe 'courses/show.html.erb' do
     allow(view).to receive(:subdomain?).and_return(false)
     allow(view).to receive(:hide_language_links?).and_return(false)
     allow(view).to receive(:top_level_domain?).and_return(true)
-    @course = create(:course, meta_desc: 'Meta description.', seo_page_title: 'SEO Title')
+    @course = create(:course_with_lessons, meta_desc: 'Meta description.', seo_page_title: 'SEO Title')
     assign(:course, @course)
     @admin = create(:user, :admin, organization: @org)
     @user = create(:user, organization: @org)

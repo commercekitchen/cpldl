@@ -56,6 +56,11 @@ module ApplicationHelper
     user.present? && user.has_role?(:admin, current_organization)
   end
 
+  def current_language
+    language_string = I18n.locale == :es ? 'Spanish' : 'English'
+    Language.find_by(name: language_string)
+  end
+
   protected
 
   def current_subdomain

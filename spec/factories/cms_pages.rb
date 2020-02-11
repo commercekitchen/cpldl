@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :cms_page do
+    sequence(:title) { |n| "Cms Page #{n}" }
     organization
-    title 'A New Page'
     language
     body 'Look at that body!'
     author 'CK Dev'

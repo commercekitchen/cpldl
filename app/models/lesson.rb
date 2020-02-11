@@ -22,6 +22,7 @@ class Lesson < ApplicationRecord
 
   belongs_to :course
   belongs_to :parent, class_name: 'Lesson', optional: true
+  has_many :lesson_completions, dependent: :destroy
 
   # TODO: We need to make lesson titles unique per course, but not site-wide.
   validates :title, length: { maximum: 90 }, presence: true # , uniqueness: true
@@ -39,7 +40,6 @@ class Lesson < ApplicationRecord
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
   before_destroy :delete_associated_asl_files
-  before_destroy :delete_associated_user_completions
 
   default_scope { order(:lesson_order) }
   scope :published, -> { where(pub_status: 'P') }
@@ -58,11 +58,6 @@ class Lesson < ApplicationRecord
 
   def delete_associated_asl_files
     FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
-  end
-
-  def delete_associated_user_completions
-    completions = CompletedLesson.where(lesson_id: id)
-    completions.each(&:destroy)
   end
 
   def duration_str

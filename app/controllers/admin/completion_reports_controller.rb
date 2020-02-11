@@ -4,6 +4,7 @@ module Admin
   class CompletionReportsController < BaseController
 
     def show
+      authorize current_organization, :download_reports?
       @report_service = CompletionReportService.new(organization: current_organization)
 
       respond_to do |format|
