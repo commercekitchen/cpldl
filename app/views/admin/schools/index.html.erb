@@ -13,12 +13,10 @@
 </div>
 
 <%= form_for [:admin, @new_school], remote: true, format: :js do |f| %>
-  <div class="row">
-    <div class="sixcol">
+  <fieldset>
+    <div class='inline-form'>
       <%= f.text_field :school_name %>
-    </div>
-    <div class="sixcol">
       <%= f.submit "Add School" %>
     </div>
-  </div>
+  </fieldset>
 <% end %>
