@@ -5,23 +5,27 @@
   <%= f.hidden_field :invitation_token, readonly: true %>
 
   <% if f.object.class.require_password_on_accepting %>
-    <fieldset>
-      <%= f.label :password, class: "text-color" do %>
-        New Password
-        <% if @minimum_password_length %>
-          <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
+    <div class="form-row">
+      <fieldset>
+        <%= f.label :password, class: "text-color" do %>
+          New Password
+          <% if @minimum_password_length %>
+            <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
+          <% end %>
         <% end %>
-      <% end %>
-      <%= f.text_field :password, autofocus: true, autocomplete: "off" %>
-    </fieldset>
+        <%= f.text_field :password, autofocus: true, autocomplete: "off" %>
+      </fieldset>
+    </div>
 
-    <fieldset>
-      <%= f.label :password_confirmation, "Confirm new password", class: "text-color" %>
-      <%= f.password_field :password_confirmation, autocomplete: "off" %>
-    </fieldset>
+    <div class='form-row'>
+      <fieldset>
+        <%= f.label :password_confirmation, "Confirm new password", class: "text-color" %>
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </fieldset>
+    </div>
   <% end %>
 
-  <div class="actions">
+  <div class="form-row">
     <%= f.submit t("devise.invitations.edit.submit_button") %>
   </div>
 <% end %>

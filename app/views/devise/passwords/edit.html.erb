@@ -4,20 +4,26 @@
   <%= render partial: 'devise/shared/error_messages', resource: resource %>
   <%= f.hidden_field :reset_password_token %>
 
-  <fieldset>
-    <%= f.label :password, class: "text-color" do %>
-      New Password
-      <% if @minimum_password_length %>
-        <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :password, class: "text-color" do %>
+        New Password
+        <% if @minimum_password_length %>
+          <i class="note">(<%= @minimum_password_length %> characters minimum)</i>
+        <% end %>
       <% end %>
-    <% end %>
-    <%= f.text_field :password, autofocus: true, autocomplete: "off" %>
-  </fieldset>
+      <%= f.text_field :password, autofocus: true, autocomplete: "off" %>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.label :password_confirmation, "Confirm new password", class: "text-color" %>
-    <%= f.text_field :password_confirmation, autocomplete: "off" %>
-  </fieldset>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :password_confirmation, "Confirm new password", class: "text-color" %>
+      <%= f.text_field :password_confirmation, autocomplete: "off" %>
+    </fieldset>
+  </div>
 
-  <%= f.submit "Change my password" %>
+  <div class='form-row'>
+    <%= f.submit "Change my password" %>
+  </div>
 <% end %>

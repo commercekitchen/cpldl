@@ -1,27 +1,37 @@
-<fieldset>
-  <%= f.text_field :first_name, placeholder: "#{t('login_signup.first_name')}" %>
-</fieldset>
+<div class='form-row inline'>
+  <fieldset class='inline-item'>
+    <%= f.text_field :first_name, placeholder: "#{t('login_signup.first_name')}" %>
+  </fieldset>
 
-<fieldset>
-  <%= f.text_field :last_name, placeholder: "#{t('profile.last_name')}" %>
-</fieldset>
+  <fieldset class='inline-item'>
+    <%= f.text_field :last_name, placeholder: "#{t('profile.last_name')}" %>
+  </fieldset>
+</div>
 
-<fieldset>
-  <%= f.text_field :phone, placeholder: "#{t('profile.phone')}" %>
-</fieldset>
+<div class='form-row'>
+  <fieldset>
+    <%= f.text_field :phone, placeholder: "#{t('profile.phone')}" %>
+  </fieldset>
+</div>
 
-<fieldset>
-  <%= f.text_field :street_address, placeholder: "#{t('profile.street_address')}" %>
-</fieldset>
+<div class='form-row'>
+  <fieldset>
+    <%= f.text_field :street_address, placeholder: "#{t('profile.street_address')}" %>
+  </fieldset>
+</div>
 
-<fieldset>
-  <%= f.text_field :city, placeholder: "#{t('profile.city')}" %>
-</fieldset>
+<div class='form-row inline'>
+  <fieldset class='inline-item'>
+    <%= f.text_field :city, placeholder: "#{t('profile.city')}" %>
+  </fieldset>
 
-<fieldset>
-  <%= f.text_field :state, placeholder: "#{t('profile.state')}" %>
-</fieldset>
+  <fieldset class='inline-item'>
+    <%= f.text_field :state, placeholder: "#{t('profile.state')}" %>
+  </fieldset>
+</div>
 
-<fieldset>
-  <%= f.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
-</fieldset>
+<div class='form-row'>
+  <fieldset>
+    <%= f.text_field :zip_code, placeholder: "#{t('login_signup.zip_code')}" %>
+  </fieldset>
+</div>

@@ -13,12 +13,10 @@
 </div>
 
 <%= form_for [:admin, @new_category], remote: true, format: :js do |f| %>
-  <div class="row">
-    <div class="sixcol category_name_input">
+  <fieldset>
+    <div class="category_name_input inline-form">
       <%= f.text_field :name %>
-    </div>
-    <div class="sixcol">
       <%= f.submit "Add Category" %>
     </div>
-  </div>
+  </fieldset>
 <% end %>

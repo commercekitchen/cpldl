@@ -9,12 +9,14 @@
     Accepting library branches turns on this feature for your subsite, meaning that new users registering for an account will be given the option to select their library branch upon account creation. When turning this feature on, be sure to add library branches below from which users can select their branch.
   </p>
   <%= form_for [:admin, current_organization], remote: true, format: :js, html: { id: "org_branches_form" } do |f| %>
-    <fieldset>
-      <%= f.check_box :branches %>
-      <%= f.label :branches, class: "text-color inline-label" do %>
-        Accept Library Branches?
-      <% end %>
-    </fieldset>
+    <div class='form-row'>
+      <fieldset>
+        <%= f.check_box :branches %>
+        <%= f.label :branches, class: "text-color inline-label" do %>
+          Accept Library Branches?
+        <% end %>
+      </fieldset>
+    </div>
   <% end %>
 </div>
 <br />

@@ -13,30 +13,38 @@
     </div>
   <% end %>
 
-  <fieldset>
-    <%= f.label :email, class: "text-color" do %>
-      <%= t('login_signup.email') %>
-    <% end %>
-    <%= f.email_field :email, autofocus: true %>
-  </fieldset>
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :email, class: "text-color" do %>
+        <%= t('login_signup.email') %>
+      <% end %>
+      <%= f.email_field :email, autofocus: true %>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.label :password, class: "text-color" do %>
-      <%= t('login_signup.password') %> <i class="note"><%= t('change_login_page.leave_blank_to_not_change_password') %></i>
-    <% end %>
-    <%= f.text_field :password, autocomplete: "off", class: "strength" %>
-    <span class="password-indicator"></span>
-  </fieldset>
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :password, class: "text-color" do %>
+        <%= t('login_signup.password') %> <i class="note"><%= t('change_login_page.leave_blank_to_not_change_password') %></i>
+      <% end %>
+      <%= f.text_field :password, autocomplete: "off", class: "strength" %>
+      <span class="password-indicator"></span>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.label :password_confirmation, class: "text-color" do %>
-      <%= t('change_login_page.password_confirmation') %>
-    <% end %>
-    <%= f.text_field :password_confirmation %>
-  </fieldset>
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :password_confirmation, class: "text-color" do %>
+        <%= t('change_login_page.password_confirmation') %>
+      <% end %>
+      <%= f.text_field :password_confirmation %>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.submit "Save", class: "button-color" %>
-  </fieldset>
+  <div class="form-row">
+    <fieldset>
+      <%= f.submit "Save", class: "button-color" %>
+    </fieldset>
+  </div>
 
 <% end %>

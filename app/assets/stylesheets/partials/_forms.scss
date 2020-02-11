@@ -1,8 +1,4 @@
-fieldset {
-  margin: 1em 0;
-}
-
-div.form-group {
+.form-group {
   margin: 1em 0;
 }
 
@@ -29,6 +25,22 @@ label.plain {
   content: " *";
   color: $teal;
   font-weight: bold;
+}
+
+.form-row {
+  margin: 1em 0;
+
+  &.inline {
+    display: flex;
+
+    .inline-item {
+      flex-grow: 1;
+
+      &:not(:last-child) {
+        padding-right: 2em;
+      }
+    }
+  }
 }
 
 input[type="text"],
@@ -61,6 +73,16 @@ textarea {
 
 .table_row_disabled {
   color: $grey;
+}
+
+.inline-form {
+  display: flex;
+
+  input {
+    &:nth-child(1) {
+      margin-right: 1em;
+    }
+  }
 }
 
 .date-select {
@@ -209,8 +231,20 @@ select {
   }
 }
 
-.form_action {
-  &_skip {
+.form-actions {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+
+  &.left {
+    justify-content: flex-start;
+  }
+
+  &.spread {
+    justify-content: space-between;
+  }
+
+  .secondary-action {
     margin-left: 2em;
   }
 }

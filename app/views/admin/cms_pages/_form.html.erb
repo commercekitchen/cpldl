@@ -10,7 +10,7 @@
   </div>
 <% end %>
 
-<%= form_for([:admin, @cms_page], html: { multipart: true } ) do |f| %>
+<%= form_for([:admin, @cms_page], html: { multipart: true, class: 'cms-page-form' } ) do |f| %>
   <% if @cms_page.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@cms_page.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -28,75 +28,76 @@
     <h1>Page Information</h1>
   <% end %>
 
-  <div class="tencol">
-    <p class="emphasis no-top-margin">Edit your English-language page content below. Toggle to alternate language versions using the <br> drop down menu.</p>
+  <div class="form-row">
+    <p class="emphasis no-top-margin">Edit your English-language page content below. Toggle to alternate language versions using the drop down menu.</p>
+     <%= f.collection_select(:language_id, Language.all, :id, "name", {}, {} ) %>
   </div>
 
-  <fieldset class="twocol last">
-      <%= f.collection_select(:language_id, Language.all, :id, "name", {}, { class: "small" } ) %>
-  </fieldset>
-
-  <fieldset>
-    <%= f.label :title, class: "text-color" do %>
-      Title<span class="required"></span>
-    <% end %>
-    <%= f.text_field :title, maxlength: 90 %>
-    <div class="character-limit note left-or-right">&nbsp;</div>
-  </fieldset>
-
-  <div class="row">
-    <div class="sixcol">
-      <fieldset>
-        <%= f.label :audience, class: "text-color" do %>
-          Who can view<span class="required"></span>
-        <% end %>
-        <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @cms_page.audience), { include_blank: "Select..."} ) %>
-      </fieldset>
-    </div>
-
-    <div class="sixcol last">
-      <fieldset>
-        <%= f.label :pub_status, class: "text-color" do %>
-          Publication Status<span class="required"></span>
-        <% end %>
-        <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archive", "A"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
-      </fieldset>
-    </div>
-  </div>
-
-  <fieldset>
-    <%= f.label :author, class: "text-color" do %>
-      Author<span class="required"></span>
-    <% end %>
-    <%= f.text_field :author, class: "bottom-margin" %>
-  </fieldset>
-
-  <fieldset>
-    <%= f.label :body, class: "text-color" do %>
-      Page Content<span class="required"></span>
-    <% end %>
-    <%= f.cktext_area :body %>
-  </fieldset>
-
-  <fieldset>
-    <%= f.label "SEO page title", class: "text-color" %>
-    <%= f.text_field :seo_page_title, maxlength: 90 %>
-    <div class="character-limit note left-or-right">&nbsp;</div>
-  </fieldset>
-
-  <fieldset>
-    <%= f.label :meta_desc, class: "text-color" %>
-    <%= f.text_field :meta_desc, maxlength: 156 %>
-    <div class="character-limit note left-or-right">&nbsp;</div>
-  </fieldset>
-
-  <div class="actions">
-    <div class="row">
-      <% if params[:action] == "edit" %>
-        <%= render "edit_actions", f: f %>
-      <% else %>
-        <%= render "new_actions", f: f %>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :title, class: "text-color" do %>
+        Title<span class="required"></span>
       <% end %>
-    </div>
+      <%= f.text_field :title, maxlength: 90 %>
+      <div class="character-limit note left-or-right">&nbsp;</div>
+    </fieldset>
+  </div>
+
+  <div class="form-row inline">
+    <fieldset class="inline-item">
+      <%= f.label :audience, class: "text-color" do %>
+        Who can view<span class="required"></span>
+      <% end %>
+      <%= f.select(:audience, options_for_select([["Unauthenticated Users", "Unauth"], ["Authenticated Users", "Auth"], ["Administrators", "Admin"], ["Everyone", "All"]], @cms_page.audience), { include_blank: "Select..."} ) %>
+    </fieldset>
+
+    <fieldset class="inline-item">
+      <%= f.label :pub_status, class: "text-color" do %>
+        Publication Status<span class="required"></span>
+      <% end %>
+      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archive", "A"]], @cms_page.pub_status), { include_blank: "Select..." } ) %>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :author, class: "text-color" do %>
+        Author<span class="required"></span>
+      <% end %>
+      <%= f.text_field :author, class: "bottom-margin" %>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :body, class: "text-color" do %>
+        Page Content<span class="required"></span>
+      <% end %>
+      <%= f.cktext_area :body %>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset>
+      <%= f.label "SEO page title", class: "text-color" %>
+      <%= f.text_field :seo_page_title, maxlength: 90 %>
+      <div class="character-limit note left-or-right">&nbsp;</div>
+    </fieldset>
+  </div>
+
+  <div class="form-row">
+    <fieldset>
+      <%= f.label :meta_desc, class: "text-color" %>
+      <%= f.text_field :meta_desc, maxlength: 156 %>
+      <div class="character-limit note left-or-right">&nbsp;</div>
+    </fieldset>
+  </div>
+
+  <div class="form-actions spread">
+    <%= f.submit "Preview Page", params: { commit: "Preview" }, class: "btn-grey" %>
+    <%= f.submit "Save Page", params: { commit: "Save Page" }, class: "button-color" %>
+    <% if params[:action] == "edit" %>
+      <%= link_to "Delete Page", admin_cms_page_path(@cms_page), method: :delete, data: { confirm: "Are you sure you want to delete this page?" }, class: "btn btn-grey" %>
+    <% end %>
   </div>
 <% end %>

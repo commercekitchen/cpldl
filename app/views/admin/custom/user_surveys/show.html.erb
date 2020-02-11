@@ -7,35 +7,42 @@
 <p class="emphasis no-top-margin">Add a button that will appear on all course completion pages to take your users to an external survey site of your choice.</p>
 
 <%= form_for @organization, url: admin_custom_user_surveys_path do |f| %>
-  <fieldset>
-    <%= f.check_box :user_survey_enabled, class: "bottom-margin" %>
-    <%= f.label :user_survey_enabled, class: 'text-color inline-label' do %>
-      Enable Survey?
-    <% end %>
-  </fieldset>
-
-  <fieldset>
-    <span class='text-color block-label'>
-      Survey Button Text
-    </span>
-    <div class='i18n-translation-fields'>
-      <%= fields_for 'translation[en]', @en_translation do |tf| %>
-        <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @en_translation } %>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.check_box :user_survey_enabled, class: "bottom-margin" %>
+      <%= f.label :user_survey_enabled, class: 'text-color inline-label' do %>
+        Enable Survey?
       <% end %>
-      <div class='bottom-margin'></div>
-      <%= fields_for 'translation[es]', @es_translation do |tf| %>
-        <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @es_translation } %>
+    </fieldset>
+  </div>
+
+  <div class='form-row'>
+    <fieldset>
+      <span class='text-color block-label'>
+        Survey Button Text
+      </span>
+      <div class='i18n-translation-fields'>
+        <%= fields_for 'translation[en]', @en_translation do |tf| %>
+          <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @en_translation } %>
+        <% end %>
+        <div class='bottom-margin'></div>
+        <%= fields_for 'translation[es]', @es_translation do |tf| %>
+          <%= render partial: 'admin/custom/translations/fields', locals: { form: tf, translation: @es_translation } %>
+        <% end %>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :user_survey_link, class: 'text-color' do %>
+        Survey link
       <% end %>
-    </div>
-
-  </fieldset>
-
-  <fieldset>
-    <%= f.label :user_survey_link, class: 'text-color' do %>
-      Survey link
-    <% end %>
-    <%= f.text_field :user_survey_link %>
-  </fieldset>
+      <%= f.text_field :user_survey_link %>
+    </fieldset>
+  </div>
   
-  <%= f.submit 'Submit', class: "button-color" %>
+  <div class='form-row'>
+    <%= f.submit 'Submit', class: "button-color" %>
+  </div>
 <% end %>

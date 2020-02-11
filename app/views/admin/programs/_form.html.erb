@@ -10,20 +10,28 @@
     </div>
   <% end %>
 
-  <fieldset>
-    <%= f.text_field :program_name, placeholder: "#{t('programs_form.program_name')}" %>
-  </fieldset>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.text_field :program_name, placeholder: "#{t('programs_form.program_name')}" %>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.select :parent_type, Program::PARENT_TYPES, { include_blank: t('programs_form.parent_type') } %>
-  </fieldset>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.select :parent_type, Program::PARENT_TYPES, { include_blank: t('programs_form.parent_type') } %>
+    </fieldset>
+  </div>
 
-  <fieldset>
-    <%= f.label :location_required, class: "text-color" do %>
-      <span><%= t('programs_form.require_locations') %>&nbsp;</span>
-      <%= f.check_box :location_required %>
-    <% end %>
-  </fieldset>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :location_required, class: "text-color" do %>
+        <span><%= t('programs_form.require_locations') %>&nbsp;</span>
+        <%= f.check_box :location_required %>
+      <% end %>
+    </fieldset>
+  </div>
 
-  <%= f.submit "Create Program", class: "button-color" %>
+  <div class='form-row'>
+    <%= f.submit "Create Program", class: "button-color" %>
+  </div>
 <% end %>
