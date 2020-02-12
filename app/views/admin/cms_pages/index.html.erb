@@ -2,16 +2,16 @@
 
 <h2>CMS Pages</h2>
 
-<div class="row">
-  <div class="sixcol">
+<section class="admin-resource-page-header">
+  <div class="description">
     <p class="emphasis no-top-margin">
       Re-order pages by clicking on the arrow icon to drag and drop courses. Edit by clicking the appropriate page title below.
     </p>
   </div>
-  <div class="sixcol last left-or-right">
+  <div class="action">
     <%= link_to "Add a New CMS Page", new_admin_cms_page_path, class: "btn button-color" %>
   </div>
-</div>
+</section>
 
 <div class="sortable-list" data-page="cms_pages" >
   <div class="list-titles">

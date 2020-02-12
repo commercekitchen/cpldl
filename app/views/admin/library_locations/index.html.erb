@@ -20,17 +20,17 @@
   <% end %>
 </div>
 <br />
-<div id="branch-management">
-  <div class="row">
-    <div class="sixcol">
+<section id="branch-management">
+  <section class="admin-resource-page-header">
+    <div class="description">
       <p class="emphasis no-top-margin">
         Re-order library branches by clicking on the arrow icon to drag and drop. Edit by clicking the appropriate location name.
       </p>
     </div>
-    <div class="sixcol last left-or-right">
+    <div class="action">
       <%= link_to "Add a Library Branch", new_admin_library_location_path, class: "btn button-color" %>
     </div>
-  </div>
+  </section>
 
   <div class="sortable-list" data-page="library_locations">
     <div class="list-titles">

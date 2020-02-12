@@ -33,6 +33,10 @@
     }
   }
 
+  .table-row {
+    border-color: $underline_color;
+  }
+
   .footer-primary {
     background-color: $footer_color;
   }
@@ -90,8 +94,9 @@
     padding-bottom: 1em;
   }
 
-  ul.objects li {
-    padding: 10px 10px 10px 0;
-    border-bottom: 1px solid $underline_color;
+  .admin-resource-list {
+    .resource-row {
+      border-color: $underline_color;
+    }
   }
 }

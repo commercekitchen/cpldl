@@ -2,15 +2,11 @@
 
 <h1>Schools</h1>
 
-<div class="row underlined">
-  &nbsp;
-</div>
-
-<div id="school_rows">
+<ul id="school_rows" class="admin-resource-list">
   <% @schools.each do |school| %>
     <%= render partial: "school_row", locals: { school: school } %>
   <% end %>
-</div>
+</ul>
 
 <%= form_for [:admin, @new_school], remote: true, format: :js do |f| %>
   <fieldset>

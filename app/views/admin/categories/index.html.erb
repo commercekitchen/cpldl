@@ -2,14 +2,12 @@
 
 <h2>Categories</h2>
 
-<div id="category_list">
-  <div class="sortable-list" data-page="categories">
-    <ul class="objects sortable reorderable" id="category_rows">
-      <% @categories.each do |category| %>
-        <%= render partial: "category_row", locals: { category: category } %>
-      <% end %>
-    </ul>
-  </div>
+<div class="sortable-list" data-page="categories">
+  <ul class="admin-resource-list objects sortable reorderable" id="category_rows">
+    <% @categories.each do |category| %>
+      <%= render partial: "category_row", locals: { category: category } %>
+    <% end %>
+  </ul>
 </div>
 
 <%= form_for [:admin, @new_category], remote: true, format: :js do |f| %>

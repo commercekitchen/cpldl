@@ -4,15 +4,11 @@
   <%= "Location Options" %>
 </h1>
 
-<div class="row underlined">
-  &nbsp;
-</div>
-
-<div id="program_location_rows">
+<ul id="program_location_rows" class="admin-resource-list">
   <% @program.program_locations.select(&:persisted?).each do |pl| %>
     <%= render partial: "admin/program_locations/location_row", locals: { program_location: pl } %>
   <% end %>
-</div>
+</ul>
 
 <%= form_for [:admin, @program_location], remote: true do |f| %>
   <%= render partial: "program_locations_form", locals: { f: f } %>

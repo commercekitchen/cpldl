@@ -43,7 +43,7 @@ feature 'Admin user visits category management page' do
   scenario 'can disable category', js: true do
     visit admin_categories_path
     click_on "category_toggle_link_#{@category1.id}"
-    expect(page).to have_selector(:css, ".table_row_disabled .four-of-twelve #category_toggle_link_#{@category1.id}")
+    expect(page).to have_selector(:css, ".table_row_disabled #category_toggle_link_#{@category1.id}")
     @category1.reload
     expect(@category1.enabled).to eq(false)
   end

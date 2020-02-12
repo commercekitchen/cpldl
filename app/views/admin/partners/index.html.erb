@@ -4,11 +4,11 @@
 
 <h2>Partners</h2>
 
-<table id="partner_list">
+<ul id="partner_list" class="admin-resource-list">
   <% @partners.each do |partner| %>
     <%= render partial: 'partner_row', locals: { partner: partner } %>
   <% end %>
-</table>
+</ul>
 
 <%= form_for [:admin, @new_partner], remote: true do |f| %>
   <fieldset>

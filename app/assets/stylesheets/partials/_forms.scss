@@ -79,7 +79,14 @@ textarea {
 }
 
 .inline-form {
+  margin: 1em 0;
   display: flex;
+  align-items: center;
+
+  .inline-input {
+    flex-grow: 1;
+    padding-right: 2em;
+  }
 
   input {
     &:nth-child(1) {
