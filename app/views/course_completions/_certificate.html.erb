@@ -1,0 +1,23 @@
+<div class="certificate-preview">
+  <div class="inner">
+    <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
+    <p>
+      <%= t('certificate.this_award') %>
+    </p>
+    <% if current_user %>
+      <%= content_tag :h2, "#{current_user.profile.full_name}", class: "name" %>
+    <% else %>
+      <%= t('certificate.name_fill') %>
+    <% end %>
+    <p>
+      <%= t('certificate.has_completed') %>
+    </p>
+    <%= content_tag :h2, "#{@course.title}", class: "course" %>
+    <p>
+      <%= t('certificate.as_of') %>  <% if current_user %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %> <% else %> <%= local_time(Time.zone.now, '%B %e, %Y') %> <% end %>
+    </p>
+    <div class='certificate-logo'>
+      <%= image_tag "dl_logo.png", alt: "DigitalLearn Logo" %>
+    </div>
+  </div>
+</div>

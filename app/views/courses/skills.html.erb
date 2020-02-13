@@ -2,32 +2,10 @@
 
 <small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
 
-<div class="container">
-  <div class="row">
-    <div class="sixcol">
-      <h2 class="text-color"><%= t('course_page.practice_and_use_your_skills') %></h2>
-      <% if @course.notes.blank? %>
-        <div class="note"><%= t('course_page.there_are_no_notes_for_course') %></div>
-      <% else %>
-        <div class="show_with_bullets"><%= sanitize(@course.notes) %></div>
-      <% end %>
-    </div>
-    <div class="sixcol">
-      <h2 class="text-color"><%= t('course_page.additional_resources') %></h2>
-      <% if @course.post_course_attachments.count > 0 %>
-        <ul class="no-padding">
-          <% @course.post_course_attachments.each do |a| %>
-            <%= link_to course_attachment_path(@course, a), target: "_blank" do %>
-              <li>
-                <i class="icon-download"></i><%= a.document_file_name %>
-                <p class="note file-description"><%= a.file_description %></p>
-              </li>
-            <% end %>
-          <% end %>
-        </ul>
-      <% else %>
-        <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
-      <% end %>
-    </div>
-  </div>
-</div>
+<% content_for :left do %>
+  <%= render "shared/courses/course_notes" %>
+<% end %>
+
+<% content_for :right do %>
+  <%= render "shared/courses/supplemental_materials" %>
+<% end %>

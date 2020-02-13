@@ -2,8 +2,8 @@
 
 <small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
 
-<div class="row">
-  <div class="eightcol">
+<div class="course">
+  <div class='course-info'>
     <div class="course-details text-color">
       <div><i class="icon-pencil"></i><%= @course.lessons.published.count %> <%= t('course_page.lessons') %></div>
       <div><i class="icon-clock"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
@@ -13,11 +13,11 @@
     <div><small><%= t('course_page.topics') %>: <%= @course.topics_str %></small></div>
   </div>
   
-  <div class="fourcol last align-right mobile-tweak">
+  <div class="course-actions">
     <% if user_signed_in? && current_user.has_role?(:admin, current_organization) %>
       <p class="course-edit-add-remove"><small><%= link_to "Edit Course >>", edit_admin_course_path(@course) %></small></p>
     <% else %>
-      <%= render partial: 'courses/course_progress_actions', locals: { course: @course } %>
+      <%= render 'courses/course_progress_actions' %>
     <% end %>
 
     <%= start_or_resume_course_link(@course) %>
@@ -29,13 +29,14 @@
 <hr>
 
 <h2 class="text-color"><%= t('course_page.lessons_in_this_course') %></h2>
-<div class="lesson-start-instructions"><%= t('course_page.start_lesson_instructions') %></div>
-<%= render partial: "shared/lessons/grid" %>
+<p><%= t('course_page.start_lesson_instructions') %></p>
+<%= render "shared/lessons/grid" %>
+
 <hr>
 
 <% content_for :left do %>
-  <%= render partial: "shared/courses/text_copies" %>
+  <%= render "shared/courses/text_copies" %>
 <% end %>
 <% content_for :right do %>
-  <%= render partial: "shared/courses/supplemental_materials" %>
+  <%= render "shared/courses/supplemental_materials" %>
 <% end %>

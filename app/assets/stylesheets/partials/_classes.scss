@@ -238,12 +238,6 @@ ul.less-padding {
   padding-left: 1.5em;
 }
 
-@media (max-width: $breakpoint-mobile) {
-  .mobile-tweak.align-right {
-    text-align: left;
-  }
-}
-
 .padded {
   padding-left: 5px;
 }

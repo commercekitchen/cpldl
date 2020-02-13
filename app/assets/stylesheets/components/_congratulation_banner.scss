@@ -6,19 +6,12 @@
   border-color: $grey;
   border-width: 0.3em;
   padding: 5em;
-  @media (max-width: $breakpoint-mobile) {
+  @media (max-width: $breakpoint-tablet) {
     padding: 2em;
   }
 
   .extra-margin {
     margin-bottom: 2em;
-  }
-
-  .congrats-button {
-    @media (max-width: $breakpoint-mobile) {
-      //@include span-columns(12);
-      padding: 0.25em;
-    }
   }
 
   .bottom-button {
@@ -39,48 +32,6 @@
     }
     &.small-margin {
       margin-bottom: 0;
-    }
-  }
-
-  .cert-preview {
-    height: 20em;
-    width: 54%;
-    margin: 0 23%;
-    padding: 3%;
-    background-color: $white;
-    .cert-inner {
-      height: 100%;
-      border: solid;
-      border-color: $teal;
-      &.cpl-blue {
-        border-color: $cpl-blue;
-      }
-      h1 {
-        color: $dark-grey;
-        font-size: 1.8em;
-        margin-bottom: 0.9em;
-      }
-      p {
-        color: $dark-grey;
-        font-size: 0.8em;
-        margin-bottom: 0;
-      }
-      h2 {
-        font-weight: lighter;
-        margin: 0.3em 0;
-        &.name {
-          color: $purple;
-        }
-        &.course {
-          color: $teal;
-        }
-      }
-      img {
-        position: relative;
-        left: -8em;
-        bottom: -1.5em;
-        width: 30%;
-      }
     }
   }
 }
