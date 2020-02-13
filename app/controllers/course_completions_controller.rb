@@ -30,6 +30,7 @@ class CourseCompletionsController < ApplicationController
                orientation: 'Landscape',
                page_size: 'Letter',
                show_as_html: params[:debug].present?
+
         if current_user
           send_data(@pdf,
                     filename: "#{current_user.profile.first_name} #{@course.title} completion certificate.pdf",

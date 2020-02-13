@@ -12,7 +12,7 @@
     <p>
       <%= t('certificate.has_completed') %>
     </p>
-    <%= content_tag :h2, "#{@course.title}", class: "course" %>
+    <%= content_tag :h2, "#{@course.title}", class: "course-title" %>
     <p>
       <%= t('certificate.as_of') %>  <% if current_user %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %> <% else %> <%= local_time(Time.zone.now, '%B %e, %Y') %> <% end %>
     </p>
