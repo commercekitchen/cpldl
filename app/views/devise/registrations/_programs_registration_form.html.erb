@@ -1,4 +1,4 @@
-<div class="form-group">
+<div class="form-row">
   <%= f.label :library_card_number, t('login_signup.program'), class: "signup-label" %>
   <%= f.text_field :library_card_number, placeholder: "#{t('login_signup.library_card_number')}" %>
 </div>
@@ -7,7 +7,7 @@
   <%= t('login_signup.dont_have_library_card') %> <%= link_to "#{t('login_signup.register_for_library_card_link')}", "https://library.nashville.org/get-card", target: "_blank" %> <%= t('login_signup.register_for_library_card') %>
 </p>
 
-<div class="form-group">
+<div class="form-row">
   <h3><%= t('login_signup.program_type_prompt') %></h3>
   <%= field_set_tag t('login_signup.program_type_label'), class: 'signup-label' do %>
     <div class="inline-radio-group">
@@ -25,7 +25,7 @@
     <% end %>
 </div>
 
-<div class="form-group">
+<div class="form-row">
   <% if params["user"] %>
     <%= hidden_field_tag "previously_selected_program", params["user"]["program_id"] %>
   <% end %>

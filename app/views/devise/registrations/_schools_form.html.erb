@@ -1,16 +1,16 @@
 <div id="schoolFields">
-  <div class="form-group">
+  <div class="form-row">
     <%= f.label :acting_as, t('login_signup.parent_student'), class: "signup-label" %>
     <%= f.select :acting_as, options_for_select(['Parent', 'Student'], resource.acting_as), class: "bottom-margin" %>
   </div>
 
-  <div class="form-group">
+  <div class="form-row">
     <%= f.label :student_id, t('login_signup.student_id'), class: "signup-label" %>
     <%= f.text_field :student_id, placeholder: "Students' ID #s" %>
   </div>
 
   <div id="student-only" class="hideUntilActive">
-    <div class="form-group">
+    <div class="form-row">
       <%= field_set_tag t('login_signup.birthday'), class: "signup-label" do %>
         <div class="date-select">
           <%= f.date_select :date_of_birth, order: [:month, :day, :year], start_year: 1990, end_year: Date.today.year %>
@@ -30,7 +30,7 @@
       <div class='inline-item'></div>
     </div>
 
-    <div class="form-group">
+    <div class="form-row">
       <%= f.label :school_id, t('login_signup.school'), class: "signup-label" %>
       <%= f.collection_select :school_id, current_organization.schools.enabled, :id, :school_name, { include_blank: "Select School" } %>
     </div>
