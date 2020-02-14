@@ -1,6 +1,8 @@
-<div class="form-group">
-  <% if params["user"].present? %>
-    <%= f.hidden_field "previous_location_id", value: params["user"]["program_location_id"] %>
-  <% end %>
-  <%= f.collection_select :program_location_id, [], :id, :location_name, include_blank: false %>
+<div class="form-row">
+  <fieldset>
+    <% if params["user"].present? %>
+      <%= f.hidden_field "previous_location_id", value: params["user"]["program_location_id"] %>
+    <% end %>
+    <%= f.collection_select :program_location_id, [], :id, :location_name, include_blank: false %>
+  </fieldset>
 </div>

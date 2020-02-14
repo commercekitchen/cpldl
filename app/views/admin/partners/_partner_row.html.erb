@@ -1,8 +1,8 @@
-<tr id="partner_row_<%= partner.id %>">
-  <td>
+<li class="resource-row" id="partner_row_<%= partner.id %>">
+  <div class="resource-title">
     <%= partner.name %>
-  </td>
-  <td>
+  </div>
+  <div class="resource-link">
     <%= link_to 'Delete', admin_partner_path(partner), method: :delete, remote: true, data: { confirm: "Delete #{partner.name} as a partner?" }, id: "delete_partner_link_#{partner.id}" %>
-  </td>
-</tr>
+  </div>
+</li>

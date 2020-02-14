@@ -1,23 +1,19 @@
-<div class="logo">
-  <div class="logo-icon">
-    <div class="ninecol right-logo">
-      <% if subdomain? %>
-        <%= link_to footer_logo_link_url || '#', target: "_blank" do %>
-          <%= safe_image_tag footer_logo_url, class: "medium-logo link-#{current_organization.subdomain}", alt: "#{current_organization.name} Footer Logo" %>
-        <% end %>
-      <% end %>
+<div class="footer-logo">
+  <% if subdomain? %>
+    <%= link_to footer_logo_link_url || '#', target: "_blank" do %>
+      <%= safe_image_tag footer_logo_url, class: "medium-logo link-#{current_organization.subdomain}", alt: "#{current_organization.name} Footer Logo" %>
+    <% end %>
+  <% end %>
 
-      <%= link_to "http://www.ala.org/pla/", target: "_blank" do %>
-        <% if top_level_domain? %>
-          <%= image_tag "pla_logo_header.png", class: "link-pla", alt: "Public Library Association Logo" %>
-        <% else %>
-          <%= image_tag "pla_logo_footer.png", class: "link-pla", alt: "Public Library Association Logo" %>
-        <% end %>
-      <% end %>
+  <%= link_to "http://www.ala.org/pla/", target: "_blank" do %>
+    <% if top_level_domain? %>
+      <%= image_tag "pla_logo_header.png", class: "link-pla", alt: "Public Library Association Logo" %>
+    <% else %>
+      <%= image_tag "pla_logo_footer.png", class: "link-pla", alt: "Public Library Association Logo" %>
+    <% end %>
+  <% end %>
 
-      <div class="license">
-        This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
-      </div>
-    </div>
+  <div class="license">
+    This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 Unported License
   </div>
 </div>

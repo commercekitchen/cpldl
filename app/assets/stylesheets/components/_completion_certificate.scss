@@ -1,0 +1,51 @@
+.certificate-preview {
+  position: relative;
+  height: 20em;
+  max-width: 30em;
+  margin: 2em auto;
+  padding: 1em;
+  background-color: $white;
+
+  .inner {
+    height: 100%;
+    border: solid;
+    border-color: $teal;
+    text-align: center;
+
+    h1 {
+      color: $dark-grey;
+      font-size: 1.8em;
+      margin-bottom: 0.9em;
+    }
+
+    p {
+      color: $dark-grey;
+      font-size: 0.8em;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      font-weight: lighter;
+      margin: 0.3em 0;
+      &.name {
+        color: $purple;
+      }
+      &.course-title {
+        color: $teal;
+      }
+    }
+  }
+}
+
+.certificate-logo {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 2em;
+  margin-left: 1em;
+
+  img {
+    max-height: 2.5em;
+  }
+}

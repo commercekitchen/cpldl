@@ -24,10 +24,6 @@ gem 'pundit'
 gem 'recaptcha', require: 'recaptcha/rails'
 gem 'rolify'
 
-# Bourbon for sass mixins, and neat for the grid framework
-gem 'bourbon', '< 5.0'
-gem 'neat', '< 2.0'
-
 # Redis for Sidekiq
 gem 'redis'
 gem 'redis-namespace'

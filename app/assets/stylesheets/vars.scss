@@ -77,9 +77,11 @@ $notice-color: #e3ecdc;
 $font-primary: sans-serif;
 $font-secondary: "Roboto", sans-serif;
 
+// Layout
+$container-max-width: 1024px;
+
 /* Breakpoints */
-$mobile: new-breakpoint(max-width 500px 12);
-$mobile-large: new-breakpoint(max-width 700px 12);
-$mobile-xlarge: new-breakpoint(max-width 830px 12);
-$tablet: new-breakpoint(max-width 1044px 12);
-$desktop: new-breakpoint(min-width 1044px 12);
+$breakpoint-mobile: 500px;
+$breakpoint-mobile-large: 700px;
+$breakpoint-mobile-xlarge: 830px;
+$breakpoint-tablet: 1044px;

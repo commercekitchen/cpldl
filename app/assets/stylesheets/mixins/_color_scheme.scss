@@ -33,7 +33,11 @@
     }
   }
 
-  .footer-primary {
+  .table-row {
+    border-color: $underline_color;
+  }
+
+  .footer {
     background-color: $footer_color;
   }
 
@@ -53,12 +57,6 @@
     }
   }
 
-  .logo-icon {
-    a:hover {
-      text-decoration: none;
-    }
-  }
-
   a.inverted {
     color: $white;
   }
@@ -67,17 +65,9 @@
     font-size: 1.1em;
     color: $primary_color;
     margin-top: 1.5em;
-
-    &-no-margin {
-      margin-top: 0;
-    }
   }
 
   .text-color {
-    color: $primary_color;
-  }
-
-  .cert-color {
     color: $primary_color;
   }
 
@@ -94,8 +84,9 @@
     padding-bottom: 1em;
   }
 
-  ul.objects li {
-    padding: 10px 10px 10px 0;
-    border-bottom: 1px solid $underline_color;
+  .admin-resource-list {
+    .resource-row {
+      border-color: $underline_color;
+    }
   }
 }

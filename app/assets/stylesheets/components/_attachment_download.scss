@@ -1,0 +1,12 @@
+.attachment-download {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  .file-description {
+    display: block;
+    margin-top: 1px;
+    margin-bottom: 5px;
+    padding-left: 3em;
+  }
+}

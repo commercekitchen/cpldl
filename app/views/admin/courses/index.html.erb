@@ -2,16 +2,16 @@
 
 <h2>Courses</h2>
 
-<div class="row">
-  <div class="sixcol">
+<section class="admin-resource-page-header">
+  <div class="description">
     <p class="emphasis no-top-margin">
       Re-order courses on the homepage by clicking on the arrow icon to drag and drop courses. Edit by clicking the appropriate course below.
     </p>
   </div>
-  <div class="sixcol last left-or-right">
+  <div class="action">
     <%= link_to "Add a New Course", new_admin_course_path, class: "btn button-color" %>
   </div>
-</div>
+</section>
 
 <% (@category_ids || []).each do |category_id| %>
   <%= render partial: "admin/courses/sortable_list", locals: { courses: @courses.with_category(category_id), category: Category.find_by_id(category_id) } %>

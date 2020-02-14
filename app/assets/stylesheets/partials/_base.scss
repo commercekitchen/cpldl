@@ -38,9 +38,6 @@ h2 {
 
 p {
   line-height: 1.5em;
-  &.shorty {
-    line-height: 1.2em;
-  }
 }
 
 small {
@@ -68,7 +65,7 @@ ul {
 }
 
 i::before {
-  padding-right: 1em;
+  padding-right: 0.5em;
 }
 
 hr {

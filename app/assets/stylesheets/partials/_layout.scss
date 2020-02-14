@@ -17,3 +17,37 @@
 .sidebar {
   grid-area: sidebar;
 }
+
+.two-column-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  grid-template-areas: "left-area right-area";
+
+  @media (max-width: $breakpoint-mobile-large) {
+    grid-template-areas:
+      "left-area left-area"
+      "right-area right-area";
+  }
+
+  .left {
+    grid-area: left-area;
+    padding-right: 4em;
+    border-right: 1px solid $grey;
+
+    @media (max-width: $breakpoint-mobile-large) {
+      padding-right: 0em;
+      padding-bottom: 4em;
+      border: none;
+    }
+  }
+
+  .right {
+    grid-area: right-area;
+    padding-left: 4em;
+
+    @media (max-width: $breakpoint-mobile-large) {
+      padding-left: 0em;
+    }
+  }
+}

@@ -26,16 +26,12 @@
 <% end %>
 
 <h2 class="text-color"><%= t('completed_courses_page.update_course_recommendations') %></h2>
-<p class="shorty">
+<p>
   <%= t('completed_courses_page.when_you_signed_up_quiz') %>
 </p>
-<p class="shorty">
+<p>
   <%= t('completed_courses_page.have_you_completed_most_courses') %>
 </p>
-<div class="row">
-  <div>
-    <%= link_to new_quiz_response_path do %>
-      <%= button_tag(i18n_with_default("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), type: "button", class: "button-color") %>
-    <% end %>
-  </div>
-</div>
+<%= link_to new_quiz_response_path do %>
+  <%= button_tag(i18n_with_default("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), type: "button", class: "button-color") %>
+<% end %>
