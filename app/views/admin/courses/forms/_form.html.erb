@@ -193,7 +193,7 @@
     </fieldset>
   </div>
 
-  <% if current_organization.base_site? && !@course.new_record? %>
+  <% if top_level_domain? && !@course.new_record? %>
     <div class="form-row">
       <fieldset>
         <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>

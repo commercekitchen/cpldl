@@ -110,7 +110,7 @@
     </fieldset>
   </div>
 
-  <% if current_organization.base_site? %>
+  <% if top_level_domain? %>
     <div class="form-row">
       <fieldset>
         <%= f.label :propagation_org_ids, 'Propagate these changes to subsite lessons for:', class: "text-color" %>

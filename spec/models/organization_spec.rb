@@ -74,15 +74,4 @@ RSpec.describe Organization, type: :model do
       expect(@org.admin_user_emails).not_to include(@user4.email)
     end
   end
-
-  describe '#base_site?' do
-    it 'returns true if the org has the www subdomain' do
-      subject.update(subdomain: 'www')
-      expect(subject.base_site?).to eq(true)
-    end
-
-    it 'returns false if the org does not have the www subdomain' do
-      expect(subject.base_site?).to eq(false)
-    end
-  end
 end

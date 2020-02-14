@@ -57,10 +57,6 @@ class Organization < ApplicationRecord
     programs.map(&:parent_type).any? { |p| p.to_sym == :students_and_parents }
   end
 
-  def base_site?
-    subdomain == 'www'
-  end
-
   def authentication_key_field
     if library_card_login?
       :library_card_number
