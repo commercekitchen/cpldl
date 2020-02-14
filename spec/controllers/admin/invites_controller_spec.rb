@@ -40,13 +40,18 @@ describe Admin::InvitesController do
   describe '#edit' do
     before do
       @invited_user = AdminInvitationService.invite(email: 'test_invite@example.com', organization: organization, inviter: admin)
+      @token = @invited_user.raw_invitation_token
       sign_out admin
     end
 
     it 'should have an ok response' do
-      token = @invited_user.raw_invitation_token
-      get :edit, params: { invitation_token: token }
+      get :edit, params: { invitation_token: @token }
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'should not show sidebar' do
+      get :edit, params: { invitation_token: @token }
+      expect(assigns(:show_sidebar)).to be_falsey
     end
   end
 
