@@ -9,7 +9,7 @@ namespace :rollbar do
   # Rails env.  So, instead just pull the value of of the yml.
 
   desc 'Set Rollbar notification variables'
-  task :set_env do
+  task set_env: :environment do
     ROLLBAR_TOKEN = YAML.load_file(File.expand_path('config/secrets.yml'))['default']['rollbar_api_key']
     set :rollbar_token, ROLLBAR_TOKEN
     set :rollbar_env, (proc { fetch :stage })
