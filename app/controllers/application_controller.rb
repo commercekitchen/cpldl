@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  after_action :verify_authorized, except: %i[index export_user_info sort]
-  after_action :verify_policy_scoped, only: %i[index export_user_info sort]
+  after_action :verify_authorized, except: %i[index export_user_info sort], unless: :ckeditor_controller?
+  after_action :verify_policy_scoped, only: %i[index export_user_info sort], unless: :ckeditor_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -188,6 +188,10 @@ class ApplicationController < ActionController::Base
   def user_not_authorized
     flash[:alert] = 'You are not authorized to perform this action.'
     redirect_to(request.referer || root_path)
+  end
+
+  def ckeditor_controller?
+    self.class.to_s.starts_with?("Ckeditor::")
   end
 
 end
