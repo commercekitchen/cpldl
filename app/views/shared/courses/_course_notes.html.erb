@@ -1,0 +1,6 @@
+<h2 class="text-color"><%= t('course_completion_page.practice_new_skills') %></h2>
+<% if @course.notes.present? %>
+  <div class="show_with_bullets"><%= @course.notes.html_safe %></div>
+<% else %>
+  <p class="note"><%= t('course_completion_page.there_are_no_notes_for_course') %></p>
+<% end %>

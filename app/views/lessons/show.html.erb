@@ -17,14 +17,12 @@
 
 <hr />
 
-<div class="row">
-  <div class="sixcol border-right">
-    <%= render partial: "playlist" %>
-  </div>
+<% content_for :left do %>
+  <%= render partial: "playlist" %>
+<% end %>
 
-  <div class="sixcol last">
-    <%= render partial: "shared/lessons/supplemental_materials", locals: { course: @course } %>
-  </div>
-</div>
+<% content_for :right do %>
+  <%= render partial: "shared/courses/supplemental_materials" %>
+<% end %>
 
 <%= hidden_field_tag :is_assessment, @lesson.is_assessment %>

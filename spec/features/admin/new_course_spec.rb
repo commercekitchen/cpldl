@@ -69,6 +69,11 @@ feature 'Admin user creates new course and lesson' do
 
   scenario 'adds supplemental materials and post-course supplemental materials' do
     fill_basic_course_info
+    attach_file 'Text copies of the course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    attach_file 'Additional Resources (post-completion)', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    click_button 'Save Course'
+    expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
+
     attach_file 'Text copies of the course', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_1.pdf')
     attach_file 'Additional Resources (post-completion)', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_Worksheet.pdf')
     click_button 'Save Course'

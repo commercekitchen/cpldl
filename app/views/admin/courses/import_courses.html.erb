@@ -2,16 +2,16 @@
 
 <h2>Import DigitalLearn Courses</h2>
 
-<div class="row">
-  <div class="sixcol">
+<section class="admin-resource-page-header">
+  <div class="description">
     <p class="emphasis no-top-margin">
       These courses are offered by DigitalLearn for you to import into your organization's courses.
     </p>
   </div>
-  <div class="sixcol last left-or-right">
+  <div class="action">
     <%= link_to "Add a New Course", new_admin_course_path, class: "btn button-color" %>
   </div>
-</div>
+</section>
 
 <% (@category_ids || []).each do |category_id| %>
   <%= render partial: "admin/courses/sortable_import_list", locals: { courses: @importable_courses.with_category(category_id), category: Category.find_by_id(category_id) } %>

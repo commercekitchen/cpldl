@@ -8,23 +8,23 @@
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <% if @library_card_login %>
-    <div class="form-group">
+    <div class="form-row">
       <%= label_tag "login_library_card_number", "Library Card Number", class: "screen-reader-text" %>
       <%= f.text_field :login, autofocus: true, id: "login_library_card_number", placeholder: "#{t('login_signup.library_card_number')} *" %>
     </div>
 
-    <div class="form-group">
+    <div class="form-row">
       <%= label_tag "login_password", "Library Card Pin", class: "screen-reader-text" %>
       <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
         spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.library_card_pin')} *" %>
     </div>
   <% else %>
-    <div class="form-group">
+    <div class="form-row">
       <%= label_tag "login_email", "Email", class: "screen-reader-text" %>
       <%= f.email_field :login, autofocus: true, id: "login_email", placeholder: "#{t('login_signup.email')} *" %>
     </div>
 
-    <div class="form-group">
+    <div class="form-row">
       <%= label_tag "login_password", "Password", class: "screen-reader-text" %>
       <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
         spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
@@ -32,7 +32,7 @@
   <% end %>
 
   <% if devise_mapping.rememberable? && !@library_card_login -%>
-    <div class="form-group">
+    <div class="form-row">
       <%= f.check_box :remember_me %>
       <%= f.label :remember_me, "#{t('login_signup.keep_me_logged_in')}", class: "plain" %>
       <%= check_box_tag('hide_signin_pass', '1', false, onchange: 'hide_login_password(this);') %>
@@ -40,7 +40,7 @@
     </div>
   <% end -%>
 
-  <%= f.submit "#{t('login_signup.access_courses')}", class: "button-color"%>
+  <%= f.submit "#{t('login_signup.access_courses')}", class: "btn mobile-large-full-width button-color"%>
 <% end %>
 
 <% if !@library_card_login %>

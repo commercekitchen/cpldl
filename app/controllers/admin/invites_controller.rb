@@ -2,7 +2,7 @@
 
 module Admin
   class InvitesController < Devise::InvitationsController
-    before_action :enable_sidebar
+    before_action :enable_sidebar, except: [:edit]
     before_action :skip_authorization, only: %i[edit update]
 
     def new

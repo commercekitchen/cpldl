@@ -7,18 +7,24 @@
 <p class="emphasis no-top-margin">Add a custom logo to your footer to appear next to the PLA logo. Uploaded file should be in png or jpeg format and less than 2MB in size.</p>
 
 <%= form_for @organization, url: admin_custom_footers_path, html: { multipart: true } do |f| %>
-  <fieldset>
-    <%= f.label :footer_logo_link, class: 'text-color' do %>
-      Footer Logo Link<span class="required"></span>
-    <% end %>
-    <%= f.text_field :footer_logo_link, class: "bottom-margin" %>
-  </fieldset>
-  <fieldset>
-    <%= f.label :footer_logo, class: 'text-color' do %>
-      Footer Logo<span class="required"></span>
-    <% end %>
-    <%= f.file_field :footer_logo, class: "upload-field" %>
-  </fieldset>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :footer_logo_link, class: 'text-color' do %>
+        Footer Logo Link<span class="required"></span>
+      <% end %>
+      <%= f.text_field :footer_logo_link, class: "bottom-margin" %>
+    </fieldset>
+  </div>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :footer_logo, class: 'text-color' do %>
+        Footer Logo<span class="required"></span>
+      <% end %>
+      <%= f.file_field :footer_logo, class: "upload-field" %>
+    </fieldset>
+  </div>
   
-  <%= f.submit 'Submit', class: "button-color" %>
+  <div class='form-row'>
+    <%= f.submit 'Submit', class: "button-color" %>
+  </div>
 <% end %>

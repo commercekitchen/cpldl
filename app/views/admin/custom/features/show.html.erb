@@ -11,14 +11,14 @@ By checking the box below, you indicate that all users must be signed in to acce
 </p>
 
 <%= form_for @organization, url: admin_custom_features_path do |f| %>
-  <div class="row">
-    <div class="sixcol">
-      <fieldset>
-        <%= f.check_box :login_required %>
-        <%= f.label :login_required, 'Require Login?', class: 'text-color inline-label' %>
-      </fieldset>
-    </div>
+  <div class="form-row">
+    <fieldset>
+      <%= f.check_box :login_required %>
+      <%= f.label :login_required, 'Require Login?', class: 'text-color inline-label' %>
+    </fieldset>
   </div>
 
-  <%= f.submit 'Submit', class: "button-color" %>
+  <div class="form-row">
+    <%= f.submit 'Submit', class: "button-color" %>
+  </div>
 <% end %>
