@@ -17,11 +17,9 @@
       <% end %>
     <% end %>
 
-    <% if subdomain? %>
-      <%= link_to(course_skills_path(@course.id)) do %>
-        <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
-            <%= t('course_completion_page.practice_skills') %>
-        <% end %>
+    <%= link_to(course_skills_path(@course.id)) do %>
+      <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
+          <%= t('course_completion_page.practice_skills') %>
       <% end %>
     <% end %>
   </div>
