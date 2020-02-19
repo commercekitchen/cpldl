@@ -81,6 +81,12 @@ describe ContactsController do
       expect(response).to render_template :new
     end
 
+    it 'handles long emails gracefulle' do
+      long_email = "tom+long_email_address@ckdtech.co"
+      post :create, params: { contact: valid_attributes.merge(email: long_email) }
+      expect(response).to render_template :new
+    end
+
   end
 
 end
