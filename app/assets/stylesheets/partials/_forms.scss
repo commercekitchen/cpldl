@@ -247,8 +247,8 @@ select {
 
 .form-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  margin-bottom: 1em;
 
   &.left {
     justify-content: flex-start;
@@ -260,6 +260,14 @@ select {
 
   .secondary-action {
     margin-left: 2em;
+  }
+
+  input[type="submit"] {
+    margin-bottom: 1em;
+
+    @media (max-width: $breakpoint-mobile-large) {
+      width: 100%;
+    }
   }
 }
 

@@ -1,0 +1,10 @@
+<fieldset class='attachment-upload-fields'>
+  <div class="removable">
+    <%= attachment_form.hidden_field :doc_type, value: attachment_type %>
+    <%= attachment_form.file_field :document, class: "upload-field" %>
+    <%= attachment_form.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this attachment" %>
+  </div>
+  <% if removable %>
+    <%= link_to_remove_child "remove field" %>
+  <% end %>
+</fieldset>

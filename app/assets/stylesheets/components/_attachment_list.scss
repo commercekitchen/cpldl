@@ -1,0 +1,23 @@
+.attachment-list {
+  margin-bottom: 1em;
+
+  .attachment {
+    font-size: 11px;
+    color: $dark-grey;
+    margin-bottom: 0.5em;
+
+    display: grid;
+    grid-template-columns: 40% 25%;
+    grid-gap: 1em;
+
+    @media (max-width: $breakpoint-mobile-xlarge) {
+      grid-template-columns: 75% 25%;
+    }
+  }
+
+  .attachment-filename {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

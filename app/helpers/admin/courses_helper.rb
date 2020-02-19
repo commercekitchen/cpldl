@@ -2,17 +2,17 @@
 
 module Admin
   module CoursesHelper
-    def link_to_add_fields(name, form, association, prefix)
+    def link_to_add_fields(name, form, association, attachment_type)
 
       new_object = form.object.class.reflect_on_association(association).klass.new
 
       fields = form.fields_for(association, new_object, child_index: "new_#{association}") do |builder|
-        render('admin/courses/forms/' + prefix + '_' + association.to_s.singularize + '_fields', f: builder)
+        render('admin/courses/forms/attachment_upload', attachment_form: builder, attachment_type: attachment_type, removable: true)
       end
 
       link_to(name, "javascript:add_fields('#{association}',
                                            '#{escape_javascript(fields)}',
-                                           '#{prefix}')", id: "add-attachment-#{prefix}")
+                                           '#{attachment_type}')", id: "add-attachment-#{attachment_type}")
     end
 
     def link_to_remove_child(name)

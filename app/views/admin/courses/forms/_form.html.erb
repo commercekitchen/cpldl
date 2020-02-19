@@ -48,7 +48,8 @@
   <%= render partial: 'admin/courses/forms/additional_resource_fields', locals: { f: f } %>
 
   <fieldset class='additional-content'>
-    <%= f.label :notes, "Add additional links or content for further learning. This content is available to users after completing the course.", class: "text-color" %>
+    <%= f.label :notes, "Content for further learning", class: "text-color" %>
+    <p><i>This content is available to users after completing the course.</i></p>
     <%= f.cktext_area :notes %>
   </fieldset>
 
@@ -58,7 +59,7 @@
     <% end %>
 
     <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
-      <div class="form-1-col">
+      <div>
         <%= b.check_box(checked: current_topics(@course, b.object)) %>
         <%= b.label class: "plain" %>
       </div>
@@ -118,27 +119,25 @@
   </fieldset>
 
   <% if top_level_domain? && !@course.new_record? %>
-    <div class="form-row">
-      <fieldset>
-        <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
-        <% if Organization.using_course(@course.id).exists? %>
-          <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
-            <div class="form-1-col">
-              <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
-              <%= b.label class: "plain" %>
-            </div>
-          <% end %>
-        <% else %>
-          <p><i>There's no subsite imported this course yet.</i></p>
+    <fieldset class='propagation'>
+      <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
+      <% if Organization.using_course(@course.id).exists? %>
+        <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
+          <div>
+            <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
+            <%= b.label class: "plain" %>
+          </div>
         <% end %>
-      </fieldset>
-    </div>
+      <% else %>
+        <p><i>There's no subsite imported this course yet.</i></p>
+      <% end %>
+    </fieldset>
   <% end %>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 
-  <div class="form-actions spread">
+  <div class="form-actions spread actions">
     <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "button-color" %>
     <% if @course.lessons.blank? %>
       <%= f.submit "Save Course and Add Lessons", class: "button-color" %>
