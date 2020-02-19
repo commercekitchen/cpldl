@@ -55,6 +55,7 @@ module Admin
           redirect_to new_admin_course_lesson_path(@course), notice: 'Course was successfully created. Now add some lessons.'
         end
       else
+        @course.errors.delete(:"attachments.document_content_type")
         @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
         render :new
@@ -100,6 +101,7 @@ module Admin
           redirect_to new_admin_course_lesson_path(@course), notice: success_message
         end
       else
+        @course.errors.delete(:"attachments.document_content_type")
         @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
 

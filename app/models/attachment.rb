@@ -12,7 +12,7 @@ class Attachment < ApplicationRecord
                                                               'application/vnd.openxmlformats-officedocument.presentationml.presentation',
                                                               'application/msword',
                                                               'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-                                                    message: ', Only PDF, Word, PowerPoint, or Excel files are allowed.'
+                                                    message: 'is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.'
 
   validates :doc_type, allow_blank: true,
                          inclusion: { in: %w[supplemental post-course],
