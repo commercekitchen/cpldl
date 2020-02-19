@@ -17,9 +17,11 @@
       <% end %>
     <% end %>
 
-    <%= link_to(course_skills_path(@course.id)) do %>
-      <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
-          <%= t('course_completion_page.practice_skills') %>
+    <% if @course.notes.present? || !@course.post_course_attachments.empty? %>
+      <%= link_to(course_skills_path(@course)) do %>
+        <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
+            <%= t('course_completion_page.practice_skills') %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
@@ -42,13 +44,3 @@
   </div>
   <%= link_to "#{t('course_completion_page.restart_this_course')}", course_path(@course), class: "white" %>
 </div>
-
-<hr />
-
-<% content_for :left do %>
-  <%= render "shared/courses/course_notes" %>
-<% end %>
-
-<% content_for :right do %>
-  <%= render "shared/courses/supplemental_materials" %>
-<% end %>
