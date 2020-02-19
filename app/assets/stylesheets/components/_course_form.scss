@@ -1,0 +1,83 @@
+.course-form {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-gap: 2em;
+  grid-template-areas:
+    "title title"
+    "author author"
+    "summary summary"
+    "description description"
+    "text_copies text_copies"
+    "resources resources"
+    "additional_content additional_content"
+    "topics categories"
+    "language format"
+    "course_level pub_status"
+    "access_level ."
+    "seo_title seo_title"
+    "seo_meta seo_meta";
+
+  .title {
+    grid-area: title;
+  }
+
+  .author {
+    grid-area: author;
+  }
+
+  .summary {
+    grid-area: summary;
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .text-copies {
+    grid-area: text_copies;
+  }
+
+  .resources {
+    grid-area: resources;
+  }
+
+  .additional-content {
+    grid-area: additional_content;
+  }
+
+  .topics {
+    grid-area: topics;
+  }
+
+  .categories {
+    grid-area: categories;
+  }
+
+  .language {
+    grid-area: language;
+  }
+
+  .format {
+    grid-area: format;
+  }
+
+  .course-level {
+    grid-area: course_level;
+  }
+
+  .pub-status {
+    grid-area: pub_status;
+  }
+
+  .access-level {
+    grid-area: access_level;
+  }
+
+  .seo-title {
+    grid-area: seo_title;
+  }
+
+  .seo-meta {
+    grid-area: seo_meta;
+  }
+}

@@ -1,0 +1,23 @@
+<div class='form-row resources'>
+  <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+    <fieldset>
+      <%= a.label :document, "Additional Resources", class: "text-color" %>
+      <i>Upload any supplemental materials for further learning. These files are available to users after completing the course.</i>
+    </fieldset>
+    <fieldset>
+      <% @course.attachments.where(doc_type: "post-course").each do |a| %>
+        <p>
+          <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+        </p>
+      <% end %>
+    </fieldset>
+    <fieldset>
+      <%= a.hidden_field :doc_type, value: "post-course" %>
+      <%= a.hidden_field :_destroy, class: "removable" %>
+      <%= a.file_field :document, class: "upload-field" %>
+      <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this attachment" %>
+    </fieldset>
+    <br />
+  <% end %>
+  <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>
+</div>

@@ -1,0 +1,26 @@
+<div class='form-row inline flex-start text-copies'>
+  <div class='inline-item'>
+    <%= f.fields_for :attachments, @course.attachments.build do |a| %>
+      <fieldset>
+        <%= a.label :document, "Text Copies of Course", class: "text-color" %>
+        <p><i>Upload text copies of the course to allow users to download content and view offline or follow along with the online course.</i></p>
+      </fieldset>
+      <fieldset>
+        <%= a.hidden_field :_destroy, class: "removable" %>
+        <%= a.hidden_field :doc_type, value: "supplemental" %>
+        <%= a.file_field :document, class: "upload-field" %>
+        <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this attachment" %>
+      </fieldset>
+      <br />
+    <% end %>
+    <%= link_to_add_fields "Add Attachment", f , :attachments, "sup" %>
+  </div>
+
+  <fieldset class="inline-item">
+    <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
+      <p>
+        <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+      </p>
+    <% end %>
+  </fieldset>
+</div>
