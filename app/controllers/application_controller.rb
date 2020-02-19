@@ -191,7 +191,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ckeditor_controller?
-    self.class.to_s.starts_with?("Ckeditor::")
+    self.class.to_s.starts_with?('Ckeditor::')
   end
 
 end
