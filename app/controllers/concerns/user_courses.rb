@@ -7,7 +7,6 @@ module UserCourses
     courses = Course.includes(:lessons)
                     .where(pub_status: 'P', language_id: current_language_id, organization: current_organization)
     courses = courses.everyone unless user_signed_in?
-    courses = courses.where(display_on_dl: true) if top_level_domain?
     courses
   end
 
