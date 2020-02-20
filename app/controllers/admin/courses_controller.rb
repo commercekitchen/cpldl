@@ -162,8 +162,6 @@ module Admin
         :pub_date,
         :format,
         :access_level,
-        :subsite_course,
-        :display_on_dl,
         :subdomain,
         :organization_id,
         :category_id,

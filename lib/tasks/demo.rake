@@ -17,9 +17,7 @@ namespace :demo do
                                   level: cpl_course.level,
                                   notes: cpl_course.notes,
                                   format: cpl_course.format,
-                                  subsite_course: true,
-                                  pub_date: cpl_course.pub_status == 'P' ? Time.zone.today : nil,
-                                  display_on_dl: false)
+                                  pub_date: cpl_course.pub_status == 'P' ? Time.zone.today : nil)
 
       @new_course.organization = Organization.find(3)
 
