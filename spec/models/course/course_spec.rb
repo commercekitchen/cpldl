@@ -5,6 +5,18 @@ require 'rails_helper'
 describe Course do
   let(:course) { FactoryBot.create(:course) }
 
+  describe 'scopes' do
+    describe '#pla' do
+      let(:pla) { FactoryBot.create(:default_organization) }
+      let!(:pla_course) { FactoryBot.create(:course, organization: pla) }
+      let!(:non_pla_course) { FactoryBot.create(:course) }
+
+      it 'should return www courses only' do
+        expect(Course.pla).to contain_exactly(pla_course)
+      end
+    end
+  end
+
   describe '#topics_list' do
     let!(:topic) { FactoryBot.create(:topic, title: 'Existing Topic') }
 

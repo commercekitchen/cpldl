@@ -23,7 +23,7 @@ module Admin
 
     def import_courses
       authorize current_organization, :import_courses?
-      @all_subsite_ids = Course.where(pub_status: 'P', subsite_course: true).pluck(:id)
+      @all_subsite_ids = Course.pla.where(pub_status: 'P').pluck(:id)
       @previously_imported_ids = current_organization.courses.where.not(pub_status: 'A').pluck(:parent_id).compact
       @unadded_course_ids = @all_subsite_ids - @previously_imported_ids
       @importable_courses = Course.where(id: @unadded_course_ids)
