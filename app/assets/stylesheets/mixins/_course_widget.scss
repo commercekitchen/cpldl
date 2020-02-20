@@ -13,12 +13,6 @@
     border-top-left-radius: 20px;
     float: left;
 
-    @media (min-width: $breakpoint-tablet) {
-      &:nth-child(3n) {
-        margin-right: 0;
-      }
-    }
-
     @media (max-width: $breakpoint-tablet) {
       margin-right: 2em;
     }
