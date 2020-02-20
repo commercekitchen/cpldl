@@ -23,14 +23,20 @@ feature 'User visits course complete page' do
     scenario 'sees practice skills button if notes exist' do
       course.update(notes: '<strong>Post-Course completion notes...</strong>')
       visit course_completion_path(course)
-      expect(page).to have_link('Use My Skills Now')
+
+      click_link 'Use My Skills Now'
+      expect(current_path).to eq(course_skills_path(course))
+      expect(page).to have_content('Post-Course completion notes...')
     end
 
     scenario 'sees practice skills button if post course attachments exist' do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
       course.attachments.create(document: file, doc_type: 'post-course')
       visit course_completion_path(course)
-      expect(page).to have_link('Use My Skills Now')
+
+      click_link 'Use My Skills Now'
+      expect(current_path).to eq(course_skills_path(course))
+      expect(page).to have_content('testfile.pdf')
     end
 
     scenario 'can view skills page' do
@@ -57,6 +63,9 @@ feature 'User visits course complete page' do
       course.notes = '<strong>Post-Course completion notes...</strong>'
       course.save
       visit course_completion_path(course)
+
+      click_link 'Use My Skills Now'
+      expect(current_path).to eq(course_skills_path(course))
       expect(page).to have_content('Practice and use your new skills! (click each link below)')
       expect(page).to have_content('Post-Course completion notes...')
       expect(page).to_not have_content('<strong>')
@@ -66,7 +75,9 @@ feature 'User visits course complete page' do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
       course.attachments.create(document: file, doc_type: 'post-course')
       visit course_completion_path(course)
-      # expect(page).to have_content("Click here for a text copy of the course.")
+
+      click_link 'Use My Skills Now'
+      expect(current_path).to eq(course_skills_path(course))
       expect(page).to have_content('testfile.pdf')
     end
   end
