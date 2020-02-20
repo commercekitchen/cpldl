@@ -378,7 +378,6 @@ CREATE TABLE public.courses (
     course_order integer,
     pub_date timestamp without time zone,
     format character varying,
-    subsite_course boolean DEFAULT false,
     parent_id integer,
     category_id integer,
     organization_id integer,
@@ -1834,6 +1833,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191119190714'),
 ('20191211193827'),
 ('20200120023743'),
-('20200220181809');
+('20200220181809'),
+('20200220184942');
 
 
