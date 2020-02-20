@@ -65,8 +65,8 @@ feature 'Admin user updates course' do
 
   scenario 'attempts to upload attachments to course' do
     visit edit_admin_course_path(@course)
-    attach_file 'Text copies of the course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-    attach_file 'Additional Resources (post-completion)', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     click_button 'Save Course'
     expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
   end
