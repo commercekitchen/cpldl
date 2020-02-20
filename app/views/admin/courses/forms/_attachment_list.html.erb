@@ -1,0 +1,12 @@
+<div class='attachment-list'>
+  <% @course.attachments.where(doc_type: type).each do |a| %>
+    <div class='attachment'>
+      <div class='attachment-filename'>
+        <%= a.document_file_name %>
+      </div>
+      <div class='attachment-delete'>
+        <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+      </div>
+    </div>
+  <% end %>
+</div>
