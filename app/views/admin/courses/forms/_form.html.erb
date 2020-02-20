@@ -2,7 +2,7 @@
 
 <h1>Course Information</h1>
 
-<%= form_for([:admin, @course], html: { multipart: true } ) do |f| %>
+<%= form_for([:admin, @course], html: { multipart: true, class: 'course-form' } ) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -14,143 +14,74 @@
     </div>
   <% end %>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :title, class: "text-color" do %>
-        Title<span class="required"></span>
-      <% end %>
-      <%= f.text_field :title, maxlength: 50 %>
-      <div class="character-limit note left-or-right">&nbsp;</div>
-    </fieldset>
-  </div>
+  <fieldset class='title'>
+    <%= f.label :title, class: "text-color" do %>
+      Title<span class="required"></span>
+    <% end %>
+    <%= f.text_field :title, maxlength: 50 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :contributor, class: "text-color" do %>
-        Contributor<span class="required"></span>
-      <% end %>
-      <%= f.text_field :contributor, class: "bottom-margin" %>
-    </fieldset>
-  </div>
+  <fieldset class='author'>
+    <%= f.label :contributor, class: "text-color" do %>
+      Contributor<span class="required"></span>
+    <% end %>
+    <%= f.text_field :contributor %>
+  </fieldset>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :summary, class: "text-color" do %>
-        Course Summary<span class="required"></span>
-      <% end %>
-      <%= f.text_field :summary, maxlength: 74 %>
-      <div class="character-limit note left-or-right">&nbsp;</div>
-    </fieldset>
-  </div>
+  <fieldset class='summary'>
+    <%= f.label :summary, class: "text-color" do %>
+      Course Summary<span class="required"></span>
+    <% end %>
+    <%= f.text_field :summary, maxlength: 74 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :description, class: "text-color" do %>
-        Course Description<span class="required"></span>
-      <% end %>
-      <%= f.cktext_area :description %>
-    </fieldset>
-  </div>
+  <fieldset class='description'>
+    <%= f.label :description, class: "text-color" do %>
+      Course Description<span class="required"></span>
+    <% end %>
+    <%= f.cktext_area :description %>
+  </fieldset>
 
-  <div class='form-row inline flex-start'>
-    <div class='inline-item'>
-      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
-        <fieldset>
-          <%= a.label :document, "Text copies of the course", class: "text-color" %>
-          <p><i>Upload any supporting documentation or supplemental materials needed during the course.</i></p>
-        </fieldset>
-        <fieldset>
-          <%= a.hidden_field :_destroy, class: "removable" %>
-          <%= a.hidden_field :doc_type, value: "supplemental" %>
-          <%= a.file_field :document, class: "upload-field" %>
-          <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this attachment..." %>
-        </fieldset>
-        <br />
-      <% end %>
-      <%= link_to_add_fields "Add Supplemental Attachment", f , :attachments, "sup" %>
-    </div>
+  <%= render partial: 'admin/courses/forms/text_copy_fields', locals: { f: f } %>
+  <%= render partial: 'admin/courses/forms/additional_resource_fields', locals: { f: f } %>
 
-    <div class='inline-item'>
-      <%= f.fields_for :attachments, @course.attachments.build do |a| %>
-        <fieldset>
-          <%= a.label :document, "Additional Resources (post-completion)", class: "text-color" %>
-          <p><i>Upload any supporting documentation or supplemental materials needed after the course.</i></p>
-        </fieldset>
-        <fieldset>
-          <%= a.hidden_field :doc_type, value: "post-course" %>
-          <%= a.hidden_field :_destroy, class: "removable" %>
-          <%= a.file_field :document, class: "upload-field" %>
-          <%= a.text_field :file_description, class: "text-field", placeholder: "(optional) Add a description for this resource..." %>
-        </fieldset>
-        <br />
-      <% end %>
-      <%= link_to_add_fields "Add Post Course Attachment", f , :attachments, "post" %>
-    </div>
-  </div>
+  <fieldset class='additional-content'>
+    <%= f.label :notes, "Content for further learning", class: "text-color" %>
+    <p><i>This content is available to users after completing the course.</i></p>
+    <%= f.cktext_area :notes %>
+  </fieldset>
 
-  <% if @course.attachments.exists? %>
-    <div class="form-row inline flex-start">
-      <fieldset class="inline-item">
-        <%= f.label :document, "Current Supplemental Attachments", class: "text-color" %>
-        <ul>
-          <% @course.attachments.where(doc_type: "supplemental").each do |a| %>
-            <li>
-            <%= a.document_file_name %> <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
-            </li>
-          <% end %>
-        </ul>
-      </fieldset>
-      <fieldset class="inline-item">
-        <%= f.label :document, "Current Post-Course Attachments", class: "text-color" %>
-        <ul>
-          <% @course.attachments.where(doc_type: "post-course").each do |a| %>
-            <li>
-              <%= a.document_file_name %> -- <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
-            </li>
-          <% end %>
-        </ul>
-      </fieldset>
-    </div>
-  <% end %>
+  <fieldset class='topics'>
+    <%= f.label :topics, class: "text-color" do %>
+      Course Topics<span class="required"></span>
+    <% end %>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :notes, "Info to help learners practice and use their new skills (post completion)", class: "text-color" %>
-      <%= f.cktext_area :notes %>
-    </fieldset>
-  </div>
-
-  <div class="form-row inline">
-    <fieldset class='inline-item'>
-      <%= f.label :topics, class: "text-color" do %>
-        Course Topics<span class="required"></span>
-      <% end %>
-
-      <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
-        <div class="form-1-col">
-          <%= b.check_box(checked: current_topics(@course, b.object)) %>
-          <%= b.label class: "plain" %>
-        </div>
-      <% end %>
-
+    <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
       <div>
-        <%= f.check_box :other_topic %>
-        <%= f.label :other_topic, "Other Topic", class: "plain" %>
-        <%= f.text_field :other_topic_text, placeholder: "(Enter to create new topic)", class: "topic-box" %>
+        <%= b.check_box(checked: current_topics(@course, b.object)) %>
+        <%= b.label class: "plain" %>
       </div>
-    </fieldset>
-    <fieldset class='inline-item'>
+    <% end %>
+
+    <div>
+      <%= f.check_box :other_topic %>
+      <%= f.label :other_topic, "Other Topic", class: "plain" %>
+      <%= f.text_field :other_topic_text, placeholder: "(Enter to create new topic)", class: "topic-box" %>
+    </div>
+  </fieldset>
+  
+  <div class='categories'>
+    <fieldset>
       <%= f.label :category_id, class: "text-color" do %>
         Course Category
       <% end %>
       <%= f.select(:category_id, options_for_select(@category_options, @course.category_id || ("0" if @custom)),{ include_blank: "Uncategorized" } ) %>
     </fieldset>
-    <fieldset class='inline-item'>
+    <fieldset>
       <%= f.fields_for :category_attributes do |c| %>
         <%= c.hidden_field :organization_id, value: current_organization.id %>
-        <%= c.label :name do %>
-          &nbsp;
-        <% end %>
         <div class=<%="#{'field_with_errors' if f.object.category.present? && f.object.category.errors[:name].present?}"%>>
           <%= c.text_field :name, value: (@category.name if @category.present?) || (@custom_category), placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
         </div>
@@ -158,63 +89,55 @@
     </fieldset>
   </div>
 
-  <div class="form-row inline">
-    <fieldset class='inline-item'>
-      <%= f.label :language_id, class: "text-color" do %>
-        Course Language<span class="required"></span>
-      <% end %>
-      <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." } ) %>
-    </fieldset>
+  <fieldset class='language'>
+    <%= f.label :language_id, class: "text-color" do %>
+      Course Language<span class="required"></span>
+    <% end %>
+    <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." } ) %>
+  </fieldset>
 
-    <fieldset class='inline-item'>
-      <%= f.label :format, class: "text-color" do %>
-        Course Format<span class="required"></span>
-      <% end %>
-      <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." } ) %>
-    </fieldset>
-  </div>
+  <fieldset class='format'>
+    <%= f.label :format, class: "text-color" do %>
+      Course Format<span class="required"></span>
+    <% end %>
+    <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." } ) %>
+  </fieldset>
 
   <%= render("admin/courses/forms/level_pub_section", f: f) %>
   <%= render("admin/courses/forms/access_level", f: f) %>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label "SEO page title", class: "text-color" %>
-      <%= f.text_field :seo_page_title, maxlength: 90 %>
-      <div class="character-limit note left-or-right">&nbsp;</div>
-    </fieldset>
-  </div>
+  <fieldset class='seo-title'>
+    <%= f.label "SEO page title", class: "text-color" %>
+    <%= f.text_field :seo_page_title, maxlength: 90 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
 
-  <div class='form-row'>
-    <fieldset>
-      <%= f.label :meta_desc, class: "text-color" %>
-      <%= f.text_field :meta_desc, maxlength: 156 %>
-      <div class="character-limit note left-or-right">&nbsp;</div>
-    </fieldset>
-  </div>
+  <fieldset class='seo-meta'>
+    <%= f.label :meta_desc, class: "text-color" %>
+    <%= f.text_field :meta_desc, maxlength: 156 %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
 
   <% if top_level_domain? && !@course.new_record? %>
-    <div class="form-row">
-      <fieldset>
-        <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
-        <% if Organization.using_course(@course.id).exists? %>
-          <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
-            <div class="form-1-col">
-              <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
-              <%= b.label class: "plain" %>
-            </div>
-          <% end %>
-        <% else %>
-          <p><i>There's no subsite imported this course yet.</i></p>
+    <fieldset class='propagation'>
+      <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
+      <% if Organization.using_course(@course.id).exists? %>
+        <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
+          <div>
+            <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
+            <%= b.label class: "plain" %>
+          </div>
         <% end %>
-      </fieldset>
-    </div>
+      <% else %>
+        <p><i>There's no subsite imported this course yet.</i></p>
+      <% end %>
+    </fieldset>
   <% end %>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 
-  <div class="form-actions spread">
+  <div class="form-actions spread actions">
     <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "button-color" %>
     <% if @course.lessons.blank? %>
       <%= f.submit "Save Course and Add Lessons", class: "button-color" %>

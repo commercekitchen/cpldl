@@ -4,18 +4,13 @@ pre {
   font-size: 11px;
 }
 
-div {
-  &.field, &.actions {
-    margin-bottom: 10px;
-  }
-}
-
 .field_with_errors {
   input[type="text"],
   input[type="email"],
   input[type="password"],
   input[type="url"],
-  textarea, select {
+  textarea,
+  select {
     background-color: $error-color;
   }
   textarea {
