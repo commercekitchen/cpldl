@@ -129,6 +129,8 @@ Rails.application.routes.draw do
     invitations: 'admin/invites',
     sessions: 'sessions',
     passwords: 'passwords'
+  }, path_names: {
+    sign_up: ''
   }
 
   devise_scope :user do
