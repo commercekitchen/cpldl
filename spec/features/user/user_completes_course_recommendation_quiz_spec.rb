@@ -3,20 +3,19 @@
 require 'feature_helper'
 
 feature 'User completes course recommendations quiz' do
+  let(:user) { FactoryBot.create(:user) }
+  let(:org) { user.organization }
+
+  let(:core_topic) { FactoryBot.create(:topic, title: 'Core') }
+  let(:topic) { FactoryBot.create(:topic, title: 'Government') }
+
+  let(:desktop_course) { FactoryBot.create(:course, language: @english, format: 'D', level: 'Intermediate', topics: [core_topic], organization: org) }
+  let(:mobile_course) { FactoryBot.create(:course, language: @english, format: 'M', level: 'Intermediate', topics: [core_topic], organization: org) }
+  let(:topic_course) { FactoryBot.create(:course, language: @english, topics: [topic]) }
 
   before(:each) do
-    @org = create(:organization)
-    @user = create(:user, organization: @org)
-
-    @core_topic = create(:topic, title: 'Core')
-    @topic = create(:topic, title: 'Government')
-
-    @desktop_course = create(:course, language: @english, format: 'D', level: 'Intermediate', topics: [@core_topic], organization: @org)
-    @mobile_course = create(:course, language: @english, format: 'M', level: 'Intermediate', topics: [@core_topic], organization: @org)
-    @topic_course = create(:course, language: @english, topics: [@topic])
-
-    switch_to_subdomain(@org.subdomain)
-    login_as(@user)
+    switch_to_subdomain(org.subdomain)
+    login_as(user)
   end
 
   scenario 'user completes course recommendations quiz' do
