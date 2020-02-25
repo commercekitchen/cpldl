@@ -192,11 +192,35 @@ module Admin
     end
 
     def attributes_to_change
-      course_params.delete_if { |k, _| !@course.previous_changes.keys.include?(k.to_s) }
+      @attributes_to_change ||= course_params.delete_if { |k, _| !@course.previous_changes.keys.include?(k.to_s) }
     end
 
     def propagate_course_changes
-      Course.copied_from_course(@course).update(attributes_to_change.to_h)
+      Course.copied_from_course(@course).each do |copied_course|
+        new_course_attributes = attributes_to_change.to_h
+
+        if new_course_attributes.keys.include?('category_id')
+          new_category_id = subsite_category_id(copied_course, new_course_attributes['category_id'])
+          new_course_attributes.merge!(category_id: new_category_id)
+        end
+
+        copied_course.update(new_course_attributes)
+      end
+    end
+
+    def subsite_category_id(course, old_category_id)
+      old_category = Category.find(old_category_id)
+      organization = course.organization
+
+      category_id = nil
+
+      organization.categories.each do |org_category|
+        if org_category.name.downcase == old_category.name.downcase
+          category_id = org_category.id
+        end
+      end
+
+      category_id || organization.categories.create(name: old_category.name).id
     end
   end
 end

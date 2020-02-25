@@ -204,7 +204,7 @@ describe Admin::CoursesController do
   describe 'POST #update' do
     context 'with valid params' do
       let(:course1_attributes) do
-        course1.attributes.merge(access_level: 'everyone')
+        course1.attributes.merge(access_level: 'everyone', category_id: category2.id)
       end
 
       it 'updates an existing Course' do
@@ -252,6 +252,18 @@ describe Admin::CoursesController do
         it 'displays propagation success message' do
           patch :update, params: update_params
           expect(flash[:notice]).to eq('Course was successfully updated. Changes propagated to courses for 1 subsite.')
+        end
+
+        it 'creates a new category on org2' do
+          expect do
+            patch :update, params: update_params
+          end.to change { org2.categories.count }.by(1)
+        end
+
+        it 'does not assign course to main site category' do
+          expect do
+            patch :update, params: update_params
+          end.to_not(change { category2.courses.count })
         end
       end
     end
