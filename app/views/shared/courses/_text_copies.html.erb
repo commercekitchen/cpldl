@@ -6,7 +6,9 @@
       <li class="attachment-download" data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'>
         <i class="icon-download"></i>
         <%= a.document_file_name %>
-        <small class="note file-description"><%= a.file_description %></small>
+        <% if a.file_description.present? %>
+          <small class="note file-description"><%= a.file_description %></small>
+        <% end %>
       </li>
     <% end %>
   <% end %>

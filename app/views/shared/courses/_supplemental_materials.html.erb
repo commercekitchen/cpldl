@@ -6,7 +6,9 @@
       <li class="attachment-download">
         <i class="icon-download"></i>
         <%= a.document_file_name %>
-        <small class="note file-description"><%= a.file_description %></small>
+        <% if a.file_description.present? %>
+          <small class="note file-description"><%= a.file_description %></small>
+        <% end %>
       </li>
     <% end %>
   <% end %>
