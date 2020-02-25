@@ -6,7 +6,7 @@
     <div class='fields'>
       <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'post-course' } %>
       <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'post-course', removable: false } %>
-      <%= link_to_add_fields "Add Post Course Attachment", f, :attachments, "post-course" %>
+      <%= link_to_add_fields "Add Attachment", f, :attachments, "post-course" %>
     </div>
   <% end %>
 </div>
