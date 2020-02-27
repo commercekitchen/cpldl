@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :program do
-    program_name { Faker::App.name }
+    program_name { Faker::Lorem.words(number: 4).join(' ') }
     location_required { false }
     parent_type { Program.parent_types['seniors'] }
     organization { create(:organization, :accepts_programs) }

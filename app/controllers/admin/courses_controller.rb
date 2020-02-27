@@ -33,11 +33,7 @@ module Admin
     end
 
     def create
-      @course = if course_params[:category_id].present? && course_params[:category_id] == '0'
-                  Course.new(course_params)
-                else
-                  Course.new(course_params.except(:category_attributes))
-                end
+      @course = current_organization.courses.new(new_course_params)
 
       authorize @course
 
@@ -162,8 +158,6 @@ module Admin
         :pub_date,
         :format,
         :access_level,
-        :subdomain,
-        :organization_id,
         :category_id,
         propagation_org_ids: [],
         category_attributes: %i[name organization_id],
@@ -188,39 +182,18 @@ module Admin
     end
 
     def propagate_changes?
-      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_change.to_h.any?
+      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_propagate.any?
     end
 
-    def attributes_to_change
-      @attributes_to_change ||= course_params.delete_if { |k, _| !@course.previous_changes.keys.include?(k.to_s) }
+    def attributes_to_propagate
+      category_name = @course.reload.category.name
+      course_params.except(:category_id, :category_attributes, :propagation_org_ids).merge(category_name: category_name).to_h
     end
 
     def propagate_course_changes
-      Course.copied_from_course(@course).each do |copied_course|
-        new_course_attributes = attributes_to_change.to_h
-
-        if new_course_attributes.keys.include?('category_id')
-          new_category_id = subsite_category_id(copied_course, new_course_attributes['category_id'])
-          new_course_attributes.merge!(category_id: new_category_id)
-        end
-
-        copied_course.update(new_course_attributes)
+      Course.copied_from_course(@course).each do |course|
+        course.update(attributes_to_propagate)
       end
-    end
-
-    def subsite_category_id(course, old_category_id)
-      old_category = Category.find(old_category_id)
-      organization = course.organization
-
-      category_id = nil
-
-      organization.categories.each do |org_category|
-        if org_category.name.downcase == old_category.name.downcase
-          category_id = org_category.id
-        end
-      end
-
-      category_id || organization.categories.create(name: old_category.name).id
     end
   end
 end

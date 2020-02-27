@@ -4,6 +4,8 @@ class Course < ApplicationRecord
   extend FriendlyId
   friendly_id :slug_candidates, use: %i[slugged history]
 
+  attr_accessor :category_name
+
   def slug_candidates
     [
       :title,
@@ -69,6 +71,8 @@ class Course < ApplicationRecord
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
   scope :published, -> { where(pub_status: 'P') }
+
+  before_save :find_or_create_category
 
   def propagation_org_ids
     @propagation_org_ids ||= []
@@ -140,5 +144,12 @@ class Course < ApplicationRecord
 
   def published?
     pub_status == 'P'
+  end
+
+  def find_or_create_category
+    return true unless category_name.present?
+
+    existing_category = self.organization.categories.where('lower(name) = ?', category_name.downcase).first
+    self.category = existing_category || self.organization.categories.find_or_create_by(name: category_name)
   end
 end

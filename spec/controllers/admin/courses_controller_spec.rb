@@ -240,7 +240,7 @@ describe Admin::CoursesController do
 
         before do
           course2.update(organization: org2, parent_id: course1.id)
-          course1.propagation_org_ids = [org2.id]
+          course1.update(propagation_org_ids: [org2])
         end
 
         it 'propagates changes to selected courses' do
@@ -264,6 +264,28 @@ describe Admin::CoursesController do
           expect do
             patch :update, params: update_params
           end.to_not(change { category2.courses.count })
+        end
+
+        describe 'new category' do
+          let(:new_category_params) do
+            { id: course1.to_param,
+              course: { category_id: '0',
+                        category_attributes: { name: 'New Category', organization_id: org.id },
+                        propagation_org_ids: [org2.id] },
+              commit: 'Save Course' }
+          end
+
+          it 'should create a new category in originating org' do
+            expect do
+              patch :update, params: new_category_params
+            end.to change { org.categories.count }.by(1)
+          end
+
+          it 'should create a new category in subsite org' do
+            expect do
+              patch :update, params: new_category_params
+            end.to change { org2.categories.count }.by(1)
+          end
         end
       end
     end
