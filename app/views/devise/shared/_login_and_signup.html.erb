@@ -1,7 +1,7 @@
-<div class="sixcol extra-padding-right">
+<% content_for :left do %>
   <%= render "devise/sessions/new" %>
-</div>
+<% end %>
 
-<div class="sixcol last border-left extra-padding-left">
+<% content_for :right do %>
   <%= render "devise/registrations/new" %>
-</div>
+<% end %>

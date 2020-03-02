@@ -4,19 +4,17 @@
 
 <h2>Partners</h2>
 
-<table id="partner_list">
+<ul id="partner_list" class="admin-resource-list">
   <% @partners.each do |partner| %>
     <%= render partial: 'partner_row', locals: { partner: partner } %>
   <% end %>
-</table>
+</ul>
 
 <%= form_for [:admin, @new_partner], remote: true do |f| %>
-  <div class="row">
-    <div class="sixcol category_name_input">
+  <fieldset>
+    <div class='inline-form'>
       <%= f.text_field :name %>
-    </div>
-    <div class="sixcol">
       <%= f.submit "Add Partner" %>
     </div>
-  </div>
+  </fieldset>
 <% end %>

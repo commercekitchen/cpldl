@@ -1,37 +1,47 @@
 $(document).ready(function() {
-
   // If the seo title is empty, prepopulate with title value.
   $("body").on("blur", "#course_title", function() {
-    if($("#course_seo_page_title").val().trim() === "") {
+    if (
+      $("#course_seo_page_title")
+        .val()
+        .trim() === ""
+    ) {
       $("#course_seo_page_title").val($("#course_title").val());
     }
   });
 
-  $(".no_drag_link").on("mousedown", function(e){
+  $(".no_drag_link").on("mousedown", function(e) {
     $(this).trigger("mouseup");
     return false;
   });
 
   // If the user enters text in the topics textbox, mark the checkbox too.
   $("body").on("change", "#course_other_topic_text", function() {
-    if($(this).val().trim() !== "") {
+    if (
+      $(this)
+        .val()
+        .trim() !== ""
+    ) {
       $("#course_other_topic").prop("checked", true);
     }
   });
 
-  $(".course_pub").on("change", function(){ //listen for a change on the given selector(id)
+  $(".course_pub").on("change", function() {
+    //listen for a change on the given selector(id)
     var courseId = $(this).data("courseId");
     var value = $(this).val();
-    if(value == "A"){
-      var r = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
+    if (value == "A") {
+      var r = confirm(
+        "Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view."
+      );
     } else {
-      var r = true
+      var r = true;
     }
 
-    if(r == true){
+    if (r == true) {
       $.ajax({
         url: "/admin/courses/" + courseId + "/update_pub_status/",
-        data: { "value": value },
+        data: { value: value },
         dataType: "json",
         type: "PATCH"
       });
@@ -40,56 +50,62 @@ $(document).ready(function() {
     }
   });
 
-
-  $("#course_pub_status").change(function(){
+  $("#course_pub_status").change(function() {
     var value = $(this).val();
-    var currentStatus = $(this).data("status")
+    var currentStatus = $(this).data("status");
 
-    if(value == "A"){
+    if (value == "A") {
+      var rconfirm = confirm(
+        "Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view."
+      );
 
-      var rconfirm = confirm("Are you sure you want to Archive this item? Archiving means it will no longer be avaliable to edit or view.");
-
-      if(rconfirm == false){
+      if (rconfirm == false) {
         $("#course_pub_status").val(currentStatus);
-        return false
+        return false;
       }
     }
   });
 
-  $("#course_category_id").change(function(){
+  $("#course_category_id").change(function() {
     var value = $(this).val();
     var $el = $("#course_category_attributes_name");
 
-    if (value == "0"){
+    if (value == "0") {
       $el.show();
     } else {
       $el
         .val("")
         .hide()
-        .parent().removeClass("field_with_errors");
+        .parent()
+        .removeClass("field_with_errors");
     }
   });
 
-  if ($("#course_category_id").val() == "0" ){
+  if ($("#course_category_id").val() == "0") {
     $("#course_category_attributes_name").show();
   }
 });
 
-  // remove attachment fields in Course form
-  $(function () {
-    $(document).delegate('.remove_child','click', function() {
-      $(this).parent().children('.removable')[0].value = 1;
-      $(this).prev().slideUp();
-      $(this).parent().slideUp();
-      $(this).slideUp();
-      return false;
-    });
-   });
+// remove attachment fields in Course form
+$(function() {
+  $(document).delegate(".remove_child", "click", function() {
+    $(this)
+      .parent()
+      .children(".removable")[0].value = 1;
+    $(this)
+      .prev()
+      .slideUp();
+    $(this)
+      .parent()
+      .slideUp();
+    $(this).slideUp();
+    return false;
+  });
+});
 
-  // add attachment fields in Course form
-  function add_fields(association, content, prefix) {
-    var new_id = new Date().getTime();
-    var regexp = new RegExp("new_" + association, "g")
-    $("#add-attachment-" + prefix).before(content.replace(regexp, new_id));
-
-  };
+// add attachment fields in Course form
+function add_fields(association, content, prefix) {
+  var new_id = new Date().getTime();
+  var regexp = new RegExp("new_" + association, "g");
+  $("#add-attachment-" + prefix).before(content.replace(regexp, new_id));
+}

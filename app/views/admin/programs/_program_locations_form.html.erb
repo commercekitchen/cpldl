@@ -1,11 +1,10 @@
-<fieldset class="extra-bottom-margin cleared-float">
-  <div class="row">
-    <div class="sixcol">
+
+<div class='form-row'>
+  <fieldset>
+    <div class='inline-form'>
       <%= f.text_field :location_name %>
-    </div>
-    <div class="sixcol">
       <%= f.submit "Add", id: "addLocation" %>
+      <%= f.hidden_field :program_id, :value => @program.id %>
     </div>
-  </div>
-  <%= f.hidden_field :program_id, :value => @program.id %>
-</fieldset>
+  </fieldset>
+</div>

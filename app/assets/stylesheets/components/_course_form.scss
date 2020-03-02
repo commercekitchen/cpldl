@@ -1,0 +1,110 @@
+.course-form {
+  display: grid;
+  grid-template-columns: minmax(0, 50%) minmax(0, 50%);
+  grid-gap: 2em;
+  grid-template-areas:
+    "title title"
+    "author author"
+    "summary summary"
+    "description description"
+    "text_copies text_copies"
+    "resources resources"
+    "additional_content additional_content"
+    "topics categories"
+    "language format"
+    "course_level pub_status"
+    "access_level ."
+    "seo_title seo_title"
+    "seo_meta seo_meta"
+    "propagation propagation"
+    "actions actions";
+
+  .title {
+    grid-area: title;
+  }
+
+  .author {
+    grid-area: author;
+  }
+
+  .summary {
+    grid-area: summary;
+  }
+
+  .description {
+    grid-area: description;
+  }
+
+  .text-copies {
+    grid-area: text_copies;
+
+    .fields {
+      margin-left: 2em;
+    }
+  }
+
+  .resources {
+    grid-area: resources;
+
+    .fields {
+      margin-left: 2em;
+    }
+  }
+
+  .additional-content {
+    grid-area: additional_content;
+  }
+
+  .topics {
+    grid-area: topics;
+  }
+
+  .categories {
+    grid-area: categories;
+  }
+
+  .language {
+    grid-area: language;
+  }
+
+  .format {
+    grid-area: format;
+  }
+
+  .course-level {
+    grid-area: course_level;
+  }
+
+  .pub-status {
+    grid-area: pub_status;
+  }
+
+  .access-level {
+    grid-area: access_level;
+  }
+
+  .seo-title {
+    grid-area: seo_title;
+  }
+
+  .seo-meta {
+    grid-area: seo_meta;
+  }
+
+  .propagation {
+    grid-area: propagation;
+  }
+
+  .actions {
+    grid-area: actions;
+  }
+}
+
+.attachment-upload-fields {
+  max-width: 50%;
+  margin-bottom: 1em;
+
+  @media (max-width: $breakpoint-mobile-large) {
+    max-width: 100%;
+  }
+}

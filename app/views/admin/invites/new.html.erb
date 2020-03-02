@@ -5,15 +5,21 @@
 <%= form_for resource, as: resource_name, url: invitation_path(resource_name), html: {method: :post} do |f| %>
   <%= render partial: 'devise/shared/error_messages', resource: resource %>
 
-  <% resource.class.invite_key_fields.each do |field| -%>
-    <p><%= f.label field, class: "text-color" %><br />
-    <%= f.text_field field %></p>
-  <% end -%>
+  <div class='form-row inline'>
+    <% resource.class.invite_key_fields.each do |field| -%>
+      <div class='inline-item'>
+        <%= f.label field, class: "text-color" %>
+        <%= f.text_field field %>
+      </div>
+    <% end -%>
 
-  <% if top_level_domain? %>
-    <%= f.collection_select(:organization_id, Organization.all, :id, "name" ) %>
-  <% end %>
-    <p>
-      <%= f.submit t("devise.invitations.new.submit_button"), class: "button-color" %>
-    </p>
+    <% if top_level_domain? %>
+      <div class='inline-item'>
+        <%= f.collection_select(:organization_id, Organization.all, :id, "name" ) %>
+      </div>
+    <% end %>
+  </div>
+
+
+  <%= f.submit t("devise.invitations.new.submit_button"), class: "button-color" %>
 <% end %>

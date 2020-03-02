@@ -1,6 +1,6 @@
 <% categorized_courses(@courses).each do |category_name, courses| %>
   <h3><%= category_name %></h3>
-  <div class="container">
+  <div class="flex-list">
     <% courses.each do |course| %>
       <%= render partial: 'shared/courses/course_widget', locals: { course: course } %>
     <% end %>

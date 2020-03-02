@@ -62,4 +62,12 @@ feature 'Admin user updates course' do
     visit edit_admin_course_path(@course)
     expect(page).to have_select('course_category_id', with_options: [@category.name.to_s, "#{@disabled_category.name} (disabled)"])
   end
+
+  scenario 'attempts to upload attachments to course' do
+    visit edit_admin_course_path(@course)
+    attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+    click_button 'Save Course'
+    expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
+  end
 end

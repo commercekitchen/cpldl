@@ -4,13 +4,11 @@
 
 <h2>User Accounts</h2>
 
-<div class="row">
-  <div class="sixcol">
+<div class="inline-form">
+  <div class="inline-input">
     <%= render partial: "shared/search_box", locals: { search_path: admin_users_path, placeholder_text: "Search users by keyword", search_param: :users_search } %>
   </div>
-  <div class="sixcol last left-or-right">
-    <%= link_to "Export User Information", admin_export_user_info_path(format: :csv), class: "btn button-color" %>
-  </div>
+  <%= link_to "Export User Information", admin_export_user_info_path(format: :csv), class: "btn button-color" %>
 </div>
 
 <%= render partial: 'shared/users_table', locals: { users: @users } %>

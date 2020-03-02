@@ -5,7 +5,7 @@
     <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
   </head>
   <body class="<%= current_organization.subdomain %>">
-    <div class="container">
+    <div class="pdf-page">
       <%= yield %>
     </div>
   </body>

@@ -22,7 +22,6 @@ class CourseImportService
 
   def save_new_course!
     @new_course.parent_id = @parent_course.id
-    @new_course.subsite_course = false
     @new_course.pub_date = nil
     @new_course.pub_status = 'D'
     @new_course.category_id = new_or_existing_subsite_category_id(@parent_course.category)

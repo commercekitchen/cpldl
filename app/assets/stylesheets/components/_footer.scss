@@ -1,14 +1,25 @@
-.footer-primary {
+.footer {
   margin-top: 2em;
   padding: 2em 0;
   min-height: 236px;
   background-color: $teal;
   color: $white;
-  text-align: center;
 }
 
-ul strong {
-  margin-bottom: 5px;
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-logo {
+  text-align: right;
+}
+
+.logo {
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .medium-logo {
@@ -24,28 +35,12 @@ ul strong {
   margin-bottom: 10px;
 }
 
-.right-logo {
-  text-align: right;
-}
-
-.large-logo {
-  padding-top: 2em;
-  width: 90%;
-}
-
-.license {
-  text-align: right;
-}
-
 .cms_nav {
   padding-left: 0px;
-  text-align: left;
+  padding-right: 2em;
+  min-width: 10em;
 
   a {
     color: $white;
   }
-}
-
-.link-cpl {
-  padding-right: 1em;
 }

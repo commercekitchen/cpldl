@@ -24,53 +24,57 @@
       </div>
     <% end %>
 
-    <div class="row">
-      <fieldset class="sixcol">
+    <div class="form-row inline">
+      <fieldset class='inline-item'>
         <%= f.label :first_name, class: "screen-reader-text" %>
         <%= f.text_field :first_name, placeholder: "First *", maxlength: 30 %>
       </fieldset>
 
-      <fieldset class="sixcol last">
+      <fieldset class="inline-item">
         <%= f.label :last_name, class: "screen-reader-text" %>
         <%= f.text_field :last_name, placeholder: "Last *", maxlength: 30 %>
       </fieldset>
     </div>
 
-    <fieldset>
-      <%= f.label :organization, class: "screen-reader-text" %>
-      <%= f.text_field :organization, placeholder: "Organization *", maxlength: 50 %>
-    </fieldset>
+    <div class='form-row'>
+      <fieldset>
+        <%= f.label :organization, class: "screen-reader-text" %>
+        <%= f.text_field :organization, placeholder: "Organization *", maxlength: 50 %>
+      </fieldset>
+    </div>
 
-    <div class="row">
-      <fieldset class="eightcol">
+    <div class="form-row inline">
+      <fieldset class="inline-item">
         <%= f.label :city, class: "screen-reader-text" %>
         <%= f.text_field :city, placeholder: "City *", maxlength: 30 %>
       </fieldset>
 
-      <fieldset class="fourcol last">
+      <fieldset class="inline-item">
         <%= f.label :state, class: "screen-reader-text" %>
-        <%= f.select :state, options_for_select(Constants.us_states, @contact.state), { include_blank: "Select... *" } %>
+        <%= f.select :state, options_for_select(Constants.us_states, @contact.state), { include_blank: "Select State... *" } %>
       </fieldset>
     </div>
 
-    <div class="row">
-      <fieldset class="eightcol">
+    <div class="form-row inline">
+      <fieldset class="inline-item">
         <%= f.label :email, class: "screen-reader-text" %>
         <%= f.text_field :email, placeholder: "Email *", maxlength: 30 %>
       </fieldset>
 
-      <fieldset class="fourcol last">
+      <fieldset class="inline-item">
         <%= f.label :phone, class: "screen-reader-text" %>
         <%= f.text_field :phone, placeholder: "Phone", maxlength: 20 %>
       </fieldset>
     </div>
 
-    <fieldset class="extra-bottom-margin">
+    <fieldset class="form-row">
       <%= f.label :comments, class: "screen-reader-text" %>
       <%= f.text_area :comments, placeholder: "Comments *", maxlength: 2048 %>
     </fieldset>
 
-    <%= f.submit "Submit" %>
+    <div class="form-row">
+      <%= f.submit "Submit" %>
+    </div>
 
     <%= render "shared/required_field_msg" %>
 

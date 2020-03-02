@@ -81,7 +81,7 @@ class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
     # Custom setup for branches, partners, etc. would go here...
 
     # Import all subsite courses
-    Course.where(pub_status: 'P', subsite_course: true).each do |course|
+    Course.pla.where(pub_status: 'P').each do |course|
       CourseImportService.new(organization: cleveland, course_id: course.id)
     end
   end

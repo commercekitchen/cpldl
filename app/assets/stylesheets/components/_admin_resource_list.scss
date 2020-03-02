@@ -1,0 +1,32 @@
+.admin-resource-list {
+  padding-left: 0;
+}
+
+.resource-row {
+  padding: 1em 0;
+  display: flex;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+
+  &:first-child {
+    &.sortable-dragging {
+      border-bottom: none;
+    }
+  }
+
+  &:not(.sortable-dragging) {
+    border-top: 1px solid;
+  }
+
+  &:not(.sortable-dragging) ~ &:not(.sortable-dragging) {
+    border-top: none;
+  }
+
+  .resource-title {
+    flex-basis: 50%;
+  }
+
+  .resource-link {
+    flex-basis: 50%;
+  }
+}

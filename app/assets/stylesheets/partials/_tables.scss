@@ -25,18 +25,13 @@ table td {
 }
 
 table th {
-  border-width: 2px;
+  border-width: 1px;
   font-size: 1em;
   font-weight: 400;
 }
 
 table tr.strong {
   font-weight: bold;
-}
-
-table tr:last-child th,
-table tr:last-child td {
-  border-bottom: none;
 }
 
 table tr:nth-child(even) {

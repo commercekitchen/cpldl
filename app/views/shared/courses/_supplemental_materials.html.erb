@@ -1,39 +1,20 @@
-<div class="container">
-  <div class="row">
-    <div class="sixcol">
-      <h2 class="text-color"><%= t('course_page.click_here_for_text_copy_course') %></h2>
-      <% if @course.supplemental_attachments.count > 0 %>
-        <ul class="no-padding">
-        <%# TODO: make this a model method %>
-        <% course.supplemental_attachments.each do |a| %>
-          <%= link_to course_attachment_path(course, a), target: "_blank", class: "block_link" do %>
-            <li data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'><i class="icon-download"></i><%= a.document_file_name %>
-              <p class="note file-description"><%= a.file_description %></p>
-            </li>
-          <% end %>
+<h2 class="text-color"><%= t('course_page.additional_resources') %></h2>
+<% if @course.post_course_attachments.count > 0 %>
+  <ul class="no-padding">
+  <% @course.post_course_attachments.each do |a| %>
+    <%= link_to course_attachment_path(@course, a), target: "_blank", class: "block_link" do %>
+      <li class="attachment-download">
+        <i class="icon-download"></i>
+        <%= a.document_file_name %>
+        <% if a.file_description.present? %>
+          <small class="note file-description"><%= a.file_description %></small>
         <% end %>
-        </ul>
-      <% else %>
-        <div class="note"><%= t('course_page.there_is_no_text_copy_of_course') %></div>
-      <% end %>
-    </div>
-    <div class="sixcol">
-      <h2 class="text-color"><%= t('course_page.additional_resources') %></h2>
-      <% if @course.post_course_attachments.count > 0 %>
-        <ul class="no-padding">
-        <% @course.post_course_attachments.each do |a| %>
-          <%= link_to course_attachment_path(@course, a), target: "_blank", class: "block_link" do %>
-            <li>
-              <i class="icon-download"></i><%= truncate(a.document_file_name, length: 28) %>
-              <p class="note file-description"><%= a.file_description %></p>
-            </li>
-          <% end %>
-        <% end %>
-        </ul>
-      <% else %>
-        <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
-      <% end %>
-    </div>
-  </div>
-</div>
+      </li>
+    <% end %>
+  <% end %>
+  </ul>
+<% else %>
+  <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
+<% end %>
+
 
