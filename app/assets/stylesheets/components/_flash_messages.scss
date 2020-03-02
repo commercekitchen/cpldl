@@ -1,0 +1,36 @@
+.flash-message {
+  color: $notice-font-color;
+  border: 1px solid $notice-border-color;
+  background: $notice-color;
+  margin: 0 0 1em;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px -2px $notice-border-color;
+  border-radius: 4px;
+}
+
+.error,
+.alert {
+  color: $error-font-color;
+  border: 1px solid $error-border-color;
+  background: $error-color;
+  margin: 0 0 1em;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px -2px $error-border-color;
+  border-radius: 4px;
+}
+
+.notice {
+  color: $notice-font-color;
+  border: 1px solid $notice-border-color;
+  background: $notice-color;
+  margin: 0 0 1em;
+  padding: 1em;
+  text-align: center;
+  font-weight: bold;
+  box-shadow: 0 2px 4px -2px $notice-border-color;
+  border-radius: 4px;
+}
