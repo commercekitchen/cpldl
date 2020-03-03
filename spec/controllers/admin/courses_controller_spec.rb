@@ -49,17 +49,25 @@ describe Admin::CoursesController do
     end
   end
 
-  describe 'GET #show' do
-    it 'assigns the requested course as @course' do
-      get :show, params: { id: course1.to_param }
-      expect(assigns(:course)).to eq(course1)
-    end
-  end
-
   describe 'GET #new' do
     it 'assigns a new course as @course' do
       get :new
       expect(assigns(:course)).to be_a_new(Course)
+    end
+  end
+
+  describe 'GET #preview' do
+    let(:pla) { FactoryBot.create(:default_organization) }
+    let(:pla_course) { FactoryBot.create(:course, organization: pla) }
+
+    it 'assigns the requested course as @course' do
+      get :preview, params: { course_id: pla_course.to_param }
+      expect(assigns(:course)).to eq(pla_course)
+    end
+
+    it 'renders course show' do
+      get :preview, params: { course_id: pla_course.to_param }
+      expect(response).to render_template('courses/show')
     end
   end
 

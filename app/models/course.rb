@@ -147,9 +147,9 @@ class Course < ApplicationRecord
   end
 
   def find_or_create_category
-    return true unless category_name.present?
+    return true if category_name.blank?
 
-    existing_category = self.organization.categories.where('lower(name) = ?', category_name.downcase).first
+    existing_category = self.organization.categories.find_by('lower(name) = ?', category_name.downcase)
     self.category = existing_category || self.organization.categories.find_or_create_by(name: category_name)
   end
 end

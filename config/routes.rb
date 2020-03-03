@@ -100,9 +100,10 @@ Rails.application.routes.draw do
 
     get 'users/export_user_info', to: 'users#export_user_info', as: :export_user_info
 
-    resources :courses do
+    resources :courses, except: [:show] do
       put :sort, on: :collection
       patch 'update_pub_status'
+      get :preview
 
       resources :lessons, except: [:index, :show] do
         collection do

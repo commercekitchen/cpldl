@@ -3,7 +3,7 @@
 module Admin
   class CoursesController < BaseController
 
-    before_action :set_course, only: %i[show edit update destroy]
+    before_action :set_course, only: %i[preview edit update destroy]
     before_action :set_maximums, only: %i[new edit]
     before_action :set_category_options, only: %i[new edit create update]
 
@@ -16,7 +16,7 @@ module Admin
       enable_sidebar
     end
 
-    def show
+    def preview
       authorize @course
       render 'courses/show'
     end
@@ -135,7 +135,8 @@ module Admin
     end
 
     def set_course
-      @course = Course.friendly.find(params[:id])
+      id_param = params[:id] || params[:course_id]
+      @course = Course.friendly.find(id_param)
     end
 
     def course_params

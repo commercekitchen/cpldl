@@ -18,6 +18,12 @@ class CoursePolicy < AdminOnlyPolicy
     record.organization == user.organization && record.published?
   end
 
+  def preview?
+    return false unless user.admin?
+
+    record.organization == Organization.pla
+  end
+
   class Scope < Scope
     def resolve
       courses = scope.includes(:lessons).where(organization: user.organization)
