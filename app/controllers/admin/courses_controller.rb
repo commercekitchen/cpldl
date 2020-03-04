@@ -18,6 +18,7 @@ module Admin
 
     def preview
       authorize @course
+      @preview = true
       render 'courses/show'
     end
 

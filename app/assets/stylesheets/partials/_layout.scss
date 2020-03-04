@@ -1,3 +1,7 @@
+main {
+  padding-top: 2em;
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: 100%;
@@ -8,10 +12,6 @@
   display: grid;
   grid-template-columns: 25% 75%;
   grid-template-areas: "sidebar main-content";
-}
-
-.main_content {
-  grid-area: main-content;
 }
 
 .sidebar {
