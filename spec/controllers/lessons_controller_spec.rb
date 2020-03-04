@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe LessonsController do
-  let(:org) { FactoryBot.create(:default_organization) }
+  let(:org) { FactoryBot.create(:organization, login_required: false) }
   let(:user) { FactoryBot.create(:user, organization: org) }
   let(:course) { FactoryBot.create(:course, organization: org) }
   let!(:lesson1) { FactoryBot.create(:lesson, lesson_order: 1, course: course) }
@@ -13,7 +13,7 @@ describe LessonsController do
   let!(:archived_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'A') }
 
   before(:each) do
-    @request.host = 'www.test.host'
+    @request.host = "#{org.subdomain}.test.host"
     sign_in user
   end
 
@@ -76,6 +76,27 @@ describe LessonsController do
     it 'redirects to root for archived lessons' do
       get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
       expect(response).to redirect_to(root_path)
+    end
+
+    context 'preview' do
+      let(:pla) { FactoryBot.create(:default_organization) }
+      let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla) }
+      let(:pla_lesson) { pla_course.lessons.first }
+      let(:subsite_admin) { FactoryBot.create(:user, :admin, organization: org) }
+
+      it 'authorizes course preview' do
+        expect(@controller).to receive(:authorize).with(pla_course, :preview?)
+        allow(@controller).to receive(:verify_authorized)
+        get :show, params: { course_id: pla_course.to_param, id: pla_lesson.to_param, preview: true }
+      end
+
+      it 'should respond with 200 if accessed by subsite admin' do
+        sign_out user
+        sign_in subsite_admin
+        get :show, params: { course_id: pla_course.to_param, id: pla_lesson.to_param, preview: true }
+        expect(response).to have_http_status :ok
+        sign_out subsite_admin
+      end
     end
   end
 

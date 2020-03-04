@@ -19,10 +19,12 @@ feature 'Admin previews a PLA course' do
     click_link 'Import DigitalLearn Courses'
     click_link 'Preview Course'
     expect(current_path).to eq(admin_course_preview_path(pla_course.id))
-    expect(page).to have_content('You are previewing this course')
+    expect(page).to have_content("Previewing course: \"#{pla_course.title}\".")
 
     expect(page).to have_link 'Return to Admin Panel'
     expect(page).to have_link 'Import Course'
+
+    expect(page).to_not have_link 'Edit Course >>'
 
     # Return to import courses view
     click_link 'Return to Admin Panel'
@@ -31,6 +33,23 @@ feature 'Admin previews a PLA course' do
 
     # Course preview
     expect(page).to have_content(pla_course.title)
+    pla_course.lessons.each do |lesson|
+      expect(page).to have_content(lesson.title)
+      expect(page).to have_content(lesson.summary)
+    end
+
+    # Lesson preview
+    lesson = pla_course.lessons.first
+    click_link 'Start Course'
+    expect(page).to have_current_path(course_lesson_path(pla_course, lesson, preview: true))
+    expect(page).to have_content(lesson.title)
+    expect(page).to have_content("Previewing course: \"#{pla_course.title}\".")
+
+    # Lesson playlist navigation
+
+    # Preview from lesson tiles
+
+    # Completing course
 
   end
 end

@@ -6,37 +6,31 @@ class LessonsController < ApplicationController
 
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
-    authorize @lesson
+    @preview = params[:preview]
 
-    case @lesson.pub_status
-    when 'D'
-      flash[:notice] = 'That lesson is not available at this time.'
-      redirect_to root_path
-    when 'A'
-      flash[:notice] = 'That lesson is no longer available.'
-      redirect_to root_path
-    when 'P'
-      @next_lesson = @course.lesson_after(@lesson)
+    authorize_lesson
+    return unless verify_publication_status
 
-      if current_user
-        @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
-        @course_progress.update(tracked: true)
-      else
-        session[:course_id] = @course.id if session[:course_id].blank?
-        @course_progress = CourseProgress.new(course_id: session[:course_id], tracked: true)
-      end
+    @next_lesson = @course.lesson_after(@lesson)
 
-      respond_to do |format|
-        format.html do
-          # The change of course slug should 301 redirect.
-          if request.path != course_lesson_path(@course, @lesson)
-            redirect_to course_lesson_path(@course, @lesson), status: :moved_permanently
-          else
-            render :show
-          end
+    if current_user
+      @course_progress = CourseProgress.where(user_id: current_user.id, course_id: @course.id).first_or_create
+      @course_progress.update(tracked: true)
+    else
+      session[:course_id] = @course.id if session[:course_id].blank?
+      @course_progress = CourseProgress.new(course_id: session[:course_id], tracked: true)
+    end
+
+    respond_to do |format|
+      format.html do
+        # The change of course slug should 301 redirect.
+        if request.path != course_lesson_path(@course, @lesson)
+          redirect_to course_lesson_path(@course, @lesson), status: :moved_permanently
+        else
+          render :show
         end
-        format.json { render json: @lesson }
       end
+      format.json { render json: @lesson }
     end
   end
 
@@ -78,6 +72,31 @@ class LessonsController < ApplicationController
   def auth_subsites
     if current_organization.login_required?
       authenticate_user!
+    end
+  end
+
+  def authorize_lesson
+    if @preview
+      authorize @course, :preview?
+    else
+      authorize @lesson
+    end
+  end
+
+  def verify_publication_status
+    case @lesson.pub_status
+    when 'D'
+      flash[:notice] = 'That lesson is not available at this time.'
+      redirect_to root_path
+      false
+    when 'A'
+      flash[:notice] = 'That lesson is no longer available.'
+      redirect_to root_path
+      false
+    when 'P'
+      true
+    else
+      raise StandardError, 'Unknown Publication Status'
     end
   end
 end
