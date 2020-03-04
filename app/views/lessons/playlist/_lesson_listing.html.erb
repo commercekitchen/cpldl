@@ -1,4 +1,4 @@
-<%= link_to course_lesson_path(@course, lesson), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: "block_link lesson-listing_link" do %>
+<%= link_to course_lesson_path(@course, lesson, preview: @preview), data: { cpl_ga_event: "on",  cpl_ga_value: "user-click-lesson" }, class: "block_link lesson-listing_link" do %>
   <div class="lesson-listing">
     <div class="lesson-status-icon">
       <% if lesson.id == @lesson.id %>

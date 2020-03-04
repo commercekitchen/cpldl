@@ -19,10 +19,10 @@ feature 'Admin previews a PLA course' do
     click_link 'Import DigitalLearn Courses'
     click_link 'Preview Course'
     expect(current_path).to eq(admin_course_preview_path(pla_course.id))
-    expect(page).to have_content("Previewing course: \"#{pla_course.title}\".")
+    expect(page).to have_content('You are previewing this course.')
 
     expect(page).to have_link 'Return to Admin Panel'
-    expect(page).to have_link 'Import Course'
+    expect(page).to have_link 'Import'
 
     expect(page).to_not have_link 'Edit Course >>'
 
@@ -43,13 +43,36 @@ feature 'Admin previews a PLA course' do
     click_link 'Start Course'
     expect(page).to have_current_path(course_lesson_path(pla_course, lesson, preview: true))
     expect(page).to have_content(lesson.title)
-    expect(page).to have_content("Previewing course: \"#{pla_course.title}\".")
+    expect(page).to have_content('You are previewing this course.')
+
+    # Skip to next lesson
+    click_link 'Skip to next Activity'
+    next_lesson = pla_course.lesson_after(lesson)
+    expect(page).to have_current_path(course_lesson_path(pla_course, next_lesson, preview: true))
 
     # Lesson playlist navigation
+    last_lesson = pla_course.lessons.last
+    within('.playlist') do
+      find('.lesson-title', text: last_lesson.title).ancestor('.lesson-listing_link').click
+    end
 
-    # Preview from lesson tiles
+    expect(page).to have_current_path(course_lesson_path(pla_course, last_lesson, preview: true))
+    expect(page).to have_content(last_lesson.title)
+    expect(page).to have_content('You are previewing this course.')
+  end
 
-    # Completing course
+  scenario 'admin previews course and clicks lesson tiles' do
+    lesson = pla_course.lessons.first
+    click_link 'Import DigitalLearn Courses'
+    click_link 'Preview Course'
+    expect(page).to have_content(lesson.title)
+    find('.lesson-title', text: lesson.title).ancestor('.lesson-tile').click
+    expect(page).to have_current_path(course_lesson_path(pla_course, lesson, preview: true))
+  end
 
+  scenario 'admin finishes course in preview mode' do
+  end
+
+  scenario 'admin imports course from preview' do
   end
 end

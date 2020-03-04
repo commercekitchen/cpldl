@@ -25,7 +25,7 @@ class LessonsController < ApplicationController
       format.html do
         # The change of course slug should 301 redirect.
         if request.path != course_lesson_path(@course, @lesson)
-          redirect_to course_lesson_path(@course, @lesson), status: :moved_permanently
+          redirect_to course_lesson_path(@course, @lesson, preview: @preview), status: :moved_permanently
         else
           render :show
         end
