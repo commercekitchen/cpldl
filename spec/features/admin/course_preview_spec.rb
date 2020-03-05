@@ -90,5 +90,11 @@ feature 'Admin previews a PLA course' do
   end
 
   scenario 'admin imports course from preview' do
+    visit admin_course_preview_path(pla_course.id)
+    click_link 'Import'
+
+    new_course = org.courses.where(parent: pla_course).first
+
+    expect(current_path).to eq(edit_admin_course_path(new_course))
   end
 end
