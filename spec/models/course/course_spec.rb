@@ -31,7 +31,7 @@ describe Course do
       it 'should not create a new category' do
         expect do
           course.update(category_name: category.name)
-        end.to_not change { org.categories.count }
+        end.to_not(change { org.categories.count })
       end
 
       it 'should add course to existing category' do
@@ -42,7 +42,7 @@ describe Course do
 
       it 'should add course to existing category in case-insensitive manner' do
         expect do
-          course.update(category_name: "eXisting categorY")
+          course.update(category_name: 'eXisting categorY')
         end.to change { category.courses.count }.by(1)
       end
     end

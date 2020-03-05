@@ -2,7 +2,9 @@
 
 FactoryBot.define do
   factory :lesson do
-    title 'Lesson 1'
+    sequence :title do |n|
+      "Lesson #{n}"
+    end
     summary 'Lesson summary'
     duration 90
     lesson_order 1

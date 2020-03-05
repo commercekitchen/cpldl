@@ -9,8 +9,8 @@
     <%= t("completed_lesson_page.activity") %>
     <%= @next_lesson.published_lesson_order %>
   </h2>
-  <%= link_to t("completed_lesson_page.continue"), course_lesson_path(@course, @next_lesson), class: "btn small button-color" %>
+  <%= link_to t("completed_lesson_page.continue"), course_lesson_path(@course, @next_lesson, preview: @preview), class: "btn small button-color" %>
   <span class="vertical-bar">&nbsp;</span>
   <i class="icon-cw %> flip-horizontal"></i>
-  <%= link_to t("completed_lesson_page.repeat_activity"), course_lesson_path(@course, @current_lesson), class: "grey" %>
+  <%= link_to t("completed_lesson_page.repeat_activity"), course_lesson_path(@course, @current_lesson, preview: @preview), class: "grey" %>
 </div>

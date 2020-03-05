@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe LessonsController do
-  let(:org) { FactoryBot.create(:default_organization) }
+  let(:org) { FactoryBot.create(:organization, login_required: false) }
   let(:user) { FactoryBot.create(:user, organization: org) }
   let(:course) { FactoryBot.create(:course, organization: org) }
   let!(:lesson1) { FactoryBot.create(:lesson, lesson_order: 1, course: course) }
@@ -13,7 +13,7 @@ describe LessonsController do
   let!(:archived_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'A') }
 
   before(:each) do
-    @request.host = 'www.test.host'
+    @request.host = "#{org.subdomain}.test.host"
     sign_in user
   end
 
@@ -77,6 +77,26 @@ describe LessonsController do
       get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
       expect(response).to redirect_to(root_path)
     end
+
+    context 'preview' do
+      let(:pla) { FactoryBot.create(:default_organization) }
+      let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla) }
+      let(:pla_lesson) { pla_course.lessons.first }
+      let(:subsite_admin) { FactoryBot.create(:user, :admin, organization: org) }
+
+      it 'authorizes course preview' do
+        expect(@controller).to receive(:authorize).with(pla_course, :preview?)
+        allow(@controller).to receive(:verify_authorized)
+        get :show, params: { course_id: pla_course.to_param, id: pla_lesson.to_param, preview: true }
+      end
+
+      it 'should respond with 200 if accessed by subsite admin' do
+        sign_out user
+        sign_in subsite_admin
+        get :show, params: { course_id: pla_course.to_param, id: pla_lesson.to_param, preview: true }
+        expect(response).to have_http_status :ok
+      end
+    end
   end
 
   describe 'POST #complete' do
@@ -115,6 +135,36 @@ describe LessonsController do
       expect do
         post :complete, params: { course_id: course.to_param, lesson_id: lesson1.to_param }, format: :json
       end.to_not change(LessonCompletion, :count)
+    end
+
+    context 'preview' do
+      let(:pla) { FactoryBot.create(:default_organization) }
+      let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla) }
+      let(:pla_lesson) { pla_course.lessons.first }
+      let(:subsite_admin) { FactoryBot.create(:user, :admin, organization: org) }
+
+      before do
+        sign_out user
+        sign_in subsite_admin
+      end
+
+      it 'authorizes course preview' do
+        expect(@controller).to receive(:authorize).with(pla_course, :preview?)
+        allow(@controller).to receive(:verify_authorized)
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_lesson.to_param, preview: true }, format: :json
+      end
+
+      it 'includes preview parameter if a preview lesson is finished' do
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_lesson.to_param, preview: true }, format: :json
+        expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(pla_course, pla_lesson, preview: true))
+      end
+
+      it 'returns to course preview if finishing a preview course' do
+        pla_assessment = pla_course.lessons.last
+        pla_assessment.update(is_assessment: true)
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_assessment.to_param, preview: true }, format: :json
+        expect(JSON.parse(response.body)['redirect_path']).to eq(admin_course_preview_path(pla_course.to_param))
+      end
     end
   end
 

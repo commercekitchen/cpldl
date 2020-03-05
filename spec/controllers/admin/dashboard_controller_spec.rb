@@ -81,6 +81,12 @@ describe Admin::DashboardController do
         end.to change(Course, :count).by(1)
       end
 
+      it 'should redirect to edit page for new course' do
+        post :add_imported_course, params: { course_id: importable_course1.id }
+        new_course = Course.where(parent: importable_course1).first
+        expect(response).to redirect_to(edit_admin_course_path(new_course))
+      end
+
       it 'should create new subdomain course with new category with same name as imported course' do
         post :add_imported_course, params: { course_id: importable_course1.id }
         course_category = org.courses.last.category

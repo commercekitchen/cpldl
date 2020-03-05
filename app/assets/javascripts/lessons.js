@@ -3,8 +3,15 @@ $(document).ready(function() {
   // match the event from the ASL file:
   // window.parent.sendLessonCompletedEvent();
   sendLessonCompletedEvent = function() {
+    var preview = getUrlParameter("preview");
+    var requestUrl = window.location.pathname + "/complete";
+
+    if (preview == "true") {
+      requestUrl = requestUrl + "?preview=true";
+    }
+
     $.ajax({
-      url: window.location.pathname + "/complete",
+      url: requestUrl,
       type: "POST",
       dataType: "json"
     }).always(function(data) {
@@ -12,6 +19,15 @@ $(document).ready(function() {
         window.location = data.redirect_path;
       }
     });
+  };
+
+  getUrlParameter = function(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+    var results = regex.exec(location.search);
+    return results === null
+      ? ""
+      : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
   getDLCTransition = function(_) {

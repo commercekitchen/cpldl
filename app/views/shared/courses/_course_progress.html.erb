@@ -24,7 +24,7 @@
     <% end %>
     <span class="next-lesson-link">
       <% unless lesson.is_assessment %>
-        <%= link_to t('lesson_page.skip_to_next_lesson'), course_lesson_path(course, course.lesson_after(lesson)), class: "inverted" %>
+        <%= link_to t('lesson_page.skip_to_next_lesson'), course_lesson_path(course, course.lesson_after(lesson), preview: @preview), class: "inverted" %>
       <% end %>
     </span>
   </footer>

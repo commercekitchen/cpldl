@@ -78,4 +78,8 @@ class Organization < ApplicationRecord
     errors.delete(:footer_logo_content_type)
     errors.delete(:footer_logo_file_size)
   end
+
+  def self.pla
+    find_by(subdomain: 'www')
+  end
 end

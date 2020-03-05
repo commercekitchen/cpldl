@@ -1,4 +1,4 @@
-<%= render partial: "shared/courses/metas" %>
+<%= render "shared/courses/metas" %>
 
 <small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
 
@@ -14,13 +14,15 @@
   </div>
   
   <div class="course-actions">
-    <% if user_signed_in? && current_user.has_role?(:admin, current_organization) %>
+    <% if org_admin? && policy(@course).edit? %>
       <p class="course-edit-add-remove"><small><%= link_to "Edit Course >>", edit_admin_course_path(@course) %></small></p>
-    <% else %>
+    <% end %>
+
+    <% unless @preview %>
       <%= render 'courses/course_progress_actions' %>
     <% end %>
 
-    <%= start_or_resume_course_link(@course) %>
+    <%= start_or_resume_course_link(@course, @preview) %>
   </div>
 </div>
 

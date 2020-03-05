@@ -46,6 +46,37 @@ describe CoursePolicy, type: :policy do
     end
   end
 
+  permissions :preview? do
+    let(:pla) { FactoryBot.create(:default_organization) }
+    let(:guest_user) { GuestUser.new(organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:admin) { FactoryBot.create(:user, :admin, organization: organization) }
+    let(:course) { FactoryBot.create(:course, organization: pla) }
+    let(:subsite_course) { FactoryBot.create(:course) }
+
+    context 'guest_user' do
+      it 'denies access' do
+        expect(subject).to_not permit(guest_user, course)
+      end
+    end
+
+    context 'subsite user' do
+      it 'denies access' do
+        expect(subject).to_not permit(user, course)
+      end
+    end
+
+    context 'subsite admin' do
+      it 'allows access to pla course' do
+        expect(subject).to permit(admin, course)
+      end
+
+      it 'denies access to non PLA courses' do
+        expect(subject).to_not permit(admin, subsite_course)
+      end
+    end
+  end
+
   permissions :show? do
     let(:guest_user) { GuestUser.new(organization: organization) }
     let(:user) { FactoryBot.create(:user, organization: organization) }
