@@ -35,29 +35,32 @@ class LessonsController < ApplicationController
   end
 
   def lesson_complete
-    authorize @course, :show?
+    @preview = params[:preview]
+
+    if @preview
+      authorize @course, :preview?
+    else
+      authorize @course, :show?
+    end
+
     @current_lesson = @course.lessons.friendly.find(params[:lesson_id])
     @next_lesson = @course.lesson_after(@current_lesson)
   end
 
   def complete
-    lesson = @course.lessons.friendly.find(params[:lesson_id])
-    authorize lesson, :show?
+    @lesson = @course.lessons.friendly.find(params[:lesson_id])
+    @preview = params[:preview]
 
-    if current_user
-      course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
-      LessonCompletion.find_or_create_by!(course_progress: course_progress, lesson: lesson)
-    else
-      session[:completed_lessons] ||= []
-      session[:completed_lessons] << lesson.id unless session[:completed_lessons].include?(lesson.id)
-    end
+    authorize_lesson
+    update_course_progress
 
     respond_to do |format|
       format.json do
-        if lesson.is_assessment
-          render status: :ok, json: { redirect_path: course_completion_path(@course) }
+        if @lesson.is_assessment
+          redirect_path = @preview ? admin_course_preview_path(@course) : course_completion_path(@course)
+          render status: :ok, json: { redirect_path: redirect_path }
         else
-          render status: :ok, json: { redirect_path: course_lesson_lesson_complete_path(@course, lesson) }
+          render status: :ok, json: { redirect_path: course_lesson_lesson_complete_path(@course, @lesson, preview: @preview) }
         end
       end
     end
@@ -79,7 +82,7 @@ class LessonsController < ApplicationController
     if @preview
       authorize @course, :preview?
     else
-      authorize @lesson
+      authorize @lesson, :show?
     end
   end
 
@@ -97,6 +100,16 @@ class LessonsController < ApplicationController
       true
     else
       raise StandardError, 'Unknown Publication Status'
+    end
+  end
+
+  def update_course_progress
+    if current_user
+      course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
+      LessonCompletion.find_or_create_by!(course_progress: course_progress, lesson: @lesson)
+    else
+      session[:completed_lessons] ||= []
+      session[:completed_lessons] << @lesson.id unless session[:completed_lessons].include?(@lesson.id)
     end
   end
 end

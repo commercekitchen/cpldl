@@ -70,7 +70,23 @@ feature 'Admin previews a PLA course' do
     expect(page).to have_current_path(course_lesson_path(pla_course, lesson, preview: true))
   end
 
-  scenario 'admin finishes course in preview mode' do
+  scenario 'admin finishes lessons in preview mode' do
+    first_lesson = pla_course.lessons.first
+    second_lesson = pla_course.lessons.second
+    last_lesson = pla_course.lessons.last
+    last_lesson.update(is_assessment: true)
+
+    visit course_lesson_lesson_complete_path(pla_course, first_lesson, preview: true)
+    expect(page).to have_content("You've completed Activity 1: #{first_lesson.title}")
+
+    # Repeat activity link
+    click_link 'Repeat Activity'
+    expect(page).to have_current_path(course_lesson_path(pla_course, first_lesson, preview: true))
+
+    # Continue link
+    visit course_lesson_lesson_complete_path(pla_course, first_lesson, preview: true)
+    click_link 'Continue'
+    expect(page).to have_current_path(course_lesson_path(pla_course, second_lesson, preview: true))
   end
 
   scenario 'admin imports course from preview' do

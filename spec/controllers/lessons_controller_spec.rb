@@ -95,7 +95,6 @@ describe LessonsController do
         sign_in subsite_admin
         get :show, params: { course_id: pla_course.to_param, id: pla_lesson.to_param, preview: true }
         expect(response).to have_http_status :ok
-        sign_out subsite_admin
       end
     end
   end
@@ -136,6 +135,36 @@ describe LessonsController do
       expect do
         post :complete, params: { course_id: course.to_param, lesson_id: lesson1.to_param }, format: :json
       end.to_not change(LessonCompletion, :count)
+    end
+
+    context 'preview' do
+      let(:pla) { FactoryBot.create(:default_organization) }
+      let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla) }
+      let(:pla_lesson) { pla_course.lessons.first }
+      let(:subsite_admin) { FactoryBot.create(:user, :admin, organization: org) }
+
+      before do
+        sign_out user
+        sign_in subsite_admin
+      end
+
+      it 'authorizes course preview' do
+        expect(@controller).to receive(:authorize).with(pla_course, :preview?)
+        allow(@controller).to receive(:verify_authorized)
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_lesson.to_param, preview: true }, format: :json
+      end
+
+      it 'includes preview parameter if a preview lesson is finished' do
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_lesson.to_param, preview: true }, format: :json
+        expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(pla_course, pla_lesson, preview: true))
+      end
+
+      it 'returns to course preview if finishing a preview course' do
+        pla_assessment = pla_course.lessons.last
+        pla_assessment.update(is_assessment: true)
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_assessment.to_param, preview: true }, format: :json
+        expect(JSON.parse(response.body)['redirect_path']).to eq(admin_course_preview_path(pla_course.to_param))
+      end
     end
   end
 
