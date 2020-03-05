@@ -14,9 +14,9 @@
 </section>
 
 <% (@category_ids || []).each do |category_id| %>
-  <%= render partial: "admin/courses/sortable_import_list", locals: { courses: @importable_courses.with_category(category_id), category: Category.find_by_id(category_id) } %>
+  <%= render partial: "admin/courses/import_list", locals: { courses: @importable_courses.with_category(category_id), category: Category.find_by_id(category_id) } %>
 <% end %>
 
 <% if @uncategorized_courses.present? %>
-  <%= render partial: "admin/courses/sortable_import_list", locals: { courses: @uncategorized_courses, category: nil } %>
+  <%= render partial: "admin/courses/import_list", locals: { courses: @uncategorized_courses, category: nil } %>
 <% end %>

@@ -3,7 +3,7 @@
   <% if courses.empty? %>
     No courses in this category
   <% else %>
-    <div class="sortable-list" data-page="courses">
+    <div>
       <div class="list-titles">
         <div class="cell text-color">Course</div>
         <div class="cell text-color">Topic</div>
@@ -11,9 +11,9 @@
         <div class="cell text-color"></div>
         <div class="cell text-color"></div>
       </div>
-      <ul class="objects sortable reorderable">
+      <ul class="objects">
         <% courses.each do |course| %>
-          <li class="sortable-item table-row import-table-row" data-id="<%= course.id %>">
+          <li class="table-row">
             <div class="cell"><%= course.title %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
