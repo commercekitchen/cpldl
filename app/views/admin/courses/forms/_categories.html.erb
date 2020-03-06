@@ -1,0 +1,16 @@
+<div class='categories'>
+  <fieldset>
+    <%= f.label :category_id, class: "text-color" do %>
+      Course Category
+    <% end %>
+    <%= f.select(:category_id, options_for_select(@category_options, @course.category_id || ("0" if @custom)),{ include_blank: "Uncategorized" } ) %>
+  </fieldset>
+  <fieldset>
+    <%= f.fields_for :category_attributes do |c| %>
+      <%= c.hidden_field :organization_id, value: current_organization.id %>
+      <div class=<%="#{'field_with_errors' if f.object.category.present? && f.object.category.errors[:name].present?}"%>>
+        <%= c.text_field :name, value: (@category.name if @category.present?) || (@custom_category), placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
+      </div>
+    <% end %>
+  </fieldset>
+</div>

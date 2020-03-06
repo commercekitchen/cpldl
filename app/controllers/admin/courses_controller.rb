@@ -31,6 +31,7 @@ module Admin
 
     def edit
       authorize @course
+      @imported_course = @course.parent.present?
     end
 
     def create

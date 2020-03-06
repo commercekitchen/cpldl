@@ -2,7 +2,7 @@
   <%= f.label :level, class: "text-color" do %>
     Course Level<span class="required"></span>
   <% end %>
-  <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." } ) %>
+  <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." }, { disabled: @imported_course } ) %>
 </fieldset>
 <fieldset class='pub-status'>
   <%= f.label :pub_status, class: "text-color" do %>

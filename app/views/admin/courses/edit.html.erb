@@ -1,3 +1,5 @@
 <%= content_for(:callout) { %><h1>Edit This Course</h1><% } %>
 
-<%= render  partial: 'admin/courses/forms/form', locals: { breadcrumb: "Edit Course" } %>
+<small><%= "Admin >> Courses >> Edit Course" %></small>
+
+<%= render 'admin/courses/form' %>

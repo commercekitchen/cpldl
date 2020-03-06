@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Admin::CoursesController do
   let(:org) { FactoryBot.create(:organization) }
   let(:other_org) { FactoryBot.create(:organization, subdomain: 'dpl') }
+  let(:pla) { FactoryBot.create(:default_organization) }
+  let(:pla_course) { FactoryBot.create(:course, organization: pla) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
   let(:category1) { FactoryBot.create(:category, organization: org) }
   let(:category2) { FactoryBot.create(:category, organization: org) }
@@ -92,9 +94,21 @@ describe Admin::CoursesController do
   end
 
   describe 'GET #edit' do
+    let(:imported_course) { FactoryBot.create(:course, organization: org, parent: pla_course) }
+
     it 'assigns the requested course as @course' do
       get :edit, params: { id: course1.to_param }
       expect(assigns(:course)).to eq(course1)
+    end
+
+    it 'assigns imported_course instance variable to true if course is imported' do
+      get :edit, params: { id: imported_course.to_param }
+      expect(assigns(:imported_course)).to eq(true)
+    end
+
+    it 'assigns imported_course to false if course is original' do
+      get :edit, params: { id: course1.to_param }
+      expect(assigns(:imported_course)).to eq(false)
     end
   end
 

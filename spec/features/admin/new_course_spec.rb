@@ -35,7 +35,6 @@ feature 'Admin user creates new course and lesson' do
   end
 
   scenario 'creates course with new category' do
-    expect(page).to have_content('Course Information')
     fill_basic_course_info
     select('Create new category', from: 'course_category_id')
     fill_in :course_category_attributes_name, with: new_category_name
