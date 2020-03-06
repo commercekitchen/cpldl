@@ -23,6 +23,7 @@
   &.restricted {
     grid-template-areas:
       "categories access_level"
+      "actions actions"
       "title title"
       "author author"
       "summary summary"
@@ -35,8 +36,7 @@
       "course_level pub_status"
       "seo_title seo_title"
       "seo_meta seo_meta"
-      "propagation propagation"
-      "actions actions";
+      "propagation propagation";
   }
 
   .title {

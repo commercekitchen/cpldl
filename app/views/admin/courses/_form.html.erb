@@ -13,6 +13,7 @@
   <% if @imported_course %>
     <%= render 'admin/courses/forms/categories', f: f %>
     <%= render 'admin/courses/forms/access_level', f: f %>
+    <%= render 'admin/courses/forms/imported_course_actions', f: f %>
   <% end %>
 
   <fieldset class='title'>
@@ -134,12 +135,7 @@
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 
-  <div class="form-actions spread actions">
-    <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "button-color" %>
-    <% if @course.lessons.blank? %>
-      <%= f.submit "Save Course and Add Lessons", class: "button-color" %>
-    <% else %>
-      <%= f.submit "Save Course and Edit Lessons", class: "button-color" %>
-    <% end %>
-  </div>
+  <% unless @imported_course %>
+    <%= render 'admin/courses/forms/course_owner_actions', f: f %>
+  <% end %>
 <% end %>

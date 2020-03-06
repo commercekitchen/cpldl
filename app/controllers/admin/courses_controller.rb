@@ -35,9 +35,11 @@ module Admin
     end
 
     def create
-      @course = current_organization.courses.new(new_course_params)
+      @course = current_organization.courses.new
 
       authorize @course
+
+      @course.assign_attributes(new_course_params)
 
       if params[:course][:pub_status] == 'P'
         @course.set_pub_date
@@ -78,23 +80,22 @@ module Admin
     def update
       authorize @course
 
-      # The slug must be set to nil for the friendly_id to update on title change
-      @course.slug = nil if @course.title != params[:course][:title]
+      if update_course
+        if @course.parent.blank?
+          @course.topics_list(build_topics_list(params))
 
-      @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
-
-      if @course.update(new_course_params)
-        @course.topics_list(build_topics_list(params))
-
-        changed = propagate_changes? ? propagate_course_changes.count : 0
-        success_message = 'Course was successfully updated.'
-        success_message += " Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
+          changed = propagate_changes? ? propagate_course_changes.count : 0
+          success_message = 'Course was successfully updated.'
+          success_message += " Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
+        end
 
         case params[:commit]
         when 'Save Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
         when 'Save Course and Edit Lessons'
           redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
+        when 'Publish'
+          redirect_to admin_dashboard_index_path, notice: 'Course successfully published!'
         else
           redirect_to new_admin_course_lesson_path(@course), notice: success_message
         end
@@ -142,32 +143,7 @@ module Admin
     end
 
     def course_params
-      permitted_attributes = [
-        :title,
-        :seo_page_title,
-        :meta_desc,
-        :summary,
-        :description,
-        :contributor,
-        :pub_status,
-        :language_id,
-        :level,
-        :topics,
-        :notes,
-        :delete_document,
-        :other_topic,
-        :other_topic_text,
-        :course_order,
-        :pub_date,
-        :format,
-        :access_level,
-        :category_id,
-        propagation_org_ids: [],
-        category_attributes: %i[name organization_id],
-        attachments_attributes: %i[course_id document title doc_type file_description _destroy]
-      ]
-
-      params.require(:course).permit(permitted_attributes)
+      params.require(:course).permit(policy(@course).permitted_attributes)
     end
 
     def new_course_params
@@ -196,6 +172,17 @@ module Admin
     def propagate_course_changes
       Course.copied_from_course(@course).each do |course|
         course.update(attributes_to_propagate)
+      end
+    end
+
+    def update_course
+      if @course.parent.present?
+        @course.update(new_course_params.merge(pub_status: 'P'))
+      else
+        # The slug must be set to nil for the friendly_id to update on title change
+        @course.slug = nil if @course.title != params[:course][:title]
+        @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
+        @course.update(new_course_params)
       end
     end
   end

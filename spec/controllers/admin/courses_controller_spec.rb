@@ -252,6 +252,27 @@ describe Admin::CoursesController do
         expect(assigns(:course).topics.last.title).to include('Another new topic')
       end
 
+      describe 'publish an imported course' do
+        let(:imported_course) { FactoryBot.create(:course, organization: org, parent: pla_course, pub_status: 'D') }
+
+        it 'should change the publication status' do
+          expect do
+            patch :update, params: { id: imported_course.to_param, course: imported_course.attributes, commit: 'Publish' }
+          end.to change { imported_course.reload.pub_status }.from('D').to('P')
+        end
+
+        it 'should not change title, if new title is given' do
+          expect do
+            patch :update, params: { id: imported_course.to_param, course: { title: 'New Title' }, commit: 'Publish' }
+          end.to_not(change { imported_course.reload.title })
+        end
+
+        it 'should redirect to admin dashboard' do
+          patch :update, params: { id: imported_course.to_param, course: imported_course.attributes, commit: 'Publish' }
+          expect(response).to redirect_to(admin_dashboard_index_path)
+        end
+      end
+
       describe 'propagation' do
         let(:org2) { FactoryBot.create(:organization) }
         let(:update_params) do

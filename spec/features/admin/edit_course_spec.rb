@@ -57,15 +57,23 @@ feature 'Admin user updates course' do
 
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
       expect(page).to have_content('Supplemental materials for further learning. These files are available to users after completing the course.')
+
+      expect(page).to_not have_button('Save Course')
+      expect(page).to_not have_button('Save Course and Edit Lessons')
+
+      expect(page).to have_button('Publish')
+      expect(page).to have_content('If you wish to edit details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
+      expect(page).to have_link('contact a PLA Administrator')
     end
 
     scenario 'changes access level for course' do
       visit edit_admin_course_path(subsite_course)
       within(:css, 'main') do
         select('Authenticated Users', from: 'course_access_level')
-        click_button 'Save Course'
+        click_button 'Publish'
       end
-      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(current_path).to eq(admin_dashboard_index_path)
+      visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_access_level', selected: 'Authenticated Users')
     end
 
@@ -73,9 +81,10 @@ feature 'Admin user updates course' do
       visit edit_admin_course_path(subsite_course)
       within(:css, 'main') do
         select(category.name, from: 'course_category_id')
-        click_button 'Save Course'
+        click_button 'Publish'
       end
-      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(current_path).to eq(admin_dashboard_index_path)
+      visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_category_id', selected: category.name)
     end
 
@@ -84,7 +93,7 @@ feature 'Admin user updates course' do
       within(:css, 'main') do
         select('Create new category', from: 'course_category_id')
         fill_in :course_category_attributes_name, with: category.name
-        click_button 'Save Course'
+        click_button 'Publish'
       end
       expect(current_path).to eq(admin_course_path(subsite_course))
       expect(page).to have_content('Category Name is already in use by your organization.')
@@ -98,9 +107,10 @@ feature 'Admin user updates course' do
       within(:css, 'main') do
         select('Create new category', from: 'course_category_id')
         fill_in :course_category_attributes_name, with: "#{category.name}_#{new_word}"
-        click_button 'Save Course'
+        click_button 'Publish'
       end
-      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(current_path).to eq(admin_dashboard_index_path)
+      visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_category_id', selected: "#{category.name}_#{new_word}")
     end
 

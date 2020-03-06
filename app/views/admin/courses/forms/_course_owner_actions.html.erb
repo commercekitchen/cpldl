@@ -1,0 +1,8 @@
+  <div class="form-actions spread actions">
+    <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "button-color" %>
+    <% if @course.lessons.blank? %>
+      <%= f.submit "Save Course and Add Lessons", class: "button-color" %>
+    <% else %>
+      <%= f.submit "Save Course and Edit Lessons", class: "button-color" %>
+    <% end %>
+  </div>
