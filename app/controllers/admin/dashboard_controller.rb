@@ -43,7 +43,7 @@ module Admin
       import_service = CourseImportService.new(organization: current_organization, course_id: params['course_id'].to_i)
       new_course = import_service.import!
 
-      redirect_to edit_admin_course_path(new_course)
+      redirect_to edit_admin_course_path(new_course), notice: 'Congrats! You have just imported a PLA course. Please set your desired Access Level and Course Category.'
     rescue ActiveRecord::RecordInvalid => e
       redirect_to admin_import_courses_path, alert: e.record.errors.full_messages
     end
