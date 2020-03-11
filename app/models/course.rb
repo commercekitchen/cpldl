@@ -67,7 +67,7 @@ class Course < ApplicationRecord
   default_scope { order('course_order ASC') }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
-  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
+  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
   scope :published, -> { where(pub_status: 'P') }

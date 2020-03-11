@@ -287,13 +287,12 @@ describe Admin::CoursesController do
         let(:org2) { FactoryBot.create(:organization) }
         let(:update_params) do
           { id: course1.to_param,
-            course: course1_attributes.merge(propagation_org_ids: [org2.id], title: 'Test Course'),
+            course: course1_attributes.merge(title: 'Test Course'),
             commit: 'Save Course' }
         end
 
         before do
           course2.update(organization: org2, parent_id: course1.id)
-          course1.update(propagation_org_ids: [org2])
         end
 
         it 'propagates changes to selected courses' do
@@ -304,7 +303,7 @@ describe Admin::CoursesController do
 
         it 'displays propagation success message' do
           patch :update, params: update_params
-          expect(flash[:notice]).to eq('Course was successfully updated. Changes propagated to courses for 1 subsite.')
+          expect(flash[:notice]).to eq('Course was successfully updated.')
         end
 
         it 'creates a new category on org2' do
@@ -323,8 +322,7 @@ describe Admin::CoursesController do
           let(:new_category_params) do
             { id: course1.to_param,
               course: { category_id: '0',
-                        category_attributes: { name: 'New Category', organization_id: org.id },
-                        propagation_org_ids: [org2.id] },
+                        category_attributes: { name: 'New Category', organization_id: org.id } },
               commit: 'Save Course' }
           end
 

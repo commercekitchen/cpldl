@@ -80,10 +80,8 @@ module Admin
       if update_course
         if @course.parent.blank?
           @course.topics_list(build_topics_list(params))
-
-          changed = propagate_changes? ? propagate_course_changes.count : 0
+          CoursePropagationService.new(course: @course).propagate_course_changes
           success_message = 'Course was successfully updated.'
-          success_message += " Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
         end
 
         case params[:commit]
@@ -171,19 +169,9 @@ module Admin
       topics_list | other_topic
     end
 
-    def propagate_changes?
-      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_propagate.any?
-    end
-
     def attributes_to_propagate
       category_name = @course.reload.category.name
       course_params.except(:category_id, :category_attributes, :propagation_org_ids).merge(category_name: category_name).to_h
-    end
-
-    def propagate_course_changes
-      Course.copied_from_course(@course).each do |course|
-        course.update(attributes_to_propagate)
-      end
     end
 
     def update_course
