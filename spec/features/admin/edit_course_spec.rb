@@ -58,8 +58,8 @@ feature 'Admin user updates course' do
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
       expect(page).to have_content('Supplemental materials for further learning. These files are available to users after completing the course.')
 
-      expect(page).to_not have_button('Save Course')
-      expect(page).to_not have_button('Save Course and Edit Lessons')
+      expect(page).to_not have_button('Publish Course')
+      expect(page).to_not have_button('Edit Lessons')
 
       expect(page).to have_button('Publish')
       expect(page).to have_content('If you wish to edit details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
@@ -130,7 +130,7 @@ feature 'Admin user updates course' do
       visit edit_admin_course_path(custom_subsite_course)
       attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
       attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-      click_button 'Save Course'
+      click_button 'Publish Course'
       expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
     end
 

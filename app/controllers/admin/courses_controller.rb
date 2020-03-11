@@ -41,15 +41,12 @@ module Admin
 
       @course.assign_attributes(new_course_params)
 
-      if params[:course][:pub_status] == 'P'
-        @course.set_pub_date
-      end
-
       @course.org_id = current_user.organization_id
 
       if @course.save
         @course.topics_list(build_topics_list(params))
-        if params[:commit] == 'Save Course'
+
+        if params[:commit] == 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         else
           redirect_to new_admin_course_lesson_path(@course), notice: 'Course was successfully created. Now add some lessons.'
@@ -92,12 +89,16 @@ module Admin
         case params[:commit]
         when 'Save Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
-        when 'Save Course and Edit Lessons'
-          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
+        when 'Edit Lessons'
+          if @course.lessons.blank?
+            redirect_to new_admin_course_lesson_path(@course), notice: success_message
+          else
+            redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
+          end
         when 'Publish'
           redirect_to admin_dashboard_index_path, notice: 'Course successfully published!'
         else
-          redirect_to new_admin_course_lesson_path(@course), notice: success_message
+          render :edit, alert: 'Unknown Action'
         end
       else
         @course.errors.delete(:"attachments.document_content_type")
@@ -147,10 +148,20 @@ module Admin
     end
 
     def new_course_params
-      if course_params[:category_id].present? && course_params[:category_id] == '0'
-        course_params
+      new_params = if course_params[:category_id].present? && course_params[:category_id] == '0'
+                     course_params
+                   else
+                     course_params.except(:category_attributes)
+                   end
+
+      new_params.merge(pub_status: publication_status_by_commit)
+    end
+
+    def publication_status_by_commit
+      if ['Publish', 'Publish Course'].include?(params[:commit])
+        'P'
       else
-        course_params.except(:category_attributes)
+        'D'
       end
     end
 
@@ -181,7 +192,6 @@ module Admin
       else
         # The slug must be set to nil for the friendly_id to update on title change
         @course.slug = nil if @course.title != params[:course][:title]
-        @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
         @course.update(new_course_params)
       end
     end

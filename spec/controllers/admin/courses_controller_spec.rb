@@ -120,7 +120,6 @@ describe Admin::CoursesController do
         summary:  "Basically it's basic",
         description:  'More descriptive that you know!',
         contributor:  "MeMyself&I <a href='here.com'></a>",
-        pub_status:  'P',
         format: 'D',
         other_topic_text: 'Learning',
         language_id: @english.id,
@@ -136,7 +135,6 @@ describe Admin::CoursesController do
         summary: '',
         description: '',
         contributor: '',
-        pub_status: '',
         format: '',
         language_id: '',
         level: '',
@@ -208,6 +206,18 @@ describe Admin::CoursesController do
         }
         expect(response).to render_template('new')
       end
+
+      it 'saves course as draft if committed with draft' do
+        expect do
+          post :create, params: { course: valid_attributes, commit: 'Save as Draft' }
+        end.to change { Course.where(pub_status: 'D').count }.by(1)
+      end
+
+      it 'publishes course if committed with publish' do
+        expect do
+          post :create, params: { course: valid_attributes, commit: 'Publish Course' }
+        end.to change { Course.where(pub_status: 'P').count }.by(1)
+      end
     end
 
     context 'with invalid params' do
@@ -240,7 +250,7 @@ describe Admin::CoursesController do
       end
 
       it 'updates an existing Course, and moves on to lessons' do
-        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course and Add Lessons' }
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Edit Lessons' }
         expect(response).to redirect_to(new_admin_course_lesson_path(course1, course1.lessons.first))
       end
 
