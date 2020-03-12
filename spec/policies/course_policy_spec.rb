@@ -236,7 +236,7 @@ describe CoursePolicy, type: :policy do
                                                                 :category_id,
                                                                 propagation_org_ids: [],
                                                                 category_attributes: %i[name organization_id],
-                                                                attachments_attributes: %i[course_id document title doc_type file_description _destroy])
+                                                                attachments_attributes: %i[document title doc_type file_description _destroy])
       end
     end
   end
