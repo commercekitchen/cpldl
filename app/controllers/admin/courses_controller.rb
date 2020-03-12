@@ -80,12 +80,12 @@ module Admin
       if update_course
         if @course.parent.blank?
           @course.topics_list(build_topics_list(params))
-          CoursePropagationService.new(course: @course).propagate_course_changes
+          CoursePropagationService.new(course: @course, attributes_to_propagate: attributes_to_propagate).propagate_course_changes
           success_message = 'Course was successfully updated.'
         end
 
         case params[:commit]
-        when 'Save Course'
+        when 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
         when 'Edit Lessons'
           if @course.lessons.blank?
@@ -170,7 +170,7 @@ module Admin
     end
 
     def attributes_to_propagate
-      category_name = @course.reload.category.name
+      category_name = @course.reload&.category&.name
       course_params.except(:category_id, :category_attributes, :propagation_org_ids).merge(category_name: category_name).to_h
     end
 

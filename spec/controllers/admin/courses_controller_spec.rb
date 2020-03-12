@@ -240,12 +240,12 @@ describe Admin::CoursesController do
       end
 
       it 'updates an existing Course' do
-        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course' }
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Publish Course' }
         expect(response).to redirect_to(edit_admin_course_path(course1))
       end
 
       it 'displays appropriate notice for successful course update' do
-        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Save Course' }
+        patch :update, params: { id: course1.to_param, course: course1_attributes, commit: 'Publish Course' }
         expect(flash[:notice]).to eq('Course was successfully updated.')
       end
 
@@ -288,7 +288,7 @@ describe Admin::CoursesController do
         let(:update_params) do
           { id: course1.to_param,
             course: course1_attributes.merge(title: 'Test Course'),
-            commit: 'Save Course' }
+            commit: 'Publish Course' }
         end
 
         before do
