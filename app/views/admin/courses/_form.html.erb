@@ -20,7 +20,7 @@
     <%= f.label :title, class: "text-color" do %>
       Title<span class="required"></span>
     <% end %>
-    <%= f.text_field :title, maxlength: 50, disabled: @imported_course %>
+    <%= f.text_field :title, maxlength: Course.max_length_for(:title), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -35,7 +35,7 @@
     <%= f.label :summary, class: "text-color" do %>
       Course Summary<span class="required"></span>
     <% end %>
-    <%= f.text_field :summary, maxlength: 74, disabled: @imported_course %>
+    <%= f.text_field :summary, maxlength: Course.max_length_for(:summary), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -109,7 +109,7 @@
     <%= f.label :seo_page_title, class: "text-color" do %>
       SEO Page Title
     <% end %>
-    <%= f.text_field :seo_page_title, maxlength: 90, disabled: @imported_course %>
+    <%= f.text_field :seo_page_title, maxlength: Course.max_length_for(:seo_page_title), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -117,7 +117,7 @@
     <%= f.label :meta_desc, class: "text-color" do %>
       SEO Meta Description
     <% end %>
-    <%= f.text_field :meta_desc, maxlength: 156, disabled: @imported_course %>
+    <%= f.text_field :meta_desc, maxlength: Course.max_length_for(:meta_desc), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 

@@ -4,7 +4,6 @@ module Admin
   class LessonsController < BaseController
 
     before_action :set_course, except: [:sort]
-    before_action :set_maximums, only: %i[new edit]
 
     def new
       @lesson = @course.lessons.new
@@ -89,13 +88,6 @@ module Admin
                                      :pub_status,
                                      :subdomain,
                                      propagation_org_ids: [])
-    end
-
-    def set_maximums
-      @max_title = Lesson.validators_on(:title).first.options[:maximum]
-      @max_summary = Lesson.validators_on(:summary).first.options[:maximum]
-      @max_seo_page_title = Lesson.validators_on(:seo_page_title).first.options[:maximum]
-      @max_meta_desc = Lesson.validators_on(:meta_desc).first.options[:maximum]
     end
 
     def validate_assessment

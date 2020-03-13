@@ -27,26 +27,26 @@
     <div class="form-row inline">
       <fieldset class='inline-item'>
         <%= f.label :first_name, class: "screen-reader-text" %>
-        <%= f.text_field :first_name, placeholder: "First *", maxlength: 30 %>
+        <%= f.text_field :first_name, placeholder: "First *", maxlength: Contact.max_length_for(:first_name) %>
       </fieldset>
 
       <fieldset class="inline-item">
         <%= f.label :last_name, class: "screen-reader-text" %>
-        <%= f.text_field :last_name, placeholder: "Last *", maxlength: 30 %>
+        <%= f.text_field :last_name, placeholder: "Last *", maxlength: Contact.max_length_for(:last_name) %>
       </fieldset>
     </div>
 
     <div class='form-row'>
       <fieldset>
         <%= f.label :organization, class: "screen-reader-text" %>
-        <%= f.text_field :organization, placeholder: "Organization *", maxlength: 50 %>
+        <%= f.text_field :organization, placeholder: "Organization *", maxlength: Contact.max_length_for(:organization) %>
       </fieldset>
     </div>
 
     <div class="form-row inline">
       <fieldset class="inline-item">
         <%= f.label :city, class: "screen-reader-text" %>
-        <%= f.text_field :city, placeholder: "City *", maxlength: 30 %>
+        <%= f.text_field :city, placeholder: "City *", maxlength: Contact.max_length_for(:city) %>
       </fieldset>
 
       <fieldset class="inline-item">
@@ -58,18 +58,18 @@
     <div class="form-row inline">
       <fieldset class="inline-item">
         <%= f.label :email, class: "screen-reader-text" %>
-        <%= f.text_field :email, placeholder: "Email *", maxlength: 30 %>
+        <%= f.text_field :email, placeholder: "Email *", maxlength: Contact.max_length_for(:email) %>
       </fieldset>
 
       <fieldset class="inline-item">
         <%= f.label :phone, class: "screen-reader-text" %>
-        <%= f.text_field :phone, placeholder: "Phone", maxlength: 20 %>
+        <%= f.text_field :phone, placeholder: "Phone", maxlength: Contact.max_length_for(:phone) %>
       </fieldset>
     </div>
 
     <fieldset class="form-row">
       <%= f.label :comments, class: "screen-reader-text" %>
-      <%= f.text_area :comments, placeholder: "Comments *", maxlength: 2048 %>
+      <%= f.text_area :comments, placeholder: "Comments *", maxlength: Contact.max_length_for(:comments) %>
     </fieldset>
 
     <div class="form-row">

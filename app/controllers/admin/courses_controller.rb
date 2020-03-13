@@ -4,7 +4,6 @@ module Admin
   class CoursesController < BaseController
 
     before_action :set_course, only: %i[preview edit update destroy]
-    before_action :set_maximums, only: %i[new edit]
     before_action :set_category_options, only: %i[new edit create update]
 
     def index
@@ -127,13 +126,6 @@ module Admin
       end
 
       @category_options << ['Create new category', 0]
-    end
-
-    def set_maximums
-      @max_title   = Course.validators_on(:title).first.options[:maximum]
-      @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
-      @max_summary = Course.validators_on(:summary).first.options[:maximum]
-      @max_meta    = Course.validators_on(:meta_desc).first.options[:maximum]
     end
 
     def set_course
