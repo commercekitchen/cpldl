@@ -4,6 +4,7 @@
   grid-template-columns: minmax(0, 50%) minmax(0, 50%);
   grid-gap: 2em;
   grid-template-areas:
+    "errors errors"
     "title title"
     "author author"
     "summary summary"
@@ -21,6 +22,7 @@
 
   &.restricted {
     grid-template-areas:
+      "errors errors"
       "categories access_level"
       "actions actions"
       "title title"
@@ -36,6 +38,10 @@
       "seo_title seo_title"
       "seo_meta seo_meta"
       "propagation propagation";
+  }
+
+  .error_explanation {
+    grid-area: errors;
   }
 
   .title {
