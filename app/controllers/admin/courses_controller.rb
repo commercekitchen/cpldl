@@ -2,7 +2,6 @@
 
 module Admin
   class CoursesController < BaseController
-
     before_action :set_course, only: %i[preview edit update destroy]
     before_action :set_category_options, only: %i[new edit create update]
 
@@ -40,11 +39,7 @@ module Admin
 
       @course.assign_attributes(new_course_params)
 
-      @course.org_id = current_user.organization_id
-
       if @course.save
-        @course.topics_list(build_topics_list(params))
-
         if params[:commit] == 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         else
@@ -78,7 +73,6 @@ module Admin
 
       if update_course
         if @course.parent.blank?
-          @course.topics_list(build_topics_list(params))
           CoursePropagationService.new(course: @course, attributes_to_propagate: attributes_to_propagate).propagate_course_changes
           success_message = 'Course was successfully updated.'
         end
@@ -153,12 +147,6 @@ module Admin
       else
         'D'
       end
-    end
-
-    def build_topics_list(params)
-      topics_list = params[:course][:topics] || []
-      other_topic = params[:course][:other_topic] == '1' ? [params[:course][:other_topic_text]] : []
-      topics_list | other_topic
     end
 
     def attributes_to_propagate

@@ -77,6 +77,32 @@ describe CoursePropagationService do
   end
 
   describe 'topic changes' do
+    let!(:topic1) { FactoryBot.create(:topic) }
+    let(:topic_attributes) do
+      {
+        topic_ids: [topic1.id],
+        course_topics_attributes: [{ topic_attributes: { title: 'Some new topic' } }]
+      }
+    end
+
+    subject { described_class.new(course: course, attributes_to_propagate: topic_attributes) }
+
+    it 'should propagate topic changes' do
+      expect do
+        subject.propagate_course_changes
+      end.to change { child_course.topics.count }.by(2)
+    end
+
+    it 'should create new custom topic' do
+      expect do
+        subject.propagate_course_changes
+      end.to change(Topic, :count).by(1)
+    end
+
+    it 'should add existing topic to child course' do
+      subject.propagate_course_changes
+      expect(child_course.reload.topics).to include(topic1)
+    end
   end
 
   it 'should not change child course category' do

@@ -8,6 +8,7 @@ describe Admin::CoursesController do
   let(:pla) { FactoryBot.create(:default_organization) }
   let(:pla_course) { FactoryBot.create(:course, organization: pla) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
+  let!(:topic) { FactoryBot.create(:topic) }
   let(:category1) { FactoryBot.create(:category, organization: org) }
   let(:category2) { FactoryBot.create(:category, organization: org) }
   let(:category3) { FactoryBot.create(:category, organization: other_org) }
@@ -121,7 +122,7 @@ describe Admin::CoursesController do
         description:  'More descriptive that you know!',
         contributor:  "MeMyself&I <a href='here.com'></a>",
         format: 'D',
-        other_topic_text: 'Learning',
+        topic_ids: [topic.id],
         language_id: @english.id,
         level: 'Advanced',
         course_order: '',
@@ -138,7 +139,6 @@ describe Admin::CoursesController do
         format: '',
         language_id: '',
         level: '',
-        other_topic_text: '',
         course_order: '',
         organization_id: org.id }
     end
@@ -156,13 +156,17 @@ describe Admin::CoursesController do
         expect(assigns(:course)).to be_persisted
       end
 
+      it 'assigns an existing topic' do
+        expect do
+          post :create, params: { course: valid_attributes }
+        end.to change { topic.courses.count }.by(1)
+      end
+
       it 'creates a new topic, if given' do
-        valid_attributes[:other_topic] = '1'
-        valid_attributes[:other_topic_text] = 'Some other topic'
-        post :create, params: { course: valid_attributes }
-        expect(assigns(:course)).to be_a(Course)
-        expect(assigns(:course)).to be_persisted
-        expect(assigns(:course).topics.last.title).to include('Some other topic')
+        valid_attributes[:course_topics_attributes] = [{ topic_attributes: { title: 'Some other topic' } }]
+        expect do
+          post :create, params: { course: valid_attributes }
+        end.to change(Topic, :count).by(1)
       end
 
       it 'redirects to the admin edit view of the course' do
@@ -256,8 +260,7 @@ describe Admin::CoursesController do
 
       it 'creates a new topic, if given' do
         valid_attributes = course1_attributes
-        valid_attributes[:other_topic] = '1'
-        valid_attributes[:other_topic_text] = 'Another new topic'
+        valid_attributes[:course_topics_attributes] = [{ topic_attributes: { title: 'Another new topic' } }]
         patch :update, params: { id: course1.to_param, course: valid_attributes }
         expect(assigns(:course).topics.last.title).to include('Another new topic')
       end

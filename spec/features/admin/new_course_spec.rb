@@ -21,7 +21,7 @@ feature 'Admin user creates new course and lesson' do
     fill_in :course_description, with: 'Description for new course'
     check 'Topic A'
     check 'Other Topic'
-    fill_in :course_other_topic_text, with: 'Some New Topic'
+    fill_in :course_course_topics_attributes_0_topic_attributes_title, with: 'Some New Topic'
     select('Desktop', from: 'course_format')
     select('English', from: 'course_language_id')
     select('Beginner', from: 'course_level')
@@ -31,6 +31,13 @@ feature 'Admin user creates new course and lesson' do
     switch_to_subdomain(org.subdomain)
     login_as admin
     visit new_admin_course_path
+  end
+
+  scenario 'assigns topics' do
+    fill_basic_course_info
+    click_button 'Publish Course'
+    expect(page).to have_field('Topic A', checked: true)
+    expect(page).to have_field('Some New Topic', checked: true)
   end
 
   scenario 'creates course with new category' do
