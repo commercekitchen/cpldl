@@ -9,7 +9,7 @@ class CoursePropagationService
 
   def propagate_course_changes
     child_courses.each do |child|
-      child.update(@attributes_to_propagate)
+      child.update(@attributes_to_propagate.merge(topics: topics))
     end
   end
 
@@ -17,5 +17,9 @@ class CoursePropagationService
 
   def child_courses
     Course.copied_from_course(@course)
+  end
+
+  def topics
+    @course.topics
   end
 end

@@ -5,7 +5,8 @@ require 'rails_helper'
 describe CoursePropagationService do
   let(:pla) { FactoryBot.create(:default_organization) }
   let(:course) { FactoryBot.create(:course_with_lessons, organization: pla) }
-  let!(:child_course) { FactoryBot.create(:course, parent: course) }
+  let(:old_topic) { FactoryBot.create(:topic) }
+  let!(:child_course) { FactoryBot.create(:course, parent: course, topics: [old_topic]) }
 
   describe 'model attribute changes' do
     let(:new_attributes) do
@@ -77,37 +78,17 @@ describe CoursePropagationService do
   end
 
   describe 'topic changes' do
-    let!(:topic1) { FactoryBot.create(:topic) }
-    let(:topic_attributes) do
-      {
-        topic_ids: [topic1.id],
-        course_topics_attributes: [{ topic_attributes: { title: 'Some new topic' } }]
-      }
+    let!(:topic) { FactoryBot.create(:topic) }
+
+    before do
+      course.update(topics: [topic])
     end
 
-    subject { described_class.new(course: course, attributes_to_propagate: topic_attributes) }
+    subject { described_class.new(course: course, attributes_to_propagate: {}) }
 
-    it 'should propagate topic changes' do
-      expect do
-        subject.propagate_course_changes
-      end.to change { child_course.topics.count }.by(2)
-    end
-
-    it 'should create new custom topic' do
-      expect do
-        subject.propagate_course_changes
-      end.to change(Topic, :count).by(1)
-    end
-
-    it 'should add existing topic to child course' do
+    it 'should add correct topic to child course' do
       subject.propagate_course_changes
-      expect(child_course.reload.topics).to include(topic1)
+      expect(child_course.reload.topics).to contain_exactly(topic)
     end
-  end
-
-  it 'should not change child course category' do
-  end
-
-  it 'should not change child course access level' do
   end
 end

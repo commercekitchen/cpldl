@@ -150,8 +150,7 @@ module Admin
     end
 
     def attributes_to_propagate
-      category_name = @course.reload&.category&.name
-      course_params.except(:category_id, :category_attributes, :propagation_org_ids).merge(category_name: category_name).to_h
+      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes)
     end
 
     def update_course
