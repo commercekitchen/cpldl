@@ -1,12 +1,16 @@
 <div class='text-copies'>
   <%= f.fields_for :attachments, @course.attachments.build do |a| %>
     <%= a.label :document, "Text Copies of Course", class: "text-color" %>
-    <p><i>Upload text copies of the course to allow users to download content and view offline or follow along with the online course.</i></p>
+    <p><i>
+      <%= "#{@imported_course ? 'Text' : 'Upload text'} copies of the course to allow users to download content and view offline or follow along with the online course." %>
+    </i></p>
 
     <div class='fields'>
       <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'supplemental' } %>
-      <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'supplemental', removable: false } %>
-      <%= link_to_add_fields "Add Attachment", f, :attachments, "supplemental" %>
+      <% unless @imported_course %>
+        <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'supplemental', removable: false } %>
+        <%= link_to_add_fields "Add Attachment", f, :attachments, "supplemental" %>
+      <% end %>
     </div>
   <% end %>
 </div>

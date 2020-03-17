@@ -1,8 +1,10 @@
 .course-form {
+  margin-top: 2em;
   display: grid;
   grid-template-columns: minmax(0, 50%) minmax(0, 50%);
   grid-gap: 2em;
   grid-template-areas:
+    "errors errors"
     "title title"
     "author author"
     "summary summary"
@@ -12,12 +14,35 @@
     "additional_content additional_content"
     "topics categories"
     "language format"
-    "course_level pub_status"
-    "access_level ."
+    "course_level access_level"
     "seo_title seo_title"
     "seo_meta seo_meta"
     "propagation propagation"
     "actions actions";
+
+  &.restricted {
+    grid-template-areas:
+      "errors errors"
+      "categories access_level"
+      "actions actions"
+      "title title"
+      "author author"
+      "summary summary"
+      "description description"
+      "text_copies text_copies"
+      "resources resources"
+      "additional_content additional_content"
+      "topics ."
+      "language format"
+      "course_level pub_status"
+      "seo_title seo_title"
+      "seo_meta seo_meta"
+      "propagation propagation";
+  }
+
+  .error_explanation {
+    grid-area: errors;
+  }
 
   .title {
     grid-area: title;

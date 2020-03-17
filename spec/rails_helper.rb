@@ -61,8 +61,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    @english = create(:language)
-    @spanish = create(:spanish_lang)
+    @english = FactoryBot.create(:language)
+    @spanish = FactoryBot.create(:spanish_lang)
     I18n.locale = :en
   end
 

@@ -87,6 +87,11 @@ describe Admin::DashboardController do
         expect(response).to redirect_to(edit_admin_course_path(new_course))
       end
 
+      it 'should assign correct flash' do
+        post :add_imported_course, params: { course_id: importable_course1.id }
+        expect(flash[:notice]).to eq('Congrats! You have just imported a PLA course. Please set your desired Access Level and Course Category.')
+      end
+
       it 'should create new subdomain course with new category with same name as imported course' do
         post :add_imported_course, params: { course_id: importable_course1.id }
         course_category = org.courses.last.category

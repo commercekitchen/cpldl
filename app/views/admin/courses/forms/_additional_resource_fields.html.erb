@@ -1,12 +1,17 @@
 <div class='resources'>
   <%= f.fields_for :attachments, @course.attachments.build do |a| %>
     <%= a.label :document, "Additional Resources", class: "text-color" %>
-    <p><i>Upload any supplemental materials for further learning. These files are available to users after completing the course.</i></p>
+    <p><i>
+      <%= "#{@imported_course ? 'Supplemental' : 'Upload any supplemental'} materials for further learning. These files are available to users after completing the course." %>
+    </i></p>
+      
     
     <div class='fields'>
       <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'post-course' } %>
-      <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'post-course', removable: false } %>
-      <%= link_to_add_fields "Add Attachment", f, :attachments, "post-course" %>
+      <% unless @imported_course %>
+        <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'post-course', removable: false } %>
+        <%= link_to_add_fields "Add Attachment", f, :attachments, "post-course" %>
+      <% end %>
     </div>
   <% end %>
 </div>

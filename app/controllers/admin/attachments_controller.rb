@@ -6,7 +6,7 @@ module Admin
       @attachment = Attachment.find(params[:id])
       authorize @attachment
       @attachment.destroy
-      redirect_back(fallback_location: root_path)
+      redirect_to edit_admin_course_path(@attachment.course)
     end
   end
 end

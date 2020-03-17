@@ -18,7 +18,7 @@ feature 'Admin previews a PLA course' do
   scenario 'admin clicks course preview link from course import view' do
     click_link 'Import DigitalLearn Courses'
     click_link 'Preview Course'
-    expect(current_path).to eq(admin_course_preview_path(pla_course.id))
+    expect(current_path).to eq(admin_course_preview_path(pla_course))
     expect(page).to have_content('You are previewing this course.')
 
     expect(page).to have_link 'Return to Admin Panel'

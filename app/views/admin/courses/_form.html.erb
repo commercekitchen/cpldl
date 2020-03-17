@@ -1,8 +1,4 @@
-<small><%= "Admin >> Courses >> #{breadcrumb}" %></small>
-
-<h1>Course Information</h1>
-
-<%= form_for([:admin, @course], html: { multipart: true, class: 'course-form' } ) do |f| %>
+<%= form_for([:admin, @course], html: { multipart: true, class: "course-form #{'restricted' if @imported_course}" } ) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
@@ -14,11 +10,17 @@
     </div>
   <% end %>
 
+  <% if @imported_course %>
+    <%= render 'admin/courses/forms/categories', f: f %>
+    <%= render 'admin/courses/forms/access_level', f: f %>
+    <%= render 'admin/courses/forms/imported_course_actions', f: f %>
+  <% end %>
+
   <fieldset class='title'>
     <%= f.label :title, class: "text-color" do %>
       Title<span class="required"></span>
     <% end %>
-    <%= f.text_field :title, maxlength: 50 %>
+    <%= f.text_field :title, maxlength: Course.max_length_for(:title), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -26,14 +28,14 @@
     <%= f.label :contributor, class: "text-color" do %>
       Contributor<span class="required"></span>
     <% end %>
-    <%= f.text_field :contributor %>
+    <%= f.text_field :contributor, disabled: @imported_course %>
   </fieldset>
 
   <fieldset class='summary'>
     <%= f.label :summary, class: "text-color" do %>
       Course Summary<span class="required"></span>
     <% end %>
-    <%= f.text_field :summary, maxlength: 74 %>
+    <%= f.text_field :summary, maxlength: Course.max_length_for(:summary), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -41,7 +43,7 @@
     <%= f.label :description, class: "text-color" do %>
       Course Description<span class="required"></span>
     <% end %>
-    <%= f.cktext_area :description %>
+    <%= f.cktext_area :description, disabled: @imported_course %>
   </fieldset>
 
   <%= render partial: 'admin/courses/forms/text_copy_fields', locals: { f: f } %>
@@ -50,71 +52,53 @@
   <fieldset class='additional-content'>
     <%= f.label :notes, "Content for Further Learning", class: "text-color" %>
     <p><i>This content is available to users after completing the course.</i></p>
-    <%= f.cktext_area :notes %>
+    <%= f.cktext_area :notes, disabled: @imported_course %>
   </fieldset>
 
-  <fieldset class='topics'>
-    <%= f.label :topics, class: "text-color" do %>
-      Course Topics<span class="required"></span>
-    <% end %>
+  <%= render 'admin/courses/forms/topics', f: f %>
 
-    <%= f.collection_check_boxes(:topics, Topic.all, :title, :title) do |b| %>
-      <div>
-        <%= b.check_box(checked: current_topics(@course, b.object)) %>
-        <%= b.label class: "plain" %>
-      </div>
-    <% end %>
-
-    <div>
-      <%= f.check_box :other_topic %>
-      <%= f.label :other_topic, "Other Topic", class: "plain" %>
-      <%= f.text_field :other_topic_text, placeholder: "(Enter to create new topic)", class: "topic-box" %>
-    </div>
-  </fieldset>
-  
-  <div class='categories'>
-    <fieldset>
-      <%= f.label :category_id, class: "text-color" do %>
-        Course Category
-      <% end %>
-      <%= f.select(:category_id, options_for_select(@category_options, @course.category_id || ("0" if @custom)),{ include_blank: "Uncategorized" } ) %>
-    </fieldset>
-    <fieldset>
-      <%= f.fields_for :category_attributes do |c| %>
-        <%= c.hidden_field :organization_id, value: current_organization.id %>
-        <div class=<%="#{'field_with_errors' if f.object.category.present? && f.object.category.errors[:name].present?}"%>>
-          <%= c.text_field :name, value: (@category.name if @category.present?) || (@custom_category), placeholder: "Enter new category name", class: "#{'hideUntilActive' unless @category_name.present?}" %>
-        </div>
-      <% end %>
-    </fieldset>
-  </div>
+  <% unless @imported_course %>
+    <%= render 'admin/courses/forms/categories', f: f %>
+  <% end %>
 
   <fieldset class='language'>
     <%= f.label :language_id, class: "text-color" do %>
       Course Language<span class="required"></span>
     <% end %>
-    <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." } ) %>
+    <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, { disabled: @imported_course } ) %>
   </fieldset>
 
   <fieldset class='format'>
     <%= f.label :format, class: "text-color" do %>
       Course Format<span class="required"></span>
     <% end %>
-    <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." } ) %>
+    <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." }, { disabled: @imported_course } ) %>
   </fieldset>
 
-  <%= render("admin/courses/forms/level_pub_section", f: f) %>
-  <%= render("admin/courses/forms/access_level", f: f) %>
+  <fieldset class='course-level'>
+    <%= f.label :level, class: "text-color" do %>
+      Course Level<span class="required"></span>
+    <% end %>
+    <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." }, { disabled: @imported_course } ) %>
+  </fieldset>
+
+  <% unless @imported_course %>
+    <%= render 'admin/courses/forms/access_level', f: f %>
+  <% end %>
 
   <fieldset class='seo-title'>
-    <%= f.label "SEO page title", class: "text-color" %>
-    <%= f.text_field :seo_page_title, maxlength: 90 %>
+    <%= f.label :seo_page_title, class: "text-color" do %>
+      SEO Page Title
+    <% end %>
+    <%= f.text_field :seo_page_title, maxlength: Course.max_length_for(:seo_page_title), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
   <fieldset class='seo-meta'>
-    <%= f.label :meta_desc, class: "text-color" %>
-    <%= f.text_field :meta_desc, maxlength: 156 %>
+    <%= f.label :meta_desc, class: "text-color" do %>
+      SEO Meta Description
+    <% end %>
+    <%= f.text_field :meta_desc, maxlength: Course.max_length_for(:meta_desc), disabled: @imported_course %>
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
@@ -137,12 +121,7 @@
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 
-  <div class="form-actions spread actions">
-    <%= f.submit "Save Course", params: { commit: "Save Course" }, class: "button-color" %>
-    <% if @course.lessons.blank? %>
-      <%= f.submit "Save Course and Add Lessons", class: "button-color" %>
-    <% else %>
-      <%= f.submit "Save Course and Edit Lessons", class: "button-color" %>
-    <% end %>
-  </div>
+  <% unless @imported_course %>
+    <%= render 'admin/courses/forms/course_owner_actions', f: f %>
+  <% end %>
 <% end %>

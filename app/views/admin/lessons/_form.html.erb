@@ -19,7 +19,7 @@
       <%= f.label :title, class: "text-color" do %>
         Lesson Title<span class="required"></span>
       <% end %>
-      <%= f.text_field :title, maxlength: 90  %>
+      <%= f.text_field :title, maxlength: Lesson.max_length_for(:title)  %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -29,7 +29,7 @@
       <%= f.label :summary, class: "text-color" do %>
         Lesson Summary<span class="required"></span>
       <% end %>
-      <%= f.text_field :summary, maxlength: 156 %>
+      <%= f.text_field :summary, maxlength: Lesson.max_length_for(:summary) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -77,7 +77,7 @@
       <%= f.label :seo_page_title, class: "text-color" do %>
         Page Title
       <% end %>
-      <%= f.text_field :seo_page_title, maxlength: 90 %>
+      <%= f.text_field :seo_page_title, maxlength: Lesson.max_length_for(:seo_page_title) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -85,7 +85,7 @@
   <div class='form'>
     <fieldset>
       <%= f.label :meta_desc, class: "text-color" %>
-      <%= f.text_field :meta_desc, maxlength: 156 %>
+      <%= f.text_field :meta_desc, maxlength: Lesson.max_length_for(:meta_desc) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>

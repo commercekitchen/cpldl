@@ -2,9 +2,7 @@
 
 module Admin
   class CoursesController < BaseController
-
     before_action :set_course, only: %i[preview edit update destroy]
-    before_action :set_maximums, only: %i[new edit]
     before_action :set_category_options, only: %i[new edit create update]
 
     def index
@@ -31,22 +29,18 @@ module Admin
 
     def edit
       authorize @course
+      @imported_course = @course.parent.present?
     end
 
     def create
-      @course = current_organization.courses.new(new_course_params)
+      @course = current_organization.courses.new
 
       authorize @course
 
-      if params[:course][:pub_status] == 'P'
-        @course.set_pub_date
-      end
-
-      @course.org_id = current_user.organization_id
+      @course.assign_attributes(new_course_params)
 
       if @course.save
-        @course.topics_list(build_topics_list(params))
-        if params[:commit] == 'Save Course'
+        if params[:commit] == 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         else
           redirect_to new_admin_course_lesson_path(@course), notice: 'Course was successfully created. Now add some lessons.'
@@ -77,25 +71,25 @@ module Admin
     def update
       authorize @course
 
-      # The slug must be set to nil for the friendly_id to update on title change
-      @course.slug = nil if @course.title != params[:course][:title]
-
-      @course.update_pub_date(params[:course][:pub_status]) if params[:course][:pub_status] != @course.pub_status
-
-      if @course.update(new_course_params)
-        @course.topics_list(build_topics_list(params))
-
-        changed = propagate_changes? ? propagate_course_changes.count : 0
-        success_message = 'Course was successfully updated.'
-        success_message += " Changes propagated to courses for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
+      if update_course
+        if @course.parent.blank?
+          CoursePropagationService.new(course: @course, attributes_to_propagate: attributes_to_propagate).propagate_course_changes
+          success_message = 'Course was successfully updated.'
+        end
 
         case params[:commit]
-        when 'Save Course'
+        when 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
-        when 'Save Course and Edit Lessons'
-          redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
+        when 'Edit Lessons'
+          if @course.lessons.blank?
+            redirect_to new_admin_course_lesson_path(@course), notice: success_message
+          else
+            redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
+          end
+        when 'Publish'
+          redirect_to admin_dashboard_index_path, notice: 'Course successfully published!'
         else
-          redirect_to new_admin_course_lesson_path(@course), notice: success_message
+          render :edit, alert: 'Unknown Action'
         end
       else
         @course.errors.delete(:"attachments.document_content_type")
@@ -128,73 +122,44 @@ module Admin
       @category_options << ['Create new category', 0]
     end
 
-    def set_maximums
-      @max_title   = Course.validators_on(:title).first.options[:maximum]
-      @max_seo     = Course.validators_on(:seo_page_title).first.options[:maximum]
-      @max_summary = Course.validators_on(:summary).first.options[:maximum]
-      @max_meta    = Course.validators_on(:meta_desc).first.options[:maximum]
-    end
-
     def set_course
       id_param = params[:id] || params[:course_id]
       @course = Course.friendly.find(id_param)
     end
 
     def course_params
-      permitted_attributes = [
-        :title,
-        :seo_page_title,
-        :meta_desc,
-        :summary,
-        :description,
-        :contributor,
-        :pub_status,
-        :language_id,
-        :level,
-        :topics,
-        :notes,
-        :delete_document,
-        :other_topic,
-        :other_topic_text,
-        :course_order,
-        :pub_date,
-        :format,
-        :access_level,
-        :category_id,
-        propagation_org_ids: [],
-        category_attributes: %i[name organization_id],
-        attachments_attributes: %i[course_id document title doc_type file_description _destroy]
-      ]
-
-      params.require(:course).permit(permitted_attributes)
+      params.require(:course).permit(policy(@course).permitted_attributes)
     end
 
     def new_course_params
-      if course_params[:category_id].present? && course_params[:category_id] == '0'
-        course_params
+      new_params = if course_params[:category_id].present? && course_params[:category_id] == '0'
+                     course_params
+                   else
+                     course_params.except(:category_attributes)
+                   end
+
+      new_params.merge(pub_status: publication_status_by_commit)
+    end
+
+    def publication_status_by_commit
+      if ['Publish', 'Publish Course'].include?(params[:commit])
+        'P'
       else
-        course_params.except(:category_attributes)
+        'D'
       end
     end
 
-    def build_topics_list(params)
-      topics_list = params[:course][:topics] || []
-      other_topic = params[:course][:other_topic] == '1' ? [params[:course][:other_topic_text]] : []
-      topics_list | other_topic
-    end
-
-    def propagate_changes?
-      @course.propagation_org_ids.delete_if(&:blank?).any? && attributes_to_propagate.any?
-    end
-
     def attributes_to_propagate
-      category_name = @course.reload.category.name
-      course_params.except(:category_id, :category_attributes, :propagation_org_ids).merge(category_name: category_name).to_h
+      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes)
     end
 
-    def propagate_course_changes
-      Course.copied_from_course(@course).each do |course|
-        course.update(attributes_to_propagate)
+    def update_course
+      if @course.parent.present?
+        @course.update(new_course_params.merge(pub_status: 'P'))
+      else
+        # The slug must be set to nil for the friendly_id to update on title change
+        @course.slug = nil if @course.title != params[:course][:title]
+        @course.update(new_course_params)
       end
     end
   end

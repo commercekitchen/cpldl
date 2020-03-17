@@ -28,14 +28,14 @@ class Course < ApplicationRecord
 
   enum access_level: { everyone: 0, authenticated_users: 1 }
   # Attributes not saved to db, but still needed for validation
-  attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
+  attr_accessor :other_topic, :org_id, :subdomain
   attr_writer :propagation_org_ids
 
   belongs_to :parent, class_name: 'Course', optional: true
   # has_one :assessment
   has_one :course_progress, dependent: :restrict_with_exception
 
-  has_many :course_topics, dependent: :destroy
+  has_many :course_topics, dependent: :destroy, inverse_of: :course
   has_many :topics, through: :course_topics
   has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy, inverse_of: :course
   belongs_to :organization, optional: false
@@ -47,6 +47,7 @@ class Course < ApplicationRecord
   belongs_to :category, optional: true
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
+  accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 50 }, presence: true
@@ -62,12 +63,11 @@ class Course < ApplicationRecord
   validates :level, presence: true,
     inclusion: { in: %w[Beginner Intermediate Advanced],
       message: '%<value>s is not a valid level' }
-  validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == '1' }
 
   default_scope { order('course_order ASC') }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
-  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
+  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
   scope :published, -> { where(pub_status: 'P') }

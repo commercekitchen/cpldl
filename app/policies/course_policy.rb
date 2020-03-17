@@ -24,6 +24,36 @@ class CoursePolicy < AdminOnlyPolicy
     record.organization == Organization.pla
   end
 
+  def permitted_attributes
+    return [] unless user.admin?
+
+    if record.parent.present?
+      [:category_id, :access_level, category_attributes: %i[name organization_id]]
+    else
+      [:title,
+       :seo_page_title,
+       :meta_desc,
+       :summary,
+       :description,
+       :contributor,
+       :pub_status,
+       :language_id,
+       :level,
+       :notes,
+       :delete_document,
+       :course_order,
+       :pub_date,
+       :format,
+       :access_level,
+       :category_id,
+       topic_ids: [],
+       course_topics_attributes: [topic_attributes: [:title]],
+       propagation_org_ids: [],
+       category_attributes: %i[name organization_id],
+       attachments_attributes: %i[document title doc_type file_description _destroy]]
+    end
+  end
+
   class Scope < Scope
     def resolve
       courses = scope.includes(:lessons).where(organization: user.organization)

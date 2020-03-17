@@ -4,9 +4,11 @@
       <div class='attachment-filename'>
         <%= a.document_file_name %>
       </div>
-      <div class='attachment-delete'>
-        <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
-      </div>
+      <% unless @imported_course %>
+        <div class='attachment-delete'>
+          <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+        </div>
+      <% end %>
     </div>
   <% end %>
 </div>

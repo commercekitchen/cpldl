@@ -176,4 +176,67 @@ describe CoursePolicy, type: :policy do
       end
     end
   end
+
+  describe 'permitted_attributes' do
+    let(:pla) { FactoryBot.create(:default_organization) }
+    let(:pla_course) { FactoryBot.create(:course, organization: pla) }
+    let(:admin) { FactoryBot.create(:user, :admin) }
+    let(:subsite) { admin.organization }
+    let(:guest_user) { GuestUser.new(organization: subsite) }
+    let(:user) { FactoryBot.create(:user, organization: subsite) }
+    let(:imported_subsite_course) { FactoryBot.create(:course, organization: subsite, parent: pla_course) }
+    let(:custom_subsite_course) { FactoryBot.create(:course, organization: subsite) }
+
+    context 'for a guest user' do
+      subject { CoursePolicy.new(guest_user, custom_subsite_course) }
+
+      it 'should be empty' do
+        expect(subject.permitted_attributes).to eq([])
+      end
+    end
+
+    context 'for a subsite user' do
+      subject { CoursePolicy.new(user, custom_subsite_course) }
+
+      it 'should be empty' do
+        expect(subject.permitted_attributes).to eq([])
+      end
+    end
+
+    context 'for a subsite admin editing an imported course' do
+      subject { CoursePolicy.new(admin, imported_subsite_course) }
+
+      it 'should contain appropriate attributes' do
+        expect(subject.permitted_attributes).to contain_exactly(:category_id, :access_level, category_attributes: %i[name organization_id])
+      end
+    end
+
+    context 'for a subsite admin creating or editing a custom course' do
+      subject { CoursePolicy.new(admin, custom_subsite_course) }
+
+      it 'should contain appropriate attributes' do
+        expect(subject.permitted_attributes).to contain_exactly(:title,
+                                                                :seo_page_title,
+                                                                :meta_desc,
+                                                                :summary,
+                                                                :description,
+                                                                :contributor,
+                                                                :pub_status,
+                                                                :language_id,
+                                                                :level,
+                                                                :notes,
+                                                                :delete_document,
+                                                                :course_order,
+                                                                :pub_date,
+                                                                :format,
+                                                                :access_level,
+                                                                :category_id,
+                                                                topic_ids: [],
+                                                                course_topics_attributes: [topic_attributes: [:title]],
+                                                                propagation_org_ids: [],
+                                                                category_attributes: %i[name organization_id],
+                                                                attachments_attributes: %i[document title doc_type file_description _destroy])
+      end
+    end
+  end
 end
