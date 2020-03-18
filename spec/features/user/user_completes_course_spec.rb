@@ -66,7 +66,7 @@ feature 'User visits course complete page' do
 
       click_link 'Use My Skills Now'
       expect(current_path).to eq(course_skills_path(course))
-      expect(page).to have_content('Practice and use your new skills! (click each link below)')
+      expect(page).to have_content('Practice and use your new skills!')
       expect(page).to have_content('Post-Course completion notes...')
       expect(page).to_not have_content('<strong>')
     end

@@ -239,7 +239,7 @@ es:
     there_is_no_text_copy_of_course: "No hay ninguna copia de texto para este curso."
     there_are_no_additional_resources: "No hay recursos adicionales para este curso."
     there_are_no_notes_for_course: "No hay notas o recursos de los asociados para este curso"
-    practice_and_use_your_skills: "Utilizar mis habilidades ahora! ( Haga clic en cada enlace de abajo )"
+    practice_and_use_your_skills: "Utilizar mis habilidades ahora!"
     lessons_in_this_course: "Actividades en este curso"
     start_lesson: "Empezar"
     lesson: "Actividad"
@@ -250,7 +250,7 @@ es:
   course_completion_page:
     default_org:
       user_survey_button_text: "Necesitamos su ayuda - Por favor tome una encuesta rápida"
-    practice_new_skills: "¡Practica y usa sus nuevas habilidades! (Da clic en cada liga abajo)"
+    practice_new_skills: "¡Practica y usa sus nuevas habilidades!"
     congratulations: "Felicitaciones"
     you_successfully_completed: "Ha completado la Actividad"
     return_to_my_courses: "Regresar a Mis Cursos"
