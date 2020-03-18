@@ -237,7 +237,7 @@ en:
     there_is_no_text_copy_of_course: "There is no text copy for this course"
     there_are_no_additional_resources: "There are no additional resources for this course."
     there_are_no_notes_for_course: "There are no notes or partner resources for this course"
-    practice_and_use_your_skills: "Use my skills now! (click each link below)"
+    practice_and_use_your_skills: "Use my skills now!"
     lessons_in_this_course: "Activities in This Course"
     start_lesson: "Start"
     lesson: "Activity"
@@ -248,7 +248,7 @@ en:
   course_completion_page:
     default_org:
       user_survey_button_text: "We Need Your Help - Please Take a Quick Survey"
-    practice_new_skills: "Practice and use your new skills! (click each link below)"
+    practice_new_skills: "Practice and use your new skills!"
     congratulations: "Congratulations"
     you_successfully_completed: "You've successfully completed"
     return_to_my_courses: "Return to My Courses"
