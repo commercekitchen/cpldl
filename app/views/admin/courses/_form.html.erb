@@ -102,22 +102,6 @@
     <div class="character-limit note left-or-right">&nbsp;</div>
   </fieldset>
 
-  <% if top_level_domain? && !@course.new_record? %>
-    <fieldset class='propagation'>
-      <%= f.label :propagation_org_ids, 'Propagate these changes to subsite courses for:', class: "text-color" %>
-      <% if Organization.using_course(@course.id).exists? %>
-        <%= f.collection_check_boxes :propagation_org_ids, Organization.using_course(@course.id), :id, :name  do |b| %>
-          <div>
-            <%= b.check_box(checked: @course.propagation_org_ids.include?(b.object)) %>
-            <%= b.label class: "plain" %>
-          </div>
-        <% end %>
-      <% else %>
-        <p><i>There's no subsite imported this course yet.</i></p>
-      <% end %>
-    </fieldset>
-  <% end %>
-
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 
