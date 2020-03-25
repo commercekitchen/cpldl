@@ -23,13 +23,14 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :show] do
     post 'start'
-    get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     get 'skills', to: 'courses#skills', as: :skills
     resources :lessons, only: [:index, :show] do
       get 'lesson_complete'
       post 'complete'
     end
   end
+
+  resources :attachments, only: [:show]
 
   resources :my_courses, only: [:index], param: :course_id
 

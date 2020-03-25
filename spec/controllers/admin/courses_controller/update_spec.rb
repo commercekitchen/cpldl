@@ -96,6 +96,33 @@ describe Admin::CoursesController do
           end.to_not(change { child_course.reload.access_level })
         end
 
+        describe 'attachments' do
+          let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
+
+          let(:attachment_attributes) do
+            { attachments_attributes: {
+              '0' => {
+                document: document,
+                title: '',
+                doc_type: 'post-course',
+                file_description: 'post-course attachment test'
+              }
+            } }
+          end
+
+          it 'adds attachments to parent course' do
+            expect do
+              patch :update, params: { id: pla_course.to_param, course: attachment_attributes }
+            end.to change { pla_course.attachments.count }.by(1)
+          end
+
+          it 'does not propagate attachments to child course' do
+            expect do
+              patch :update, params: { id: pla_course.to_param, course: attachment_attributes }
+            end.to_not(change { child_course.attachments.count })
+          end
+        end
+
         describe 'new category' do
           let(:new_category_params) do
             { id: pla_course.to_param,
