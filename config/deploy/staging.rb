@@ -1,6 +1,6 @@
 set :bundle_without, %w{production test}.join(" ")
 
-set :branch, "staging"
+set :branch, "develop"
 
 server "dl-stageapp-01.do.lark-it.com",
   user: fetch(:application),
