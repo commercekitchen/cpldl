@@ -2,14 +2,13 @@
 
 class CoursePropagationService
 
-  def initialize(course:, attributes_to_propagate:)
+  def initialize(course:)
     @course = course
-    @attributes_to_propagate = attributes_to_propagate
   end
 
-  def propagate_course_changes
+  def propagate_course_changes(attributes_to_propagate)
     child_courses.each do |child|
-      child.update(@attributes_to_propagate.merge(topics: topics))
+      child.update(attributes_to_propagate.merge(topics: topics))
     end
   end
 

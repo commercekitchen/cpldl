@@ -24,10 +24,10 @@ describe CoursePropagationService do
       }
     end
 
-    subject { described_class.new(course: course, attributes_to_propagate: new_attributes) }
+    subject { described_class.new(course: course) }
 
     it 'should update child course info' do
-      subject.propagate_course_changes
+      subject.propagate_course_changes(new_attributes)
       child_course.reload
       new_attributes.keys.each do |k|
         expect(child_course.send(k)).to eq(new_attributes[k])
@@ -56,23 +56,23 @@ describe CoursePropagationService do
       }
     end
 
-    subject { described_class.new(course: course, attributes_to_propagate: attachment_attributes) }
+    subject { described_class.new(course: course) }
 
     it 'should update child attachments' do
       expect do
-        subject.propagate_course_changes
+        subject.propagate_course_changes(attachment_attributes)
       end.to change { child_course.attachments.count }.by(2)
     end
 
     it 'should add a post-course attachment' do
       expect do
-        subject.propagate_course_changes
+        subject.propagate_course_changes(attachment_attributes)
       end.to change { child_course.post_course_attachments.count }.by(1)
     end
 
     it 'should add a supplemental attachment' do
       expect do
-        subject.propagate_course_changes
+        subject.propagate_course_changes(attachment_attributes)
       end.to change { child_course.supplemental_attachments.count }.by(1)
     end
   end
@@ -84,10 +84,10 @@ describe CoursePropagationService do
       course.update(topics: [topic])
     end
 
-    subject { described_class.new(course: course, attributes_to_propagate: {}) }
+    subject { described_class.new(course: course) }
 
     it 'should add correct topic to child course' do
-      subject.propagate_course_changes
+      subject.propagate_course_changes({})
       expect(child_course.reload.topics).to contain_exactly(topic)
     end
   end
