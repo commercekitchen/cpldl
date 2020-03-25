@@ -11,7 +11,6 @@ class CourseImportService
     ActiveRecord::Base.transaction do
       save_new_course!
       copy_parent_lessons!
-      copy_attachments!
       copy_topics!
     end
 
@@ -49,16 +48,6 @@ class CourseImportService
       new_lesson.course_id = @new_course.id
       new_lesson.story_line = nil
       new_lesson.save!
-    end
-  end
-
-  def copy_attachments!
-    # Create copies of the attachments
-    @parent_course.attachments.each do |attachment|
-      new_attachment = attachment.dup
-      new_attachment.document = attachment.document
-      new_attachment.course_id = @new_course.id
-      new_attachment.save!
     end
   end
 

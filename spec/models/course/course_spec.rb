@@ -180,4 +180,32 @@ describe Course do
       expect(archived_course.published?).to be_falsey
     end
   end
+
+  describe 'attachments' do
+    let(:pla) { FactoryBot.create(:default_organization) }
+    let(:pla_course) { FactoryBot.create(:course, organization: pla) }
+    let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
+    let!(:post_course_attachment) { FactoryBot.create(:attachment, doc_type: 'post-course', course: pla_course) }
+    let!(:supplemental_attachment) { FactoryBot.create(:attachment, doc_type: 'supplemental', course: pla_course) }
+
+    context 'parent course' do
+      it 'returns correct #post_course_attachments' do
+        expect(pla_course.post_course_attachments).to contain_exactly(post_course_attachment)
+      end
+
+      it 'returns correct #supplemental_attachments' do
+        expect(pla_course.supplemental_attachments).to contain_exactly(supplemental_attachment)
+      end
+    end
+
+    context 'child course' do
+      it 'returns correct #post_course_attachments' do
+        expect(child_course.post_course_attachments).to contain_exactly(post_course_attachment)
+      end
+
+      it 'returns correct #supplemental_attachments' do
+        expect(child_course.supplemental_attachments).to contain_exactly(supplemental_attachment)
+      end
+    end
+  end
 end

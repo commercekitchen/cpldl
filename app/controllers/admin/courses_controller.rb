@@ -73,7 +73,7 @@ module Admin
 
       if update_course
         if @course.parent.blank?
-          CoursePropagationService.new(course: @course, attributes_to_propagate: attributes_to_propagate).propagate_course_changes
+          CoursePropagationService.new(course: @course).propagate_course_changes(attributes_to_propagate)
           success_message = 'Course was successfully updated.'
         end
 
@@ -150,7 +150,7 @@ module Admin
     end
 
     def attributes_to_propagate
-      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes)
+      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes)
     end
 
     def update_course

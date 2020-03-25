@@ -48,22 +48,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  def view_attachment
-    @course = Course.friendly.find(params[:course_id])
-    authorize @course, :show?
-
-    extension = File.extname(@course.attachments.find(params[:attachment_id]).document_file_name)
-    file_options = if extension == '.pdf'
-                     { disposition: 'inline', type: 'application/pdf', x_sendfile: true }
-                   else
-                     { disposition: 'attachment', type: ['application/msword',
-                                                         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                                                         'application/vnd.openxmlformats-officedocument.presentationml.presentation'],
-                       x_sendfile: true }
-                   end
-    send_file @course.attachments.find(params[:attachment_id]).document.path, file_options
-  end
-
   def skills
     @course = Course.friendly.find(params[:course_id])
     authorize @course, :show?
