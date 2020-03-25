@@ -68,8 +68,4 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:course_id])
     authorize @course, :show?
   end
-
-  def designing_courses_1; end
-
-  def designing_courses_2; end
 end
