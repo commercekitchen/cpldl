@@ -61,7 +61,7 @@ describe Admin::CoursesController do
       end
 
       it 'redirects to lesson edit page if desired' do
-        patch :update, params: { id: pla_course.to_param, course: update_params, commit: 'Edit Lessons' }
+        patch :update, params: { id: pla_course.to_param, course: update_params, commit: 'Save & Edit Lessons' }
         expect(response).to redirect_to(new_admin_course_lesson_path(pla_course.reload, pla_course.lessons.first))
       end
 
