@@ -33,9 +33,22 @@ feature 'Admin user creates new course and lesson' do
     visit new_admin_course_path
   end
 
+  scenario 'toggles course publication status' do
+    fill_basic_course_info
+    expect(page).to have_select('Publication Status', selected: 'Draft')
+    select('Published', from: 'Publication Status')
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully created.')
+    expect(page).to have_select('Publication Status', selected: 'Published')
+    select('Archived', from: 'Publication Status')
+    click_button 'Save Course'
+    visit admin_courses_path
+    expect(page).to_not have_content('New Course Title')
+  end
+
   scenario 'assigns topics' do
     fill_basic_course_info
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_field('Topic A', checked: true)
     expect(page).to have_field('Some New Topic', checked: true)
   end
@@ -44,7 +57,7 @@ feature 'Admin user creates new course and lesson' do
     fill_basic_course_info
     select('Create new category', from: 'course_category_id')
     fill_in :course_category_attributes_name, with: new_category_name
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
     expect(current_path).to eq(edit_admin_course_path(Course.last))
     expect(page).to have_select('course_category_id', selected: Course.last.category.name)
@@ -53,7 +66,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'creates new course with existing category' do
     fill_basic_course_info
     select(category.name, from: 'course_category_id')
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
     expect(current_path).to eq(edit_admin_course_path(Course.last))
     expect(page).to have_select('course_category_id', selected: category.name)
@@ -66,7 +79,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'attempts to create duplicate category' do
     select('Create new category', from: 'course_category_id')
     fill_in :course_category_attributes_name, with: category.name
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_content('Category Name is already in use by your organization.')
     expect(page).to have_select('course_category_id', selected: 'Create new category')
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{category.name}']")
@@ -76,12 +89,12 @@ feature 'Admin user creates new course and lesson' do
     fill_basic_course_info
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
 
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_1.pdf')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_Worksheet.pdf')
-    click_button 'Publish Course'
+    click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
     expect(page).to have_content('Why_Use_a_Computer_1.pdf')
     expect(page).to have_content('Why_Use_a_Computer_Worksheet.pdf')

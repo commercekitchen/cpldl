@@ -28,35 +28,35 @@ describe Admin::CoursesController do
         update_params.merge(course_topics_attributes: [{ topic_attributes: { title: 'Another new topic' } }])
       end
 
-      let(:publish_request) do
-        patch :update, params: { id: pla_course.to_param, course: update_params, commit: 'Publish Course' }
+      let(:save_request) do
+        patch :update, params: { id: pla_course.to_param, course: update_params, commit: 'Save Course' }
       end
 
       it 'redirects to edit path' do
-        publish_request
+        save_request
         expect(response).to redirect_to(edit_admin_course_path(pla_course.reload))
       end
 
       it 'updates title' do
         expect do
-          publish_request
+          save_request
         end.to change { pla_course.reload.title }.from('PLA Course').to('Updated Title')
       end
 
       it 'updates access level' do
         expect do
-          publish_request
+          save_request
         end.to change { pla_course.reload.access_level }.from('everyone').to('authenticated_users')
       end
 
       it 'updates category' do
         expect do
-          publish_request
+          save_request
         end.to change { pla_course.reload.category }.from(pla_category1).to(pla_category2)
       end
 
       it 'displays appropriate notice for successful course update' do
-        publish_request
+        save_request
         expect(flash[:notice]).to eq('Course was successfully updated.')
       end
 
@@ -74,7 +74,7 @@ describe Admin::CoursesController do
       describe 'propagation' do
         it 'propagates title to child courses' do
           expect do
-            publish_request
+            save_request
           end.to change { child_course.reload.title }.to('Updated Title')
         end
 
@@ -86,13 +86,13 @@ describe Admin::CoursesController do
 
         it 'does not assign course to main site category' do
           expect do
-            publish_request
+            save_request
           end.to_not(change { child_course.reload.category })
         end
 
         it 'does not change child course access level' do
           expect do
-            publish_request
+            save_request
           end.to_not(change { child_course.reload.access_level })
         end
 
@@ -152,35 +152,29 @@ describe Admin::CoursesController do
         sign_in admin
       end
 
-      describe 'publish an imported course' do
+      describe 'save an imported course' do
         let(:new_category) { FactoryBot.create(:category, organization: org) }
-
-        it 'should change the publication status' do
-          expect do
-            patch :update, params: { id: child_course.to_param, course: child_course.attributes, commit: 'Publish' }
-          end.to change { child_course.reload.pub_status }.from('D').to('P')
-        end
 
         it 'should not change title, if new title is given' do
           expect do
-            patch :update, params: { id: child_course.to_param, course: { title: 'New Title' }, commit: 'Publish' }
+            patch :update, params: { id: child_course.to_param, course: { title: 'New Title' }, commit: 'Save Course' }
           end.to_not(change { child_course.reload.title })
         end
 
-        it 'should redirect to admin dashboard' do
-          patch :update, params: { id: child_course.to_param, course: child_course.attributes, commit: 'Publish' }
-          expect(response).to redirect_to(admin_dashboard_index_path)
+        it 'should redirect to course edit page' do
+          patch :update, params: { id: child_course.to_param, course: child_course.attributes, commit: 'Save Course' }
+          expect(response).to redirect_to(edit_admin_course_path(child_course))
         end
 
         it 'should change the course category, if given' do
           expect do
-            patch :update, params: { id: child_course.to_param, course: { category_id: new_category.id }, commit: 'Publish' }
+            patch :update, params: { id: child_course.to_param, course: { category_id: new_category.id }, commit: 'Save Course' }
           end.to change { child_course.reload.category }.to(new_category)
         end
 
         it 'should change the course access level, if given' do
           expect do
-            patch :update, params: { id: child_course.to_param, course: { access_level: 'authenticated_users' }, commit: 'Publish' }
+            patch :update, params: { id: child_course.to_param, course: { access_level: 'authenticated_users' }, commit: 'Save Course' }
           end.to change { child_course.reload.access_level }.from('everyone').to('authenticated_users')
         end
       end

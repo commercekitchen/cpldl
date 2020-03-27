@@ -17,13 +17,14 @@
     "course_level access_level"
     "seo_title seo_title"
     "seo_meta seo_meta"
-    "propagation propagation"
+    "pub_status ."
     "actions actions";
 
   &.restricted {
     grid-template-areas:
       "errors errors"
       "categories access_level"
+      "pub_status ."
       "actions actions"
       "title title"
       "author author"
@@ -34,10 +35,9 @@
       "additional_content additional_content"
       "topics ."
       "language format"
-      "course_level pub_status"
+      "course_level ."
       "seo_title seo_title"
-      "seo_meta seo_meta"
-      "propagation propagation";
+      "seo_meta seo_meta";
   }
 
   .error_explanation {
@@ -114,6 +114,10 @@
 
   .seo-meta {
     grid-area: seo_meta;
+  }
+
+  .pub-status {
+    grid-area: pub_status;
   }
 
   .propagation {

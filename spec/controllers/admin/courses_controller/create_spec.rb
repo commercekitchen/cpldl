@@ -74,6 +74,12 @@ describe Admin::CoursesController do
       it 'redirects to the admin edit view of the course' do
         post :create, params: { course: valid_attributes }
         expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(edit_admin_course_path(Course.find_by(title: valid_attributes[:title])))
+      end
+
+      it 'redirects to the lesson edit page if specified' do
+        post :create, params: { course: valid_attributes, commit: 'Save & Edit Lessons' }
+        expect(response).to have_http_status(:redirect)
         expect(response).to redirect_to(new_admin_course_lesson_path(Course.find_by(title: valid_attributes[:title])))
       end
 
@@ -112,15 +118,9 @@ describe Admin::CoursesController do
         expect(response).to render_template('new')
       end
 
-      it 'saves course as draft if committed with draft' do
-        expect do
-          post :create, params: { course: valid_attributes, commit: 'Save as Draft' }
-        end.to change { Course.where(pub_status: 'D').count }.by(1)
-      end
-
       it 'publishes course if committed with publish' do
         expect do
-          post :create, params: { course: valid_attributes, commit: 'Publish Course' }
+          post :create, params: { course: valid_attributes.merge(pub_status: 'P') }
         end.to change { Course.where(pub_status: 'P').count }.by(1)
       end
     end

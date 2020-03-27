@@ -58,10 +58,7 @@ feature 'Admin user updates course' do
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
       expect(page).to have_content('Supplemental materials for further learning. These files are available to users after completing the course.')
 
-      expect(page).to_not have_button('Publish Course')
-      expect(page).to_not have_button('Edit Lessons')
-
-      expect(page).to have_button('Publish')
+      expect(page).to have_button('Save Course')
       expect(page).to have_content('If you wish to edit details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
       expect(page).to have_link('contact a PLA Administrator')
     end
@@ -70,11 +67,10 @@ feature 'Admin user updates course' do
       visit edit_admin_course_path(subsite_course)
       within(:css, 'main') do
         select('Authenticated Users', from: 'course_access_level')
-        click_button 'Publish'
+        click_button 'Save Course'
       end
-      expect(current_path).to eq(admin_dashboard_index_path)
-      expect(page).to have_content('Course successfully published!')
-      visit(edit_admin_course_path(subsite_course))
+      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_select('course_access_level', selected: 'Authenticated Users')
     end
 
@@ -82,10 +78,8 @@ feature 'Admin user updates course' do
       visit edit_admin_course_path(subsite_course)
       within(:css, 'main') do
         select(category.name, from: 'course_category_id')
-        click_button 'Publish'
+        click_button 'Save Course'
       end
-      expect(current_path).to eq(admin_dashboard_index_path)
-      visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_category_id', selected: category.name)
     end
 
@@ -94,7 +88,7 @@ feature 'Admin user updates course' do
       within(:css, 'main') do
         select('Create new category', from: 'course_category_id')
         fill_in :course_category_attributes_name, with: category.name
-        click_button 'Publish'
+        click_button 'Save Course'
       end
       expect(current_path).to eq(admin_course_path(subsite_course))
       expect(page).to have_content('Category Name is already in use by your organization.')
@@ -108,10 +102,8 @@ feature 'Admin user updates course' do
       within(:css, 'main') do
         select('Create new category', from: 'course_category_id')
         fill_in :course_category_attributes_name, with: "#{category.name}_#{new_word}"
-        click_button 'Publish'
+        click_button 'Save Course'
       end
-      expect(current_path).to eq(admin_dashboard_index_path)
-      visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_category_id', selected: "#{category.name}_#{new_word}")
     end
 
@@ -132,20 +124,14 @@ feature 'Admin user updates course' do
       visit edit_admin_course_path(custom_subsite_course)
       attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
       attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-      click_button 'Publish Course'
+      click_button 'Save Course'
       expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
     end
 
     scenario 'can edit course title' do
       visit edit_admin_course_path(custom_subsite_course)
       fill_in 'Title', with: 'New Course Title'
-      click_button 'Save as Draft'
-      expect(page).to have_content('Course saved as draft.')
-      visit admin_courses_path
-      expect(page).to have_select("course_#{custom_subsite_course.id}", selected: 'Draft')
-      click_link 'New Course Title'
-      expect(page).to have_content('Edit This Course')
-      click_button 'Publish Course'
+      click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
       expect(current_path).to eq(edit_admin_course_path(custom_subsite_course.reload))
       expect(page).to have_field('Title', with: 'New Course Title')
