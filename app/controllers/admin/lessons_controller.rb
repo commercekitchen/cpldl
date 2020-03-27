@@ -27,6 +27,7 @@ module Admin
       end
 
       if @lesson.save
+        add_lesson_to_child_courses!
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: 'Lesson was successfully created.'
       else
         render :new
@@ -43,9 +44,8 @@ module Admin
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
 
       if @lesson.update(@lesson_params)
-        changed = propagate_changes? ? propagate_lesson_changes : 0
+        LessonPropagationService.new(lesson: @lesson).update_children!
         success_message = 'Lesson successfully updated.'
-        success_message += "Changes propagated to lessons for #{changed} #{'subsite'.pluralize(changed)}." if propagate_changes?
         redirect_to edit_admin_course_lesson_path, notice: success_message
       else
         render :edit, notice: 'Lesson failed to update.'
@@ -67,6 +67,10 @@ module Admin
       lessons = policy_scope(Lesson)
       SortService.sort(model: lessons, order_params: params[:order], attribute_key: :lesson_order, user: current_user)
 
+      lessons.each do |lesson|
+        LessonPropagationService.new(lesson: lesson).update_children!
+      end
+
       head :ok
     end
 
@@ -86,8 +90,7 @@ module Admin
                                      :is_assessment,
                                      :lesson_order,
                                      :pub_status,
-                                     :subdomain,
-                                     propagation_org_ids: [])
+                                     :subdomain)
     end
 
     def validate_assessment
@@ -103,22 +106,12 @@ module Admin
       end
     end
 
-    def propagate_changes?
-      @lesson.propagation_org_ids.delete_if(&:blank?).any? && (attributes_to_change.to_h.any? || lesson_params[:story_line].present?)
-    end
+    def add_lesson_to_child_courses!
+      courses = Course.copied_from_course(@lesson.course)
 
-    def attributes_to_change
-      lesson_params.delete_if { |k, _| !@lesson.previous_changes.keys.include?(k.to_s) }
-    end
-
-    def propagate_lesson_changes
-      lessons = Lesson.copied_from_lesson(@lesson)
-
-      lessons.find_each do |lesson|
-        lesson.update(attributes_to_change)
+      courses.each do |course|
+        LessonPropagationService.new(lesson: @lesson).add_to_course!(course)
       end
-
-      lessons.size
     end
   end
 end

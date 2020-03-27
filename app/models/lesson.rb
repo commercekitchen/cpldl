@@ -43,10 +43,7 @@ class Lesson < ApplicationRecord
 
   default_scope { order(:lesson_order) }
   scope :published, -> { where(pub_status: 'P') }
-  scope :copied_from_lesson, lambda { |lesson|
-    joins(course: :organization)
-      .where(parent_id: lesson.id, organizations: { id: lesson.propagation_org_ids })
-  }
+  scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
 
   def propagation_org_ids
     @propagation_org_ids ||= []
@@ -64,14 +61,6 @@ class Lesson < ApplicationRecord
     Duration.duration_str(duration)
   end
 
-  def duration_to_int(duration_param)
-    self.duration = if duration_param.include?(':')
-                      Duration.duration_str_to_int(duration_param)
-                    else
-                      duration_param.to_i
-                    end
-  end
-
   def published?
     pub_status == 'P'
   end
@@ -80,6 +69,14 @@ class Lesson < ApplicationRecord
     return 0 unless self.published?
 
     self.course.lessons.published.map(&:id).index(self.id) + 1
+  end
+
+  def duration_to_int(duration_param)
+    self.duration = if duration_param.include?(':')
+                      Duration.duration_str_to_int(duration_param)
+                    else
+                      duration_param.to_i
+                    end
   end
 
 end
