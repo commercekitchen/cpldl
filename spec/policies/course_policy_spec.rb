@@ -233,7 +233,6 @@ describe CoursePolicy, type: :policy do
                                                                 :category_id,
                                                                 topic_ids: [],
                                                                 course_topics_attributes: [topic_attributes: [:title]],
-                                                                propagation_org_ids: [],
                                                                 category_attributes: %i[name organization_id],
                                                                 attachments_attributes: %i[document title doc_type file_description _destroy])
       end

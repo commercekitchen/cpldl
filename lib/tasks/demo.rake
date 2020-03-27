@@ -45,7 +45,7 @@ namespace :demo do
                                    story_line_file_size: cpl_lesson.story_line_file_size,
                                    story_line_updated_at: cpl_lesson.story_line_updated_at,
                                    pub_status: cpl_lesson.pub_status,
-                                   parent_lesson_id: cpl_lesson.id)
+                                   parent_id: cpl_lesson.id)
 
         @new_course.lessons << new_lesson
       end
