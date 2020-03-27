@@ -103,21 +103,6 @@
     </fieldset>
   </div>
 
-  <% if top_level_domain? %>
-    <div class="form-row">
-      <fieldset>
-        <%= f.label :propagation_org_ids, 'Propagate these changes to subsite lessons for:', class: "text-color" %>
-
-        <%= f.collection_check_boxes :propagation_org_ids, Organization.using_lesson(@lesson.id), :id, :name  do |b| %>
-          <div>
-            <%= b.check_box(checked: @lesson.propagation_org_ids.include?(b.object)) %>
-            <%= b.label class: "plain" %>
-          </div>
-        <% end %>
-      </fieldset>
-    </div>
-  <% end %>
-
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 
   <%= f.button :submit, class: "btn button-color loading-button" do %>

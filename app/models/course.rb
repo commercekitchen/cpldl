@@ -29,7 +29,6 @@ class Course < ApplicationRecord
   enum access_level: { everyone: 0, authenticated_users: 1 }
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :org_id, :subdomain
-  attr_writer :propagation_org_ids
 
   belongs_to :parent, class_name: 'Course', optional: true
   # has_one :assessment
@@ -73,10 +72,6 @@ class Course < ApplicationRecord
   scope :published, -> { where(pub_status: 'P') }
 
   before_save :find_or_create_category
-
-  def propagation_org_ids
-    @propagation_org_ids ||= []
-  end
 
   def topics_list(topic_list)
     if topic_list.present?

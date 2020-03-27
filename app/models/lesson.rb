@@ -18,7 +18,6 @@ class Lesson < ApplicationRecord
   end
 
   attr_accessor :subdomain
-  attr_writer :propagation_org_ids
 
   belongs_to :course
   belongs_to :parent, class_name: 'Lesson', optional: true
@@ -41,10 +40,6 @@ class Lesson < ApplicationRecord
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
-
-  def propagation_org_ids
-    @propagation_org_ids ||= []
-  end
 
   def skip_for_zip
     %w[application/zip application/x-zip].include?(story_line_content_type)

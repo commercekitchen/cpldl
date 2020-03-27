@@ -156,7 +156,6 @@ describe Lesson do
       let(:copied_lesson) { new_course.lessons.first }
 
       before(:each) do
-        original_lesson.propagation_org_ids << new_org.id
         copied_lesson.update(parent_id: original_lesson.id)
       end
 
@@ -167,18 +166,6 @@ describe Lesson do
       it 'does not return non-copied lessons' do
         expect(Lesson.copied_from_lesson(original_lesson).count).to eq(1)
       end
-    end
-  end
-
-  context '#propagates_org_ids' do
-    it 'is empty by default' do
-      expect(Lesson.new.propagation_org_ids).to eq([])
-    end
-
-    it 'can be updated' do
-      lesson = Lesson.new
-      lesson.propagation_org_ids = [1]
-      expect(lesson.propagation_org_ids).to eq([1])
     end
   end
 end
