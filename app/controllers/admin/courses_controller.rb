@@ -86,6 +86,8 @@ module Admin
           else
             redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
           end
+        when 'Save as Draft'
+          redirect_to edit_admin_course_path(@course), notice: 'Course saved as draft.'
         when 'Publish'
           redirect_to admin_dashboard_index_path, notice: 'Course successfully published!'
         else

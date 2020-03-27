@@ -73,6 +73,7 @@ feature 'Admin user updates course' do
         click_button 'Publish'
       end
       expect(current_path).to eq(admin_dashboard_index_path)
+      expect(page).to have_content('Course successfully published!')
       visit(edit_admin_course_path(subsite_course))
       expect(page).to have_select('course_access_level', selected: 'Authenticated Users')
     end
@@ -135,9 +136,22 @@ feature 'Admin user updates course' do
     end
 
     scenario 'can edit course title' do
+      visit edit_admin_course_path(custom_subsite_course)
+      fill_in 'Title', with: 'New Course Title'
+      click_button 'Save as Draft'
+      expect(page).to have_content('Course saved as draft.')
+      visit admin_courses_path
+      expect(page).to have_select("course_#{custom_subsite_course.id}", selected: 'Draft')
+      click_link 'New Course Title'
+      expect(page).to have_content('Edit This Course')
+      click_button 'Publish Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(current_path).to eq(edit_admin_course_path(custom_subsite_course.reload))
+      expect(page).to have_field('Title', with: 'New Course Title')
     end
 
     scenario 'can preview course' do
+      skip 'TODO: Course preview spec'
     end
   end
 end
