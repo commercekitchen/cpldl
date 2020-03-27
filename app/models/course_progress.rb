@@ -19,7 +19,7 @@ class CourseProgress < ApplicationRecord
   end
 
   def percent_complete
-    total = course.lessons.published.count
+    total = course.lessons.count
     completed = lessons_completed
     return 0 if total.zero?
 

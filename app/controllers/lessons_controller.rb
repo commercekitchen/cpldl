@@ -9,7 +9,6 @@ class LessonsController < ApplicationController
     @preview = params[:preview]
 
     authorize_lesson
-    return unless verify_publication_status
 
     @next_lesson = @course.lesson_after(@lesson)
 
@@ -83,23 +82,6 @@ class LessonsController < ApplicationController
       authorize @course, :preview?
     else
       authorize @lesson, :show?
-    end
-  end
-
-  def verify_publication_status
-    case @lesson.pub_status
-    when 'D'
-      flash[:notice] = 'That lesson is not available at this time.'
-      redirect_to root_path
-      false
-    when 'A'
-      flash[:notice] = 'That lesson is no longer available.'
-      redirect_to root_path
-      false
-    when 'P'
-      true
-    else
-      raise StandardError, 'Unknown Publication Status'
     end
   end
 

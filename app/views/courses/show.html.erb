@@ -5,7 +5,7 @@
 <div class="course">
   <div class='course-info'>
     <div class="course-details text-color">
-      <div><i class="icon-pencil"></i><%= @course.lessons.published.count %> <%= t('course_page.lessons') %></div>
+      <div><i class="icon-pencil"></i><%= @course.lessons.count %> <%= t('course_page.lessons') %></div>
       <div><i class="icon-clock"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
       <div><i class="icon-plus"></i><%= t("course_page.#{@course.level.downcase}") %></div>
     </div>

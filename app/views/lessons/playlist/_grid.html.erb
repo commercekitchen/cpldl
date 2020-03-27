@@ -1,5 +1,5 @@
 <div class="lesson-playlist-grid">
-  <% @course.lessons.published.each_with_index do |lesson, i| %>
+  <% @course.lessons.each_with_index do |lesson, i| %>
     <%= render partial: "lessons/playlist/lesson_listing", locals: { lesson: lesson, lesson_number: i} %>
   <% end %>
 </div>

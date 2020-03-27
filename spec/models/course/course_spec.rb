@@ -120,47 +120,32 @@ describe Course do
       expect(course_with_lessons.lesson_after(123)).to eq(first_lesson)
     end
 
-    it 'should skip unpublished lessons' do
-      second_lesson.update(pub_status: 'D')
-      expect(course_with_lessons.lesson_after(first_lesson)).to eq(third_lesson)
-    end
-
     it 'should raise an error if called when there are no lessons' do
       expect { course.lesson_after }.to raise_error(StandardError)
     end
   end
 
   describe '#duration' do
-    let(:lesson1) { FactoryBot.create(:lesson, title: '1', duration: 75) }
-    let(:lesson2) { FactoryBot.create(:lesson, title: '2', duration: 150) }
-    let(:lesson3) { FactoryBot.create(:lesson, title: '3', duration: 225) }
-    let(:lesson4) { FactoryBot.create(:lesson, title: '4', duration: 90) }
-    let(:lesson5) { FactoryBot.create(:lesson, title: '5', duration: 9) }
+    let!(:lesson1) { FactoryBot.create(:lesson, course: course, title: '1', duration: 75) }
+    let!(:lesson2) { FactoryBot.create(:lesson, course: course, title: '2', duration: 150) }
+    let!(:lesson3) { FactoryBot.create(:lesson, course: course, title: '3', duration: 225) }
+    let!(:lesson4) { FactoryBot.create(:lesson, title: '4', duration: 90) }
+    let!(:lesson5) { FactoryBot.create(:lesson, title: '5', duration: 9) }
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson1, lesson2, lesson3]
       expect(course.duration).to eq('7 mins')
     end
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson4]
-      expect(course.duration).to eq('1 min')
+      expect(lesson4.course.duration).to eq('1 min')
     end
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson5]
-      expect(course.duration).to eq('0 mins')
+      expect(lesson5.course.duration).to eq('0 mins')
     end
 
     it 'should return duration in format if one is passed' do
-      course.lessons << [lesson1, lesson2, lesson3]
       expect(course.duration('minutes')).to eq('7 minutes')
-    end
-
-    it 'should not count draft lessons' do
-      lesson1.update(pub_status: 'D')
-      course.lessons << [lesson1, lesson2, lesson3]
-      expect(course.duration).to eq '6 mins'
     end
   end
 

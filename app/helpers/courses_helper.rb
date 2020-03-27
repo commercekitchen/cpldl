@@ -28,7 +28,7 @@ module CoursesHelper
 
   def percent_complete_without_user(course, _lesson_id)
     session[:completed_lessons] ||= []
-    total_lessons = course.lessons.published.count
+    total_lessons = course.lessons.count
     completed = (session[:completed_lessons] & course.lessons.pluck(:id)).count
     return 0 if total_lessons.zero?
 

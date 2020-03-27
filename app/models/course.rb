@@ -93,15 +93,15 @@ class Course < ApplicationRecord
   end
 
   def lesson_after(lesson = nil)
-    raise StandardError, 'There are no available lessons for this course.' if lessons.published.count.zero?
+    raise StandardError, 'There are no available lessons for this course.' if lessons.count.zero?
 
     begin
       lesson_order = lesson.lesson_order
-      return lessons.published.last if lesson_order >= last_lesson_order
+      return lessons.last if lesson_order >= last_lesson_order
 
-      lessons.published.find_by('lesson_order > ?', lesson_order)
+      lessons.find_by('lesson_order > ?', lesson_order)
     rescue StandardError
-      lessons.published.first
+      lessons.first
     end
   end
 
@@ -113,7 +113,7 @@ class Course < ApplicationRecord
 
   def duration(format = 'mins')
     total = 0
-    lessons.published.each { |l| total += l.duration }
+    lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
 
