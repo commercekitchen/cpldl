@@ -80,7 +80,7 @@ module Admin
         case params[:commit]
         when 'Publish Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
-        when 'Edit Lessons'
+        when 'Save & Edit Lessons'
           if @course.lessons.blank?
             redirect_to new_admin_course_lesson_path(@course), notice: success_message
           else

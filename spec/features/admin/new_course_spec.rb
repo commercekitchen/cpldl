@@ -89,7 +89,7 @@ feature 'Admin user creates new course and lesson' do
 
   scenario 'adds a lesson' do
     visit edit_admin_course_path(course_id: course, id: course.id)
-    click_button 'Edit Lessons'
+    click_button 'Save & Edit Lessons'
     expect(current_path).to eq(new_admin_course_lesson_path(course))
     fill_in :lesson_title, with: 'New Lesson Title'
     fill_in :lesson_summary, with: 'Summary for new lesson'
@@ -107,7 +107,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'attempts to add two assessments' do
     FactoryBot.create(:lesson, course: course, is_assessment: true)
     visit edit_admin_course_path(course_id: course, id: course.id)
-    click_button 'Edit Lessons'
+    click_button 'Save & Edit Lessons'
     click_link 'Add Another Lesson'
     expect(current_path).to eq(new_admin_course_lesson_path(course))
     page.find('#lesson_is_assessment_true').click

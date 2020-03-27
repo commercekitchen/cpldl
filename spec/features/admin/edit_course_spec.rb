@@ -121,6 +121,7 @@ feature 'Admin user updates course' do
     end
 
     scenario 'can preview course' do
+      skip 'TODO: course preview spec'
     end
   end
 
