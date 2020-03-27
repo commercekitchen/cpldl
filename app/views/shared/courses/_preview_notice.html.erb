@@ -2,8 +2,8 @@
   <div class='preview-notice'>
     <div class='container'>
       You are previewing this course.
-      <%= link_to 'Import', admin_dashboard_add_imported_course_path(course_id: @course.id), method: :post %>
-      <%= link_to 'Return to Admin Panel', admin_import_courses_path %>
+      <%= link_to 'Import Course', admin_dashboard_add_imported_course_path(course_id: @course.id), method: :post %>
+      <%= link_to 'Return to Admin Dashboard', admin_import_courses_path %>
     </div>
   </div>
 <% end %>

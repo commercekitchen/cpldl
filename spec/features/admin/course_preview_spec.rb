@@ -21,13 +21,13 @@ feature 'Admin previews a PLA course' do
     expect(current_path).to eq(admin_course_preview_path(pla_course))
     expect(page).to have_content('You are previewing this course.')
 
-    expect(page).to have_link 'Return to Admin Panel'
+    expect(page).to have_link 'Return to Admin Dashboard'
     expect(page).to have_link 'Import'
 
     expect(page).to_not have_link 'Edit Course >>'
 
     # Return to import courses view
-    click_link 'Return to Admin Panel'
+    click_link 'Return to Admin Dashboard'
     expect(current_path).to eq(admin_import_courses_path)
     click_link 'Preview Course'
 
