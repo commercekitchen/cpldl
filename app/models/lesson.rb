@@ -31,8 +31,6 @@ class Lesson < ApplicationRecord
   validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :seo_page_title, length: { maximum: 90 }
   validates :meta_desc, length: { maximum: 156 }
-  validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
 
   has_attached_file :story_line, Rails.configuration.storyline_paperclip_opts
   before_post_process :skip_for_zip
@@ -42,7 +40,6 @@ class Lesson < ApplicationRecord
   before_destroy :delete_associated_asl_files
 
   default_scope { order(:lesson_order) }
-  scope :published, -> { where(pub_status: 'P') }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
 
   def propagation_org_ids
@@ -59,16 +56,6 @@ class Lesson < ApplicationRecord
 
   def duration_str
     Duration.duration_str(duration)
-  end
-
-  def published?
-    pub_status == 'P'
-  end
-
-  def published_lesson_order
-    return 0 unless self.published?
-
-    self.course.lessons.published.map(&:id).index(self.id) + 1
   end
 
   def duration_to_int(duration_param)

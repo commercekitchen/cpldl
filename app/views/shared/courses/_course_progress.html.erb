@@ -6,9 +6,9 @@
   <% else %>
     <span class="meter" style="width: <%= percent_complete_without_user(course, lesson.id) %>%;"></span>
   <% end %>
-    <% lesson_count = course.lessons.published.count %>
+    <% lesson_count = course.lessons.count %>
     <% spacing = 100.0 / lesson_count %>
-    <% arrow_position = lesson.published_lesson_order * spacing - (spacing / 2) - 6 %>
+    <% arrow_position = lesson.lesson_order * spacing - (spacing / 2) - 6 %>
     <% lesson_count.times do |i| %>
       <% if i >= 1 %>
         <span class="lesson-break" style="left: <%= (i * spacing) - (i-1) %>%;"></span>

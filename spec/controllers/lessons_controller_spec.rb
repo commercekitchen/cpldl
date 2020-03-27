@@ -9,8 +9,6 @@ describe LessonsController do
   let!(:lesson1) { FactoryBot.create(:lesson, lesson_order: 1, course: course) }
   let!(:lesson2) { FactoryBot.create(:lesson, lesson_order: 2, course: course) }
   let!(:lesson3) { FactoryBot.create(:lesson, lesson_order: 3, course: course) }
-  let!(:draft_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'D') }
-  let!(:archived_lesson) { FactoryBot.create(:lesson, course: course, pub_status: 'A') }
 
   before(:each) do
     @request.host = "#{org.subdomain}.test.host"
@@ -56,26 +54,6 @@ describe LessonsController do
     it 'responds to json' do
       get :show, params: { course_id: course.to_param, id: lesson2.id }, format: :json
       expect(response).to have_http_status(:success)
-    end
-
-    it 'sets correct flash for draft lessons' do
-      get :show, params: { course_id: course.to_param, id: draft_lesson.id }, format: :json
-      expect(flash[:notice]).to eq('That lesson is not available at this time.')
-    end
-
-    it 'redirects to root for archived lessons' do
-      get :show, params: { course_id: course.to_param, id: draft_lesson.id }, format: :json
-      expect(response).to redirect_to(root_path)
-    end
-
-    it 'sets correct flash for archived lessons' do
-      get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
-      expect(flash[:notice]).to eq('That lesson is no longer available.')
-    end
-
-    it 'redirects to root for archived lessons' do
-      get :show, params: { course_id: course.to_param, id: archived_lesson.id }, format: :json
-      expect(response).to redirect_to(root_path)
     end
 
     context 'preview' do

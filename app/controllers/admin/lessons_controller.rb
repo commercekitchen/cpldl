@@ -6,6 +6,7 @@ module Admin
     before_action :set_course, except: [:sort]
 
     def new
+      @course_lessons = Lesson.where(course: @course)
       @lesson = @course.lessons.new
       authorize @lesson
     end
@@ -89,7 +90,6 @@ module Admin
                                      :meta_desc,
                                      :is_assessment,
                                      :lesson_order,
-                                     :pub_status,
                                      :subdomain)
     end
 

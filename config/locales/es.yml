@@ -36,8 +36,6 @@ es:
         password: "Contraseña"
       course:
         pub_status: "Estado de la publicación"
-      lesson:
-        pub_status: "Estado de la publicación"
     errors:
       models:
         profile:

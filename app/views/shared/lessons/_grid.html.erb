@@ -1,5 +1,5 @@
 <div class="flex-list">
-  <% @course.lessons.published.each do |l| %>
+  <% @course.lessons.each do |l| %>
     <%= render partial: "shared/lessons/lesson_tile_link",
       locals: { lesson: l, completed: lessons_completed(@course).include?(l.id) } %>
   <% end %>

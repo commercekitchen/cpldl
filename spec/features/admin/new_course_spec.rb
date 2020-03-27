@@ -95,7 +95,6 @@ feature 'Admin user creates new course and lesson' do
     fill_in :lesson_summary, with: 'Summary for new lesson'
     fill_in :lesson_duration, with: '05:15'
     attach_file 'Articulate Storyline Package', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-    select 'Published', from: 'Publication Status'
     click_button 'Save Lesson'
     expect(page).to have_content('Lesson was successfully created.')
     expect(current_path).to eq(edit_admin_course_lesson_path(course.to_param, Lesson.last.to_param))

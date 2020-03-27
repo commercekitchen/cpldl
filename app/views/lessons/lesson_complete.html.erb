@@ -1,13 +1,13 @@
 <div>
   <h2 class="text-color"><%= t("completed_lesson_page.congratulations") %></h2>
   <p>
-    <%= t("completed_lesson_page.youve_completed_activity") %> <%= @current_lesson.published_lesson_order %>: <%= @current_lesson.title %>
+    <%= t("completed_lesson_page.youve_completed_activity") %> <%= @current_lesson.lesson_order %>: <%= @current_lesson.title %>
   </p>
   <h2 class="text-color"><%= t("completed_lesson_page.up_next") %>:</h2>
   <h2 class="text-color">
     <%= "#{@next_lesson.title} - " %>
     <%= t("completed_lesson_page.activity") %>
-    <%= @next_lesson.published_lesson_order %>
+    <%= @next_lesson.lesson_order %>
   </h2>
   <%= link_to t("completed_lesson_page.continue"), course_lesson_path(@course, @next_lesson, preview: @preview), class: "btn small button-color" %>
   <span class="vertical-bar">&nbsp;</span>
