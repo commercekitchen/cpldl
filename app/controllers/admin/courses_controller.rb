@@ -40,10 +40,10 @@ module Admin
       @course.assign_attributes(new_course_params)
 
       if @course.save
-        if params[:commit] == 'Publish Course'
-          redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
-        else
+        if params[:commit] == 'Save & Edit Lessons'
           redirect_to new_admin_course_lesson_path(@course), notice: 'Course was successfully created. Now add some lessons.'
+        else
+          redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         end
       else
         @course.errors.delete(:"attachments.document_content_type")
@@ -71,14 +71,17 @@ module Admin
     def update
       authorize @course
 
-      if update_course
+      @course.slug = nil if @course.title != params[:course][:title]
+
+      if @course.update(new_course_params)
         if @course.parent.blank?
           CoursePropagationService.new(course: @course).propagate_course_changes(attributes_to_propagate)
-          success_message = 'Course was successfully updated.'
         end
 
+        success_message = 'Course was successfully updated.'
+
         case params[:commit]
-        when 'Publish Course'
+        when 'Save Course'
           redirect_to edit_admin_course_path(@course), notice: success_message
         when 'Save & Edit Lessons'
           if @course.lessons.blank?
@@ -86,10 +89,6 @@ module Admin
           else
             redirect_to edit_admin_course_lesson_path(@course, @course.lessons.first), notice: success_message
           end
-        when 'Save as Draft'
-          redirect_to edit_admin_course_path(@course), notice: 'Course saved as draft.'
-        when 'Publish'
-          redirect_to admin_dashboard_index_path, notice: 'Course successfully published!'
         else
           render :edit, alert: 'Unknown Action'
         end
@@ -134,35 +133,15 @@ module Admin
     end
 
     def new_course_params
-      new_params = if course_params[:category_id].present? && course_params[:category_id] == '0'
-                     course_params
-                   else
-                     course_params.except(:category_attributes)
-                   end
-
-      new_params.merge(pub_status: publication_status_by_commit)
-    end
-
-    def publication_status_by_commit
-      if ['Publish', 'Publish Course'].include?(params[:commit])
-        'P'
-      else
-        'D'
-      end
+      @new_course_params ||= if course_params[:category_id].present? && course_params[:category_id] == '0'
+                               course_params
+                             else
+                               course_params.except(:category_attributes)
+                             end
     end
 
     def attributes_to_propagate
-      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes)
-    end
-
-    def update_course
-      if @course.parent.present?
-        @course.update(new_course_params.merge(pub_status: 'P'))
-      else
-        # The slug must be set to nil for the friendly_id to update on title change
-        @course.slug = nil if @course.title != params[:course][:title]
-        @course.update(new_course_params)
-      end
+      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes, :pub_status)
     end
   end
 end
