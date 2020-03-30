@@ -7,7 +7,7 @@ describe Admin::CoursesController do
   let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
   let(:category1) { FactoryBot.create(:category, organization: org) }
   let(:category2) { FactoryBot.create(:category, organization: org) }
-  let!(:course1) { FactoryBot.create(:course, title: 'Course1', course_order: 1, category: category1, organization: org) }
+  let!(:course1) { FactoryBot.create(:course_with_lessons, title: 'Course1', course_order: 1, category: category1, organization: org) }
   let!(:course2) { FactoryBot.create(:course, title: 'Course2', course_order: 2, category: category2, organization: org) }
   let!(:course3) { FactoryBot.create(:course, title: 'Course3', course_order: 3, organization: org) }
 

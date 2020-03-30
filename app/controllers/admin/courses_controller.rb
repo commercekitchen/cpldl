@@ -59,7 +59,6 @@ module Admin
 
       course.pub_status = params[:value]
       course.update_pub_date(params[:value])
-      course.update_lesson_pub_stats(params[:value])
 
       if course.save
         render status: :ok, json: course.pub_status.to_s
