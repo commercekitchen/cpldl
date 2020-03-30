@@ -122,13 +122,6 @@ class Course < ApplicationRecord
                     end
   end
 
-  def update_lesson_pub_stats(new_pub_status)
-    lessons.each do |l|
-      l.pub_status = new_pub_status
-      l.save
-    end
-  end
-
   def post_course_attachments
     (parent || self).attachments.where(doc_type: 'post-course')
   end
