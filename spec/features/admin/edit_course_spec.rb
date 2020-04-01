@@ -74,6 +74,19 @@ feature 'Admin user updates course' do
       expect(page).to have_select('course_access_level', selected: 'Authenticated Users')
     end
 
+    scenario 'changes publication status for course' do
+      visit edit_admin_course_path(subsite_course)
+      expect(page).to have_select('Publication Status', selected: 'Published')
+      within(:css, 'main') do
+        select('Draft', from: 'Publication Status')
+        click_button 'Save Course'
+      end
+      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_select('Publication Status', selected: 'Draft')
+
+    end
+
     scenario 'selects existing category for course' do
       visit edit_admin_course_path(subsite_course)
       within(:css, 'main') do
