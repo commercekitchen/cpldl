@@ -16,7 +16,7 @@
             <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "no_drag_link" %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
-            <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Publish", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
+            <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Published", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
               <% unless course.pub_date.blank? %>
                 <span class="note">(<%= course.pub_date.strftime("%m/%d/%Y") %>)</span>
               <% end %>
