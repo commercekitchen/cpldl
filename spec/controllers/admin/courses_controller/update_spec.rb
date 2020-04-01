@@ -177,6 +177,12 @@ describe Admin::CoursesController do
             patch :update, params: { id: child_course.to_param, course: { access_level: 'authenticated_users' }, commit: 'Save Course' }
           end.to change { child_course.reload.access_level }.from('everyone').to('authenticated_users')
         end
+
+        it 'should change publication status, if given' do
+          expect do
+            patch :update, params: { id: child_course.to_param, course: { pub_status: 'P' }, commit: 'Save Course' }
+          end.to change { child_course.reload.pub_status }.from('D').to('P')
+        end
       end
     end
   end

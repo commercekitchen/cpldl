@@ -207,7 +207,7 @@ describe CoursePolicy, type: :policy do
       subject { CoursePolicy.new(admin, imported_subsite_course) }
 
       it 'should contain appropriate attributes' do
-        expect(subject.permitted_attributes).to contain_exactly(:category_id, :access_level, category_attributes: %i[name organization_id])
+        expect(subject.permitted_attributes).to contain_exactly(:category_id, :access_level, :pub_status, category_attributes: %i[name organization_id])
       end
     end
 
