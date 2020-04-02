@@ -43,7 +43,7 @@ module Admin
       import_service = CourseImportService.new(organization: current_organization, course_id: params['course_id'].to_i)
       new_course = import_service.import!
 
-      success_message = 'Congrats! You have just imported a PLA course. Please set your desired Course Category, Access Level and Publication Status.'
+      success_message = 'Congrats! You have just imported a PLA course.<br /> Please set your desired Course Category, Access Level and Publication Status.'.html_safe
 
       redirect_to edit_admin_course_path(new_course), notice: success_message
     rescue ActiveRecord::RecordInvalid => e
