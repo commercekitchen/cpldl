@@ -85,7 +85,7 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{category.name}']")
   end
 
-  scenario 'adds supplemental materials and post-course supplemental materials' do
+  scenario 'adds text copies and additional-resource materials' do
     fill_basic_course_info
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')

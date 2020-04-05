@@ -104,8 +104,8 @@ describe Admin::CoursesController do
               '0' => {
                 document: document,
                 title: '',
-                doc_type: 'post-course',
-                file_description: 'post-course attachment test'
+                doc_type: 'additional-resource',
+                file_description: 'additional-resource attachment test'
               }
             } }
           end

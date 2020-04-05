@@ -31,7 +31,7 @@ feature 'User visits course complete page' do
 
     scenario 'sees practice skills button if post course attachments exist' do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
-      course.attachments.create(document: file, doc_type: 'post-course')
+      course.attachments.create(document: file, doc_type: 'additional-resource')
       visit course_completion_path(course)
 
       click_link 'Use My Skills Now'
@@ -41,7 +41,7 @@ feature 'User visits course complete page' do
 
     scenario 'can view skills page' do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
-      course.attachments.create(document: file, doc_type: 'post-course')
+      course.attachments.create(document: file, doc_type: 'additional-resource')
       course.update(notes: '<strong>Post-Course completion notes...</strong>')
       visit course_completion_path(course)
       click_link 'Use My Skills Now'
@@ -73,7 +73,7 @@ feature 'User visits course complete page' do
 
     scenario 'can view the supplemental materials link' do
       file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
-      course.attachments.create(document: file, doc_type: 'post-course')
+      course.attachments.create(document: file, doc_type: 'additional-resource')
       visit course_completion_path(course)
 
       click_link 'Use My Skills Now'
