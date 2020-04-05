@@ -172,6 +172,7 @@ describe Course do
     let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
     let!(:post_course_attachment) { FactoryBot.create(:attachment, doc_type: 'post-course', course: pla_course) }
     let!(:supplemental_attachment) { FactoryBot.create(:attachment, doc_type: 'supplemental', course: pla_course) }
+    let!(:subsite_post_course_attachment) { FactoryBot.create(:attachment, doc_type: 'post-course', course: child_course) }
 
     context 'parent course' do
       it 'returns correct #post_course_attachments' do
@@ -184,11 +185,11 @@ describe Course do
     end
 
     context 'child course' do
-      it 'returns correct #post_course_attachments' do
-        expect(child_course.post_course_attachments).to contain_exactly(post_course_attachment)
+      it 'returns subsite specific post_course_attachments' do
+        expect(child_course.post_course_attachments).to contain_exactly(subsite_post_course_attachment)
       end
 
-      it 'returns correct #supplemental_attachments' do
+      it 'returns parent supplemental_attachments' do
         expect(child_course.supplemental_attachments).to contain_exactly(supplemental_attachment)
       end
     end

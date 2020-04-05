@@ -123,7 +123,7 @@ class Course < ApplicationRecord
   end
 
   def post_course_attachments
-    (parent || self).attachments.where(doc_type: 'post-course')
+    self.attachments.where(doc_type: 'post-course')
   end
 
   def supplemental_attachments
