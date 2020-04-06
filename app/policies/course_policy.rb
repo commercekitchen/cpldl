@@ -28,7 +28,11 @@ class CoursePolicy < AdminOnlyPolicy
     return [] unless user.admin?
 
     if record.parent.present?
-      [:category_id, :access_level, :pub_status, category_attributes: %i[name organization_id]]
+      [:category_id,
+       :access_level,
+       :pub_status,
+       category_attributes: %i[name organization_id],
+       attachments_attributes: %i[document title doc_type file_description _destroy]]
     else
       [:title,
        :seo_page_title,

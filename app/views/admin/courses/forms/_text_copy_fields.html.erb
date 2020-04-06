@@ -6,7 +6,7 @@
     </i></p>
 
     <div class='fields'>
-      <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'text-copy' } %>
+      <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'text-copy', allow_delete: !@imported_course } %>
       <% unless @imported_course %>
         <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'text-copy', removable: false } %>
         <%= link_to_add_fields "Add Attachment", f, :attachments, 'text-copy' %>
