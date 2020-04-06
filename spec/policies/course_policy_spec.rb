@@ -210,6 +210,7 @@ describe CoursePolicy, type: :policy do
         expect(subject.permitted_attributes).to contain_exactly(:category_id,
                                                                 :access_level,
                                                                 :pub_status,
+                                                                :notes,
                                                                 category_attributes: %i[name organization_id],
                                                                 attachments_attributes: %i[document title doc_type file_description _destroy])
       end

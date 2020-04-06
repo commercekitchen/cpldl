@@ -208,6 +208,12 @@ describe Admin::CoursesController do
             patch :update, params: { id: child_course.to_param, course: { attachments_attributes: additional_resource_attachment_attributes } }
           end.to change { child_course.reload.attachments.count }.by(1)
         end
+
+        it 'should update course notes' do
+          expect do
+            patch :update, params: { id: child_course.to_param, course: { notes: 'new course notes' } }
+          end.to change { child_course.reload.notes }.from(nil).to('new course notes')
+        end
       end
     end
   end

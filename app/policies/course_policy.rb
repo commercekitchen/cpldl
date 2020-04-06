@@ -31,6 +31,7 @@ class CoursePolicy < AdminOnlyPolicy
       [:category_id,
        :access_level,
        :pub_status,
+       :notes,
        category_attributes: %i[name organization_id],
        attachments_attributes: %i[document title doc_type file_description _destroy]]
     else

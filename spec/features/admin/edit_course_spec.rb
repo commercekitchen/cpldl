@@ -39,7 +39,6 @@ feature 'Admin user updates course' do
        'Contributor',
        'Course Summary',
        'Course Description',
-       'Content for Further Learning',
        topic.title,
        'Course Language',
        'Course Format',
@@ -132,6 +131,14 @@ feature 'Admin user updates course' do
       click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_content('testfile.pdf')
+    end
+
+    scenario 'updates content for further learning' do
+      visit edit_admin_course_path(subsite_course)
+      fill_in 'Content for Further Learning', with: 'New content for further learning'
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field('Content for Further Learning', with: 'New content for further learning')
     end
 
     scenario 'can preview course' do
