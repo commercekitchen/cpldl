@@ -52,7 +52,7 @@
   <fieldset class='additional-content'>
     <%= f.label :notes, "Content for Further Learning", class: "text-color" %>
     <p><i>This content is available to users after completing the course.</i></p>
-    <%= f.cktext_area :notes, disabled: @imported_course %>
+    <%= f.cktext_area :notes %>
   </fieldset>
 
   <%= render 'admin/courses/forms/topics', f: f %>

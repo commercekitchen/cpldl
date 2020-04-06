@@ -104,8 +104,8 @@ describe Admin::CoursesController do
               '0' => {
                 document: document,
                 title: '',
-                doc_type: 'post-course',
-                file_description: 'post-course attachment test'
+                doc_type: 'additional-resource',
+                file_description: 'additional-resource attachment test'
               }
             } }
           end
@@ -154,6 +154,25 @@ describe Admin::CoursesController do
 
       describe 'save an imported course' do
         let(:new_category) { FactoryBot.create(:category, organization: org) }
+        let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
+
+        let(:additional_resource_attachment_attributes) do
+          { '0' => {
+            document: document,
+              title: '',
+              doc_type: 'additional-resource',
+              file_description: 'additional-resource attachment test'
+          } }
+        end
+
+        let(:text_copy_attachment_attributes) do
+          { '0' => {
+            document: document,
+            title: '',
+            doc_type: 'text-copy',
+            file_description: 'text-copy attachment test'
+          } }
+        end
 
         it 'should not change title, if new title is given' do
           expect do
@@ -182,6 +201,18 @@ describe Admin::CoursesController do
           expect do
             patch :update, params: { id: child_course.to_param, course: { pub_status: 'P' }, commit: 'Save Course' }
           end.to change { child_course.reload.pub_status }.from('D').to('P')
+        end
+
+        it 'should add an additional resource attachment' do
+          expect do
+            patch :update, params: { id: child_course.to_param, course: { attachments_attributes: additional_resource_attachment_attributes } }
+          end.to change { child_course.reload.attachments.count }.by(1)
+        end
+
+        it 'should update course notes' do
+          expect do
+            patch :update, params: { id: child_course.to_param, course: { notes: 'new course notes' } }
+          end.to change { child_course.reload.notes }.from(nil).to('new course notes')
         end
       end
     end

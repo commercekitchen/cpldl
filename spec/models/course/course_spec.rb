@@ -170,26 +170,27 @@ describe Course do
     let(:pla) { FactoryBot.create(:default_organization) }
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
     let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
-    let!(:post_course_attachment) { FactoryBot.create(:attachment, doc_type: 'post-course', course: pla_course) }
-    let!(:supplemental_attachment) { FactoryBot.create(:attachment, doc_type: 'supplemental', course: pla_course) }
+    let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course) }
+    let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', course: pla_course) }
+    let!(:subsite_additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: child_course) }
 
     context 'parent course' do
-      it 'returns correct #post_course_attachments' do
-        expect(pla_course.post_course_attachments).to contain_exactly(post_course_attachment)
+      it 'returns correct additional resource' do
+        expect(pla_course.additional_resource_attachments).to contain_exactly(additional_resource_attachment)
       end
 
-      it 'returns correct #supplemental_attachments' do
-        expect(pla_course.supplemental_attachments).to contain_exactly(supplemental_attachment)
+      it 'returns correct text copy attachments' do
+        expect(pla_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
       end
     end
 
     context 'child course' do
-      it 'returns correct #post_course_attachments' do
-        expect(child_course.post_course_attachments).to contain_exactly(post_course_attachment)
+      it 'returns subsite specific additional_resource_attachments' do
+        expect(child_course.additional_resource_attachments).to contain_exactly(subsite_additional_resource_attachment)
       end
 
-      it 'returns correct #supplemental_attachments' do
-        expect(child_course.supplemental_attachments).to contain_exactly(supplemental_attachment)
+      it 'returns parent text copies' do
+        expect(child_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
       end
     end
   end

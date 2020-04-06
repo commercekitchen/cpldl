@@ -17,10 +17,10 @@ feature 'Admin user updates course' do
   let(:pla_course) { FactoryBot.create(:course, organization: pla) }
   let(:subsite_course) { FactoryBot.create(:course, organization: org, parent: pla_course) }
   let!(:course_attachment) do
-    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'post-course', course: subsite_course)
+    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'additional-resource', course: subsite_course)
   end
-  let!(:supplemental_attachment) do
-    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'supplemental', course: subsite_course)
+  let!(:text_copy_attachment) do
+    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'text-copy', course: subsite_course)
   end
 
   let!(:topic) { FactoryBot.create(:topic) }
@@ -39,7 +39,6 @@ feature 'Admin user updates course' do
        'Contributor',
        'Course Summary',
        'Course Description',
-       'Content for Further Learning',
        topic.title,
        'Course Language',
        'Course Format',
@@ -51,12 +50,13 @@ feature 'Admin user updates course' do
 
       expect(page).to_not have_field('Other Topic')
       expect(page).to_not have_field('course_other_topic_text')
-      expect(page).to_not have_link('Delete')
-      expect(page).to_not have_css('.attachment-upload-fields')
-      expect(page).to_not have_link('Add Attachment')
+
+      expect(page).to have_link('Delete', count: 1)
+      expect(page).to have_css('.attachment-upload-fields', count: 1)
+      expect(page).to have_link('Add Attachment', count: 1)
 
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
-      expect(page).to have_content('Supplemental materials for further learning. These files are available to users after completing the course.')
+      expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users after completing the course.')
 
       expect(page).to have_button('Save Course')
       expect(page).to have_content('If you wish to edit details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
@@ -123,6 +123,22 @@ feature 'Admin user updates course' do
     scenario 'can see which categories are disabled' do
       visit edit_admin_course_path(subsite_course)
       expect(page).to have_select('course_category_id', with_options: [category.name.to_s, "#{disabled_category.name} (disabled)"])
+    end
+
+    scenario 'can upload additional resource attachments' do
+      visit edit_admin_course_path(subsite_course)
+      attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'testfile.pdf')
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_content('testfile.pdf')
+    end
+
+    scenario 'updates content for further learning' do
+      visit edit_admin_course_path(subsite_course)
+      fill_in 'Content for Further Learning', with: 'New content for further learning'
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field('Content for Further Learning', with: 'New content for further learning')
     end
 
     scenario 'can preview course' do

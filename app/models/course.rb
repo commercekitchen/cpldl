@@ -122,12 +122,12 @@ class Course < ApplicationRecord
                     end
   end
 
-  def post_course_attachments
-    (parent || self).attachments.where(doc_type: 'post-course')
+  def additional_resource_attachments
+    self.attachments.where(doc_type: 'additional-resource')
   end
 
-  def supplemental_attachments
-    (parent || self).attachments.where(doc_type: 'supplemental')
+  def text_copy_attachments
+    (parent || self).attachments.where(doc_type: 'text-copy')
   end
 
   def published?
