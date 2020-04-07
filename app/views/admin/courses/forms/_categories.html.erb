@@ -1,6 +1,6 @@
 <div class='categories'>
   <fieldset>
-    <%= f.label :category_id, class: "text-color" do %>
+    <%= f.label :category_id do %>
       Course Category
     <% end %>
     <%= f.select(:category_id, options_for_select(@category_options, @course.category_id || ("0" if @custom)),{ include_blank: "Uncategorized" } ) %>

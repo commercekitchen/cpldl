@@ -1,6 +1,6 @@
 <div class='text-copies'>
   <%= f.fields_for :attachments, @course.attachments.build do |a| %>
-    <%= a.label :document, "Text Copies of Course", class: "text-color" %>
+    <%= a.label :document, "Text Copies of Course", class: "#{'disabled' if @imported_course}" %>
     <p><i>
       <%= "#{@imported_course ? 'Text' : 'Upload text'} copies of the course to allow users to download content and view offline or follow along with the online course." %>
     </i></p>

@@ -1,6 +1,6 @@
 <div class='resources'>
   <%= f.fields_for :attachments, @course.attachments.build do |a| %>
-    <%= a.label :document, "Additional Resources", class: "text-color" %>
+    <%= a.label :document, "Additional Resources" %>
     <p><i>
       <%= 'Upload any supplemental materials for further learning. These files are available to users after completing the course.' %>
     </i></p>
