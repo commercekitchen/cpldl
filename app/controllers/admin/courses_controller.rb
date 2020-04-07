@@ -140,7 +140,7 @@ module Admin
     end
 
     def attributes_to_propagate
-      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes, :pub_status)
+      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes, :pub_status, :notes)
     end
   end
 end
