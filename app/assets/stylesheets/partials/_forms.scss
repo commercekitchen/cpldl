@@ -3,18 +3,22 @@ label {
   font-size: 1.5em;
   margin-bottom: 0.5em;
   display: block;
+
+  &.plain {
+    color: $dark-grey;
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    display: inline-block;
+    padding-right: 1em;
+  }
+
+  &.disabled {
+    color: $grey;
+  }
 }
 
 legend {
   margin-bottom: 0.5em;
-}
-
-label.plain {
-  color: $dark-grey;
-  font-size: 1em;
-  margin-bottom: 0.5em;
-  display: inline-block;
-  padding-right: 1em;
 }
 
 .required:after {
@@ -214,19 +218,6 @@ select {
   outline: 0;
 }
 
-.inline-checkbox-row {
-  padding-top: 15px;
-
-  .plain-label {
-    font-size: 16px;
-    color: black;
-
-    span {
-      padding-left: 10px;
-    }
-  }
-}
-
 .inline-radio-group {
   padding-top: 10px;
   padding-left: 20px;
@@ -285,4 +276,9 @@ select {
 
 .character-limit {
   margin-bottom: -14px;
+}
+
+input:disabled,
+select:disabled {
+  color: darken($medium-grey, 20%);
 }

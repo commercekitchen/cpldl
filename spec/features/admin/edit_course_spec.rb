@@ -59,7 +59,7 @@ feature 'Admin user updates course' do
       expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users after completing the course.')
 
       expect(page).to have_button('Save Course')
-      expect(page).to have_content('If you wish to edit details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
+      expect(page).to have_content('If you wish to edit additional details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
       expect(page).to have_link('contact a PLA Administrator')
     end
 

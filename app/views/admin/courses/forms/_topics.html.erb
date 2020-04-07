@@ -1,19 +1,19 @@
   <fieldset class='topics'>
-    <%= f.label :topic_ids, class: "text-color" do %>
+    <%= f.label :topic_ids, class: "#{'disabled' if @imported_course}" do %>
       Course Topics<span class="required"></span>
     <% end %>
 
     <%= f.collection_check_boxes(:topic_ids, Topic.all, :id, :title, {}, disabled: @imported_course) do |b| %>
       <div>
         <%= b.check_box %>
-        <%= b.label class: "plain" %>
+        <%= b.label class: "plain #{'disabled' if @imported_course}" %>
       </div>
     <% end %>
 
     <% unless @imported_course %>
       <div>
         <%= f.check_box :other_topic %>
-        <%= f.label :other_topic, "Other Topic", class: "plain" %>
+        <%= f.label :other_topic, "Other Topic", class: "plain #{'disabled' if @imported_course}" %>
         <%= f.fields_for :course_topics, [CourseTopic.new] do |ct| %>
           <%= ct.fields_for :topic_attributes do |topic_form| %>
             <%= topic_form.text_field :title, placeholder: "(Enter to create new topic)", class: "topic-box" %>
