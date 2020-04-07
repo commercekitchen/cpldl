@@ -21,7 +21,7 @@ describe Admin::CoursesController do
       end
 
       let(:update_params) do
-        pla_course.attributes.merge('title' => 'Updated Title', 'access_level' => 'authenticated_users', 'category_id' => pla_category2.id)
+        pla_course.attributes.merge('title' => 'Updated Title', 'access_level' => 'authenticated_users', 'category_id' => pla_category2.id, 'notes' => 'New Notes')
       end
 
       let(:new_topic_params) do
@@ -94,6 +94,12 @@ describe Admin::CoursesController do
           expect do
             save_request
           end.to_not(change { child_course.reload.access_level })
+        end
+
+        it 'does not propagate notes/content for further learning to child courses' do
+          expect do
+            save_request
+          end.to_not(change { child_course.reload.notes })
         end
 
         describe 'attachments' do
