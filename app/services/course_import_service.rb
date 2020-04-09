@@ -12,6 +12,7 @@ class CourseImportService
       save_new_course!
       copy_parent_lessons!
       copy_topics!
+      copy_attachments!
     end
 
     @new_course
@@ -52,6 +53,16 @@ class CourseImportService
       new_topic = course_topic.dup
       new_topic.course_id = @new_course.id
       new_topic.save!
+    end
+  end
+
+  def copy_attachments!
+    # Create copies of the attachments
+    @parent_course.additional_resource_attachments.each do |attachment|
+      new_attachment = attachment.dup
+      new_attachment.document = attachment.document
+      new_attachment.course_id = @new_course.id
+      new_attachment.save!
     end
   end
 end

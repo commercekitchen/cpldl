@@ -9,7 +9,8 @@ describe CourseImportService do
   let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla, topics: [topic], category: category) }
 
   let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
-  let!(:attachment) { FactoryBot.create(:attachment, document: document, course: pla_course) }
+  let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', document: document, course: pla_course) }
+  let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', document: document, course: pla_course)  }
 
   let(:subsite) { FactoryBot.create(:organization) }
 
@@ -45,10 +46,16 @@ describe CourseImportService do
     end.to change { subsite.lessons.count }.by(3)
   end
 
-  it 'should not copy attachments' do
+  it 'should copy additional-content attachments' do
     expect do
       subject.import!
-    end.to_not change(Attachment, :count)
+    end.to change { Attachment.where(doc_type: 'additional-resource').count }.by(1)
+  end
+
+  it 'should not copy text-copy attachments' do
+    expect do
+      subject.import!
+    end.to_not(change { Attachment.where(doc_type: 'text-copy').count })
   end
 
   it 'should create new course topic' do
