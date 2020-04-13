@@ -2,10 +2,5 @@
 
 <small><%= link_to "Courses", courses_path %> >> <%= @course.title %></small>
 
-<% content_for :left do %>
-  <%= render "shared/courses/course_notes" %>
-<% end %>
-
-<% content_for :right do %>
-  <%= render "shared/courses/supplemental_materials" %>
-<% end %>
+<%= render "shared/courses/course_notes" %>
+<%= render "shared/courses/supplemental_materials" %>

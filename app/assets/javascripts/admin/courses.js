@@ -15,14 +15,17 @@ $(document).ready(function() {
     return false;
   });
 
-  // If the user enters text in the topics textbox, mark the checkbox too.
-  $("body").on("change", "#course_other_topic_text", function() {
-    if (
-      $(this)
-        .val()
-        .trim() !== ""
-    ) {
-      $("#course_other_topic").prop("checked", true);
+  // Only show other topic input if box is checked
+  $("#course_other_topic").on("change", function() {
+    if ($("#course_other_topic").prop("checked")) {
+      $(".topic-box")
+        .show()
+        .prop("required", true);
+    } else {
+      $(".topic-box")
+        .val("")
+        .hide()
+        .prop("required", false);
     }
   });
 

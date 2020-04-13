@@ -83,7 +83,7 @@ feature 'User visits course listing page' do
       expect(current_path).to eq(course_lesson_path(course1, lesson))
       expect(page.title).to eq(lesson.title)
       expect(page).to_not have_selector('h1', text: course1.title)
-      expect(page).to have_content("#{lesson.published_lesson_order}. #{lesson.title}")
+      expect(page).to have_content("#{lesson.lesson_order}. #{lesson.title}")
     end
 
     scenario 'can click to start a course and be taken to the first not-completed lesson' do

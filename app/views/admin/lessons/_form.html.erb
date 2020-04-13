@@ -19,7 +19,7 @@
       <%= f.label :title, class: "text-color" do %>
         Lesson Title<span class="required"></span>
       <% end %>
-      <%= f.text_field :title, maxlength: 90  %>
+      <%= f.text_field :title, maxlength: Lesson.max_length_for(:title)  %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -29,7 +29,7 @@
       <%= f.label :summary, class: "text-color" do %>
         Lesson Summary<span class="required"></span>
       <% end %>
-      <%= f.text_field :summary, maxlength: 156 %>
+      <%= f.text_field :summary, maxlength: Lesson.max_length_for(:summary) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -77,7 +77,7 @@
       <%= f.label :seo_page_title, class: "text-color" do %>
         Page Title
       <% end %>
-      <%= f.text_field :seo_page_title, maxlength: 90 %>
+      <%= f.text_field :seo_page_title, maxlength: Lesson.max_length_for(:seo_page_title) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -85,19 +85,12 @@
   <div class='form'>
     <fieldset>
       <%= f.label :meta_desc, class: "text-color" %>
-      <%= f.text_field :meta_desc, maxlength: 156 %>
+      <%= f.text_field :meta_desc, maxlength: Lesson.max_length_for(:meta_desc) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
 
   <div class="form-row inline">
-    <fieldset class="inline-item">
-      <%= f.label :pub_status, class: "text-color" do %>
-        Publication Status<span class="required"></span>
-      <% end %>
-      <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"]], @lesson.pub_status), { include_blank: "Select..." } ) %>
-    </fieldset>
-
     <fieldset class="inline-item">
       <%= f.label :is_assessment, class: "text-color" do %>
         Assessment<span class="required"></span>
@@ -109,21 +102,6 @@
       <%= f.label :is_assessment_false, "No", class: "plain" %>
     </fieldset>
   </div>
-
-  <% if top_level_domain? %>
-    <div class="form-row">
-      <fieldset>
-        <%= f.label :propagation_org_ids, 'Propagate these changes to subsite lessons for:', class: "text-color" %>
-
-        <%= f.collection_check_boxes :propagation_org_ids, Organization.using_lesson(@lesson.id), :id, :name  do |b| %>
-          <div>
-            <%= b.check_box(checked: @lesson.propagation_org_ids.include?(b.object)) %>
-            <%= b.label class: "plain" %>
-          </div>
-        <% end %>
-      </fieldset>
-    </div>
-  <% end %>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
 

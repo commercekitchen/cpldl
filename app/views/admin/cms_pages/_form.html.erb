@@ -38,7 +38,7 @@
       <%= f.label :title, class: "text-color" do %>
         Title<span class="required"></span>
       <% end %>
-      <%= f.text_field :title, maxlength: 90 %>
+      <%= f.text_field :title, maxlength: CmsPage.max_length_for(:title) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -80,7 +80,7 @@
   <div class="form-row">
     <fieldset>
       <%= f.label "SEO page title", class: "text-color" %>
-      <%= f.text_field :seo_page_title, maxlength: 90 %>
+      <%= f.text_field :seo_page_title, maxlength: CmsPage.max_length_for(:seo_page_title) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>
@@ -88,7 +88,7 @@
   <div class="form-row">
     <fieldset>
       <%= f.label :meta_desc, class: "text-color" %>
-      <%= f.text_field :meta_desc, maxlength: 156 %>
+      <%= f.text_field :meta_desc, maxlength: CmsPage.max_length_for(:meta_desc) %>
       <div class="character-limit note left-or-right">&nbsp;</div>
     </fieldset>
   </div>

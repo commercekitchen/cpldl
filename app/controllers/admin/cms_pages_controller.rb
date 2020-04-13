@@ -3,7 +3,6 @@
 module Admin
   class CmsPagesController < BaseController
     before_action :set_page, only: %i[edit update destroy]
-    before_action :set_maximums, only: %i[new edit]
 
     def index
       @cms_pages = policy_scope(CmsPage)
@@ -93,12 +92,6 @@ module Admin
 
     def set_page
       @cms_page = CmsPage.friendly.find(params[:id])
-    end
-
-    def set_maximums
-      @max_title = CmsPage.validators_on(:title).first.options[:maximum]
-      @max_seo   = CmsPage.validators_on(:seo_page_title).first.options[:maximum]
-      @max_meta  = CmsPage.validators_on(:meta_desc).first.options[:maximum]
     end
 
     def unescaped_cms_content

@@ -535,8 +535,6 @@ CREATE TABLE public.lessons (
     story_line_content_type character varying,
     story_line_file_size bigint,
     story_line_updated_at timestamp without time zone,
-    pub_status character varying,
-    parent_lesson_id integer,
     parent_id integer
 );
 
@@ -1834,6 +1832,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20191211193827'),
 ('20200120023743'),
 ('20200220181809'),
-('20200220184942');
+('20200220184942'),
+('20200327172506'),
+('20200327214039');
 
 

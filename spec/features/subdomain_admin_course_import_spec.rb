@@ -90,7 +90,7 @@ feature 'Admin courses' do
         click_link('Import Course', href: admin_dashboard_add_imported_course_path(course_id: importable_course1.id))
       end.to change(Category, :count).by(1)
 
-      expect(page).to have_content('Course Information')
+      expect(page).to have_content('Edit This Course')
       expect(page).to have_select('course_category_id', selected: pla_category.name)
     end
 
@@ -101,7 +101,7 @@ feature 'Admin courses' do
         click_link('Import Course', href: admin_dashboard_add_imported_course_path(course_id: importable_course3.id))
       end.not_to change(Category, :count)
 
-      expect(page).to have_content('Course Information')
+      expect(page).to have_content('Edit This Course')
       expect(page).to have_select('course_category_id', selected: dpl_category.name)
     end
   end

@@ -7,14 +7,12 @@ describe CourseProgressesController do
   let(:organization) { user.organization }
   let(:course1) { FactoryBot.create(:course, title: 'Course 1', language: @english, organization: organization) }
   let(:course2) { FactoryBot.create(:course, title: 'Course 2', language: @english, organization: organization) }
-  let(:lesson1) { create(:lesson, lesson_order: 1) }
-  let(:lesson2) { create(:lesson, lesson_order: 2) }
-  let(:lesson3) { create(:lesson, lesson_order: 3) }
-  let(:lesson4) { create(:lesson) }
+  let(:lesson1) { create(:lesson, lesson_order: 1, course: course1) }
+  let(:lesson2) { create(:lesson, lesson_order: 2, course: course1) }
+  let(:lesson3) { create(:lesson, lesson_order: 3, course: course1) }
+  let(:lesson4) { create(:lesson, course: course2) }
 
   before(:each) do
-    course1.lessons << [lesson1, lesson2, lesson3]
-    course2.lessons << [lesson4]
     request.host = "#{organization.subdomain}.example.com"
   end
 

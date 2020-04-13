@@ -23,13 +23,14 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :show] do
     post 'start'
-    get 'attachment/:attachment_id' => 'courses#view_attachment', as: :attachment
     get 'skills', to: 'courses#skills', as: :skills
     resources :lessons, only: [:index, :show] do
       get 'lesson_complete'
       post 'complete'
     end
   end
+
+  resources :attachments, only: [:show]
 
   resources :my_courses, only: [:index], param: :course_id
 
@@ -46,9 +47,6 @@ Rails.application.routes.draw do
   get '/static/customization', to: redirect('/cms_pages/pricing-features')
   get '/static/portfolio', to: redirect('/cms_pages/see-our-work-in-action')
   get '/static/overview', to: redirect('/cms_pages/get-digitallearn-for-your-library')
-
-  get 'designing-courses-1', to: 'courses#designing_courses_1'
-  get 'designing-courses-2', to: 'courses#designing_courses_2'
 
   namespace :trainer do
     root 'home#index'
@@ -100,9 +98,10 @@ Rails.application.routes.draw do
 
     get 'users/export_user_info', to: 'users#export_user_info', as: :export_user_info
 
-    resources :courses do
+    resources :courses, except: [:show] do
       put :sort, on: :collection
       patch 'update_pub_status'
+      get :preview
 
       resources :lessons, except: [:index, :show] do
         collection do

@@ -8,23 +8,29 @@
     text-align: $slogan_alignment;
   }
 
+  .callout {
+    flex-grow: 1;
+  }
+
   .banner {
     background-color: $background_color;
-    margin-bottom: 2em;
     padding: 1em 0 2em 0;
     min-height: 2em;
+
+    .banner-content {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+      flex-wrap: wrap-reverse;
+    }
 
     h1 {
       font-family: $font-secondary;
       color: $text_color;
-      font-size: 2em;
+      font-size: 3.3em;
       font-weight: 100;
       margin-bottom: 0;
-      margin-top: 13px;
-
-      @media (min-width: $breakpoint-tablet) {
-        font-size: 3.3em;
-      }
+      margin-top: 0.25em;
 
       &.slogan {
         @media (min-width: $breakpoint-tablet) {

@@ -1,0 +1,111 @@
+<%= form_for([:admin, @course], html: { multipart: true, class: "course-form #{'restricted' if @imported_course}" } ) do |f| %>
+  <% if @course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
+      <ul>
+        <% @course.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if @imported_course %>
+    <%= render 'admin/courses/forms/imported_course_actions', f: f %>
+  <% end %>
+
+  <fieldset class='title'>
+    <%= f.label :title, class: "#{'disabled' if @imported_course}" do %>
+      Title<span class="required"></span>
+    <% end %>
+    <%= f.text_field :title, maxlength: Course.max_length_for(:title), disabled: @imported_course %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
+
+  <fieldset class='author'>
+    <%= f.label :contributor, class: "#{'disabled' if @imported_course}" do %>
+      Contributor<span class="required"></span>
+    <% end %>
+    <%= f.text_field :contributor, disabled: @imported_course %>
+  </fieldset>
+
+  <fieldset class='summary'>
+    <%= f.label :summary, class: "#{'disabled' if @imported_course}" do %>
+      Course Summary<span class="required"></span>
+    <% end %>
+    <%= f.text_field :summary, maxlength: Course.max_length_for(:summary), disabled: @imported_course %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
+
+  <fieldset class='description'>
+    <%= f.label :description, class: "#{'disabled' if @imported_course}" do %>
+      Course Description<span class="required"></span>
+    <% end %>
+    <%= f.cktext_area :description, disabled: @imported_course %>
+  </fieldset>
+
+  <%= render partial: 'admin/courses/forms/text_copy_fields', locals: { f: f } %>
+  <%= render partial: 'admin/courses/forms/additional_resource_fields', locals: { f: f } %>
+
+  <fieldset class='additional-content'>
+    <%= f.label :notes, "Content for Further Learning", class: "" %>
+    <p><i>This content is available to users after completing the course.</i></p>
+    <%= f.cktext_area :notes %>
+  </fieldset>
+
+  <%= render 'admin/courses/forms/topics', f: f %>
+  <%= render 'admin/courses/forms/categories', f: f %>
+
+  <fieldset class='language'>
+    <%= f.label :language_id, class: "#{'disabled' if @imported_course}" do %>
+      Course Language<span class="required"></span>
+    <% end %>
+    <%= f.collection_select(:language_id, Language.all, :id, "name", { include_blank: "Select..." }, { disabled: @imported_course } ) %>
+  </fieldset>
+
+  <fieldset class='format'>
+    <%= f.label :format, class: "#{'disabled' if @imported_course}" do %>
+      Course Format<span class="required"></span>
+    <% end %>
+    <%= f.select(:format, options_for_select([["Desktop", "D"],["Mobile", "M"]], @course.format), { include_blank: "Select..." }, { disabled: @imported_course } ) %>
+  </fieldset>
+
+  <fieldset class='course-level'>
+    <%= f.label :level, class: "#{'disabled' if @imported_course}" do %>
+      Course Level<span class="required"></span>
+    <% end %>
+    <%= f.select(:level, options_for_select(["Beginner", "Intermediate", "Advanced"], @course.level), { include_blank: "Select..." }, { disabled: @imported_course } ) %>
+  </fieldset>
+
+  <%= render 'admin/courses/forms/access_level', f: f %>
+
+  <fieldset class='seo-title'>
+    <%= f.label :seo_page_title, class: "#{'disabled' if @imported_course}" do %>
+      SEO Page Title
+    <% end %>
+    <%= f.text_field :seo_page_title, maxlength: Course.max_length_for(:seo_page_title), disabled: @imported_course %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
+
+  <fieldset class='seo-meta'>
+    <%= f.label :meta_desc, class: "#{'disabled' if @imported_course}" do %>
+      SEO Meta Description
+    <% end %>
+    <%= f.text_field :meta_desc, maxlength: Course.max_length_for(:meta_desc), disabled: @imported_course %>
+    <div class="character-limit note left-or-right">&nbsp;</div>
+  </fieldset>
+
+  <fieldset class='pub-status'>
+    <%= f.label :pub_status do %>
+      Publication Status
+    <% end %>
+    <%= f.select(:pub_status, options_for_select([["Draft", "D"], ["Published", "P"], ["Archived", "A"]], @course.pub_status), data: { status: @course.pub_status }) %>
+  </fieldset>
+
+  <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
+  <%= f.hidden_field :organization_id, value: current_organization.id %>
+
+  <% unless @imported_course %>
+    <%= render 'admin/courses/forms/course_owner_actions', f: f %>
+  <% end %>
+<% end %>

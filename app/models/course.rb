@@ -28,14 +28,13 @@ class Course < ApplicationRecord
 
   enum access_level: { everyone: 0, authenticated_users: 1 }
   # Attributes not saved to db, but still needed for validation
-  attr_accessor :other_topic, :other_topic_text, :org_id, :subdomain
-  attr_writer :propagation_org_ids
+  attr_accessor :other_topic, :org_id, :subdomain
 
   belongs_to :parent, class_name: 'Course', optional: true
   # has_one :assessment
   has_one :course_progress, dependent: :restrict_with_exception
 
-  has_many :course_topics, dependent: :destroy
+  has_many :course_topics, dependent: :destroy, inverse_of: :course
   has_many :topics, through: :course_topics
   has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy, inverse_of: :course
   belongs_to :organization, optional: false
@@ -47,6 +46,7 @@ class Course < ApplicationRecord
   belongs_to :category, optional: true
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
+  accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
 
   validates :description, :contributor, :language_id, presence: true
   validates :title, length: { maximum: 50 }, presence: true
@@ -62,21 +62,16 @@ class Course < ApplicationRecord
   validates :level, presence: true,
     inclusion: { in: %w[Beginner Intermediate Advanced],
       message: '%<value>s is not a valid level' }
-  validates :other_topic_text, presence: true, if: proc { |a| a.other_topic == '1' }
 
   default_scope { order('course_order ASC') }
 
   scope :with_category, ->(category_id) { where(category_id: category_id) }
-  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id, organizations: { id: course.propagation_org_ids }) }
+  scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
   scope :published, -> { where(pub_status: 'P') }
 
   before_save :find_or_create_category
-
-  def propagation_org_ids
-    @propagation_org_ids ||= []
-  end
 
   def topics_list(topic_list)
     if topic_list.present?
@@ -93,15 +88,15 @@ class Course < ApplicationRecord
   end
 
   def lesson_after(lesson = nil)
-    raise StandardError, 'There are no available lessons for this course.' if lessons.published.count.zero?
+    raise StandardError, 'There are no available lessons for this course.' if lessons.count.zero?
 
     begin
       lesson_order = lesson.lesson_order
-      return lessons.published.last if lesson_order >= last_lesson_order
+      return lessons.last if lesson_order >= last_lesson_order
 
-      lessons.published.find_by('lesson_order > ?', lesson_order)
+      lessons.find_by('lesson_order > ?', lesson_order)
     rescue StandardError
-      lessons.published.first
+      lessons.first
     end
   end
 
@@ -113,7 +108,7 @@ class Course < ApplicationRecord
 
   def duration(format = 'mins')
     total = 0
-    lessons.published.each { |l| total += l.duration }
+    lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
   end
 
@@ -127,19 +122,12 @@ class Course < ApplicationRecord
                     end
   end
 
-  def update_lesson_pub_stats(new_pub_status)
-    lessons.each do |l|
-      l.pub_status = new_pub_status
-      l.save
-    end
+  def additional_resource_attachments
+    self.attachments.where(doc_type: 'additional-resource')
   end
 
-  def post_course_attachments
-    self.attachments.where(doc_type: 'post-course')
-  end
-
-  def supplemental_attachments
-    self.attachments.where(doc_type: 'supplemental')
+  def text_copy_attachments
+    (parent || self).attachments.where(doc_type: 'text-copy')
   end
 
   def published?
@@ -147,9 +135,9 @@ class Course < ApplicationRecord
   end
 
   def find_or_create_category
-    return true unless category_name.present?
+    return true if category_name.blank?
 
-    existing_category = self.organization.categories.where('lower(name) = ?', category_name.downcase).first
+    existing_category = self.organization.categories.find_by('lower(name) = ?', category_name.downcase)
     self.category = existing_category || self.organization.categories.find_or_create_by(name: category_name)
   end
 end

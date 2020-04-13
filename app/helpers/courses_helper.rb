@@ -28,7 +28,7 @@ module CoursesHelper
 
   def percent_complete_without_user(course, _lesson_id)
     session[:completed_lessons] ||= []
-    total_lessons = course.lessons.published.count
+    total_lessons = course.lessons.count
     completed = (session[:completed_lessons] & course.lessons.pluck(:id)).count
     return 0 if total_lessons.zero?
 
@@ -51,15 +51,15 @@ module CoursesHelper
     end
   end
 
-  def start_or_resume_course_link(course)
+  def start_or_resume_course_link(course, preview = nil)
     return if course.lessons.empty?
 
     course_progress = current_user&.course_progresses&.find_by(course_id: course.id)
 
     lesson_path = if course_progress
-                    course_lesson_path(course, course_progress.next_lesson)
+                    course_lesson_path(course, course_progress.next_lesson, preview: preview)
                   else
-                    course_lesson_path(course, course.lessons.first)
+                    course_lesson_path(course, course.lessons.first, preview: preview)
                   end
 
     link_to t('course_page.start_course').to_s, lesson_path, class: 'btn button-color', data: { cpl_ga_event: 'on', cpl_ga_value: 'user-start-course' }

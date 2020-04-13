@@ -1,8 +1,8 @@
 <h2 class="text-color"><%= t('course_page.additional_resources') %></h2>
-<% if @course.post_course_attachments.count > 0 %>
+<% if @course.additional_resource_attachments.count > 0 %>
   <ul class="no-padding">
-  <% @course.post_course_attachments.each do |a| %>
-    <%= link_to course_attachment_path(@course, a), target: "_blank", class: "block_link" do %>
+  <% @course.additional_resource_attachments.each do |a| %>
+    <%= link_to attachment_path(a), target: "_blank", class: "block_link" do %>
       <li class="attachment-download">
         <i class="icon-download"></i>
         <%= a.document_file_name %>

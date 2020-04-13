@@ -81,30 +81,6 @@ describe CoursesController do
     end
   end
 
-  describe 'GET #view_attachment' do
-    context 'when logged in' do
-      before(:each) do
-        sign_in user
-      end
-
-      it 'allows the user to view an uploaded file' do
-        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
-        course1.attachments.create(document: file, doc_type: 'post-course')
-        get :view_attachment, params: { course_id: course1, attachment_id: course1.attachments.first.id }
-        expect(response).to have_http_status(:success)
-      end
-    end
-
-    context 'when not logged in' do
-      it 'should allow view' do
-        file = fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
-        course1.attachments.create(document: file, doc_type: 'post-course')
-        get :view_attachment, params: { course_id: course1, attachment_id: course1.attachments.first.id }
-        expect(response).to have_http_status(:success)
-      end
-    end
-  end
-
   describe 'GET #skills' do
     context 'when logged in' do
       before(:each) do

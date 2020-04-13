@@ -17,7 +17,7 @@
       <% end %>
     <% end %>
 
-    <% if @course.notes.present? || !@course.post_course_attachments.empty? %>
+    <% if @course.notes.present? || !@course.additional_resource_attachments.empty? %>
       <%= link_to(course_skills_path(@course)) do %>
         <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
             <%= t('course_completion_page.practice_skills') %>

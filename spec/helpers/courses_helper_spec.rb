@@ -111,5 +111,10 @@ describe CoursesHelper do
       expected_path = course_lesson_path(course, course.lessons.second)
       expect(helper.start_or_resume_course_link(course)).to include(expected_path)
     end
+
+    it 'should include preview param if given' do
+      expected_path = course_lesson_path(course, course.lessons.first, preview: true)
+      expect(helper.start_or_resume_course_link(course, true)).to include(expected_path)
+    end
   end
 end

@@ -5,6 +5,7 @@ require 'feature_helper'
 feature 'Admin visits dashboard' do
   let!(:default_organization) { FactoryBot.create(:default_organization) }
   let(:admin) { FactoryBot.create(:user, :admin) }
+  let!(:course) { FactoryBot.create(:course, pub_status: 'D', organization: admin.organization) }
 
   before do
     switch_to_subdomain(admin.organization.subdomain)
@@ -43,5 +44,12 @@ feature 'Admin visits dashboard' do
      'Completed Courses'].each do |link|
       expect(page).to_not have_link(link)
     end
+  end
+
+  scenario 'changes course publication status', js: true do
+    expect(page).to have_select("course_#{course.id}", selected: 'Draft')
+    select('Published', from: "course_#{course.id}")
+    visit admin_dashboard_index_path
+    expect(page).to have_select("course_#{course.id}", selected: 'Published')
   end
 end

@@ -15,7 +15,7 @@ describe Attachment do
     end
 
     it 'can only have listed doc_types' do
-      allowed_statuses = %w[supplemental post-course]
+      allowed_statuses = %w[text-copy additional-resource]
       allowed_statuses.each do |status|
         @attachment.doc_type = status
         expect(@attachment).to be_valid

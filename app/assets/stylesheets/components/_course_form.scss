@@ -1,8 +1,10 @@
 .course-form {
+  margin-top: 2em;
   display: grid;
   grid-template-columns: minmax(0, 50%) minmax(0, 50%);
   grid-gap: 2em;
   grid-template-areas:
+    "errors errors"
     "title title"
     "author author"
     "summary summary"
@@ -12,12 +14,35 @@
     "additional_content additional_content"
     "topics categories"
     "language format"
-    "course_level pub_status"
-    "access_level ."
+    "course_level access_level"
     "seo_title seo_title"
     "seo_meta seo_meta"
-    "propagation propagation"
+    "pub_status ."
     "actions actions";
+
+  &.restricted {
+    grid-template-areas:
+      "errors errors"
+      "categories access_level"
+      "resources resources"
+      "additional_content additional_content"
+      "pub_status ."
+      "actions actions"
+      "title title"
+      "author author"
+      "summary summary"
+      "description description"
+      "text_copies text_copies"
+      "topics ."
+      "language format"
+      "course_level ."
+      "seo_title seo_title"
+      "seo_meta seo_meta";
+  }
+
+  .error_explanation {
+    grid-area: errors;
+  }
 
   .title {
     grid-area: title;
@@ -91,12 +116,25 @@
     grid-area: seo_meta;
   }
 
+  .pub-status {
+    grid-area: pub_status;
+  }
+
   .propagation {
     grid-area: propagation;
   }
 
   .actions {
     grid-area: actions;
+  }
+
+  .imported-course-actions {
+    border-bottom: 1px solid $grey;
+
+    p {
+      margin-block-start: 2em;
+      margin-block-end: 0;
+    }
   }
 }
 

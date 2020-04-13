@@ -31,7 +31,7 @@ describe Course do
       it 'should not create a new category' do
         expect do
           course.update(category_name: category.name)
-        end.to_not change { org.categories.count }
+        end.to_not(change { org.categories.count })
       end
 
       it 'should add course to existing category' do
@@ -42,7 +42,7 @@ describe Course do
 
       it 'should add course to existing category in case-insensitive manner' do
         expect do
-          course.update(category_name: "eXisting categorY")
+          course.update(category_name: 'eXisting categorY')
         end.to change { category.courses.count }.by(1)
       end
     end
@@ -120,47 +120,32 @@ describe Course do
       expect(course_with_lessons.lesson_after(123)).to eq(first_lesson)
     end
 
-    it 'should skip unpublished lessons' do
-      second_lesson.update(pub_status: 'D')
-      expect(course_with_lessons.lesson_after(first_lesson)).to eq(third_lesson)
-    end
-
     it 'should raise an error if called when there are no lessons' do
       expect { course.lesson_after }.to raise_error(StandardError)
     end
   end
 
   describe '#duration' do
-    let(:lesson1) { FactoryBot.create(:lesson, title: '1', duration: 75) }
-    let(:lesson2) { FactoryBot.create(:lesson, title: '2', duration: 150) }
-    let(:lesson3) { FactoryBot.create(:lesson, title: '3', duration: 225) }
-    let(:lesson4) { FactoryBot.create(:lesson, title: '4', duration: 90) }
-    let(:lesson5) { FactoryBot.create(:lesson, title: '5', duration: 9) }
+    let!(:lesson1) { FactoryBot.create(:lesson, course: course, title: '1', duration: 75) }
+    let!(:lesson2) { FactoryBot.create(:lesson, course: course, title: '2', duration: 150) }
+    let!(:lesson3) { FactoryBot.create(:lesson, course: course, title: '3', duration: 225) }
+    let!(:lesson4) { FactoryBot.create(:lesson, title: '4', duration: 90) }
+    let!(:lesson5) { FactoryBot.create(:lesson, title: '5', duration: 9) }
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson1, lesson2, lesson3]
       expect(course.duration).to eq('7 mins')
     end
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson4]
-      expect(course.duration).to eq('1 min')
+      expect(lesson4.course.duration).to eq('1 min')
     end
 
     it 'should return the sum of the lesson durations' do
-      course.lessons << [lesson5]
-      expect(course.duration).to eq('0 mins')
+      expect(lesson5.course.duration).to eq('0 mins')
     end
 
     it 'should return duration in format if one is passed' do
-      course.lessons << [lesson1, lesson2, lesson3]
       expect(course.duration('minutes')).to eq('7 minutes')
-    end
-
-    it 'should not count draft lessons' do
-      lesson1.update(pub_status: 'D')
-      course.lessons << [lesson1, lesson2, lesson3]
-      expect(course.duration).to eq '6 mins'
     end
   end
 
@@ -178,6 +163,35 @@ describe Course do
 
     it 'should return false if course is archived' do
       expect(archived_course.published?).to be_falsey
+    end
+  end
+
+  describe 'attachments' do
+    let(:pla) { FactoryBot.create(:default_organization) }
+    let(:pla_course) { FactoryBot.create(:course, organization: pla) }
+    let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
+    let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course) }
+    let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', course: pla_course) }
+    let!(:subsite_additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: child_course) }
+
+    context 'parent course' do
+      it 'returns correct additional resource' do
+        expect(pla_course.additional_resource_attachments).to contain_exactly(additional_resource_attachment)
+      end
+
+      it 'returns correct text copy attachments' do
+        expect(pla_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
+      end
+    end
+
+    context 'child course' do
+      it 'returns subsite specific additional_resource_attachments' do
+        expect(child_course.additional_resource_attachments).to contain_exactly(subsite_additional_resource_attachment)
+      end
+
+      it 'returns parent text copies' do
+        expect(child_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
+      end
     end
   end
 end

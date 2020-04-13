@@ -21,11 +21,10 @@ feature 'Admin user creates new course and lesson' do
     fill_in :course_description, with: 'Description for new course'
     check 'Topic A'
     check 'Other Topic'
-    fill_in :course_other_topic_text, with: 'Some New Topic'
+    fill_in :course_course_topics_attributes_0_topic_attributes_title, with: 'Some New Topic'
     select('Desktop', from: 'course_format')
     select('English', from: 'course_language_id')
     select('Beginner', from: 'course_level')
-    select('Published', from: 'course_pub_status')
   end
 
   before(:each) do
@@ -34,8 +33,27 @@ feature 'Admin user creates new course and lesson' do
     visit new_admin_course_path
   end
 
+  scenario 'toggles course publication status' do
+    fill_basic_course_info
+    expect(page).to have_select('Publication Status', selected: 'Draft')
+    select('Published', from: 'Publication Status')
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully created.')
+    expect(page).to have_select('Publication Status', selected: 'Published')
+    select('Archived', from: 'Publication Status')
+    click_button 'Save Course'
+    visit admin_courses_path
+    expect(page).to_not have_content('New Course Title')
+  end
+
+  scenario 'assigns topics' do
+    fill_basic_course_info
+    click_button 'Save Course'
+    expect(page).to have_field('Topic A', checked: true)
+    expect(page).to have_field('Some New Topic', checked: true)
+  end
+
   scenario 'creates course with new category' do
-    expect(page).to have_content('Course Information')
     fill_basic_course_info
     select('Create new category', from: 'course_category_id')
     fill_in :course_category_attributes_name, with: new_category_name
@@ -67,7 +85,7 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{category.name}']")
   end
 
-  scenario 'adds supplemental materials and post-course supplemental materials' do
+  scenario 'adds text copies and additional-resource materials' do
     fill_basic_course_info
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
@@ -84,13 +102,12 @@ feature 'Admin user creates new course and lesson' do
 
   scenario 'adds a lesson' do
     visit edit_admin_course_path(course_id: course, id: course.id)
-    click_button 'Save Course and Add Lessons'
+    click_button 'Save & Edit Lessons'
     expect(current_path).to eq(new_admin_course_lesson_path(course))
     fill_in :lesson_title, with: 'New Lesson Title'
     fill_in :lesson_summary, with: 'Summary for new lesson'
     fill_in :lesson_duration, with: '05:15'
     attach_file 'Articulate Storyline Package', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
-    select 'Published', from: 'Publication Status'
     click_button 'Save Lesson'
     expect(page).to have_content('Lesson was successfully created.')
     expect(current_path).to eq(edit_admin_course_lesson_path(course.to_param, Lesson.last.to_param))
@@ -102,7 +119,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'attempts to add two assessments' do
     FactoryBot.create(:lesson, course: course, is_assessment: true)
     visit edit_admin_course_path(course_id: course, id: course.id)
-    click_button 'Save Course and Edit Lessons'
+    click_button 'Save & Edit Lessons'
     click_link 'Add Another Lesson'
     expect(current_path).to eq(new_admin_course_lesson_path(course))
     page.find('#lesson_is_assessment_true').click

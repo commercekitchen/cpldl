@@ -20,6 +20,14 @@
 
   label {
     color: $primary_color;
+
+    &.disabled {
+      color: $grey;
+
+      .required:after {
+        color: $grey;
+      }
+    }
   }
 
   table {
