@@ -10,7 +10,7 @@ describe CourseImportService do
 
   let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
   let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', document: document, course: pla_course) }
-  let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', document: document, course: pla_course)  }
+  let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', document: document, course: pla_course) }
 
   let(:subsite) { FactoryBot.create(:organization) }
 

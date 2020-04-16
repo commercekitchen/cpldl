@@ -7,8 +7,10 @@
       
     
     <div class='fields'>
-      <%= render partial: 'admin/courses/forms/attachment_list', locals: { type: 'additional-resource', allow_delete: true } %>
-      <%= render partial: 'admin/courses/forms/attachment_upload', locals: { attachment_form: a, attachment_type: 'additional-resource', removable: false } %>
+      <%= render partial: 'admin/courses/forms/attachment_list',
+                 locals: { attachments: @course.additional_resource_attachments, allow_delete: true } %>
+      <%= render partial: 'admin/courses/forms/attachment_upload',
+                 locals: { attachment_form: a, attachment_type: 'additional-resource', removable: false } %>
       <%= link_to_add_fields "Add Attachment", f, :attachments, "additional-resource" %>
     </div>
   <% end %>
