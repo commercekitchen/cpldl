@@ -1,5 +1,5 @@
 <div class='attachment-list'>
-  <% @course.attachments.where(doc_type: type).each do |a| %>
+  <% attachments.each do |a| %>
     <div class='attachment'>
       <div class='attachment-filename'>
         <%= a.document_file_name %>

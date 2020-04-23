@@ -7,8 +7,12 @@ feature 'Admin user updates course' do
     fixture_file_upload(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip')
   end
 
-  let(:file_attachment) do
+  let(:additional_resource_file) do
     fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf')
+  end
+
+  let(:text_copy_file) do
+    fixture_file_upload(Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_1.pdf'), 'application/pdf')
   end
 
   let(:pla) { FactoryBot.create(:default_organization) }
@@ -16,11 +20,11 @@ feature 'Admin user updates course' do
   let(:org) { user.organization }
   let(:pla_course) { FactoryBot.create(:course, organization: pla) }
   let(:subsite_course) { FactoryBot.create(:course, organization: org, parent: pla_course) }
-  let!(:course_attachment) do
-    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'additional-resource', course: subsite_course)
+  let!(:additional_resource_attachment) do
+    FactoryBot.create(:attachment, document: additional_resource_file, doc_type: 'additional-resource', course: subsite_course)
   end
   let!(:text_copy_attachment) do
-    FactoryBot.create(:attachment, document: file_attachment, doc_type: 'text-copy', course: subsite_course)
+    FactoryBot.create(:attachment, document: text_copy_file, doc_type: 'text-copy', course: pla_course)
   end
 
   let!(:topic) { FactoryBot.create(:topic) }
@@ -52,11 +56,13 @@ feature 'Admin user updates course' do
       expect(page).to_not have_field('course_other_topic_text')
 
       expect(page).to have_link('Delete', count: 1)
+
+      expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users after completing the course.')
       expect(page).to have_css('.attachment-upload-fields', count: 1)
       expect(page).to have_link('Add Attachment', count: 1)
 
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
-      expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users after completing the course.')
+      expect(page).to have_content(text_copy_attachment.document_file_name)
 
       expect(page).to have_button('Save Course')
       expect(page).to have_content('If you wish to edit additional details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
