@@ -44,8 +44,6 @@ class User < ApplicationRecord
   # Expose some information from profile
   delegate :library_location_name, :library_location_zipcode, to: :profile, allow_nil: true
 
-  ROLES = %w[Admin Trainer User Parent Student].freeze
-
   ### Devise overrides to allow library card number login
   # TODO: Pull this into a concern
 

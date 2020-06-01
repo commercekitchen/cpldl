@@ -62,6 +62,17 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe '#assignable_roles' do
+    it 'returns correct options for typical organization' do
+      expect(org.assignable_roles).to contain_exactly('Admin', 'User', 'Trainer')
+    end
+
+    it 'returns correct options for program organization with student programs' do
+      FactoryBot.create(:program, :student_program, organization: org)
+      expect(org.assignable_roles).to contain_exactly('Admin', 'User', 'Trainer', 'Parent', 'Student')
+    end
+  end
+
   describe '#pla' do
     it 'returns PLA organization' do
       expect(Organization.pla).to eq(pla)
