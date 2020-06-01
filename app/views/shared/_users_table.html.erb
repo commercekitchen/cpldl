@@ -1,8 +1,13 @@
 <table class="users-table">
+  <colgroup>
+    <col span="1" style="width: 40%;">
+    <col span="1" style="width: 40%;">
+    <col span="1" style="width: 20%;">
+  </colgroup>
+
   <tr>
     <th>Name</th>
     <th><%= t('login_signup.email') %></th>
-    <th>Language</th>
     <th>User Role</th>
   </tr>
   <% users.each do |user| %>
@@ -12,9 +17,6 @@
       </td>
       <td>
         <%= user.email %>
-      </td>
-      <td>
-        <%= user.preferred_language %>
       </td>
       <td>
         <% if current_user.has_role?(:admin, current_organization) %>
