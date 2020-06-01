@@ -79,6 +79,16 @@ class Organization < ApplicationRecord
     errors.delete(:footer_logo_file_size)
   end
 
+  def assignable_roles
+    default_roles = ['Admin', 'User', 'Trainer']
+    
+    if student_programs?
+      default_roles + ['Student', 'Parent']
+    else
+      default_roles
+    end
+  end
+
   def self.pla
     find_by(subdomain: 'www')
   end

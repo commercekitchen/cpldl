@@ -1,0 +1,13 @@
+.users-table {
+  width: 100%;
+  table-layout: fixed;
+
+  th,
+  td {
+    padding: 10px 10px;
+  }
+
+  td {
+    word-wrap: break-word;
+  }
+}

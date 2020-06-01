@@ -1,8 +1,13 @@
 <table class="users-table">
+  <colgroup>
+    <col span="1" style="width: 40%;">
+    <col span="1" style="width: 40%;">
+    <col span="1" style="width: 20%;">
+  </colgroup>
+
   <tr>
     <th>Name</th>
     <th><%= t('login_signup.email') %></th>
-    <th>Language</th>
     <th>User Role</th>
   </tr>
   <% users.each do |user| %>
@@ -14,11 +19,8 @@
         <%= user.email %>
       </td>
       <td>
-        <%= user.preferred_language %>
-      </td>
-      <td>
         <% if current_user.has_role?(:admin, current_organization) %>
-          <%= select_tag "user_#{user.id}", options_for_select(User::ROLES, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
+          <%= select_tag "user_#{user.id}", options_for_select(current_organization.assignable_roles, user.current_roles.capitalize), data: { user_id: user.id, role: user.current_roles }, class: "user_role small narrow", method: :patch %>
         <% else %>
           <%= user.current_roles.empty? ? "user" : user.current_roles %>
         <% end %>

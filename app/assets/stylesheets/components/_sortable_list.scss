@@ -36,6 +36,7 @@
   display: table-cell;
   width: 15%;
   vertical-align: middle;
+
   @media (max-width: $breakpoint-mobile-large) {
     display: block;
   }
