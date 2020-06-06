@@ -414,7 +414,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
-    websocket-extensions (0.1.4)
+    websocket-extensions (0.1.5)
     where_exists (1.2.1)
       rails (>= 4.2, < 6.1)
     wicked_pdf (1.4.0)
