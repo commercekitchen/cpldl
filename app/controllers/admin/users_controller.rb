@@ -50,7 +50,7 @@ module Admin
 
     def users_csv(users)
       CSV.generate do |csv|
-        csv << ['User Name', 'User Last Name', 'User Email', 'User Role', 'Registration Date', 'Branch', 'Zip Code', 'Courses User has Started', 'Courses User has Completed']
+        csv << ['User Name', 'User Last Name', 'User Email', 'User Role', 'Preferred Language', 'Registration Date', 'Branch', 'Zip Code', 'Courses User has Started', 'Courses User has Completed']
 
         users.each do |user|
           row = []
@@ -60,6 +60,7 @@ module Admin
           row << profile.try(:last_name)
           row << user.email
           row << user.roles.map(&:name).map(&:capitalize).join(', ')
+          row << user.preferred_language
           row << user.created_at.in_time_zone('Central Time (US & Canada)').strftime('%m-%d-%Y')
           row << profile.try(:library_location).try(:name)
           row << profile.try(:zip_code)

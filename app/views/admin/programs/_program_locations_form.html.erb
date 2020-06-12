@@ -2,7 +2,7 @@
 <div class='form-row'>
   <fieldset>
     <div class='inline-form'>
-      <%= f.text_field :location_name %>
+      <%= f.text_field :location_name, required: true %>
       <%= f.submit "Add", id: "addLocation" %>
       <%= f.hidden_field :program_id, :value => @program.id %>
     </div>
