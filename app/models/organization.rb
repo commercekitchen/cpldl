@@ -80,10 +80,10 @@ class Organization < ApplicationRecord
   end
 
   def assignable_roles
-    default_roles = ['Admin', 'User', 'Trainer']
-    
+    default_roles = %w[Admin User Trainer]
+
     if student_programs?
-      default_roles + ['Student', 'Parent']
+      default_roles + %w[Student Parent]
     else
       default_roles
     end
