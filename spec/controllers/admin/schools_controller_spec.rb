@@ -50,6 +50,25 @@ describe Admin::SchoolsController do
     end
   end
 
+  describe 'PATCH #update' do
+    let(:school) { create(:school, organization: organization, school_type: 'elementary') }
+
+    it 'updates school' do
+      expect do
+        patch :update, params: { id: school.id, school: { school_type: 'middle_school' }, format: 'js' }
+      end.to change { school.reload.school_type }.from('elementary').to('middle_school')
+    end
+
+    it 'does not update school for another subsite' do
+      sign_out admin
+      sign_in other_subsite_admin
+
+      expect do
+        patch :update, params: { id: school.id, school: { school_type: 'middle_school' }, format: 'js' }
+      end.to_not change { school.reload.school_type }
+    end
+  end
+
   describe 'POST #toggle' do
     it 'should disable enabled school' do
       expect(enabled_school.enabled).to be true
