@@ -18,6 +18,11 @@
     letter-spacing: 1px;
     outline: none;
 
+    &.skinny {
+      min-width: 200px;
+      padding: 11px 20px;
+    }
+
     @media (max-width: $breakpoint-tablet) {
       min-width: 0;
     }
