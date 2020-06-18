@@ -11,7 +11,8 @@
 <%= form_for [:admin, @new_school], remote: true, format: :js do |f| %>
   <fieldset>
     <div class='inline-form'>
-      <%= f.text_field :school_name %>
+      <%= f.text_field :school_name, placeholder: 'School Name' %>
+      <%= f.select :school_type, school_type_options %>
       <%= f.submit "Add School" %>
     </div>
   </fieldset>

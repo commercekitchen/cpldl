@@ -32,12 +32,15 @@ feature 'Admin manages schools' do
     expect(page).to have_select('School type', selected: 'High School')
   end
 
-  scenario 'Admin changes a school type' do
+  scenario 'Admin changes a school type', js: true do
     @elementary_school = FactoryBot.create(:school, organization: organization, school_type: 'elementary')
 
     visit admin_schools_path
 
-    select('Middle School', from: 'School type')
+    within('.resource-row') do
+      select('Middle School', from: 'School type')
+    end
+
     expect(page).to have_select('School type', selected: 'Middle School')
 
     visit admin_schools_path

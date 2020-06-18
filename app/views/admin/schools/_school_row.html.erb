@@ -2,6 +2,10 @@
   <div class="resource-title">
     <%= school.school_name %>
   </div>
+  <%= form_for [:admin, school], remote: true do |f| %>
+    <%= f.label :school_type %>
+    <%= f.select :school_type, school_type_options, {}, onchange: "$(this.form).submit();" %>
+  <% end %>
   <div class="resource-link">
     <%= link_to (school.enabled? ? "Disable" : "Enable"), admin_school_toggle_path(school.id), method: :post, remote: true %>
   </div>
