@@ -23,6 +23,18 @@ module Admin
       end
     end
 
+    def update
+      @school = @school = School.find(params[:id])
+      authorize @school
+
+      respond_to do |format|
+        format.html { redirect_to action: 'index' }
+        format.js do
+          @school.update(school_params)
+        end
+      end
+    end
+
     def toggle
       @school = School.find(params[:school_id])
       authorize @school, :update?

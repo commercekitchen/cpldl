@@ -78,7 +78,7 @@ Rails.application.routes.draw do
       post 'toggle'
     end
 
-    resources :schools, only: [:create, :index] do
+    resources :schools, only: [:create, :index, :update] do
       post 'toggle'
     end
 
