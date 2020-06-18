@@ -31,12 +31,13 @@ describe Admin::SchoolsController do
   describe 'POST #create' do
     it 'should create new school with valid attributes' do
       valid_attributes = {
-        school_name: 'Lincoln Elementary'
+        school_name: 'Lincoln Elementary',
+        school_type: 'elementary'
       }
 
       expect do
         post :create, params: { school: valid_attributes, format: 'js' }
-      end.to change { organization.schools.count }.by(1)
+      end.to change { organization.schools.elementary.count }.by(1)
     end
 
     it 'should not create a school for another subsite' do
