@@ -5,7 +5,7 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      @schools = policy_scope(School)
+      @schools = policy_scope(School).order(Arel.sql('lower(school_name)'))
       @new_school = current_organization.schools.new
     end
 
