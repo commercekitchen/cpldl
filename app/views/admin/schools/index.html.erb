@@ -12,7 +12,7 @@
   <fieldset>
     <div class='inline-form new-school-form'>
       <%= f.text_field :school_name, placeholder: "School Name" %>
-      <%= f.select :school_type, school_type_options, prompt: "Choose school type" %>
+      <%= f.select :school_type, school_type_options, { prompt: "Choose school type" }, { required: true } %>
       <%= f.submit "Add School", class: "skinny" %>
     </div>
   </fieldset>
