@@ -27,9 +27,9 @@ feature 'Admin manages schools' do
     expect(page).to have_content(@middle_school.school_name)
     expect(page).to have_content(@high_school.school_name)
 
-    expect(page).to have_select('School type', selected: 'Elementary')
-    expect(page).to have_select('School type', selected: 'Middle School')
-    expect(page).to have_select('School type', selected: 'High School')
+    expect(page).to have_select('school_school_type', selected: 'Elementary')
+    expect(page).to have_select('school_school_type', selected: 'Middle School')
+    expect(page).to have_select('school_school_type', selected: 'High School')
   end
 
   scenario 'Admin changes a school type', js: true do
@@ -38,14 +38,14 @@ feature 'Admin manages schools' do
     visit admin_schools_path
 
     within('.resource-row') do
-      select('Middle School', from: 'School type')
+      select('Middle School', from: 'school_school_type')
     end
 
-    expect(page).to have_select('School type', selected: 'Middle School')
+    expect(page).to have_select('school_school_type', selected: 'Middle School')
 
     visit admin_schools_path
 
-    expect(page).to have_select('School type', selected: 'Middle School')
+    expect(page).to have_select('school_school_type', selected: 'Middle School')
   end
 
   scenario 'Admin creates a new school', js: true do
@@ -59,7 +59,7 @@ feature 'Admin manages schools' do
     expect(page).to have_selector('.resource-row')
     within('.resource-row') do
       expect(page).to have_content('New School')
-      expect(page).to have_select('School type', selected: 'Middle School')
+      expect(page).to have_select('school_school_type', selected: 'Middle School')
     end
   end
 end
