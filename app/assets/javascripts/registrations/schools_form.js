@@ -3,13 +3,27 @@ var schoolsForm = (function () {
     $("#school_fields").show();
   }
 
-  function resetForm() {}
+  function resetForm() {
+    // Clear options
+    $("#school_fields hideUntilActive").hide();
+  }
 
   function hideForm() {
     $("#school_fields").hide();
   }
 
-  function loadSchoolTypes() {}
+  function loadSchoolsByType(schoolType) {
+    $.get("/ajax/schools", { school_type: schoolType }).done(function (data) {
+      newOptions = data.map(function (obj) {
+        return [obj.id, obj.school_name];
+      });
+
+      console.log(newOptions);
+
+      $("#user_school_id").updateDropdown("School", newOptions);
+      $("#school_fields .hideUntilActive").show();
+    });
+  }
 
   function showStudentFields() {
     $("#student-only").show();
@@ -25,7 +39,7 @@ var schoolsForm = (function () {
     showForm: showForm,
     resetForm: resetForm,
     hideForm: hideForm,
-    loadSchoolTypes: loadSchoolTypes,
+    loadSchoolsByType: loadSchoolsByType,
     showStudentFields: showStudentFields,
     hideStudentFields: hideStudentFields,
   };
@@ -40,5 +54,10 @@ $(document).ready(function () {
     } else {
       schoolsForm.hideStudentFields();
     }
+  });
+
+  $("#school_type").change(function () {
+    var schoolType = $(this).val();
+    schoolsForm.loadSchoolsByType(schoolType);
   });
 });

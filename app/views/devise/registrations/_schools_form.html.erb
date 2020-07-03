@@ -30,7 +30,7 @@
       <%= select_tag :school_type, options_for_select(school_type_options), { include_blank: "Select School Type..." } %>
     </div>
 
-    <div class="form-row">
+    <div class="form-row hideUntilActive">
       <%= f.label :school_id, t('login_signup.school'), class: "signup-label" %>
       <%= f.collection_select :school_id, [], :id, :school_name, { include_blank: "Select School..." } %>
     </div>
