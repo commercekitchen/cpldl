@@ -17,9 +17,7 @@ describe Admin::SchoolsController do
   describe 'GET #index' do
     it 'assigns schools for organization' do
       get :index
-      expect(assigns(:schools).count).to eq(2)
-      expect(assigns(:schools).first).to eq(enabled_school)
-      expect(assigns(:schools).second).to eq(disabled_school)
+      expect(assigns(:schools)).to contain_exactly(enabled_school, disabled_school)
     end
 
     it 'creates new empty school' do

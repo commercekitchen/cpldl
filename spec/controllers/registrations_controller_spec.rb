@@ -76,4 +76,35 @@ describe RegistrationsController do
       end
     end
   end
+
+  describe 'school registration' do
+    let(:organization) { create(:organization, accepts_programs: true) }
+    let(:program) { create(:program, parent_type: :students_and_parents, organization: organization) }
+    let(:school) { create(:school, school_type: :middle_school, organization: organization) }
+
+    before do
+      @request.host = "#{organization.subdomain}.test.host"
+    end
+
+    describe '#create' do
+      let(:user_params) do
+        { email: email,
+          password: password,
+          password_confirmation: password,
+          profile_attributes: profile_attributes,
+          program_type: program.parent_type,
+          program_id: program.id,
+          acting_as: 'Student',
+          school_type: school.school_type,
+          school_id: school.id }
+      end
+
+      it 'should create user with school' do
+        expect do
+          post :create, params: { user: user_params }
+        end.to change { User.where(school_id: school.id).count }.by(1)
+      end
+
+    end
+  end
 end

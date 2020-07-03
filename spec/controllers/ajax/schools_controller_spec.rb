@@ -17,7 +17,7 @@ describe Ajax::SchoolsController do
   describe 'GET #index' do
     it 'returns elementary schools' do
       get :index, params: { school_type: 'elementary' }, format: :js
-      expect(response.body).to eq([@elementary_school1, @elementary_school2].to_json)
+      expect(JSON.parse(response.body)).to contain_exactly(JSON.parse(@elementary_school1.to_json), JSON.parse(@elementary_school2.to_json))
     end
 
     it 'returns middle schools' do
