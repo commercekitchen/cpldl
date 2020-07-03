@@ -12,9 +12,9 @@ feature 'user signs up for school program' do
 
   before do
     create(:program, program_name: 'MNPS', parent_type: :students_and_parents)
-    create(:school, school_type: :elementary, school_name: 'Lincoln Elementary')
-    create(:school, school_type: :middle_school, school_name: 'Middle School East')
-    create(:school, school_type: :high_school, school_name: 'GLHS')
+    create(:school, school_type: :elementary, school_name: 'Lincoln Elementary', organization: organization)
+    create(:school, school_type: :middle_school, school_name: 'Middle School East', organization: organization)
+    create(:school, school_type: :high_school, school_name: 'GLHS', organization: organization)
   end
 
   scenario 'registers', js: true do

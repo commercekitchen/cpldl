@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   namespace :ajax do
     post 'programs/sub_programs'
     post 'programs/select_program'
+
+    resources :schools, only: [:index]
   end
 
   resources :contacts, only: [:new, :create]
