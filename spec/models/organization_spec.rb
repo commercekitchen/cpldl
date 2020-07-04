@@ -62,6 +62,17 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe '#student_programs?' do
+    it 'is false if organization has no school programs' do
+      expect(org.student_programs?).to eq(false)
+    end
+
+    it 'is true if organization has school programs' do
+      org.programs << FactoryBot.create(:program, parent_type: :students_and_parents)
+      expect(org.student_programs?).to eq(true)
+    end
+  end
+
   describe '#assignable_roles' do
     it 'returns correct options for typical organization' do
       expect(org.assignable_roles).to contain_exactly('Admin', 'User', 'Trainer')

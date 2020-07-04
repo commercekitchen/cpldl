@@ -1,38 +1,45 @@
-<div id="schoolFields">
+<div class="form-row">
+  <%= f.label :acting_as, t('login_signup.parent_student'), class: "signup-label" %>
+  <%= f.select :acting_as, options_for_select(['Student', 'Parent'], resource.acting_as), class: "bottom-margin" %>
+</div>
+
+
+<div id="student-only">
   <div class="form-row">
-    <%= f.label :acting_as, t('login_signup.parent_student'), class: "signup-label" %>
-    <%= f.select :acting_as, options_for_select(['Parent', 'Student'], resource.acting_as), class: "bottom-margin" %>
-  </div>
-
-  <div class="form-row">
-    <%= f.label :student_id, t('login_signup.student_id'), class: "signup-label" %>
-    <%= f.text_field :student_id, placeholder: "Students' ID #s" %>
-  </div>
-
-  <div id="student-only" class="hideUntilActive">
-    <div class="form-row">
-      <%= field_set_tag t('login_signup.birthday'), class: "signup-label" do %>
-        <div class="date-select">
-          <%= f.date_select :date_of_birth, order: [:month, :day, :year], start_year: 1990, end_year: Date.today.year %>
-          <%= label_tag 'user_date_of_birth_2i', 'Month', hidden: true %>
-          <%= label_tag 'user_date_of_birth_3i', 'Day', hidden: true %>
-          <%= label_tag 'user_date_of_birth_1i', 'Year', hidden: true %>
-        </div>
-      <% end %>
-    </div>
-
-    <div class="form-row inline">
-      <div class='inline-item'>
-        <%= f.label :grade, t('login_signup.grade'), class: "signup-label" %>
-        <%= f.select :grade, (1..12) %>
+    <%= field_set_tag t('login_signup.birthday'), class: "signup-label" do %>
+      <div class="date-select">
+        <%= f.date_select :date_of_birth, order: [:month, :day, :year], start_year: 1990, end_year: Date.today.year %>
+        <%= label_tag 'user_date_of_birth_2i', 'Month', hidden: true %>
+        <%= label_tag 'user_date_of_birth_3i', 'Day', hidden: true %>
+        <%= label_tag 'user_date_of_birth_1i', 'Year', hidden: true %>
       </div>
-      <div class='inline-item'></div>
-      <div class='inline-item'></div>
-    </div>
+    <% end %>
+  </div>
+
+  <div class="form-row">
+    <%= f.label :grade, t('login_signup.grade'), class: "signup-label" %>
+    <%= f.select :grade, (1..12) %>
+  </div>
+
+  <fieldset>
+
+    <h3><%= t('login_signup.select_school') %></h3>
 
     <div class="form-row">
-      <%= f.label :school_id, t('login_signup.school'), class: "signup-label" %>
-      <%= f.collection_select :school_id, current_organization.schools.enabled, :id, :school_name, { include_blank: "Select School" } %>
+      <%= label_tag :school_type, t('login_signup.school_type'), class: "signup-label" %>
+      <%= select_tag :school_type, options_for_select(school_type_options), { include_blank: "Select School Type..." } %>
     </div>
-  </div>
+
+    <div class="form-row hideUntilActive">
+      <%= f.label :school_id, t('login_signup.school'), class: "signup-label" %>
+      <%= f.collection_select :school_id, [], :id, :school_name, { include_blank: "Select School..." } %>
+    </div>
+
+  </fieldset>
+
+</div>
+
+<div class="form-row">
+  <%= f.label :student_id, t('login_signup.student_id'), class: "signup-label" %>
+  <%= f.text_field :student_id, placeholder: "Students' ID #s" %>
 </div>

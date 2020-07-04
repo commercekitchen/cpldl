@@ -5,6 +5,8 @@
 .resource-row {
   padding: 1em 0;
   display: flex;
+  align-items: center;
+  align-content: stretch;
   border-top: 1px solid;
   border-bottom: 1px solid;
 
@@ -22,11 +24,11 @@
     border-top: none;
   }
 
-  .resource-title {
-    flex-basis: 50%;
-  }
+  .resource-cell {
+    flex: 1 1 0px;
 
-  .resource-link {
-    flex-basis: 50%;
+    &:not(:first-child) {
+      padding: 0 1rem;
+    }
   }
 }

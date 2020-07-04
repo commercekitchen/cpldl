@@ -12,7 +12,8 @@ class CompletedCoursesExporter
   def to_csv
     users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number)
     CSV.generate do |csv|
-      csv << [User.human_attribute_name(@primary_id_field), 'Program Name', 'Course', 'Course Completed At', 'Branch']
+      csv << column_headers
+
       users.each do |user|
         next unless user.reportable_role?(@org)
 
@@ -20,11 +21,24 @@ class CompletedCoursesExporter
           next unless cp.complete?
 
           program_name = user.program.present? ? user.program.program_name : ''
-          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.completed_at.strftime('%m-%d-%Y'), user.profile.library_location.try(:name)]
+          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.completed_at.strftime('%m-%d-%Y'), user.profile.library_location&.name]
+          values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if school_program_org?
           csv.add_row values
         end
       end
     end
+  end
+
+  private
+
+  def column_headers
+    headers = [User.human_attribute_name(@primary_id_field), 'Program Name', 'Course', 'Course Completed At', 'Branch']
+    headers.concat(['School Type', 'School Name']) if school_program_org?
+    headers
+  end
+
+  def school_program_org?
+    @school_program_org ||= @org.student_programs?
   end
 
 end

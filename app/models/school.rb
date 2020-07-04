@@ -6,5 +6,7 @@ class School < ApplicationRecord
 
   validates :school_name, presence: true
 
+  enum school_type: { elementary: 0, middle_school: 1, high_school: 2 }
+
   scope :enabled, -> { where(enabled: true) }
 end

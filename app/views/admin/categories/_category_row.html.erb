@@ -1,8 +1,8 @@
 <li class="resource-row sortable-item <%= category.enabled? ? "table_row_enabled" : "table_row_disabled" %>" data-id="<%= category.id %>" id="category_row_<%= category.id %>">
-  <div class="resource-title">
+  <div class="resource-cell">
     <%= category.name %>
   </div>
-  <div class="resource-link">
+  <div class="resource-cell">
     <%= link_to (category.enabled ? "Disable" : "Enable"), admin_category_toggle_path(category_id: category.id, format: "js"), method: :post, remote: true, id: "category_toggle_link_#{category.id}", class: "no_drag_link" %>
   </div>
 </li>
