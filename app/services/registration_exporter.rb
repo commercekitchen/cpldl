@@ -37,7 +37,7 @@ class RegistrationExporter
   end
 
   def school_programs?
-    @school_programs ||= @org.has_student_programs?
+    @school_programs ||= @org.student_programs?
   end
 
 end

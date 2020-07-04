@@ -62,14 +62,14 @@ RSpec.describe Organization, type: :model do
     end
   end
 
-  describe '#has_student_programs?' do
+  describe '#student_programs?' do
     it 'is false if organization has no school programs' do
-      expect(org.has_student_programs?).to eq(false)
+      expect(org.student_programs?).to eq(false)
     end
 
     it 'is true if organization has school programs' do
       org.programs << FactoryBot.create(:program, parent_type: :students_and_parents)
-      expect(org.has_student_programs?).to eq(true)
+      expect(org.student_programs?).to eq(true)
     end
   end
 

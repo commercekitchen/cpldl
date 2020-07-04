@@ -53,7 +53,7 @@ class Organization < ApplicationRecord
     users.select { |u| u.has_role?(:admin, self) }.map(&:email)
   end
 
-  def has_student_programs?
+  def student_programs?
     programs.where(parent_type: :students_and_parents).present?
   end
 
@@ -82,7 +82,7 @@ class Organization < ApplicationRecord
   def assignable_roles
     default_roles = %w[Admin User Trainer]
 
-    if has_student_programs?
+    if student_programs?
       default_roles + %w[Student Parent]
     else
       default_roles

@@ -63,7 +63,7 @@ describe Admin::SchoolsController do
 
       expect do
         patch :update, params: { id: school.id, school: { school_type: 'middle_school' }, format: 'js' }
-      end.to_not change { school.reload.school_type }
+      end.to_not(change { school.reload.school_type })
     end
   end
 

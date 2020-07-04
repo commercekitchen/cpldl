@@ -35,8 +35,8 @@ describe RegistrationExporter do
       let(:organization) { FactoryBot.create(:organization, branches: true) }
       let(:branch) { FactoryBot.create(:library_location, organization: organization) }
       let(:profile) { FactoryBot.build(:profile, library_location: branch) }
-      let!(:branch_user) { FactoryBot.create(:user, profile: profile, organization: organization) }  
-      
+      let!(:branch_user) { FactoryBot.create(:user, profile: profile, organization: organization) }
+
       let(:subject) { RegistrationExporter.new(organization) }
       let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
 

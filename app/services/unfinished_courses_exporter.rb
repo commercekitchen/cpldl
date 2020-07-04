@@ -37,7 +37,7 @@ class UnfinishedCoursesExporter
   end
 
   def school_program_org?
-    @school_program_org ||= @org.has_student_programs?
+    @school_program_org ||= @org.student_programs?
   end
 
 end
