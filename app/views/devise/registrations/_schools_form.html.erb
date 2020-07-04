@@ -27,12 +27,12 @@
 
     <div class="form-row">
       <%= label_tag :school_type, t('login_signup.school_type'), class: "signup-label" %>
-      <%= select_tag :school_type, options_for_select(school_type_options), { include_blank: "Select School Type..." } %>
+      <%= select_tag :school_type, options_for_select(school_type_options), { prompt: "Select School Type..." } %>
     </div>
 
     <div class="form-row hideUntilActive">
       <%= f.label :school_id, t('login_signup.school'), class: "signup-label" %>
-      <%= f.collection_select :school_id, [], :id, :school_name, { include_blank: "Select School..." } %>
+      <%= f.collection_select :school_id, [], :id, :school_name, { prompt: "Select School..." } %>
     </div>
 
   </fieldset>
