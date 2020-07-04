@@ -38,7 +38,7 @@ class CompletedCoursesExporter
   end
 
   def school_program_org?
-    @school_program_org ||= @org.programs.where(parent_type: :students_and_parents).present?
+    @school_program_org ||= @org.has_student_programs?
   end
 
 end

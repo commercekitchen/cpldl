@@ -91,7 +91,6 @@ describe CompletedCoursesExporter do
       it 'should contain school name' do
         expect(report.to_s).to match(school.school_name)
       end
-
     end
   end
 

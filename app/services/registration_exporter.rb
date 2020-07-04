@@ -37,7 +37,7 @@ class RegistrationExporter
   end
 
   def school_programs?
-    @school_programs ||= @org.programs.where(parent_type: :students_and_parents).present?
+    @school_programs ||= @org.has_student_programs?
   end
 
 end
