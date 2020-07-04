@@ -18,8 +18,6 @@ var schoolsForm = (function () {
         return [obj.id, obj.school_name];
       });
 
-      console.log(newOptions);
-
       $("#user_school_id").updateDropdown("School", newOptions);
       $("#school_fields .hideUntilActive").show();
     });
@@ -58,9 +56,10 @@ $(document).ready(function () {
 
   $("#school_type").change(function () {
     var schoolType = $(this).val();
-
-    $("#school_type option[value='']").remove();
-
-    schoolsForm.loadSchoolsByType(schoolType);
+    console.log(schoolType);
+    if (schoolType !== "") {
+      $("#school_type option[value='']").remove();
+      schoolsForm.loadSchoolsByType(schoolType);
+    }
   });
 });
