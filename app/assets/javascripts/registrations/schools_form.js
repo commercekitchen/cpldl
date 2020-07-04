@@ -58,6 +58,9 @@ $(document).ready(function () {
 
   $("#school_type").change(function () {
     var schoolType = $(this).val();
+
+    $("#school_type option[value='']").remove();
+
     schoolsForm.loadSchoolsByType(schoolType);
   });
 });
