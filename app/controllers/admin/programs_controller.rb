@@ -21,7 +21,7 @@ module Admin
     end
 
     def index
-      @programs = policy_scope(Program)
+      @programs = policy_scope(Program).active
     end
 
     def edit
