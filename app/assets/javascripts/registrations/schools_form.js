@@ -56,7 +56,7 @@ $(document).ready(function () {
 
   $("#school_type").change(function () {
     var schoolType = $(this).val();
-    console.log(schoolType);
+
     if (schoolType !== "") {
       $("#school_type option[value='']").remove();
       schoolsForm.loadSchoolsByType(schoolType);
