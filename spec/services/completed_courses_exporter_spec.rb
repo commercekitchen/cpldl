@@ -7,6 +7,7 @@ describe CompletedCoursesExporter do
   describe 'email login organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let(:program) { FactoryBot.create(:program, organization: organization) }
+    let(:inactive_program) { FactoryBot.create(:program, organization: organization, active: false) }
     let(:branch) { FactoryBot.create(:library_location, organization: organization) }
     let(:profile) { FactoryBot.build(:profile, library_location: branch) }
 
@@ -27,6 +28,9 @@ describe CompletedCoursesExporter do
 
     let(:user_with_program) { FactoryBot.create(:user, program: program, organization: organization) }
     let!(:user_with_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_program, completed_at: Time.zone.now) }
+
+    let(:user_with_inactive_program) { FactoryBot.create(:user, program: inactive_program, organization: organization) }
+    let!(:user_with_inactive_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_inactive_program, completed_at: Time.zone.now) }
 
     let(:exporter) { described_class.new(organization) }
     let(:report) { CSV.parse(exporter.to_csv, headers: true) }
@@ -57,6 +61,10 @@ describe CompletedCoursesExporter do
 
     it 'should include program information' do
       expect(report.to_s).to match(program.program_name)
+    end
+
+    it 'should include program information for inactive programs' do
+      expect(report.to_s).to match(inactive_program.program_name)
     end
 
     it 'should contain course name' do
