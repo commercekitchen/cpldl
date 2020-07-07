@@ -16,5 +16,7 @@ class Program < ApplicationRecord
 
   accepts_nested_attributes_for :program_locations
 
+  default_scope { where(active: true) }
+
   scope :for_subdomain, ->(subdomain) { joins(:organization).where('organizations.subdomain = ?', subdomain) }
 end
