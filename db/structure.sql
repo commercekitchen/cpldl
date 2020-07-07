@@ -788,7 +788,8 @@ CREATE TABLE public.programs (
     organization_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    parent_type integer
+    parent_type integer,
+    active boolean DEFAULT true NOT NULL
 );
 
 
@@ -1843,6 +1844,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200220184942'),
 ('20200327172506'),
 ('20200327214039'),
-('20200618155234');
+('20200618155234'),
+('20200707133604');
 
 
