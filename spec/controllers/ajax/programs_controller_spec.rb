@@ -13,6 +13,7 @@ describe Ajax::ProgramsController do
     before do
       @program = create(:program, organization: organization)
       create(:program, organization: organization, active: false)
+      create(:program)
 
       @student_program1 = create(:program, :student_program, organization: organization)
       @student_program2 = create(:program, :student_program, organization: organization)
