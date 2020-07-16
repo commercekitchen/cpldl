@@ -21,7 +21,7 @@ class RegistrationExporter
         program_name = user.program.present? ? user.program.program_name : ''
         values = [user.send(@primary_id_field), program_name, user.created_at]
         values.concat([user.library_location_name, user.library_location_zipcode]) if @org.branches?
-        values.concat([user.school.school_type.titleize, user.school.school_name, user.student_id]) if school_programs?
+        values.concat([user.school&.school_type&.titleize, user.school&.school_name, user.student_id]) if school_programs?
         csv.add_row values
       end
     end
