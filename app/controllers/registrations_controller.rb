@@ -26,14 +26,6 @@ class RegistrationsController < Devise::RegistrationsController
   private
 
   def sign_up_params
-
-    if params[:user]['date_of_birth(1i)'].present?
-      month = params[:user]['date_of_birth(2i)'].to_i
-      day = params[:user]['date_of_birth(3i)'].to_i
-      year = params[:user]['date_of_birth(1i)'].to_i
-      params[:user][:date_of_birth] = Date.new(year, month, day)
-    end
-
     if current_organization.accepts_custom_branches?
       params[:user][:profile_attributes] = convert_branch_params(params[:user][:profile_attributes])
     end
@@ -79,7 +71,7 @@ class RegistrationsController < Devise::RegistrationsController
       end
 
       if params[:user][:acting_as] == 'Student'
-        allowed_programs_params << %i[date_of_birth grade school_id]
+        allowed_programs_params << %i[grade school_id]
       end
     end
 

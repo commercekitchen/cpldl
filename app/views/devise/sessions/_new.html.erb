@@ -9,23 +9,23 @@
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <% if @library_card_login %>
     <div class="form-row">
-      <%= label_tag "login_library_card_number", "Library Card Number", class: "screen-reader-text" %>
+      <%= label_tag "login_library_card_number", t('login_signup.library_card_number'), class: "screen-reader-text" %>
       <%= f.text_field :login, autofocus: true, id: "login_library_card_number", placeholder: "#{t('login_signup.library_card_number')} *" %>
     </div>
 
     <div class="form-row">
-      <%= label_tag "login_password", "Library Card Pin", class: "screen-reader-text" %>
+      <%= label_tag "login_password", t('login_signup.library_card_pin'), class: "screen-reader-text" %>
       <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
         spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.library_card_pin')} *" %>
     </div>
   <% else %>
     <div class="form-row">
-      <%= label_tag "login_email", "Email", class: "screen-reader-text" %>
+      <%= label_tag "login_email", t('login_signup.email'), class: "screen-reader-text" %>
       <%= f.email_field :login, autofocus: true, id: "login_email", placeholder: "#{t('login_signup.email')} *" %>
     </div>
 
     <div class="form-row">
-      <%= label_tag "login_password", "Password", class: "screen-reader-text" %>
+      <%= label_tag "login_password", t('login_signup.password'), class: "screen-reader-text" %>
       <%= f.text_field :password, autocomplete: "off", autocorrect: "off", autocapitalize: "off",
         spellcheck: "false", id: "login_password", placeholder: "#{t('login_signup.password')} *" %>
     </div>
