@@ -17,6 +17,8 @@ feature 'Admin manages schools' do
     @elementary_school = FactoryBot.create(:school, organization: organization, school_type: 'elementary')
     @middle_school = FactoryBot.create(:school, organization: organization, school_type: 'middle_school')
     @high_school = FactoryBot.create(:school, organization: organization, school_type: 'high_school')
+    @charter_school = FactoryBot.create(:school, organization: organization, school_type: 'charter_school')
+    @specialty_school = FactoryBot.create(:school, organization: organization, school_type: 'specialty_school')
 
     visit admin_dashboard_index_path
     click_link 'Manage Schools'
@@ -30,6 +32,8 @@ feature 'Admin manages schools' do
     expect(page).to have_select('school_school_type', selected: 'Elementary')
     expect(page).to have_select('school_school_type', selected: 'Middle School')
     expect(page).to have_select('school_school_type', selected: 'High School')
+    expect(page).to have_select('school_school_type', selected: 'Charter School')
+    expect(page).to have_select('school_school_type', selected: 'Specialty School')
   end
 
   scenario 'Admin changes a school type', js: true do
