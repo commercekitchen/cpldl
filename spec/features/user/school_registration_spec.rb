@@ -27,6 +27,9 @@ feature 'user signs up for school program' do
     find('#user_profile_attributes_first_name').set(first_name)
     find('#user_profile_attributes_last_name').set(last_name)
     find('#user_profile_attributes_zip_code').set(zip_code)
+
+    expect(page).to have_content "Library Card Number (Optional)"
+
     fill_in 'user_password_confirmation', with: password
 
     choose('Programs for Students and Parents')
