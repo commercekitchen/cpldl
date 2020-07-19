@@ -108,7 +108,6 @@ en:
     re_enter_password: "Re-enter Your Password"
     parent_student: "Parent or Student?"
     student_id: "Student ID"
-    birthday: "Date of Birth"
     grade: "Grade"
     school: "School"
     library_card_number_optional: "Library Card Number (Optional)"

@@ -113,7 +113,6 @@ es:
     re_enter_password: "Re-escriba su contraseña"
     parent_student: "¿Padre o Estudiante?"
     student_id: "Carné de estudiante"
-    birthday: "Fecha de Nacimiento"
     grade: "Grado"
     school: "Escuela"
     library_card_number: "Número de tarjeta de biblioteca"
