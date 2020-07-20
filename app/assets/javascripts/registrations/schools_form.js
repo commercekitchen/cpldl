@@ -1,15 +1,12 @@
 var schoolsForm = (function () {
   function showForm() {
     $("#school_fields").show();
-  }
-
-  function resetForm() {
-    // Clear options
-    $("#school_fields hideUntilActive").hide();
+    $("#user_acting_as").trigger("change");
   }
 
   function hideForm() {
     $("#school_fields").hide();
+    $("#user_student_id").prop("required", false);
   }
 
   function loadSchoolsByType(schoolType) {
@@ -25,7 +22,7 @@ var schoolsForm = (function () {
 
   function showStudentFields() {
     $("#student-only").show();
-    $("#user_student_id").attr("placeholder", "Student ID #");
+    $("#user_student_id").attr("placeholder", "Student ID # *");
   }
 
   function hideStudentFields() {
@@ -33,13 +30,22 @@ var schoolsForm = (function () {
     $("#user_student_id").attr("placeholder", "Students' ID #s");
   }
 
+  function makeStudentIdRequired() {
+    $("#user_student_id").prop("required", true);
+  }
+
+  function makeStudentIdOptional() {
+    $("#user_student_id").prop("required", false);
+  }
+
   return {
     showForm: showForm,
-    resetForm: resetForm,
     hideForm: hideForm,
     loadSchoolsByType: loadSchoolsByType,
     showStudentFields: showStudentFields,
     hideStudentFields: hideStudentFields,
+    makeStudentIdRequired: makeStudentIdRequired,
+    makeStudentIdOptional: makeStudentIdOptional,
   };
 })();
 
@@ -49,8 +55,10 @@ $(document).ready(function () {
 
     if (newRole == "Student") {
       schoolsForm.showStudentFields();
+      schoolsForm.makeStudentIdRequired();
     } else {
       schoolsForm.hideStudentFields();
+      schoolsForm.makeStudentIdOptional();
     }
   });
 
