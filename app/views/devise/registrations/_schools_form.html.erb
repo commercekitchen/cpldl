@@ -26,9 +26,9 @@
 
   </fieldset>
 
-</div>
+  <div class="form-row">
+    <%= f.label :student_id, t('login_signup.student_id'), class: "signup-label" %>
+    <%= f.text_field :student_id, placeholder: "Student ID # *", required: true %>
+  </div>
 
-<div class="form-row">
-  <%= f.label :student_id, t('login_signup.student_id'), class: "signup-label" %>
-  <%= f.text_field :student_id, placeholder: "Students' ID #s" %>
 </div>
