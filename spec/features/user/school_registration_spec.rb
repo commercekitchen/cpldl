@@ -13,10 +13,10 @@ feature 'user signs up for school program' do
   before do
     create(:program, program_name: 'MNPS', parent_type: :students_and_parents, organization: organization)
     create(:school, school_type: :elementary, school_name: 'Lincoln Elementary', organization: organization)
-    create(:school, school_type: :middle_school, school_name: 'Middle School East', organization: organization)
-    create(:school, school_type: :high_school, school_name: 'GLHS', organization: organization)
-    create(:school, school_type: :charter_school, school_name: 'Magna Carta Charter School', organization: organization)
-    create(:school, school_type: :specialty_school, school_name: 'Denver School of Performing Arts', organization: organization)
+    create(:school, school_type: :middle, school_name: 'Middle School East', organization: organization)
+    create(:school, school_type: :high, school_name: 'GLHS', organization: organization)
+    create(:school, school_type: :charter, school_name: 'Magna Carta Charter School', organization: organization)
+    create(:school, school_type: :specialty, school_name: 'Denver School of Performing Arts', organization: organization)
   end
 
   scenario 'registers as student', js: true do
@@ -47,16 +47,16 @@ feature 'user signs up for school program' do
     expect(page).to have_select('School', exact: true)
     expect(page).to have_select('School', options: ['Select School...', 'Lincoln Elementary'])
 
-    select('Middle School', from: 'School Type')
+    select('Middle', from: 'School Type')
     expect(page).to have_select('School', options: ['Select School...', 'Middle School East'])
 
-    select('Charter School', from: 'School Type')
+    select('Charter', from: 'School Type')
     expect(page).to have_select('School', options: ['Select School...', 'Magna Carta Charter School'])
 
-    select('Specialty School', from: 'School Type')
+    select('Specialty', from: 'School Type')
     expect(page).to have_select('School', options: ['Select School...', 'Denver School of Performing Arts'])
 
-    select('High School', from: 'School Type')
+    select('High', from: 'School Type')
     expect(page).to have_select('School', options: ['Select School...', 'GLHS'])
 
     select('GLHS', from: 'School')

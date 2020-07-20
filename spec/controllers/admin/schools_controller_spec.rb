@@ -53,8 +53,8 @@ describe Admin::SchoolsController do
 
     it 'updates school' do
       expect do
-        patch :update, params: { id: school.id, school: { school_type: 'middle_school' }, format: 'js' }
-      end.to change { school.reload.school_type }.from('elementary').to('middle_school')
+        patch :update, params: { id: school.id, school: { school_type: 'middle' }, format: 'js' }
+      end.to change { school.reload.school_type }.from('elementary').to('middle')
     end
 
     it 'does not update school for another subsite' do
@@ -62,7 +62,7 @@ describe Admin::SchoolsController do
       sign_in other_subsite_admin
 
       expect do
-        patch :update, params: { id: school.id, school: { school_type: 'middle_school' }, format: 'js' }
+        patch :update, params: { id: school.id, school: { school_type: 'middle' }, format: 'js' }
       end.to_not(change { school.reload.school_type })
     end
   end

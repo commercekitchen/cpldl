@@ -80,7 +80,7 @@ describe RegistrationsController do
   describe 'school registration' do
     let(:organization) { create(:organization, accepts_programs: true) }
     let(:program) { create(:program, parent_type: :students_and_parents, organization: organization) }
-    let(:school) { create(:school, school_type: :middle_school, organization: organization) }
+    let(:school) { create(:school, school_type: :middle, organization: organization) }
 
     before do
       @request.host = "#{organization.subdomain}.test.host"
