@@ -22,12 +22,10 @@ var schoolsForm = (function () {
 
   function showStudentFields() {
     $("#student-only").show();
-    $("#user_student_id").attr("placeholder", "Student ID # *");
   }
 
   function hideStudentFields() {
     $("#student-only").hide();
-    $("#user_student_id").attr("placeholder", "Students' ID #s");
   }
 
   function makeStudentIdRequired() {
