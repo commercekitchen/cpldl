@@ -17,9 +17,7 @@ describe Admin::SchoolsController do
   describe 'GET #index' do
     it 'assigns schools for organization' do
       get :index
-      expect(assigns(:schools).count).to eq(2)
-      expect(assigns(:schools).first).to eq(enabled_school)
-      expect(assigns(:schools).second).to eq(disabled_school)
+      expect(assigns(:schools)).to contain_exactly(enabled_school, disabled_school)
     end
 
     it 'creates new empty school' do
@@ -31,12 +29,13 @@ describe Admin::SchoolsController do
   describe 'POST #create' do
     it 'should create new school with valid attributes' do
       valid_attributes = {
-        school_name: 'Lincoln Elementary'
+        school_name: 'Lincoln Elementary',
+        school_type: 'elementary'
       }
 
       expect do
         post :create, params: { school: valid_attributes, format: 'js' }
-      end.to change { organization.schools.count }.by(1)
+      end.to change { organization.schools.elementary.count }.by(1)
     end
 
     it 'should not create a school for another subsite' do
@@ -46,6 +45,25 @@ describe Admin::SchoolsController do
       expect do
         post :create, params: { school: { school_name: 'Some School' }, format: 'js' }
       end.to_not change(School, :count)
+    end
+  end
+
+  describe 'PATCH #update' do
+    let(:school) { create(:school, organization: organization, school_type: 'elementary') }
+
+    it 'updates school' do
+      expect do
+        patch :update, params: { id: school.id, school: { school_type: 'middle' }, format: 'js' }
+      end.to change { school.reload.school_type }.from('elementary').to('middle')
+    end
+
+    it 'does not update school for another subsite' do
+      sign_out admin
+      sign_in other_subsite_admin
+
+      expect do
+        patch :update, params: { id: school.id, school: { school_type: 'middle' }, format: 'js' }
+      end.to_not(change { school.reload.school_type })
     end
   end
 

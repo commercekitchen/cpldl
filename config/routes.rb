@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   namespace :ajax do
     post 'programs/sub_programs'
     post 'programs/select_program'
+
+    resources :schools, only: [:index]
   end
 
   resources :contacts, only: [:new, :create]
@@ -78,7 +80,7 @@ Rails.application.routes.draw do
       post 'toggle'
     end
 
-    resources :schools, only: [:create, :index] do
+    resources :schools, only: [:create, :index, :update] do
       post 'toggle'
     end
 

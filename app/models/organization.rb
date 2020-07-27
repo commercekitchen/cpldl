@@ -54,7 +54,7 @@ class Organization < ApplicationRecord
   end
 
   def student_programs?
-    programs.map(&:parent_type).any? { |p| p.to_sym == :students_and_parents }
+    programs.where(parent_type: :students_and_parents).present?
   end
 
   def authentication_key_field

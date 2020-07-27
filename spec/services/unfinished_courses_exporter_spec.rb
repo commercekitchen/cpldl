@@ -7,8 +7,10 @@ describe UnfinishedCoursesExporter do
   describe 'email login organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let(:program) { FactoryBot.create(:program, organization: organization) }
+    let(:branch) { FactoryBot.create(:library_location, organization: organization) }
+    let(:profile) { FactoryBot.build(:profile, library_location: branch) }
 
-    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:user) { FactoryBot.create(:user, organization: organization, profile: profile) }
     let!(:user_course_progress) { FactoryBot.create(:course_progress, user: user) }
 
     let(:parent_user) { FactoryBot.create(:user, :parent, organization: organization) }
@@ -30,7 +32,7 @@ describe UnfinishedCoursesExporter do
     let(:report) { CSV.parse(exporter.to_csv, headers: true) }
 
     it 'should contain correct headers' do
-      expect(report.headers).to eq(['Email', 'Program Name', 'Course', 'Course Started At'])
+      expect(report.headers).to eq(['Email', 'Program Name', 'Course', 'Course Started At', 'Branch'])
     end
 
     it 'should contain user email' do
@@ -69,6 +71,32 @@ describe UnfinishedCoursesExporter do
       user_course_progress.update(completed_at: Time.zone.now)
       expect(report.to_s).to_not match(user.email)
     end
+
+    it 'should contain branch name' do
+      expect(report.to_s).to match(branch.name)
+    end
+
+    context 'with school program' do
+      let(:school_program) { FactoryBot.create(:program, parent_type: :students_and_parents, organization: organization) }
+      let(:school) { FactoryBot.create(:school, organization: organization) }
+      let(:user_with_school) { FactoryBot.create(:user, program: school_program, school: school, organization: organization) }
+
+      before do
+        FactoryBot.create(:course_progress, user: user_with_school)
+      end
+
+      it 'should include school headers' do
+        expect(report.headers).to eq(['Email', 'Program Name', 'Course', 'Course Started At', 'Branch', 'School Type', 'School Name'])
+      end
+
+      it 'should contain school type' do
+        expect(report.to_s).to match(school.school_type.titleize)
+      end
+
+      it 'should contain school name' do
+        expect(report.to_s).to match(school.school_name)
+      end
+    end
   end
 
   describe 'library_card_login organization report' do
@@ -80,7 +108,7 @@ describe UnfinishedCoursesExporter do
     let(:report) { CSV.parse(exporter.to_csv, headers: true) }
 
     it 'should have correct headers' do
-      expect(report.headers).to eq(['Library Card Number', 'Program Name', 'Course', 'Course Started At'])
+      expect(report.headers).to eq(['Library Card Number', 'Program Name', 'Course', 'Course Started At', 'Branch'])
     end
 
     it 'should include user library card number' do

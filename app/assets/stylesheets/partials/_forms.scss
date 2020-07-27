@@ -97,8 +97,11 @@ textarea {
     padding-right: 2em;
   }
 
-  input {
-    &:nth-child(1) {
+  input,
+  select {
+    flex: 0 1 auto;
+
+    &:not(:last-child) {
       margin-right: 1em;
     }
   }

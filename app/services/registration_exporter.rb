@@ -20,8 +20,9 @@ class RegistrationExporter
 
         program_name = user.program.present? ? user.program.program_name : ''
         values = [user.send(@primary_id_field), program_name, user.created_at]
-        values.concat([user.library_location_name, user.library_location_zipcode])
-        csv.add_row values.compact
+        values.concat([user.library_location_name, user.library_location_zipcode]) if @org.branches?
+        values.concat([user.school&.school_type&.titleize, user.school&.school_name, user.student_id]) if school_programs?
+        csv.add_row values
       end
     end
   end
@@ -31,7 +32,12 @@ class RegistrationExporter
   def column_headers
     headers = [User.human_attribute_name(@primary_id_field), 'Program Name', 'Registration Date']
     headers.concat(['Branch Name', 'Zip']) if @org.branches?
-    headers.compact
+    headers.concat(['School Type', 'School Name', 'Student ID(s)']) if school_programs?
+    headers
+  end
+
+  def school_programs?
+    @school_programs ||= @org.student_programs?
   end
 
 end

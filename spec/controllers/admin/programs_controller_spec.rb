@@ -10,6 +10,7 @@ describe Admin::ProgramsController do
     @admin = create(:user, :admin, organization: @organization)
     @program1 = create(:program, organization: @organization)
     @program2 = create(:program, organization: @organization)
+    @inactive_program = create(:program, organization: @organization, active: false)
     @location1 = create(:program_location, program: @program2)
     @location2 = create(:program_location, program: @program2)
     sign_in @admin
@@ -45,10 +46,9 @@ describe Admin::ProgramsController do
   end
 
   describe 'GET #index' do
-    it 'assigns all programs as @programs' do
+    it 'assigns all active programs as @programs' do
       get :index
-      expect(assigns(:programs)).to include(@program1, @program2)
-      expect(assigns(:programs).count).to eq(2)
+      expect(assigns(:programs)).to contain_exactly(@program1, @program2)
     end
   end
 

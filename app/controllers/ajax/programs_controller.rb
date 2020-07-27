@@ -5,7 +5,7 @@ module Ajax
 
     def sub_programs
       skip_authorization
-      @programs = Program.where(parent_type: Program.parent_types[params[:parent_type].to_sym])
+      @programs = current_organization.programs.where(parent_type: Program.parent_types[params[:parent_type].to_sym]).active
 
       respond_to do |format|
         format.json { render json: @programs.to_json, status: :ok }

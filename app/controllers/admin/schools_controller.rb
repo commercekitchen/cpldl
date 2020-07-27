@@ -5,7 +5,7 @@ module Admin
     before_action :enable_sidebar
 
     def index
-      @schools = policy_scope(School)
+      @schools = policy_scope(School).order(Arel.sql('lower(school_name)'))
       @new_school = current_organization.schools.new
     end
 
@@ -20,6 +20,18 @@ module Admin
         end
 
         format.js {}
+      end
+    end
+
+    def update
+      @school = @school = School.find(params[:id])
+      authorize @school
+
+      respond_to do |format|
+        format.html { redirect_to action: 'index' }
+        format.js do
+          @school.update(school_params)
+        end
       end
     end
 
@@ -41,7 +53,7 @@ module Admin
     private
 
     def school_params
-      params.require(:school).permit(:school_name)
+      params.require(:school).permit(:school_name, :school_type)
     end
 
   end

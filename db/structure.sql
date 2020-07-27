@@ -788,7 +788,8 @@ CREATE TABLE public.programs (
     organization_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    parent_type integer
+    parent_type integer,
+    active boolean DEFAULT true NOT NULL
 );
 
 
@@ -865,7 +866,8 @@ CREATE TABLE public.schools (
     enabled boolean DEFAULT true,
     organization_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    school_type integer
 );
 
 
@@ -1585,6 +1587,13 @@ CREATE INDEX index_schools_on_organization_id ON public.schools USING btree (org
 
 
 --
+-- Name: index_schools_on_school_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_schools_on_school_type ON public.schools USING btree (school_type);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1834,6 +1843,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200220181809'),
 ('20200220184942'),
 ('20200327172506'),
-('20200327214039');
+('20200327214039'),
+('20200618155234'),
+('20200707133604');
 
 

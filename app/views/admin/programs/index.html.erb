@@ -5,10 +5,10 @@
 <ul class='admin-resource-list'>
   <% @programs.each do |program| %>
     <li class='resource-row'>
-      <div class='resource-title'>
+      <div class='resource-cell'>
         <%= program.program_name %>
       </div>
-      <div class='resource-link'>
+      <div class='resource-cell'>
         <% if program.location_required? %>
           <%= link_to  "Edit", edit_admin_program_path(program) %>
         <% end %>

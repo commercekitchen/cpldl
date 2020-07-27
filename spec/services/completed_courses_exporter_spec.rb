@@ -7,6 +7,7 @@ describe CompletedCoursesExporter do
   describe 'email login organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let(:program) { FactoryBot.create(:program, organization: organization) }
+    let(:inactive_program) { FactoryBot.create(:program, organization: organization, active: false) }
     let(:branch) { FactoryBot.create(:library_location, organization: organization) }
     let(:profile) { FactoryBot.build(:profile, library_location: branch) }
 
@@ -27,6 +28,9 @@ describe CompletedCoursesExporter do
 
     let(:user_with_program) { FactoryBot.create(:user, program: program, organization: organization) }
     let!(:user_with_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_program, completed_at: Time.zone.now) }
+
+    let(:user_with_inactive_program) { FactoryBot.create(:user, program: inactive_program, organization: organization) }
+    let!(:user_with_inactive_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_inactive_program, completed_at: Time.zone.now) }
 
     let(:exporter) { described_class.new(organization) }
     let(:report) { CSV.parse(exporter.to_csv, headers: true) }
@@ -59,6 +63,10 @@ describe CompletedCoursesExporter do
       expect(report.to_s).to match(program.program_name)
     end
 
+    it 'should include program information for inactive programs' do
+      expect(report.to_s).to match(inactive_program.program_name)
+    end
+
     it 'should contain course name' do
       expect(report.to_s).to match(user_course_progress.course.title)
     end
@@ -69,6 +77,28 @@ describe CompletedCoursesExporter do
 
     it 'should contain branch name' do
       expect(report.to_s).to match(branch.name)
+    end
+
+    context 'with school program' do
+      let(:school_program) { FactoryBot.create(:program, parent_type: :students_and_parents, organization: organization) }
+      let(:school) { FactoryBot.create(:school, organization: organization) }
+      let(:user_with_school) { FactoryBot.create(:user, program: school_program, school: school, organization: organization) }
+
+      before do
+        FactoryBot.create(:course_progress, user: user_with_school, completed_at: Time.zone.now)
+      end
+
+      it 'should include school headers' do
+        expect(report.headers).to eq(['Email', 'Program Name', 'Course', 'Course Completed At', 'Branch', 'School Type', 'School Name'])
+      end
+
+      it 'should contain school type' do
+        expect(report.to_s).to match(school.school_type.titleize)
+      end
+
+      it 'should contain school name' do
+        expect(report.to_s).to match(school.school_name)
+      end
     end
   end
 
