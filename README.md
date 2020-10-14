@@ -6,10 +6,9 @@ practice for digital literacy trainers.
 
 ## Contributions
 
-Please ask before opening a pull to add features, as we must weigh the impact against current
-implementations of this code base.
+If you find a bug, please open an issue.
 
-That said, if you find a bug, please do open an issue!
+Feel free to submit a Pull Request if you'd like to contribute. Follow instructions below to set up and run the application in a development environment. If you do choose to contribute, please include tests for your code and fix any formatting issues uncovered with RuboCop.
 
 ## Getting Started
 
@@ -38,6 +37,19 @@ required to stand up a new DigitalLearn site.
 ### Start Server
 
 - `rails s`
+
+In order to test subdomain functionality, consider using lvh.me:
+Run server with `rails s -b lvh.me`, then visit `_subdomain_.lvh.me:3000`
+
+Alternatively, you can create a tunnel to your localhost with [ngrok](https://github.com/inconshreveable/ngrok).
+
+### Run Tests
+
+- `rspec`
+
+### Run rubocop linter
+
+- `rubocop`
 
 ## Adding new Subsites
 
