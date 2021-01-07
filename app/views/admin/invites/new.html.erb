@@ -9,7 +9,7 @@
     <% resource.class.invite_key_fields.each do |field| -%>
       <div class='inline-item'>
         <%= f.label field, class: "text-color" %>
-        <%= f.text_field field %>
+        <%= f.text_field field, required: true %>
       </div>
     <% end -%>
 
