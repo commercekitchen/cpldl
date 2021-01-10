@@ -4,6 +4,8 @@ class LessonsController < ApplicationController
   before_action :auth_subsites
   before_action :set_course
 
+  rescue_from ActionController::UnknownFormat, with: :report_unknown_format
+
   def show
     @lesson = @course.lessons.friendly.find(params[:id])
     @preview = params[:preview]
@@ -63,9 +65,16 @@ class LessonsController < ApplicationController
         end
       end
     end
+
   end
 
   private
+
+  def report_unknown_format(exception)
+    request_format = request.format
+
+    Rollbar.error(exception, request_format: request_format)
+  end
 
   def set_course
     @course = Course.friendly.find(params[:course_id])
