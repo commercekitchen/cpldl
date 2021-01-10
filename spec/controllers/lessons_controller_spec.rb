@@ -115,6 +115,11 @@ describe LessonsController do
       end.to_not change(LessonCompletion, :count)
     end
 
+    it 'logs info to rollbar on unknown format' do
+      expect(Rollbar).to receive(:error).once
+      post :complete, params: { course_id: course.to_param, lesson_id: lesson1.to_param }, format: :foobar
+    end
+
     context 'preview' do
       let(:pla) { FactoryBot.create(:default_organization) }
       let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla) }
