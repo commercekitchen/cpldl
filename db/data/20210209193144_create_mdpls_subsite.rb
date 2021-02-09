@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMdplsSubsite < ActiveRecord::Migration[5.2]
   def up
     # Subsite Attributes

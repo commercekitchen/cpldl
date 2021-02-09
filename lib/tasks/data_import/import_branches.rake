@@ -4,16 +4,16 @@ require 'csv'
 
 namespace :data_import do
   desc 'Import branch data for an organization'
-  task :import_branches, [:subdomain] => :environment do |t, args|
+  task :import_branches, [:subdomain] => :environment do |_t, args|
     subdomain = args[:subdomain]
-    missing_subdomain_error = "You must provide a subdomain argument to import"\
-      " branches: `rake data_import:import_branches[subdomain]`"
-    abort(missing_subdomain_error) unless subdomain.present?
+    missing_subdomain_error = 'You must provide a subdomain argument to import'\
+      ' branches: `rake data_import:import_branches[subdomain]`'
+    abort(missing_subdomain_error) if subdomain.blank?
 
     organization = Organization.find_by(subdomain: subdomain)
-    abort("Subsite #{subdomain} does not exist") unless organization.present?
+    abort("Subsite #{subdomain} does not exist") if organization.blank?
 
-    filename = Rails.root.join("lib", "tasks", "data_import", "branch_data", "#{subdomain}.csv")
+    filename = Rails.root.join('lib', 'tasks', 'data_import', 'branch_data', "#{subdomain}.csv")
     abort("File not found: #{filename}") unless File.exist?(filename)
 
     count = 0

@@ -38,7 +38,7 @@ feature 'Admin accepts invitation' do
       fill_in 'New Password', with: password
       fill_in 'Confirm new password', with: password
       click_button 'Set my password'
-  
+
       expect(current_path).to eq(profile_path)
       expect(page).to have_content('This is the first time you have logged in, please update your profile.')
       fill_in 'First Name', with: 'Test'
