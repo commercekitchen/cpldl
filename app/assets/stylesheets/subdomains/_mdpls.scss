@@ -1,0 +1,8 @@
+.mdpls {
+  @include color_scheme($mdpls-blue, $mdpls-green, $mdpls-dark-blue);
+  @include banner($mdpls-dark-blue);
+  @include buttons($mdpls-blue);
+  @include course_widget($mdpls-blue);
+  @include lesson_tile($mdpls-blue, $mdpls-gray, $mdpls-green);
+  @include icons($mdpls-blue, $mdpls-green);
+}

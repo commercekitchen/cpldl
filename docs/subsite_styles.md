@@ -2,7 +2,7 @@
 
 ## Defining Colors
 
-Create color variables in `_vars.scss`:
+Create color variables in `app/assets/stylesheets/vars.scss`:
 
 ```
 /* NEW_SUBDOMAIN */
@@ -21,12 +21,12 @@ This file should define a single class which matches your new subdomain name, wh
 
 ```
   .new_subdomain {
-    @include color_scheme($new_subdomain-blue, $new_subdomain-orange, center);
-    @include banner($new_subdomain-blue, $white, 2.5em);
-    @include buttons($new_subdomain-orange, $white);
-    @include course_widget($new_subdomain-orange, $new_subdomain-orange);
-    @include lesson_tile($new_subdomain-blue, $new_subdomain-grey, $new_subdomain-orange, $new_subdomain-orange);
-    @include icons($new_subdomain-blue, $new_subdomain-orange);
+    @include color_scheme($primary_color, $action_color, $footer_color, $underline_color, $cms_link_color);
+    @include banner( $background_color, $custom_banner_font, $slogan_alignment, $text_color);
+    @include buttons($button_color, $text_color);
+    @include course_widget($primary_bg_color, $secondary_bg_color);
+    @include lesson_tile($bg_color, $completed_bg_color, $check_color);
+    @include icons($icon_color, $check_color);
   }
 ```
 
