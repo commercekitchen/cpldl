@@ -12,9 +12,11 @@
   - Should users select programs on login?
   - What program options?
 - Header logo
+  - .png
   - Full Color
   - 120px x 400px max final display dimensions
 - Footer logo
+  - .png
   - White, Transparent
   - 80px x 320px max final display dimensions
 - Google analytics ID
@@ -27,7 +29,7 @@
 
 - [Set up the subsite styles and mixins](subsite_styles.md)
 
-- Create google analytics javascript partial in `views/shared/` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
+- Create google analytics javascript partial in `app/views/shared/analytics` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
 
   ```
   ga('create', 'new_analytics_id', 'auto', {
@@ -35,7 +37,9 @@
   });
   ```
 
-- Add google analytics home page url and datastudio link (when created) to en.yml and es.yml
+  NOTE: When not using Google Analytics, the partial file must still be present, but it may be left empty.
+
+- If applicable, add google analytics home page url and datastudio link (when created) to en.yml and es.yml
 
   ```
   google_analytics_url:
