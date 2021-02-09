@@ -27,16 +27,6 @@
 
 - [Set up the subsite styles and mixins](subsite_styles.md)
 
-- Add subsite Footer logo and logo link through subsite admin panel customization pages
-
-- Customize subsite texts through admin panel
-
-  - Custom banner greeting text
-  - Additional banner greeting content
-  - User dashboard subheader
-  - Retake quiz prompt (usually just 'Retake the Quiz' unless otherwise specified)
-  - Explanation of course colors (misspelled key in yaml file) - courses to be completed are displayed with the colors passed to the `course_widget` SASS mixin in the `_new_subdomain.scss` class. Completed courses are displayed in Gray by default. This sentence usually ends with the prompt "To add more to your plan,"
-
 - Create google analytics javascript partial in `views/shared/` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
 
   ```
@@ -91,3 +81,15 @@ class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
   end
 end
 ```
+
+### After Deployment
+
+- Add subsite Footer logo and logo link through subsite admin panel customization pages
+
+- Customize subsite texts through admin panel
+
+  - Custom banner greeting text
+  - Additional banner greeting content
+  - User dashboard subheader
+  - Retake quiz prompt (usually just 'Retake the Quiz' unless otherwise specified)
+  - Explanation of course colors (misspelled key in yaml file) - courses to be completed are displayed with the colors passed to the `course_widget` SASS mixin in the `_new_subdomain.scss` class. Completed courses are displayed in Gray by default. This sentence usually ends with the prompt "To add more to your plan,"
