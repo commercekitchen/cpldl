@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :school do
-    school_name { Faker::Hipster.sentence(word_count: 3) }
+    school_name { Faker::Lorem.sentence(word_count: 3) }
     school_type { :middle }
     organization
 
