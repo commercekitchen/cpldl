@@ -61,30 +61,48 @@
 
 ### Deployment
 
-To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data-migrate) like the following example:
+To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data-migrate).
 
-```
-class CreateClevelandOrganization < ActiveRecord::Migration[5.2]
-  def up
-    # Create the subdomain organization
-    cleveland = Organization.create!(name: 'Cleveland Foundation', subdomain: 'cleveland', accepts_partners: true)
+- Run `rails g data_migration create_example_subsite`
 
-    # Invite an admin user
-    AdminInvitationService.invite(email: 'cwilliams@clevefdn.org', organization: cleveland)
+- Update the new data migration file created in `db/data` with the new subsite's information:
 
-    # Custom setup for branches, partners, etc. would go here...
+  ```
+  class CreateExampleSubsite < ActiveRecord::Migration[5.2]
+    def up
+      # Subsite Attributes
+      subsite_attributes = {
+        name: 'New Subsite Name',
+        subdomain: 'new_subdomain',
+        branches: false,
+        accepts_programs: false,
+        accepts_partners: false
+      }
 
-    # Import all subsite courses
-    Course.pla.where(pub_status: 'P').each do |course|
-      CourseImportService.new(organization: cleveland, course_id: course.id)
+      # Admin users
+      admins = ['admin@example.com']
+
+      # Create the subdomain organization
+      subsite = Organization.create!(subsite_attributes)
+
+      # Invite Admins
+      admins.each do |email|
+        AdminInvitationService.invite(email: email, organization: subsite)
+      end
+
+      # Custom setup for branches, partners, etc. would go here...
+
+      # Import all subsite courses
+      Course.pla.where(pub_status: 'P').each do |course|
+        CourseImportService.new(organization: subsite, course_id: course.id)
+      end
+    end
+
+    def down
+      raise ActiveRecord::IrreversibleMigration
     end
   end
-
-  def down
-    raise ActiveRecord::IrreversibleMigration
-  end
-end
-```
+  ```
 
 ### After Deployment
 
