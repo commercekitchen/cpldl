@@ -3,9 +3,11 @@
 class CreateMdplsSubsite < ActiveRecord::Migration[5.2]
   def up
     # Subsite Attributes
+    subdomain = 'mdpls'
+
     subsite_attributes = {
       name: 'Miami-Dade Public Library System',
-      subdomain: 'mdpls',
+      subdomain: subdomain,
       branches: true,
       accepts_programs: false,
       accepts_partners: false
@@ -28,6 +30,9 @@ class CreateMdplsSubsite < ActiveRecord::Migration[5.2]
     Course.pla.where(pub_status: 'P').each do |course|
       CourseImportService.new(organization: subsite, course_id: course.id).import!
     end
+
+    # Import branches
+    Rake::Task["data_import:import_branches"].invoke(subdomain)
   end
 
   def down
