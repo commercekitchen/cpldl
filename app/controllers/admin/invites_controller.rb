@@ -41,5 +41,9 @@ module Admin
 
       AdminInvitationService.invite(email: params[:user][:email], organization: organization, inviter: current_user)
     end
+
+    def after_accept_path_for(user)
+      after_sign_in_path_for(user)
+    end
   end
 end

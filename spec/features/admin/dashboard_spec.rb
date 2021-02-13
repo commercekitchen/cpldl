@@ -49,6 +49,7 @@ feature 'Admin visits dashboard' do
   scenario 'changes course publication status', js: true do
     expect(page).to have_select("course_#{course.id}", selected: 'Draft')
     select('Published', from: "course_#{course.id}")
+    expect(page).to have_select("course_#{course.id}", selected: 'Published')
     visit admin_dashboard_index_path
     expect(page).to have_select("course_#{course.id}", selected: 'Published')
   end
