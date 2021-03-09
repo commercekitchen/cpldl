@@ -32,7 +32,7 @@ class CreateMdplsSubsite < ActiveRecord::Migration[5.2]
     end
 
     # Import branches
-    Rake::Task["data_import:import_branches"].invoke(subdomain)
+    Rake::Task['data_import:import_branches'].invoke(subdomain)
   end
 
   def down
