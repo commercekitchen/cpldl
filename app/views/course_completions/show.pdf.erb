@@ -15,7 +15,7 @@
   </p>
   <%= content_tag :h2, "#{@course.title}", class: "course" %>
   <p>
-    <%= t('certificate.as_of') %>  <% if current_user %> <%= local_time(current_user.course_progresses.where(course_id: @course.id).first.completed_at, '%B %e, %Y') %> <% else %> <%= local_time(Time.zone.now, '%B %e, %Y') %> <% end %>
+    <%= t('certificate.as_of') %> <%= course_completion_date(current_user, @course) %>
   </p>
   <%= wicked_pdf_image_tag "dl_logo.png" %>
 </div>

@@ -34,6 +34,9 @@ en:
         password: "Password"
       course:
         pub_status: "Publication Status"
+  date:
+    formats:
+      date_only: "%-m/%-d/%Y"
   common:
     submit: "Submit"
     save: "Save"
