@@ -13,7 +13,7 @@
           <%= course.title %>
         </td>
         <td>
-          <%= local_time(current_user.course_progresses.where(course_id: course.id).first.completed_at, '%B %e, %Y') %>
+          <%= course_completion_date(current_user, course) %>
         </td>
         <td>
           <%= link_to "Download Certificate", course_completion_path(course, format: 'pdf') %>

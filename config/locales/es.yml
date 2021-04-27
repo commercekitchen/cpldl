@@ -42,6 +42,9 @@ es:
           attributes:
             last_name:
               blank: "no puede estar en blanco"
+  date:
+    formats:
+      date_only: "%-d/%-m/%Y"
   common:
     submit: "Enviar"
     save: "Guardar"
@@ -261,8 +264,8 @@ es:
     this_award: "Este diploma certifica que"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
-    has_completed: "ha culminado la clase de"
-    as_of: "en el mes de"
+    has_completed: "ha completado el curso de"
+    as_of: "el"
   quiz:
     intro_text: " ¿qué le gustaría aprender?"
     answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."

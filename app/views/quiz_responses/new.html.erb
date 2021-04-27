@@ -1,5 +1,5 @@
 <%= content_for(:callout) do %>
-  <h1><%= current_user.profile.first_name %>, <%= t('quiz.intro_text') %> </h1>
+  <h1><%= current_user.first_name %>, <%= t('quiz.intro_text') %> </h1>
 <% end %>
 
 <h2 class="text-color"><%= t('quiz.answer_3_questions') %> </h2>
