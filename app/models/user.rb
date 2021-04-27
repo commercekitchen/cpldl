@@ -42,7 +42,9 @@ class User < ApplicationRecord
   serialize :quiz_responses_object
 
   # Expose some information from profile
-  delegate :full_name,
+  delegate :first_name,
+           :last_name,
+           :full_name,
            :library_location_name,
            :library_location_zipcode, to: :profile, allow_nil: true
 

@@ -1,6 +1,6 @@
 <h1 class="slogan">
   <% if user_signed_in? %>
-    <%= t('logged_in_user.hi') %> <%=current_user.profile.first_name%><%= "(ADMIN)" if current_user.admin? %>!
+    <%= t('logged_in_user.hi') %> <%=current_user.first_name%><%= "(ADMIN)" if current_user.admin? %>!
     <br>
   <% end %>
   <%= raw i18n_with_default("home.#{current_organization.subdomain}.custom_banner_greeting") %>
