@@ -5,7 +5,7 @@
       <%= t('certificate.this_award') %>
     </p>
     <% if current_user %>
-      <%= content_tag :h2, "#{current_user.profile.full_name}", class: "name" %>
+      <%= content_tag :h2, "#{current_user.full_name}", class: "name" %>
     <% else %>
       <%= t('certificate.name_fill') %>
     <% end %>

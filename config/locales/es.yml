@@ -264,7 +264,7 @@ es:
     this_award: "Este diploma certifica que"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
-    has_completed: "ha culminado la clase de"
+    has_completed: "ha completado el curso de"
     as_of: "el"
   quiz:
     intro_text: " ¿qué le gustaría aprender?"

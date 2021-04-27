@@ -21,6 +21,28 @@ feature 'User visits course complete page' do
       Timecop.return
     end
 
+    scenario 'sees certificate message in english', js: true do
+      visit course_completion_path(course)
+      message = "This award certifies that\n"\
+                "#{user.full_name}\n"\
+                "has completed\n"\
+                "#{course.title}\n"\
+                'as of 3/10/2021'
+      expect(page).to have_content(message)
+    end
+
+    scenario 'sees certificate message in spanish', js: true do
+      visit course_completion_path(course)
+      click_link 'Español'
+
+      message = "Este diploma certifica que\n"\
+                "#{user.full_name}\n"\
+                "ha completado el curso de\n"\
+                "#{course.title}\n"\
+                'el 10/3/2021'
+      expect(page).to have_content(message)
+    end
+
     scenario 'does not see practice skills button if no attachments or notes are available' do
       visit course_completion_path(course)
       expect(page).to_not have_link('Use My Skills Now')
@@ -55,17 +77,6 @@ feature 'User visits course complete page' do
       expect(page).to have_content('testfile.pdf')
       expect(page).to have_content('Post-Course completion notes...')
     end
-
-    scenario 'sees completion date in english', js: true do
-      visit course_completion_path(course)
-      expect(page).to have_content('as of 3/10/2021')
-    end
-
-    scenario 'sees completion date in spanish', js: true do
-      visit course_completion_path(course)
-      click_link 'Español'
-      expect(page).to have_content('en 10/3/2021')
-    end
   end
 
   context 'as a headless user' do
@@ -76,6 +87,28 @@ feature 'User visits course complete page' do
 
     after do
       Timecop.return
+    end
+
+    scenario 'sees certificate message in english', js: true do
+      visit course_completion_path(course)
+      message = "This award certifies that\n"\
+                "_____________________\n"\
+                "has completed\n"\
+                "#{course.title}\n"\
+                'as of 3/10/2021'
+      expect(page).to have_content(message)
+    end
+
+    scenario 'sees certificate message in spanish', js: true do
+      visit course_completion_path(course)
+      click_link 'Español'
+
+      message = "Este diploma certifica que\n"\
+                "_____________________\n"\
+                "ha completado el curso de\n"\
+                "#{course.title}\n"\
+                'el 10/3/2021'
+      expect(page).to have_content(message)
     end
 
     scenario 'can view the notes and partner resources info for the given course' do
@@ -98,17 +131,6 @@ feature 'User visits course complete page' do
       click_link 'Use My Skills Now'
       expect(current_path).to eq(course_skills_path(course))
       expect(page).to have_content('testfile.pdf')
-    end
-
-    scenario 'sees completion date in english', js: true do
-      visit course_completion_path(course)
-      expect(page).to have_content('as of 3/10/2021')
-    end
-
-    scenario 'sees completion date in spanish', js: true do
-      visit course_completion_path(course)
-      click_link 'Español'
-      expect(page).to have_content('en 10/3/2021')
     end
   end
 end
