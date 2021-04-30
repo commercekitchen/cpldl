@@ -132,7 +132,3 @@ group :test do
   gem 'webdrivers'
   gem 'webmock'
 end
-
-group :development, :staging do
-  gem 'mail_interceptor'
-end
