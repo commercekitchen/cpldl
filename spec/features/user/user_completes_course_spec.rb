@@ -13,6 +13,34 @@ feature 'User visits course complete page' do
     before do
       switch_to_subdomain(org.subdomain)
       login_as(user)
+      Timecop.freeze(Time.zone.local(2021, 3, 10, 10, 0, 0))
+      course_progress.update(completed_at: Time.zone.now)
+    end
+
+    after do
+      Timecop.return
+    end
+
+    scenario 'sees certificate message in english', js: true do
+      visit course_completion_path(course)
+      message = "This award certifies that\n"\
+                "#{user.full_name}\n"\
+                "has completed\n"\
+                "#{course.title}\n"\
+                'as of 3/10/2021'
+      expect(page).to have_content(message)
+    end
+
+    scenario 'sees certificate message in spanish', js: true do
+      visit course_completion_path(course)
+      click_link 'Español'
+
+      message = "Este diploma certifica que\n"\
+                "#{user.full_name}\n"\
+                "ha completado el curso de\n"\
+                "#{course.title}\n"\
+                'el 10/3/2021'
+      expect(page).to have_content(message)
     end
 
     scenario 'does not see practice skills button if no attachments or notes are available' do
@@ -49,14 +77,38 @@ feature 'User visits course complete page' do
       expect(page).to have_content('testfile.pdf')
       expect(page).to have_content('Post-Course completion notes...')
     end
-
   end
 
   context 'as a headless user' do
-    let!(:course_progress) { FactoryBot.create(:course_progress, course: course, completed_at: Time.zone.now) }
-
     before do
       switch_to_subdomain(org.subdomain)
+      Timecop.freeze(Time.zone.local(2021, 3, 10, 10, 0, 0))
+    end
+
+    after do
+      Timecop.return
+    end
+
+    scenario 'sees certificate message in english', js: true do
+      visit course_completion_path(course)
+      message = "This award certifies that\n"\
+                "_____________________\n"\
+                "has completed\n"\
+                "#{course.title}\n"\
+                'as of 3/10/2021'
+      expect(page).to have_content(message)
+    end
+
+    scenario 'sees certificate message in spanish', js: true do
+      visit course_completion_path(course)
+      click_link 'Español'
+
+      message = "Este diploma certifica que\n"\
+                "_____________________\n"\
+                "ha completado el curso de\n"\
+                "#{course.title}\n"\
+                'el 10/3/2021'
+      expect(page).to have_content(message)
     end
 
     scenario 'can view the notes and partner resources info for the given course' do
@@ -81,5 +133,4 @@ feature 'User visits course complete page' do
       expect(page).to have_content('testfile.pdf')
     end
   end
-
 end

@@ -34,6 +34,9 @@ en:
         password: "Password"
       course:
         pub_status: "Publication Status"
+  date:
+    formats:
+      date_only: "%-m/%-d/%Y"
   common:
     submit: "Submit"
     save: "Save"
@@ -259,7 +262,7 @@ en:
     this_award: "This award certifies that"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
-    has_completed: "has completed:"
+    has_completed: "has completed"
     as_of: "as of"
   quiz:
     intro_text: " what would you like to learn?"
@@ -295,6 +298,7 @@ en:
     carnegielibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w160560212p161760560/"
     cleveland: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216325566p206666986/"
     yclibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216335491p206727926"
+    mdpls: "https://analytics.google.com/analytics/web/#/report-home/a37972615w270389568p241859444"
   google_studio_url:
     chipublib: "https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik"
     npl: "https://datastudio.google.com/open/1Z4sv_djbM53ZRAkcGOOlq8tjVM3AS8gb"

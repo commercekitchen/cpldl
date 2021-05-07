@@ -4,7 +4,7 @@
     <%= render "shared/layout/meta_tags" %>
     <%= render "shared/layout/analytics" %>
   </head>
-  <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>">
+  <body class="<%= "#{controller_name}-#{action_name}" %> <%= current_organization.subdomain %>" data-locale="<%= I18n.locale %>">
     <%= render "shared/layout/header" %>
     <%= render "shared/layout/banner" %>
     <%= render "shared/courses/preview_notice" %>

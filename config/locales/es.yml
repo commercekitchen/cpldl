@@ -42,6 +42,9 @@ es:
           attributes:
             last_name:
               blank: "no puede estar en blanco"
+  date:
+    formats:
+      date_only: "%-d/%-m/%Y"
   common:
     submit: "Enviar"
     save: "Guardar"
@@ -261,8 +264,8 @@ es:
     this_award: "Este diploma certifica que"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
-    has_completed: "ha culminado la clase de"
-    as_of: "en el mes de"
+    has_completed: "ha completado el curso de"
+    as_of: "el"
   quiz:
     intro_text: " ¿qué le gustaría aprender?"
     answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
@@ -297,6 +300,7 @@ es:
     carnegielibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w160560212p161760560/"
     cleveland: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216325566p206666986/"
     yclibrary: "https://analytics.google.com/analytics/web/#embed/report-home/a37972615w216335491p206727926"
+    mdpls: "https://analytics.google.com/analytics/web/#/report-home/a37972615w270389568p241859444"
   google_studio_url:
     chipublib: "https://datastudio.google.com/open/1SAr1D4QfApB4KmerUiIeDMTT-UDO8jik"
     npl: "https://datastudio.google.com/open/1Z4sv_djbM53ZRAkcGOOlq8tjVM3AS8gb"

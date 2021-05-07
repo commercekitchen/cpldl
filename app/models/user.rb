@@ -42,7 +42,11 @@ class User < ApplicationRecord
   serialize :quiz_responses_object
 
   # Expose some information from profile
-  delegate :library_location_name, :library_location_zipcode, to: :profile, allow_nil: true
+  delegate :first_name,
+           :last_name,
+           :full_name,
+           :library_location_name,
+           :library_location_zipcode, to: :profile, allow_nil: true
 
   ### Devise overrides to allow library card number login
   # TODO: Pull this into a concern

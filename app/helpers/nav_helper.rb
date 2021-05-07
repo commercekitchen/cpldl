@@ -10,7 +10,7 @@ module NavHelper
     if org_admin?
       "#{t('logged_in_user.hi')} Admin!"
     else
-      "#{t('logged_in_user.hi')} #{current_user.profile.first_name}!"
+      "#{t('logged_in_user.hi')} #{current_user.first_name}!"
     end
   end
 

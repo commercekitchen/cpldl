@@ -40,7 +40,7 @@ describe ProfilesController do
                            language: @english, opt_out_of_recommendations: true }
         put :update, params: { id: @user.profile, profile: profile_params, authenticity_token: set_authenticity_token }
         @user.reload
-        expect(@user.profile.first_name).to eq('Robby')
+        expect(@user.first_name).to eq('Robby')
         expect(@user.profile.zip_code).to eq('12345')
         expect(@user.profile.language.name).to eq('English')
         expect(@user.profile.opt_out_of_recommendations).to be true

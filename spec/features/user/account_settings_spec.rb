@@ -40,7 +40,7 @@ feature 'Registered user visits account pages' do
       click_button 'Save'
 
       @user.reload
-      expect(@user.profile.first_name).to eq('Alex')
+      expect(@user.first_name).to eq('Alex')
       expect(@user.profile.zip_code).to eq('12345')
       expect(@user.profile.language.name).to eq('English')
     end
@@ -81,8 +81,8 @@ feature 'Registered user visits account pages' do
       click_button 'Save'
 
       @program_user.reload
-      expect(@program_user.profile.first_name).to eq('Alex')
-      expect(@program_user.profile.last_name).to eq('Monroe')
+      expect(@program_user.first_name).to eq('Alex')
+      expect(@program_user.last_name).to eq('Monroe')
       expect(@program_user.profile.zip_code).to eq('12345')
       expect(@program_user.profile.language.name).to eq('English')
     end
@@ -123,7 +123,7 @@ feature 'Registered user visits account pages' do
       click_button 'Save'
 
       user.reload
-      expect(user.profile.first_name).to eq('Alex')
+      expect(user.first_name).to eq('Alex')
       expect(user.profile.zip_code).to eq('12345')
       expect(user.profile.language.name).to eq('English')
     end

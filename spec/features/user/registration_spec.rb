@@ -34,7 +34,7 @@ feature 'User signs up' do
       expect(page).to have_content('This is the first time you have logged in, please update your profile.')
 
       user = User.last
-      expect(user.profile.first_name).to eq('Alejandro')
+      expect(user.first_name).to eq('Alejandro')
       expect(user.profile.zip_code).to eq('')
     end
 
@@ -84,7 +84,7 @@ feature 'User signs up' do
       expect(page).to have_content('This is the first time you have logged in, please update your profile.')
 
       user = User.last
-      expect(user.profile.first_name).to eq(first_name)
+      expect(user.first_name).to eq(first_name)
       expect(user.profile.zip_code).to eq(zip_code)
     end
 
@@ -129,7 +129,7 @@ feature 'User signs up' do
       expect(page).to have_content('This is the first time you have logged in, please update your profile.')
 
       user = User.last
-      expect(user.profile.first_name).to eq(first_name)
+      expect(user.first_name).to eq(first_name)
       expect(user.profile.zip_code).to eq('')
     end
 
