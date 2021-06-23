@@ -83,7 +83,6 @@ set :linked_dirs, fetch(:linked_dirs, []).push(
   'tmp/sockets',
   'vendor/bundle',
   'public/system',
-  'public/storylines',
   'public/ckeditor_assets'
 )
 
