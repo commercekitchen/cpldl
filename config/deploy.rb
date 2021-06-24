@@ -3,7 +3,7 @@ lock '3.4.0'
 require 'colorize'
 
 # GIT Repo URL
-set :repo_url, "git@github.com:PublicLibraryAssoc/cpldl.git"
+set :repo_url, "git@github.com:commercekitchen/cpldl.git"
 
 # Ruby Version (used for RVM) - MUST MATCH PASSENGER/SERVER CONFIG!
 set :ruby_version, '2.6.4'
