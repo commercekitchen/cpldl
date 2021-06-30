@@ -90,7 +90,6 @@ feature 'Admin user updates course' do
       expect(current_path).to eq(edit_admin_course_path(subsite_course))
       expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_select('Publication Status', selected: 'Draft')
-
     end
 
     scenario 'selects existing category for course' do

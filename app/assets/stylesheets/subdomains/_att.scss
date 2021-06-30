@@ -1,0 +1,8 @@
+.att {
+  @include color_scheme($att-blue, $att-blue);
+  @include banner($att-blue);
+  @include buttons($att-blue);
+  @include course_widget($att-blue);
+  @include lesson_tile($att-blue, $grey, $orange);
+  @include icons($att-blue, $orange);
+}
