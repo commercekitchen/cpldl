@@ -65,7 +65,7 @@
           to upload a new one, you need to delete the current one first.</p>
           <p class="upload-field">
             <%= @lesson.story_line.instance.story_line_file_name %>
-              <%= link_to "Remove", destroy_asl_attachment_admin_course_lessons_path(@course, @lesson), method: "delete", data: { confirm: "Are you sure?" } %>
+            <%= link_to "Remove", destroy_asl_attachment_admin_course_lessons_path(course_id: @course.id, lesson_id: @lesson.id), method: "delete", data: { confirm: "Are you sure?" } %>
           </p>
         </fieldset>
       <% end %>
