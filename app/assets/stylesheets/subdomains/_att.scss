@@ -1,5 +1,5 @@
 .att {
-  @include color_scheme($att-dark-blue, $att-light-blue);
+  @include color_scheme($att-dark-blue, $att-light-blue, $att-light-blue);
   @include banner($att-light-blue);
   @include buttons($att-dark-blue);
   @include course_widget($att-light-blue, $att-dark-blue);
