@@ -89,6 +89,17 @@ class Organization < ApplicationRecord
     end
   end
 
+  def training_site_link
+    training_site_base = Rails.application.secrets.training_site_base
+    training_site_domain = Rails.application.secrets.training_site_domain
+
+    if use_subdomain_for_training_site
+      [training_site_base, subdomain, training_site_domain].join('.')
+    else
+      [training_site_base, training_site_domain].join('.')
+    end
+  end
+
   def self.pla
     find_by(subdomain: 'www')
   end

@@ -595,7 +595,8 @@ CREATE TABLE public.organizations (
     accepts_custom_branches boolean DEFAULT false,
     login_required boolean DEFAULT true,
     preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
-    accepts_partners boolean DEFAULT false
+    accepts_partners boolean DEFAULT false,
+    use_subdomain_for_training_site boolean DEFAULT false NOT NULL
 );
 
 
@@ -1829,6 +1830,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200327172506'),
 ('20200327214039'),
 ('20200618155234'),
-('20200707133604');
+('20200707133604'),
+('20210726182520');
 
 

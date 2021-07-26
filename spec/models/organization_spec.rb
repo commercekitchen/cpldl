@@ -89,4 +89,15 @@ RSpec.describe Organization, type: :model do
       expect(Organization.pla).to eq(pla)
     end
   end
+
+  describe '#training_site_link' do
+    it 'returns main training site by default' do
+      expect(org.training_site_link).to eq('https://training.test.org')
+    end
+
+    it 'returns subsite link if configured' do
+      org.update(use_subdomain_for_training_site: true)
+      expect(org.training_site_link).to eq("https://training.#{org.subdomain}.test.org")
+    end
+  end
 end
