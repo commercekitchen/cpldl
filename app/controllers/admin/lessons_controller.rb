@@ -54,10 +54,10 @@ module Admin
     end
 
     def destroy_asl_attachment
-      @lesson = @course.lessons.friendly.find(params[:format])
+      @lesson = @course.lessons.friendly.find(params[:lesson_id])
       authorize @lesson, :update?
 
-      @lesson.story_line = nil
+      @lesson.story_line.destroy
       @lesson.save
       FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
       flash[:notice] = 'Story Line successfully removed, please upload a new story line .zip file.'

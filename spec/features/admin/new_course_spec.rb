@@ -100,7 +100,7 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_content('Why_Use_a_Computer_Worksheet.pdf')
   end
 
-  scenario 'adds a lesson' do
+  scenario 'adds a lesson', js: true do
     visit edit_admin_course_path(course_id: course, id: course.id)
     click_button 'Save & Edit Lessons'
     expect(current_path).to eq(new_admin_course_lesson_path(course))
@@ -108,9 +108,12 @@ feature 'Admin user creates new course and lesson' do
     fill_in :lesson_summary, with: 'Summary for new lesson'
     fill_in :lesson_duration, with: '05:15'
     attach_file 'Articulate Storyline Package', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
+
     click_button 'Save Lesson'
     expect(page).to have_content('Lesson was successfully created.')
     expect(current_path).to eq(edit_admin_course_lesson_path(course.to_param, Lesson.last.to_param))
+
+    expect(page).to have_content 'BasicSearch1.zip'
 
     click_link 'Add Another Lesson'
     expect(current_path).to eq(new_admin_course_lesson_path(course.to_param))

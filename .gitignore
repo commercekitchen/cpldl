@@ -61,3 +61,6 @@ config/secrets.yml
 
 # Local environment
 /config/local_env.yml
+
+# asdf version
+.tool-versions

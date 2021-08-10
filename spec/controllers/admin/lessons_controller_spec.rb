@@ -195,4 +195,13 @@ describe Admin::LessonsController do
       expect(child_lesson2.reload.lesson_order).to eq(1)
     end
   end
+
+  describe 'DELETE #destroy_asl_attachment' do
+    let(:params) { { course_id: pla_course.id, lesson_id: lesson1.id } }
+
+    it 'should remove lesson upload' do
+      delete :destroy_asl_attachment, params: params
+      expect(lesson1.reload.story_line.exists?).to be_falsey
+    end
+  end
 end
