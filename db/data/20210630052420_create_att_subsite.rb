@@ -10,9 +10,9 @@ class CreateAttSubsite < ActiveRecord::Migration[5.2]
     }
 
     # Admin users
-    admins = ['susie+att_admin@ckdtech.co,
-               alex+att_admin@ckdtech.co,
-               tom+att_admin@ckdtech.co']
+    admins = ['susie+att_admin@ckdtech.co',
+               'alex+att_admin@ckdtech.co',
+               'tom+att_admin@ckdtech.co']
 
     # Create the subdomain organization
     subsite = Organization.create!(subsite_attributes)
