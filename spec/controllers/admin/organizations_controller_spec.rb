@@ -55,6 +55,33 @@ describe Admin::OrganizationsController do
         patch :update, params: { id: org.id, organization: update_params, format: :json }
         expect(org.reload.branches).to be_truthy
       end
+
+      it 'should update footer links' do
+        footer_link_params = {
+          footer_links_attributes: [
+            { label: 'Some Link', url: 'http://example.com' },
+            { label: 'Another Link', url: 'http://website.org' }
+          ]
+        }
+        
+        expect do
+          patch :update, params: { id: org.id, organization: footer_link_params, format: :json }
+        end.to change { org.reload.footer_links.count }.by(2)
+      end
+
+      it 'should allow destruction of footer links' do
+        link = FactoryBot.create(:footer_link, organization: org)
+
+        destroy_link_params = {
+          footer_links_attributes: [
+            { id: link.id, _destroy: '1' }
+          ]
+        }
+
+        expect do
+          patch :update, params: { id: org.id, organization: destroy_link_params, format: :json }
+        end.to change { org.reload.footer_links.count }.by(-1)
+      end
     end
   end
 
