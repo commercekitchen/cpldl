@@ -34,6 +34,7 @@ feature 'Admin manages footer links' do
     fill_in 'URL', with: url
     click_on 'Add Link'
     expect(page).to have_content label
+    expect(page).to have_link(label, href: url)
     expect(page).to have_content url
     expect(page).to have_field('Label', with: '')
     expect(page).to have_field('URL', with: '')
