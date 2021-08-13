@@ -264,6 +264,8 @@ en:
     name_fill_long: "_________________________________________"
     has_completed: "has completed"
     as_of: "as of"
+    att:
+      disclaimer: "<strong>Disclaimer:</strong> None of the other companies whose names or logos appear in these educational materials have been involved in the creation of these materials, or approve, sponsor, or are affiliated in any way with these materials."
   quiz:
     intro_text: " what would you like to learn?"
     answer_3_questions: "Answer three questions and we'll recommend which courses to take."

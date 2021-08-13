@@ -1,0 +1,22 @@
+<div class="att-certificate">
+  <div class="certificate-preview">
+    <div class="inner">
+      <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
+      <p>
+        <%= t('certificate.this_award') %>
+      </p>
+      <div class="name-fill">&nbsp;</div>
+      <p>
+        <%= t('certificate.has_completed') %>
+      </p>
+      <%= content_tag :h2, "#{@course.title}", class: "course-title" %>
+      <div class='certificate-logo'>
+        <%= image_tag "att_certificate_logo", alt: "AT&T/PLA Logo" %>
+      </div>
+
+      <div class="disclaimer">
+        <%= t('certificate.att.disclaimer').html_safe %>
+      </div>
+    </div>
+  </div>
+</div>
