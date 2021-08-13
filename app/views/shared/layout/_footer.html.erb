@@ -1,6 +1,6 @@
 <footer class="footer">
   <div class="container footer-content">
-    <ul class="cms_nav">
+    <ul class="cms_nav" id="footer_link_section">
       <% if @footer_pages&.any? || @footer_links&.any? %>
         <strong>LEARN MORE</strong>
         <% @footer_pages&.each do |page| %>
@@ -8,7 +8,7 @@
         <% end %>
 
         <% @footer_links&.each do |footer_link| %>
-          <li id=<%= "footer_link-#{footer_link.id}" %>><%= link_to footer_link.label, footer_link.url, class: "cms_nav--link" %></li>
+          <%= render partial: "shared/layout/footer_link", locals: { link: footer_link } %>
         <% end %>
       <% end %>
     </ul>
