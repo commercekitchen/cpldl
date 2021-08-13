@@ -17,9 +17,11 @@
   <% end %>
 
   <div class="form-row">
-    <%= link_to(course_completion_path(@course, format: 'pdf')) do %>
-      <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
-        <%= t('course_completion_page.download_certificate') %>
+    <% if !current_organization.custom_certificate_enabled? %>
+      <%= link_to(course_completion_path(@course, format: 'pdf')) do %>
+        <%= button_tag(type: 'button', class: "congrats-button button-color") do %>
+          <%= t('course_completion_page.download_certificate') %>
+        <% end %>
       <% end %>
     <% end %>
 
