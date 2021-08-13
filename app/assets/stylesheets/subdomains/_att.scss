@@ -5,4 +5,62 @@
   @include course_widget($att-light-blue, $att-dark-blue);
   @include lesson_tile($att-light-blue, $grey, $att-orange);
   @include icons($att-light-blue, $orange);
+
+  .congrats-banner {
+    background-color: $att-light-blue;
+  }
+}
+
+.att-certificate {
+  .certificate-preview {
+    background-color: $att-light-blue;
+    height: 25em;
+
+    .inner {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: none;
+      padding: 1rem;
+      background-color: $white;
+
+      .name-fill {
+        border-bottom: 1px solid $att-light-blue;
+        width: 75%;
+        margin: 1rem auto;
+      }
+
+      h1 {
+        color: $att-light-blue;
+        margin: 0.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: $att-light-blue;
+      }
+
+      h2 {
+        color: $att-light-blue;
+        font-weight: bold;
+      }
+
+      .disclaimer {
+        font-size: 0.5rem;
+        color: $att-light-blue;
+        font-weight: lighter;
+      }
+    }
+  }
+
+  .certificate-logo {
+    position: relative;
+    display: block;
+    margin: 1rem 0;
+
+    img {
+      max-height: 2.7rem;
+      padding: 0.1rem;
+    }
+  }
 }
