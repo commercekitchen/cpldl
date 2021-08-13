@@ -1,0 +1,11 @@
+<li class="resource-row" id="footer_link_row_<%= link.id %>">
+  <div class="resource-cell">
+    <%= link.label %>
+  </div>
+  <div class="resource-cell">
+    <%= link.url %>
+  </div>
+  <div class="resource-cell">
+    <%= link_to 'Delete', admin_footer_link_path(link), method: :delete, remote: true, data: { confirm: "Delete #{link.label} (#{link.url})?" }, id: "delete_footer_link_link_#{link.id}" %>
+  </div>
+</li>

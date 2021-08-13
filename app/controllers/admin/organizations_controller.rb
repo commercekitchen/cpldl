@@ -23,7 +23,12 @@ module Admin
     private
 
     def organization_params
-      params.require(:organization).permit(:name, :subdomain, :branches, :accepts_programs)
+      params.require(:organization)
+            .permit(:name,
+                    :subdomain,
+                    :branches,
+                    :accepts_programs,
+                    footer_links_attributes: [:label, :url, :id, :_destroy])
     end
   end
 end
