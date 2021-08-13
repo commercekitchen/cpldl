@@ -75,6 +75,7 @@ Rails.application.routes.draw do
     end
 
     resources :partners, only: [:index, :create, :destroy]
+    resources :footer_links, only: [:index, :create, :destroy]
 
     resources :program_locations, only: [:create] do
       post 'toggle'

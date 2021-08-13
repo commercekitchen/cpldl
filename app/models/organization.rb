@@ -46,8 +46,6 @@ class Organization < ApplicationRecord
   validates :user_survey_link, url: { allow_blank: true }
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
 
-  accepts_nested_attributes_for :footer_links, allow_destroy: true
-
   def user_count
     users.count
   end
