@@ -1,10 +1,14 @@
 <footer class="footer">
   <div class="container footer-content">
     <ul class="cms_nav">
-      <% if @footer_pages && @footer_pages.any? %>
+      <% if @footer_pages&.any? || @footer_links&.any? %>
         <strong>LEARN MORE</strong>
-        <% @footer_pages.each do |page| %>
+        <% @footer_pages&.each do |page| %>
           <li><%= link_to page.title, cms_page_path(page), class: "cms_nav--link" %></li>
+        <% end %>
+
+        <% @footer_links&.each do |footer_link| %>
+          <li id=<%= "footer_link-#{footer_link.id}" %>><%= link_to footer_link.label, footer_link.url, class: "cms_nav--link" %></li>
         <% end %>
       <% end %>
     </ul>

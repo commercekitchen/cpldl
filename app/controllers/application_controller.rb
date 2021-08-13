@@ -108,6 +108,7 @@ class ApplicationController < ActionController::Base
     org_id = current_organization.id
 
     @footer_pages = CmsPage.where(pub_status: 'P', language: current_language, organization_id: org_id, audience: user_audience_list)
+    @footer_links = FooterLink.where(organization_id: org_id)
   end
 
   def set_cms_marketing_pages
