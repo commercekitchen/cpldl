@@ -1,0 +1,25 @@
+<div class="att-pdf-cert">
+  <div class="cert-box">
+    <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
+
+    <p>
+      <%= t('certificate.this_award') %>
+    </p>
+
+    <div class="name-fill">&nbsp;</div>
+
+    <p>
+      <%= t('certificate.has_completed') %>
+    </p>
+
+    <%= content_tag :h2, "#{@course.title}", class: "course" %>
+
+    <div class="image-container">
+      <%= wicked_pdf_image_tag "att_certificate_logo.png" %>
+    </div>
+
+    <div class="disclaimer">
+      <%= t('certificate.att.disclaimer').html_safe %>
+    </div>
+  </div>
+</div>
