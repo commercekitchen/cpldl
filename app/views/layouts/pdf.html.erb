@@ -2,7 +2,11 @@
 <html>
   <head>
     <meta charset='utf-8' />
-    <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <% if current_organization.custom_certificate_enabled? %>
+      <%= wicked_pdf_stylesheet_link_tag "#{current_organization.subdomain}_pdf" -%>
+    <% else %>
+      <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+    <% end %>
   </head>
   <body class="<%= current_organization.subdomain %>">
     <div class="pdf-page">
