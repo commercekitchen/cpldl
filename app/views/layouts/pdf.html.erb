@@ -3,7 +3,7 @@
   <head>
     <meta charset='utf-8' />
     <% if current_organization.custom_certificate_enabled? %>
-      <%= wicked_pdf_stylesheet_link_tag "subdomains/pdfs/#{current_organization.subdomain}" -%>
+      <%= wicked_pdf_stylesheet_link_tag "#{current_organization.subdomain}_pdf" -%>
     <% else %>
       <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
     <% end %>
