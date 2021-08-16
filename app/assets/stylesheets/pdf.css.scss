@@ -31,3 +31,50 @@
     left: 2.5em;
   }
 }
+
+.att-pdf-cert {
+  background-color: $att-light-blue;
+  padding: 2em;
+
+  .cert-box {
+    height: auto;
+    text-align: center;
+    border: none;
+    padding: 3rem;
+    background-color: $white;
+    color: $att-light-blue;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+
+    p {
+      color: $att-light-blue;
+      font-size: 1.5em;
+    }
+
+    h1 {
+      color: $att-light-blue;
+      font-size: 3.5em;
+      margin: 0 0 1em 0;
+    }
+
+    .name-fill {
+      border-bottom: 1px solid $att-light-blue;
+      width: 75%;
+      margin: 3em auto 1em auto;
+    }
+
+    h2 {
+      color: $att-light-blue;
+      font-size: 2.5em;
+      font-weight: lighter;
+      margin-bottom: 2em;
+    }
+
+    img {
+      margin: 2em;
+      position: relative;
+      height: 5em;
+    }
+  }
+}

@@ -25,7 +25,7 @@ class CourseCompletionsController < ApplicationController
       format.html
       format.pdf do
         @pdf = render_to_string pdf: 'file_name',
-               template: 'course_completions/show.pdf.erb',
+               template: pdf_template_path,
                layout: 'pdf.html.erb',
                orientation: 'Landscape',
                page_size: 'Letter',
@@ -41,6 +41,16 @@ class CourseCompletionsController < ApplicationController
                     type: 'application/pdf')
         end
       end
+    end
+  end
+
+  private
+
+  def pdf_template_path
+    if current_organization.custom_certificate_enabled?
+      "course_completions/custom_certificates/#{current_organization.subdomain}.pdf.erb"
+    else
+      "course_completions/show.pdf.erb"
     end
   end
 
