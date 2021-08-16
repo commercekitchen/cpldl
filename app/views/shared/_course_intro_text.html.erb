@@ -20,6 +20,15 @@
   <h2 class="slogan centered text-color">
     <%= i18n_with_default("home.choose_a_course.#{current_organization.subdomain}") %>
   </h2>
+
+  <% custom_subheader = i18n_with_default("home.choose_course_subheader.#{current_organization.subdomain}") %>
+
+  <% unless custom_subheader.blank? %>
+    <p class="emphasis">
+      <%= custom_subheader %>
+    </p>
+  <% end %>
+
   <% if current_organization.courses.authenticated_users.exists? %>
     <p class="center">
       <%= t('home.more_courses') %>
