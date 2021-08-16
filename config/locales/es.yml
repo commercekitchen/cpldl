@@ -83,6 +83,8 @@ es:
       pima: "Seleccione un curso de los que aparecen a continuación para comenzar."
       ebrpl: "Seleccione un tema a continuación para comenzar a aprender o utilice el cuadro de búsqueda en la parte superior de la pantalla."
       carnegielibrary: "Seleccione un tema a continuación para comenzar a aprender o utilice el cuadro de búsqueda en la parte superior de la pantalla."
+    choose_course_subheader:
+      default_org: ""
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses: "¿Qué le gustaría aprender?"
     trainer_link: "Herramientas y recursos para instructores"

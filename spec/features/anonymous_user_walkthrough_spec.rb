@@ -12,6 +12,22 @@ feature 'Anonymous visits static pages' do
     expect(page).to have_content('Choose a course below to start learning or search courses.')
   end
 
+  scenario 'visits home page for subdomain with custom translations' do
+    org = FactoryBot.create(:organization)
+    switch_to_subdomain(org.subdomain)
+
+    header_translation_key = "home.choose_a_course.#{org.subdomain}"
+    subhead_translation_key = "home.choose_course_subheader.#{org.subdomain}"
+    custom_heading = "Custom Courses Header"
+    custom_subheading = "Custom course subheader with more info"
+    FactoryBot.create(:translation, locale: :en, key: header_translation_key, value: custom_heading)
+    FactoryBot.create(:translation, locale: :en, key: subhead_translation_key, value: custom_subheading)
+
+    visit root_path
+    expect(page).to have_content custom_heading
+    expect(page).to have_content custom_subheading
+  end
+
   scenario 'can visit the customization page' do
     page = create(:cms_page, title: 'Pricing & Features')
     visit cms_page_path(page)
