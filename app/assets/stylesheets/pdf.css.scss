@@ -5,10 +5,13 @@
   border-color: $teal;
   height: 43.5em;
   text-align: center;
+  color: $grey;
+
   h1 {
     font-size: 3.5em;
     margin: 1.5em 0;
   }
+
   h2 {
     font-size: 2.5em;
     margin: 0.5em 0;
@@ -20,10 +23,12 @@
       color: $teal;
     }
   }
+
   p {
     font-size: 1.5em;
     margin: 0.2em 0;
   }
+
   img {
     position: absolute;
     bottom: 2em;
