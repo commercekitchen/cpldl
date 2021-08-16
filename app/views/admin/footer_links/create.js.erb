@@ -1,0 +1,4 @@
+$('#footer_link_list').append("<%= escape_javascript(render partial: 'footer_link_row', locals: { link: @link }) %>");
+$('#footer_link_section').append("<%= escape_javascript(render partial: "shared/layout/footer_link", locals: { link: @link }) %>");
+$('#footer_link_label').val('');
+$('#footer_link_url').val('');

@@ -81,4 +81,19 @@ feature 'User clicks through each page' do
     end
   end
 
+  describe 'Footer' do
+    let!(:link1) { FactoryBot.create(:footer_link, organization: org) }
+    let!(:link2) { FactoryBot.create(:footer_link, organization: org) }
+    let!(:other_org_link) { FactoryBot.create(:footer_link) }
+    let!(:cms_page) { FactoryBot.create(:cms_page, organization: org, pub_status: 'P') }
+
+    scenario 'correct LEARN MORE links display' do
+      visit root_path
+      expect(page).to have_link(cms_page.title, href: cms_page_path(cms_page))
+      expect(page).to have_link(link1.label, href: link1.url)
+      expect(page).to have_link(link2.label, href: link2.url)
+      expect(page).not_to have_link(other_org_link.label)
+    end
+  end
+
 end

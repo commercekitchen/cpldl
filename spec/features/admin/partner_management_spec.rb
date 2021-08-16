@@ -37,7 +37,7 @@ feature 'Admin manages partners' do
   end
 
   scenario 'can delete partner', js: true do
-    Partner.create!(name: 'test', organization: organization)
+    FactoryBot.create(:partner, name: 'test', organization: organization)
     visit admin_partners_path
     page.accept_confirm { click_on "delete_partner_link_#{partner1.id}" }
     expect(page).to_not have_content partner1.name

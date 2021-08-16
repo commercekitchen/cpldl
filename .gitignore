@@ -64,3 +64,6 @@ config/secrets.yml
 
 # asdf version
 .tool-versions
+
+# ERD
+erd.pdf

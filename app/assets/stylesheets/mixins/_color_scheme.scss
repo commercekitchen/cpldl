@@ -55,6 +55,10 @@
     &.cms_nav--link {
       color: $cms_link_color !important;
     }
+
+    &.white {
+      color: $white;
+    }
   }
 
   .language-links {

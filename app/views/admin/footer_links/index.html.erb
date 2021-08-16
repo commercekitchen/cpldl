@@ -1,0 +1,32 @@
+<%= content_for(:callout) do %>
+  <h1>Admin Dashboard</h1>
+<% end %>
+
+<h2>Footer Links</h2>
+
+<p class="emphasis no-top-margin">
+  Footer Links provide users access to resources outside of DigitalLearn.
+  These links will appear in addition to any of your subsite's CMS Pages in the "LEARN MORE" section of the footer.
+</p>
+
+<ul id="footer_link_list" class="admin-resource-list">
+  <% @footer_links.each do |link| %>
+    <%= render partial: 'footer_link_row', locals: { link: link } %>
+  <% end %>
+</ul>
+
+<%= form_for [:admin, @new_link], remote: true do |f| %>
+  <fieldset>
+    <div class="inline-form">
+      <div class="inline-input">
+        <%= f.label :label, "Label", class: "plain" %>
+        <%= f.text_field :label %>
+      </div>
+      <div class="inline-input">
+        <%= f.label :url, "URL", class: "plain" %>
+        <%= f.text_field :url %>
+      </div>
+      <%= f.submit "Add Link", class: "skinny" %>
+    </div>
+  </fieldset>
+<% end %>

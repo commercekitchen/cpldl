@@ -90,7 +90,7 @@ textarea {
 .inline-form {
   margin: 1em 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 
   .inline-input {
     flex-grow: 1;

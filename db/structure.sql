@@ -399,6 +399,39 @@ CREATE TABLE public.data_migrations (
 
 
 --
+-- Name: footer_links; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.footer_links (
+    id bigint NOT NULL,
+    organization_id bigint,
+    label character varying NOT NULL,
+    url character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: footer_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.footer_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: footer_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.footer_links_id_seq OWNED BY public.footer_links.id;
+
+
+--
 -- Name: friendly_id_slugs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1076,6 +1109,13 @@ ALTER TABLE ONLY public.courses ALTER COLUMN id SET DEFAULT nextval('public.cour
 
 
 --
+-- Name: footer_links id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.footer_links ALTER COLUMN id SET DEFAULT nextval('public.footer_links_id_seq'::regclass);
+
+
+--
 -- Name: friendly_id_slugs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1268,6 +1308,14 @@ ALTER TABLE ONLY public.data_migrations
 
 
 --
+-- Name: footer_links footer_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.footer_links
+    ADD CONSTRAINT footer_links_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: friendly_id_slugs friendly_id_slugs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1457,6 +1505,13 @@ CREATE INDEX index_courses_on_slug ON public.courses USING btree (slug);
 --
 
 CREATE INDEX index_courses_on_title ON public.courses USING btree (title);
+
+
+--
+-- Name: index_footer_links_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_footer_links_on_organization_id ON public.footer_links USING btree (organization_id);
 
 
 --
@@ -1831,6 +1886,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200327214039'),
 ('20200618155234'),
 ('20200707133604'),
-('20210726182520');
+('20210726182520'),
+('20210812220205');
 
 

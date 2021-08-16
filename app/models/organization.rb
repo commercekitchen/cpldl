@@ -6,12 +6,13 @@ class Organization < ApplicationRecord
   resourcify
 
   store_attributes :preferences do
-    footer_logo_file_name     String
-    footer_logo_file_size     Integer
-    footer_logo_link          String
-    footer_logo_content_type  String
-    user_survey_enabled       Boolean, default: false
-    user_survey_link          String
+    footer_logo_file_name      String
+    footer_logo_file_size      Integer
+    footer_logo_link           String
+    footer_logo_content_type   String
+    user_survey_enabled        Boolean, default: false
+    user_survey_link           String
+    custom_certificate_enabled Boolean, default: false
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
@@ -25,6 +26,7 @@ class Organization < ApplicationRecord
   has_many :users, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :partners, dependent: :destroy
+  has_many :footer_links, dependent: :destroy
 
   has_many :lessons, through: :courses
 
