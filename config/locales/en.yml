@@ -78,6 +78,8 @@ en:
       ebrpl: "Choose a topic below to start learning or use the search box at the top of the screen."
       carnegielibrary: "Choose a topic below to start learning or use the search box at the top of the screen."
       kclibrary: "Choose a course below to start learning or search courses."
+    choose_course_subheader:
+      default_org: ""
     new_to_computers: "If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed."
     search_courses: "Search Courses"
     trainer_link: "Tools and Resources for Trainers"

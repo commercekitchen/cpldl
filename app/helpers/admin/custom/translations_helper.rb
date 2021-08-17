@@ -30,6 +30,7 @@ module Admin
         texts = {
           'home.%<subdomain>s.custom_banner_greeting' => 'Homepage Greeting',
           'home.choose_a_course.%<subdomain>s' => 'Course Selection Greeting',
+          'home.choose_course_subheader.%<subdomain>s' => 'Course Selection Subheader',
           'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button'
         }
 
