@@ -157,4 +157,8 @@ class Course < ApplicationRecord
     existing_category = self.organization.categories.find_by('lower(name) = ?', category_name.downcase)
     self.category = existing_category || self.organization.categories.find_or_create_by(name: category_name)
   end
+
+  def self.pub_status_options
+    [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
+  end
 end

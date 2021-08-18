@@ -70,6 +70,15 @@
       background: linear-gradient(to bottom, $grey 0%, $dark-grey 100%);
     }
 
+    &.coming-soon header {
+      background: linear-gradient(to bottom, $grey 0%, $black 100%);
+    }
+
+    .coming-soon-label {
+      color: $grey;
+      font-weight: 300;
+    }
+
     &.retake-quiz header {
       background: $primary_bg_color;
     }

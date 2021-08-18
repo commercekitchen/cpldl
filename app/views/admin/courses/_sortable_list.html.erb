@@ -9,6 +9,7 @@
         <div class="cell text-color">Topic</div>
         <div class="cell text-color">Language</div>
         <div class="cell text-color">Publication Status</div>
+        <div class="cell">&nbsp;</div>
       </div>
       <ul class="objects sortable reorderable">
         <% courses.each do |course| %>
@@ -16,7 +17,11 @@
             <div class="cell"><%= link_to course.title, edit_admin_course_path(course), class: "no_drag_link" %></div>
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
-            <div class="cell"><%= select_tag "course_#{course.id}", options_for_select([["Published", "P"], ["Draft", "D"], ["Archive", "A"]], course.pub_status), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
+            <div class="cell">
+              <% disabled_options = course.coming_soon? ? ['A', 'D', 'P'] : [] %>
+              <%= select_tag "course_#{course.id}", options_for_select(Course.pub_status_options, selected: course.pub_status, disabled: disabled_options), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
+            </div>
+            <div class="cell">
               <% unless course.pub_date.blank? %>
                 <span class="note">(<%= course.pub_date.strftime("%m/%d/%Y") %>)</span>
               <% end %>
