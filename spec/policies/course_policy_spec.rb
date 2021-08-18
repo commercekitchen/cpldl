@@ -9,8 +9,8 @@ describe CoursePolicy, type: :policy do
   let!(:other_subsite_record) { FactoryBot.create(:course) }
 
   let!(:authorized_user_course) { FactoryBot.create(:course, organization: organization, access_level: :authenticated_users) }
-  let!(:draft_course) { FactoryBot.create(:draft_course, organization: organization) }
-  let!(:archived_course) { FactoryBot.create(:archived_course, organization: organization) }
+  let!(:draft_course) { FactoryBot.create(:course, :draft, organization: organization) }
+  let!(:archived_course) { FactoryBot.create(:course, :archived, organization: organization) }
   let!(:coming_soon_course) { FactoryBot.create(:course, :coming_soon, organization: organization) }
 
   subject { described_class }

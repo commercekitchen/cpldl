@@ -14,8 +14,8 @@ RSpec.describe LessonPolicy, type: :policy do
   let(:everyone_course) { FactoryBot.create(:course, organization: organization) }
   let(:authorized_user_course) { FactoryBot.create(:course, organization: organization, access_level: :authenticated_users) }
   let(:other_subsite_course) { FactoryBot.create(:course) }
-  let(:draft_course) { FactoryBot.create(:draft_course, organization: organization) }
-  let(:archived_course) { FactoryBot.create(:archived_course, organization: organization) }
+  let(:draft_course) { FactoryBot.create(:course, :draft, organization: organization) }
+  let(:archived_course) { FactoryBot.create(:course, :archived, organization: organization) }
   let(:no_auth_course) { FactoryBot.create(:course, organization: no_auth_organization) }
   let(:no_auth_private_course) { FactoryBot.create(:course, organization: no_auth_organization, access_level: :authenticated_users) }
 

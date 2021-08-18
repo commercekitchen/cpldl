@@ -65,7 +65,7 @@ class CoursePolicy < AdminOnlyPolicy
       if user.is_a? GuestUser
         courses.visible_to_users.everyone
       elsif user.admin?
-        courses.where.not(pub_status: 'A')
+        courses.where.not(publication_status: :archived)
       else
         courses.visible_to_users
       end
