@@ -6,6 +6,8 @@ describe Course do
   let(:course) { FactoryBot.create(:course) }
   let(:org) { course.organization }
 
+  it { should define_enum_for(:publication_status).with_values([:draft, :published, :archived]) }
+
   describe 'scopes' do
     describe '#pla' do
       let(:pla) { FactoryBot.create(:default_organization) }

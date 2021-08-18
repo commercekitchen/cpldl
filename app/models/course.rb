@@ -17,6 +17,8 @@ class Course < ApplicationRecord
     subdomain
   end
 
+  enum publication_status: { draft: 0, published: 1, archived: 2 }
+
   # PgSearch gem config
   include PgSearch::Model
   multisearchable against: %i[title summary description topics_str level]
