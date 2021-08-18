@@ -21,7 +21,7 @@ describe Course do
 
     describe '#visible_to_users' do
       let(:organization) { FactoryBot.create(:organization) }
-      let!(:published_course) { FactoryBot.create(:course, organization: organization) }
+      let!(:published_course) { FactoryBot.create(:course, :published, organization: organization) }
       let!(:coming_soon_course) { FactoryBot.create(:course, :coming_soon, organization: organization) }
 
       it 'should return all published and coming soon courses' do

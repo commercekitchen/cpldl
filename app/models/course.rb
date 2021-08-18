@@ -83,7 +83,8 @@ class Course < ApplicationRecord
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
-  scope :visible_to_users, -> { where(publication_status: :published) }
+  scope :coming_soon, -> { where(coming_soon: true) }
+  scope :visible_to_users, -> { published.or(coming_soon) }
 
   before_save :find_or_create_category
   after_save :update_publication_date
