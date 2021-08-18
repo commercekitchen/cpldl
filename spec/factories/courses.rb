@@ -22,6 +22,10 @@ FactoryBot.define do
       pub_status 'A'
     end
 
+    factory :coming_soon_course do
+      pub_status 'C'
+    end
+
     factory :course_with_lessons do
       after(:create) do |course|
         create(:lesson, course: course, lesson_order: 1)

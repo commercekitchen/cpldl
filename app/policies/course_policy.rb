@@ -63,11 +63,11 @@ class CoursePolicy < AdminOnlyPolicy
       courses = scope.includes(:lessons).where(organization: user.organization)
 
       if user.is_a? GuestUser
-        courses.published.everyone
+        courses.visible_to_users.everyone
       elsif user.admin?
         courses.where.not(pub_status: 'A')
       else
-        courses.published
+        courses.visible_to_users
       end
     end
   end

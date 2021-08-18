@@ -16,6 +16,16 @@ describe Course do
         expect(Course.pla).to contain_exactly(pla_course)
       end
     end
+
+    describe '#visible_to_users' do
+      let(:organization) { FactoryBot.create(:organization) }
+      let!(:published_course) { FactoryBot.create(:course, organization: organization) }
+      let!(:coming_soon_course) { FactoryBot.create(:coming_soon_course, organization: organization) }
+
+      it 'should return all published and coming soon courses' do
+        expect(Course.visible_to_users).to contain_exactly(published_course, coming_soon_course)
+      end
+    end
   end
 
   describe 'category' do
@@ -192,6 +202,13 @@ describe Course do
       it 'returns parent text copies' do
         expect(child_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
       end
+    end
+  end
+
+  describe '#pub_status_options' do
+    it 'should contain array of publication status options' do
+      expected_options_array = [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
+      expect(Course.pub_status_options).to eq(expected_options_array)
     end
   end
 end

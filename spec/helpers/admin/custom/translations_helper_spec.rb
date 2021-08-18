@@ -14,6 +14,7 @@ describe Admin::Custom::TranslationsHelper do
     let(:expected_keys) do
       ["home.#{subdomain}.custom_banner_greeting",
        "home.choose_a_course.#{subdomain}",
+       "home.choose_course_subheader.#{subdomain}",
        "completed_courses_page.#{subdomain}.retake_the_quiz"]
     end
 

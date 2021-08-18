@@ -2,7 +2,11 @@
   <h3><%= category_name %></h3>
   <div class="flex-list">
     <% courses.each do |course| %>
-      <%= render partial: 'shared/courses/course_widget', locals: { course: course } %>
+      <% if course.published? %>
+        <%= render partial: 'shared/courses/course_widget', locals: { course: course } %>
+      <% elsif course.coming_soon? %>
+        <%= render partial: 'shared/courses/coming_soon', locals: { course: course } %>
+      <% end %>
     <% end %>
   </div>
 <% end %>

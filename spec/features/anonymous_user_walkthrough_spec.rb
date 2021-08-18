@@ -13,7 +13,7 @@ feature 'Anonymous visits static pages' do
   end
 
   scenario 'visits home page for subdomain with custom translations' do
-    org = FactoryBot.create(:organization)
+    org = FactoryBot.create(:organization, subdomain: 'neworg')
     switch_to_subdomain(org.subdomain)
 
     header_translation_key = "home.choose_a_course.#{org.subdomain}"

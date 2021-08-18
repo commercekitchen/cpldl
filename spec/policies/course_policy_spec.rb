@@ -11,6 +11,7 @@ describe CoursePolicy, type: :policy do
   let!(:authorized_user_course) { FactoryBot.create(:course, organization: organization, access_level: :authenticated_users) }
   let!(:draft_course) { FactoryBot.create(:draft_course, organization: organization) }
   let!(:archived_course) { FactoryBot.create(:archived_course, organization: organization) }
+  let!(:coming_soon_course) { FactoryBot.create(:coming_soon_course, organization: organization) }
 
   subject { described_class }
 
@@ -25,7 +26,7 @@ describe CoursePolicy, type: :policy do
       let(:scope) { Pundit.policy_scope!(guest_user, Course) }
 
       it 'should only display public courses' do
-        expect(scope).to contain_exactly(subsite_record)
+        expect(scope).to contain_exactly(subsite_record, coming_soon_course)
       end
     end
 
@@ -33,7 +34,7 @@ describe CoursePolicy, type: :policy do
       let(:scope) { Pundit.policy_scope!(user, Course) }
 
       it 'should display public and authorized-user-only courses' do
-        expect(scope).to contain_exactly(subsite_record, authorized_user_course)
+        expect(scope).to contain_exactly(subsite_record, authorized_user_course, coming_soon_course)
       end
     end
 
@@ -41,7 +42,7 @@ describe CoursePolicy, type: :policy do
       let(:scope) { Pundit.policy_scope!(admin, Course) }
 
       it 'should display all courses' do
-        expect(scope).to contain_exactly(subsite_record, authorized_user_course, draft_course)
+        expect(scope).to contain_exactly(subsite_record, authorized_user_course, draft_course, coming_soon_course)
       end
     end
   end
