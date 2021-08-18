@@ -57,7 +57,7 @@ class Course < ApplicationRecord
             :summary,
             :format,
             :level,
-            :language_id, presence: true, unless: :coming_soon?
+            :language_id, presence: true, unless: :draft?
 
   # Force coming_soon to false if draft
   validates :coming_soon, inclusion: { in: [false] }, unless: :draft?

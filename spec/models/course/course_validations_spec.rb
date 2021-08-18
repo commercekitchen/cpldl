@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Course do
   context 'validations' do
     let(:org) { create(:organization) }
-    let(:course) { FactoryBot.build(:course, organization: org) }
+    let(:course) { FactoryBot.build(:course, :published, organization: org) }
     let(:draft_course) { FactoryBot.create(:course) }
 
     it 'is initially valid' do
