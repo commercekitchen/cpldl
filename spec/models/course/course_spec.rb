@@ -4,6 +4,7 @@ require 'rails_helper'
 
 describe Course do
   let(:course) { FactoryBot.create(:course) }
+  let(:draft_course) { FactoryBot.build(:course, :draft) }
   let(:org) { course.organization }
 
   it { should define_enum_for(:publication_status).with_values([:draft, :published, :archived]) }
@@ -198,10 +199,8 @@ describe Course do
   end
 
   describe 'publication info' do
-    let(:draft_course) { FactoryBot.create(:course) }
-
     it 'should initially be set to draft status' do
-      expect(draft_course.publication_status).to eq('draft')
+      expect(Course.new.publication_status).to eq('draft')
     end
 
     it 'should set pub date on publication' do

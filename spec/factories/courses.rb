@@ -4,18 +4,22 @@ FactoryBot.define do
 
   factory :course do
     title { Faker::Lorem.characters(number: 25) }
-    meta_desc 'A first course in computing'
-    summary 'In this course you will...'
-    description 'Description'
-    contributor 'John Doe'
-    level 'Beginner'
-    format 'D'
+    meta_desc { 'A first course in computing' }
+    summary { 'In this course you will...' }
+    description { 'Description' }
+    contributor { 'John Doe' }
+    level { 'Beginner' }
+    format { 'D' }
     language
     organization
-    publication_status :draft
+    publication_status { :published }
 
     trait :published do
       publication_status :published
+    end
+
+    trait :draft do
+      publication_status :draft
     end
 
     trait :archived do
