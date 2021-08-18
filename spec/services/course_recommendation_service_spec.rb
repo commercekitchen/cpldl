@@ -41,8 +41,8 @@ describe CourseRecommendationService do
 
     # Create non-applicable course
     create(:course, language: @english, topics: [@other_topic])
-    @draft_desktop_course = create(:course, language: @english, format: 'D', pub_status: 'D', organization: @organization)
-    @draft_mobile_course = create(:course, language: @english, format: 'M', pub_status: 'D', organization: @organization)
+    @draft_desktop_course = create(:course, :draft, language: @english, format: 'D', organization: @organization)
+    @draft_mobile_course = create(:course, :draft, language: @english, format: 'M', organization: @organization)
   end
 
   describe 'new service instance' do

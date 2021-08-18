@@ -25,17 +25,17 @@ class CourseRecommendationService
 
   def desktop_courses
     response = @responses['set_one']
-    core_courses.where(format: 'D', level: level_string(response), pub_status: 'P')
+    core_courses.published.where(format: 'D', level: level_string(response))
   end
 
   def mobile_courses
     response = @responses['set_two']
-    core_courses.where(format: 'M', level: level_string(response), pub_status: 'P')
+    core_courses.published.where(format: 'M', level: level_string(response))
   end
 
   def topic_courses
     response = @responses['set_three']
-    Course.topic_search(topics[response.to_i]).where(pub_status: 'P')
+    Course.published.topic_search(topics[response.to_i])
   end
 
   def topics
