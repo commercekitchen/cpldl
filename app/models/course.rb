@@ -52,7 +52,7 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
 
   # Presence validations
-  validates :title, :pub_status, presence: true
+  validates :title, :publication_status, presence: true
   validates :description,
             :contributor,
             :summary,
@@ -63,7 +63,7 @@ class Course < ApplicationRecord
   # Other Validations
   validates :title, length: { maximum: 50 }
   validates :title, uniqueness: { scope: :organization_id,
-                                  conditions: -> { where.not(pub_status: 'A') },
+                                  conditions: -> { where.not(publication_status: :archived) },
                     message: 'has already been taken for the organization' }
   validates :seo_page_title, length: { maximum: 90 }
   validates :summary, length: { maximum: 74 }
@@ -71,9 +71,6 @@ class Course < ApplicationRecord
   validates :format, inclusion: { in: %w[M D],
                                   message: '%<value>s is not a valid format',
                                   allow_blank: true }
-  validates :pub_status, inclusion: { in: %w[P D A C],
-                                      message: '%<value>s is not a valid status',
-                                      allow_blank: true }
   validates :level, inclusion: { in: %w[Beginner Intermediate Advanced],
                                  message: '%<value>s is not a valid level',
                                  allow_blank: true }
@@ -125,10 +122,6 @@ class Course < ApplicationRecord
     total = 0
     lessons.each { |l| total += l.duration }
     Duration.minutes_str(total, format)
-  end
-
-  def set_pub_date
-    self.pub_date = Time.zone.now unless pub_status != 'P'
   end
 
   def update_pub_date(new_pub_status)

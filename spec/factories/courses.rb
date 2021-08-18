@@ -12,18 +12,14 @@ FactoryBot.define do
     format 'D'
     language
     organization
-    pub_status 'P'
+    publication_status :draft
 
-    factory :draft_course do
-      pub_status 'D'
+    trait :published do
+      publication_status :published
     end
 
-    factory :archived_course do
-      pub_status 'A'
-    end
-
-    factory :coming_soon_course do
-      pub_status 'C'
+    trait :archived do
+      publication_status :archived
     end
 
     factory :course_with_lessons do

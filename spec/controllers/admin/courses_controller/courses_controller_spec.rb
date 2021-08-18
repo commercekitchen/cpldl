@@ -79,7 +79,7 @@ describe Admin::CoursesController do
       Timecop.freeze do
         patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'A' }
         course1.reload
-        expect(course1.pub_date).to be(nil)
+        expect(course1.pub_date).to be_nil
 
         patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'P' }
         course1.reload

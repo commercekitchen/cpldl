@@ -93,7 +93,7 @@ describe CmsPage do
     end
 
     it 'does not set pub date if status is not Published' do
-      expect(page.set_pub_date).to be(nil)
+      expect(page.set_pub_date).to be_nil
     end
 
     it 'should set pub date on publication' do
@@ -103,9 +103,9 @@ describe CmsPage do
 
     it 'should update the pub date with status change' do
       page.pub_status = 'P'
-      expect(page.set_pub_date).to_not be(nil)
+      expect(page.set_pub_date).to_not be_nil
       page.pub_status = 'D'
-      expect(page.update_pub_date(page.pub_status)).to be(nil)
+      expect(page.update_pub_date(page.pub_status)).to be_nil
       page.pub_status = 'P'
       expect(page.update_pub_date(page.pub_status).to_i).to be(Time.zone.now.to_i)
     end

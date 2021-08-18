@@ -53,7 +53,7 @@ describe Admin::CmsPagesController do
       Timecop.freeze do
         patch :update_pub_status, params: { cms_page_id: cms_page.id.to_param, value: 'A' }
         cms_page.reload
-        expect(cms_page.pub_date).to be(nil)
+        expect(cms_page.pub_date).to be_nil
 
         patch :update_pub_status, params: { cms_page_id: cms_page.id.to_param, value: 'P' }
         cms_page.reload

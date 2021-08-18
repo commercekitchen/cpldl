@@ -33,7 +33,7 @@ en:
         email: "Email"
         password: "Password"
       course:
-        pub_status: "Publication Status"
+        publication_status: "Publication Status"
   date:
     formats:
       date_only: "%-m/%-d/%Y"

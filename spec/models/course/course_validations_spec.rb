@@ -6,14 +6,14 @@ describe Course do
   context 'validations' do
     let(:org) { create(:organization) }
     let(:course) { FactoryBot.build(:course, organization: org) }
-    let(:draft_course) { FactoryBot.create(:draft_course) }
+    let(:draft_course) { FactoryBot.create(:course) }
 
     it 'is initially valid' do
       expect(course).to be_valid
     end
 
     it 'should not allow two published courses with the same title within organization' do
-      FactoryBot.create(:course, title: course.title, organization: org, pub_status: 'P')
+      FactoryBot.create(:course, :published, title: course.title, organization: org)
       course.validate
 
       expect(course.errors.messages.empty?).to be(false)
@@ -21,7 +21,7 @@ describe Course do
     end
 
     it 'should not allow two draft courses with the same title within organization' do
-      FactoryBot.create(:course, title: course.title, organization: org, pub_status: 'D')
+      FactoryBot.create(:course, :published, title: course.title, organization: org)
       expect(course).to_not be_valid
     end
 
@@ -31,12 +31,12 @@ describe Course do
     end
 
     it 'should allow a new course with duplicate name if original is archived' do
-      FactoryBot.create(:course, title: course.title, organization: org, pub_status: 'A')
+      FactoryBot.create(:course, :archived, title: course.title, organization: org)
       expect(course).to be_valid
     end
 
     it 'should save new course with duplicate name if original is archived' do
-      FactoryBot.create(:course, title: course.title, organization: org, pub_status: 'A')
+      FactoryBot.create(:course, :archived, title: course.title, organization: org)
       expect(course.save).to be_truthy
     end
 
@@ -68,33 +68,23 @@ describe Course do
 
     describe 'invalid publication statuses' do
       it 'should not allow empty string for publication status' do
-        course.pub_status = ''
+        course.publication_status = ''
         expect(course).to_not be_valid
       end
 
       it 'has correct error message with empty string publication status' do
-        course.update(pub_status: '')
+        course.update(publication_status: '')
         expect(course.errors.full_messages).to contain_exactly("Publication Status can't be blank")
       end
 
       it 'should not allow nil for publication status' do
-        course.pub_status = nil
+        course.publication_status = nil
         expect(course).to_not be_valid
       end
 
       it 'has correct error message for nil publication status' do
-        course.update(pub_status: nil)
+        course.update(publication_status: nil)
         expect(course.errors.full_messages).to contain_exactly("Publication Status can't be blank")
-      end
-
-      it 'should not allow invalid publication status' do
-        course.pub_status = 'X'
-        expect(course).to_not be_valid
-      end
-
-      it 'has correct error message for invalid publication status' do
-        course.update(pub_status: 'X')
-        expect(course.errors.full_messages).to contain_exactly('Publication Status X is not a valid status')
       end
     end
 
@@ -133,32 +123,6 @@ describe Course do
       end
     end
 
-    it 'should initially be set to published status' do
-      expect(draft_course.pub_status).to eq('D')
-    end
-
-    it 'does not set pub date if status is not Published' do
-      expect(draft_course.set_pub_date).to be(nil)
-    end
-
-    it 'should set pub date on publication' do
-      Timecop.freeze do
-        course.pub_status = 'P'
-        expect(course.set_pub_date.to_i).to eq(Time.zone.now.to_i)
-      end
-    end
-
-    it 'should update the pub date with status change' do
-      Timecop.freeze do
-        course.pub_status = 'P'
-        expect(course.set_pub_date).to_not be(nil)
-        course.pub_status = 'D'
-        expect(course.update_pub_date(course.pub_status)).to be(nil)
-        course.pub_status = 'P'
-        expect(course.update_pub_date(course.pub_status).to_i).to be(Time.zone.now.to_i)
-      end
-    end
-
     it 'should not require the seo page title' do
       course.seo_page_title = ''
       expect(course).to be_valid
@@ -189,20 +153,25 @@ describe Course do
       expect(course).to_not be_valid
     end
 
-    describe 'Coming Soon courses' do
+    describe 'Draft courses' do
       let(:course) do
-        Course.new(pub_status: 'C',
+        Course.new(publication_status: 'draft',
                    title: 'Some Title',
                    language: @english,
                    organization: org)
       end
 
-      it 'is valid with only a title' do
+      it 'is valid with only a title and language' do
         expect(course).to be_valid
       end
 
       it 'requires a title' do
         course.title = nil
+        expect(course).not_to be_valid
+      end
+
+      it 'requires a language' do
+        course.language = nil
         expect(course).not_to be_valid
       end
     end

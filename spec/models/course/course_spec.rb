@@ -161,23 +161,6 @@ describe Course do
     end
   end
 
-  describe '#published?' do
-    let(:draft_course) { FactoryBot.create(:draft_course) }
-    let(:archived_course) { FactoryBot.create(:archived_course) }
-
-    it 'should return true if course is published' do
-      expect(course.published?).to be_truthy
-    end
-
-    it 'should return false if course is in draft status' do
-      expect(draft_course.published?).to be_falsey
-    end
-
-    it 'should return false if course is archived' do
-      expect(archived_course.published?).to be_falsey
-    end
-  end
-
   describe 'attachments' do
     let(:pla) { FactoryBot.create(:default_organization) }
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
@@ -211,6 +194,21 @@ describe Course do
     it 'should contain array of publication status options' do
       expected_options_array = [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
       expect(Course.pub_status_options).to eq(expected_options_array)
+    end
+  end
+
+  describe 'publication info' do
+    let(:draft_course) { FactoryBot.create(:course) }
+
+    it 'should initially be set to draft status' do
+      expect(draft_course.publication_status).to eq('draft')
+    end
+
+    it 'should set pub date on publication' do
+      Timecop.freeze do
+        draft_course.update(publication_status: :published)
+        expect(draft_course.pub_date).to eq(Time.zone.now)
+      end
     end
   end
 end

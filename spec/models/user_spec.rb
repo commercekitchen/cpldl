@@ -155,7 +155,7 @@ describe User do
   context '#add_user_token' do
     it 'assigns a random user token' do
       @user = FactoryBot.create(:user)
-      expect(@user.token).to_not be(nil)
+      expect(@user.token).to_not be_nil
 
       @user2 = FactoryBot.create(:user, email: 'random@nowhere.com')
       expect(@user.token).to_not eq(@user2.token)
