@@ -34,7 +34,6 @@ class Course < ApplicationRecord
   attr_accessor :other_topic, :org_id, :subdomain
 
   belongs_to :parent, class_name: 'Course', optional: true
-  # has_one :assessment
   has_one :course_progress, dependent: :restrict_with_exception
 
   has_many :course_topics, dependent: :destroy, inverse_of: :course
@@ -60,6 +59,9 @@ class Course < ApplicationRecord
             :level,
             :language_id, presence: true, unless: :coming_soon?
 
+  # Force coming_soon to false if draft
+  validates :coming_soon, inclusion: { in: [false] }, unless: :draft?
+
   # Other Validations
   validates :title, length: { maximum: 50 }
   validates :title, uniqueness: { scope: :organization_id,
@@ -81,9 +83,10 @@ class Course < ApplicationRecord
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
-  scope :visible_to_users, -> { where( pub_status: ['P', 'C']) }
+  scope :visible_to_users, -> { where(publication_status: :published) }
 
   before_save :find_or_create_category
+  after_save :update_publication_date
 
   def topics_list(topic_list)
     if topic_list.present?
@@ -124,26 +127,12 @@ class Course < ApplicationRecord
     Duration.minutes_str(total, format)
   end
 
-  def update_pub_date(new_pub_status)
-    self.pub_date = if new_pub_status == 'P'
-                      Time.zone.now
-                    end
-  end
-
   def additional_resource_attachments
     self.attachments.where(doc_type: 'additional-resource')
   end
 
   def text_copy_attachments
     (parent || self).attachments.where(doc_type: 'text-copy')
-  end
-
-  def published?
-    pub_status == 'P'
-  end
-
-  def coming_soon?
-    pub_status == 'C'
   end
 
   def find_or_create_category
@@ -153,7 +142,15 @@ class Course < ApplicationRecord
     self.category = existing_category || self.organization.categories.find_or_create_by(name: category_name)
   end
 
-  def self.pub_status_options
-    [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
+  def self.publication_status_options
+    self.publication_statuses.keys.map { |status| [status.titleize, status] }
+  end
+
+  private
+
+  def update_publication_date
+    if saved_change_to_publication_status? && published?
+      update(pub_date: Time.zone.now)
+    end
   end
 end

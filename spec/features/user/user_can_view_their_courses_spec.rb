@@ -9,7 +9,7 @@ feature 'User is able to view the courses in their plan' do
   let(:npl_user) { FactoryBot.create(:user, organization: npl) }
   let(:course1) { FactoryBot.create(:course, title: 'Course 1', organization: org) }
   let(:course2) { FactoryBot.create(:course, title: 'Course 2', organization: org, language: @spanish) }
-  let!(:coming_soon_course) { FactoryBot.create(:coming_soon_course, title: 'CS Course', organization: org) }
+  let!(:coming_soon_course) { FactoryBot.create(:course, :coming_soon, title: 'CS Course', organization: org) }
   let!(:course_progress1) { FactoryBot.create(:course_progress, course: course1, tracked: true, user: user) }
   let!(:course_progress2) { FactoryBot.create(:course_progress, course: course2, tracked: false, user: user) }
 

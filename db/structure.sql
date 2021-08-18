@@ -366,7 +366,8 @@ CREATE TABLE public.courses (
     category_id integer,
     organization_id integer,
     access_level integer DEFAULT 0 NOT NULL,
-    publication_status integer DEFAULT 0 NOT NULL
+    publication_status integer DEFAULT 0 NOT NULL,
+    coming_soon boolean DEFAULT false NOT NULL
 );
 
 
@@ -1889,6 +1890,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200707133604'),
 ('20210726182520'),
 ('20210812220205'),
-('20210818183119');
+('20210818183119'),
+('20210818202156');
 
 

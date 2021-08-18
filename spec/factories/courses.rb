@@ -22,6 +22,11 @@ FactoryBot.define do
       publication_status :archived
     end
 
+    trait :coming_soon do
+      publication_status :draft
+      coming_soon { true }
+    end
+
     factory :course_with_lessons do
       after(:create) do |course|
         create(:lesson, course: course, lesson_order: 1)

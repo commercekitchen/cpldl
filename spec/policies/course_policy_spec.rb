@@ -11,7 +11,7 @@ describe CoursePolicy, type: :policy do
   let!(:authorized_user_course) { FactoryBot.create(:course, organization: organization, access_level: :authenticated_users) }
   let!(:draft_course) { FactoryBot.create(:draft_course, organization: organization) }
   let!(:archived_course) { FactoryBot.create(:archived_course, organization: organization) }
-  let!(:coming_soon_course) { FactoryBot.create(:coming_soon_course, organization: organization) }
+  let!(:coming_soon_course) { FactoryBot.create(:course, :coming_soon, organization: organization) }
 
   subject { described_class }
 

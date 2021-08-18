@@ -66,6 +66,18 @@ describe Course do
       end
     end
 
+    it 'can be coming_soon if draft' do
+      course.publication_status = :draft
+      course.coming_soon = true
+      expect(course).to be_valid
+    end
+
+    it 'cannot be coming_soon unless in draft status' do
+      course.publication_status = :published
+      course.coming_soon = true
+      expect(course).not_to be_valid
+    end
+
     describe 'invalid publication statuses' do
       it 'should not allow empty string for publication status' do
         course.publication_status = ''
