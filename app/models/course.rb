@@ -27,6 +27,7 @@ class Course < ApplicationRecord
                                  }
 
   enum access_level: { everyone: 0, authenticated_users: 1 }
+
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :org_id, :subdomain
 
@@ -48,20 +49,32 @@ class Course < ApplicationRecord
   accepts_nested_attributes_for :category, reject_if: :all_blank
   accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
 
-  validates :description, :contributor, :language_id, presence: true
-  validates :title, length: { maximum: 50 }, presence: true
+  # Presence validations
+  validates :title, :pub_status, presence: true
+  validates :description,
+            :contributor,
+            :summary,
+            :format,
+            :level,
+            :language_id, presence: true, unless: :coming_soon?
+
+  # Other Validations
+  validates :title, length: { maximum: 50 }
   validates :title, uniqueness: { scope: :organization_id,
-    conditions: -> { where.not(pub_status: 'A') }, message: 'has already been taken for the organization' }
+                                  conditions: -> { where.not(pub_status: 'A') },
+                    message: 'has already been taken for the organization' }
   validates :seo_page_title, length: { maximum: 90 }
-  validates :summary, length: { maximum: 74 }, presence: true
+  validates :summary, length: { maximum: 74 }
   validates :meta_desc, length: { maximum: 156 }
-  validates :format, presence: true,
-    inclusion: { in: %w[M D], message: '%<value>s is not a valid format', allow_blank: true }
-  validates :pub_status, presence: true,
-    inclusion: { in: %w[P D A], message: '%<value>s is not a valid status', allow_blank: true }
-  validates :level, presence: true,
-    inclusion: { in: %w[Beginner Intermediate Advanced],
-      message: '%<value>s is not a valid level' }
+  validates :format, inclusion: { in: %w[M D],
+                                  message: '%<value>s is not a valid format',
+                                  allow_blank: true }
+  validates :pub_status, inclusion: { in: %w[P D A C],
+                                      message: '%<value>s is not a valid status',
+                                      allow_blank: true }
+  validates :level, inclusion: { in: %w[Beginner Intermediate Advanced],
+                                 message: '%<value>s is not a valid level',
+                                 allow_blank: true }
 
   default_scope { order('course_order ASC') }
 
@@ -69,7 +82,7 @@ class Course < ApplicationRecord
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
-  scope :published, -> { where(pub_status: 'P') }
+  scope :visible_to_users, -> { where( pub_status: ['P', 'C']) }
 
   before_save :find_or_create_category
 
@@ -132,6 +145,10 @@ class Course < ApplicationRecord
 
   def published?
     pub_status == 'P'
+  end
+
+  def coming_soon?
+    pub_status == 'C'
   end
 
   def find_or_create_category

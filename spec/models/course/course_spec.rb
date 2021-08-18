@@ -16,6 +16,16 @@ describe Course do
         expect(Course.pla).to contain_exactly(pla_course)
       end
     end
+
+    describe '#visible_to_users' do
+      let(:organization) { FactoryBot.create(:organization) }
+      let!(:published_course) { FactoryBot.create(:course, organization: organization) }
+      let!(:coming_soon_course) { FactoryBot.create(:coming_soon_course, organization: organization) }
+
+      it 'should return all published and coming soon courses' do
+        expect(Course.visible_to_users).to contain_exactly(published_course, coming_soon_course)
+      end
+    end
   end
 
   describe 'category' do
