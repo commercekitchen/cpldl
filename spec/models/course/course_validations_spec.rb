@@ -188,5 +188,23 @@ describe Course do
       course.meta_desc = invalid_meta
       expect(course).to_not be_valid
     end
+
+    describe 'Coming Soon courses' do
+      let(:course) do
+        Course.new(pub_status: 'C',
+                   title: 'Some Title',
+                   language: @english,
+                   organization: org)
+      end
+
+      it 'is valid with only a title' do
+        expect(course).to be_valid
+      end
+
+      it 'requires a title' do
+        course.title = nil
+        expect(course).not_to be_valid
+      end
+    end
   end
 end

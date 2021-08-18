@@ -27,7 +27,7 @@ class CoursesController < ApplicationController
     authorize @course
 
     case @course.pub_status
-    when 'D'
+    when 'D', 'C'
       flash[:notice] = 'That course is not avaliable at this time.'
       redirect_to root_path
     when 'A'
