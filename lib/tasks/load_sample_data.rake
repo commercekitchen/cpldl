@@ -36,7 +36,7 @@ namespace :db do
         summary: Faker::Lorem.sentence(word_count: 5),
         description: Faker::Lorem.paragraph(3),
         contributor: Faker.name,
-        pub_status: %w[P D T].sample,
+        publication_status: %w[published draft archived].sample,
         language_id: Language.all.sample.id,
         level: %w[Beginner Intermediate Advanced].sample
       )
