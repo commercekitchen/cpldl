@@ -87,7 +87,7 @@ class Course < ApplicationRecord
   scope :visible_to_users, -> { published.or(coming_soon) }
 
   before_save :find_or_create_category
-  after_save :update_publication_date
+  after_save :update_publication_date, if: :saved_change_to_publication_status?
 
   def topics_list(topic_list)
     if topic_list.present?
@@ -150,8 +150,10 @@ class Course < ApplicationRecord
   private
 
   def update_publication_date
-    if saved_change_to_publication_status? && published?
+    if published?
       update(pub_date: Time.zone.now)
+    else
+      update(pub_date: nil)
     end
   end
 end

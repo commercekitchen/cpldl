@@ -26,14 +26,14 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:id])
     authorize @course
 
-    case @course.pub_status
-    when 'D', 'C'
+    case @course.publication_status
+    when 'draft'
       flash[:notice] = 'That course is not avaliable at this time.'
       redirect_to root_path
-    when 'A'
+    when 'archived'
       flash[:notice] = 'That course is no longer avaliable.'
       redirect_to root_path
-    when 'P'
+    when 'published'
       respond_to do |format|
         format.html do
           # Need to handle the change of course slug, which should 301 redirect.

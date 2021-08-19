@@ -40,12 +40,12 @@ describe Admin::DashboardController do
     let(:dl_course3) { FactoryBot.create(:course, title: 'Course3', organization: pla) }
     let(:dl_course4) { FactoryBot.create(:course, title: 'Course4', organization: pla) }
     let(:dl_course5) { FactoryBot.create(:course, title: 'Course5', organization: pla) }
-    let!(:archived_course) { FactoryBot.create(:course, title: 'Archived Cource', pub_status: 'A', organization: pla) }
+    let!(:archived_course) { FactoryBot.create(:course, :archived, title: 'Archived Cource', organization: pla) }
     let!(:course1) { FactoryBot.create(:course, title: 'Course1', parent_id: dl_course1.id, organization: org) }
     let!(:course2) { FactoryBot.create(:course, title: 'Course2', parent_id: dl_course2.id, organization: other_org) }
     let!(:course3) { FactoryBot.create(:course, title: 'Course3', parent_id: dl_course3.id, organization: org) }
-    let!(:archived_subdomain_course) { FactoryBot.create(:course, title: 'ArchSubCourse', parent_id: dl_course4.id, pub_status: 'A', organization: org) }
-    let!(:draft_subdomain_course) { FactoryBot.create(:course, title: 'DraftSubCourse', parent_id: dl_course5.id, pub_status: 'D', organization: org) }
+    let!(:archived_subdomain_course) { FactoryBot.create(:course, :archived, title: 'ArchSubCourse', parent_id: dl_course4.id, organization: org) }
+    let!(:draft_subdomain_course) { FactoryBot.create(:course, :draft, title: 'DraftSubCourse', parent_id: dl_course5.id, organization: org) }
 
     before do
       sign_in subsite_admin

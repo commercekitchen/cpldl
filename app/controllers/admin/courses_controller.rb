@@ -57,11 +57,10 @@ module Admin
       course = Course.find(params[:course_id])
       authorize course, :update?
 
-      course.pub_status = params[:value]
-      course.update_pub_date(params[:value])
+      course.publication_status = params[:value]
 
       if course.save
-        render status: :ok, json: course.pub_status.to_s
+        render status: :ok, json: course.publication_status.to_s
       else
         render status: :unprocessable_entity, json: 'post failed to update'
       end

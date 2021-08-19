@@ -70,20 +70,20 @@ describe Admin::CoursesController do
 
   describe 'PATCH #update_pub_status' do
     it 'updates the status' do
-      patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'P' }
-      course1.reload
-      expect(course1.pub_status).to eq('P')
+      expect do
+        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'archived' }
+      end.to change{ course1.reload.publication_status }.from('published').to('archived')
     end
 
     it 'updates the pub_date if status is published' do
       Timecop.freeze do
-        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'A' }
+        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'archived' }
         course1.reload
         expect(course1.pub_date).to be_nil
 
-        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'P' }
+        patch :update_pub_status, params: { course_id: course1.id.to_param, value: 'published' }
         course1.reload
-        expect(course1.pub_date.to_i).to eq(Time.zone.now.to_i)
+        expect(course1.pub_date).to eq(Time.zone.now)
       end
     end
   end

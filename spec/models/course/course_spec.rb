@@ -209,5 +209,17 @@ describe Course do
         expect(draft_course.pub_date).to eq(Time.zone.now)
       end
     end
+
+    it 'does not update pub date if publication status is not changed' do
+      expect do
+        course.update(title: 'New Course Title')
+      end.not_to change(course, :pub_date)
+    end
+
+    it 'should clear pub date on archive' do
+      expect(course.pub_date).not_to be_nil
+      course.update(publication_status: :archived)
+      expect(course.pub_date).to be_nil
+    end
   end
 end
