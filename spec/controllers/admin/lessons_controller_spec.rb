@@ -43,8 +43,7 @@ describe Admin::LessonsController do
         meta_desc:  'Its good to Meta-Tate',
         summary:  'Sum-tings-smelly',
         is_assessment: false,
-        story_line: story_line,
-        pub_status: 'P' }
+        story_line: story_line }
     end
 
     let(:assessment_attributes) do
@@ -54,8 +53,7 @@ describe Admin::LessonsController do
         meta_desc:  'is this like inception',
         summary:  'Sum-tings-smelly',
         is_assessment: true,
-        story_line: story_line,
-        pub_status: 'P' }
+        story_line: story_line }
     end
 
     let(:invalid_attributes) do
@@ -65,8 +63,7 @@ describe Admin::LessonsController do
         meta_desc:  '',
         summary:  '',
         is_assessment: '',
-        story_line: nil,
-        pub_status: nil }
+        story_line: nil }
     end
 
     context 'unauthorized user' do
