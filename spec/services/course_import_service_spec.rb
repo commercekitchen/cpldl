@@ -31,7 +31,7 @@ describe CourseImportService do
   it 'should import course in draft status' do
     expect do
       subject.import!
-    end.to change { Course.where(pub_status: 'D').count }.by(1)
+    end.to change { Course.draft.count }.by(1)
   end
 
   it 'should create new category on organization' do

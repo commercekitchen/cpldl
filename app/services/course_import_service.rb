@@ -23,7 +23,7 @@ class CourseImportService
   def save_new_course!
     @new_course.parent_id = @parent_course.id
     @new_course.pub_date = nil
-    @new_course.pub_status = 'D'
+    @new_course.publication_status = :draft
     @new_course.category_id = new_or_existing_subsite_category_id(@parent_course.category)
     @new_course.organization = @organization
     @new_course.save!
