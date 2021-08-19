@@ -12,12 +12,12 @@ namespace :demo do
                                   summary: cpl_course.summary,
                                   description: cpl_course.description,
                                   contributor: cpl_course.contributor,
-                                  pub_status: cpl_course.pub_status,
+                                  publication_status: cpl_course.publication_status,
                                   language_id: cpl_course.language_id,
                                   level: cpl_course.level,
                                   notes: cpl_course.notes,
                                   format: cpl_course.format,
-                                  pub_date: cpl_course.pub_status == 'P' ? Time.zone.today : nil)
+                                  pub_date: cpl_course.published? ? Time.zone.today : nil)
 
       @new_course.organization = Organization.find(3)
 
@@ -44,7 +44,7 @@ namespace :demo do
                                    story_line_content_type: cpl_lesson.story_line_content_type,
                                    story_line_file_size: cpl_lesson.story_line_file_size,
                                    story_line_updated_at: cpl_lesson.story_line_updated_at,
-                                   pub_status: cpl_lesson.pub_status,
+                                   publication_status: cpl_lesson.publication_status,
                                    parent_id: cpl_lesson.id)
 
         @new_course.lessons << new_lesson
