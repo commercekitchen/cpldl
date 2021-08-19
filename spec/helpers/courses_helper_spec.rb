@@ -7,17 +7,6 @@ describe CoursesHelper do
   let(:organization) { user.organization }
   let!(:course) { FactoryBot.create(:course, organization: organization) }
 
-  describe '#pub_status_str' do
-    it 'returns the full name for a given status' do
-      course.pub_status = 'D'
-      expect(helper.pub_status_str(course)).to eq('Draft')
-      course.pub_status = 'P'
-      expect(helper.pub_status_str(course)).to eq('Published')
-      course.pub_status = 'T'
-      expect(helper.pub_status_str(course)).to eq('Trashed')
-    end
-  end
-
   describe '#percent_complete' do
     let!(:course2) { FactoryBot.create(:course, title: 'Course 2') }
     let!(:course_progress) { FactoryBot.create(:course_progress, user: user, course: course) }

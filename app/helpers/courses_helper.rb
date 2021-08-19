@@ -6,14 +6,6 @@ module CoursesHelper
     titles.include?(topic.title)
   end
 
-  def pub_status_str(course)
-    case course.pub_status
-    when 'D' then 'Draft'
-    when 'P' then 'Published'
-    when 'T' then 'Trashed'
-    end
-  end
-
   def percent_complete(course)
     if user_signed_in?
       course_progress = current_user.course_progresses.find_by(course_id: course.id)
