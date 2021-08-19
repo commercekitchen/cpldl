@@ -11,7 +11,7 @@ describe Admin::CoursesController do
 
   let(:org) { FactoryBot.create(:organization) }
   let(:admin) { FactoryBot.create(:user, :admin, organization: org) }
-  let!(:child_course) { FactoryBot.create(:course, title: 'Child Course', parent: pla_course, organization: org, pub_status: 'D') }
+  let!(:child_course) { FactoryBot.create(:course, :draft, title: 'Child Course', parent: pla_course, organization: org) }
 
   describe 'POST #update' do
     context 'pla course' do
@@ -205,8 +205,8 @@ describe Admin::CoursesController do
 
         it 'should change publication status, if given' do
           expect do
-            patch :update, params: { id: child_course.to_param, course: { publication_status: :archived }, commit: 'Save Course' }
-          end.to change { child_course.reload.publication_status }.from('published').to('archived')
+            patch :update, params: { id: child_course.to_param, course: { publication_status: :published }, commit: 'Save Course' }
+          end.to change { child_course.reload.publication_status }.from('draft').to('published')
         end
 
         it 'should add an additional resource attachment' do

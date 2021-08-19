@@ -51,9 +51,9 @@ describe Course do
     end
 
     it 'is valid with a valid publication status' do
-      allowed_statuses = %w[P D A]
+      allowed_statuses = %w[published draft archived]
       allowed_statuses.each do |status|
-        course.pub_status = status
+        course.publication_status = status
         expect(course).to be_valid
       end
     end
