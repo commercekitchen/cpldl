@@ -17,7 +17,7 @@
     "course_level access_level"
     "seo_title seo_title"
     "seo_meta seo_meta"
-    "pub_status ."
+    "pub_status coming_soon"
     "actions actions";
 
   &.restricted {
@@ -26,7 +26,7 @@
       "categories access_level"
       "resources resources"
       "additional_content additional_content"
-      "pub_status ."
+      "pub_status coming_soon"
       "actions actions"
       "title title"
       "author author"
@@ -104,6 +104,11 @@
     grid-area: pub_status;
   }
 
+  .coming-soon {
+    line-height: 8rem;
+    grid-area: coming_soon;
+  }
+
   .access-level {
     grid-area: access_level;
   }
@@ -114,10 +119,6 @@
 
   .seo-meta {
     grid-area: seo_meta;
-  }
-
-  .pub-status {
-    grid-area: pub_status;
   }
 
   .propagation {

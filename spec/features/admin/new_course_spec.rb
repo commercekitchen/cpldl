@@ -46,6 +46,18 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to_not have_content('New Course Title')
   end
 
+  scenario 'assigns course as coming soon' do
+    fill_basic_course_info
+    expect(page).to have_select('Publication Status', selected: 'Draft')
+    check 'Display as "Coming Soon"'
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully created.')
+    expect(page).to have_field('Display as "Coming Soon"', checked: true)
+    visit courses_path
+    expect(page).to have_content('New Course Title')
+    expect(page).to have_content('Coming Soon')
+  end
+
   scenario 'assigns topics' do
     fill_basic_course_info
     click_button 'Save Course'

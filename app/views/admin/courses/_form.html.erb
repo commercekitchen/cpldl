@@ -102,6 +102,11 @@
     <%= f.select(:publication_status, options_for_select(Course.publication_status_options, @course.publication_status), data: { status: @course.publication_status }) %>
   </fieldset>
 
+  <fieldset class='coming-soon'>
+    <%= f.check_box :coming_soon %>
+    <%= f.label :coming_soon, 'Display as "Coming Soon"', class: 'plain' %>
+  </fieldset>
+
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 

@@ -211,6 +211,7 @@ describe CoursePolicy, type: :policy do
         expect(subject.permitted_attributes).to contain_exactly(:category_id,
                                                                 :access_level,
                                                                 :publication_status,
+                                                                :coming_soon,
                                                                 :notes,
                                                                 category_attributes: %i[name organization_id],
                                                                 attachments_attributes: %i[document title doc_type file_description _destroy])
@@ -228,6 +229,7 @@ describe CoursePolicy, type: :policy do
                                                                 :description,
                                                                 :contributor,
                                                                 :publication_status,
+                                                                :coming_soon,
                                                                 :language_id,
                                                                 :level,
                                                                 :notes,
