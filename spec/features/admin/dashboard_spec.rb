@@ -5,7 +5,7 @@ require 'feature_helper'
 feature 'Admin visits dashboard' do
   let!(:default_organization) { FactoryBot.create(:default_organization) }
   let(:admin) { FactoryBot.create(:user, :admin) }
-  let!(:course) { FactoryBot.create(:course, pub_status: 'D', organization: admin.organization) }
+  let!(:course) { FactoryBot.create(:course, :draft, organization: admin.organization) }
 
   before do
     switch_to_subdomain(admin.organization.subdomain)

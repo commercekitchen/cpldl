@@ -120,8 +120,8 @@ describe Admin::CoursesController do
 
       it 'publishes course if committed with publish' do
         expect do
-          post :create, params: { course: valid_attributes.merge(pub_status: 'P') }
-        end.to change { Course.where(pub_status: 'P').count }.by(1)
+          post :create, params: { course: valid_attributes.merge(publication_status: :published) }
+        end.to change { Course.published.count }.by(1)
       end
     end
 

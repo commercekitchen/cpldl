@@ -96,10 +96,10 @@
   </fieldset>
 
   <fieldset class='pub-status'>
-    <%= f.label :pub_status do %>
+    <%= f.label :publication_status do %>
       Publication Status
     <% end %>
-    <%= f.select(:pub_status, options_for_select(Course.pub_status_options, @course.pub_status), data: { status: @course.pub_status }) %>
+    <%= f.select(:publication_status, options_for_select(Course.publication_status_options, @course.publication_status), data: { status: @course.publication_status }) %>
   </fieldset>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>

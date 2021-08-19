@@ -18,8 +18,7 @@
             <div class="cell"><%= course.topics_str %></div>
             <div class="cell"><%= course.language.name %></div>
             <div class="cell">
-              <% disabled_options = course.coming_soon? ? ['A', 'D', 'P'] : [] %>
-              <%= select_tag "course_#{course.id}", options_for_select(Course.pub_status_options, selected: course.pub_status, disabled: disabled_options), data: { course_id: course.id, status: course.pub_status }, class:"course_pub small narrow", method: :patch %>
+              <%= select_tag "course_#{course.id}", options_for_select(Course.publication_status_options, selected: course.publication_status), data: { course_id: course.id, status: course.publication_status }, class:"course_pub small narrow", method: :patch %>
             </div>
             <div class="cell">
               <% unless course.pub_date.blank? %>

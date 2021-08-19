@@ -205,8 +205,8 @@ describe Admin::CoursesController do
 
         it 'should change publication status, if given' do
           expect do
-            patch :update, params: { id: child_course.to_param, course: { pub_status: 'P' }, commit: 'Save Course' }
-          end.to change { child_course.reload.pub_status }.from('D').to('P')
+            patch :update, params: { id: child_course.to_param, course: { publication_status: :archived }, commit: 'Save Course' }
+          end.to change { child_course.reload.publication_status }.from('published').to('archived')
         end
 
         it 'should add an additional resource attachment' do

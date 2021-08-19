@@ -30,7 +30,7 @@ class CoursePolicy < AdminOnlyPolicy
     if record.parent.present?
       [:category_id,
        :access_level,
-       :pub_status,
+       :publication_status,
        :notes,
        category_attributes: %i[name organization_id],
        attachments_attributes: %i[document title doc_type file_description _destroy]]
@@ -41,7 +41,7 @@ class CoursePolicy < AdminOnlyPolicy
        :summary,
        :description,
        :contributor,
-       :pub_status,
+       :publication_status,
        :language_id,
        :level,
        :notes,
