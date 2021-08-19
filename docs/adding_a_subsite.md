@@ -95,7 +95,7 @@ To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data
       # Custom setup for branches, partners, etc. would go here...
 
       # Import all subsite courses
-      Course.pla.where(pub_status: 'P').each do |course|
+      Course.pla.published.each do |course|
         CourseImportService.new(organization: subsite, course_id: course.id).import!
       end
     end
