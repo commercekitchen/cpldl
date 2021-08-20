@@ -71,7 +71,7 @@
     }
 
     &.coming-soon header {
-      background: linear-gradient(to bottom, $grey 0%, $black 100%);
+      background: $lighter-background-gray;
     }
 
     .coming-soon-label {
