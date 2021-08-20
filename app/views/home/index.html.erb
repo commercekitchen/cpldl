@@ -1,2 +1,8 @@
-<%= render "shared/course_intro_text" %>
+<% if user_signed_in? %>
+  <%= content_for(:callout) do %>
+    <%= render "shared/logo_banner" %>
+  <% end %>
+<% end %>
+
+<%= render partial: "shared/course_intro_text", locals: { no_results: false } %>
 <%= render "shared/courses/listing" %>

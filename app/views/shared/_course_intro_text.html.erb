@@ -1,32 +1,30 @@
 <% if user_signed_in? && current_user.has_role?(:admin, current_organization) %>
-  <%= content_for(:callout) do %>
-    <%= render "shared/logo_banner" %>
+  <% unless no_results %>
+    <h2 class="text-color">
+      Edit a course by clicking on a course below, search courses or navigate to the
+      <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: "inline_link" %>.
+    </h2>
   <% end %>
-  <h2 class="text-color">
-    Edit a course by clicking on a course below, search courses or navigate to the
-    <%= link_to "Admin Dashboard", admin_dashboard_index_path, class: "inline_link" %>.
-  </h2>
-
 <% elsif user_signed_in? %>
-  <%= content_for(:callout) do %>
-    <%= render "shared/logo_banner" %>
-  <% end %>
   <h2 class="slogan text-color">
-    <%= t("logged_in_user.choose_a_course") %>
+    <% unless no_results %>
+      <%= t("logged_in_user.choose_a_course") %>
+    <% end %>
     <%= link_to "#{t('logged_in_user.my_courses_link')}", my_courses_path, class: "inline_link" %> <%= t('logged_in_user.view_your_customized_plan') %>
   </h2>
-
 <% else %>
-  <h2 class="slogan centered text-color">
-    <%= i18n_with_default("home.choose_a_course.#{current_organization.subdomain}") %>
-  </h2>
+  <% unless no_results %>
+    <h2 class="slogan centered text-color">
+      <%= i18n_with_default("home.choose_a_course.#{current_organization.subdomain}") %>
+    </h2>
 
-  <% custom_subheader = i18n_with_default("home.choose_course_subheader.#{current_organization.subdomain}") %>
+    <% custom_subheader = i18n_with_default("home.choose_course_subheader.#{current_organization.subdomain}") %>
 
-  <% unless custom_subheader.blank? %>
-    <p class="custom-subheader-text">
-      <%= custom_subheader %>
-    </p>
+    <% unless custom_subheader.blank? %>
+      <p class="custom-subheader-text">
+        <%= custom_subheader %>
+      </p>
+    <% end %>
   <% end %>
 
   <% if current_organization.courses.authenticated_users.exists? %>
