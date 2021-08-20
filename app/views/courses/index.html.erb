@@ -1,7 +1,15 @@
-<%= render "shared/course_intro_text" %>
+<% if user_signed_in? %>
+  <%= content_for(:callout) do %>
+    <%= render "shared/logo_banner" %>
+  <% end %>
+<% end %>
+
+<%= render partial: "shared/course_intro_text", locals: { no_results: params[:search] && @courses.count.zero? } %>
 
 <% if @courses.count > 0 %>
   <%= render "shared/courses/listing" %>
-<% else %>
+<% elsif params[:search].present? %>
   <p>No courses match your search. <%= link_to "View all courses", courses_path %></p>
+<% else %>
+  <p>Course materials coming soon.<p>
 <% end %>
