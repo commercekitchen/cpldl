@@ -194,7 +194,7 @@ es:
       retake_the_quiz: "Repite el Cuestionario"
     course: "Curso"
     date_completed: "Fecha de terminación"
-    certificate_of_completion: "Certificado de Culminación"
+    certificate_of_completion: "Certificado de Finalización"
     update_course_recommendations: "Actualizar Cursos Recomendados"
     when_you_signed_up_quiz: "Cuando creó su cuenta, respondió un questionario que nos ayudó a recomendarle cursos útiles para usted."
     practice_skills: "Ahora usar mis habilidades"
@@ -264,11 +264,13 @@ es:
     practice_skills: "Ahora usar mis habilidades"
     there_are_no_notes_for_course: "No hay notas o recursos de los asociados para este curso"
   certificate:
-    this_award: "Este diploma certifica que"
+    this_award: "Este certificado acredita que ha completado"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
     has_completed: "ha completado el curso de"
     as_of: "el"
+    att:
+      disclaimer: "<strong>Exención de responsabilidad:</strong> Ninguna de las otras compañías cuyos nombres o logotipos aparecen en estos materiales educativos han participado en la creación de estos materiales, ni los han aprobado ni patrocinado. Tampoco están afiliadas de ninguna manera con estos materiales."
   quiz:
     intro_text: " ¿qué le gustaría aprender?"
     answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
