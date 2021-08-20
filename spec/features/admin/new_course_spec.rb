@@ -46,15 +46,31 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to_not have_content('New Course Title')
   end
 
-  scenario 'assigns course as coming soon' do
-    fill_basic_course_info
+  scenario 'assigns course as coming soon', js: true do
+    fill_in :course_title, with: 'CS Course Title'
+    select('English', from: 'course_language_id')
     expect(page).to have_select('Publication Status', selected: 'Draft')
+
+    # Make sure "Coming Soon" can't be checked outside of Draft status
+    select('Published', from: 'Publication Status')
+    expect(page).to have_field('Display as "Coming Soon"', checked: false, disabled: true)
+
+    # Make sure "Coming Soon" gets unchecked when selecting non-Draft status
+    select('Draft', from: 'Publication Status')
+    expect(page).to have_field('Display as "Coming Soon"', checked: false, disabled: false)
+    check 'Display as "Coming Soon"'
+    expect(page).to have_field('Display as "Coming Soon"', checked: true, disabled: false)
+    select('Published', from: 'Publication Status')
+    expect(page).to have_field('Display as "Coming Soon"', checked: false, disabled: true)
+
+    # Select "Coming Soon" and save
+    select('Draft', from: 'Publication Status')
     check 'Display as "Coming Soon"'
     click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
     expect(page).to have_field('Display as "Coming Soon"', checked: true)
     visit courses_path
-    expect(page).to have_content('New Course Title')
+    expect(page).to have_content('CS Course Title')
     expect(page).to have_content('Coming Soon')
   end
 

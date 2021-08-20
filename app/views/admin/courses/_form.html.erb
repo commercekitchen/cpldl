@@ -103,8 +103,9 @@
   </fieldset>
 
   <fieldset class='coming-soon'>
-    <%= f.check_box :coming_soon %>
+    <%= f.check_box :coming_soon, disabled: !@course.draft? %>
     <%= f.label :coming_soon, 'Display as "Coming Soon"', class: 'plain' %>
+    <em>(Draft courses only)</em>
   </fieldset>
 
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
