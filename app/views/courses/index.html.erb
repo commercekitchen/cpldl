@@ -11,5 +11,5 @@
 <% elsif params[:search].present? %>
   <p>No courses match your search. <%= link_to "View all courses", courses_path %></p>
 <% else %>
-  <p>Course materials coming soon.<p>
+  <p><%= t('course_page.materials_coming_soon') %><p>
 <% end %>

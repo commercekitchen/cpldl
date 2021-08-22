@@ -245,6 +245,7 @@ en:
     start_lesson: "Start"
     lesson: "Activity"
     start_lesson_instructions: "Click on a lesson below to begin."
+    materials_coming_soon: "Course materials coming soon."
   lesson_page:
     percent_complete: "% Complete"
     skip_to_next_lesson: "Skip to next Activity >>"
