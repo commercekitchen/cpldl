@@ -247,6 +247,7 @@ es:
     start_lesson: "Empezar"
     lesson: "Actividad"
     start_lesson_instructions: "Da click en una actividad debajo para empezar."
+    materials_coming_soon: "Próximamente los materiales del curso."
   lesson_page:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"
