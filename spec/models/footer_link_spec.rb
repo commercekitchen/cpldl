@@ -21,4 +21,9 @@ RSpec.describe FooterLink, type: :model do
     link.organization = nil
     expect(link).not_to be_valid
   end
+
+  it 'should require a language' do
+    link.language = nil
+    expect(link).not_to be_valid
+  end
 end

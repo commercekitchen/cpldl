@@ -86,13 +86,28 @@ feature 'User clicks through each page' do
     let!(:link2) { FactoryBot.create(:footer_link, organization: org) }
     let!(:other_org_link) { FactoryBot.create(:footer_link) }
     let!(:cms_page) { FactoryBot.create(:cms_page, organization: org, pub_status: 'P') }
+    let!(:other_org_cms_page) { FactoryBot.create(:cms_page, pub_status: 'P') }
+    let!(:spanish_cms_page) { FactoryBot.create(:cms_page, organization: org, pub_status: 'P', language: @spanish) }
+    let!(:spanish_link) { FactoryBot.create(:footer_link, organization: org, language: @spanish) }
 
-    scenario 'correct LEARN MORE links display' do
+    scenario 'english LEARN MORE links display' do
       visit root_path
       expect(page).to have_link(cms_page.title, href: cms_page_path(cms_page))
       expect(page).to have_link(link1.label, href: link1.url)
       expect(page).to have_link(link2.label, href: link2.url)
       expect(page).not_to have_link(other_org_link.label)
+      expect(page).not_to have_link(other_org_cms_page.title)
+      expect(page).not_to have_link(spanish_cms_page.title)
+      expect(page).not_to have_link(spanish_link.label)
+    end
+
+    scenario 'spanish LEARN MORE links display' do
+      visit root_path
+      click_link 'Español'
+      expect(page).to have_link(spanish_cms_page.title)
+      expect(page).to have_link(spanish_link.label)
+      expect(page).not_to have_link(cms_page.title)
+      expect(page).not_to have_link(link1.label)
     end
   end
 

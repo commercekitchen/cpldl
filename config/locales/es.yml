@@ -265,10 +265,10 @@ es:
     practice_skills: "Ahora usar mis habilidades"
     there_are_no_notes_for_course: "No hay notas o recursos de los asociados para este curso"
   certificate:
-    this_award: "Este certificado acredita que ha completado"
+    this_award: "Este certificado acredita que"
     name_fill: "_____________________"
     name_fill_long: "_________________________________________"
-    has_completed: "ha completado el curso de"
+    has_completed: "ha completado"
     as_of: "el"
     att:
       disclaimer: "<strong>Exención de responsabilidad:</strong> Ninguna de las otras compañías cuyos nombres o logotipos aparecen en estos materiales educativos han participado en la creación de estos materiales, ni los han aprobado ni patrocinado. Tampoco están afiliadas de ninguna manera con estos materiales."

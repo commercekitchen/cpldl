@@ -26,6 +26,10 @@
         <%= f.label :url, "URL", class: "plain" %>
         <%= f.text_field :url %>
       </div>
+      <div class="inline-input">
+        <%= f.label :language_id, "Language", class: "plain" %>
+        <%= f.collection_select :language_id, Language.all, :id, :name, { selected: Language.find_by(name: "English") } %>
+      </div>
       <%= f.submit "Add Link", class: "skinny" %>
     </div>
   </fieldset>
