@@ -2,3 +2,4 @@ $('#footer_link_list').append("<%= escape_javascript(render partial: 'footer_lin
 $('#footer_link_section').append("<%= escape_javascript(render partial: "shared/layout/footer_link", locals: { link: @link }) %>");
 $('#footer_link_label').val('');
 $('#footer_link_url').val('');
+$('#footer_link_language_id').val(<%= Language.first.id %>); // Reset language to default

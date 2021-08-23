@@ -19,11 +19,15 @@ feature 'Admin manages footer links' do
     expect(page).to have_content('These links will appear in addition to any of your subsite\'s CMS Pages in the "LEARN MORE" section of the footer.')
   end
 
-  scenario 'admin sees existing footer links' do
+  scenario 'admin sees existing footer link entries' do
     link = FactoryBot.create(:footer_link, organization: organization)
     visit admin_footer_links_path
-    expect(page).to have_content link.label
-    expect(page).to have_content link.url
+
+    within('#footer_link_list') do
+      expect(page).to have_content link.label
+      expect(page).to have_content link.url
+      expect(page).to have_content 'English'
+    end
   end
 
   scenario 'admin can add new footer link', js: true do
@@ -32,12 +36,22 @@ feature 'Admin manages footer links' do
     visit admin_footer_links_path
     fill_in 'Label', with: label
     fill_in 'URL', with: url
+    expect(page).to have_select('Language', selected: 'English')
+    select 'Spanish', from: 'Language'
     click_on 'Add Link'
-    expect(page).to have_content label
-    expect(page).to have_link(label, href: url)
-    expect(page).to have_content url
+
+    within('#footer_link_list') do
+      expect(page).to have_content label
+      expect(page).to have_content url
+      expect(page).to have_content 'Spanish'
+    end
+
     expect(page).to have_field('Label', with: '')
     expect(page).to have_field('URL', with: '')
+    expect(page).to have_select('Language', selected: 'English')
+
+    # Link in footer
+    expect(page).to have_link(label, href: url)
   end
 
   scenario 'admin can delete existing footer link', js: true do

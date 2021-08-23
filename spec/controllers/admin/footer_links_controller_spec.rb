@@ -30,7 +30,7 @@ describe Admin::FooterLinksController do
   end
 
   describe 'POST #create' do
-    let(:link_params) { { label: 'Test Link', url: 'https://example.com' } }
+    let(:link_params) { { label: 'Test Link', url: 'https://example.com', language_id: @english.id } }
 
     it 'should create a footer link' do
       expect do

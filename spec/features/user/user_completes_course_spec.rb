@@ -35,9 +35,9 @@ feature 'User visits course complete page' do
       visit course_completion_path(course)
       click_link 'Español'
 
-      message = "Este diploma certifica que\n"\
+      message = "Este certificado acredita que\n"\
                 "#{user.full_name}\n"\
-                "ha completado el curso de\n"\
+                "ha completado\n"\
                 "#{course.title}\n"\
                 'el 10/3/2021'
       expect(page).to have_content(message)
@@ -103,9 +103,9 @@ feature 'User visits course complete page' do
       visit course_completion_path(course)
       click_link 'Español'
 
-      message = "Este diploma certifica que\n"\
+      message = "Este certificado acredita que\n"\
                 "_____________________\n"\
-                "ha completado el curso de\n"\
+                "ha completado\n"\
                 "#{course.title}\n"\
                 'el 10/3/2021'
       expect(page).to have_content(message)

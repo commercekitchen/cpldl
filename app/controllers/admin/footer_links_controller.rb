@@ -36,7 +36,7 @@ module Admin
     private
 
     def footer_link_params
-      params.require(:footer_link).permit(:label, :url)
+      params.require(:footer_link).permit(:label, :url, :language_id)
     end
   end
 end
