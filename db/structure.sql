@@ -390,15 +390,6 @@ ALTER SEQUENCE public.courses_id_seq OWNED BY public.courses.id;
 
 
 --
--- Name: data_migrations; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.data_migrations (
-    version character varying NOT NULL
-);
-
-
---
 -- Name: footer_links; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -408,7 +399,8 @@ CREATE TABLE public.footer_links (
     label character varying NOT NULL,
     url character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    language_id bigint
 );
 
 
@@ -1300,14 +1292,6 @@ ALTER TABLE ONLY public.courses
 
 
 --
--- Name: data_migrations data_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.data_migrations
-    ADD CONSTRAINT data_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: footer_links footer_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1505,6 +1489,13 @@ CREATE INDEX index_courses_on_slug ON public.courses USING btree (slug);
 --
 
 CREATE INDEX index_courses_on_title ON public.courses USING btree (title);
+
+
+--
+-- Name: index_footer_links_on_language_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_footer_links_on_language_id ON public.footer_links USING btree (language_id);
 
 
 --
@@ -1737,6 +1728,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: footer_links fk_rails_bd7708fd9c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.footer_links
+    ADD CONSTRAINT fk_rails_bd7708fd9c FOREIGN KEY (language_id) REFERENCES public.languages(id);
+
+
+--
 -- Name: lesson_completions fk_rails_d03dba97f9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1887,6 +1886,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200618155234'),
 ('20200707133604'),
 ('20210726182520'),
-('20210812220205');
+('20210812220205'),
+('20210823165603');
 
 
