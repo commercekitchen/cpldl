@@ -9,7 +9,7 @@
 <% if @courses.count > 0 %>
   <%= render "shared/courses/listing" %>
 <% elsif params[:search].present? %>
-  <p>No courses match your search. <%= link_to "View all courses", courses_path %></p>
+  <p><%= t('course_page.no_courses_match') %> <%= link_to t('course_page.view_all_courses'), courses_path %></p>
 <% else %>
   <p><%= t('course_page.materials_coming_soon') %><p>
 <% end %>

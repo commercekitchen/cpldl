@@ -2,7 +2,7 @@
   <div class="container footer-content">
     <ul class="cms_nav" id="footer_link_section">
       <% if @footer_pages&.any? || @footer_links&.any? %>
-        <strong>LEARN MORE</strong>
+        <strong><%= t('common.learn_more') %></strong>
         <% @footer_pages&.each do |page| %>
           <li><%= link_to page.title, cms_page_path(page), class: "cms_nav--link" %></li>
         <% end %>
