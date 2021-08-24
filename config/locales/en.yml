@@ -226,6 +226,7 @@ en:
     well_suggest_more_courses: "and we'll suggest even more courses."
     ready_to_learn_more: "Ready to Learn More?"
     find_new_courses_retake_quiz: "Find new courses when you retake the quiz"
+    view_your_courses: "View all your courses"
   course_page:
     add_to_your_plan: "Add to your plan"
     lessons: "Activities"
@@ -247,6 +248,8 @@ en:
     lesson: "Activity"
     start_lesson_instructions: "Click on a lesson below to begin."
     materials_coming_soon: "Course materials coming soon."
+    no_courses_match: "No courses match your search."
+    view_all_courses: "View all courses"
   lesson_page:
     percent_complete: "% Complete"
     skip_to_next_lesson: "Skip to next Activity >>"
