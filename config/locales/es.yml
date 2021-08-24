@@ -49,6 +49,7 @@ es:
     submit: "Enviar"
     save: "Guardar"
     cancel: "Cancelar"
+    learn_more: "APRENDE MÁS"
   admin:
     dashboard: "Panel de control"
   home:
@@ -248,6 +249,8 @@ es:
     lesson: "Actividad"
     start_lesson_instructions: "Da click en una actividad debajo para empezar."
     materials_coming_soon: "Próximamente los materiales del curso."
+    no_courses_match: "Ningún curso coincide con su búsqueda."
+    view_all_courses: "Ver todos los cursos"
   lesson_page:
     percent_complete: "% Avance"
     skip_to_next_lesson: "Pasar a la siguiente actividad >>"

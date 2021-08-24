@@ -92,6 +92,7 @@ feature 'User clicks through each page' do
 
     scenario 'english LEARN MORE links display' do
       visit root_path
+      expect(page).to have_content('LEARN MORE')
       expect(page).to have_link(cms_page.title, href: cms_page_path(cms_page))
       expect(page).to have_link(link1.label, href: link1.url)
       expect(page).to have_link(link2.label, href: link2.url)
@@ -104,6 +105,8 @@ feature 'User clicks through each page' do
     scenario 'spanish LEARN MORE links display' do
       visit root_path
       click_link 'Español'
+      expect(page).to have_content('APRENDE MÁS')
+      expect(page).not_to have_content('LEARN MORE')
       expect(page).to have_link(spanish_cms_page.title)
       expect(page).to have_link(spanish_link.label)
       expect(page).not_to have_link(cms_page.title)

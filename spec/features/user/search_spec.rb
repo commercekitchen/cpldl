@@ -22,6 +22,14 @@ feature 'User searches for courses' do
     expect(page).to have_link('View all courses', href: courses_path)
   end
 
+  scenario 'no courses found - spanish' do
+    click_link 'Español'
+    fill_in 'Search', with: 'foobar'
+    click_on('submit-search')
+    expect(page).to have_content('Ningún curso coincide con su búsqueda.')
+    expect(page).to have_link('Ver todos los cursos', href: courses_path)
+  end
+
   scenario 'course found' do
     fill_in 'Search', with: course.title
     click_on('submit-search')
