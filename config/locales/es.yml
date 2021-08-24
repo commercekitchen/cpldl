@@ -49,6 +49,7 @@ es:
     submit: "Enviar"
     save: "Guardar"
     cancel: "Cancelar"
+    learn_more: "APRENDE MÁS"
   admin:
     dashboard: "Panel de control"
   home:
