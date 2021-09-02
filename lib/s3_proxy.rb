@@ -8,7 +8,7 @@ class S3Proxy < Rack::Proxy
 
     # use rack proxy for anything hitting our host app at /example_service
     if use_s3? && request.path =~ %r{^/storylines}
-      @backend = URI("https://#{s3_bucket_name}.s3-#{s3_region}.amazonaws.com")
+      @backend = URI(cloudfront_url)
 
       # most backends required host set properly, but rack-proxy doesn't set this for you automatically
       # even when a backend host is passed in via the options
@@ -32,11 +32,7 @@ class S3Proxy < Rack::Proxy
     Rails.configuration.lesson_store == :s3
   end
 
-  def s3_bucket_name
-    Rails.configuration.s3_bucket_name
-  end
-
-  def s3_region
-    Rails.configuration.s3_region
+  def cloudfront_url
+    Rails.configuration.cloudfront_url
   end
 end
