@@ -95,7 +95,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'awesome_print', require: 'ap'
+  gem 'awesome_print'
   gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'byebug'

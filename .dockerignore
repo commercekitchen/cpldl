@@ -1,0 +1,11 @@
+**/.git
+**/.DS_Store
+**/node_modules
+development/**
+tmp/pids/server.pid
+log/**
+
+public/ckeditor_assets/**
+public/storylines/**
+public/system/**
+public/trainings/**

@@ -67,3 +67,6 @@ config/secrets.yml
 
 # ERD
 erd.pdf
+
+# Development docker data
+/development/data/*

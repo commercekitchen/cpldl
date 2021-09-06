@@ -19,8 +19,7 @@ RUN apt-get clean all && \
   imagemagick \
   file \
   nodejs \
-  yarn \
-  graphviz
+  yarn
 
 # Set working directory
 RUN mkdir /rails-app
@@ -39,13 +38,3 @@ COPY install_gems.sh install_gems.sh
 RUN chmod u+x install_gems.sh && ./install_gems.sh
 
 COPY . /rails-app
-
-# Precompile assets
-COPY precompile_assets.sh precompile_assets.sh
-RUN chmod u+x precompile_assets.sh && ./precompile_assets.sh
-
-# Add entrypoint script
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-
-ENTRYPOINT ["entrypoint.sh"]
