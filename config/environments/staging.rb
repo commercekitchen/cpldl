@@ -62,6 +62,7 @@ Rails.application.configure do
   ### S3 Configuration ###
   config.lesson_store = :s3
 
+  config.cloudfront_url = 'https://dmx80r2ae8pd1.cloudfront.net'
   config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
   config.s3_bucket_name = 'dl-stageapp-lessons'
 
