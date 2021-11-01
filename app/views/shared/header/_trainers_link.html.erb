@@ -1,5 +1,5 @@
 <div class="trainers-link">
   <strong>
-    <%= link_to t('home.trainer_link'), current_organization.training_site_link %>
+    <%= link_to i18n_with_default("home.trainer_link.#{current_organization.subdomain}"), current_organization.training_site_link %>
   </strong>
 </div>

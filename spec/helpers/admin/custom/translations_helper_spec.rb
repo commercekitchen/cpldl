@@ -15,7 +15,8 @@ describe Admin::Custom::TranslationsHelper do
       ["home.#{subdomain}.custom_banner_greeting",
        "home.choose_a_course.#{subdomain}",
        "home.choose_course_subheader.#{subdomain}",
-       "completed_courses_page.#{subdomain}.retake_the_quiz"]
+       "completed_courses_page.#{subdomain}.retake_the_quiz",
+       "home.trainer_link.#{subdomain}"]
     end
 
     it 'should return correct english translation keys' do
