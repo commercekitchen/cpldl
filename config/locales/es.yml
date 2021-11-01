@@ -88,7 +88,8 @@ es:
       default_org: ""
     new_to_computers: "Si usted no tiene experiencia con las computadoras, no las ha usado recientemente, no se siente cómodo usándolas, o necesita un repaso, aquí encontrará tutoriales prácticos que le ayudarán a entender cómo usar una computadora, y a adquirir la confianza para usar el internet en su vida diaria."
     search_courses: "¿Qué le gustaría aprender?"
-    trainer_link: "Herramientas y recursos para instructores"
+    trainer_link:
+      default_org: "Herramientas y recursos para instructores"
     org_trainer_link: "Cyber Navigator Dashboard"
     mins_abbr: "min"
     more_courses: "Hay mas cursos disponible si se inscribe - lo puede hacer facilmente"
