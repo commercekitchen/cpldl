@@ -83,7 +83,9 @@ en:
       default_org: ""
     new_to_computers: "If you are new to computers, haven't used them for a while, are a little unsure and uncomfortable, or just need a bit of a refresher, we have the tools to help you tackle technology at your own pace and gain the confidence you need to succeed."
     search_courses: "Search Courses"
-    trainer_link: "Tools and Resources for Trainers"
+    trainer_link:
+      default_org: "Tools and Resources for Trainers"
+      att: "Tools and Resources for Instructors"
     org_trainer_link: "Cyber Navigator Dashboard"
     mins_abbr: "mins"
     more_courses: "More courses are available if you sign up - easily do so"
