@@ -31,19 +31,27 @@ module Admin
           'home.%<subdomain>s.custom_banner_greeting' => 'Homepage Greeting',
           'home.choose_a_course.%<subdomain>s' => 'Course Selection Greeting',
           'home.choose_course_subheader.%<subdomain>s' => 'Course Selection Subheader',
-          'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button'
+          'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button',
+          'home.trainer_link.%<subdomain>' => 'Tools and Resources for Trainers'
         }
 
         # texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
+        interpolated_defaults(texts)
+      end
 
+      def es_keys
+        es_texts = {
+          'home.trainer_link.%<subdomain>' => 'Herramientas y recursos para instructores'
+        }
+
+        en_keys.merge(interpolated_defaults(es_texts))
+      end
+
+      def interpolated_defaults(texts)
         texts.each_with_object({}) do |(k, v), obj|
           key = format(k, subdomain: current_organization.subdomain)
           obj[key] = v
         end
-      end
-
-      def es_keys
-        en_keys
       end
     end
   end
