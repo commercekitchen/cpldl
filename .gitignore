@@ -70,3 +70,9 @@ erd.pdf
 
 # Development docker data
 /development/data/*
+
+# Terraform state, secrets, etc.
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
