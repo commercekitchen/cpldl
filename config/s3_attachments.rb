@@ -5,6 +5,7 @@ module CPLDigitalLearn
     # S3 Paperclip options
     config.paperclip_defaults = {
       storage: :s3,
+      s3_protocol: :https,
       path: ":class/:attachment/:id/:basename.:extension",
       bucket: config.s3_bucket_name,
       s3_region: config.s3_region,
