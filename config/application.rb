@@ -43,12 +43,28 @@ module CPLDigitalLearn
     require Rails.root.join("lib/s3_proxy.rb")
     config.middleware.use S3Proxy, streaming: false
 
-    # Default to local lesson store
-    config.lesson_store = :local
-
+    # Attachment options
     config.s3_region = 'us-west-2'
+    config.s3_bucket_name = "dl-uploads-#{Rails.env}"
 
+    # Ckeditor options
+    config.ckeditor_paperclip_opts = {
+      storage: :filesystem,
+      url:  '/ckeditor_assets/:attachment/:id/:filename',
+      path: ':rails_root/public/ckeditor_assets/attachments/:id/:filename'
+    }
+
+    config.ckeditor_paperclip_picture_opts = {
+      storage: :filesystem,
+      url: '/ckeditor_assets/pictures/:id/:style_:basename.:extension',
+      path: ':rails_root/public/ckeditor_assets/pictures/:id/:style_:basename.:extension',
+      styles: { content: '800>', thumb: '118x100#' }
+    }
+
+    # Default local lesson storage options
+    config.lesson_store = :local
     config.storyline_paperclip_opts = {
+      storage: :filesystem,
       url: '/system/lessons/story_lines/:id/:basename.:extension'
     }
   end
