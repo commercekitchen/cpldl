@@ -9,6 +9,11 @@ class S3Uploader
     filename = record.send("#{attachment_name}_file_name")
     return unless filename.present?
 
+    if !File.exist?(record.send(attachment_name).path(style))
+      puts "File #{filename} doesn't exist for #{record.class.name} #{record.id}"
+      return
+    end
+
     s3_path = "#{record.class.name.downcase.pluralize}/#{attachment_name.pluralize}/#{record.id}"
     s3_path += "/#{style}" if style.present?
     s3_path += "/#{filename}"
@@ -19,8 +24,8 @@ class S3Uploader
     
     @s3_client.put_object(bucket: @bucket_name, key: s3_path, body: file)
   rescue Aws::S3::Errors::NoSuchBucket => e
-    puts "Creating the non-existing bucket: #{bucket_name}"
-    s3_client.create_bucket(bucket: bucket_name)
+    puts "Creating the non-existing bucket: #{@bucket_name}"
+    @s3_client.create_bucket(bucket: @bucket_name)
     retry
   end
 end
