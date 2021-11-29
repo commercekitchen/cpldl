@@ -71,8 +71,8 @@ Rails.application.configure do
 
   # Use cloudfront as s3 alias
   # config.paperclip_defaults = config.paperclip_defaults.merge({
-  #  url: ":s3_alias_url",
-  #  s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
+  #   url: ":s3_alias_url",
+  #   s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
   # })
 
   # Lesson storage type

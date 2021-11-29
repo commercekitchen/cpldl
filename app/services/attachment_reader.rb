@@ -1,5 +1,3 @@
-require 'open-uri'
-
 class AttachmentReader
   def initialize(file)
     @file = file
