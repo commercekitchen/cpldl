@@ -1,5 +1,7 @@
 module CPLDigitalLearn
   class Application < Rails::Application
+    config.s3_enabled = true
+
     # S3 Paperclip options
     config.paperclip_defaults = {
       storage: :s3,

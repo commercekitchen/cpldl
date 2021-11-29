@@ -44,6 +44,7 @@ module CPLDigitalLearn
     config.middleware.use S3Proxy, streaming: false
 
     # Attachment options
+    config.s3_enabled = false # override to use S3 attachments
     config.s3_region = 'us-west-2'
     config.s3_bucket_name = "dl-uploads-#{Rails.env}"
 
