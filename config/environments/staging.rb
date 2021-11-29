@@ -1,3 +1,6 @@
+# Enable S3 for file uploads
+require File.expand_path('../../s3_attachments', __FILE__)
+
 Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
@@ -57,7 +60,12 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
-  Paperclip.options[:command_path] = "/usr/local/bin/"
+
+  # Use cloudfront as s3 alias
+  config.paperclip_defaults = config.paperclip_defaults.merge({
+    url: ":s3_alias_url",
+    s3_host_alias: "d1kcbeee8u67um.cloudfront.net"
+  })
 
   ### S3 Lesson Configuration ###
   config.lesson_store = :s3

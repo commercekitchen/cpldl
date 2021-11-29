@@ -70,12 +70,6 @@ Rails.application.configure do
   ### S3 Lesson Configuration ###
   # Enable and update the following configuration
 
-  # Use cloudfront as s3 alias
-  #config.paperclip_defaults = config.paperclip_defaults.merge({
-  #  url: ":s3_alias_url",
-  #  s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
-  #})
-
   # Lesson storage type
   # config.lesson_store = :s3
 
