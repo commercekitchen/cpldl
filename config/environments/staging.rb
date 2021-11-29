@@ -59,12 +59,10 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   Paperclip.options[:command_path] = "/usr/local/bin/"
 
-  ### S3 Configuration ###
+  ### S3 Lesson Configuration ###
   config.lesson_store = :s3
-
   config.cloudfront_url = 'https://dmx80r2ae8pd1.cloudfront.net'
   config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
-  config.s3_bucket_name = 'dl-stageapp-lessons'
 
   config.storyline_paperclip_opts = {
     storage: :s3,
