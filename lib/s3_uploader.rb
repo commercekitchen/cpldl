@@ -19,8 +19,8 @@ class S3Uploader
     
     @s3_client.put_object(bucket: @bucket_name, key: s3_path, body: file)
   rescue Aws::S3::Errors::NoSuchBucket => e
-    puts "Creating the non-existing bucket: #{bucket_name}"
-    s3_client.create_bucket(bucket: bucket_name)
+    puts "Creating the non-existing bucket: #{@bucket_name}"
+    s3_client.create_bucket(bucket: @bucket_name)
     retry
   end
 end
