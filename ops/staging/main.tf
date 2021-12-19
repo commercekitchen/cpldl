@@ -80,7 +80,7 @@ module "database" {
   environment_name    = var.environment_name
   region              = var.region
   vpc_id              = module.vpc.vpc_id
-  db_snapshot_name    = "learners-db-snapshot"
+  db_snapshot_name    = "learners-db-snapshot-staging"
   bastian_sg_id       = module.bastian.bastian_sg_id
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
@@ -109,8 +109,8 @@ module "application" {
   ssh_key_name                = "ec2_test_key"
   rails_master_key            = var.rails_master_key
   s3_bucket_arns = [
-    "arn:aws:s3:::dl-learners-uploads-${var.environment_name}",
-    "arn:aws:s3:::dl-stageapp-lessons-${var.environment_name}-zipped"
+    "arn:aws:s3:::dl-uploads-${var.environment_name}",
+    "arn:aws:s3:::dl-stageapp-lessons-zipped"
   ]
 }
 

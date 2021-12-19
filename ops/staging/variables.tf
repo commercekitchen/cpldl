@@ -1,4 +1,4 @@
-variable "project_name" { default = "dl-training" }
+variable "project_name" { default = "dl-learners" }
 variable "environment_name" { default = "staging" }
 variable "region" { default = "us-west-2" }
 variable "database_name" { default = "railsapp_staging" }
