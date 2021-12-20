@@ -4,6 +4,18 @@ resource "aws_s3_bucket" "pipeline_store" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_public_access_block" "block_public_access" {
+  bucket = aws_s3_bucket.pipeline_store.id
+
+  block_public_acls   = true
+  block_public_policy = true
+}
+
+resource "aws_codestarconnections_connection" "repo_actions" {
+  name          = "${var.project_name}-${var.environment_name}-codestar"
+  provider_type = "GitHub"
+}
+
 data "template_file" "buildspec" {
   template = file("${path.module}/buildspec.yml")
 
