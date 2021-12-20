@@ -2,7 +2,7 @@
 
 module ApplicationHelper
   def current_organization
-    find_organization
+    @current_organization ||= find_organization
   end
 
   def find_organization
