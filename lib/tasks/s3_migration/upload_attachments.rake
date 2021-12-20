@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 's3_uploader'
 
 namespace :s3_migration do
-  desc "Copy all attachments to S3"
+  desc 'Copy all attachments to S3'
   task upload_attachments: :environment do
     uploader = S3Uploader.new
 
     begin
       [
-        { model: Attachment, attachment_name: "document" },
-        { model: Organization, attachment_name: "footer_logo" },
-        { model: Ckeditor::AttachmentFile, attachment_name: "data" },
-        { model: Ckeditor::Picture, attachment_name: "data", styles: true }
+        { model: Attachment, attachment_name: 'document' },
+        { model: Organization, attachment_name: 'footer_logo' },
+        { model: Ckeditor::AttachmentFile, attachment_name: 'data' },
+        { model: Ckeditor::Picture, attachment_name: 'data', styles: true }
       ].each do |upload_options|
         model = upload_options[:model]
         attachment_name = upload_options[:attachment_name]

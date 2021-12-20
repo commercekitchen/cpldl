@@ -207,7 +207,7 @@ describe Course do
 
   describe '#pub_status_options' do
     it 'should contain array of publication status options' do
-      expected_options_array = [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
+      expected_options_array = [%w[Draft D], %w[Published P], %w[Archived A], ['Coming Soon', 'C']]
       expect(Course.pub_status_options).to eq(expected_options_array)
     end
   end

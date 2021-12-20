@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class S3Uploader
   def initialize
     region = Rails.application.config.s3_region
@@ -7,9 +9,9 @@ class S3Uploader
 
   def copy_to_s3!(record, style: nil, attachment_name:)
     filename = record.send("#{attachment_name}_file_name")
-    return unless filename.present?
+    return if filename.blank?
 
-    if !File.exist?(record.send(attachment_name).path(style))
+    unless File.exist?(record.send(attachment_name).path(style))
       puts "File #{filename} doesn't exist for #{record.class.name} #{record.id}"
       return
     end
@@ -21,7 +23,7 @@ class S3Uploader
     file = File.open(record.send(attachment_name).path(style))
 
     puts "Uploading #{filename}..."
-    
+
     @s3_client.put_object(bucket: @bucket_name, key: s3_path, body: file)
   rescue Aws::S3::Errors::NoSuchBucket => e
     puts "Creating the non-existing bucket: #{@bucket_name}"
