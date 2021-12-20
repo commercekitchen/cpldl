@@ -27,7 +27,7 @@ class User < ApplicationRecord
   before_create :add_token_to_user
 
   # Encrypt library card pin for security
-  attr_encrypted :library_card_pin, key: Rails.application.secrets.secret_key_base[0..31]
+  attr_encrypted :library_card_pin, key: Rails.application.credentials[Rails.env.to_sym][:secret_key_base][0..31]
 
   # Save blank emails as NULL
   nilify_blanks only: [:email]

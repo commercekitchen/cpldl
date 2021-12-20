@@ -92,8 +92,8 @@ class Organization < ApplicationRecord
   end
 
   def training_site_link
-    training_site_base = Rails.application.secrets.training_site_base
-    training_site_domain = Rails.application.secrets.training_site_domain
+    training_site_base = Rails.application.credentials[Rails.env.to_sym][:training_site_base]
+    training_site_domain = Rails.application.credentials[Rails.env.to_sym][:training_site_domain]
 
     if use_subdomain_for_training_site
       [training_site_base, subdomain, training_site_domain].join('.')
