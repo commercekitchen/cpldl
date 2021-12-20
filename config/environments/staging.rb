@@ -11,7 +11,10 @@ Rails.application.configure do
   # config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.serve_static_files = true
 
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
+  # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
+  # `config/secrets.yml.key`.
+  config.read_encrypted_secrets = true
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
