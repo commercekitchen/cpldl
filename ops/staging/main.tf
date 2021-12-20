@@ -60,7 +60,7 @@ module "load_balancer" {
   vpc_id                    = module.vpc.vpc_id
   public_subnet_ids         = module.vpc.public_subnet_ids
   default_security_group_id = module.vpc.default_security_group_id
-  certificate_arn           = "arn:aws:acm:us-west-2:917415714855:certificate/54a42ae6-ae72-40a5-a3d0-cd4f1383a557"
+  certificate_arn           = var.certificate_arn
 }
 
 module "bastian" {
@@ -127,7 +127,6 @@ module "pipeline" {
   github_owner       = "commercekitchen"
   github_repo        = "cpldl"
   branch             = "develop"
-  oauth_token        = var.github_oauth_token
   rails_master_key   = var.rails_master_key
   docker_username    = var.docker_username
   docker_password    = var.docker_password

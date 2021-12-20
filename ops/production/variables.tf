@@ -21,12 +21,6 @@ variable "rails_master_key" {
   sensitive   = true
 }
 
-variable "github_oauth_token" {
-  description = "OAuth token for GitHub integration"
-  type        = string
-  sensitive   = true
-}
-
 variable "docker_username" {}
 variable "docker_password" {
   description = "Docker account password"

@@ -21,7 +21,8 @@ data "template_file" "codepipeline_policy_template" {
   template = file("${path.module}/policies/codepipeline_policy.json")
 
   vars = {
-    aws_s3_bucket_arn = aws_s3_bucket.pipeline_store.arn
+    aws_s3_bucket_arn       = aws_s3_bucket.pipeline_store.arn
+    codestar_connection_arn = aws_codestarconnections_connection.repo_actions.arn
   }
 }
 

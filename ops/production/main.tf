@@ -125,7 +125,6 @@ module "pipeline" {
   github_owner       = "CKDev"
   github_repo        = "digital-learn-training"
   branch             = "main"
-  oauth_token        = var.github_oauth_token
   rails_master_key   = var.rails_master_key
   docker_username    = var.docker_username
   docker_password    = var.docker_password

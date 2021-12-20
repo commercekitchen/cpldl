@@ -18,6 +18,13 @@
     {
       "Effect": "Allow",
       "Action": [
+        "codestar-connections:UseConnection"
+      ],
+      "Resource": "${codestar_connection_arn}"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
         "codebuild:BatchGetBuilds",
         "codebuild:StartBuild"
       ],

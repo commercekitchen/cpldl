@@ -1,5 +1,5 @@
 resource "aws_key_pair" "bastian_key" {
-  key_name   = "bastian-key-${var.environment_name}"
+  key_name   = "bastian-key-${var.project_name}-${var.environment_name}"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDVvwwWqcBYrB5B/PEUv6cOgKUz+4JSTNPJP/LVnRUSZOLgDuXIeUME6vdYp5lTi+SaKIADMyFPXbMwYelNyLjQX4DCjfnRVUW7UzBDo4DMo1t/gSa/WJh1etByhol+PEnHK+uBO78UQavyw2Yr+yi8UqhUFXSbZoRDklpdaY9gQLXxnDFHOlW3EUZAA9YGgqHWeAkJd4M6+s487k1PqODfNyPAfihckG57tLEkoFHp3IXYFmJoeppEidPGouwoHfyBDyI/VpIX3ofs98y4iPdMhcA5RiuoXEIjVfuOiRSiHEtXxWGPb0fTL5FrBdAdXIJT+AoaPg8ycVEhlVcXdOA1"
 }
 
