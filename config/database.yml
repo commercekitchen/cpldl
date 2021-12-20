@@ -7,6 +7,12 @@ default: &default
   password: <%= ENV['POSTGRES_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
+staging:
+  <<: *default
+
+production:
+  <<: *default
+
 development:
   <<: *default
   database: cpldl_development
