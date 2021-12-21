@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 # Base set of gems
 gem 'jquery-rails', '>= 4.3.0'
 gem 'pg'
+gem 'puma'
 gem 'rails', '>= 5.2.0', '< 6.0'
 gem 'sass-rails', '>= 6.0.0'
 gem 'uglifier'
