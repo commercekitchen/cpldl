@@ -3,7 +3,7 @@ Copyright (c) 2003-2011, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.html or http://ckeditor.com/license
 */
 
-CKEDITOR.editorConfig = function(config) {
+CKEDITOR.editorConfig = function (config) {
   // Define changes to default configuration here. For example:
   // config.language = 'fr';
   // config.uiColor = '#AADC6E';
@@ -38,10 +38,10 @@ CKEDITOR.editorConfig = function(config) {
   // Font plugin
   //config.extraPlugins = "font";
 
-  config.skin = "moono";
+  config.skin = "moono-lisa";
 
   // Rails CSRF token
-  config.filebrowserParams = function() {
+  config.filebrowserParams = function () {
     var csrf_token,
       csrf_param,
       meta,
@@ -70,7 +70,7 @@ CKEDITOR.editorConfig = function(config) {
     return params;
   };
 
-  config.addQueryString = function(url, params) {
+  config.addQueryString = function (url, params) {
     var queryString = [];
 
     if (!params) {
@@ -84,7 +84,7 @@ CKEDITOR.editorConfig = function(config) {
   };
 
   // Integrate Rails CSRF token into file upload dialogs (link, image, attachment and flash)
-  CKEDITOR.on("dialogDefinition", function(ev) {
+  CKEDITOR.on("dialogDefinition", function (ev) {
     // Take the dialog name and its definition from the event data.
     var dialogName = ev.data.name;
     var dialogDefinition = ev.data.definition;
@@ -123,7 +123,7 @@ CKEDITOR.editorConfig = function(config) {
     { name: "links", items: ["Link", "Unlink"] },
     {
       name: "insert",
-      items: ["Image", "Table", "HorizontalRule", "SpecialChar"]
+      items: ["Image", "Table", "HorizontalRule", "SpecialChar"],
     },
     { name: "forms" },
     { name: "tools" },
@@ -132,17 +132,23 @@ CKEDITOR.editorConfig = function(config) {
     {
       name: "basicstyles",
       groups: ["basicstyles", "cleanup"],
-      items: ["Bold", "Italic", "Underline"]
+      items: ["Bold", "Italic", "Underline"],
     },
     {
       name: "paragraph",
       groups: ["list", "indent", "blocks", "align", "bidi"],
-      items: ["NumberedList", "BulletedList", "Outdent", "Indent", "Blockquote"]
+      items: [
+        "NumberedList",
+        "BulletedList",
+        "Outdent",
+        "Indent",
+        "Blockquote",
+      ],
     },
     { name: "styles", items: ["Styles", "Format", "Font", "FontSize"] },
     { name: "colors" },
     { name: "about" },
-    { name: "others", items: ["Source"] }
+    { name: "others", items: ["Source"] },
   ];
 
   // Remove some buttons provided by the standard plugins, which are

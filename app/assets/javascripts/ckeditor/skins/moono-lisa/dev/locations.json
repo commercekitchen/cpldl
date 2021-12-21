@@ -110,7 +110,6 @@
 			"plugins/image/icons/image.png",
 			"plugins/image2/icons/image.png"
 		],
-		"plugins/flash/icons/flash.png",
 		"plugins/table/icons/table.png",
 		"plugins/horizontalrule/icons/horizontalrule.png",
 		"plugins/smiley/icons/smiley.png",
@@ -137,9 +136,9 @@
 	],
 	"11": [
 		"plugins/link/images/anchor.png",
-		"skins/moono/images/close.png",
-		"skins/moono/images/lock.png",
-		"skins/moono/images/lock-open.png",
-		"skins/moono/images/refresh.png"
+		"skins/moono-lisa/images/close.png",
+		"skins/moono-lisa/images/lock.png",
+		"skins/moono-lisa/images/lock-open.png",
+		"skins/moono-lisa/images/refresh.png"
 	]
 }
