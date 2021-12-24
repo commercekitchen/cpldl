@@ -15,6 +15,8 @@ Rails.application.config.assets.precompile += %w( .svg .eot .woff .ttf )
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
-Rails.application.config.assets.precompile += %w(ckeditor/*)
+Rails.application.config.assets.precompile += %w[ckeditor/config.js]
+Rails.application.config.assets.precompile += %w[ckeditor/application.css]
+Rails.application.config.assets.precompile += %w[ckeditor/application.js]
 
 Rails.application.config.assets.precompile += ['pdf.css', 'att_pdf.css']
