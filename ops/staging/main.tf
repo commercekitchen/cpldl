@@ -126,7 +126,7 @@ module "pipeline" {
   ecr_project_uri    = aws_ecr_repository.ecr_repo.repository_url
   github_owner       = "commercekitchen"
   github_repo        = "cpldl"
-  branch             = "docker_aws"
+  branch             = "develop"
   rails_master_key   = var.rails_master_key
   docker_username    = var.docker_username
   docker_password    = var.docker_password
