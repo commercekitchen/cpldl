@@ -48,6 +48,10 @@ module CPLDigitalLearn
     config.s3_region = 'us-west-2'
     config.s3_bucket_name = "dl-uploads-#{Rails.env}"
 
+    config.paperclip_defaults = {
+      storage: :filesystem
+    }
+
     # Ckeditor options
     config.ckeditor_paperclip_opts = {
       storage: :filesystem,
