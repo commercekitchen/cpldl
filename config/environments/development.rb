@@ -3,6 +3,7 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.active_record.dump_schema_after_migration = !ENV['SKIP_SCHEMA_DUMP']
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

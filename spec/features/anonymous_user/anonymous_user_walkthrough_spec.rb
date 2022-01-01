@@ -19,8 +19,8 @@ feature 'Anonymous visits static pages' do
 
     header_translation_key = "home.choose_a_course.#{org.subdomain}"
     subhead_translation_key = "home.choose_course_subheader.#{org.subdomain}"
-    custom_heading = "Custom Courses Header"
-    custom_subheading = "Custom course subheader with more info"
+    custom_heading = 'Custom Courses Header'
+    custom_subheading = 'Custom course subheader with more info'
     FactoryBot.create(:translation, locale: :en, key: header_translation_key, value: custom_heading)
     FactoryBot.create(:translation, locale: :en, key: subhead_translation_key, value: custom_subheading)
 

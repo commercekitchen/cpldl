@@ -1,1 +1,0 @@
-window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:05,666%0D%0AThis%20column%20tracks%20the%20time%20spent%20on%20each%20slide.%20To%20estimate%20this%20figure,%20%0D%0A%0D%0A2%0D%0A00:00:05,666%20--%3E%2000:00:11,799%0D%0Apractice%20reading%20the%20text%20out%20loud%20and%20use%20a%20stopwatch%20to%20estimate%20the%20time.%20%0D%0A%0D%0A"}')

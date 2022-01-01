@@ -6,7 +6,7 @@ class S3Proxy < Rack::Proxy
   def perform_request(env)
     request = Rack::Request.new(env)
 
-    # use rack proxy for anything hitting our host app at /example_service
+    # use rack proxy for anything hitting our host app at /storylines or /portfolio
     if use_s3? && request.path =~ %r{^/storylines}
       @backend = URI(cloudfront_url)
 

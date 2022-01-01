@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FooterLink < ApplicationRecord
   belongs_to :organization
   belongs_to :language

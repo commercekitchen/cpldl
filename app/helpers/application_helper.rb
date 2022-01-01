@@ -2,17 +2,7 @@
 
 module ApplicationHelper
   def current_organization
-    find_organization
-  end
-
-  def find_organization
-    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
-
-    unless org.subdomain == current_subdomain
-      redirect_to_www && (return org)
-    end
-
-    org
+    @current_organization ||= find_organization
   end
 
   def redirect_to_www
@@ -62,6 +52,16 @@ module ApplicationHelper
   end
 
   protected
+
+  def find_organization
+    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
+
+    unless org.subdomain == current_subdomain
+      redirect_to_www && (return org)
+    end
+
+    org
+  end
 
   def current_subdomain
     request.subdomain
