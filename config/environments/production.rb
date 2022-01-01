@@ -98,17 +98,13 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-  ### S3 Configuration ###
+  ### S3 Storyline Configuration ###
   config.lesson_store = :s3
-
   config.cloudfront_url = 'https://d1j5ysqdewbwao.cloudfront.net'
   config.zip_bucket_name = 'dl-prodapp-lessons-zipped'
-  config.s3_bucket_name = 'dl-prodapp-lessons'
 
   config.storyline_paperclip_opts = {
-    storage: :s3,
     path: 'storylines/:id/:basename.:extension',
-    bucket: config.zip_bucket_name,
-    s3_region: config.s3_region
+    bucket: config.zip_bucket_name
   }
 end

@@ -1,3 +1,6 @@
+# Enable S3 for file uploads
+# require File.expand_path('../../s3_attachments', __FILE__)
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -64,18 +67,20 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  ### S3 Configuration ###
+  ### S3 Lesson Configuration ###
   # Enable and update the following configuration
+
+  # Use cloudfront as s3 alias
+  #config.paperclip_defaults = config.paperclip_defaults.merge({
+  #  url: ":s3_alias_url",
+  #  s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
+  #})
 
   # Lesson storage type
   # config.lesson_store = :s3
 
-  # Region
-  # config.s3_region = 'us-east-2'
-
   # S3 bucket name
   # config.zip_bucket_name = 'dl-development-lessons-zipped'
-  # config.s3_bucket_name = 'dl-development-lessons'
 
   # config.storyline_paperclip_opts = {
   #   storage: :s3,
