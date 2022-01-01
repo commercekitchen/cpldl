@@ -6,8 +6,8 @@ class S3Proxy < Rack::Proxy
   def perform_request(env)
     request = Rack::Request.new(env)
 
-    # use rack proxy for anything hitting our host app at /storylines or /ckeditor_assets
-    if use_s3? && request.path =~ %r{^/storylines|^/ckeditor_assets}
+    # use rack proxy for anything hitting our host app at /storylines or /portfolio
+    if use_s3? && request.path =~ %r{^/storylines}
       @backend = URI(cloudfront_url)
 
       # most backends required host set properly, but rack-proxy doesn't set this for you automatically
