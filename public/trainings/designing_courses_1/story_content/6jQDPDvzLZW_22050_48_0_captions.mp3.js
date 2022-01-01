@@ -1,1 +1,0 @@
-window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:09,200%0D%0AYou%E2%80%99ll%20use%20this%20column%20to%20draft%20the%20narration%20for%20the%20course.%20Numbers%20indicate%20cues%20for%20the%20animation%20to%20be%20added%20in%20the%20e-learning%20timeline.%0D%0A%0D%0A"}')

@@ -1,1 +1,0 @@
-window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:05,166%0D%0AAvoid%20using%20idioms,%20slang,%20or%20confusing%20expressions.%20%0D%0A%0D%0A2%0D%0A00:00:05,166%20--%3E%2000:00:10,799%0D%0AEnglish%20language%20learners%20may%20not%20be%20familiar%20with%20casual%20expressions%20you%20use%20on%20a%20daily%20basis.%0D%0A%0D%0A"}')

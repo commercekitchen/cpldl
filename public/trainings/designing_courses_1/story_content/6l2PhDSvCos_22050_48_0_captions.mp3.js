@@ -1,1 +1,0 @@
-window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:07,600%0D%0A%E2%80%9COn-screen%20Text%E2%80%9D%20is%20used%20to%20keep%20track%20of%20any%20written%20text%20that%20appears,%20such%20as%20text%20boxes%20or%20menus.%0D%0A%0D%0A"}')
