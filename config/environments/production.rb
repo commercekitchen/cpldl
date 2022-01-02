@@ -1,3 +1,6 @@
+# Enable S3 for file uploads
+require File.expand_path('../../s3_attachments', __FILE__)
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -103,13 +106,23 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  config.cloudfront_host = 'd1j5ysqdewbwao.cloudfront.net'
+  config.cloudfront_url = "https://#{config.cloudfront_host}"
+
+  # Use cloudfront as s3 alias
+  config.paperclip_defaults = config.paperclip_defaults.merge({
+    url: ":s3_alias_url",
+    s3_host_alias: config.cloudfront_host
+  })
+
   ### S3 Storyline Configuration ###
   config.lesson_store = :s3
-  config.cloudfront_url = 'https://d1j5ysqdewbwao.cloudfront.net'
   config.zip_bucket_name = 'dl-prodapp-lessons-zipped'
 
   config.storyline_paperclip_opts = {
+    storage: :s3,
     path: 'storylines/:id/:basename.:extension',
-    bucket: config.zip_bucket_name
+    bucket: config.zip_bucket_name,
+    s3_region: config.s3_region
   }
 end
