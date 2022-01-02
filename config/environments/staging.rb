@@ -11,7 +11,10 @@ Rails.application.configure do
   # config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.serve_static_files = true
 
-  # Settings specified here will take precedence over those in config/application.rb.
+  # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
+  # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
+  # `config/secrets.yml.key`.
+  config.read_encrypted_secrets = true
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -33,10 +36,10 @@ Rails.application.configure do
 
   # => to send email from local host
   #https://chipublib.digitallearn.org/
-  config.action_mailer.default_url_options = { host: "stage.digitallearn.org" }
+  config.action_mailer.default_url_options = { host: "staging.digitallearn.org" }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.asset_host = "https://stage.digitallearn.org"
+  config.action_mailer.asset_host = "https://staging.digitallearn.org"
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
@@ -61,15 +64,18 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
+  # Cloudfront config
+  config.cloudfront_host = 'dmx80r2ae8pd1.cloudfront.net'
+  config.cloudfront_url = "https://#{config.cloudfront_host}"
+
   # Use cloudfront as s3 alias
   config.paperclip_defaults = config.paperclip_defaults.merge({
     url: ":s3_alias_url",
-    s3_host_alias: "d1kcbeee8u67um.cloudfront.net"
+    s3_host_alias: config.cloudfront_host
   })
 
   ### S3 Lesson Configuration ###
   config.lesson_store = :s3
-  config.cloudfront_url = 'https://dmx80r2ae8pd1.cloudfront.net'
   config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
 
   config.storyline_paperclip_opts = {

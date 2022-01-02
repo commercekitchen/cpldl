@@ -50,7 +50,7 @@ class CourseCompletionsController < ApplicationController
     if current_organization.custom_certificate_enabled?
       "course_completions/custom_certificates/#{current_organization.subdomain}.pdf.erb"
     else
-      "course_completions/show.pdf.erb"
+      'course_completions/show.pdf.erb'
     end
   end
 

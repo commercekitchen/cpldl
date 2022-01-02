@@ -1,7 +1,7 @@
 # Initialize ActionMailer settings for sendgrid
 
-api_key = Rails.application.secrets.sendgrid_api_key
-domain = Rails.application.secrets.sendgrid_domain || "chipublib.digitallearn.org"
+api_key = Rails.application.credentials[Rails.env.to_sym][:sendgrid_api_key]
+domain = Rails.application.credentials[Rails.env.to_sym][:sendgrid_domain] || "chipublib.digitallearn.org"
 
 if api_key.nil?
   abort('Please ensure the sendgrid_api_key is defined in secrets.yml')

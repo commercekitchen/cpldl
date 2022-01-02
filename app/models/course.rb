@@ -82,7 +82,7 @@ class Course < ApplicationRecord
   scope :copied_from_course, ->(course) { joins(:organization).where(parent_id: course.id) }
   scope :org, ->(org) { where(organization: org) }
   scope :pla, -> { where(organization: Organization.find_by(subdomain: 'www')) }
-  scope :visible_to_users, -> { where( pub_status: ['P', 'C']) }
+  scope :visible_to_users, -> { where(pub_status: %w[P C]) }
 
   before_save :find_or_create_category
 
@@ -159,6 +159,6 @@ class Course < ApplicationRecord
   end
 
   def self.pub_status_options
-    [["Draft", "D"], ["Published", "P"], ["Archived", "A"], ["Coming Soon", "C"]]
+    [%w[Draft D], %w[Published P], %w[Archived A], ['Coming Soon', 'C']]
   end
 end

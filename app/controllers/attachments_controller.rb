@@ -5,8 +5,8 @@ class AttachmentsController < ApplicationController
     @attachment = Attachment.find(params[:id])
     authorize @attachment, :show?
 
-    data = AttachmentReader.new(@attachment).read_attachment_data("document")
-    
+    data = AttachmentReader.new(@attachment).read_attachment_data('document')
+
     filename = @attachment.document_file_name
 
     extension = File.extname(filename)

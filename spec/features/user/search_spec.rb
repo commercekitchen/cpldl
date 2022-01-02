@@ -17,7 +17,7 @@ feature 'User searches for courses' do
     fill_in 'Search', with: 'foobar'
     click_on('submit-search')
     expect(page).to have_content(I18n.t('logged_in_user.hi'))
-    expect(page).not_to have_content(I18n.t("logged_in_user.choose_a_course"))
+    expect(page).not_to have_content(I18n.t('logged_in_user.choose_a_course'))
     expect(page).to have_content('No courses match your search.')
     expect(page).to have_link('View all courses', href: courses_path)
   end

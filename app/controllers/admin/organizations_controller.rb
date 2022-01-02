@@ -28,7 +28,7 @@ module Admin
                     :subdomain,
                     :branches,
                     :accepts_programs,
-                    footer_links_attributes: [:label, :url, :id, :_destroy])
+                    footer_links_attributes: %i[label url id _destroy])
     end
   end
 end

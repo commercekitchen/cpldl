@@ -1,1 +1,0 @@
-window.globalProvideData('caption', '{"data":"1%0D%0A00:00:00,000%20--%3E%2000:00:06,100%0D%0AMake%20analogies%20and%20connections%20to%20non-technology%20experiences%20that%20the%20learner%20can%20relate%20to.%20%0D%0A%0D%0A"}')

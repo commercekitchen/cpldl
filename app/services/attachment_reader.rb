@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttachmentReader
   def initialize(file)
     @file = file
@@ -7,10 +9,9 @@ class AttachmentReader
     attachment = @file.send(attachment_name)
 
     if Rails.application.config.s3_enabled
-      attachment_uri = URI.parse(attachment.url)
-      open(attachment.url).read
+      URI.open(attachment.url).read
     else
-      open(attachment.path).read
+      URI.open(attachment.path).read
     end
   end
 end

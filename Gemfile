@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 # Base set of gems
 gem 'jquery-rails', '>= 4.3.0'
 gem 'pg'
+gem 'puma'
 gem 'rails', '>= 5.2.0', '< 6.0'
 gem 'sass-rails', '>= 6.0.0'
 gem 'uglifier'
@@ -95,7 +96,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'awesome_print', require: 'ap'
+  gem 'awesome_print'
   gem 'bullet'
   gem 'bundler-audit', require: false
   gem 'byebug'
@@ -106,17 +107,6 @@ group :development, :test do
   gem 'sunspot_solr'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
-end
-
-# Capistrano Deployment
-group :development, :deployment do
-  gem 'capistrano', '3.4.0', require: false # Deploy is locked to this version.
-  gem 'capistrano-db-tasks', '~> 0.4', require: false
-  gem 'capistrano-faster-assets', '~> 1.0', require: false
-  gem 'capistrano-rails', '~> 1.1.3', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-sidekiq', require: false
-  gem 'colorize'
 end
 
 group :test do

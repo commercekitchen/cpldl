@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - "bin/**/*"
     - "db/migrate/**/*"
+    - "db/data/migrate/**/*"
     - "db/schema.rb"
     - "config/**/*"
     - "script/**/*"

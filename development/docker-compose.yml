@@ -1,0 +1,72 @@
+version: "3.8"
+services:
+  db:
+    image: "postgres:13.4"
+    restart: always
+    environment:
+      POSTGRES_DB: cpldl_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data/postgres/pgdata:/var/lib/postgresql/data/pgdata
+    logging:
+      driver: none
+  redis:
+    image: redis:5-alpine
+    command: redis-server
+    volumes:
+      - redis:/data
+    ports:
+      - 6379
+    logging:
+      driver: none
+  web:
+    build:
+      context: ../
+      args:
+        RAILS_ENV: development
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_HOST: db
+      RAILS_ENV: development
+      RAILS_MAX_THREADS: 5
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    volumes:
+      - ../:/rails-app
+      - bundle:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+      - "redis"
+  sidekiq:
+    build:
+      context: ../
+      dockerfile: Dockerfile.sidekiq
+      args:
+        RAILS_ENV: development
+    command: bundle exec sidekiq
+    volumes:
+      - ../:/rails-app
+      - bundle:/usr/local/bundle
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_HOST: db
+      RAILS_ENV: development
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - "db"
+      - "redis"
+
+volumes:
+  db:
+  bundle:
+  redis:

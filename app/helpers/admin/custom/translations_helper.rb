@@ -32,7 +32,7 @@ module Admin
           'home.choose_a_course.%<subdomain>s' => 'Course Selection Greeting',
           'home.choose_course_subheader.%<subdomain>s' => 'Course Selection Subheader',
           'completed_courses_page.%<subdomain>s.retake_the_quiz' => 'Retake the Quiz Button',
-          'home.trainer_link.%<subdomain>' => 'Tools and Resources for Trainers'
+          'home.trainer_link.%<subdomain>s' => 'Tools and Resources for Trainers'
         }
 
         # texts['course_completion_page.%{subdomain}.user_survey_button_text'] = 'User Survey Button Text'
@@ -41,7 +41,7 @@ module Admin
 
       def es_keys
         es_texts = {
-          'home.trainer_link.%<subdomain>' => 'Herramientas y recursos para instructores'
+          'home.trainer_link.%<subdomain>s' => 'Herramientas y recursos para instructores'
         }
 
         en_keys.merge(interpolated_defaults(es_texts))
