@@ -28,13 +28,8 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-resource "aws_ecr_repository" "ecr_repo" {
-  name                 = var.project_name
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
+data "aws_ecr_repository" "ecr_repo" {
+  name = var.project_name
 }
 
 module "vpc" {
@@ -56,7 +51,7 @@ module "load_balancer" {
   vpc_id                    = module.vpc.vpc_id
   public_subnet_ids         = module.vpc.public_subnet_ids
   default_security_group_id = module.vpc.default_security_group_id
-  certificate_arn           = "arn:aws:acm:us-west-2:917415714855:certificate/59029bf5-610c-4057-aff4-6fa500856917"
+  certificate_arn           = var.certificate_arn
 }
 
 module "bastian" {
@@ -72,11 +67,11 @@ module "bastian" {
 module "database" {
   source = "../modules/database"
 
-  project_name     = var.project_name
-  environment_name = var.environment_name
-  region           = var.region
-  vpc_id           = module.vpc.vpc_id
-  #db_snapshot_name    = "TODO"
+  project_name        = var.project_name
+  environment_name    = var.environment_name
+  region              = var.region
+  vpc_id              = module.vpc.vpc_id
+  db_snapshot_name    = "prod-db-snapshot"
   multi_az            = true
   bastian_sg_id       = module.bastian.bastian_sg_id
   application_sg_id   = module.application.application_sg_id
@@ -102,13 +97,13 @@ module "application" {
   db_password                 = var.db_password
   public_subnet_ids           = module.vpc.public_subnet_ids
   instance_type               = "t3.medium"
-  desired_instance_count      = 1
+  desired_instance_count      = 2
   lb_target_group_arn         = module.load_balancer.lb_target_group_arn
   ssh_key_name                = "ec2_test_key"
   rails_master_key            = var.rails_master_key
   s3_bucket_arns = [
-    "arn:aws:s3:::dl-learners-uploads-${var.environment_name}",
-    "arn:aws:s3:::dl-prodapp-storylines-${var.environment_name}-zipped"
+    "arn:aws:s3:::dl-uploads-${var.environment_name}",
+    "arn:aws:s3:::dl-prodapp-lessons-zipped"
   ]
 }
 
@@ -121,9 +116,9 @@ module "pipeline" {
   ecs_cluster_name   = module.application.cluster_name
   ecs_service_name   = module.application.service_name
   ecr_repository_url = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
-  ecr_project_uri    = aws_ecr_repository.ecr_repo.repository_url
-  github_owner       = "CKDev"
-  github_repo        = "digital-learn-training"
+  ecr_project_uri    = data.aws_ecr_repository.ecr_repo.repository_url
+  github_owner       = "commercekitchen"
+  github_repo        = "cpldl"
   branch             = "main"
   rails_master_key   = var.rails_master_key
   docker_username    = var.docker_username

@@ -1,4 +1,4 @@
-variable "project_name" { default = "dl-training" }
+variable "project_name" { default = "dl-learners" }
 variable "environment_name" { default = "production" }
 variable "region" { default = "us-west-2" }
 variable "database_name" { default = "railsapp_production" }
@@ -24,6 +24,12 @@ variable "rails_master_key" {
 variable "docker_username" {}
 variable "docker_password" {
   description = "Docker account password"
+  type        = string
+  sensitive   = true
+}
+
+variable "certificate_arn" {
+  description = "SSL Certificate resource ARN"
   type        = string
   sensitive   = true
 }
