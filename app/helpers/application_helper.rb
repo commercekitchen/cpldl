@@ -54,6 +54,12 @@ module ApplicationHelper
   protected
 
   def find_organization
+    # Redirect chicago requests to chipublib
+    if current_subdomain == 'chicago'
+      redirect_to subdomain: 'chipublib'
+      return
+    end
+
     org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
 
     unless org.subdomain == current_subdomain
