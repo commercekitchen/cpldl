@@ -126,4 +126,11 @@ feature 'User logs in' do
     expect(current_path).to eq(user_session_path)
     expect(page).to have_content('Invalid Email or Password')
   end
+
+  scenario 'for chicago subdomain' do
+    user = create(:user, organization: org)
+    switch_to_subdomain('chicago')
+    log_in_with(user.email, user.password)
+    expect(current_path).to eq(root_path)
+  end
 end

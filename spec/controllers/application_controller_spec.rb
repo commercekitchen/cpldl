@@ -3,14 +3,16 @@
 require 'rails_helper'
 
 describe ApplicationController do
+
   describe '#after_signin_path_for' do
+
     before(:each) do
       @chipublib_organization = create(:organization)
       @npl_organization = create(:organization, subdomain: 'npl')
       @www_organization = create(:default_organization)
     end
 
-    it 'should only allow sign in for matching subdomain users' do
+    it 'should allow sign in for matching subdomain users' do
       @request.host = 'www.test.host'
       user = create(:user, organization: @www_organization)
       user.add_role(:user, @www_organization)
