@@ -27,7 +27,7 @@
     <% end %>
   <% end %>
 
-  <% if current_organization.courses.authenticated_users.exists? %>
+  <% if current_organization.courses.visible_to_users.authenticated_users.exists? %>
     <p class="center">
       <%= t('home.more_courses') %>
       <%= link_to t('home.here'), login_path, class: "inline_link" %>
