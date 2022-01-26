@@ -47,6 +47,11 @@ feature 'User is able to view the courses in their plan' do
       expect(page).to have_content('Find new courses when you retake the quiz')
       expect(page).to have_link('Retake the Quiz')
     end
+
+    scenario 'should not see the more courses blurb' do
+      visit my_courses_path
+      expect(page).not_to have_content('More courses are available if you sign up')
+    end
   end
 
   context 'npl user' do
