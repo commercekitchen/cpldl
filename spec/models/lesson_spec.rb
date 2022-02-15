@@ -29,7 +29,7 @@ describe Lesson do
     end
 
     it 'is invalid with summary that is too long' do
-      lesson.summary = 'a' * 157
+      lesson.summary = 'a' * 256
       expect(lesson).to_not be_valid
     end
 

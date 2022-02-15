@@ -544,7 +544,7 @@ CREATE TABLE public.lessons (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     slug character varying,
-    summary character varying(156),
+    summary character varying,
     story_line character varying(156),
     seo_page_title character varying(90),
     meta_desc character varying(156),
@@ -1905,6 +1905,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210726182520'),
 ('20210812220205'),
 ('20210823165603'),
-('20220215191047');
+('20220215191047'),
+('20220215194253');
 
 
