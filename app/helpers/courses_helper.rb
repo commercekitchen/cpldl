@@ -64,4 +64,9 @@ module CoursesHelper
 
     link_to t('course_page.start_course').to_s, lesson_path, class: 'btn button-color', data: { cpl_ga_event: 'on', cpl_ga_value: 'user-start-course' }
   end
+
+  def category_anchor(category_name)
+    anchor_id = category_name.downcase.parameterize
+    content_tag(:h3, category_name, id: anchor_id)
+  end
 end
