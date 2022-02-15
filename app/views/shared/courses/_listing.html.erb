@@ -1,5 +1,5 @@
 <% categorized_courses(@courses).each do |category_name, courses| %>
-  <h3><%= category_name %></h3>
+  <%= category_anchor(category_name) %>
   <div class="flex-list">
     <% courses.each do |course| %>
       <% if course.published? %>
