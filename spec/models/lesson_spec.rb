@@ -19,7 +19,7 @@ describe Lesson do
     end
 
     it 'is invalid with title that is too long' do
-      lesson.title = 'a' * 91
+      lesson.title = 'a' * 101
       expect(lesson).to_not be_valid
     end
 
