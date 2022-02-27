@@ -24,8 +24,8 @@ class Lesson < ApplicationRecord
   has_many :lesson_completions, dependent: :destroy
 
   # TODO: We need to make lesson titles unique per course, but not site-wide.
-  validates :title, length: { maximum: 90 }, presence: true # , uniqueness: true
-  validates :summary, length: { maximum: 156 }, presence: true
+  validates :title, length: { maximum: 100 }, presence: true # , uniqueness: true
+  validates :summary, length: { maximum: 255 }, presence: true
   validates :duration, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :lesson_order, presence: true, numericality: { only_integer: true, greater_than: 0, allow_blank: true }
   validates :seo_page_title, length: { maximum: 90 }

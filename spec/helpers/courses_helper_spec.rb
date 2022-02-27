@@ -123,4 +123,14 @@ describe CoursesHelper do
       expect(helper.start_or_resume_course_link(course, true)).to include(expected_path)
     end
   end
+
+  describe '#category_anchor' do
+    let(:category_name) { "Test Course Category" }
+    let(:subject) { helper.category_anchor(category_name) }
+
+    it 'returns expected tag' do
+      expected_tag = '<h3 id="test-course-category">Test Course Category</h3>'
+      expect(subject).to match(expected_tag)
+    end
+  end
 end
