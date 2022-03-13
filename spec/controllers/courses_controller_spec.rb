@@ -18,8 +18,11 @@ describe CoursesController do
   end
 
   let!(:course3) do
-    FactoryBot.create(:course, title: 'Course 3', description: 'Ruby on Rails', organization: organization)
+    FactoryBot.create(:coming_soon_course, title: 'Course 3', description: 'Ruby on Rails', organization: organization)
   end
+
+  let!(:draft_course) { FactoryBot.create(:draft_course, title: 'Draft Course', organization: organization) }
+  let!(:archived_course) { FactoryBot.create(:archived_course, title: 'Archived Course', organization: organization) }
 
   let!(:disabled_category_course) do
     FactoryBot.create(:course, title: 'Disabled Category Course', organization: organization, category: disabled_category)
@@ -32,12 +35,12 @@ describe CoursesController do
   describe 'GET #index' do
     it 'assigns all courses as @courses' do
       get :index
-      expect(assigns(:courses)).to contain_exactly(course1, course2, course3, disabled_category_course)
+      expect(assigns(:courses)).to match_array([course1, course2, course3, disabled_category_course])
     end
 
     it 'assigns all courses as @courses with an empty params' do
       get :index, params: {}
-      expect(assigns(:courses)).to contain_exactly(course1, course2, course3, disabled_category_course)
+      expect(assigns(:courses)).to match_array([course1, course2, course3, disabled_category_course])
     end
 
     it 'assigns search results to @courses' do

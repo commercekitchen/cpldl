@@ -24,8 +24,8 @@ describe Admin::CoursesController do
       get :index, params: { subdomain: 'chipublib' }
     end
 
-    it 'assigns all courses as @courses' do
-      expect(assigns(:courses)).to include(course1, course2, course3)
+    it 'assigns all published and coming soon courses as @courses' do
+      expect(assigns(:courses)).to match_array([course1, course2, course3])
     end
 
     it 'only assigns correct number of courses' do
