@@ -2,7 +2,7 @@
 
 class CoursesController < ApplicationController
   def index
-    @courses = policy_scope(Course).where(language: current_language)
+    @courses = policy_scope(Course).where(language: current_language, pub_status: ['P', 'C'])
 
     if params[:search].present?
       result_ids = PgSearch.multisearch(params[:search]).includes(:searchable).map(&:searchable).compact.map(&:id)
