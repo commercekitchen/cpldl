@@ -23,11 +23,6 @@ class CreateAttSubsite < ActiveRecord::Migration[5.2]
     admins.each do |email|
       AdminInvitationService.invite(email: email, organization: subsite)
     end
-
-    # Import all subsite courses
-    Course.pla.where(pub_status: 'P').each do |course|
-      CourseImportService.new(organization: subsite, course_id: course.id).import!
-    end
   end
 
   def down
