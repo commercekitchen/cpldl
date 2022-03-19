@@ -26,6 +26,7 @@ class CourseImportService
     @new_course.pub_status = 'D'
     @new_course.category_id = new_or_existing_subsite_category_id(@parent_course.category)
     @new_course.organization = @organization
+    @new_course.survey_url = nil
     @new_course.save!
   end
 

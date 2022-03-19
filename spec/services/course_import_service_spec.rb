@@ -63,4 +63,13 @@ describe CourseImportService do
       subject.import!
     end.to change(CourseTopic, :count).by(1)
   end
+
+  it 'should not copy survey_url into imported course' do
+    survey_url = 'http://survey.example.com'
+    pla_course.update(survey_url: survey_url)
+
+    expect do
+      subject.import!
+    end.not_to change { Course.where(survey_url: survey_url).count }
+  end
 end
