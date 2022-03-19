@@ -212,6 +212,7 @@ describe CoursePolicy, type: :policy do
                                                                 :access_level,
                                                                 :pub_status,
                                                                 :notes,
+                                                                :survey_url,
                                                                 category_attributes: %i[name organization_id],
                                                                 attachments_attributes: %i[document title doc_type file_description _destroy])
       end
@@ -237,6 +238,7 @@ describe CoursePolicy, type: :policy do
                                                                 :format,
                                                                 :access_level,
                                                                 :category_id,
+                                                                :survey_url,
                                                                 topic_ids: [],
                                                                 course_topics_attributes: [topic_attributes: [:title]],
                                                                 category_attributes: %i[name organization_id],
