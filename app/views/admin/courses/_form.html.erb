@@ -102,6 +102,14 @@
     <%= f.select(:pub_status, options_for_select(Course.pub_status_options, @course.pub_status), data: { status: @course.pub_status }) %>
   </fieldset>
 
+  <fieldset class='survey-url'>
+    <%= f.label :survey_url do %>
+      Course Completion Survey URL
+    <% end %>
+    <p><i>This url will open in a new tab automatically on course completion.</i></p>
+    <%= f.text_field :survey_url %>
+  </fieldset>
+
   <%= f.hidden_field :subdomain, value: current_organization.subdomain %>
   <%= f.hidden_field :organization_id, value: current_organization.id %>
 

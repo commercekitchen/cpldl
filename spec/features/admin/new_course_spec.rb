@@ -19,6 +19,7 @@ feature 'Admin user creates new course and lesson' do
     fill_in :course_contributor, with: 'Jane Doe'
     fill_in :course_summary, with: 'Summary for new course'
     fill_in :course_description, with: 'Description for new course'
+    fill_in :course_survey_url, with: 'http://survey.example.com'
     check 'Topic A'
     check 'Other Topic'
     fill_in :course_course_topics_attributes_0_topic_attributes_title, with: 'Some New Topic'
