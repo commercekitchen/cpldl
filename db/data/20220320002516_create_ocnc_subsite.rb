@@ -20,6 +20,7 @@ class CreateOcncSubsite < ActiveRecord::Migration[5.2]
 
     # Import all subsite courses
     Course.pla.where(pub_status: 'P').each do |course|
+      next if subsite.courses.where(title: course.title).present?
       CourseImportService.new(organization: subsite, course_id: course.id).import!
     end
   end
