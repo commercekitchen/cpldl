@@ -10,11 +10,11 @@ class CreateOcncSubsite < ActiveRecord::Migration[5.2]
     }
 
     # Create the subdomain organization
-    subsite = Organization.create!(subsite_attributes)
+    subsite = Organization.find_or_create_by!(subsite_attributes)
 
     # Create partners
     ['Orange County Public Library', 'CWS', 'Other'].each do |partner|
-      subsite.partners.create!(name: partner)
+      subsite.partners.find_or_create_by!(name: partner)
     end
 
     # Import all subsite courses
