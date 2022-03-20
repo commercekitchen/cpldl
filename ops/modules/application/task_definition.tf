@@ -47,6 +47,10 @@ resource "aws_ecs_task_definition" "app_service" {
         {
           name  = "RAILS_MAX_THREADS"
           value = "5"
+        },
+        {
+          name  = "ROLLBAR_ENV",
+          value = "${var.environment_name}"
         }
       ],
       logConfiguration = {
