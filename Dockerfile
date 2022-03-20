@@ -29,6 +29,7 @@ WORKDIR /rails-app
 # Consume build args
 ARG RAILS_ENV
 ARG RAILS_MASTER_KEY
+ARG ROLLBAR_ENV
 
 # Add gems
 COPY Gemfile Gemfile
