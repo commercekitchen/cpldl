@@ -67,7 +67,7 @@ To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data
 
 - Run `rails g data_migration create_example_subsite`
 
-- Update the new data migration file created in `db/data` with the new subsite's information:
+- Update the new data migration file created in `db/data` with the new subsite's information (do not include PII like admin emails):
 
   ```
   class CreateExampleSubsite < ActiveRecord::Migration[5.2]
@@ -81,16 +81,8 @@ To deploy a new subsite, use a [data migration](https://github.com/ilyakatz/data
         accepts_partners: false
       }
 
-      # Admin users
-      admins = ['admin@example.com']
-
       # Create the subdomain organization
       subsite = Organization.create!(subsite_attributes)
-
-      # Invite Admins
-      admins.each do |email|
-        AdminInvitationService.invite(email: email, organization: subsite)
-      end
 
       # Custom setup for branches, partners, etc. would go here...
 

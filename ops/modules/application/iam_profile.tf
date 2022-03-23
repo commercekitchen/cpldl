@@ -52,7 +52,14 @@ data "aws_iam_policy_document" "instance_policy" {
     sid = "AllObjectActions"
 
     actions = [
-      "s3:*Object*"
+      "s3:GetObject",
+      "s3:PutObject",
+      "s3:GetObjectAcl",
+      "s3:PutObjectAcl",
+      "s3:ListBucket",
+      "s3:GetBucketAcl",
+      "s3:PutBucketAcl",
+      "s3:GetBucketLocation"
     ]
 
     resources = formatlist("%s/*", var.s3_bucket_arns)

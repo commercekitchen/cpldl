@@ -77,6 +77,16 @@ feature 'User visits course complete page' do
       expect(page).to have_content('testfile.pdf')
       expect(page).to have_content('Post-Course completion notes...')
     end
+
+    scenario 'sees survey url in a new tab if configured', js: true do
+      survey_url = 'http://survey.example.com'
+      course.update(survey_url: survey_url)
+      visit course_completion_path(course)
+      expect(page.windows.length).to eq(2)
+      new_tab = page.driver.browser.window_handles.last
+      page.driver.browser.switch_to.window(new_tab)
+      expect(current_url).to match(survey_url)
+    end
   end
 
   context 'as a headless user' do

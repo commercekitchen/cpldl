@@ -82,6 +82,7 @@ Rails.application.configure do
     storage: :s3,
     path: 'storylines/:id/:basename.:extension',
     bucket: config.zip_bucket_name,
-    s3_region: config.s3_region
+    s3_region: config.s3_region,
+    s3_permissions: 'private'
   }
 end

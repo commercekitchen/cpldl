@@ -51,6 +51,10 @@ resource "aws_ecs_task_definition" "app_service" {
         {
           name  = "RAILS_LOG_TO_STDOUT",
           value = true
+        },
+        {
+          name  = "ROLLBAR_ENV",
+          value = "${var.environment_name}"
         }
       ],
       logConfiguration = {

@@ -1,0 +1,8 @@
+.ocnc {
+  @include color_scheme($ocnc-dark-blue, $ocnc-light-blue);
+  @include banner($ocnc-dark-blue);
+  @include buttons($ocnc-dark-blue);
+  @include course_widget($ocnc-light-blue);
+  @include lesson_tile($ocnc-light-blue, $ocnc-gray, $ocnc-orange);
+  @include icons($ocnc-light-blue, $ocnc-orange);
+}
