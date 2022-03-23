@@ -45,8 +45,12 @@ resource "aws_ecs_task_definition" "app_service" {
           value = "${var.environment_name}"
         },
         {
-          name  = "RAILS_MAX_THREADS"
+          name  = "RAILS_MAX_THREADS",
           value = "5"
+        },
+        {
+          name  = "RAILS_LOG_TO_STDOUT",
+          value = true
         },
         {
           name  = "ROLLBAR_ENV",
