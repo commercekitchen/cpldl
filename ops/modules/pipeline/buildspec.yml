@@ -17,7 +17,7 @@ phases:
       - echo Building the Docker image...
       - REPOSITORY_URI=${ecr_project_uri}
       - docker build --build-arg RAILS_ENV=${rails_env} --build-arg RAILS_MASTER_KEY=${rails_master_key} --build-arg ROLLBAR_ENV=${rollbar_env} -t $REPOSITORY_URI:${rails_env} .
-      - docker tag $REPOSITORY_URI:rails_env $REPOSITORY_URI:$IMAGE_TAG
+      - docker tag $REPOSITORY_URI:${rails_env} $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
