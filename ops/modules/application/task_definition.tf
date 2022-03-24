@@ -50,7 +50,7 @@ resource "aws_ecs_task_definition" "app_service" {
         },
         {
           name  = "RAILS_LOG_TO_STDOUT",
-          value = true
+          value = "true"
         },
         {
           name  = "ROLLBAR_ENV",
