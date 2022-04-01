@@ -146,6 +146,14 @@ feature 'Admin user updates course' do
       expect(page).to have_field('Content for Further Learning', with: 'New content for further learning')
     end
 
+    scenario 'can edit course completion survey url' do
+      visit edit_admin_course_path(subsite_course)
+      fill_in 'Course Completion Survey URL', with: 'https://survey.example.com'
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field('Course Completion Survey URL', with: 'https://survey.example.com')
+    end
+
     scenario 'can preview course' do
       skip 'TODO: course preview spec'
     end
@@ -169,6 +177,14 @@ feature 'Admin user updates course' do
       expect(page).to have_content('Course was successfully updated.')
       expect(current_path).to eq(edit_admin_course_path(custom_subsite_course.reload))
       expect(page).to have_field('Title', with: 'New Course Title')
+    end
+
+    scenario 'can edit course completion survey url' do
+      visit edit_admin_course_path(subsite_course)
+      fill_in 'Course Completion Survey URL', with: 'https://survey.example.com'
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field('Course Completion Survey URL', with: 'https://survey.example.com')
     end
 
     scenario 'can preview course' do

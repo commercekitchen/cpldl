@@ -26,6 +26,7 @@ data "template_file" "buildspec" {
     rails_env          = var.environment_name
     cluster_name       = var.ecs_cluster_name
     rails_master_key   = var.rails_master_key
+    rollbar_env        = var.environment_name
     docker_username    = var.docker_username
     docker_password    = var.docker_password
   }
