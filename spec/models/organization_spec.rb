@@ -38,12 +38,25 @@ RSpec.describe Organization, type: :model do
   describe 'validations' do
     it 'requires a name' do
       org.name = nil
-      expect(org).to_not be_valid
+      expect(org).not_to be_valid
     end
 
     it 'requires a subdomain' do
       org.subdomain = nil
-      expect(org).to_not be_valid
+      expect(org).not_to be_valid
+    end
+
+    it 'requires survey link if survey is enabled' do
+      org.user_survey_enabled = true
+      expect(org).not_to be_valid
+    end
+
+    it 'requires url format for survey link' do
+      expect(org).to validate_url_of(:user_survey_link)
+    end
+
+    it 'requires url format for spanish survey link' do
+      expect(org).to validate_url_of(:spanish_survey_link)
     end
   end
 

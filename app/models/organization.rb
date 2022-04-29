@@ -12,6 +12,7 @@ class Organization < ApplicationRecord
     footer_logo_content_type   String
     user_survey_enabled        Boolean, default: false
     user_survey_link           String
+    spanish_survey_link        String
     custom_certificate_enabled Boolean, default: false
   end
 
@@ -46,6 +47,7 @@ class Organization < ApplicationRecord
 
   validates :user_survey_link, url: { allow_blank: true }
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
+  validates :spanish_survey_link, url: { allow_blank: true }
 
   def user_count
     users.count
