@@ -113,4 +113,30 @@ RSpec.describe Organization, type: :model do
       expect(org.training_site_link).to eq("https://training.#{org.subdomain}.test.org")
     end
   end
+
+  describe '#survey_url' do
+    let(:survey_url) { 'https://survey.example.com' }
+    let(:spanish_survey_url) { 'https://spanish.example.com' }
+
+    before do
+      org.user_survey_link = survey_url
+    end
+
+    it 'returns user_survey_link for en locale' do
+      expect(org.survey_url(:en)).to eq(survey_url)
+    end
+
+    it 'returns user_survey_link for es locale if no spanish survey' do
+      expect(org.survey_url(:es)).to eq(survey_url)
+    end
+
+    it 'returns spanish_survey_link for es locale if spanish survey exists' do
+      org.spanish_survey_link = spanish_survey_url
+      expect(org.survey_url(:es)).to eq(spanish_survey_url)
+    end
+
+    it 'returns user_survey_link for unknown locale' do
+      expect(org.survey_url(:foobar)).to eq(survey_url)
+    end
+  end
 end

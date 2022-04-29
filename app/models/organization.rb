@@ -104,6 +104,14 @@ class Organization < ApplicationRecord
     end
   end
 
+  def survey_url(locale)
+    if locale == :es
+      spanish_survey_link || user_survey_link
+    else
+      user_survey_link
+    end
+  end
+
   def self.pla
     find_by(subdomain: 'www')
   end
