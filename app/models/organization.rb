@@ -106,7 +106,7 @@ class Organization < ApplicationRecord
 
   def survey_url(locale)
     if locale == :es
-      spanish_survey_link || user_survey_link
+      spanish_survey_link.blank? ? user_survey_link : spanish_survey_link
     else
       user_survey_link
     end
