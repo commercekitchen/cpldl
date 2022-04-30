@@ -130,6 +130,11 @@ RSpec.describe Organization, type: :model do
       expect(org.survey_url(:es)).to eq(survey_url)
     end
 
+    it 'returns user_survey_link for es locale for blank spanish survey' do
+      org.spanish_survey_link = ''
+      expect(org.survey_url(:es)).to eq(survey_url)
+    end
+
     it 'returns spanish_survey_link for es locale if spanish survey exists' do
       org.spanish_survey_link = spanish_survey_url
       expect(org.survey_url(:es)).to eq(spanish_survey_url)
