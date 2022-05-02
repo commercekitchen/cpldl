@@ -12,6 +12,7 @@ require 'pry'
 require 'spec_helper'
 require 'rspec/rails'
 require 'pundit/rspec'
+require 'validate_url/rspec_matcher'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

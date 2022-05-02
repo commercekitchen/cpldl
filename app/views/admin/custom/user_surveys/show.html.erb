@@ -36,9 +36,18 @@
   <div class='form-row'>
     <fieldset>
       <%= f.label :user_survey_link, class: 'text-color' do %>
-        Survey link
+        Survey Link
       <% end %>
       <%= f.text_field :user_survey_link %>
+    </fieldset>
+  </div>
+  <div class='form-row'>
+    <fieldset>
+      <%= f.label :spanish_survey_link, class: 'text-color' do %>
+        Spanish Survey Link
+      <% end %>
+      <p class="emphasis no-top-margin">If a Spanish language survey link is not provided, the English survey will be used by default.</p>
+      <%= f.text_field :spanish_survey_link %>
     </fieldset>
   </div>
   
