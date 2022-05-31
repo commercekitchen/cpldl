@@ -56,15 +56,32 @@ describe Admin::InvitesController do
   end
 
   describe '#update' do
+    let(:invited_user) do
+      AdminInvitationService.invite(email: 'test_invite@example.com', organization: organization, inviter: admin)
+    end
+    let(:token) { invited_user.raw_invitation_token }
+    let(:send_update_request) do
+      put :update, params: { user: { invitation_token: token, password: 'password', password_confirmation: 'password' } }
+    end
+
     before do
-      @invited_user = AdminInvitationService.invite(email: 'test_invite@example.com', organization: organization, inviter: admin)
       sign_out admin
     end
 
-    it 'should have an ok response' do
-      token = @invited_user.raw_invitation_token
-      put :update, params: { invitation_token: token, password: 'password', password_confirmation: 'password' }
-      expect(response).to have_http_status(:ok)
+    it 'should have a found response' do
+      send_update_request
+      expect(response).to have_http_status(:found)
+    end
+
+    it 'should redirect to profile' do
+      send_update_request
+      expect(response).to redirect_to(profile_path)
+    end
+
+    it 'should update password' do
+      expect(invited_user.valid_password?('password')).to be_falsey
+      send_update_request
+      expect(invited_user.reload.valid_password?('password')).to be_truthy
     end
   end
 end
