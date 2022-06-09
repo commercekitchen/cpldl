@@ -29,7 +29,7 @@ resource "aws_db_instance" "app_db" {
   deletion_protection                   = true
 
   lifecycle {
-    #prevent_destroy = true
+    prevent_destroy = true
   }
 }
 
