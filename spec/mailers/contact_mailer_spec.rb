@@ -13,7 +13,7 @@ describe ContactMailer, type: :mailer do
     end
 
     it 'should send email to the correct person' do
-      expect(email.to).to contain_exactly('sallen@ala.org')
+      expect(email.to).to contain_exactly('pla@ala.org')
     end
   end
 end
