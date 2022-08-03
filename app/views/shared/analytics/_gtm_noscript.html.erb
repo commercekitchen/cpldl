@@ -1,0 +1,8 @@
+<% if Rails.env.production? && current_organization.gtm_id.present? %>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=<%= current_organization.gtm_id %>"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe>
+  </noscript>
+  <!-- End Google Tag Manager (noscript) -->
+<% end %>
