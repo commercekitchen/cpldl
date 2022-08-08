@@ -10,10 +10,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: $breakpoint-mobile) {
+    flex-direction: column;
+  }
 }
 
 .footer-logo {
   text-align: right;
+
+  @media (max-width: $breakpoint-mobile) {
+    text-align: center;
+  }
 }
 
 .logo {
@@ -27,6 +35,10 @@
   max-height: 60px;
   margin-bottom: 10px;
   margin-right: 10px;
+
+  @media (max-width: $breakpoint-mobile) {
+    margin-right: 0;
+  }
 }
 
 .link-pla {
@@ -42,5 +54,10 @@
 
   a {
     color: $white;
+  }
+
+  @media (max-width: $breakpoint-mobile) {
+    text-align: center;
+    padding-right: 0;
   }
 }
