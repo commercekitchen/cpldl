@@ -27,6 +27,3 @@
   <meta name="description" content="<%=content_for(:meta_description).strip%>">
   <meta name="author" content="CKD Technology Partners">
 <% end %>
-
-<%# TODO: does this belong here?  A hidden field in the head? %>
-<%= hidden_field_tag :user_ga_id, session[:user_ga_id] %>
