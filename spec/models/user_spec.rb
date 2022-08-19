@@ -152,16 +152,6 @@ describe User do
     end
   end
 
-  context '#add_user_token' do
-    it 'assigns a random user token' do
-      @user = FactoryBot.create(:user)
-      expect(@user.token).to_not be(nil)
-
-      @user2 = FactoryBot.create(:user, email: 'random@nowhere.com')
-      expect(@user.token).to_not eq(@user2.token)
-    end
-  end
-
   context 'case insensitive login' do
     let!(:user1) { FactoryBot.create(:user, email: 'downcase@gmail.com') }
     it 'should not allow two emails with upppercased and downcased one' do

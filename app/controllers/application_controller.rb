@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :set_cms_footer_pages
   before_action :set_cms_marketing_pages
-  before_action :set_user_token
   before_action :require_valid_profile
 
   helper_method :subdomain?
@@ -172,18 +171,6 @@ class ApplicationController < ActionController::Base
 
   def missing_profile?(user)
     user.present? && user.profile.nil?
-  end
-
-  def set_user_token
-    if current_user&.token
-      session[:user_ga_id] = current_user.token
-    elsif current_user && current_user.token.blank?
-      current_user.send(:add_token_to_user)
-      current_user.save(validate: false)
-      session[:user_ga_id] = current_user.token
-    else
-      session[:user_ga_id] = 'guest'
-    end
   end
 
   def user_not_authorized
