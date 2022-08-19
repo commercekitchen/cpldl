@@ -24,7 +24,6 @@ class User < ApplicationRecord
   validates_associated :profile
 
   has_many :course_progresses, dependent: :destroy
-  before_create :add_token_to_user
 
   # Encrypt library card pin for security
   attr_encrypted :library_card_pin, key: Rails.application.credentials[Rails.env.to_sym][:secret_key_base][0..31]
@@ -167,10 +166,6 @@ class User < ApplicationRecord
   end
 
   private
-
-  def add_token_to_user
-    self.token = SecureRandom.uuid if self.token.blank?
-  end
 
   def set_password_from_pin
     return unless library_card_pin_changed?

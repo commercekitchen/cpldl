@@ -631,8 +631,7 @@ CREATE TABLE public.organizations (
     login_required boolean DEFAULT true,
     preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
     accepts_partners boolean DEFAULT false,
-    use_subdomain_for_training_site boolean DEFAULT false NOT NULL,
-    gtm_id character varying
+    use_subdomain_for_training_site boolean DEFAULT false NOT NULL
 );
 
 
@@ -1910,6 +1909,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220215191047'),
 ('20220215194253'),
 ('20220319171829'),
-('20220803035909');
+('20220803035909'),
+('20220819184026');
 
 

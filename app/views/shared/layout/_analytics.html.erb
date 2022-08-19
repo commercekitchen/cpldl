@@ -1,8 +1,9 @@
 <% if Rails.env.production? && !org_admin? %>
-  <% if current_organization.gtm_id.present? %>
-    <%= render "shared/analytics/gtm" %>
-  <% else %>
-    <%= render "shared/analytics/ga_#{current_organization.subdomain}" %>
-    <%= render "shared/analytics/ga_event_tracking"%>
-  <% end %>
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MKC7DHG');</script>
+  <!-- End Google Tag Manager -->
 <% end %>
