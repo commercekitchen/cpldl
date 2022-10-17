@@ -19,6 +19,17 @@ feature 'Admin user updates lesson' do
     log_in_with user.email, user.password
   end
 
+  scenario 'can change lesson title', js: true do
+    visit edit_admin_course_lesson_path(course, lesson)
+    fill_in 'Lesson Title', with: 'New Lesson Title'
+    find("body").click # Blur input
+    expect(page).to have_field('SEO Page Title', with: 'New Lesson Title')
+    click_button 'Save Lesson'
+    expect(page).to have_content('Lesson successfully updated.')
+    expect(current_path).to eq(edit_admin_course_lesson_path(course, lesson))
+    expect(page).to have_field('Lesson Title', with: 'New Lesson Title')
+  end
+
   scenario 'can change lesson attachment', js: true do
     visit edit_admin_course_lesson_path(course, lesson)
     expect(page).to have_content('BasicSearch1.zip')
