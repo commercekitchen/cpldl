@@ -21,4 +21,14 @@ describe Admin::AttachmentsController do
       end
     end
   end
+
+  describe 'PUT #sort' do
+    it 'should change attachment order' do
+      attachment2 = FactoryBot.create(:attachment, course: course)
+      order_params = { '0' => { id: attachment2.id, position: 1 }, '1' => { id: attachment.id, position: 2 } }
+      put :sort, params: { order: order_params }
+      expect(attachment.reload.attachment_order).to eq(2)
+      expect(attachment2.reload.attachment_order).to eq(1)
+    end
+  end
 end

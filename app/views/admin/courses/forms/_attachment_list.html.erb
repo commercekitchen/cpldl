@@ -1,14 +1,16 @@
-<div class='attachment-list'>
-  <% attachments.each do |a| %>
-    <div class='attachment'>
-      <div class='attachment-filename'>
-        <%= a.document_file_name %>
-      </div>
-      <% if allow_delete %>
-        <div class='attachment-delete'>
-          <%= link_to "Delete", admin_attachment_path(a), method: :delete, data: { confirm: "Are you sure?" } %>
+<div class='attachment-list sortable-list' data-page='attachments'>
+  <ul class='objects sortable reorderable'>
+    <% attachments.each do |a| %>
+      <li class='attachment sortable-item' data-id=<%= a.id %>>
+        <div class='attachment-filename'>
+          <%= a.document_file_name %>
         </div>
-      <% end %>
-    </div>
-  <% end %>
+        <% if allow_delete %>
+          <div class='attachment-delete'>
+            <%= link_to 'Delete', admin_attachment_path(a), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
 </div>

@@ -2,9 +2,10 @@
   margin-bottom: 1em;
 
   .attachment {
-    font-size: 11px;
+    font-size: 1rem;
     color: $dark-grey;
     margin-bottom: 0.5em;
+    padding: 0.25em 0;
 
     display: grid;
     grid-template-columns: 40% 25%;

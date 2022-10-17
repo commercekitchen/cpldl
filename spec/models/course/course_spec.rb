@@ -180,17 +180,19 @@ describe Course do
     let(:pla) { FactoryBot.create(:default_organization) }
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
     let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
-    let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course) }
-    let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', course: pla_course) }
+    let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course, attachment_order: 2) }
+    let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', course: pla_course, attachment_order: 2) }
     let!(:subsite_additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: child_course) }
 
     context 'parent course' do
-      it 'returns correct additional resource' do
-        expect(pla_course.additional_resource_attachments).to contain_exactly(additional_resource_attachment)
+      it 'returns correct additional resources sorted by attachment_order' do
+        attachment2 = FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course, attachment_order: 1)
+        expect(pla_course.additional_resource_attachments).to eq([attachment2, additional_resource_attachment])
       end
 
-      it 'returns correct text copy attachments' do
-        expect(pla_course.text_copy_attachments).to contain_exactly(text_copy_attachment)
+      it 'returns correct text copy attachments sorted by attachment_order' do
+        attachment2 = FactoryBot.create(:attachment, doc_type: 'text-copy', course: pla_course, attachment_order: 1)
+        expect(pla_course.text_copy_attachments).to eq([attachment2, text_copy_attachment])
       end
     end
 
