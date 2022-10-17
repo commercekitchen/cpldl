@@ -170,9 +170,11 @@ feature 'Admin user updates course' do
       expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
     end
 
-    scenario 'can edit course title' do
+    scenario 'can edit course title', js: true do
       visit edit_admin_course_path(custom_subsite_course)
       fill_in 'Title', with: 'New Course Title'
+      find("body").click # Blur input
+      expect(page).to have_field('SEO Page Title', with: 'New Course Title')
       click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
       expect(current_path).to eq(edit_admin_course_path(custom_subsite_course.reload))
