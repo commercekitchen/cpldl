@@ -28,4 +28,16 @@ RSpec.describe FooterLink, type: :model do
     link.language = nil
     expect(link).not_to be_valid
   end
+
+  it 'prepends scheme if missing' do
+    link.url = 'www.example.com'
+    link.save
+    expect(link.reload.url).to eq('https://www.example.com')
+  end
+
+  it 'accepts footer links with scheme' do
+    link.url = 'http://www.example.com'
+    link.save
+    expect(link.reload.url).to eq('http://www.example.com')
+  end
 end
