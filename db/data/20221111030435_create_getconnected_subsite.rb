@@ -10,7 +10,7 @@ class CreateGetconnectedSubsite < ActiveRecord::Migration[5.2]
     }
 
     # Create the subdomain organization
-    subsite = Organization.find_or_create_by!(subdomain: subsite_attributes[:subdomain])
+    subsite = Organization.find_or_create_by!(subdomain: subsite_attributes[:subdomain], name: subsite_attributes[:name])
     subsite.update!(subsite_attributes)
 
     # Import all subsite courses
