@@ -1,0 +1,8 @@
+.getconnected {
+  @include color_scheme($get-connected-blue, $get-connected-orange);
+  @include banner($get-connected-blue);
+  @include buttons($get-connected-orange);
+  @include course_widget($get-connected-orange);
+  @include lesson_tile($get-connected-orange, $grey, $get-connected-orange);
+  @include icons($get-connected-blue, $get-connected-orange);
+}
