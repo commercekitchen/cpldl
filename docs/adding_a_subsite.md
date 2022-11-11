@@ -31,16 +31,6 @@
 
 - Add the subsite's header logo to assets as `app/assets/images/new_subdomain_logo_header.png`
 
-- Create google analytics javascript partial in `app/views/shared/analytics` as `_ga_new_subdomain.html.erb`. Use one of the existing GA files as a guide. Simply replace the analytics ID with the appropriate ID for the new subdomain:
-
-  ```
-  ga('create', 'new_analytics_id', 'auto', {
-    userId: userGaId
-  });
-  ```
-
-  NOTE: When not using Google Analytics, the partial file must still be present, but it may be left empty.
-
 - If applicable, add google analytics home page url and datastudio link (when created) to en.yml and es.yml
 
   ```
