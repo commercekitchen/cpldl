@@ -113,7 +113,9 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :attachments, only: [:destroy]
+    resources :attachments, only: [:destroy] do
+      put :sort, on: :collection
+    end
 
     namespace :custom do
       resources :translations, constraints: { :id => /[^\/]+/ }

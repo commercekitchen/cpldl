@@ -136,11 +136,11 @@ class Course < ApplicationRecord
   end
 
   def additional_resource_attachments
-    self.attachments.where(doc_type: 'additional-resource')
+    self.attachments.where(doc_type: 'additional-resource').order(:attachment_order)
   end
 
   def text_copy_attachments
-    (parent || self).attachments.where(doc_type: 'text-copy')
+    (parent || self).attachments.where(doc_type: 'text-copy').order(:attachment_order)
   end
 
   def published?

@@ -91,7 +91,8 @@ CREATE TABLE public.attachments (
     document_file_size bigint,
     document_updated_at timestamp without time zone,
     doc_type character varying,
-    file_description character varying
+    file_description character varying,
+    attachment_order integer DEFAULT 0
 );
 
 
@@ -1910,6 +1911,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220215194253'),
 ('20220319171829'),
 ('20220803035909'),
-('20220819184026');
+('20220819184026'),
+('20221017042846');
 
 
