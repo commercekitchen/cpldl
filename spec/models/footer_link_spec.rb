@@ -40,4 +40,10 @@ RSpec.describe FooterLink, type: :model do
     link.save
     expect(link.reload.url).to eq('http://www.example.com')
   end
+
+  it 'handles whitespace' do
+    link.url = ' https://www.example.com/'
+    link.save
+    expect(link.reload.url).to eq('https://www.example.com/')
+  end
 end
