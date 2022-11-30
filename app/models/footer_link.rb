@@ -12,6 +12,7 @@ class FooterLink < ApplicationRecord
   private
 
   def normalize_url
+    url.strip!
     uri = URI.parse(url)
     
     if uri.scheme.nil? && uri.host.nil?
