@@ -3,13 +3,13 @@
   <p>
     <%= t('certificate.this_award') %>
   </p>
-    <% if current_user %>
-      <%= content_tag :h2, "#{current_user.first_name} #{current_user.last_name}", class: "name" %>
-    <% else %>
-      <br/><br/>
-      <%= t('certificate.name_fill_long') %>
-      <br/>
-    <% end %>
+  <% if current_user %>
+    <%= content_tag :h2, "#{current_user.first_name} #{current_user.last_name}", class: "name" %>
+  <% else %>
+    <br/><br/>
+    <%= t('certificate.name_fill_long') %>
+    <br/>
+  <% end %>
   <p>
     <%= t('certificate.has_completed') %>
   </p>
@@ -17,5 +17,5 @@
   <p>
     <%= t('certificate.as_of') %> <%= course_completion_date(current_user, @course) %>
   </p>
-  <%= wicked_pdf_image_tag "dl_logo.png" %>
+  <%= image_tag wicked_pdf_asset_base64 "dl_logo.png" %>
 </div>
