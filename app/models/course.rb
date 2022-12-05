@@ -40,6 +40,7 @@ class Course < ApplicationRecord
   has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy, inverse_of: :course
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
+  has_many :resource_links, dependent: :destroy
   accepts_nested_attributes_for :attachments,
                                 reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
@@ -48,6 +49,7 @@ class Course < ApplicationRecord
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
   accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
+  accepts_nested_attributes_for :resource_links, reject_if: :all_blank, allow_destroy: true
 
   # Presence validations
   validates :title, :pub_status, presence: true

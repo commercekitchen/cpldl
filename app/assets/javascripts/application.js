@@ -15,4 +15,5 @@
 //= require select2.full
 //= require html.sortable
 //= require ckeditor/init
+//= require cocoon
 //= require_tree .

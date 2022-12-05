@@ -1,17 +1,21 @@
 <h2 class="text-color"><%= t('course_page.additional_resources') %></h2>
-<% if @course.additional_resource_attachments.count > 0 %>
+<% if (@course.additional_resource_attachments.count + @course.resource_links.count) > 0 %>
   <ul class="no-padding">
-  <% @course.additional_resource_attachments.each do |a| %>
-    <%= link_to attachment_path(a), target: "_blank", class: "block_link" do %>
-      <li class="attachment-download">
-        <i class="icon-download"></i>
-        <%= a.document_file_name %>
-        <% if a.file_description.present? %>
-          <small class="note file-description"><%= a.file_description %></small>
-        <% end %>
-      </li>
+    <% @course.additional_resource_attachments.each do |a| %>
+      <%= link_to attachment_path(a), target: '_blank', class: 'block_link' do %>
+        <li class="attachment-download">
+          <i class="icon-download"></i>
+          <%= a.document_file_name %>
+          <% if a.file_description.present? %>
+            <small class="note file-description"><%= a.file_description %></small>
+          <% end %>
+        </li>
+      <% end %>
     <% end %>
-  <% end %>
+    <br/>
+    <% @course.resource_links.each do |l| %>
+      <%= link_to l.label, l.url, target: '_blank', class: 'block_link' %>
+    <% end %>
   </ul>
 <% else %>
   <div class="note"><%= t('course_page.there_are_no_additional_resources') %></div>
