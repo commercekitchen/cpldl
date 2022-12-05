@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-class FooterLink < ApplicationRecord
+class ResourceLink < ApplicationRecord
   include UrlNormalizable
 
-  belongs_to :organization
-  belongs_to :language
+  belongs_to :course
 
   validates :label, presence: true
   validates :url, presence: true

@@ -835,6 +835,39 @@ ALTER SEQUENCE public.programs_id_seq OWNED BY public.programs.id;
 
 
 --
+-- Name: resource_links; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.resource_links (
+    id bigint NOT NULL,
+    course_id bigint,
+    label character varying NOT NULL,
+    url character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: resource_links_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.resource_links_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: resource_links_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.resource_links_id_seq OWNED BY public.resource_links.id;
+
+
+--
 -- Name: roles; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1196,6 +1229,13 @@ ALTER TABLE ONLY public.programs ALTER COLUMN id SET DEFAULT nextval('public.pro
 
 
 --
+-- Name: resource_links id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_links ALTER COLUMN id SET DEFAULT nextval('public.resource_links_id_seq'::regclass);
+
+
+--
 -- Name: roles id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1407,6 +1447,14 @@ ALTER TABLE ONLY public.programs
 
 
 --
+-- Name: resource_links resource_links_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.resource_links
+    ADD CONSTRAINT resource_links_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: roles roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1613,6 +1661,13 @@ CREATE INDEX index_program_locations_on_program_id ON public.program_locations U
 --
 
 CREATE INDEX index_programs_on_organization_id ON public.programs USING btree (organization_id);
+
+
+--
+-- Name: index_resource_links_on_course_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_resource_links_on_course_id ON public.resource_links USING btree (course_id);
 
 
 --
@@ -1912,6 +1967,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220319171829'),
 ('20220803035909'),
 ('20220819184026'),
-('20221017042846');
+('20221017042846'),
+('20221205023629');
 
 

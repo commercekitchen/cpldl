@@ -40,6 +40,7 @@ class Course < ApplicationRecord
   has_many :lessons, -> { order(:lesson_order) }, dependent: :destroy, inverse_of: :course
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
+  has_many :resource_links, dependent: :destroy
   accepts_nested_attributes_for :attachments,
                                 reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
 
