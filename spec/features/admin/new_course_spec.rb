@@ -14,11 +14,15 @@ feature 'Admin user creates new course and lesson' do
   end
   let(:new_category_name) { Faker::Lorem.word }
 
-  def fill_basic_course_info
+  def fill_basic_course_info(js: false)
     fill_in :course_title, with: 'New Course Title'
     fill_in :course_contributor, with: 'Jane Doe'
     fill_in :course_summary, with: 'Summary for new course'
-    fill_in :course_description, with: 'Description for new course'
+    if js
+      fill_in_ckeditor :course_description, with: 'Description for new course'
+    else
+      fill_in :course_description, with: 'Description for new course'
+    end
     fill_in :course_survey_url, with: 'http://survey.example.com'
     check 'Topic A'
     check 'Other Topic'
@@ -101,16 +105,34 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_content('Why_Use_a_Computer_Worksheet.pdf')
   end
 
-  scenario 'adds resource links' do
-    fill_basic_course_info
+  scenario 'adds resource links', js: true do
+    fill_basic_course_info(js: true)
     within '.resource-links' do
-      fill_in 'label', with: 'New Resource Link'
-      fill_in 'url', with: 'example.com'
+      expect(page).not_to have_selector('.nested-fields')
+      click_link 'Add Resource Link'
+
+      within '.nested-fields' do
+        fill_in 'Label', with: 'New Resource Link'
+        fill_in 'URL', with: 'example.com'
+      end
+
+      # Remove link
+      click_link 'Remove Link'
+      expect(page).not_to have_selector('.nested-fields')
+
+      # Re-add link
+      click_link 'Add Resource Link'
+
+      within '.nested-fields' do
+        fill_in 'Label', with: 'New Resource Link'
+        fill_in 'URL', with: 'example.com'
+      end
     end
+
     click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
-    expect(page).to have_content('New Resource Link')
-    expect(page).to have_content('https://www.example.com')
+    expect(page).to have_field('Label', with: 'New Resource Link')
+    expect(page).to have_field('URL', with: 'https://www.example.com')
   end
 
   scenario 'adds a lesson', js: true do

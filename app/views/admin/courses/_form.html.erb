@@ -53,7 +53,9 @@
       <i>Add any external links for further learning. These links will be visible to users after completing the course.</i>
     </p>
 
-    <%= link_to_add_association 'Add Resource Link', f, :resource_links, partial: 'admin/courses/forms/resource_link_fields' %>
+    <div class='fields'>
+      <%= link_to_add_association 'Add Resource Link', f, :resource_links, partial: 'admin/courses/forms/resource_link_fields', data: { association_insertion_method: 'prepend' } %>
+    </div>
   </fieldset>
 
   <fieldset class='additional-content'>

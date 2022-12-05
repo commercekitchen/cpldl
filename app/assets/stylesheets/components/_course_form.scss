@@ -11,6 +11,7 @@
     "description description"
     "text_copies text_copies"
     "resources resources"
+    "links links"
     "additional_content additional_content"
     "topics categories"
     "language format"
@@ -26,6 +27,7 @@
       "errors errors"
       "categories access_level"
       "resources resources"
+      "links links"
       "additional_content additional_content"
       "pub_status ."
       "survey_url ."
@@ -72,6 +74,14 @@
 
   .resources {
     grid-area: resources;
+
+    .fields {
+      margin-left: 2em;
+    }
+  }
+
+  .resource-links {
+    grid-area: links;
 
     .fields {
       margin-left: 2em;
