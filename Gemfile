@@ -82,6 +82,9 @@ gem 'aws-sdk-s3', '~> 1'
 # Rack::Proxy for S3 Proxy middleware
 gem 'rack-proxy'
 
+# Cocoon for dynamic nested forms
+gem 'cocoon'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

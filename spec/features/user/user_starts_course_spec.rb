@@ -9,6 +9,8 @@ feature 'User visits course listing page' do
   let!(:course2) { FactoryBot.create(:course, title: 'Course 2', course_order: 2, organization: organization) }
   let!(:course3) { FactoryBot.create(:course, title: 'Course 3', course_order: 3, organization: organization) }
   let(:www_course) { FactoryBot.create(:course_with_lessons, organization: www) }
+  let!(:attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: course1) }
+  let!(:resource_link) { FactoryBot.create(:resource_link, course: course1) }
 
   before(:each) do
     switch_to_subdomain(organization.subdomain)
@@ -39,6 +41,11 @@ feature 'User visits course listing page' do
       visit root_path
       first(:css, '.course-widget').click
       expect(current_path).to eq(course_path(course1))
+
+      # Course attachments and resource links
+      expect(page).to have_link(attachment.document_file_name)
+      expect(page).to have_link(resource_link.label)
+      expect(page).to have_link(href: resource_link.url)
     end
 
     context 'on a login_required subdomain' do
@@ -74,6 +81,17 @@ feature 'User visits course listing page' do
 
     before(:each) do
       login_as(user)
+    end
+
+    scenario 'can click on a course to be taken to the course page' do
+      visit root_path
+      first(:css, '.course-widget').click
+      expect(current_path).to eq(course_path(course1))
+
+      # Course attachments and resource links
+      expect(page).to have_link(attachment.document_file_name)
+      expect(page).to have_link(resource_link.label)
+      expect(page).to have_link(href: resource_link.url)
     end
 
     scenario 'can click to start a course and be taken to the first lesson' do

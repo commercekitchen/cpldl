@@ -65,6 +65,14 @@ def change_password(password)
   click_button 'Save'
 end
 
+def fill_in_ckeditor(locator, opts)
+  content = opts.fetch(:with).to_json # convert to a safe javascript string
+  page.execute_script <<-SCRIPT
+    CKEDITOR.instances['#{locator}'].setData(#{content});
+    $('textarea##{locator}').text(#{content});
+  SCRIPT
+end
+
 Capybara.server = :webrick
 
 # Use Selenium and Chromedriver for feature specs
