@@ -132,7 +132,14 @@ feature 'Admin user creates new course and lesson' do
     click_button 'Save Course'
     expect(page).to have_content('Course was successfully created.')
     expect(page).to have_field('Label', with: 'New Resource Link')
-    expect(page).to have_field('URL', with: 'https://www.example.com')
+    expect(page).to have_field('URL', with: 'https://example.com')
+
+    # Remove resource link
+    click_link 'Remove Link'
+    expect(page).not_to have_selector('.nested-fields')
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully updated.')
+    expect(page).not_to have_selector('.nested-fields')
   end
 
   scenario 'adds a lesson', js: true do

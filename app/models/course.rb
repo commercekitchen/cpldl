@@ -49,6 +49,7 @@ class Course < ApplicationRecord
 
   accepts_nested_attributes_for :category, reject_if: :all_blank
   accepts_nested_attributes_for :course_topics, reject_if: proc { |ct| ct[:topic_attributes][:title].blank? }
+  accepts_nested_attributes_for :resource_links, reject_if: :all_blank, allow_destroy: true
 
   # Presence validations
   validates :title, :pub_status, presence: true
