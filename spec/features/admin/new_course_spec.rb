@@ -101,6 +101,18 @@ feature 'Admin user creates new course and lesson' do
     expect(page).to have_content('Why_Use_a_Computer_Worksheet.pdf')
   end
 
+  scenario 'adds resource links' do
+    fill_basic_course_info
+    within '.resource-links' do
+      fill_in 'label', with: 'New Resource Link'
+      fill_in 'url', with: 'example.com'
+    end
+    click_button 'Save Course'
+    expect(page).to have_content('Course was successfully created.')
+    expect(page).to have_content('New Resource Link')
+    expect(page).to have_content('https://www.example.com')
+  end
+
   scenario 'adds a lesson', js: true do
     visit edit_admin_course_path(course_id: course, id: course.id)
     click_button 'Save & Edit Lessons'

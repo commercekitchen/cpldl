@@ -47,6 +47,15 @@
   <%= render partial: 'admin/courses/forms/text_copy_fields', locals: { f: f } %>
   <%= render partial: 'admin/courses/forms/additional_resource_fields', locals: { f: f } %>
 
+  <fieldset class='resource-links'>
+    <%= f.label :document, "External Resource Links" %>
+    <p>
+      <i>Add any external links for further learning. These links will be visible to users after completing the course.</i>
+    </p>
+
+    <%= link_to_add_association 'Add Resource Link', f, :resource_links %>
+  </fieldset>
+
   <fieldset class='additional-content'>
     <%= f.label :notes, "Content for Further Learning", class: "" %>
     <p><i>This content is available to users after completing the course.</i></p>
