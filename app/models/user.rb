@@ -21,7 +21,7 @@ class User < ApplicationRecord
 
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile
-  validates_associated :profile
+  validates_associated :profile, unless: :phone_number_user?
 
   has_many :course_progresses, dependent: :destroy
 
@@ -32,10 +32,14 @@ class User < ApplicationRecord
   nilify_blanks only: [:email]
 
   before_validation :set_password_from_pin, if: :library_card_login?
+
   # Validate card number and pin for library card logins
   validates :library_card_number, uniqueness: { scope: :organization_id, if: :library_card_login? },
                                   format: { with: /\A[0-9]{7,}\z/, if: :library_card_login? }
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
+
+  # Validate phone number if applicable
+  validates :phone_number, format: { with: /\A\d{10}\z/ , if: :phone_number_user?, message: 'must be exactly 10 digits' }
 
   # Serialized hash of quiz responses
   serialize :quiz_responses_object
@@ -47,13 +51,15 @@ class User < ApplicationRecord
            :library_location_name,
            :library_location_zipcode, to: :profile, allow_nil: true
 
-  ### Devise overrides to allow library card number login
+  ### Devise overrides to allow library card and phone number login(s)
   attr_writer :login
 
   def login
     @login || (
       if self.organization.present? && library_card_login?
         self.library_card_number
+      elsif phone_number_user?
+        self.phone_number
       else
         self.email
       end
@@ -61,7 +67,7 @@ class User < ApplicationRecord
   end
 
   def email_required?
-    if organization.library_card_login?
+    if library_card_login? || phone_number_user?
       false
     else
       super
@@ -69,7 +75,15 @@ class User < ApplicationRecord
   end
 
   def email_changed?
-    if organization.library_card_login?
+    if library_card_login? || phone_number_user?
+      false
+    else
+      super
+    end
+  end
+
+  def password_required?
+    if phone_number_user?
       false
     else
       super
@@ -112,6 +126,10 @@ class User < ApplicationRecord
 
   def library_card_login?
     organization.library_card_login? && !admin?
+  end
+
+  def phone_number_user?
+    organization&.phone_number_users_enabled && !admin?
   end
 
   ###
