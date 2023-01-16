@@ -48,8 +48,6 @@ class User < ApplicationRecord
            :library_location_zipcode, to: :profile, allow_nil: true
 
   ### Devise overrides to allow library card number login
-  # TODO: Pull this into a concern
-
   attr_writer :login
 
   def login

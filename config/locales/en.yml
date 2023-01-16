@@ -68,6 +68,7 @@ en:
     login: "Log In"
     signup: "Sign Up"
     signup_notice: "Please login if you have an account"
+    enter_phone_number: "Enter Phone Number"
     choose_a_course:
       default_org: "Choose a course below to start learning or search courses."
       www: "Choose a course below to start learning or search courses."
