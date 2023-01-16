@@ -44,9 +44,6 @@ Rails.application.routes.draw do
 
   resources :quiz_responses, only: [:new, :create]
 
-  # Phone number "login" page
-  resources :phone_number_sessions, only: [:new, :create, :destroy]
-
   resources 'cms_pages', only: [:show]
 
   get '/static/customization', to: redirect('/cms_pages/pricing-features')

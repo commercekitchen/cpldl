@@ -83,12 +83,6 @@ class LessonsController < ApplicationController
   def auth_subsites
     if current_organization.login_required?
       authenticate_user!
-    elsif current_organization.phone_number_users_enabled
-      if session[:user_phone_number].present?
-        return true
-      else
-        redirect_to new_phone_number_session_path
-      end
     end
   end
 

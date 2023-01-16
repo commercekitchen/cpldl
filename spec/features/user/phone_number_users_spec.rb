@@ -3,8 +3,9 @@
 require 'feature_helper'
 
 feature 'User visits a subdomain with phone number users enabled' do
-  let(:organization) { FactoryBot.create(:organization, login_required: false, phone_number_users_enabled: true) }
+  let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true) }
   let!(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+  let(:lesson) { course.lessons.first }
 
   before do
     switch_to_subdomain(organization.subdomain)
@@ -16,16 +17,16 @@ feature 'User visits a subdomain with phone number users enabled' do
     find('.course-widget').click
     expect(current_path).to eq(course_path(course))
     click_on('Start Course')
-    expect(current_path).to eq(new_phone_number_session_path)
+    expect(current_path).to eq(new_user_session_path)
 
     # Invalid phone number
     fill_in 'Phone Number', with: '1234'
     click_on('Submit')
-    expect(current_path).to eq(new_phone_number_session_path)
-    expect(page).to have_content('Invalid Phone Number')
+    expect(current_path).to eq(new_user_session_path)
+    expect(page).to have_content('Phone number must be exactly 10 digits')
     fill_in 'Phone Number', with: '1231231234'
     click_on('Submit')
-    expect(current_path).to eq(courses_path(course))
+    expect(current_path).to eq(course_lesson_path(course, lesson))
   end
 
   scenario 'user revisits partially completed course' do

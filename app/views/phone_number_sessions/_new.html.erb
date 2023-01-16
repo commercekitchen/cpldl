@@ -1,6 +1,6 @@
 <h2 class="text-color"><%= t("home.enter_phone_number") %></h2>
 
-<%= form_for :phone_number, url: phone_number_sessions_path do |f| %>
+<%= form_for :phone_number, url: user_session_path do |f| %>
   <div class="form-row">
     <%= f.text_field :phone, placeholder: "#{t('profile.phone')}" %>
   </div>
