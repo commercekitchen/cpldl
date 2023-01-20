@@ -13,7 +13,7 @@ class MyCoursesController < ApplicationController
     end
 
     @courses = params[:search].blank? ? @authorized_courses.where(id: tracked_course_ids) : @results
-    @skip_quiz = current_user.profile.opt_out_of_recommendations
+    @skip_quiz = current_user.profile&.opt_out_of_recommendations
 
     respond_to do |format|
       format.html { render :index }

@@ -39,7 +39,7 @@ class User < ApplicationRecord
   validates :library_card_pin, format: { with: /\A[0-9]{4}\z/, if: :library_card_login? }
 
   # Validate phone number if applicable
-  validates :phone_number, format: { with: /\A\d{10}\z/ , if: :phone_number_user?, message: 'must be exactly 10 digits' }
+  validates :phone_number, uniqueness: { allow_blank: true }, format: { with: /\A\d{10}\z/ , if: :phone_number_user?, message: 'must be exactly 10 digits' }
 
   # Serialized hash of quiz responses
   serialize :quiz_responses_object

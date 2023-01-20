@@ -54,4 +54,9 @@ FactoryBot.define do
       end
     end
   end
+
+  factory :phone_number_user, class: 'User' do
+    phone_number { 10.times.map { rand(10) }.join('') }
+    organization { FactoryBot.create(:organization, phone_number_users_enabled: true) }
+  end
 end
