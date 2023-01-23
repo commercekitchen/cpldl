@@ -40,7 +40,9 @@
     </div>
   <% end %>
 
-  <%= hidden_field_tag :admin, params[:admin] %>
+  <% if params[:admin] == 'true' %>
+    <%= hidden_field_tag :admin, params[:admin] %>
+  <% end %>
 
   <%= f.submit "#{t('login_signup.access_courses')}", class: "btn mobile-large-full-width button-color"%>
 <% end %>

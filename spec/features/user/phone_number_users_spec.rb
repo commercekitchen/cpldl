@@ -103,7 +103,7 @@ feature 'User visits a subdomain with phone number users enabled' do
     find('.retake-quiz').click
 
     expect(current_path).to eq(new_quiz_response_path)
-    expect(page).to have_content('what would you like to learn?')
+    expect(page).to have_content('(123) 123-1234, what would you like to learn?')
     choose 'set_one_2'
     choose 'set_two_2'
     choose 'set_three_3'
