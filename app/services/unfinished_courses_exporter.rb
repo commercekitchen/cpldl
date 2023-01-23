@@ -10,7 +10,7 @@ class UnfinishedCoursesExporter
   end
 
   def to_csv
-    users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number)
+    users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number, :phone_number)
     CSV.generate do |csv|
       csv << column_headers
       users.each do |user|
@@ -20,7 +20,7 @@ class UnfinishedCoursesExporter
           next if cp.complete?
 
           program_name = user.program.present? ? user.program.program_name : ''
-          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.created_at.strftime('%m-%d-%Y'), user.profile.library_location&.name]
+          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.created_at.strftime('%m-%d-%Y'), user.profile&.library_location&.name]
           values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if school_program_org?
           csv.add_row values
         end

@@ -65,6 +65,8 @@ class Organization < ApplicationRecord
   def authentication_key_field(admin = false)
     if library_card_login? && !admin
       :library_card_number
+    elsif phone_number_users_enabled? && !admin
+      :phone_number
     else
       :email
     end
