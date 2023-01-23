@@ -23,7 +23,7 @@ feature 'User visits a subdomain with phone number users enabled' do
     fill_in 'Phone Number', with: '1234'
     click_on('Submit')
     expect(current_path).to eq(new_user_session_path)
-    expect(page).to have_content('Phone number must be exactly 10 digits')
+    expect(page).to have_content('Phone Number must be exactly 10 digits')
 
     # Valid phone number
     fill_in 'Phone Number', with: '1231231234'
