@@ -62,16 +62,16 @@ class Organization < ApplicationRecord
     programs.where(parent_type: :students_and_parents).present?
   end
 
-  def authentication_key_field
-    if library_card_login?
+  def authentication_key_field(admin = false)
+    if library_card_login? && !admin
       :library_card_number
     else
       :email
     end
   end
 
-  def password_key_field
-    if library_card_login?
+  def password_key_field(admin = false)
+    if library_card_login? && !admin
       :library_card_pin
     else
       :password

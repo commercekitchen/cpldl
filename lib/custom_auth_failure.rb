@@ -11,8 +11,8 @@ class CustomAuthFailure < Devise::FailureApp
 
   def subsite_auth_keys
     {
-      authentication_keys: User.human_attribute_name(organization.authentication_key_field, { locale: I18n.locale }),
-      password_keys: User.human_attribute_name(organization.password_key_field, { locale: I18n.locale })
+      authentication_keys: User.human_attribute_name(organization.authentication_key_field(params[:admin]), { locale: I18n.locale }),
+      password_keys: User.human_attribute_name(organization.password_key_field(params[:admin]), { locale: I18n.locale })
     }
   end
 

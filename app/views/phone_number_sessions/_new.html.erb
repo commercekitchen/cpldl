@@ -5,5 +5,12 @@
     <%= f.text_field :phone, placeholder: "#{t('profile.phone')}" %>
   </div>
 
-  <%= f.submit t('common.submit'), class: "button-color" %>
+  <div class='form-row inline space-between'>
+    <div>
+      <%= f.submit t('common.submit'), class: "button-color" %>
+    </div>
+    <div>
+      <%= link_to 'Log In as Admin', new_user_session_path(admin: true) %>
+    </div>
+  </div>
 <% end %>

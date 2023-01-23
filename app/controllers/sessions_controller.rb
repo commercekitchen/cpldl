@@ -10,7 +10,7 @@ class SessionsController < Devise::SessionsController
   end
 
   def create
-    if current_organization.phone_number_users_enabled && phone_number_params.present?
+    if current_organization.phone_number_users_enabled && !params[:user] && phone_number_params.present?
       self.resource = warden.authenticate!(:phone_number)
       sign_in(resource_name, resource)
       respond_with resource, location: after_sign_in_path_for(resource)
