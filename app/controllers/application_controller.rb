@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include ApplicationHelper
-  include Pundit
+  include Pundit::Authorization
 
   before_action :current_organization
   before_action :set_locale
