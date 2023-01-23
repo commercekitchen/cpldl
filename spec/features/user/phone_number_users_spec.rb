@@ -29,9 +29,6 @@ feature 'User visits a subdomain with phone number users enabled' do
     fill_in 'Phone Number', with: '1231231234'
     click_on('Submit')
     expect(current_path).to eq(course_lesson_path(course, lesson))
-
-    # User sees correct greeting
-    expect(page).to have_content('Hi 1231231234!')
   end
 
   scenario 'user revisits partially completed course' do
@@ -58,6 +55,15 @@ feature 'User visits a subdomain with phone number users enabled' do
     visit new_user_session_path
     fill_in 'Phone Number', with: '1231231234'
     click_on('Submit')
+
+    # Verify greetings
+    within('.header-nav') do
+      expect(page).to have_content('Hi (123) 123-1234!')
+    end
+
+    within('.banner') do
+      expect(page).to have_content('Hi (123) 123-1234!')
+    end
     
     # Default account page
     click_link('Account')

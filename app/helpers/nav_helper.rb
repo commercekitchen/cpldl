@@ -10,7 +10,7 @@ module NavHelper
     if org_admin?
       "#{t('logged_in_user.hi')} Admin!"
     elsif current_user.phone_number_user?
-      "#{t('logged_in_user.hi')} #{current_user.phone_number}!"
+      "#{t('logged_in_user.hi')} #{number_to_phone(current_user.phone_number, area_code: true)}!"
     else
       "#{t('logged_in_user.hi')} #{current_user.first_name}!"
     end
