@@ -21,7 +21,7 @@ class CompletedCoursesExporter
           next unless cp.complete?
 
           program_name = user.program.present? ? user.program.program_name : ''
-          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.completed_at.strftime('%m-%d-%Y'), user.profile.library_location&.name]
+          values = [user.send(@primary_id_field), program_name, cp.course.title, cp.completed_at.strftime('%m-%d-%Y'), user.profile&.library_location&.name]
           values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if school_program_org?
           csv.add_row values
         end

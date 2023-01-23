@@ -5,7 +5,7 @@
 <div class="congrats-banner color">
   <div class="form-row">
     <% if current_user %>
-      <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{current_user.first_name}." %>
+      <%= content_tag :p, "#{t('course_completion_page.congratulations')}, #{user_display_name}." %>
     <% end %>
     <%= content_tag :p, "#{t('course_completion_page.you_successfully_completed')} #{@course.title}!", class: "small-margin" %>
   </div>

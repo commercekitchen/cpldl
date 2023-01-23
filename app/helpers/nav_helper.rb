@@ -9,8 +9,8 @@ module NavHelper
   def user_greeting
     if org_admin?
       "#{t('logged_in_user.hi')} Admin!"
-    else
-      "#{t('logged_in_user.hi')} #{current_user.first_name}!"
+    elsif current_user.phone_number_user?
+      "#{t('logged_in_user.hi')} #{user_display_name}!"
     end
   end
 
@@ -21,7 +21,11 @@ module NavHelper
   end
 
   def account_link
-    link_to t('logged_in_user.account'), profile_path, class: 'inline_link'
+    if current_user.phone_number_user?
+      link_to t('logged_in_user.account'), course_completions_path, class: 'inline_link'
+    else
+      link_to t('logged_in_user.account'), profile_path, class: 'inline_link'
+    end
   end
 
   def org_trainers_link

@@ -33,7 +33,7 @@ class CourseCompletionsController < ApplicationController
 
         if current_user
           send_data(@pdf,
-                    filename: "#{current_user.first_name} #{@course.title} completion certificate.pdf",
+                    filename: "#{current_user.first_name || current_user.phone_number} #{@course.title} completion certificate.pdf",
                     type: 'application/pdf')
         else
           send_data(@pdf,

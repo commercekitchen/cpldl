@@ -31,14 +31,18 @@
     </div>
   <% end %>
 
-  <% if devise_mapping.rememberable? && !@library_card_login -%>
+  <% if devise_mapping.rememberable? && !@library_card_login %>
     <div class="form-row">
       <%= f.check_box :remember_me %>
       <%= f.label :remember_me, "#{t('login_signup.keep_me_logged_in')}", class: "plain" %>
       <%= check_box_tag('hide_signin_pass', '1', false, onchange: 'hide_login_password(this);') %>
       <%= label_tag('hide_signin_pass', "#{t('login_signup.hide_password')}", class: 'plain') %>
     </div>
-  <% end -%>
+  <% end %>
+
+  <% if params[:admin] == 'true' %>
+    <%= hidden_field_tag :admin, params[:admin] %>
+  <% end %>
 
   <%= f.submit "#{t('login_signup.access_courses')}", class: "btn mobile-large-full-width button-color"%>
 <% end %>

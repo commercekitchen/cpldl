@@ -159,4 +159,26 @@ describe User do
       expect(user2.valid?).to be_falsey
     end
   end
+
+  context 'phone number user' do
+    let(:org) { create(:organization, phone_number_users_enabled: true) }
+
+    it 'should be valid with valid phone number and org' do
+      user = User.new(phone_number: '1231231234', organization: org)
+      expect(user).to be_valid
+    end
+
+    describe 'invalid phone number' do
+      subject { User.new(phone_number: '1231234', organization: org) }
+
+      it 'should be invalid with invalid phone number' do
+        expect(subject).not_to be_valid
+      end
+
+      it 'should have correct error message' do
+        subject.valid?
+        expect(subject.errors[:phone_number]).to contain_exactly('must be exactly 10 digits')
+      end
+    end
+  end
 end

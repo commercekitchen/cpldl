@@ -14,6 +14,7 @@ class Organization < ApplicationRecord
     user_survey_link           String
     spanish_survey_link        String
     custom_certificate_enabled Boolean, default: false
+    phone_number_users_enabled Boolean, default: false
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
@@ -61,16 +62,18 @@ class Organization < ApplicationRecord
     programs.where(parent_type: :students_and_parents).present?
   end
 
-  def authentication_key_field
-    if library_card_login?
+  def authentication_key_field(admin = false)
+    if library_card_login? && !admin
       :library_card_number
+    elsif phone_number_users_enabled? && !admin
+      :phone_number
     else
       :email
     end
   end
 
-  def password_key_field
-    if library_card_login?
+  def password_key_field(admin = false)
+    if library_card_login? && !admin
       :library_card_pin
     else
       :password

@@ -74,6 +74,7 @@ es:
     login: "Iniciar sesión"
     signup: "Crear una cuenta"
     signup_notice: "Entra en la cuenta si usted tiene una cuenta"
+    enter_phone_number: "Escriba su Número de Teléfono"
     choose_a_course:
       default_org: "Seleccione un curso de los que aparecen a continuación para comenzar."
       www: "Seleccione un curso de los que aparecen a continuación para comenzar."

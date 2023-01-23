@@ -57,7 +57,7 @@ feature 'Admin user updates course' do
 
       expect(page).to have_link('Delete', count: 1)
 
-      expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users after completing the course.')
+      expect(page).to have_content('Upload any supplemental materials for further learning. These files are available to users when viewing the course.')
       expect(page).to have_css('.attachment-upload-fields', count: 1)
       expect(page).to have_link('Add Attachment', count: 1)
 
