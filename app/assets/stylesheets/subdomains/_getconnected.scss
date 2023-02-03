@@ -5,4 +5,10 @@
   @include course_widget($get-connected-orange);
   @include lesson_tile($get-connected-orange, $grey, $get-connected-orange);
   @include icons($get-connected-blue, $get-connected-orange);
+
+  .custom-header-link {
+    color: $get-connected-red;
+    white-space: normal;
+    text-align: left;
+  }
 }
