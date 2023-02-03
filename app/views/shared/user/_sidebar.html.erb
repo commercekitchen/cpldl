@@ -1,7 +1,9 @@
 <div class="sidebar">
   <ul class="sidebar-links">
-    <li><%= link_to "#{t('account.profile')}", profile_path %></li>
-    <% if !current_organization.library_card_login? || current_user&.has_role?(:admin, current_organization) %>
+    <% if !current_user.phone_number_user? %>
+      <li><%= link_to "#{t('account.profile')}", profile_path %></li>
+    <% end %>
+    <% if !(current_user.library_card_login? || current_user.phone_number_user?) || current_user&.has_role?(:admin, current_organization) %>
       <li><%= link_to "#{t('account.login_information')}", account_path %></li>
     <% end %>
     <li><%= link_to "#{t('account.my_completed_courses')}", course_completions_path %></li>

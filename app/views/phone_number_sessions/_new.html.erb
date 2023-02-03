@@ -1,0 +1,16 @@
+<h2 class="text-color"><%= t("home.enter_phone_number") %></h2>
+
+<%= form_for :phone_number, url: user_session_path do |f| %>
+  <div class="form-row">
+    <%= f.text_field :phone, placeholder: "#{t('profile.phone')}" %>
+  </div>
+
+  <div class='form-row inline space-between'>
+    <div>
+      <%= f.submit t('common.submit'), class: "button-color" %>
+    </div>
+    <div>
+      <%= link_to 'Log In as Admin', new_user_session_path(admin: true) %>
+    </div>
+  </div>
+<% end %>

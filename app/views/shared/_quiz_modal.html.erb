@@ -3,7 +3,7 @@
   <div class="modal-fade-screen">
     <div class="modal-inner quiz-modal-inner">
       <div class="modal-close" for="quiz-start-modal"></div>
-      <h2 class="text-color"><%= current_user.first_name %>, <%= t('quiz.intro_text') %> </h2>
+      <h2 class="text-color"><%= user_display_name %>, <%= t('quiz.intro_text') %> </h2>
       <h2 class="text-color"><%= t('quiz.answer_3_questions') %> </h2>
       <div>
         <%= form_tag new_quiz_response_path, id: "msform" do %>

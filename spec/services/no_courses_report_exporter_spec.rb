@@ -60,4 +60,20 @@ describe NoCoursesReportExporter do
       expect(report.to_s).to match(library_card_user.library_card_number)
     end
   end
+
+  describe 'phone number login organization report' do
+    let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true) }
+    let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
+
+    let(:exporter) { described_class.new(organization) }
+    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+
+    it 'should have correct headers' do
+      expect(report.headers).to eq(['Phone Number', 'Registration Date'])
+    end
+
+    it 'should include user phone number' do
+      expect(report.to_s).to match('1231231234')
+    end
+  end
 end

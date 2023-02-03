@@ -14,6 +14,15 @@ feature 'Admin user logs in' do
 
     context 'with valid profile' do
       scenario 'is sent to admin dashboard page' do
+        visit new_user_session_path
+
+        # Failed login attempt
+        find('#login_email').set('foo@bar.com')
+        find('#login_password').set('abc123')
+        click_button 'Access Courses'
+        expect(page).to have_content('Invalid Email or Password')
+
+        # Successful login
         log_in_with @user.email, @user.password
         expect(current_path).to eq(admin_dashboard_index_path)
       end
@@ -92,10 +101,60 @@ feature 'Admin user logs in' do
 
     context 'with valid profile' do
       scenario 'can sign in with email and password' do
+        visit new_user_session_path(admin: true)
+
+        # Failed login attempt
+        find('#login_email').set('foo@bar.com')
+        find('#login_password').set('abc123')
+        click_button 'Access Courses'
+        expect(page).to have_content('Invalid Email or Password')
+
+        # Successful attempt
         log_in_with(user.email, user.password, true)
         expect(current_path).to eq(admin_dashboard_index_path)
       end
     end
+  end
 
+  context 'phone number organization' do
+    let(:org) { create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true) }
+    let(:user) { create(:user) }
+
+    before(:each) do
+      user.add_role(:admin, org)
+      user.update(organization: org)
+      switch_to_subdomain(org.subdomain)
+    end
+
+    context 'with no profile' do
+      scenario 'can sign in with email and password' do
+        user.update(profile: nil)
+        visit new_user_session_path
+        click_link('Log In as Admin')
+        expect(page).to have_current_path(new_user_session_path(admin: true))
+        log_in_with(user.email, user.password, true)
+        expect(current_path).to eq(profile_path)
+      end
+    end
+
+    context 'with valid profile' do
+      scenario 'can sign in with email and password' do
+        visit new_user_session_path
+        click_link('Log In as Admin')
+        expect(page).to have_current_path(new_user_session_path(admin: true))
+        
+        # Failed login attempt
+        find('#login_email').set('foo@bar.com')
+        find('#login_password').set('abc123')
+        click_button 'Access Courses'
+        expect(page).to have_content('Invalid Email or Password')
+
+        # Successful login
+        find('#login_email').set(user.email)
+        find('#login_password').set(user.password)
+        click_button 'Access Courses'
+        expect(current_path).to eq(admin_dashboard_index_path)
+      end
+    end
   end
 end

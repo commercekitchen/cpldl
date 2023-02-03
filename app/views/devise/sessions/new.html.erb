@@ -1,1 +1,5 @@
-<%= render 'devise/shared/login_and_signup' %>
+<% if @phone_number_login %>
+  <%= render 'phone_number_sessions/new' %>
+<% else %>
+  <%= render 'devise/shared/login_and_signup' %>
+<% end %>

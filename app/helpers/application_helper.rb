@@ -51,6 +51,14 @@ module ApplicationHelper
     Language.find_by(name: language_string)
   end
 
+  def user_display_name
+    if current_user.phone_number_user?
+      number_to_phone(current_user.phone_number, area_code: true)
+    else
+      current_user.first_name
+    end
+  end
+
   protected
 
   def find_organization

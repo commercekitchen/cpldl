@@ -1054,7 +1054,8 @@ CREATE TABLE public.users (
     program_id integer,
     encrypted_library_card_pin character varying,
     encrypted_library_card_pin_iv character varying,
-    partner_id bigint
+    partner_id bigint,
+    phone_number character varying
 );
 
 
@@ -1968,6 +1969,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220803035909'),
 ('20220819184026'),
 ('20221017042846'),
-('20221205023629');
+('20221205023629'),
+('20230116033009');
 
 

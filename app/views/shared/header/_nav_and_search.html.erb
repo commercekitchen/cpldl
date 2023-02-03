@@ -8,4 +8,8 @@
   <% end %>
 
   <%= render partial: "shared/search_box", locals: { search_path: courses_path, placeholder_text: t("home.search_courses"), search_param: :search }  %>
+
+  <% if current_organization.subdomain == 'getconnected' %>
+    <%= link_to 'Learn more about how to get Free Home Internet with the Affordable Connectivity Program!', 'https://www.internetforallnow.org/applytoday', class: 'custom-header-link', target: '_blank' %>
+  <% end %>
 </div>

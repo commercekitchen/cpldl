@@ -68,19 +68,19 @@ describe CompletionReportService do
       expect(parsed_report.headers).to eq(['Zip Code', 'Sign-Ups(total)', 'Course Title', 'Completions'])
     end
 
-    it 'should include correct count for zip code 1' do
+    it 'includes correct count for zip code 1' do
       expect(parsed_report.to_s).to match("#{user.profile.zip_code},2")
     end
 
-    it 'should include correct count for other zip code' do
+    it 'includes correct count for other zip code' do
       expect(parsed_report.to_s).to match("#{other_zip},1")
     end
 
-    it 'should include completions count for course 1' do
+    it 'includes completions count for course 1' do
       expect(parsed_report.to_s).to match("#{course1.title},2")
     end
 
-    it 'should include completions count for course 2' do
+    it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},1")
     end
   end
@@ -97,19 +97,19 @@ describe CompletionReportService do
       expect(parsed_report.to_s).to_not match('No Partner Selected')
     end
 
-    it 'should include correct count for partner 1' do
+    it 'includes correct count for partner 1' do
       expect(parsed_report.to_s).to match("#{partner1.name},2")
     end
 
-    it 'should include correct count for partner 2' do
+    it 'includes correct count for partner 2' do
       expect(parsed_report.to_s).to match("#{partner2.name},1")
     end
 
-    it 'should include completions count for course 1' do
+    it 'includes completions count for course 1' do
       expect(parsed_report.to_s).to match("#{course1.title},1")
     end
 
-    it 'should include completions count for course 2' do
+    it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},2")
     end
   end
@@ -122,19 +122,19 @@ describe CompletionReportService do
       expect(parsed_report.headers).to eq(['Library', 'Sign-Ups(total)', 'Course Title', 'Completions'])
     end
 
-    it 'should include correct count for library 1' do
+    it 'includes correct count for library 1' do
       expect(parsed_report.to_s).to match("#{library1.name},2")
     end
 
-    it 'should include correct count for library 2' do
+    it 'includes correct count for library 2' do
       expect(parsed_report.to_s).to match("#{library2.name},1")
     end
 
-    it 'should include completions count for course 1' do
+    it 'includes completions count for course 1' do
       expect(parsed_report.to_s).to match("#{course1.title},2")
     end
 
-    it 'should include completions count for course 2' do
+    it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},1")
     end
   end
@@ -143,7 +143,7 @@ describe CompletionReportService do
     let(:report) { report_service.generate_completion_report(group_by: 'survey_responses') }
     let(:parsed_report) { CSV.parse(report, headers: true) }
 
-    it 'should return correct column headers' do
+    it 'returns correct column headers' do
       expected_headers = ['How comfortable are you with desktop or laptop computers?',
                           'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
                           'What would you like to do with a computer?',
@@ -153,20 +153,53 @@ describe CompletionReportService do
       expect(parsed_report.headers).to eq(expected_headers)
     end
 
-    it 'should return correct responses count for response set 1' do
+    it 'returns correct responses count for response set 1' do
       expect(parsed_report.to_s).to match("#{I18n.t('quiz.set_one_1')},\"#{I18n.t('quiz.set_two_3')}\",#{I18n.t('quiz.set_three_3')},1")
     end
 
-    it 'should return correct responses count for response set 2' do
+    it 'returns correct responses count for response set 2' do
       expect(parsed_report.to_s).to match("\"#{I18n.t('quiz.set_one_2')}\",\"#{I18n.t('quiz.set_two_1')}\",#{I18n.t('quiz.set_three_2')},1")
     end
 
-    it 'should include completions count for course 1' do
+    it 'includes completions count for course 1' do
       expect(parsed_report.to_s).to match("#{course1.title},1")
     end
 
-    it 'should include completions count for course 2' do
+    it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},1")
+    end
+  end
+
+  context 'phone_number_users_enabled organization' do
+    let(:phone_org) do
+      FactoryBot.create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true)
+    end
+    let(:phone_user) do
+      FactoryBot.create(:phone_number_user, organization: phone_org, quiz_responses_object: responses1)
+    end
+    let!(:course_progress1) do
+      FactoryBot.create(:course_progress, course_id: course1.id, tracked: true, completed_at: Time.zone.now, user: phone_user)
+    end
+    let(:phone_report_service) { CompletionReportService.new(organization: phone_org) }
+    let(:report) { phone_report_service.generate_completion_report(group_by: 'survey_responses') }
+    let(:parsed_report) { CSV.parse(report, headers: true) }
+
+    it 'returns correct column headers' do
+      expected_headers = ['How comfortable are you with desktop or laptop computers?',
+                          'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
+                          'What would you like to do with a computer?',
+                          'Total Responses',
+                          'Course Title',
+                          'Completions']
+      expect(parsed_report.headers).to eq(expected_headers)
+    end
+
+    it 'returns correct responses count for response set 1' do
+      expect(parsed_report.to_s).to match("#{I18n.t('quiz.set_one_1')},\"#{I18n.t('quiz.set_two_3')}\",#{I18n.t('quiz.set_three_3')},1")
+    end
+
+    it 'includes completions count for course 1' do
+      expect(parsed_report.to_s).to match("#{course1.title},1")
     end
   end
 end

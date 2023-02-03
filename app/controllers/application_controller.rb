@@ -2,7 +2,7 @@
 
 class ApplicationController < ActionController::Base
   include ApplicationHelper
-  include Pundit
+  include Pundit::Authorization
 
   before_action :current_organization
   before_action :set_locale
@@ -70,6 +70,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_valid_profile
+    return if current_user&.phone_number_user?
     if invalid_user_profile?(current_user) || missing_profile?(current_user)
       flash[:alert] = 'You must have a valid profile before you can continue:'
       redirect_to invalid_profile_path
@@ -161,7 +162,7 @@ class ApplicationController < ActionController::Base
     elsif invalid_user_profile?(user)
       profile_path
     else
-      root_path
+      stored_location_for(user) || root_path
     end
   end
 
