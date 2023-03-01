@@ -42,7 +42,7 @@ module CoursesHelper
   end
 
   def categorized_courses(courses)
-    courses.includes(:category).order('categories.category_order').group_by do |course|
+    courses.includes(:category).reorder('categories.category_order').order('course_order').group_by do |course|
       if course.category&.enabled?
         course.category.name
       else
