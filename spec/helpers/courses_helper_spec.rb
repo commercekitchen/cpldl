@@ -69,8 +69,8 @@ describe CoursesHelper do
     let(:category) { FactoryBot.create(:category, organization: organization, category_order: 1) }
     let(:category2) { FactoryBot.create(:category, organization: organization, category_order: 2) }
     let(:disabled_category) { FactoryBot.create(:category, :disabled, organization: organization) }
-    let!(:category2_course) { FactoryBot.create(:course, category: category2, organization: organization) }
-    let!(:course_with_category) { FactoryBot.create(:course, category: category, organization: organization) }
+    let!(:category2_course) { FactoryBot.create(:course, category: category2, organization: organization, course_order: 1) }
+    let!(:course_with_category) { FactoryBot.create(:course, category: category, organization: organization, course_order: 2) }
     let!(:uncategorized_course) { FactoryBot.create(:course, organization: organization) }
     let!(:course_with_disabled_category) { FactoryBot.create(:course, category: disabled_category, organization: organization) }
 
