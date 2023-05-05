@@ -12,7 +12,7 @@ else
     :password => api_key,
     :domain => domain,
     :address => 'smtp.sendgrid.net',
-    :port => 25,
+    :port => 465,
     :authentication => :plain,
     :enable_starttls_auto => true
   }
