@@ -7,6 +7,7 @@ if api_key.nil?
   abort('Please ensure the sendgrid_api_key is defined in secrets.yml')
 else
   ActionMailer::Base.smtp_settings = {
+    :from => 'no-reply@digitallearn.org',
     :user_name => 'apikey',
     :password => api_key,
     :domain => domain,
