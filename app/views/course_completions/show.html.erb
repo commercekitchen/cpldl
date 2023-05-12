@@ -50,10 +50,3 @@
   </div>
   <%= link_to "#{t('course_completion_page.restart_this_course')}", course_path(@course), class: "white" %>
 </div>
-
-<% # Open course completion survey url in new tab & focus %>
-<% if @course.survey_url.present? %>
-  <%= javascript_tag do %>
-    window.open('<%= @course.survey_url %>', '_blank').focus();
-  <% end %>
-<% end %>

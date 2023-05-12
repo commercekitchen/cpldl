@@ -1,5 +1,6 @@
-<% if current_organization.user_survey_enabled? %>
-  <%= link_to(current_organization.survey_url(I18n.locale), target: '_blank') do %>
+<% @survey_url = @course.survey_url || current_organization.survey_url(I18n.locale) %>
+<% if @survey_url.present? %>
+  <%= link_to(@survey_url, target: '_blank') do %>
     <%= button_tag(type: 'button', class: "congrats-button button-color small") do %>
       <%= i18n_with_default("course_completion_page.#{current_organization.subdomain}.user_survey_button_text") %>
     <% end %>
