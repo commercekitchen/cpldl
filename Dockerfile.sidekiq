@@ -1,4 +1,4 @@
-FROM ruby:2.7.6-slim-buster
+FROM ruby:2.7.7-slim-buster
 
 # install rails dependencies
 RUN apt-get clean all && \
