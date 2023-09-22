@@ -20,56 +20,40 @@ class CourseRecommendationService
   private
 
   def course_collection
-    (desktop_courses + mobile_courses + topic_courses) & org_courses
+    core_desktop_courses.or(core_mobile_courses).or(topic_courses)
   end
 
-  def desktop_courses
-    response = @responses['set_one']
-    core_courses.where(format: 'D', level: level_string(response), pub_status: 'P')
+  def core_desktop_courses
+    level = @responses['desktop_level']
+    return available_courses.none if level == 'Advanced'
+    core_courses.where(format: 'D', level: level)
   end
 
-  def mobile_courses
-    response = @responses['set_two']
-    core_courses.where(format: 'M', level: level_string(response), pub_status: 'P')
+  def core_mobile_courses
+    level = @responses['mobile_level']
+    return available_courses.none if level == 'Advanced'
+    core_courses.where(format: 'M', level: level)
   end
 
   def topic_courses
-    response = @responses['set_three']
-    Course.topic_search(topics[response.to_i]).where(pub_status: 'P')
+    topics = @responses['topics']
+    available_courses.where('topics.title IN (?)', topics)
   end
 
-  def topics
-    {
-      1 => 'Job Search',
-      2 => 'Education: Child',
-      3 => 'Government',
-      4 => 'Education: Adult',
-      5 => 'Communication Social Media',
-      6 => 'Security',
-      7 => 'Software Apps',
-      8 => 'Information Searching'
-    }
+  def core_courses
+    available_courses.where(topics: { title: 'Core' })
   end
 
-  def level_string(level)
-    case level
-    when '1'
-      'Beginner'
-    when '2'
-      'Intermediate'
-    end
+  def available_courses
+    Course
+      .joins(:topics)
+      .where(organization: @org)
+      .where(language_id: language.id)
+      .where(pub_status: 'P')
   end
 
   def language
     language_string = I18n.locale == :es ? 'Spanish' : 'English'
     Language.find_by(name: language_string)
-  end
-
-  def org_courses
-    @org_courses ||= Course.where(organization: @org).where(language_id: language.id)
-  end
-
-  def core_courses
-    Course.topic_search('Core')
   end
 end

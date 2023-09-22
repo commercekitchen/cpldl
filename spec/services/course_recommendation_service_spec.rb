@@ -3,130 +3,73 @@
 require 'rails_helper'
 
 describe CourseRecommendationService do
-
-  let(:topics) do
-    {
-      1 => 'Job Search',
-      2 => 'Education: Child',
-      3 => 'Government',
-      4 => 'Education: Adult',
-      5 => 'Communication Social Media',
-      6 => 'Security',
-      7 => 'Software Apps',
-      8 => 'Information Searching'
-    }
-  end
+  let(:organization) { create(:organization) }
+  let(:user) { create(:user, organization: organization) }
+  let(:core_topic) { create(:topic, title: 'Core') }
+  let(:topic1) { create(:topic) }
+  let(:topic2) { create(:topic) }
+  let!(:topic1_course) { create(:course, language: @english, topics: [topic1], organization: organization) }
+  let!(:topic2_course) { create(:course, language: @english, topics: [topic2], organization: organization) }
+  let!(:other_org_course) { create(:course, language: @english, topics: [topic1]) }
 
   before(:each) do
-    @organization = create(:organization)
-    @other_organization = create(:organization)
-    @user = create(:user, organization: @organization)
-
-    @core_topic = create(:topic, title: 'Core')
-    @other_topic = create(:topic)
-
-    # Create applicable courses
+    # Create core courses
     %w[M D].each do |format|
       %w[Beginner Intermediate].each do |level|
-        create(:course, language: @english, format: format, level: level, topics: [@core_topic], organization: @organization)
-        create(:course, language: @spanish, format: format, level: level, topics: [@core_topic], organization: @organization)
+        create(:course, language: @english, format: format, level: level, topics: [core_topic], organization: organization)
+        create(:course, language: @spanish, format: format, level: level, topics: [core_topic], organization: organization)
+
+        # Draft Courses
+        create(:course, language: @english, format: format, level: level, topics: [core_topic], organization: organization, pub_status: 'D')
+        create(:course, language: @spanish, format: format, level: level, topics: [core_topic], organization: organization, pub_status: 'D')
       end
-    end
-
-    topics.each do |_k, v|
-      topic = create(:topic, title: v)
-      create(:course, language: @english, topics: [topic], organization: @organization)
-      create(:course, language: @spanish, topics: [topic], organization: @organization)
-    end
-
-    # Create non-applicable course
-    create(:course, language: @english, topics: [@other_topic])
-    @draft_desktop_course = create(:course, language: @english, format: 'D', pub_status: 'D', organization: @organization)
-    @draft_mobile_course = create(:course, language: @english, format: 'M', pub_status: 'D', organization: @organization)
-  end
-
-  describe 'new service instance' do
-    before(:each) do
-      @responses = {
-        'set_one' => '1',
-        'set_two' => '2',
-        'set_three' => '3'
-      }
-
-      @service = CourseRecommendationService.new(@organization.id, @responses)
-    end
-
-    it 'assigns org' do
-      expect(@service.instance_variable_get(:@org)).to eq(@organization)
-    end
-
-    it 'assigns responses' do
-      expect(@service.instance_variable_get(:@responses)).to eq(@responses)
     end
   end
 
   describe 'add recommended courses' do
-    it 'should create a course progress for each desktop level' do
-      expect do
-        %w[1 2].each do |d_level|
-          responses = {
-            'set_two' => d_level
-          }
-
-          @service = CourseRecommendationService.new(@organization.id, responses)
-          @service.add_recommended_courses(@user.id)
-        end
-      end.to change(CourseProgress, :count).by(2)
+    let(:responses) do
+      {
+        'desktop_level' => 'Intermediate',
+        'mobile_level' => 'Advanced',
+        'topics' => [topic1.title, topic2.title]
+      }
     end
+    let(:service) { CourseRecommendationService.new(organization.id, responses) }
+    let(:int_desktop_course) { create(:course, language: @english, format: 'D', level: 'Intermediate', topics: [core_topic], organization: organization) }
 
-    it 'should create a course progress for each mobile level' do
+    it 'adds correct courses' do
       expect do
-        %w[1 2].each do |m_level|
-          responses = {
-            'set_one' => m_level
-          }
+        service.add_recommended_courses(user.id)
+      end.to change { user.reload.course_progresses.count }.from(0).to(3)
 
-          @service = CourseRecommendationService.new(@organization.id, responses)
-          @service.add_recommended_courses(@user.id)
-        end
-      end.to change(CourseProgress, :count).by(2)
-    end
-
-    it 'should create a course progress for each topic' do
-      expect do
-        topics.each do |topic_int, _topic_string|
-          responses = {
-            'set_three' => topic_int
-          }
-
-          @service = CourseRecommendationService.new(@organization.id, responses)
-          @service.add_recommended_courses(@user.id)
-        end
-      end.to change(CourseProgress, :count).by(8)
+      int_desktop_course = Course.find_by(format: 'D', level: 'Intermediate', organization: organization)
+      expect(user.course_progresses.map(&:course)).to contain_exactly(topic1_course, topic2_course, int_desktop_course)
     end
   end
 
   describe 'spanish language course' do
-    before(:each) do
-      responses = {
-        'set_one' => '1',
-        'set_two' => '2',
-        'set_three' => '3'
+    let(:responses) do
+      {
+        'desktop_level' => 'Beginner',
+        'mobile_level' => 'Intermediate',
+        'topics' => []
       }
+    end
+    let(:service) { CourseRecommendationService.new(organization.id, responses) }
 
+    before(:each) do
       I18n.locale = :es
-      @service = CourseRecommendationService.new(@organization.id, responses)
     end
 
-    it 'should create a course progress' do
+    it 'should create course progresses' do
       expect do
-        @service.add_recommended_courses(@user.id)
-      end.to change(CourseProgress, :count).by(3)
+        service.add_recommended_courses(user.id)
+      end.to change { user.reload.course_progresses.count }.by(2)
     end
 
-    it 'should create a course progress for a spanish course' do
-      @service.add_recommended_courses(@user.id)
-      expect(CourseProgress.last.course.language_id).to eq(@spanish.id)
+    it 'should only create course progresses for spanish courses' do
+      service.add_recommended_courses(user.id)
+      expect(user.reload.course_progresses.map { |cp| cp.course.language_id }.uniq).to contain_exactly(@spanish.id)
     end
   end
 end
