@@ -6,7 +6,7 @@
   <%= link_to "#{ t('my_courses_page.click_here_to_homepage') }", root_path %>
 
   <% unless @skip_quiz %>
-    <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", new_quiz_response_path %>
+    <%= t('my_courses_page.completed_most_courses') %> <%= link_to "#{t('my_courses_page.click_here_to_quiz')}", new_course_recommendation_survey_path %>
     <%= t('my_courses_page.well_suggest_more_courses') %>
   <% end %>
 </p>

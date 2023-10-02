@@ -280,7 +280,7 @@ en:
       disclaimer: "<strong>Disclaimer:</strong> None of the other companies whose names or logos appear in these educational materials have been involved in the creation of these materials, or approve, sponsor, or are affiliated in any way with these materials."
   quiz:
     intro_text: " what would you like to learn?"
-    answer_3_questions: "Answer three questions and we'll recommend which courses to take."
+    instructions: "Answer three questions and we'll recommend which courses to take."
     question_1: "How comfortable are you with desktop or laptop computers? Select one."
     set_one_1: "This is my first time using a computer."
     set_one_2: "I can use a keyboard and mouse, but I'm not comfortable beyond that."

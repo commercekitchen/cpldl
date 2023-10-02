@@ -1,0 +1,38 @@
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">1. <%= t("course_recommendation_survey.desktop.question") %></p></strong>
+  <ul class="less-padding">
+    <% ['Beginner', 'Intermediate', 'Advanced', 'Expert'].each do |level| %>
+      <li>
+        <%= radio_button_tag(:desktop_level, level) %>
+        <% label_text = t("course_recommendation_survey.desktop.#{level.downcase}") %>
+        <%= label_tag("desktop_level_#{level.downcase}", label_text, class: "inline-label") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">2. <%= t("course_recommendation_survey.mobile.question") %></p></strong>
+  <ul class="less-padding">
+    <% ['Beginner', 'Intermediate', 'Advanced', 'Expert'].each do |level| %>
+      <li>
+        <%= radio_button_tag(:mobile_level, level) %>
+        <% label_text = t("course_recommendation_survey.mobile.#{level.downcase}") %>
+        <%= label_tag("mobile_level_#{level.downcase}", label_text, class: "inline-label") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">3. <%= t("course_recommendation_survey.topics.question") %></p></strong>
+  <ul class="less-padding">
+    <% @topics.each do |topic| %>
+        <li>
+          <%= check_box_tag "topics[]", topic.id %>
+          <% label_text = I18n.translate!("course_recommendation_survey.topics.#{topic.translation_key}") %>
+          <%= label_tag("topics[]", label_text, class: "inline-label") %>
+        </li>
+    <% end %>
+  </ul>
+<% end %>

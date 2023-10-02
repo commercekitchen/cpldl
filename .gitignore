@@ -77,3 +77,6 @@ erd.pdf
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore any .pem key files (they shouldn't be here anyway)
+*.pem

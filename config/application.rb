@@ -27,6 +27,9 @@ module CPLDigitalLearn
     require Rails.root.join("lib/custom_public_exceptions")
     config.exceptions_app = CustomPublicExceptions.new(Rails.public_path)
 
+    # Separate I18n translation files
+    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
+
     config.to_prepare do
       Devise::SessionsController.skip_before_action :require_valid_profile
     end

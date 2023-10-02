@@ -7,6 +7,9 @@ class CourseRecommendationService
     @responses = responses
   end
 
+  def course_recommendations(recommendation_survey_responses)
+  end
+
   def add_recommended_courses(user_id)
     @user = User.find(user_id)
 
@@ -25,19 +28,19 @@ class CourseRecommendationService
 
   def core_desktop_courses
     level = @responses['desktop_level']
-    return available_courses.none if level == 'Advanced'
+    return available_courses.none if level == 'Advanced' || level == 'Expert'
     core_courses.where(format: 'D', level: level)
   end
 
   def core_mobile_courses
     level = @responses['mobile_level']
-    return available_courses.none if level == 'Advanced'
+    return available_courses.none if level == 'Advanced' || level == 'Expert'
     core_courses.where(format: 'M', level: level)
   end
 
   def topic_courses
-    topics = @responses['topics']
-    available_courses.where('topics.title IN (?)', topics)
+    topic_ids = @responses['topics']
+    available_courses.where(topics: { id: topic_ids })
   end
 
   def core_courses
@@ -46,7 +49,7 @@ class CourseRecommendationService
 
   def available_courses
     Course
-      .joins(:topics)
+      .left_outer_joins(:topics)
       .where(organization: @org)
       .where(language_id: language.id)
       .where(pub_status: 'P')

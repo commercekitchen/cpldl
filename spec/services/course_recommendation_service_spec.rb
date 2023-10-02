@@ -31,7 +31,7 @@ describe CourseRecommendationService do
       {
         'desktop_level' => 'Intermediate',
         'mobile_level' => 'Advanced',
-        'topics' => [topic1.title, topic2.title]
+        'topics' => [topic1.id, topic2.id]
       }
     end
     let(:service) { CourseRecommendationService.new(organization.id, responses) }

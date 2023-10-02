@@ -59,7 +59,7 @@ feature 'User logs in' do
       click_on 'Save'
       user.profile.reload
 
-      expect(current_path).to eq(new_quiz_response_path)
+      expect(current_path).to eq(new_course_recommendation_survey_path)
       visit profile_path
       click_on 'Save'
 
@@ -82,7 +82,7 @@ feature 'User logs in' do
 
       click_on 'Save'
 
-      expect(current_path).to eq(new_quiz_response_path)
+      expect(current_path).to eq(new_course_recommendation_survey_path)
     end
 
     scenario 'first time login with program org, no course recommendations' do

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-class QuizResponsesController < ApplicationController
+class CourseRecommendationSurveysController < ApplicationController
   before_action :authenticate_user!
 
   def new
     authorize current_organization, :get_recommendations?
+    @topics = Topic.where(translation_key: topic_translation_keys)
   end
 
   def create
@@ -18,7 +19,17 @@ class QuizResponsesController < ApplicationController
   private
 
   def quiz_params
-    params.permit('set_one', 'set_two', 'set_three')
+    params.permit('desktop_level', 'mobile_level', 'topics' => [])
   end
 
+  def topic_translation_keys
+    ['job_search',
+     'education_child',
+     'govt',
+     'education_adult',
+     'communication_social_media',
+     'security',
+     'software_apps',
+     'information_searching']
+  end
 end

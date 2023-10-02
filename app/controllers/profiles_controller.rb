@@ -117,10 +117,9 @@ class ProfilesController < ApplicationController
 
   def redirect_path
     if first_time_login?
-      show_quiz? ? new_quiz_response_path : root_path
+      show_quiz? ? new_course_recommendation_survey_path : root_path
     else
       profile_path
     end
   end
-
 end

@@ -4,7 +4,8 @@ require 'feature_helper'
 
 feature 'User visits a subdomain with phone number users enabled' do
   let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true) }
-  let!(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+  let(:topic) {  FactoryBot.create(:topic, title: 'Search For a Job.', translation_key: 'job_search') }
+  let!(:course) { FactoryBot.create(:course_with_lessons, organization: organization, topics: [topic]) }
   let(:lesson) { course.lessons.first }
 
   before do
@@ -102,11 +103,12 @@ feature 'User visits a subdomain with phone number users enabled' do
     expect(current_path).to eq(my_courses_path)
     find('.retake-quiz').click
 
-    expect(current_path).to eq(new_quiz_response_path)
+    expect(current_path).to eq(new_course_recommendation_survey_path)
     expect(page).to have_content('(123) 123-1234, what would you like to learn?')
-    choose 'set_one_2'
-    choose 'set_two_2'
-    choose 'set_three_3'
+
+    choose('desktop_level_Intermediate')
+    choose('mobile_level_Intermediate')
+    find("input[type='checkbox'][value='#{topic.id}']").check
 
     click_button 'Submit'
 

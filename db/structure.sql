@@ -64,6 +64,8 @@ $_$;
 
 SET default_tablespace = '';
 
+SET default_table_access_method = heap;
+
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
@@ -953,7 +955,8 @@ CREATE TABLE public.topics (
     id integer NOT NULL,
     title character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    translation_key character varying
 );
 
 
@@ -1970,6 +1973,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220819184026'),
 ('20221017042846'),
 ('20221205023629'),
-('20230116033009');
+('20230116033009'),
+('20231001021801');
 
 

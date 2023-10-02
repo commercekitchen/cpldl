@@ -279,7 +279,7 @@ es:
       disclaimer: "<strong>Exención de responsabilidad:</strong> Ninguna de las otras compañías cuyos nombres o logotipos aparecen en estos materiales educativos han participado en la creación de estos materiales, ni los han aprobado ni patrocinado. Tampoco están afiliadas de ninguna manera con estos materiales."
   quiz:
     intro_text: " ¿qué le gustaría aprender?"
-    answer_3_questions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
+    instructions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
     question_1: "Qué tanto ha usado una computadora o una laptop? Seleccione una opción."
     set_one_1: "Esta es la primera vez que uso una computadora."
     set_one_2: "Puedo usar el ratón y el teclado, pero no sé mucho más."

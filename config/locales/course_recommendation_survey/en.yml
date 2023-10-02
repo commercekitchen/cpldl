@@ -1,0 +1,27 @@
+en:
+  course_recommendation_survey:
+    intro_text: " what would you like to learn?"
+    instructions: "Answer three questions and we'll recommend which courses to take."
+    desktop:
+      question: "How comfortable are you with desktop or laptop computers? Select one."
+      beginner: "This is my first time using a computer."
+      intermediate: "I can use a keyboard and mouse, but I'm not comfortable beyond that."
+      advanced: "I can use a computer, but I'd like to learn more."
+      expert: "I'm very comfortable with a computer, but I would like to learn more on a specific topic."
+    mobile:
+      question: "How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one."
+      beginner: "This is my first time using a phone, tablet, or iPad."
+      intermediate: "I can use at least one of these technologies, but I'm not comfortable beyond that."
+      advanced: "I can use at least one of these technologies, but I'd like to learn more."
+      expert: "I'm very comfortable with at least one of these technologies, but I would like to learn more on a specific topic."
+    topics:
+      question: "What would you like to do with a computer? Choose your top goal."
+      job_search: "Search for a job."
+      education_child: "Help my child with school."
+      govt: "Access online government information and benefits."
+      education_adult: "Use online tools to further my education."
+      communication_social_media: "Communicate with friends and family through email and video."
+      security: "Be more safe and secure when using the Internet."
+      software_apps: "Learn specific software or apps such as Microsoft Word."
+      information_searching: "Search for information."
+    skip: "Skip Quiz"
