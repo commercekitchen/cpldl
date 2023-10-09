@@ -19,13 +19,12 @@ feature 'User completes course recommendations quiz' do
     login_as(user)
   end
 
-  scenario 'user completes course recommendations quiz' do
+  scenario 'default questions' do
     visit new_course_recommendation_survey_path
     expect(page).to have_content('what would you like to learn?')
     choose 'desktop_level_Intermediate'
     choose 'mobile_level_Intermediate'
-    find("input[type='checkbox'][value='#{govt_topic.id}']").click
-    find("input[type='checkbox'][value='#{security_topic.id}']").click
+    choose "topic_#{security_topic.id}"
 
     click_button 'Submit'
 
@@ -33,7 +32,18 @@ feature 'User completes course recommendations quiz' do
 
     expect(page).to have_content(desktop_course.title)
     expect(page).to have_content(mobile_course.title)
-    expect(page).to have_content(govt_course.title)
     expect(page).to have_content(security_course.title)
+    expect(page).not_to have_content(govt_course.title)
+  end
+
+  scenario 'custom organization questions' do
+    org.update(subdomain: 'getconnected', custom_recommendation_survey: true)
+    user.update(organization: org)
+    switch_to_subdomain('getconnected')
+    visit new_course_recommendation_survey_path
+    expect(page).to have_content("Can you use a computer to access the Internet? Please choose one option.")
+    expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
+    expect(page).to have_content("Yes, I know how to use a computer.")
+    expect(page).not_to have_content("I can use a computer, but I'd like to learn more.")
   end
 end

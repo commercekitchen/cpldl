@@ -6,11 +6,9 @@ describe CourseRecommendationService do
   let(:organization) { create(:organization) }
   let(:user) { create(:user, organization: organization) }
   let(:core_topic) { create(:topic, title: 'Core') }
-  let(:topic1) { create(:topic) }
-  let(:topic2) { create(:topic) }
-  let!(:topic1_course) { create(:course, language: @english, topics: [topic1], organization: organization) }
-  let!(:topic2_course) { create(:course, language: @english, topics: [topic2], organization: organization) }
-  let!(:other_org_course) { create(:course, language: @english, topics: [topic1]) }
+  let(:topic) { create(:topic) }
+  let!(:topic_course) { create(:course, language: @english, topics: [topic], organization: organization) }
+  let!(:other_org_course) { create(:course, language: @english, topics: [topic]) }
 
   before(:each) do
     # Create core courses
@@ -31,7 +29,7 @@ describe CourseRecommendationService do
       {
         'desktop_level' => 'Intermediate',
         'mobile_level' => 'Advanced',
-        'topics' => [topic1.id, topic2.id]
+        'topic' => topic.id
       }
     end
     let(:service) { CourseRecommendationService.new(organization.id, responses) }
@@ -40,10 +38,10 @@ describe CourseRecommendationService do
     it 'adds correct courses' do
       expect do
         service.add_recommended_courses(user.id)
-      end.to change { user.reload.course_progresses.count }.from(0).to(3)
+      end.to change { user.reload.course_progresses.count }.from(0).to(2)
 
       int_desktop_course = Course.find_by(format: 'D', level: 'Intermediate', organization: organization)
-      expect(user.course_progresses.map(&:course)).to contain_exactly(topic1_course, topic2_course, int_desktop_course)
+      expect(user.course_progresses.map(&:course)).to contain_exactly(topic_course, int_desktop_course)
     end
   end
 
@@ -52,7 +50,7 @@ describe CourseRecommendationService do
       {
         'desktop_level' => 'Beginner',
         'mobile_level' => 'Intermediate',
-        'topics' => []
+        'topic' => nil
       }
     end
     let(:service) { CourseRecommendationService.new(organization.id, responses) }

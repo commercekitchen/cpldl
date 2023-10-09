@@ -108,7 +108,7 @@ feature 'User visits a subdomain with phone number users enabled' do
 
     choose('desktop_level_Intermediate')
     choose('mobile_level_Intermediate')
-    find("input[type='checkbox'][value='#{topic.id}']").check
+    choose("topic_#{topic.id}")
 
     click_button 'Submit'
 

@@ -39,8 +39,8 @@ class CourseRecommendationService
   end
 
   def topic_courses
-    topic_ids = @responses['topics']
-    available_courses.where(topics: { id: topic_ids })
+    topic_id = @responses['topic']
+    available_courses.where(topics: { id: topic_id })
   end
 
   def core_courses

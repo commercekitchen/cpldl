@@ -38,17 +38,15 @@ describe CourseRecommendationSurveysController do
 
   describe 'POST #create' do
     let(:core_topic) { FactoryBot.create(:topic, title: 'Core') }
-    let(:govt_topic) { FactoryBot.create(:topic, title: 'Job Search', translation_key: 'job_search') }
     let(:security_topic) { FactoryBot.create(:topic, title: 'Security', translation_key: 'security') }
     let!(:software_apps_topic) { FactoryBot.create(:topic, title: 'Software Apps', translation_key: 'software_apps') }
     let(:other_topic) { FactoryBot.create(:topic, title: 'Non-survey topic', translation_key: 'ns_topic') }
     let!(:desktop_course) { create(:course, format: 'D', level: 'Intermediate', topics: [core_topic], organization: organization) }
     let!(:mobile_course) { create(:course, format: 'M', level: 'Intermediate', topics: [core_topic], organization: organization) }
-    let!(:govt_course) { create(:course, topics: [govt_topic], organization: organization) }
     let!(:security_course) { create(:course, topics: [security_topic], organization: organization) }
 
     let(:choices) do
-      { 'desktop_level' => 'Intermediate', 'mobile_level' => 'Intermediate', 'topics' => [govt_topic.id.to_s, security_topic.id.to_s] }
+      { 'desktop_level' => 'Intermediate', 'mobile_level' => 'Intermediate', 'topic' => security_topic.id.to_s }
     end
 
     context 'when logged in' do
@@ -59,12 +57,11 @@ describe CourseRecommendationSurveysController do
       it 'should add correct course progresses to user' do
         expect do
           post :create, params: choices
-        end.to change(CourseProgress, :count).by(4)
+        end.to change(CourseProgress, :count).by(3)
 
         expect(user.reload.course_progresses.map(&:course_id)).to contain_exactly(
           desktop_course.id,
           mobile_course.id,
-          govt_course.id,
           security_course.id
         )
       end
@@ -76,7 +73,7 @@ describe CourseRecommendationSurveysController do
 
       it 'should not overwrite quiz responses for user' do
         post :create, params: choices
-        { 'desktop_level' => 'Advanced', 'mobile_level' => 'Advanced', 'topics' => [] }
+        post :create, params: { 'desktop_level' => 'Advanced', 'mobile_level' => 'Advanced', 'topic' => nil }
         expect(user.reload.quiz_responses_object).to eq(choices)
       end
     end
