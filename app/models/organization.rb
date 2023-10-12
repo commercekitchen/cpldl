@@ -15,7 +15,7 @@ class Organization < ApplicationRecord
     spanish_survey_link                  String
     custom_certificate_enabled           Boolean, default: false
     phone_number_users_enabled           Boolean, default: false
-    custom_recommendation_survey Boolean, default: false
+    custom_recommendation_survey         Boolean, default: false
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
