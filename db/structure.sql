@@ -64,6 +64,8 @@ $_$;
 
 SET default_tablespace = '';
 
+SET default_table_access_method = heap;
+
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
@@ -953,7 +955,9 @@ CREATE TABLE public.topics (
     id integer NOT NULL,
     title character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    translation_key character varying,
+    organization_id bigint
 );
 
 
@@ -1700,6 +1704,13 @@ CREATE INDEX index_schools_on_school_type ON public.schools USING btree (school_
 
 
 --
+-- Name: index_topics_on_organization_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_topics_on_organization_id ON public.topics USING btree (organization_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1792,6 +1803,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.program_locations
     ADD CONSTRAINT fk_rails_684ed17f10 FOREIGN KEY (program_id) REFERENCES public.programs(id);
+
+
+--
+-- Name: topics fk_rails_79ae18bd4b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.topics
+    ADD CONSTRAINT fk_rails_79ae18bd4b FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
 
 
 --
@@ -1970,6 +1989,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220819184026'),
 ('20221017042846'),
 ('20221205023629'),
-('20230116033009');
+('20230116033009'),
+('20231001021801'),
+('20231012203418');
 
 

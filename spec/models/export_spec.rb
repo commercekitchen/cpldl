@@ -5,11 +5,6 @@ require 'rails_helper'
 describe Export do
   let(:library) { create(:library_location) }
   let(:lib_data) { { :version => 'library', library.id => { sign_ups: 1, completions: { 'Sample Course 3' => 1 } } } }
-  let(:survey_responses_data) do
-    { :version => 'survey_responses',
-      { 'set_one' => '3', 'set_two' => '3', 'set_three' => '5' } => { responses: 3, completions: { 'Test Course' => 3 } },
-      { 'set_three' => '8' } => { responses: 2, completions: { 'Intro to BS' => 2 } } }
-  end
 
   context 'check library name lookup' do
     let(:csv) { Export.to_csv_for_completion_report(lib_data) }
@@ -19,22 +14,59 @@ describe Export do
   end
 
   context 'survey_responses export' do
-    let(:csv) { Export.to_csv_for_completion_report(survey_responses_data) }
+    let(:comms_topic) { create(:topic, title: 'Communication & Social Media', translation_key: 'communication_social_media') }
+    let(:information_searching_topic) { create(:topic, title: 'Information Searching', translation_key: 'information_searching') }
 
-    it 'translates question_1 response correctly' do
-      expect(csv).to match(/I can use a computer, but I'd like to learn more./)
+    context 'default survey' do
+      let(:survey_responses_data) do
+        { :version => 'survey_responses',
+          { 'desktop_level' => 'Intermediate', 'mobile_level' => 'Advanced', 'topic' => comms_topic.id.to_s } => { responses: 3, completions: { 'Test Course' => 3 } },
+          { 'topic' => information_searching_topic.id.to_s } => { responses: 2, completions: { 'Intro to Internet Search' => 2 } } }
+      end
+      let(:csv) { Export.to_csv_for_completion_report(survey_responses_data) }
+
+      it 'translates desktop_level response correctly' do
+        expect(csv).to match(/I can use a keyboard and mouse, but I'm not comfortable beyond that./)
+      end
+
+      it 'translates mobile_level response correctly' do
+        expect(csv).to match(/I can use at least one of these technologies, but I'd like to learn more./)
+      end
+
+      it 'translates communication social media topic responses correctly' do
+        expect(csv).to match(/Communicate with friends and family through email and video./)
+      end
+
+      it 'translates information searching topic correctly' do
+        expect(csv).to match(/Search for information./)
+      end
     end
 
-    it 'translates question_2 response correctly' do
-      expect(csv).to match(/I can use at least one of these technologies, but I'd like to learn more./)
-    end
+    context 'custom org survey' do
+      let(:org) { create(:organization, subdomain: 'getconnected', custom_recommendation_survey: true) }
+      let(:online_classes_topic) { create(:topic, title: 'Take Classes Online', translation_key: 'online_classes', organization: org) }
+      let(:survey_responses_data) do
+        { :version => 'survey_responses',
+          { 'desktop_level' => 'Intermediate', 'mobile_level' => 'Advanced', 'topic' => comms_topic.id.to_s } => { responses: 3, completions: { 'Test Course' => 3 } },
+          { 'topic' => online_classes_topic.id.to_s } => { responses: 2, completions: { 'Taking Classes Online' => 2 } } }
+      end
+      let(:csv) { Export.to_csv_for_completion_report(survey_responses_data, org) }
 
-    it 'translates question_3 response correctly' do
-      expect(csv).to match(/Communicate with friends and family through email and video./)
-    end
+      it 'translates desktop_level response correctly' do
+        expect(csv).to match(/I can use a computer a little bit./)
+      end
 
-    it 'translates lone question_8 correctly' do
-      expect(csv).to match(/Search for information./)
+      it 'translates mobile_level response correctly' do
+        expect(csv).to match(/Yes, I know how to use a smartphone./)
+      end
+
+      it 'translates communication social media topic responses correctly' do
+        expect(csv).to match(/Talk to my family and friends online./)
+      end
+
+      it 'translates information searching topic correctly' do
+        expect(csv).to match(/Take a class or training./)
+      end
     end
   end
 

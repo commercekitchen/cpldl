@@ -1,0 +1,18 @@
+<%= content_for(:callout) do %>
+  <h1><%= user_display_name %>, <%= t('course_recommendation_survey.intro_text') %></h1>
+<% end %>
+
+<h2 class="text-color"><%= t('course_recommendation_survey.instructions') %></h2>
+
+<%= form_tag course_recommendation_surveys_path do %>
+  <% if current_organization.custom_recommendation_survey? && lookup_context.exists?(current_organization.subdomain, ['course_recommendation_surveys'], true) %>
+    <%= render current_organization.subdomain %>
+  <% else %>
+    <%= render 'default_survey' %>
+  <% end %>
+
+  <div class='form-actions'>
+    <%= submit_tag t('common.submit'), class: "btn small submit-button button-color" %>
+    <%= link_to t('course_recommendation_survey.skip'), root_path, class: "secondary-action" %>
+  </div>
+<% end %>

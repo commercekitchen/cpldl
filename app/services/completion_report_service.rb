@@ -6,7 +6,7 @@ class CompletionReportService
   end
 
   def generate_completion_report(group_by:)
-    Export.to_csv_for_completion_report(self.send("report_data_by_#{group_by}"))
+    Export.to_csv_for_completion_report(self.send("report_data_by_#{group_by}"), @organization)
   end
 
   private

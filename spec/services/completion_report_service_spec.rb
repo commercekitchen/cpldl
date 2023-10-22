@@ -13,8 +13,10 @@ describe CompletionReportService do
   let(:partner1) { FactoryBot.create(:partner, organization: organization) }
   let(:partner2) { FactoryBot.create(:partner, organization: organization) }
 
-  let(:responses1) { { 'set_one' => '1', 'set_two' => '3', 'set_three' => '3' } }
-  let(:responses2) { { 'set_one' => '2', 'set_two' => '1', 'set_three' => '2' } }
+  let(:job_search_topic) { FactoryBot.create(:topic, translation_key: 'job_search') }
+  let(:sercurity_topic) { FactoryBot.create(:topic, title: 'Security', translation_key: 'security') }
+  let(:responses1) { { 'desktop_level' => 'Beginner', 'mobile_level' => 'Intermediate', 'topic' => job_search_topic.id.to_s } }
+  let(:responses2) { { 'desktop_level' => 'Intermediate', 'mobile_level' => 'Beginner', 'topic' => sercurity_topic.id.to_s } }
 
   let(:user) do
     FactoryBot.create(:user, organization: organization, quiz_responses_object: responses1, partner: partner1,
@@ -140,66 +142,84 @@ describe CompletionReportService do
   end
 
   describe 'completions by quiz response' do
-    let(:report) { report_service.generate_completion_report(group_by: 'survey_responses') }
-    let(:parsed_report) { CSV.parse(report, headers: true) }
+    context 'default organization' do
+      let(:report) { report_service.generate_completion_report(group_by: 'survey_responses') }
+      let(:parsed_report) { CSV.parse(report, headers: true) }
+      let(:translation_prefix) { 'course_recommendation_survey.default' }
 
-    it 'returns correct column headers' do
-      expected_headers = ['How comfortable are you with desktop or laptop computers?',
-                          'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
-                          'What would you like to do with a computer?',
-                          'Total Responses',
-                          'Course Title',
-                          'Completions']
-      expect(parsed_report.headers).to eq(expected_headers)
-    end
+      it 'returns correct column headers' do
+        expected_headers = ['How comfortable are you with desktop or laptop computers? Select one.',
+                            'How comfortable are you using a phone, tablet, or iPad to access the Internet? Select one.',
+                            'What would you like to do with a computer? Choose your top goal.',
+                            'Total Responses',
+                            'Course Title',
+                            'Completions']
+        expect(parsed_report.headers).to eq(expected_headers)
+      end
 
-    it 'returns correct responses count for response set 1' do
-      expect(parsed_report.to_s).to match("#{I18n.t('quiz.set_one_1')},\"#{I18n.t('quiz.set_two_3')}\",#{I18n.t('quiz.set_three_3')},1")
-    end
+      it 'returns correct responses count for response set 1' do
+        expected_responses = [I18n.t("#{translation_prefix}.desktop.beginner"),
+                              "\"#{I18n.t("#{translation_prefix}.mobile.intermediate")}\"",
+                              I18n.t("#{translation_prefix}.topics.job_search"),
+                              1]
+        expect(parsed_report.to_s).to match(expected_responses.join(','))
+      end
 
-    it 'returns correct responses count for response set 2' do
-      expect(parsed_report.to_s).to match("\"#{I18n.t('quiz.set_one_2')}\",\"#{I18n.t('quiz.set_two_1')}\",#{I18n.t('quiz.set_three_2')},1")
-    end
+      it 'returns correct responses count for response set 2' do
+        expected_responses = ["\"#{I18n.t("#{translation_prefix}.desktop.intermediate")}\"",
+                              "\"#{I18n.t("#{translation_prefix}.mobile.beginner")}\"",
+                              I18n.t("#{translation_prefix}.topics.security"),
+                              1]
+        expect(parsed_report.to_s).to match(expected_responses.join(','))
+      end
 
-    it 'includes completions count for course 1' do
-      expect(parsed_report.to_s).to match("#{course1.title},1")
-    end
+      it 'includes completions count for course 1' do
+        expect(parsed_report.to_s).to match("#{course1.title},1")
+      end
 
-    it 'includes completions count for course 2' do
-      expect(parsed_report.to_s).to match("#{course2.title},1")
-    end
-  end
-
-  context 'phone_number_users_enabled organization' do
-    let(:phone_org) do
-      FactoryBot.create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true)
-    end
-    let(:phone_user) do
-      FactoryBot.create(:phone_number_user, organization: phone_org, quiz_responses_object: responses1)
-    end
-    let!(:course_progress1) do
-      FactoryBot.create(:course_progress, course_id: course1.id, tracked: true, completed_at: Time.zone.now, user: phone_user)
-    end
-    let(:phone_report_service) { CompletionReportService.new(organization: phone_org) }
-    let(:report) { phone_report_service.generate_completion_report(group_by: 'survey_responses') }
-    let(:parsed_report) { CSV.parse(report, headers: true) }
-
-    it 'returns correct column headers' do
-      expected_headers = ['How comfortable are you with desktop or laptop computers?',
-                          'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
-                          'What would you like to do with a computer?',
-                          'Total Responses',
-                          'Course Title',
-                          'Completions']
-      expect(parsed_report.headers).to eq(expected_headers)
+      it 'includes completions count for course 2' do
+        expect(parsed_report.to_s).to match("#{course2.title},1")
+      end
     end
 
-    it 'returns correct responses count for response set 1' do
-      expect(parsed_report.to_s).to match("#{I18n.t('quiz.set_one_1')},\"#{I18n.t('quiz.set_two_3')}\",#{I18n.t('quiz.set_three_3')},1")
-    end
+    context 'phone_number_users_enabled organization with custom survey' do
+      let(:custom_org) do
+        FactoryBot.create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true, custom_recommendation_survey: true)
+      end
+      let(:org_topic) { FactoryBot.create(:topic, title: 'Online Shopping', translation_key: 'online_shopping') }
+      let(:custom_responses) {{ 'desktop_level' => 'Beginner', 'mobile_level' => 'Intermediate', 'topic' => org_topic.id.to_s } }
+      let(:phone_user) do
+        FactoryBot.create(:phone_number_user, organization: custom_org, quiz_responses_object: custom_responses)
+      end
+      let!(:course_progress1) do
+        FactoryBot.create(:course_progress, course_id: course1.id, tracked: true, completed_at: Time.zone.now, user: phone_user)
+      end
+      let(:phone_report_service) { CompletionReportService.new(organization: custom_org) }
+      let(:report) { phone_report_service.generate_completion_report(group_by: 'survey_responses') }
+      let(:parsed_report) { CSV.parse(report, headers: true) }
+      let(:translation_prefix) { 'course_recommendation_survey.getconnected' }
 
-    it 'includes completions count for course 1' do
-      expect(parsed_report.to_s).to match("#{course1.title},1")
+      it 'returns correct column headers' do
+        expected_headers = ['Can you use a computer to access the Internet? Please choose one option.',
+                            'Can you use a smartphone to access the Internet?',
+                            'What do you want to do with a computer or smartphone? Please choose one option.',
+                            'Total Responses',
+                            'Course Title',
+                            'Completions']
+        expect(parsed_report.headers).to eq(expected_headers)
+      end
+
+      it 'returns correct responses count for response set 1' do
+        expected_responses = ["\"#{I18n.t("#{translation_prefix}.desktop.beginner")}\"",
+                              "#{I18n.t("#{translation_prefix}.mobile.intermediate")}",
+                              "#{I18n.t("#{translation_prefix}.topics.online_shopping")}",
+                              1]
+        expect(parsed_report.to_s).to match(expected_responses.join(','))
+      end
+
+      it 'includes completions count for course 1' do
+        expect(parsed_report.to_s).to match("#{course1.title},1")
+      end
     end
   end
 end
