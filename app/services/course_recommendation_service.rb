@@ -7,9 +7,6 @@ class CourseRecommendationService
     @responses = responses
   end
 
-  def course_recommendations(recommendation_survey_responses)
-  end
-
   def add_recommended_courses(user_id)
     @user = User.find(user_id)
 

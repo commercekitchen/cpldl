@@ -1,0 +1,58 @@
+es:
+  course_recommendation_survey:
+    skip: "Saltarse el cuestionario"
+    intro_text: " ¿qué le gustaría aprender?"
+    instructions: "Responda tres preguntas y le recomendaremos qué cursos tomar."
+    default:
+      desktop:
+        question: "Qué tanto ha usado una computadora o una laptop? Seleccione una opción."
+        beginner: "Esta es la primera vez que uso una computadora."
+        intermediate: "Puedo usar el ratón y el teclado, pero no sé mucho más."
+        advanced: "Sé usar una computadora más o menos bien, pero me gustaría aprender más."
+        expert: "Soy muy bueno con la computadora, pero me gustaría aprender más sobre un tema específico."
+      mobile:
+        question: "¿Qué tanto ha usado un teléfono móvil, una tableta, o un iPad para navegar en Internet? Seleccione una opción."
+        beginner: "Esta es la primera vez que uso un dispositivo móvil."
+        intermediate: "Puedo usar un dispositivo móvil, pero muy poco."
+        advanced: "Sé usar un dispositivo móvil, pero me gustaría aprender más."
+        expert: "Soy muy bueno con dispositivos móviles, pero me gustaría aprender más sobre un tema específico."
+      topics:
+        question: "¿Qué le gustaría hacer con la computadora? Seleccione solo la opción que más le interese."
+        job_search: "Buscar empleo."
+        education_child: "Ayude a mi hijo con la escuela."
+        govt: "Acceda a información y beneficios en línea del gobierno."
+        education_adult: "Utilice herramientas en línea para mejorar mi educación."
+        communication_social_media: "Comunicarse con amigos y familiares por correo electrónico y video."
+        security: "Usar internet de manera más segura."
+        software_apps: "Aprender una aplicación específica como Microsoft Word."
+        information_searching: "Usar Internet para encontrar información."
+    getconnected:
+      desktop:
+        question: "Can you use a computer to access the Internet? Please choose one option."
+        beginner: "No, I have never used a computer before."
+        intermediate: "I can use a computer a little bit."
+        advanced: "Yes, I know how to use a computer."
+      mobile:
+        question: "Can you use a smartphone to access the Internet?"
+        beginner: "No, I have never used a smartphone before."
+        intermediate: "I can use a smartphone a little bit."
+        advanced: "Yes, I know how to use a smartphone."
+      topics:
+        question: "What do you want to do with a computer or smartphone? Please choose one option."
+        education_adult: "Work from home."
+        job_search: "Find a job and apply online"
+        education_child: "Help my child with school."
+        healthcare: "Find healthcare information."
+        telehealth: "Visit my doctor online."
+        online_shopping: "Shop online."
+        online_billpay: "Pay bills online"
+        online_banking: "Bank online."
+        online_classes: "Take a class or training."
+        information_searching_1: "Find information and resources in my community."
+        information_searching_2: "Keep up with the news."
+        govt: "Participate in government or school meetings."
+        communication_social_media: "Talk to my family and friends online."
+        software_apps: "Learn how to use specific software (like Microsoft Word or Google Docs)."
+        security: "Make sure I am protected when using the internet."
+        none: "I am already using my computer or smartphone to do everything I want."
+    

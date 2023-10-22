@@ -42,7 +42,7 @@ en:
         education_adult: "Work from home."
         job_search: "Find a job and apply online"
         education_child: "Help my child with school."
-        health: "Find healthcare information."
+        healthcare: "Find healthcare information."
         telehealth: "Visit my doctor online."
         online_shopping: "Shop online."
         online_billpay: "Pay bills online"
@@ -55,4 +55,3 @@ en:
         software_apps: "Learn how to use specific software (like Microsoft Word or Google Docs)."
         security: "Make sure I am protected when using the internet."
         none: "I am already using my computer or smartphone to do everything I want."
-      skip: "Skip Quiz"
