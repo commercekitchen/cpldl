@@ -25,15 +25,6 @@ gem 'pundit'
 gem 'recaptcha'
 gem 'rolify'
 
-# Redis for Sidekiq
-gem 'redis'
-gem 'redis-namespace'
-
-# Background processing
-gem 'sidekiq', '>= 5.0', '< 6.0'
-gem 'sidekiq-failures'
-gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
-
 # Error reporting
 gem 'rollbar'
 
