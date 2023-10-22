@@ -30,7 +30,7 @@ gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem 'sidekiq', '>= 5.0', '< 6.0'
+gem 'sidekiq', '>= 5.0', '< 7.0'
 gem 'sidekiq-failures'
 gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
 
