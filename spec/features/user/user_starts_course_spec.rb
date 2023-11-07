@@ -114,5 +114,31 @@ feature 'User visits course listing page' do
       click_link 'Start Course'
       expect(current_path).to eq(course_lesson_path(course1, course1.lessons.second))
     end
+
+    context 'survey_required organization' do
+      before do
+        organization.update(survey_required: true)
+      end
+
+      scenario 'user cannot access course  without completing assessment' do
+        visit root_path
+        first(:css, '.course-widget').click
+        expect(current_path).to eq(new_course_recommendation_survey_path)
+        expect(page).to have_content('Please complete the Course Recommendation Survey before accessing courses.')
+      end
+
+      scenario 'user with assessment responses can access course' do
+        user.update(quiz_responses_object: {foo: 'bar'})
+        visit root_path
+        first(:css, '.course-widget').click
+
+        expect(current_path).to eq(course_path(course1))
+
+        # Course attachments and resource links
+        expect(page).to have_link(attachment.document_file_name)
+        expect(page).to have_link(resource_link.label)
+        expect(page).to have_link(href: resource_link.url)
+      end
+    end
   end
 end
