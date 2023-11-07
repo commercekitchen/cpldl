@@ -1,4 +1,4 @@
-<%= form_for([:admin, @course], html: { multipart: true, class: "course-form #{'restricted' if @imported_course}" } ) do |f| %>
+<%= form_for([:admin, @course], html: { multipart: true, class: "course-form #{'restricted' if @imported_course} #{'custom-topics' if @imported_course && @custom_topics}" } ) do |f| %>
   <% if @course.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@course.errors.count, "error") %> prohibited this course from being saved:</h2>
