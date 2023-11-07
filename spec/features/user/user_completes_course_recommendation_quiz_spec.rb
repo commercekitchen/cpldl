@@ -27,6 +27,8 @@ feature 'User completes course recommendations quiz' do
       choose 'mobile_level_Intermediate'
       choose "topic_#{security_topic.id}"
 
+      expect(page).to have_link('Skip Quiz')
+
       click_button 'Submit'
 
       expect(current_path).to eq(my_courses_path)
@@ -46,6 +48,7 @@ feature 'User completes course recommendations quiz' do
       user.update(organization: org)
       switch_to_subdomain('getconnected')
       visit new_course_recommendation_survey_path
+      expect(page).to have_link('Skip Quiz')
       expect(page).to have_content("Can you use a computer to access the Internet? Please choose one option.")
       expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
       expect(page).to have_content("Yes, I know how to use a computer.")
@@ -53,6 +56,12 @@ feature 'User completes course recommendations quiz' do
       expect(page).to have_content("What do you want to do with a computer or smartphone? Please choose one option.")
       expect(page).to have_content("Make sure I am protected when using the internet.")
       expect(page).to have_content("Shop online.")
+    end
+
+    scenario 'survey required' do
+      org.update(survey_required: true)
+      visit new_course_recommendation_survey_path
+      expect(page).not_to have_link('Skip Quiz')
     end
   end
 
@@ -65,6 +74,8 @@ feature 'User completes course recommendations quiz' do
       choose 'desktop_level_Intermediate'
       choose 'mobile_level_Intermediate'
       choose "topic_#{security_topic.id}"
+
+      expect(page).to have_link('Saltarse el cuestionario')
 
       click_button 'Enviar'
 
@@ -87,6 +98,7 @@ feature 'User completes course recommendations quiz' do
       Course.all.update(language: @spanish)
       visit new_course_recommendation_survey_path
       click_link 'Español'
+      expect(page).to have_link('Saltarse el cuestionario')
       expect(page).to have_content("Can you use a computer to access the Internet? Please choose one option.")
       expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
       expect(page).to have_content("Yes, I know how to use a computer.")
