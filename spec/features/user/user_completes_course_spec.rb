@@ -105,10 +105,11 @@ feature 'User visits course complete page' do
       expect(page).to have_content('Post-Course completion notes...')
     end
 
-    scenario 'sees survey url in a new tab if configured', js: true do
+    scenario 'opens custom survey url in a new tab if configured', js: true do
       survey_url = 'https://survey.example.com'
       course.update(survey_url: survey_url)
       visit course_completion_path(course)
+      click_link('We Need Your Help - Please Take a Quick Survey')
       expect(page.windows.length).to eq(2)
       new_tab = page.driver.browser.window_handles.last
       page.driver.browser.switch_to.window(new_tab)

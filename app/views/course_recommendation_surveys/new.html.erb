@@ -13,6 +13,9 @@
 
   <div class='form-actions'>
     <%= submit_tag t('common.submit'), class: "btn small submit-button button-color" %>
-    <%= link_to t('course_recommendation_survey.skip'), root_path, class: "secondary-action" %>
+
+    <% unless current_organization.survey_required? %>
+      <%= link_to t('course_recommendation_survey.skip'), root_path, class: "secondary-action" %>
+    <% end %>
   </div>
 <% end %>

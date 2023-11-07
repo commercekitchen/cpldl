@@ -42,6 +42,28 @@
       "course_level ."
       "seo_title seo_title"
       "seo_meta seo_meta";
+
+    &.custom-topics {
+      grid-template-areas:
+        "errors errors"
+        "categories access_level"
+        "resources resources"
+        "links links"
+        "additional_content additional_content"
+        "pub_status ."
+        "survey_url ."
+        "topics ."
+        "actions actions"
+        "title title"
+        "author author"
+        "summary summary"
+        "description description"
+        "text_copies text_copies"
+        "language format"
+        "course_level ."
+        "seo_title seo_title"
+        "seo_meta seo_meta";
+    }
   }
 
   .error_explanation {
