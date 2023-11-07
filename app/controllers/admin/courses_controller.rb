@@ -30,6 +30,7 @@ module Admin
     def edit
       authorize @course
       @imported_course = @course.imported_course?
+      @custom_topics = @course.organization.custom_topics?
     end
 
     def create

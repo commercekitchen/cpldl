@@ -1,5 +1,5 @@
 <fieldset class='topics'>
-  <% topics_allowed = current_organization.custom_topics? || !@imported_course %>
+  <% topics_allowed = !@imported_course || @custom_topics %>
   <%= f.label :topic_ids, class: "#{'disabled' if !topics_allowed}" do %>
     Course Topics<span class="required"></span>
   <% end %>
