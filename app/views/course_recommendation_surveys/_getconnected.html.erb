@@ -47,7 +47,7 @@
       ]
     %>
     <% topic_map.each do |question_key, topic_key| %>
-        <% topic = Topic.find_by(translation_key: topic_key) %>
+        <% topic = Topic.for_organization(current_organization).find_by(translation_key: topic_key) %>
         <% next unless topic.present? %>
         <li>
           <%= radio_button_tag :topic, topic.id %>

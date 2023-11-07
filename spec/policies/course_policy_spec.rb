@@ -217,6 +217,12 @@ describe CoursePolicy, type: :policy do
                                                                 attachments_attributes: %i[document title doc_type file_description _destroy],
                                                                 resource_links_attributes: %i[id label url _destroy])
       end
+
+      it 'should include topic attributes for custom_topics org' do
+        subsite.update(custom_topics: true)
+        expect(subject.permitted_attributes).to include(topic_ids: [])
+        expect(subject.permitted_attributes).to include(course_topics_attributes: [topic_attributes: [:title, :organization_id]])
+      end
     end
 
     context 'for a subsite admin creating or editing a custom course' do

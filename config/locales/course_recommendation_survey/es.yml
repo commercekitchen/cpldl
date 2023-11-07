@@ -40,7 +40,7 @@ es:
       topics:
         question: "What do you want to do with a computer or smartphone? Please choose one option."
         education_adult: "Work from home."
-        job_search: "Find a job and apply online"
+        job_search: "Find a job and apply online."
         education_child: "Help my child with school."
         healthcare: "Find healthcare information."
         telehealth: "Visit my doctor online."

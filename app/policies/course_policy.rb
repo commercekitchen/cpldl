@@ -27,15 +27,22 @@ class CoursePolicy < AdminOnlyPolicy
   def permitted_attributes
     return [] unless user.admin?
 
-    if record.parent.present?
-      [:category_id,
-       :access_level,
-       :pub_status,
-       :notes,
-       :survey_url,
-       category_attributes: %i[name organization_id],
-       attachments_attributes: %i[document title doc_type file_description _destroy],
-       resource_links_attributes: %i[id label url _destroy]]
+    if record.imported_course?
+      attributes = [:category_id,
+                    :access_level,
+                    :pub_status,
+                    :notes,
+                    :survey_url,
+                    category_attributes: %i[name organization_id],
+                    attachments_attributes: %i[document title doc_type file_description _destroy],
+                    resource_links_attributes: %i[id label url _destroy]] 
+      
+      if user.organization.custom_topics?
+        attributes << { topic_ids: [] }
+        attributes << { course_topics_attributes: [topic_attributes: [:title, :organization_id]] }
+      end
+
+      attributes
     else
       [:title,
        :seo_page_title,
