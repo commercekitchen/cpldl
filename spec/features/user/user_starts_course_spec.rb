@@ -53,10 +53,27 @@ feature 'User visits course listing page' do
     end
 
     context 'on a login_required subdomain' do
+      let(:password) { 'asdfasdf'}
+      let(:user) { create(:user, password: password, organization: organization) }
+
       scenario 'can click to start a course and is required to sign in' do
         visit course_path(course1)
         click_link 'Start Course'
         expect(current_path).to eq(user_session_path)
+        expect(page).to have_content('You need to sign in or sign up before continuing.')
+        log_in_with(user.email, password)
+        expect(current_path).to eq(course_lesson_path(course1, course1.lessons.first))
+      end
+
+      scenario 'is prompted to complete survey after login if required' do
+        organization.update(survey_required: true)
+        visit course_path(course1)
+        click_link 'Start Course'
+        expect(current_path).to eq(user_session_path)
+        expect(page).to have_content('You need to sign in or sign up before continuing.')
+        log_in_with(user.email, password)
+        expect(current_path).to eq(new_course_recommendation_survey_path)
+        expect(page).to have_content('Please complete the Course Recommendation Survey before accessing courses.')
       end
     end
 
