@@ -26,6 +26,11 @@ class CoursesController < ApplicationController
     @course = Course.friendly.find(params[:id])
     authorize @course
 
+    if current_organization.survey_required? && current_user.quiz_responses_object.blank?
+      flash[:notice] = 'Please complete the Course Recommendation Survey before accessing courses.'
+      redirect_to new_course_recommendation_survey_path and return
+    end
+
     case @course.pub_status
     when 'D', 'C'
       flash[:notice] = 'That course is not avaliable at this time.'
