@@ -107,7 +107,7 @@ GEM
     coercible (1.0.0)
       descendants_tracker (~> 0.0.1)
     concurrent-ruby (1.1.10)
-    connection_pool (2.2.5)
+    connection_pool (2.4.1)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -225,7 +225,7 @@ GEM
     pundit (2.2.0)
       activesupport (>= 3.0.0)
     racc (1.7.1)
-    rack (2.2.6.4)
+    rack (2.2.8)
     rack-attack (6.6.1)
       rack (>= 1.0, < 3)
     rack-protection (2.2.3)
@@ -336,11 +336,10 @@ GEM
       websocket (~> 1.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (5.2.10)
-      connection_pool (~> 2.2, >= 2.2.2)
+    sidekiq (6.5.10)
+      connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
-      rack-protection (>= 1.5.0)
-      redis (~> 4.5, < 4.6.0)
+      redis (>= 4.5.0, < 5)
     sidekiq-failures (1.0.1)
       sidekiq (>= 4.0.0)
     simplecov (0.21.2)
@@ -469,7 +468,7 @@ DEPENDENCIES
   rubyzip (~> 1.0)
   sass-rails (>= 6.0.0)
   shoulda-matchers
-  sidekiq (>= 5.0, < 6.0)
+  sidekiq (>= 5.0, < 7.0)
   sidekiq-failures
   simplecov
   sinatra (>= 2.0)
