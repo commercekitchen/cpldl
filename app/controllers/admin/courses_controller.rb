@@ -29,7 +29,7 @@ module Admin
 
     def edit
       authorize @course
-      @imported_course = @course.parent.present?
+      @imported_course = @course.imported_course?
     end
 
     def create

@@ -39,6 +39,10 @@ feature 'User completes course recommendations quiz' do
 
     scenario 'custom organization questions' do
       org.update(subdomain: 'getconnected', custom_recommendation_survey: true)
+
+      shopping_topic = FactoryBot.create(:topic, title: 'Online Shopping', translation_key: 'online_shopping', organization: org)
+      shopping_course = FactoryBot.create(:course, language: @english, topics: [shopping_topic], organization: org)
+
       user.update(organization: org)
       switch_to_subdomain('getconnected')
       visit new_course_recommendation_survey_path
@@ -46,6 +50,9 @@ feature 'User completes course recommendations quiz' do
       expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
       expect(page).to have_content("Yes, I know how to use a computer.")
       expect(page).not_to have_content("I can use a computer, but I'd like to learn more.")
+      expect(page).to have_content("What do you want to do with a computer or smartphone? Please choose one option.")
+      expect(page).to have_content("Make sure I am protected when using the internet.")
+      expect(page).to have_content("Shop online.")
     end
   end
 
@@ -71,6 +78,10 @@ feature 'User completes course recommendations quiz' do
 
     scenario 'custom organization questions' do
       org.update(subdomain: 'getconnected', custom_recommendation_survey: true)
+
+      shopping_topic = FactoryBot.create(:topic, title: 'Online Shopping', translation_key: 'online_shopping', organization: org)
+      shopping_course = FactoryBot.create(:course, language: @spanish, topics: [shopping_topic], organization: org)
+
       user.update(organization: org)
       switch_to_subdomain('getconnected')
       Course.all.update(language: @spanish)
@@ -80,6 +91,9 @@ feature 'User completes course recommendations quiz' do
       expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
       expect(page).to have_content("Yes, I know how to use a computer.")
       expect(page).not_to have_content("I can use a computer, but I'd like to learn more.")
+      expect(page).to have_content("What do you want to do with a computer or smartphone? Please choose one option.")
+      expect(page).to have_content("Make sure I am protected when using the internet.")
+      expect(page).to have_content("Shop online.")
     end
   end
 end

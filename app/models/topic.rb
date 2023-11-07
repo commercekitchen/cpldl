@@ -6,4 +6,6 @@ class Topic < ApplicationRecord
   has_many :courses, through: :course_topics
 
   validates :title, presence: true
+
+  scope :for_organization, -> (org) { where(organization: nil).or(where(organization: org)) }
 end
