@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   # redirect previous course completion url to new url for GA Goal completion conversion
   get '/courses/:course_id/complete', to: 'course_completions#show', as: :course_completion
 
-  resources :quiz_responses, only: [:new, :create]
+  resources :course_recommendation_surveys, only: [:new, :create]
 
   resources 'cms_pages', only: [:show]
 

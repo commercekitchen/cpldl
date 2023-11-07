@@ -106,7 +106,7 @@ feature 'User visits course complete page' do
     end
 
     scenario 'sees survey url in a new tab if configured', js: true do
-      survey_url = 'http://survey.example.com'
+      survey_url = 'https://survey.example.com'
       course.update(survey_url: survey_url)
       visit course_completion_path(course)
       expect(page.windows.length).to eq(2)

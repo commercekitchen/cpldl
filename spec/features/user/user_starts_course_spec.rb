@@ -5,7 +5,8 @@ require 'feature_helper'
 feature 'User visits course listing page' do
   let(:organization) { FactoryBot.create(:organization) }
   let(:www) { FactoryBot.create(:default_organization) }
-  let!(:course1) { FactoryBot.create(:course_with_lessons, title: 'Course 1', course_order: 1, organization: organization) }
+  let(:topic) { create(:topic) }
+  let!(:course1) { FactoryBot.create(:course_with_lessons, title: 'Course 1', course_order: 1, topics: [topic], organization: organization) }
   let!(:course2) { FactoryBot.create(:course, title: 'Course 2', course_order: 2, organization: organization) }
   let!(:course3) { FactoryBot.create(:course, title: 'Course 3', course_order: 3, organization: organization) }
   let(:www_course) { FactoryBot.create(:course_with_lessons, organization: www) }
@@ -46,6 +47,9 @@ feature 'User visits course listing page' do
       expect(page).to have_link(attachment.document_file_name)
       expect(page).to have_link(resource_link.label)
       expect(page).to have_link(href: resource_link.url)
+
+      # Course topics
+      expect(page).to have_content(topic.title)
     end
 
     context 'on a login_required subdomain' do
@@ -111,16 +115,30 @@ feature 'User visits course listing page' do
       expect(current_path).to eq(course_lesson_path(course1, course1.lessons.second))
     end
 
-    # scenario "page should pop the modal box when a lesson finishes", js: true do
-    #   visit course_path(@course_with_lessons)
-    #   click_link "Start Course"
-    #   sleep(1) # TODO: There has to be a better way...
-    #   execute_script("sendLessonCompleteEvent();"); # TODO: match with event fired from ASL file
-    #   sleep(2) # TODO: There has to be a better way?
-    #   course_progress = @user.course_progresses.where(course_id: @course_with_lessons.id).first
-    #   expect(course_progress.completed_lessons.first.lesson_id).to eq(@course_with_lessons.lessons.first.id)
-    # end
+    context 'survey_required organization' do
+      before do
+        organization.update(survey_required: true)
+      end
 
+      scenario 'user cannot access course  without completing assessment' do
+        visit root_path
+        first(:css, '.course-widget').click
+        expect(current_path).to eq(new_course_recommendation_survey_path)
+        expect(page).to have_content('Please complete the Course Recommendation Survey before accessing courses.')
+      end
+
+      scenario 'user with assessment responses can access course' do
+        user.update(quiz_responses_object: {foo: 'bar'})
+        visit root_path
+        first(:css, '.course-widget').click
+
+        expect(current_path).to eq(course_path(course1))
+
+        # Course attachments and resource links
+        expect(page).to have_link(attachment.document_file_name)
+        expect(page).to have_link(resource_link.label)
+        expect(page).to have_link(href: resource_link.url)
+      end
+    end
   end
-
 end

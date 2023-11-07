@@ -21,14 +21,20 @@ required to stand up a new DigitalLearn site.
 - Rails 5.2.3
 - Postgresql v 9.4.5
 
-### Update Secrets
+### Install postgres command line tools
 
-- Update secrets.yml with your values
+- See [Postgres Installation Instructions](https://postgresapp.com/documentation/install.html)
+
+`sudo mkdir -p /etc/paths.d && echo /Applications/Postgres.app/Contents/Versions/latest/bin | sudo tee /etc/paths.d/postgresapp`
+
+### Install Master Key
+
+- Procure master key from team lead and save to master.key
 
 ### Database Creation
 
-- Update database.yml.example with your credentials
-- Run `rake db:create db:migrate db:seed`
+- Update database.yml with your credentials
+- Run `rails db:setup`
 
 ### Install Gems
 

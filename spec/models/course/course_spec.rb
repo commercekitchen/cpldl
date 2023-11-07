@@ -5,10 +5,10 @@ require 'rails_helper'
 describe Course do
   let(:course) { FactoryBot.create(:course) }
   let(:org) { course.organization }
+  let(:pla) { FactoryBot.create(:default_organization) }
 
   describe 'scopes' do
     describe '#pla' do
-      let(:pla) { FactoryBot.create(:default_organization) }
       let!(:pla_course) { FactoryBot.create(:course, organization: pla) }
       let!(:non_pla_course) { FactoryBot.create(:course) }
 
@@ -55,51 +55,6 @@ describe Course do
           course.update(category_name: 'eXisting categorY')
         end.to change { category.courses.count }.by(1)
       end
-    end
-  end
-
-  describe '#topics_list' do
-    let!(:topic) { FactoryBot.create(:topic, title: 'Existing Topic') }
-
-    it 'assigns topics to a course' do
-      topics = ['Topic 1', 'Topic2']
-      expect do
-        course.topics_list(topics)
-      end.to change { course.topics.count }.by(2)
-    end
-
-    it 'returns a topic list as a string' do
-      topics = ['Topic 1', 'Topic 2']
-      course.topics_list(topics)
-      expect(course.topics_str).to eq('Topic 1, Topic 2')
-    end
-
-    it 'skips blank topics when assigning to a course' do
-      topics = ['Topic 1', 'Topic2', '']
-      expect do
-        course.topics_list(topics)
-      end.to change { course.topics.count }.by(2)
-    end
-
-    it 'adds new topics to the list, if not previously there' do
-      topics = ['Topic 1', 'Topic2', 'Existing Topic', '']
-      expect do
-        course.topics_list(topics)
-      end.to change(Topic, :count).by(2)
-    end
-
-    it 'does not add nil topics' do
-      topics = nil
-      expect do
-        course.topics_list(topics)
-      end.to_not(change { course.topics.count })
-    end
-
-    it 'does not add topics from empty topics list' do
-      topics = []
-      expect do
-        course.topics_list(topics)
-      end.to_not(change { course.topics.count })
     end
   end
 
@@ -176,8 +131,20 @@ describe Course do
     end
   end
 
+  describe '#imported_course?' do
+    let(:pla_course) { FactoryBot.create(:course, organization: pla) }
+    let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
+
+    it 'returns false if course has no parent' do
+      expect(pla_course.imported_course?).to eq(false)
+    end
+
+    it 'returns true if course has a parent' do
+      expect(child_course.imported_course?).to eq(true)
+    end
+  end
+
   describe 'attachments' do
-    let(:pla) { FactoryBot.create(:default_organization) }
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
     let(:child_course) { FactoryBot.create(:course, parent: pla_course) }
     let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: pla_course, attachment_order: 2) }

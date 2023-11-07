@@ -22,7 +22,7 @@ gem 'where_exists', '>= 1.0.0'
 gem 'devise', '>= 4.6.0'
 gem 'devise_invitable', '>= 2.0.0'
 gem 'pundit'
-gem 'recaptcha', require: 'recaptcha/rails'
+gem 'recaptcha'
 gem 'rolify'
 
 # Redis for Sidekiq
@@ -30,7 +30,7 @@ gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem 'sidekiq', '>= 5.0', '< 6.0'
+gem 'sidekiq', '>= 5.0', '< 7.0'
 gem 'sidekiq-failures'
 gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
 

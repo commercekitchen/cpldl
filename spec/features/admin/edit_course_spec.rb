@@ -154,6 +154,23 @@ feature 'Admin user updates course' do
       expect(page).to have_field('Course Completion Survey URL', with: 'https://survey.example.com')
     end
 
+    scenario 'can edit course topics if enabled' do
+      other_org = create(:organization, subdomain: 'other')
+      other_org_topic = create(:topic, organization: other_org, title: 'Other Org Topic')
+      org.update(custom_topics: true)
+      visit edit_admin_course_path(subsite_course)
+      expect(page).to have_field(topic.title, disabled: false)
+      expect(page).not_to have_field(other_org_topic.title)
+      check topic.title
+      fill_in :course_course_topics_attributes_0_topic_attributes_title, with: 'Org Topic'
+      expect do
+        click_button 'Save Course'
+      end.to change { Topic.where(organization: org, title: 'Org Topic').count }.by(1)
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field(topic.title, checked: true)
+      expect(page).to have_field('Org Topic', checked: true)
+    end
+
     scenario 'can preview course' do
       skip 'TODO: course preview spec'
     end

@@ -88,16 +88,6 @@ class Course < ApplicationRecord
 
   before_save :find_or_create_category
 
-  def topics_list(topic_list)
-    if topic_list.present?
-      valid_topics = topic_list.reject(&:blank?)
-      new_or_found_topics = valid_topics.map do |title|
-        Topic.find_or_create_by(title: title)
-      end
-      self.topics = new_or_found_topics
-    end
-  end
-
   def topics_str
     topics.pluck(:title).join(', ')
   end
@@ -151,6 +141,10 @@ class Course < ApplicationRecord
 
   def coming_soon?
     pub_status == 'C'
+  end
+
+  def imported_course?
+    parent.present?
   end
 
   def find_or_create_category

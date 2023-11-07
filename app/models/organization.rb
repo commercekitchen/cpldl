@@ -6,15 +6,18 @@ class Organization < ApplicationRecord
   resourcify
 
   store_attributes :preferences do
-    footer_logo_file_name      String
-    footer_logo_file_size      Integer
-    footer_logo_link           String
-    footer_logo_content_type   String
-    user_survey_enabled        Boolean, default: false
-    user_survey_link           String
-    spanish_survey_link        String
-    custom_certificate_enabled Boolean, default: false
-    phone_number_users_enabled Boolean, default: false
+    footer_logo_file_name        String
+    footer_logo_file_size        Integer
+    footer_logo_link             String
+    footer_logo_content_type     String
+    user_survey_enabled          Boolean, default: false
+    user_survey_link             String
+    spanish_survey_link          String
+    custom_certificate_enabled   Boolean, default: false
+    phone_number_users_enabled   Boolean, default: false
+    custom_recommendation_survey Boolean, default: false
+    custom_topics                Boolean, default: false
+    survey_required              Boolean, default: false
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
@@ -31,6 +34,7 @@ class Organization < ApplicationRecord
   has_many :footer_links, dependent: :destroy
 
   has_many :lessons, through: :courses
+  has_many :topics
 
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }

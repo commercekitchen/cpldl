@@ -1,0 +1,63 @@
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">1. <%= t("course_recommendation_survey.getconnected.desktop.question") %></p></strong>
+  <ul class="less-padding">
+    <% ['Beginner', 'Intermediate', 'Advanced'].each do |level| %>
+      <li>
+        <%= radio_button_tag(:desktop_level, level) %>
+        <% label_text = t("course_recommendation_survey.getconnected.desktop.#{level.downcase}") %>
+        <%= label_tag("desktop_level_#{level.downcase}", label_text, class: "inline-label") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">2. <%= t("course_recommendation_survey.getconnected.mobile.question") %></p></strong>
+  <ul class="less-padding">
+    <% ['Beginner', 'Intermediate', 'Advanced'].each do |level| %>
+      <li>
+        <%= radio_button_tag(:mobile_level, level) %>
+        <% label_text = t("course_recommendation_survey.getconnected.mobile.#{level.downcase}") %>
+        <%= label_tag("mobile_level_#{level.downcase}", label_text, class: "inline-label") %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= field_set_tag do %>
+  <strong><p class="black-modal-text">3. <%= t("course_recommendation_survey.getconnected.topics.question") %></p></strong>
+  <ul class="less-padding">
+    <%
+      topic_map = [
+        ['education_adult', 'education_adult'],
+        ['job_search', 'job_search'],
+        ['education_child', 'education_child'],
+        ['healthcare', 'healthcare'],
+        ['telehealth', 'telehealth'],
+        ['online_shopping', 'online_shopping'],
+        ['online_billpay', 'online_billpay'],
+        ['online_banking', 'online_banking'],
+        ['online_classes', 'online_classes'],
+        ['information_searching_1', 'information_searching'],
+        ['information_searching_2', 'information_searching'],
+        ['govt', 'govt'],
+        ['communication_social_media', 'communication_social_media'],
+        ['software_apps', 'software_apps'],
+        ['security', 'security']
+      ]
+    %>
+    <% topic_map.each do |question_key, topic_key| %>
+        <% topic = Topic.for_organization(current_organization).find_by(translation_key: topic_key) %>
+        <% next unless topic.present? %>
+        <li>
+          <%= radio_button_tag :topic, topic.id %>
+          <% label_text = I18n.translate!("course_recommendation_survey.getconnected.topics.#{question_key}") %>
+          <%= label_tag("topic_#{topic.id}", label_text, class: "inline-label") %>
+        </li>
+    <% end %>
+    <li>
+      <%= radio_button_tag :topic, 0 %>
+      <%= label_tag("topic_none", t('course_recommendation_survey.getconnected.topics.none'), class: "inline-label") %>
+    </li>
+  </ul>
+<% end %>

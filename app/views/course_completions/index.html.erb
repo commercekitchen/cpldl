@@ -32,6 +32,6 @@
 <p>
   <%= t('completed_courses_page.have_you_completed_most_courses') %>
 </p>
-<%= link_to new_quiz_response_path do %>
+<%= link_to new_course_recommendation_survey_path do %>
   <%= button_tag(i18n_with_default("completed_courses_page.#{current_organization.subdomain}.retake_the_quiz"), type: "button", class: "button-color") %>
 <% end %>

@@ -1,24 +1,28 @@
-  <fieldset class='topics'>
-    <%= f.label :topic_ids, class: "#{'disabled' if @imported_course}" do %>
-      Course Topics<span class="required"></span>
-    <% end %>
+<fieldset class='topics'>
+  <% topics_allowed = current_organization.custom_topics? || !@imported_course %>
+  <%= f.label :topic_ids, class: "#{'disabled' if !topics_allowed}" do %>
+    Course Topics<span class="required"></span>
+  <% end %>
 
-    <%= f.collection_check_boxes(:topic_ids, Topic.all, :id, :title, {}, disabled: @imported_course) do |b| %>
-      <div>
-        <%= b.check_box %>
-        <%= b.label class: "plain #{'disabled' if @imported_course}" %>
-      </div>
-    <% end %>
+  <%= f.collection_check_boxes(:topic_ids, Topic.for_organization(current_organization), :id, :title, {}, disabled: !topics_allowed) do |b| %>
+    <div>
+      <%= b.check_box %>
+      <%= b.label class: "plain #{'disabled' if !topics_allowed}" %>
+    </div>
+  <% end %>
 
-    <% unless @imported_course %>
-      <div>
-        <%= f.check_box :other_topic %>
-        <%= f.label :other_topic, "Other Topic", class: "plain #{'disabled' if @imported_course}" %>
-        <%= f.fields_for :course_topics, [CourseTopic.new] do |ct| %>
-          <%= ct.fields_for :topic_attributes do |topic_form| %>
-            <%= topic_form.text_field :title, placeholder: "(Enter to create new topic)", class: "topic-box" %>
+  <% if topics_allowed %>
+    <div>
+      <%= f.check_box :other_topic %>
+      <%= f.label :other_topic, "Other Topic", class: "plain" %>
+      <%= f.fields_for :course_topics, [CourseTopic.new] do |ct| %>
+        <%= ct.fields_for :topic_attributes do |topic_form| %>
+          <% if current_organization.custom_topics? %>
+            <%= topic_form.hidden_field :organization_id, value: current_organization.id %>
           <% end %>
+          <%= topic_form.text_field :title, placeholder: "(Enter to create new topic)", class: "topic-box" %>
         <% end %>
-      </div>
-    <% end %>
-  </fieldset>
+      <% end %>
+    </div>
+  <% end %>
+</fieldset>

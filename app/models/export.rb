@@ -3,7 +3,7 @@
 require 'csv'
 
 class Export
-  def self.to_csv_for_completion_report(data)
+  def self.to_csv_for_completion_report(data, organization = nil)
     @data = data
     case @data.delete(:version)
     when 'zip_code'
@@ -11,7 +11,7 @@ class Export
     when 'library'
       generate_csv_for_lib
     when 'survey_responses'
-      generate_csv_for_survey_responses
+      generate_csv_for_survey_responses(organization)
     when 'partner'
       generate_csv_for_partner
     end
@@ -74,18 +74,21 @@ class Export
     end
   end
 
-  def self.generate_csv_for_survey_responses
+  def self.generate_csv_for_survey_responses(organization)
+    translation_prefix = organization&.custom_recommendation_survey ? "course_recommendation_survey.#{organization.subdomain}" : "course_recommendation_survey.default"
+
     CSV.generate do |csv|
-      csv << ['How comfortable are you with desktop or laptop computers?',
-              'How comfortable are you using a phone, tablet, or iPad to access the Internet?',
-              'What would you like to do with a computer?',
+      csv << [I18n.t("#{translation_prefix}.desktop.question"),
+              I18n.t("#{translation_prefix}.mobile.question"),
+              I18n.t("#{translation_prefix}.topics.question"),
               'Total Responses',
               'Course Title',
               'Completions']
       @data.each do |responses_hash, count_data|
-        csv_row = [I18n.t("quiz.set_one_#{responses_hash['set_one']}"),
-                   I18n.t("quiz.set_two_#{responses_hash['set_two']}"),
-                   I18n.t("quiz.set_three_#{responses_hash['set_three']}"),
+        topic_translation_key = Topic.find(responses_hash['topic']).translation_key
+        csv_row = [I18n.t("#{translation_prefix}.desktop.#{responses_hash['desktop_level']&.downcase}"),
+                   I18n.t("#{translation_prefix}.mobile.#{responses_hash['mobile_level']&.downcase}"),
+                   I18n.t("#{translation_prefix}.topics.#{topic_translation_key}"),
                    count_data[:responses]]
 
         csv.add_row csv_row
