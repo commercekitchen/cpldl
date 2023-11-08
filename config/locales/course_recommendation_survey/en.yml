@@ -32,11 +32,13 @@ en:
         beginner: "No, I have never used a computer before."
         intermediate: "I can use a computer a little bit."
         advanced: "Yes, I know how to use a computer."
+        expert: "I'm very comfortable with a computer, but I would like to learn more on a specific topic. (Legacy)"
       mobile:
         question: "Can you use a smartphone to access the Internet?"
         beginner: "No, I have never used a smartphone before."
         intermediate: "I can use a smartphone a little bit."
         advanced: "Yes, I know how to use a smartphone."
+        expert: "I'm very comfortable with at least one of these technologies, but I would like to learn more on a specific topic. (Legacy)"
       topics:
         question: "What do you want to do with a computer or smartphone? Please choose one option."
         education_adult: "Work from home."
