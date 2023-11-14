@@ -18,6 +18,7 @@ class Organization < ApplicationRecord
     custom_recommendation_survey Boolean, default: false
     custom_topics                Boolean, default: false
     survey_required              Boolean, default: false
+    deidentify_reports           Boolean, default: false
   end
 
   # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,

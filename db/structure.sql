@@ -1045,7 +1045,7 @@ CREATE TABLE public.users (
     invited_by_type character varying,
     invited_by_id integer,
     invitations_count integer DEFAULT 0,
-    token character varying,
+    uuid character varying,
     organization_id integer,
     school_id integer,
     program_location_id integer,
@@ -1059,7 +1059,8 @@ CREATE TABLE public.users (
     encrypted_library_card_pin character varying,
     encrypted_library_card_pin_iv character varying,
     partner_id bigint,
-    phone_number character varying
+    phone_number character varying,
+    string uuid
 );
 
 
@@ -1991,6 +1992,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221205023629'),
 ('20230116033009'),
 ('20231001021801'),
-('20231012203418');
+('20231012203418'),
+('20231114043940');
 
 

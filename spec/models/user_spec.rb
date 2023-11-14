@@ -8,6 +8,10 @@ describe User do
   let(:course2) { FactoryBot.create(:course_with_lessons) }
   let(:course3) { FactoryBot.create(:course) }
 
+  it 'sets uuid for new user' do
+    expect(user.uuid).not_to be_nil
+  end
+
   context '#tracking_course?' do
     let!(:course_progress1) { FactoryBot.create(:course_progress, user: user, course: course1, tracked: true) }
     let!(:course_progress2) { FactoryBot.create(:course_progress, user: user, course: course2, tracked: false) }
@@ -19,7 +23,6 @@ describe User do
     it 'should return false for an un-tracked course' do
       expect(user.tracking_course?(course2.id)).to be false
     end
-
   end
 
   context '#completed_lesson_ids' do
