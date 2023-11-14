@@ -32,6 +32,7 @@ class User < ApplicationRecord
   nilify_blanks only: [:email]
 
   before_validation :set_password_from_pin, if: :library_card_login?
+  before_create :generate_uuid
 
   # Validate card number and pin for library card logins
   validates :library_card_number, uniqueness: { scope: :organization_id, if: :library_card_login? },
@@ -193,5 +194,9 @@ class User < ApplicationRecord
 
   def md5_digest(password, limit = 10)
     Digest::MD5.hexdigest(password).first(limit)
+  end
+
+  def generate_uuid
+    self.uuid = SecureRandom.uuid if self.uuid.blank?
   end
 end
