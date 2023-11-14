@@ -19,7 +19,7 @@ feature 'User attempts to request a new password' do
     expect(page).to have_content('Forgot your password?')
 
     fill_in 'Email', with: user.email
-    click_button 'Send me reset password instructions'
+    click_button 'Send reset password instructions'
 
     expect(page).to have_content('You will receive an email with instructions on how to reset your password in a few minutes.')
   end
