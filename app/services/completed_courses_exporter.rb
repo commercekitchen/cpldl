@@ -41,7 +41,7 @@ class CompletedCoursesExporter
     values = [user.send(@primary_id_field), course_progress.course.title, course_progress.completed_at.strftime('%m-%d-%Y')]
     values << (user.program&.program_name || '') if @org.accepts_programs?
     values << (user.profile&.library_location&.name || '') if @org.branches?
-    values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if school_program_org?
+    values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if @org.student_programs?
     values
   end
 end
