@@ -6,7 +6,7 @@ class NoCoursesReportExporter
 
   def initialize(org)
     @org = org
-    @primary_id_field = @org.authentication_key_field
+    @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
   def to_csv
