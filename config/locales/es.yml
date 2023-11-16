@@ -222,6 +222,8 @@ es:
       course_color_explaination: "Necesita terminar los cursos en púrpura. Ha terminado los cursos en gris."
     kclibrary:
       course_color_explaination: "Necesita terminar los cursos en azul. Ha terminado los cursos en gris."
+    getconnected:
+      course_color_explaination: "Necesita terminar los cursos en amarillo. Ha terminado los cursos en gris."
     add_more: "Para agregar cursos a su plan personal,"
     my_plan_click_to_start: "Mi Plan: ¡Da clic en un curso para comenzar!"
     click_here_to_homepage: "Para agregar cursos a su plan personal, de clic aquí para regresar a la página principal."
