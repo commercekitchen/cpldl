@@ -146,6 +146,9 @@ Rails.application.routes.draw do
   match '/404', to: 'errors#error404', via: [:get, :post, :patch, :delete]
   match '/500', to: 'errors#error500', via: [:get, :post, :patch, :delete]
 
+  # Custom heartland shortlink
+  get '/heartland', to: redirect('/courses/getting-started-with-telehealth'), constraints: { subdomain: 'www' }
+
   # These are all the redirects needed to keep things working from the old site.
   # They are coming from links on external sites that we can't update or change.
   # Please don't delete them.
