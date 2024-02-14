@@ -12,6 +12,7 @@
 <li><%= link_to "Completions Report (by Survey Answers)", admin_completion_report_path(group_by: "survey_responses", format: :csv) %></li>
 <li><%= link_to "Incomplete Courses", admin_report_export_path(report: :incomplete_courses, format: :csv) %></li>
 <li><%= link_to "Completed Courses", admin_report_export_path(report: :completed_courses, format: :csv) %></li>
+<li><%= link_to "Completed Lessons", admin_report_export_path(report: :completed_lessons, format: :csv) %></li>
 <li><%= link_to "Users that have not started a course", admin_report_export_path(report: :no_courses, format: :csv) %></li>
 
 <% if in_subdomain? "npl" %>

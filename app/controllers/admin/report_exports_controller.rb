@@ -19,6 +19,8 @@ module Admin
         RegistrationExporter.new(current_organization).to_csv
       when 'completed_courses'
         CompletedCoursesExporter.new(current_organization).to_csv
+      when 'completed_lessons'
+        CompletedLessonsExporter.new(current_organization).to_csv
       when 'incomplete_courses'
         UnfinishedCoursesExporter.new(current_organization).to_csv
       when 'no_courses'

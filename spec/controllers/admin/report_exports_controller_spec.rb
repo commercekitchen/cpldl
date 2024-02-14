@@ -17,7 +17,8 @@ describe Admin::ReportExportsController do
       { report_param: 'registrations', exporter_class: RegistrationExporter },
       { report_param: 'completed_courses', exporter_class: CompletedCoursesExporter },
       { report_param: 'incomplete_courses', exporter_class: UnfinishedCoursesExporter },
-      { report_param: 'no_courses', exporter_class: NoCoursesReportExporter }
+      { report_param: 'no_courses', exporter_class: NoCoursesReportExporter },
+      { report_param: 'completed_lessons', exporter_class: CompletedLessonsExporter }
     ].each do |report_type|
       it "should have a successful response for #{report_type[:report_param]}" do
         get :show, params: { report: report_type[:report_param] }, format: :csv
