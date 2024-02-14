@@ -99,13 +99,13 @@ feature 'User completes course recommendations quiz' do
       visit new_course_recommendation_survey_path
       click_link 'Español'
       expect(page).to have_link('Saltarse el cuestionario')
-      expect(page).to have_content("Can you use a computer to access the Internet? Please choose one option.")
+      expect(page).to have_content("¿Sabes usar una computadora para acceder la Internet? Por favor elige una opción:")
       expect(page).not_to have_content("How comfortable are you with desktop or laptop computers? Select one.")
-      expect(page).to have_content("Yes, I know how to use a computer.")
+      expect(page).to have_content("Sí, sé cómo usar una computadora.")
       expect(page).not_to have_content("I can use a computer, but I'd like to learn more.")
-      expect(page).to have_content("What do you want to do with a computer or smartphone? Please choose one option.")
-      expect(page).to have_content("Make sure I am protected when using the internet.")
-      expect(page).to have_content("Shop online.")
+      expect(page).to have_content("¿Qué querrías hacer con una computadora o un teléfono inteligente? Por favor elige una opción:")
+      expect(page).to have_content("Estar seguro/a de estar protegido cuando uso la Internet.")
+      expect(page).to have_content("Comprar artículos en linea.")
     end
   end
 end
