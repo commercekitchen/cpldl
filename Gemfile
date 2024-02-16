@@ -85,6 +85,9 @@ gem 'rack-proxy'
 # Cocoon for dynamic nested forms
 gem 'cocoon'
 
+# Freeze nokogiri version
+gem 'nokogiri', '~> 1.15.5'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
