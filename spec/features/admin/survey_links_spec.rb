@@ -44,21 +44,11 @@ feature 'Admin updates organization survey links' do
     page.check('Enable Survey?')
     expect(page).to have_field('Enable Survey?', checked: true)
 
-    fill_in 'Survey Link', with: 'foobar'
-    click_on('Submit')
-
-    expect(page).to have_content('User survey link is not a valid URL')
-
     survey_url = 'https://survey.example.com'
     fill_in 'Survey Link', with: survey_url
     click_on('Submit')
 
     expect(page).to have_field('Survey Link', with: survey_url)
-
-    fill_in 'Spanish Survey Link', with: 'foobar'
-    click_on('Submit')
-
-    expect(page).to have_content('Spanish survey link is not a valid URL')
 
     fill_in 'Spanish Survey Link', with: survey_url
     click_on('Submit')

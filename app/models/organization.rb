@@ -51,9 +51,7 @@ class Organization < ApplicationRecord
   validates :footer_logo_link, url: { allow_blank: true }
   after_validation :clean_up_paperclip_errors
 
-  validates :user_survey_link, url: { allow_blank: true }
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
-  validates :spanish_survey_link, url: { allow_blank: true }
 
   def user_count
     users.count
@@ -112,12 +110,18 @@ class Organization < ApplicationRecord
     end
   end
 
-  def survey_url(locale)
+  def survey_url(locale, user: nil)
     if locale == :es
-      spanish_survey_link.blank? ? user_survey_link : spanish_survey_link
+      url = spanish_survey_link.blank? ? user_survey_link : spanish_survey_link
     else
-      user_survey_link
+      url = user_survey_link
     end
+
+    if url.present? && user
+      url = url % { user_uuid: user.uuid }
+    end
+
+    url if url.present?
   end
 
   def self.pla

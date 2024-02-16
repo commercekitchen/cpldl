@@ -1,4 +1,4 @@
-<% @survey_url = @course.survey_url || current_organization.survey_url(I18n.locale) %>
+<% @survey_url = @course.survey_url || current_organization.survey_url(I18n.locale, user: current_user) %>
 <% if @survey_url.present? %>
   <%= link_to(@survey_url, target: :_blank) do %>
     <%= button_tag(type: 'button', class: "congrats-button button-color small") do %>

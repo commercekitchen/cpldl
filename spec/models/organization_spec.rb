@@ -50,14 +50,6 @@ RSpec.describe Organization, type: :model do
       org.user_survey_enabled = true
       expect(org).not_to be_valid
     end
-
-    it 'requires url format for survey link' do
-      expect(org).to validate_url_of(:user_survey_link)
-    end
-
-    it 'requires url format for spanish survey link' do
-      expect(org).to validate_url_of(:spanish_survey_link)
-    end
   end
 
   describe '#users_count' do
@@ -115,33 +107,80 @@ RSpec.describe Organization, type: :model do
   end
 
   describe '#survey_url' do
-    let(:survey_url) { 'https://survey.example.com' }
-    let(:spanish_survey_url) { 'https://spanish.example.com' }
+    context 'static survey url' do
+      let(:survey_url) { 'https://survey.example.com' }
+      let(:spanish_survey_url) { 'https://spanish.example.com' }
 
-    before do
-      org.user_survey_link = survey_url
+      before do
+        org.user_survey_link = survey_url
+      end
+
+      it 'returns nil if survey link is nil' do
+        org.user_survey_link = nil
+        expect(org.survey_url(:en)).to eq(nil)
+      end
+
+      it 'returns nil if survey link is blank' do
+        org.user_survey_link = ''
+        expect(org.survey_url(:en)).to eq(nil)
+      end
+
+      it 'returns user_survey_link for en locale' do
+        expect(org.survey_url(:en)).to eq(survey_url)
+      end
+
+      it 'returns user_survey_link for es locale if no spanish survey' do
+        expect(org.survey_url(:es)).to eq(survey_url)
+      end
+
+      it 'returns user_survey_link for es locale for blank spanish survey' do
+        org.spanish_survey_link = ''
+        expect(org.survey_url(:es)).to eq(survey_url)
+      end
+
+      it 'returns spanish_survey_link for es locale if spanish survey exists' do
+        org.spanish_survey_link = spanish_survey_url
+        expect(org.survey_url(:es)).to eq(spanish_survey_url)
+      end
+
+      it 'returns user_survey_link for unknown locale' do
+        expect(org.survey_url(:foobar)).to eq(survey_url)
+      end
     end
 
-    it 'returns user_survey_link for en locale' do
-      expect(org.survey_url(:en)).to eq(survey_url)
-    end
+    context 'survey_url with dynamic interpolation' do
+      let(:user) { create(:user) }
+      let(:survey_url) { 'https://survey.example.com?userid=%{user_uuid}' }
+      let(:spanish_survey_url) { 'https://spanish.example.com?userid=%{user_uuid}' }
 
-    it 'returns user_survey_link for es locale if no spanish survey' do
-      expect(org.survey_url(:es)).to eq(survey_url)
-    end
+      before do
+        org.user_survey_link = survey_url
+        org.spanish_survey_link = spanish_survey_url
+      end
 
-    it 'returns user_survey_link for es locale for blank spanish survey' do
-      org.spanish_survey_link = ''
-      expect(org.survey_url(:es)).to eq(survey_url)
-    end
+      it 'returns nil if survey link is nil' do
+        org.user_survey_link = nil
+        expect(org.survey_url(:en, user: user)).to eq(nil)
+      end
 
-    it 'returns spanish_survey_link for es locale if spanish survey exists' do
-      org.spanish_survey_link = spanish_survey_url
-      expect(org.survey_url(:es)).to eq(spanish_survey_url)
-    end
+      it 'returns nil if survey link is blank' do
+        org.user_survey_link = ''
+        expect(org.survey_url(:en, user: user)).to eq(nil)
+      end
 
-    it 'returns user_survey_link for unknown locale' do
-      expect(org.survey_url(:foobar)).to eq(survey_url)
+      it 'interpolates user uuid if user is given' do
+        expected_url = "https://survey.example.com?userid=#{user.uuid}"
+        expect(org.survey_url(:en, user: user)).to eq(expected_url)
+      end
+
+      it 'ignores interpolation values without user' do
+        expect(org.survey_url(:en)).to eq(survey_url)
+      end
+
+      it 'interpolates into spanish url' do
+        expected_url = "https://spanish.example.com?userid=#{user.uuid}"
+        expect(org.survey_url(:es, user: user)).to eq(expected_url)
+      end
     end
   end
 end
