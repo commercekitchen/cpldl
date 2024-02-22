@@ -52,6 +52,28 @@ RSpec.describe Organization, type: :model do
     end
   end
 
+  describe 'add_survey_url_protocols callback' do
+    it 'adds protocol to user_survey_link' do
+      org.update(user_survey_link: 'www.example.com')
+      expect(org.user_survey_link).to eq('https://www.example.com')
+    end
+
+    it 'adds protocol to spanish_survey_link' do
+      org.update(spanish_survey_link: 'www.example.com')
+      expect(org.spanish_survey_link).to eq('https://www.example.com')
+    end
+
+    it 'keeps original protocol for user_survey_link' do
+      org.update(user_survey_link: 'http://www.example.com')
+      expect(org.user_survey_link).to eq('http://www.example.com')
+    end
+
+    it 'keeps original protocol for spanish_survey_link' do
+      org.update(spanish_survey_link: 'http://www.example.com')
+      expect(org.spanish_survey_link).to eq('http://www.example.com')
+    end
+  end
+
   describe '#users_count' do
     it 'returns the count of its users' do
       expect(org.user_count).to eq(3)

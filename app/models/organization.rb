@@ -53,6 +53,8 @@ class Organization < ApplicationRecord
 
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
 
+  before_validation :add_survey_url_protocols
+
   def user_count
     users.count
   end
@@ -126,5 +128,17 @@ class Organization < ApplicationRecord
 
   def self.pla
     find_by(subdomain: 'www')
+  end
+
+  private
+
+  def add_survey_url_protocols
+    unless user_survey_link.blank? || user_survey_link[/\Ahttp:\/\//] || user_survey_link[/\Ahttps:\/\//]
+      self.user_survey_link = "https://#{user_survey_link}"
+    end
+
+    unless spanish_survey_link.blank? || spanish_survey_link[/\Ahttp:\/\//] || spanish_survey_link[/\Ahttps:\/\//]
+      self.spanish_survey_link = "https://#{spanish_survey_link}"
+    end
   end
 end
