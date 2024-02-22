@@ -7,6 +7,7 @@ feature 'User visits course complete page' do
   let(:org) { user.organization }
   let(:course) { FactoryBot.create(:course, organization: org) }
   let(:survey_url) { 'https://survey.example.com' }
+  let(:survey_url_with_uuid) { 'https://survey.example.com?userid=%{user_uuid}' }
 
   context 'as a logged in user' do
     let!(:course_progress) { FactoryBot.create(:course_progress, user: user, course: course, completed_at: Time.zone.now) }
@@ -40,6 +41,15 @@ feature 'User visits course complete page' do
       expect(page).to have_link(survey_link_text, href: survey_url)
     end
 
+    scenario 'sees interpolated survey link' do
+      org.update(user_survey_enabled: true, user_survey_link: survey_url_with_uuid)
+      visit course_completion_path(course)
+
+      survey_link_text = 'We Need Your Help - Please Take a Quick Survey'
+      expected_url = "https://survey.example.com?userid=#{user.uuid}"
+      expect(page).to have_link(survey_link_text, href: expected_url)
+    end
+
     scenario 'sees certificate message in spanish', js: true do
       visit course_completion_path(course)
       click_link 'Español'
@@ -68,6 +78,26 @@ feature 'User visits course complete page' do
 
       # Use spanish survey url if available
       expect(page).to have_link(survey_link_text, href: spanish_survey_url)
+    end
+
+    scenario 'sees spanish survey link with interpolated value' do
+      org.update(user_survey_enabled: true, user_survey_link: survey_url_with_uuid)
+      visit course_completion_path(course)
+      click_link 'Español'
+
+      survey_link_text = 'Necesitamos su ayuda - Por favor tome una encuesta rápida'
+      
+      # Default to english survey url
+      expected_url = "https://survey.example.com?userid=#{user.uuid}"
+      expect(page).to have_link(survey_link_text, href: expected_url)
+
+      spanish_survey_url = 'https://spanish-survey.example.com?userid=%{user_uuid}'
+      org.update(spanish_survey_link: spanish_survey_url)
+      visit course_completion_path(course)
+
+      # Use spanish survey url if available
+      expected_url = "https://spanish-survey.example.com?userid=#{user.uuid}"
+      expect(page).to have_link(survey_link_text, href: expected_url)
     end
 
     scenario 'does not see practice skills button if no attachments or notes are available' do
