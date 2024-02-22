@@ -51,9 +51,9 @@ class Organization < ApplicationRecord
   validates :footer_logo_link, url: { allow_blank: true }
   after_validation :clean_up_paperclip_errors
 
-  validates :user_survey_link, url: { allow_blank: true }
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
-  validates :spanish_survey_link, url: { allow_blank: true }
+
+  before_validation :add_survey_url_protocols
 
   def user_count
     users.count
@@ -112,15 +112,33 @@ class Organization < ApplicationRecord
     end
   end
 
-  def survey_url(locale)
+  def survey_url(locale, user: nil)
     if locale == :es
-      spanish_survey_link.blank? ? user_survey_link : spanish_survey_link
+      url = spanish_survey_link.blank? ? user_survey_link : spanish_survey_link
     else
-      user_survey_link
+      url = user_survey_link
     end
+
+    if url.present? && user
+      url = url % { user_uuid: user.uuid }
+    end
+
+    url if url.present?
   end
 
   def self.pla
     find_by(subdomain: 'www')
+  end
+
+  private
+
+  def add_survey_url_protocols
+    unless user_survey_link.blank? || user_survey_link[/\Ahttp:\/\//] || user_survey_link[/\Ahttps:\/\//]
+      self.user_survey_link = "https://#{user_survey_link}"
+    end
+
+    unless spanish_survey_link.blank? || spanish_survey_link[/\Ahttp:\/\//] || spanish_survey_link[/\Ahttps:\/\//]
+      self.spanish_survey_link = "https://#{spanish_survey_link}"
+    end
   end
 end
