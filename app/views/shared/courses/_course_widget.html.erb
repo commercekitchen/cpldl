@@ -1,4 +1,4 @@
-<a class="course-widget<% if courses_completed.include?(course.id) %> completed<% end %>" href="<%= course_path(course) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
+<a class="course-widget <%= courses_completed.include?(course.id) ? 'completed' : '' %> <%= course.new_course? ? 'new-course' : '' %>" href="<%= course_path(course) %>" data-cpl-ga-event="on" data-cpl-ga-value="user-open-course">
   <header>
     <h3 class='course-title shaveable' data-resize-height="75"><%= course.title %></h3>
   </header>

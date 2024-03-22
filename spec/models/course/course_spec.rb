@@ -180,4 +180,20 @@ describe Course do
       expect(Course.pub_status_options).to eq(expected_options_array)
     end
   end
+
+  describe '#new_course?' do
+    it 'is false for non-new course title' do
+      expect(course.new_course?).to eq(false)
+    end
+
+    it 'is true for new course title' do
+      course.title = "#{course.title} (New!)"
+      expect(course.new_course?).to eq(true)
+    end
+
+    it 'is true for new spanish course title' do
+      course.title = "#{course.title} (Nuevo)"
+      expect(course.new_course?).to eq(true)
+    end
+  end
 end

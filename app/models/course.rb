@@ -157,4 +157,12 @@ class Course < ApplicationRecord
   def self.pub_status_options
     [%w[Draft D], %w[Published P], %w[Archived A], ['Coming Soon', 'C']]
   end
+
+  def new_course?
+    # Lovely hack to customize "new" courses. We don't have a "new" course feature,
+    # but some clients started using the course titles to indicate new material, and
+    # they have requested additional UI indicators.
+
+    title.include?("(New!)") || title.include?("(Nuevo)")
+  end
 end
