@@ -17,10 +17,14 @@
       margin-right: 2em;
     }
 
+    &.new-course {
+      border: 2px solid $glow-blue;
+    }
+
     header {
       height: 75px;
       overflow: hidden;
-      border-top-left-radius: 20px;
+      border-top-left-radius: 18px;
     }
 
     h3 {
@@ -102,6 +106,12 @@
 
     &:hover {
       box-shadow: 0 0 10px $grey;
+    }
+
+    &.new-course {
+      &:hover {
+        box-shadow: 0 0 10px 2px $glow-blue; 
+      }
     }
   }
 }
