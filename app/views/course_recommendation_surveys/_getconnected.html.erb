@@ -60,38 +60,6 @@
       <%= label_tag("topic_none", t('course_recommendation_survey.getconnected.topics.none'), class: "inline-label") %>
     </li>
   </ul>
-
-  <br />
-  <br />
-
-  <% if I18n.locale == :en %>
-    <p>Hello:</p>
-    <p>
-      Your feedback matters!
-      You are invited to share your experience with our digital learning support and earn a $25 gift card in appreciation for your time.
-      Just complete a short survey before and after completing the recommended courses and lessons.
-      Click the link below to get started (you will be leaving this website but can easily return in the future):
-    </p>
-    <p>
-      Thank you for your valuable input and happy learning!
-    <p>
-
-    <%= link_to 'California Emerging Technology Fund', 'https://myinternetlearning.com/', target: :_blank %>
-  <% elsif I18n.locale == :es %>
-    <p>Hola:</p>
-    <p>
-      ¡Sus comentarios son importantes!
-      Los invitamos a compartir su experiencia con nuestro soporte de aprendizaje digital y puede ganar una tarjeta
-      de regalo de $25 en agradecimiento por su tiempo.
-      Simplemente complete una breve encuesta antes y después de completar los cursos y actividades recomendados.
-      Haga clic en el enlace a continuación para comenzar (abandonará este sitio web pero podrá regresar fácilmente en el futuro):
-    </p>
-    <p>
-      ¡Gracias por sus comentarios valiosos y feliz aprendizaje!
-    </p>
-
-    <%= link_to 'California Emerging Technology Fund', 'https://aprendamosenlinea.com/', target: :_blank%>
-  <% end %>
 <% end %>
 
 <br />

@@ -11,4 +11,17 @@
     white-space: normal;
     text-align: left;
   }
+
+  .external-survey-prompt {
+    border: 1px solid $get-connected-blue;
+    padding: 1rem;
+    margin-bottom: 2rem;
+
+    .feedback-banner {
+      margin-top: 0;
+      background-color: #C3E1F9;
+      color: $black;
+      padding: 0.5rem;
+    }
+  }
 }

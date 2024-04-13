@@ -11,6 +11,10 @@
   <% end %>
 </p>
 
+<% if lookup_context.exists?(current_subdomain, ['shared/courses/custom_components/course_intro'], true) %>
+  <%= render "shared/courses/custom_components/course_intro/#{current_subdomain}" %>
+<% end %>
+
 <%= render "shared/courses/listing" %>
 
 <% if @results && @results.blank? %>
