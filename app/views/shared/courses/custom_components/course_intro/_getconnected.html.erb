@@ -1,0 +1,42 @@
+<section class='external-survey-prompt'>
+  <% if I18n.locale == :en %>
+    <h4 class='feedback-banner'>
+      &#127775;
+      Share Your Opinions, Claim Your Reward!
+      &#127775;
+    </h4>
+    <p>
+      Ready to shape the future of digital learning? Take our quick survey and let us know your thoughts!
+      As a token of our appreciation, we're offering a $25 gift card to thank you for your time.
+    </p>
+    <p>
+      Simply click the link below to get started, and your survey will pop up in a new tab.
+    </p>
+    <p>
+      Please note: This survey is conducted independently; any information you choose to share is neither
+      associated with the Public Library Association (PLA) nor does PLA bear responsibility for it.
+    </p>
+
+    <%= link_to 'California Emerging Technology Fund', 'https://myinternetlearning.com/', target: :_blank %>
+  <% elsif I18n.locale == :es %>
+    <div class='feedback-banner'>
+      &#127775;
+      ¡Comparta Sus Opiniones, Reclame Su Recompensa!
+      &#127775;
+    </div>
+    <p>
+      ¿Està listo para dar forma al futuro del aprendizaje digital?
+      ¡Responda nuestra breve encuesta y háganos saber su opinión!
+      Como muestra de agradecimiento, le ofrecemos una tarjeta de regalo de $25 para agradecerle por su tiempo.
+    </p>
+    <p>
+      Simplemente haga clic en el enlace a continuación para comenzar, y su encuesta va a aparecerá en una nueva pestaña.
+    </p>
+    <p>
+      Tenga en cuenta: esta encuesta se realiza de forma independiente; cualquier información que elija compartir no es
+      asociado con la Public Library Association (PLA) ni PLA es responsable de ello.
+    </p>
+
+    <%= link_to 'California Emerging Technology Fund', 'https://aprendamosenlinea.com/', target: :_blank %>
+  <% end %>
+</section>
