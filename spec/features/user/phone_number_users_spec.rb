@@ -4,6 +4,8 @@ require 'feature_helper'
 
 feature 'User visits a subdomain with phone number users enabled' do
   let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true) }
+  let(:phone_number) { '1231231234' }
+  let!(:user) { create(:phone_number_user, sign_in_count: 2, phone_number: phone_number, organization: organization) }
   let(:topic) {  FactoryBot.create(:topic, title: 'Search For a Job.', translation_key: 'job_search') }
   let!(:course) { FactoryBot.create(:course_with_lessons, organization: organization, topics: [topic]) }
   let(:lesson) { course.lessons.first }
@@ -27,20 +29,18 @@ feature 'User visits a subdomain with phone number users enabled' do
     expect(page).to have_content('Phone Number must be exactly 10 digits')
 
     # Valid phone number
-    fill_in 'Phone Number', with: '1231231234'
+    fill_in 'Phone Number', with: phone_number
     click_on('Submit')
     expect(current_path).to eq(course_lesson_path(course, lesson))
   end
 
   scenario 'user revisits partially completed course' do
-    phone_number = '1231231234'
-    user = FactoryBot.create(:phone_number_user, organization: organization, phone_number: phone_number)
     course_progress = FactoryBot.create(:course_progress, user: user, course: course)
     FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: lesson)
 
     # Sign in with phone number
     visit new_user_session_path
-    fill_in 'Phone Number', with: '1231231234'
+    fill_in 'Phone Number', with: phone_number
     click_on('Submit')
     expect(current_path).to eq(root_path)
     expect(page).to have_content('33% Complete')
@@ -54,7 +54,7 @@ feature 'User visits a subdomain with phone number users enabled' do
   scenario 'user views account page' do
     # Sign in with phone number
     visit new_user_session_path
-    fill_in 'Phone Number', with: '1231231234'
+    fill_in 'Phone Number', with: phone_number
     click_on('Submit')
 
     # Verify greetings
@@ -78,7 +78,7 @@ feature 'User visits a subdomain with phone number users enabled' do
   scenario 'user logs out' do
     # Sign in with phone number
     visit new_user_session_path
-    fill_in 'Phone Number', with: '1231231234'
+    fill_in 'Phone Number', with: phone_number
     click_on('Submit')
 
     # Sign out
@@ -89,25 +89,31 @@ feature 'User visits a subdomain with phone number users enabled' do
     expect(page).to have_link('Sign Up / Log In')
   end
 
-  scenario 'user takes courses quiz' do
+  scenario 'user signs in for first time' do
     # Sign in with phone number
     visit new_user_session_path
-    fill_in 'Phone Number', with: '1231231234'
+    fill_in 'Phone Number', with: '1112223333'
     click_on('Submit')
 
-    # Take courses quiz
-    within('.nav-and-search') do
-      click_link('My Courses')
-    end
-
-    expect(current_path).to eq(my_courses_path)
-    find('.retake-quiz').click
-
     expect(current_path).to eq(new_course_recommendation_survey_path)
-    expect(page).to have_content('(123) 123-1234, what would you like to learn?')
+    expect(page).to have_content('(111) 222-3333, what would you like to learn?')
 
     choose('desktop_level_Intermediate')
     choose('mobile_level_Intermediate')
+    choose("topic_#{topic.id}")
+
+    click_button 'Submit'
+
+    expect(current_path).to eq(my_courses_path)
+
+    # Retake quiz
+    find('.retake-quiz').click
+
+    expect(current_path).to eq(new_course_recommendation_survey_path)
+    expect(page).to have_content('(111) 222-3333, what would you like to learn?')
+
+    choose('desktop_level_Beginner')
+    choose('mobile_level_Advanced')
     choose("topic_#{topic.id}")
 
     click_button 'Submit'

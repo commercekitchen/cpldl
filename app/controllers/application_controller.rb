@@ -118,7 +118,9 @@ class ApplicationController < ActionController::Base
   end
 
   def first_time_login?
-    current_user.present? && current_user.sign_in_count == 1 && current_user.profile.present? && current_user.profile.created_at.to_s == current_user.profile.updated_at.to_s
+    current_user.present? && current_user.sign_in_count == 1 && 
+    (current_user.phone_number_user? ||
+    (current_user.profile.present? && current_user.profile.created_at.to_s == current_user.profile.updated_at.to_s))
   end
 
   def hide_language_links?
@@ -157,8 +159,12 @@ class ApplicationController < ActionController::Base
 
   def user_after_sign_in_path_for(user)
     if first_time_login?
-      flash[:notice] = 'This is the first time you have logged in, please update your profile.'
-      profile_path
+      if current_user.phone_number_user?
+        new_course_recommendation_survey_path
+      else
+        flash[:notice] = 'This is the first time you have logged in, please update your profile.'
+        profile_path
+      end
     elsif invalid_user_profile?(user)
       profile_path
     else
