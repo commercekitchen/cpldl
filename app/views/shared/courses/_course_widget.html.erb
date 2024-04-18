@@ -3,10 +3,19 @@
     <h3 class='course-title shaveable' data-resize-height="75"><%= course.title %></h3>
   </header>
   <div class="description">
-    <p><%= course.summary %></p>
-    <div class="percent-complete"><%= percent_complete(course) %></div>
-    <div class="duration">
-      <i class="icon-clock grey"></i><%= course.duration %>
+    <div class="summary">
+      <p><%= course.summary %></p>
     </div>
+    <div class="progress">
+      <div class="percent-complete"><%= percent_complete(course) %></div>
+      <div class="duration">
+        <i class="icon-clock grey"></i><%= course.duration %>
+      </div>
+    </div>
+    <% if course.new_course? %>
+      <div class="attribution">
+        This module was made possible by AT&T
+      </div>
+    <% end %>
   </div>
 </a>
