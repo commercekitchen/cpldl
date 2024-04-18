@@ -96,6 +96,7 @@ es:
     more_courses: "Hay mas cursos disponible si se inscribe - lo puede hacer facilmente"
     here: "aquí"
     coming_soon: "Muy Pronto"
+    att_course_attribution: "Este módulo fue posible gracias a AT&T"
   login_signup:
     already_have_an_account: "¿Ya tiene una cuenta? Use su correo electrónico y su contraseña para iniciar sesión."
     already_have_an_account_card_number: "¿Ya tiene una cuenta? Use su número de tarjeta de biblioteca y su PIN de tarjeta de biblioteca para iniciar sesión."

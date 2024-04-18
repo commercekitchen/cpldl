@@ -93,6 +93,7 @@ en:
     more_courses: "More courses are available if you sign up - easily do so"
     here: "here"
     coming_soon: "Coming Soon"
+    att_course_attribution: "This module was made possible by AT&T"
   login_signup:
     already_have_an_account: "Already have an account? Log in using your email address and password below."
     already_have_an_account_card_number: "Already have an account? Log in using your library card number and PIN below"
