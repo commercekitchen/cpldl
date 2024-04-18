@@ -12,12 +12,10 @@
         <i class="icon-clock grey"></i><%= course.duration %>
       </div>
     </div>
-    <div class="attribution">
-      <% if course.new_course? %>
+    <% if course.new_course? %>
+      <div class="attribution">
         This module was made possible by AT&T
-      <% else %>
-        &nbsp;
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </a>
