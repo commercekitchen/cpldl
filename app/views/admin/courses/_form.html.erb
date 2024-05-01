@@ -119,6 +119,11 @@
     <%= f.select(:pub_status, options_for_select(Course.pub_status_options, @course.pub_status), data: { status: @course.pub_status }) %>
   </fieldset>
 
+  <fieldset class='new-course'>
+    <%= f.check_box :new_course, disabled: @imported_course %>
+    <%= f.label :new_course, "New Course", class: "plain #{'disabled' if @imported_course}" %>
+  </fieldset>
+
   <fieldset class='survey-url'>
     <%= f.label :survey_url do %>
       Course Completion Survey URL

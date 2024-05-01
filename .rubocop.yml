@@ -74,9 +74,6 @@ Style/BlockComments:
 Layout/HashAlignment:
   Enabled: false
 
-Style/BracesAroundHashParameters:
-  Enabled: false
-
 Style/RedundantSelf:
   Enabled: false
 

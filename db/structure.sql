@@ -369,7 +369,8 @@ CREATE TABLE public.courses (
     category_id integer,
     organization_id integer,
     access_level integer DEFAULT 0 NOT NULL,
-    survey_url character varying
+    survey_url character varying,
+    new_course boolean DEFAULT false NOT NULL
 );
 
 
@@ -1993,6 +1994,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20230116033009'),
 ('20231001021801'),
 ('20231012203418'),
-('20231114043940');
+('20231114043940'),
+('20240501021406');
 
 
