@@ -43,11 +43,6 @@ Rails/Output:
     - 'lib/s3_uploader.rb'
 
 # Offense count: 1
-Style/MethodMissingSuper:
-  Exclude:
-    - 'spec/support/views/pundit_view_policy.rb'
-
-# Offense count: 1
 Style/MissingRespondToMissing:
   Exclude:
     - 'spec/support/views/pundit_view_policy.rb'
