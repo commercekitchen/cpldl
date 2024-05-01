@@ -246,6 +246,7 @@ describe CoursePolicy, type: :policy do
                                                                 :access_level,
                                                                 :category_id,
                                                                 :survey_url,
+                                                                :new_course,
                                                                 topic_ids: [],
                                                                 course_topics_attributes: [topic_attributes: [:title]],
                                                                 category_attributes: %i[name organization_id],

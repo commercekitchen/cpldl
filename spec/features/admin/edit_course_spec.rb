@@ -48,7 +48,8 @@ feature 'Admin user updates course' do
        'Course Format',
        'Course Level',
        'SEO Page Title',
-       'SEO Meta Description'].each do |label|
+       'SEO Meta Description',
+       'New Course'].each do |label|
          expect(page).to have_field(label, disabled: true)
        end
 
@@ -199,11 +200,20 @@ feature 'Admin user updates course' do
     end
 
     scenario 'can edit course completion survey url' do
-      visit edit_admin_course_path(subsite_course)
+      visit edit_admin_course_path(custom_subsite_course)
       fill_in 'Course Completion Survey URL', with: 'https://survey.example.com'
       click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_field('Course Completion Survey URL', with: 'https://survey.example.com')
+    end
+
+
+    scenario 'can mark as new course' do
+      visit edit_admin_course_path(custom_subsite_course)
+      check 'New Course'
+      click_button 'Save Course'
+      expect(page).to have_content('Course was successfully updated.')
+      expect(page).to have_field('New Course', checked: true)
     end
 
     scenario 'can preview course' do
