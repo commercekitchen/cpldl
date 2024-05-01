@@ -19,6 +19,7 @@
     "seo_title seo_title"
     "seo_meta seo_meta"
     "pub_status ."
+    "new_course ."
     "survey_url ."
     "actions actions";
 
@@ -30,6 +31,7 @@
       "links links"
       "additional_content additional_content"
       "pub_status ."
+      "new_course ."
       "survey_url ."
       "actions actions"
       "title title"
@@ -51,6 +53,7 @@
         "links links"
         "additional_content additional_content"
         "pub_status ."
+        "new_course ."
         "survey_url ."
         "topics ."
         "actions actions"
@@ -136,6 +139,17 @@
 
   .pub-status {
     grid-area: pub_status;
+  }
+
+  .new-course {
+    grid-area: new_course;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    label {
+      margin: 0;
+    }
   }
 
   .survey-url {
