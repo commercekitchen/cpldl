@@ -49,7 +49,7 @@ feature 'Admin user updates course' do
        'Course Level',
        'SEO Page Title',
        'SEO Meta Description',
-       'New Course'].each do |label|
+       'AT&T Course'].each do |label|
          expect(page).to have_field(label, disabled: true)
        end
 
@@ -210,10 +210,10 @@ feature 'Admin user updates course' do
 
     scenario 'can mark as new course' do
       visit edit_admin_course_path(custom_subsite_course)
-      check 'New Course'
+      check 'AT&T Course'
       click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
-      expect(page).to have_field('New Course', checked: true)
+      expect(page).to have_field('AT&T Course', checked: true)
     end
 
     scenario 'can preview course' do
