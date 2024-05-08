@@ -1,9 +1,10 @@
 resource "aws_ecs_task_definition" "app_service" {
   family                   = "${var.project_name}-app-task-definition-${var.environment_name}"
   requires_compatibilities = ["EC2"]
-  memory                   = 512
-  cpu                      = 512
   network_mode             = "bridge"
+  memory                   = var.service_memory
+  cpu                      = var.service_cpu
+
 
   placement_constraints {
     type       = "memberOf"
