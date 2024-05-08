@@ -16,10 +16,8 @@ resource "aws_codestarconnections_connection" "repo_actions" {
   provider_type = "GitHub"
 }
 
-data "template_file" "buildspec" {
-  template = file("${path.module}/buildspec.yml")
-
-  vars = {
+locals {
+  buildspec = templatefile("${path.module}/buildspec.yml", {
     ecr_repository_url = var.ecr_repository_url
     ecr_project_uri    = var.ecr_project_uri
     region             = var.region
@@ -29,7 +27,7 @@ data "template_file" "buildspec" {
     rollbar_env        = var.environment_name
     docker_username    = var.docker_username
     docker_password    = var.docker_password
-  }
+  })
 }
 
 resource "aws_codebuild_project" "codebuild_project" {
@@ -50,7 +48,7 @@ resource "aws_codebuild_project" "codebuild_project" {
 
   source {
     type      = "CODEPIPELINE"
-    buildspec = data.template_file.buildspec.rendered
+    buildspec = local.buildspec
   }
 }
 
