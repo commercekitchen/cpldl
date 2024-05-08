@@ -17,19 +17,17 @@ resource "aws_iam_role" "codepipeline_role" {
 EOF
 }
 
-data "template_file" "codepipeline_policy_template" {
-  template = file("${path.module}/policies/codepipeline_policy.json")
-
-  vars = {
+locals {
+  codepipeline_policy_template = templatefile("${path.module}/policies/codepipeline_policy.json", {
     aws_s3_bucket_arn       = aws_s3_bucket.pipeline_store.arn
     codestar_connection_arn = aws_codestarconnections_connection.repo_actions.arn
-  }
+  })
 }
 
 resource "aws_iam_role_policy" "codepipeline_policy" {
   name   = "${var.project_name}-${var.environment_name}-codepipeline-policy"
   role   = aws_iam_role.codepipeline_role.id
-  policy = data.template_file.codepipeline_policy_template.rendered
+  policy = local.codepipeline_policy_template
 }
 
 resource "aws_iam_role" "codebuild_role" {
@@ -50,17 +48,15 @@ resource "aws_iam_role" "codebuild_role" {
 EOF
 }
 
-data "template_file" "codebuild_policy_template" {
-  template = file("${path.module}/policies/codebuild_policy.json")
-
-  vars = {
+locals {
+  codebuild_policy_template = templatefile("${path.module}/policies/codebuild_policy.json", {
     aws_s3_bucket_arn = aws_s3_bucket.pipeline_store.arn
-  }
+  })
 }
 
 resource "aws_iam_role_policy" "codebuild_policy" {
   name   = "${var.project_name}-${var.environment_name}-codebuild-policy"
   role   = aws_iam_role.codebuild_role.id
-  policy = data.template_file.codebuild_policy_template.rendered
+  policy = local.codebuild_policy_template
 }
 

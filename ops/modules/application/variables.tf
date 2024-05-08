@@ -14,3 +14,5 @@ variable "lb_target_group_arn" {}
 variable "ssh_key_name" {}
 variable "desired_instance_count" {}
 variable "s3_bucket_arns" {}
+variable "service_memory" { default = 512 }
+variable "service_cpu" { default = 512 }
