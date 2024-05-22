@@ -85,7 +85,8 @@ class Export
               'Course Title',
               'Completions']
       @data.each do |responses_hash, count_data|
-        topic_translation_key = Topic.find(responses_hash['topic']).translation_key
+        topic = Topic.find_by(id: responses_hash['topic'])
+        topic_translation_key = topic&.translation_key || 'none'
         csv_row = [I18n.t("#{translation_prefix}.desktop.#{responses_hash['desktop_level']&.downcase}"),
                    I18n.t("#{translation_prefix}.mobile.#{responses_hash['mobile_level']&.downcase}"),
                    I18n.t("#{translation_prefix}.topics.#{topic_translation_key}"),

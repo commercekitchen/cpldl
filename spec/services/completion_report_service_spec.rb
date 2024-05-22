@@ -187,7 +187,7 @@ describe CompletionReportService do
         FactoryBot.create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true, custom_recommendation_survey: true)
       end
       let(:org_topic) { FactoryBot.create(:topic, title: 'Online Shopping', translation_key: 'online_shopping') }
-      let(:custom_responses) {{ 'desktop_level' => 'Beginner', 'mobile_level' => 'Intermediate', 'topic' => org_topic.id.to_s } }
+      let(:custom_responses) { { 'desktop_level' => 'Beginner', 'mobile_level' => 'Intermediate', 'topic' => org_topic.id.to_s } }
       let(:phone_user) do
         FactoryBot.create(:phone_number_user, organization: custom_org, quiz_responses_object: custom_responses)
       end
@@ -219,6 +219,11 @@ describe CompletionReportService do
 
       it 'includes completions count for course 1' do
         expect(parsed_report.to_s).to match("#{course1.title},1")
+      end
+
+      it 'exports correctly with no topic selected' do
+        phone_user.update(quiz_responses_object: custom_responses.merge('topic' => '0'))
+        expect(parsed_report.to_s).to match(I18n.t("#{translation_prefix}.topics.none"))
       end
     end
   end
