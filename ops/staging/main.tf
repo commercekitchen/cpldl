@@ -105,7 +105,7 @@ module "application" {
   public_subnet_ids           = module.vpc.public_subnet_ids
   desired_instance_count      = 1
   instance_type               = "t3.small"
-  service_memory              = "1GB"
+  service_memory              = 512
   service_cpu                 = 512
   lb_target_group_arn         = module.load_balancer.lb_target_group_arn
   ssh_key_name                = "ec2_test_key"
