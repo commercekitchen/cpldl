@@ -18,11 +18,7 @@ class RegistrationExporter
       users.each do |user|
         next unless user.reportable_role?(@org)
 
-        program_name = user.program.present? ? user.program.program_name : ''
-        values = [user.send(@primary_id_field), program_name, user.created_at]
-        values.concat([user.library_location_name, user.library_location_zipcode]) if @org.branches?
-        values.concat([user.school&.school_type&.titleize, user.school&.school_name, user.student_id]) if school_programs?
-        csv.add_row values
+        csv.add_row registration_row(user)
       end
     end
   end
@@ -30,14 +26,18 @@ class RegistrationExporter
   private
 
   def column_headers
-    headers = [User.human_attribute_name(@primary_id_field), 'Program Name', 'Registration Date']
+    headers = [User.human_attribute_name(@primary_id_field), 'Registration Date']
+    headers << 'Program Name' if @org.accepts_programs?
     headers.concat(['Branch Name', 'Zip']) if @org.branches?
-    headers.concat(['School Type', 'School Name', 'Student ID(s)']) if school_programs?
+    headers.concat(['School Type', 'School Name', 'Student ID(s)']) if @org.student_programs?
     headers
   end
 
-  def school_programs?
-    @school_programs ||= @org.student_programs?
+  def registration_row(user)
+    values = [user.send(@primary_id_field), user.created_at]
+    values << (user.program&.program_name || '') if @org.accepts_programs?
+    values.concat([(user.library_location_name || ''), (user.library_location_zipcode || '')]) if @org.branches?
+    values.concat([user.school&.school_type&.titleize, user.school&.school_name, user.student_id]) if @org.student_programs?
+    values
   end
-
 end
