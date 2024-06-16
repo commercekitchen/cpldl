@@ -6,16 +6,16 @@ require 'csv'
 describe RegistrationExporter do
   describe 'email user' do
     describe 'no branches organization' do
-      let(:organization) { FactoryBot.create(:organization) }
+      let(:organization) { FactoryBot.create(:organization, accepts_programs: true) }
       let(:program) { FactoryBot.create(:program, organization: organization) }
-      let!(:user) { FactoryBot.create(:user, organization: organization) }
-      let!(:program_user) { FactoryBot.create(:user, program: program, organization: organization) }
+      let!(:user) { FactoryBot.create(:user, organization: organization, profile: FactoryBot.create(:profile, :with_last_name)) }
+      let!(:program_user) { FactoryBot.create(:user, program: program, organization: organization, profile: FactoryBot.create(:profile, :with_last_name)) }
 
       let(:subject) { RegistrationExporter.new(organization) }
       let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
 
       it 'should generate correct column headers' do
-        expect(parsed_report.headers).to eq(['Email', 'Program Name', 'Registration Date'])
+        expect(parsed_report.headers).to eq(['Email', 'Registration Date', 'Program Name'])
       end
 
       it 'should include user email' do
@@ -41,7 +41,7 @@ describe RegistrationExporter do
       let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
 
       it 'should generate correct column headers' do
-        expect(parsed_report.headers).to eq(['Email', 'Program Name', 'Registration Date', 'Branch Name', 'Zip'])
+        expect(parsed_report.headers).to eq(['Email', 'Registration Date', 'Branch Name', 'Zip'])
       end
 
       it 'should include branch name' do
@@ -66,7 +66,7 @@ describe RegistrationExporter do
       end
 
       it 'should generate correct column headers' do
-        expect(parsed_report.headers).to eq(['Email', 'Program Name', 'Registration Date', 'School Type', 'School Name', 'Student ID(s)'])
+        expect(parsed_report.headers).to eq(['Email', 'Registration Date', 'Program Name', 'School Type', 'School Name', 'Student ID(s)'])
       end
 
       it 'should include program name' do
@@ -94,7 +94,39 @@ describe RegistrationExporter do
     let!(:library_card_user) { FactoryBot.create(:user, :library_card_login_user, organization: library_card_organization) }
 
     it 'should include correct column headers' do
-      expect(parsed_report.headers).to eq(['Library Card Number', 'Program Name', 'Registration Date'])
+      expect(parsed_report.headers).to eq(['Library Card Number', 'Registration Date'])
+    end
+  end
+
+  describe 'phone_number user' do
+    let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true) }
+    let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
+
+    let(:exporter) { described_class.new(organization) }
+    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+
+    it 'should have correct headers' do
+      expect(report.headers).to eq(['Phone Number', 'Registration Date'])
+    end
+
+    it 'should include user phone number' do
+      expect(report.to_s).to match('1231231234')
+    end
+  end
+
+  describe 'deidentified report' do
+    let(:organization) { FactoryBot.create(:organization, phone_number_users_enabled: true, deidentify_reports: true) }
+    let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
+
+    let(:exporter) { described_class.new(organization) }
+    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+
+    it 'contains correct headers' do
+      expect(report.headers).to eq(['Uuid', 'Registration Date'])
+    end
+
+    it 'should include user uuid' do
+      expect(report.to_s).to match(user.uuid)
     end
   end
 end

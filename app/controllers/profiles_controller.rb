@@ -23,11 +23,6 @@ class ProfilesController < ApplicationController
     @profile = Profile.find_or_initialize_by(user: @user)
     authorize @profile
 
-    if params[:profile][:user].present?
-      new_role = params[:profile][:user][:user_role_string] == 'Student' ? 'Student' : 'Parent'
-      @user.add_role(new_role)
-    end
-
     profile_params.merge!(updated_at: Time.zone.now) if first_time_login?
 
     new_profile_params = if current_organization.accepts_custom_branches?
