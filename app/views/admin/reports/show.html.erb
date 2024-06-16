@@ -14,10 +14,7 @@
 <li><%= link_to "Completed Courses", admin_report_export_path(report: :completed_courses, format: :csv) %></li>
 <li><%= link_to "Completed Lessons", admin_report_export_path(report: :completed_lessons, format: :csv) %></li>
 <li><%= link_to "Users that have not started a course", admin_report_export_path(report: :no_courses, format: :csv) %></li>
-
-<% if in_subdomain? "npl" %>
-  <li><%= link_to "Registrations", admin_report_export_path(report: :registrations, format: :csv) %></li>
-<% end %>
+<li><%= link_to "All Registrations", admin_report_export_path(report: :registrations, format: :csv) %></li>
 
 <% if I18n.exists?("google_analytics_url.#{current_organization.subdomain}", I18n.locale) %>
   <li><%= link_to "Google Analytics Dashboard", t("google_analytics_url.#{current_organization.subdomain}"), target: "_blank" %></li>

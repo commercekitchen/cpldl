@@ -6,8 +6,10 @@ module Admin
     def show
       authorize current_organization, :download_reports?
       csv = run_exporter(params[:report])
+      timestamp = Time.zone.now.strftime('%Y-%m-%d')
+      filename = "#{current_organization.subdomain}-#{params[:report]}-#{timestamp}"
       respond_to do |format|
-        format.csv { send_data csv, filename: "#{params[:report]}.csv" }
+        format.csv { send_data csv, filename: "#{filename}.csv" }
       end
     end
 
