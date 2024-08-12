@@ -3,7 +3,7 @@
 class ContactMailer < ApplicationMailer
 
   def email(contact_id)
-    to = 'pla@ala.org'
+    to = 'digitallearnhelp@ala.org'
     subject = 'New DigitalLearn.org Contact Form Submitted'
     @contact = Contact.find(contact_id)
     mail(to: to, subject: subject)
