@@ -111,6 +111,19 @@
       <%= recaptcha_tags %>
     </div>
 
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        grecaptcha.ready(function() {
+          // Hacky solution to reset the recaptcha
+          // For some reason, recaptcha V2 started failing silently.
+          // This is the only thing that seems to fix it.
+          setTimeout(function() {
+            grecaptcha.reset();
+          }, 500);
+        });
+      });
+    </script>
+
     <%= f.submit t("home.signup"), class: "button-color" %>
 
   <% end %>
