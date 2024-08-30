@@ -111,6 +111,14 @@
       <%= recaptcha_tags %>
     </div>
 
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', function () {
+        grecaptcha.ready(function() {
+          grecaptcha.reset();
+        });
+      });
+    </script>
+
     <%= f.submit t("home.signup"), class: "button-color" %>
 
   <% end %>
