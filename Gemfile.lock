@@ -133,6 +133,8 @@ GEM
       devise (>= 4.6)
     diff-lcs (1.5.0)
     docile (1.4.0)
+    doorkeeper (5.8.0)
+      railties (>= 5)
     encryptor (3.0.0)
     erubi (1.10.0)
     execjs (2.8.1)
@@ -432,6 +434,7 @@ DEPENDENCIES
   database_cleaner
   devise (>= 4.6.0)
   devise_invitable (>= 2.0.0)
+  doorkeeper (~> 5.8)
   factory_bot_rails (~> 4.10.0)
   faker
   friendly_id (>= 5.1)
