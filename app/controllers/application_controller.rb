@@ -86,7 +86,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    if org_admin?(user)
+    if session[:oauth_request].present?
+      oauth_request = session.delete(:oauth_request)
+      "/oauth/authorize?response_type=code&client_id=#{oauth_request["client_id"]}&redirect_uri=#{URI.encode(oauth_request["redirect_uri"])}&scope=#{oauth_request["scope"]}&state=#{oauth_request["state"]}"
+    elsif org_admin?(user)
       admin_after_sign_in_path_for(user)
     else
       user_after_sign_in_path_for(user)

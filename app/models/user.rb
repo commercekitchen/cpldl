@@ -19,6 +19,17 @@ class User < ApplicationRecord
   belongs_to :program, optional: true
   belongs_to :partner, optional: true
 
+  # Doorkeeper oauth fields
+  has_many :access_grants,
+           class_name: 'Doorkeeper::AccessGrant',
+           foreign_key: :resource_owner_id,
+           dependent: :delete_all
+
+  has_many :access_tokens,
+           class_name: 'Doorkeeper::AccessToken',
+           foreign_key: :resource_owner_id,
+           dependent: :delete_all
+
   has_one :profile, inverse_of: :user, dependent: :destroy
   accepts_nested_attributes_for :profile
   validates_associated :profile, unless: :phone_number_user?
