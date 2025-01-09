@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  use_doorkeeper
   root 'courses#index'
 
   mount Ckeditor::Engine => '/ckeditor'
@@ -142,6 +143,13 @@ Rails.application.routes.draw do
   end
   
   get 'users/invitation/accept', to: 'devise/invitations#edit'
+
+  # Doorkeeper auth routes
+  namespace :api do
+    namespace :v1 do
+      get '/me', to: 'users#me'
+    end
+  end
 
   match '/404', to: 'errors#error404', via: [:get, :post, :patch, :delete]
   match '/500', to: 'errors#error500', via: [:get, :post, :patch, :delete]

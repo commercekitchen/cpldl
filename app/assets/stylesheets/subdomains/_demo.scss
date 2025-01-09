@@ -1,0 +1,17 @@
+.demo {
+  @include color_scheme(
+    $cleveland-purple,
+    $mdpls-green,
+    $carnegielibrary-gray,
+    $cleveland-purple
+  );
+  @include banner($cleveland-purple);
+  @include buttons($mdpls-green);
+  @include course_widget($cleveland-purple);
+  @include lesson_tile(
+    $cleveland-purple,
+    $mdpls-green,
+    $cleveland-purple
+  );
+  @include icons($cleveland-purple, $mdpls-green);
+}
