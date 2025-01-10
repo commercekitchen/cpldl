@@ -122,9 +122,14 @@ RSpec.describe Organization, type: :model do
       expect(org.training_site_link).to eq('https://training.test.org')
     end
 
-    it 'returns subsite link if configured' do
+    it 'returns correct subsite link for att subdomain' do
+      org.update(subdomain: 'att', use_subdomain_for_training_site: true)
+      expect(org.training_site_link).to eq("https://training.att.test.org")
+    end
+
+    it 'returns correct general subsite link when configured' do
       org.update(use_subdomain_for_training_site: true)
-      expect(org.training_site_link).to eq("https://training.#{org.subdomain}.test.org")
+      expect(org.training_site_link).to eq("https://#{org.subdomain}.training.test.org")
     end
   end
 
