@@ -15,6 +15,16 @@ resource "aws_ecs_service" "ecs_service" {
     container_name   = "application"
     container_port   = 3000
   }
+
+  placement_constraints {
+    type       = "memberOf"
+    expression = "attribute:ecs.availability-zone in [${var.region}a, ${var.region}b]"
+  }
+
+  ordered_placement_strategy {
+    type  = "spread"
+    field = "instanceId"
+  }
 }
 
 data "aws_ami" "ecs_ami" {
