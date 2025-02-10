@@ -5,12 +5,6 @@ resource "aws_ecs_task_definition" "app_service" {
   memory                   = var.service_memory
   cpu                      = var.service_cpu
 
-
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.availability-zone in [${var.region}a, ${var.region}b]"
-  }
-
   container_definitions = jsonencode([
     {
       name      = "application",

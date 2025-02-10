@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'uri'
+
 class Organization < ApplicationRecord
   include Storext.model
 
@@ -106,7 +108,14 @@ class Organization < ApplicationRecord
     training_site_domain = Rails.application.credentials[Rails.env.to_sym][:training_site_domain]
 
     if use_subdomain_for_training_site
-      [training_site_base, subdomain, training_site_domain].join('.')
+      if subdomain == 'att'
+        # This is needed until we can transition the AT&T Subdomain to att.trainers instead of trainers.att
+        [training_site_base, subdomain, training_site_domain].join('.')
+      else
+        uri = URI("#{training_site_base}.#{training_site_domain}")
+        uri.host = "#{subdomain}.#{uri.host}"
+        uri.to_s
+      end
     else
       [training_site_base, training_site_domain].join('.')
     end

@@ -3,14 +3,16 @@
 require 'csv'
 
 class CompletedLessonsExporter
-
   def initialize(org)
     @org = org
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
   def to_csv
-    users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number)
+    users = User.includes(:roles, :program, :profile, :school, course_progresses: [:course, :lesson_completions])
+                .where(organization_id: @org)
+                .order(:email, :library_card_number)
+    
     CSV.generate do |csv|
       csv << column_headers
 
