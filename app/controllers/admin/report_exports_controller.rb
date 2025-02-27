@@ -10,17 +10,24 @@ module Admin
         redirect_to admin_reports_path(start_date: params[:start_date], end_date: params[:end_date]) and return
       end
 
-      csv = generate_report(params[:report])
-      filename = "#{current_organization.subdomain}-#{params[:report]}-#{start_date.strftime('%Y-%m-%d')}-#{end_date.strftime('%Y-%m-%d')}"
-      respond_to do |format|
-        format.csv { send_data csv, filename: "#{filename}.csv", type: 'text/csv; header=present' }
+      @report_type = params[:report]
+
+      filename = "#{current_organization.subdomain}-#{@report_type}-#{start_date.strftime('%Y-%m-%d')}-#{end_date.strftime('%Y-%m-%d')}.csv"
+
+      if streamable_report?
+        stream_csv(filename) do |yielder|
+          exporter.stream_csv.each { |row| yielder << row }
+        end
+      else
+        csv = generate_completion_report
+        send_data csv, filename: filename, type: 'text/csv; header=present'
       end
     end
 
     private
 
     def start_date
-      if params[:start_date]
+      @start_date ||= if params[:start_date]
         Date.parse(params[:start_date])
       else
         1.month.ago.beginning_of_month
@@ -28,25 +35,34 @@ module Admin
     end
 
     def end_date
-      if params[:end_date]
+      @end_date ||= if params[:end_date]
         Date.parse(params[:end_date])
       else
         1.month.ago.end_of_month
       end
     end
 
-    def generate_report(exporter)
-      case exporter
+    def streamable_report?
+      ['registrations', 'completed_courses', 'completed_lessons', 'incomplete_courses', 'no_courses'].include? @report_type
+    end
+
+    def exporter
+      case @report_type
       when 'registrations'
-        RegistrationExporter.new(current_organization, start_date: start_date, end_date: end_date).to_csv
+        RegistrationExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'completed_courses'
-        CompletedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date).to_csv
+        CompletedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'completed_lessons'
-        CompletedLessonsExporter.new(current_organization, start_date: start_date, end_date: end_date).to_csv
+        CompletedLessonsExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'incomplete_courses'
-        UnfinishedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date).to_csv
+        UnfinishedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'no_courses'
-        NoCoursesReportExporter.new(current_organization, start_date: start_date, end_date: end_date).to_csv
+        NoCoursesReportExporter.new(current_organization, start_date: start_date, end_date: end_date)
+      end
+    end
+
+    def generate_completion_report
+      case @report_type
       when 'completions_by_library'
         completion_report_service.generate_completion_report(group_by: 'library', start_date: start_date, end_date: end_date)
       when 'completions_by_zip_code'
@@ -55,13 +71,21 @@ module Admin
         completion_report_service.generate_completion_report(group_by: 'partner', start_date: start_date, end_date: end_date)
       when 'completions_by_survey_responses'
         completion_report_service.generate_completion_report(group_by: 'survey_responses', start_date: start_date, end_date: end_date)
-      else
-        raise "Unknown report type: #{report_type}"
       end
     end
 
     def completion_report_service
       @completion_report_service ||= CompletionReportService.new(organization: current_organization)
+    end
+
+    def stream_csv(filename)
+      headers['Content-Type'] = 'text/csv; header=present'
+      headers['Content-Disposition'] = "attachment; filename=#{filename}"
+      headers['Cache-Control'] = 'no-cache'
+
+      self.response_body = Enumerator.new do |yielder|
+        yield yielder
+      end
     end
   end
 end

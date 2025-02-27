@@ -11,8 +11,8 @@ describe RegistrationExporter do
       let!(:user) { FactoryBot.create(:user, :with_last_name, organization: organization) }
       let!(:program_user) { FactoryBot.create(:user, :with_last_name, program: program, organization: organization) }
 
-      let(:subject) { RegistrationExporter.new(organization) }
-      let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
+      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       it 'should generate correct column headers' do
         expect(parsed_report.headers).to eq(['Email', 'Registration Date', 'Program Name'])
@@ -37,8 +37,8 @@ describe RegistrationExporter do
       let(:profile) { FactoryBot.build(:profile, library_location: branch) }
       let!(:branch_user) { FactoryBot.create(:user, profile: profile, organization: organization) }
 
-      let(:subject) { RegistrationExporter.new(organization) }
-      let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
+      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       it 'should generate correct column headers' do
         expect(parsed_report.headers).to eq(['Email', 'Registration Date', 'Branch Name', 'Zip'])
@@ -58,8 +58,9 @@ describe RegistrationExporter do
       let(:program) { FactoryBot.create(:program, parent_type: :students_and_parents, organization: organization) }
       let(:school) { FactoryBot.create(:school, organization: organization) }
       let(:profile) { FactoryBot.build(:profile, :with_last_name) }
-      let(:subject) { RegistrationExporter.new(organization) }
-      let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
+
+      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       before do
         @user = FactoryBot.create(:user, profile: profile, program: program, organization: organization, school: school, student_id: '12345')
@@ -89,9 +90,10 @@ describe RegistrationExporter do
 
   describe 'library_card user' do
     let(:library_card_organization) { FactoryBot.create(:organization, :library_card_login) }
-    let(:subject) { RegistrationExporter.new(library_card_organization) }
-    let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
     let!(:library_card_user) { FactoryBot.create(:user, :library_card_login_user, organization: library_card_organization) }
+
+    let(:exporter) { RegistrationExporter.new(library_card_organization) }
+    let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should include correct column headers' do
       expect(parsed_report.headers).to eq(['Library Card Number', 'Registration Date'])
@@ -103,7 +105,7 @@ describe RegistrationExporter do
     let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Phone Number', 'Registration Date'])
@@ -119,7 +121,7 @@ describe RegistrationExporter do
     let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'contains correct headers' do
       expect(report.headers).to eq(['Uuid', 'Registration Date'])
@@ -135,8 +137,8 @@ describe RegistrationExporter do
     let!(:user) { FactoryBot.create(:user, organization: organization) }
     let(:out_of_range_user) { FactoryBot.create(:user, organization: organization) }
 
-    let(:subject) { RegistrationExporter.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
-    let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
+    let(:exporter) { RegistrationExporter.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
+    let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     before { out_of_range_user.update_columns(created_at: 2.years.ago) }
 

@@ -33,7 +33,7 @@ describe CompletedCoursesExporter do
     let!(:user_with_inactive_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_inactive_program, completed_at: Time.zone.now) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should contain correct headers' do
       expect(report.headers).to eq(['Email', 'Course', 'Course Completed At', 'Program Name', 'Branch'])
@@ -108,7 +108,7 @@ describe CompletedCoursesExporter do
     let!(:completion) { FactoryBot.create(:course_progress, user: library_card_user, completed_at: Time.zone.now) }
 
     let(:exporter) { described_class.new(library_card_organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Library Card Number', 'Course', 'Course Completed At'])
@@ -125,7 +125,7 @@ describe CompletedCoursesExporter do
     let!(:completion) { FactoryBot.create(:course_progress, user: user, completed_at: Time.zone.now) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Phone Number', 'Course', 'Course Completed At'])
@@ -146,7 +146,7 @@ describe CompletedCoursesExporter do
     let!(:out_of_range_course_progress) { FactoryBot.create(:course_progress, user: user, completed_at: 2.years.ago) }
 
     let(:exporter) { described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should contain recent completion user email' do
       expect(report.to_s).to match(user.email)
