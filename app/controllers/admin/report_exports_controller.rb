@@ -83,6 +83,13 @@ module Admin
       headers['Content-Disposition'] = "attachment; filename=#{filename}"
       headers['Cache-Control'] = 'no-cache'
 
+      # Allow streamed response
+      headers.delete('Content-Length')
+      headers['Transfer-Encoding'] = 'chunked'
+
+      # Bypass etag calculation
+      response.headers["Last-Modified"] = Time.now.httpdate
+
       self.response_body = Enumerator.new do |yielder|
         yield yielder
       end

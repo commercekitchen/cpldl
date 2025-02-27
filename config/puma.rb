@@ -54,3 +54,17 @@ environment ENV.fetch("RAILS_ENV") { "development" }
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Preload application for performance
+preload_app!
+
+# Allow streaming responses to avoid buffering
+rackup DefaultRackup
+
+on_worker_boot do
+  ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
+end
+
+lowlevel_error_handler do |ex, env|
+  [500, {}, ["An error occurred: #{ex.message}\n"]]
+end
