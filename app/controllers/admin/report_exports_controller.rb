@@ -79,9 +79,12 @@ module Admin
     end
 
     def stream_csv(filename)
-      headers['Content-Type'] = 'text/csv; header=present'
+      headers["X-Accel-Buffering"] = "no"
+      headers["Cache-Control"] = "no-cache"
+      headers["Content-Type"] = "text/csv; charset=utf-8"
       headers['Content-Disposition'] = "attachment; filename=#{filename}"
-      headers['Cache-Control'] = 'no-cache'
+      headers["Last-Modified"] = Time.zone.now.ctime.to_s
+      headers.delete('Content-Length')
 
       self.response_body = Enumerator.new do |yielder|
         yield yielder

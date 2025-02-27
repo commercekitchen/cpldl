@@ -1692,6 +1692,13 @@ CREATE UNIQUE INDEX index_cms_pages_on_title_and_organization_id ON public.cms_p
 
 
 --
+-- Name: index_course_progresses_on_completed_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_course_progresses_on_completed_at ON public.course_progresses USING btree (completed_at);
+
+
+--
 -- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1927,6 +1934,13 @@ CREATE INDEX index_topics_on_organization_id ON public.topics USING btree (organ
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+
+
+--
+-- Name: index_users_on_email_and_library_card_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_email_and_library_card_number ON public.users USING btree (email, library_card_number);
 
 
 --
@@ -2238,6 +2252,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231012203418'),
 ('20231114043940'),
 ('20240501021406'),
-('20241202023432');
+('20241202023432'),
+('20250227102452');
 
 
