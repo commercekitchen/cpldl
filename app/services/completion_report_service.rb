@@ -13,13 +13,16 @@ class CompletionReportService
 
   private
 
+  def subsite_users
+    @subsite_users ||= @organization.users.with_role(:user, @organization).where(created_at: @start_date..@end_date)
+  end
+
   def report_data_by_partner
+    data = { version: 'partner' }
+
     partner_counts = subsite_users.includes(:partner)
                       .group('partners.id')
-                      .where(created_at: @start_date..@end_date)
                       .pluck('partners.name', 'partners.id', Arel.sql('count(users)'))
-
-    data = { version: 'partner' }
 
     partner_counts.each do |partner_name, partner_id, user_count|
       key = partner_name || 'No Partner Selected'
@@ -37,10 +40,6 @@ class CompletionReportService
                   .where(completed_at: @start_date..@end_date)
                   .group('courses.title')
                   .pluck('courses.title', Arel.sql('count(course_progresses)'))
-  end
-
-  def subsite_users
-    @organization.users.with_role(:user, @organization)
   end
 
   def report_data_by_zip_code
