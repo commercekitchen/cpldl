@@ -10,21 +10,31 @@ class NoCoursesReportExporter
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
-  def to_csv
-    users = User.includes(:roles)
-              .where(organization_id: @org)
-              .where(created_at: @start_date..@end_date)
-              .order(:email, :library_card_number)
+  def stream_csv
+    Enumerator.new do |yielder|
+      yielder << CSV.generate_line(column_headers)
 
-    CSV.generate do |csv|
-      csv << [User.human_attribute_name(@primary_id_field), 'Registration Date']
-
-      users.each do |user|
-        if user.course_progresses.size.zero? && user.reportable_role?(@org)
-          values = [user.send(@primary_id_field), user.created_at]
-          csv.add_row values
+      users.find_in_batches(batch_size: 1000) do |batch|
+        batch.each do |user|
+          if user.course_progresses.size.zero? && user.reportable_role?(@org)
+            values = [user.send(@primary_id_field), user.created_at]
+            yielder << CSV.generate_line(values)
+          end
         end
       end
     end
+  end
+
+  private
+
+  def users
+    User.includes(:roles, :course_progresses)
+      .where(organization_id: @org)
+      .where(created_at: @start_date..@end_date)
+      .order(:email, :library_card_number)
+  end
+
+  def column_headers
+    [User.human_attribute_name(@primary_id_field), 'Registration Date']
   end
 end

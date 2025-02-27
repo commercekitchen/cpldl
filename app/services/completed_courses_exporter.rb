@@ -10,26 +10,30 @@ class CompletedCoursesExporter
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
-  def to_csv
-    course_completions = CourseProgress
-                          .includes(:course, user: [:roles, :program, :profile, :school])
-                          .where.not(completed_at: nil)
-                          .where(completed_at: @start_date..@end_date)
-                          .where(users: { organization: @org })
-                          .order('users.email', 'users.library_card_number')
+  def stream_csv
+    Enumerator.new do |yielder|
+      yielder << CSV.generate_line(column_headers)
 
-    CSV.generate do |csv|
-      csv << column_headers
+      course_completions.find_in_batches(batch_size: 1000) do |batch|
+        batch.each do |cc|
+          next unless cc.user.reportable_role?(@org)
 
-      course_completions.each do |cc|
-        next unless cc.user.reportable_role?(@org)
-
-        csv.add_row course_progress_row(cc.user, cc)
+          yielder << CSV.generate_line(course_progress_row(cc.user, cc))
+        end
       end
     end
   end
 
   private
+
+  def course_completions
+    CourseProgress
+      .includes(:course, user: [:roles, :program, :profile, :school])
+      .where.not(completed_at: nil)
+      .where(completed_at: @start_date..@end_date)
+      .where(users: { organization: @org })
+      .order('users.email', 'users.library_card_number')
+  end
 
   def column_headers
     headers = [User.human_attribute_name(@primary_id_field), 'Course', 'Course Completed At']

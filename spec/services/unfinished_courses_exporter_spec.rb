@@ -29,7 +29,7 @@ describe UnfinishedCoursesExporter do
     let!(:user_with_program_course_progress) { FactoryBot.create(:course_progress, user: user_with_program) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should contain correct headers' do
       expect(report.headers).to eq(['Email', 'Course', 'Course Started At', 'Program Name', 'Branch'])
@@ -109,7 +109,7 @@ describe UnfinishedCoursesExporter do
         out_of_range_course_progress.update_columns(created_at: 1.year.ago)
 
         time_range_exporter = described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now)
-        time_range_report = CSV.parse(time_range_exporter.to_csv, headers: true)
+        time_range_report = CSV.parse(time_range_exporter.stream_csv.to_a.join, headers: true)
 
         expect(time_range_report.count).to eq(4)
         expect(time_range_report.to_s).not_to match(out_of_range_user.email)
@@ -123,7 +123,7 @@ describe UnfinishedCoursesExporter do
     let!(:completion) { FactoryBot.create(:course_progress, user: library_card_user) }
 
     let(:exporter) { described_class.new(library_card_organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Library Card Number', 'Course', 'Course Started At'])
@@ -140,7 +140,7 @@ describe UnfinishedCoursesExporter do
     let!(:completion) { FactoryBot.create(:course_progress, user: user) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Phone Number', 'Course', 'Course Started At'])
