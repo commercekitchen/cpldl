@@ -9,21 +9,19 @@ class CompletedLessonsExporter
   end
 
   def to_csv
-    users = User.includes(:roles, :program, :profile, :school, course_progresses: [:course, :lesson_completions])
-                .where(organization_id: @org)
-                .order(:email, :library_card_number)
+    lesson_completions = LessonCompletion
+                          .includes(:lesson, course_progress: [:course, user: [:roles, :program, :profile, :school]])
+                          .where(course_progresses: { users: { organization: @org } })
+                          .order('users.email', 'users.library_card_number')
     
     CSV.generate do |csv|
       csv << column_headers
 
-      users.each do |user|
+      lesson_completions.each do |lc|
+        user = lc.course_progress.user
         next unless user.reportable_role?(@org)
 
-        user.course_progresses.each do |cp|
-          cp.lesson_completions.each do |lc|
-            csv.add_row course_progress_row(user, lc)
-          end
-        end
+        csv.add_row course_progress_row(user, lc)
       end
     end
   end

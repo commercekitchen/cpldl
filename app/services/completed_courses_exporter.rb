@@ -9,22 +9,19 @@ class CompletedCoursesExporter
   end
 
   def to_csv
-    users = User.includes(:roles, :program, :profile, :school, course_progresses: :course)
-                .where(organization_id: @org)
-                .where_exists(:course_progresses, CourseProgress.arel_table[:completed_at].not_eq(nil))
-                .order(:email, :library_card_number)
+    course_completions = CourseProgress
+                          .includes(:course, user: [:roles, :program, :profile, :school])
+                          .where.not(completed_at: nil)
+                          .where(users: { organization: @org })
+                          .order('users.email', 'users.library_card_number')
 
     CSV.generate do |csv|
       csv << column_headers
 
-      users.each do |user|
-        next unless user.reportable_role?(@org)
+      course_completions.each do |cc|
+        next unless cc.user.reportable_role?(@org)
 
-        user.course_progresses.each do |cp|
-          next unless cp.complete?
-
-          csv.add_row course_progress_row(user, cp)
-        end
+        csv.add_row course_progress_row(cc.user, cc)
       end
     end
   end
