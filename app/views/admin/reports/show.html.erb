@@ -2,19 +2,44 @@
 
 <h2>Reports</h2>
 
-<% if current_organization.branches? %>
-  <li><%= link_to "Completions Report (by Library)", admin_completion_report_path(group_by: "library", format: :csv) %></li>
-  <li><%= link_to "Completions Report (by Zipcode)", admin_completion_report_path(group_by: "zip_code", format: :csv) %></li>
+<%= form_with url: admin_report_export_path(format: :csv), method: :get, local: true do %>
+  <div>
+    <label for="report_type">Select Report Type:</label>
+    <select name="report" id="report_type" class="form-select">
+      <% if current_organization.branches? %>
+        <option value="completions_by_library">Completions Report (by Library)</option>
+        <option value="completions_by_zip_code">Completions Report (by Zip Code)</option>
+      <% end %>
+
+      <% if current_organization.accepts_partners? %>
+        <option value="completions_by_partner">Completions Report (by Partner)</option>
+      <% end %>
+
+      <option value="completions_by_survey_responses">Completions Report (by Survey Answers)</option>
+      <option value="incomplete_courses">Incomplete Courses</option>
+      <option value="completed_courses">Completed Courses</option>
+      <option value="completed_lessons">Completed Lessons</option>
+      <option value="no_courses">Users that have not started a course</option>
+      <option value="registrations">All Registrations</option>
+    </select>
+  </div>
+
+  <div class="date-range-selectors">
+    <div>
+      <label for="start_date">Start Date:</label>
+      <%= date_field_tag :start_date, @start_date, class: "date-input" %>
+    </div>
+
+    <div>
+      <label for="end_date">End Date:</label>
+      <%= date_field_tag :end_date, @end_date, class: "date-input" %>
+    </div>
+  </div>
+
+  <div>
+    <button type="submit" class="btn btn-primary">Generate Report</button>
+  </div>
 <% end %>
-<% if current_organization.accepts_partners? %>
-  <li><%= link_to "Completions Report (by Partner)", admin_completion_report_path(group_by: "partner", format: :csv) %></li>
-<% end %>
-<li><%= link_to "Completions Report (by Survey Answers)", admin_completion_report_path(group_by: "survey_responses", format: :csv) %></li>
-<li><%= link_to "Incomplete Courses", admin_report_export_path(report: :incomplete_courses, format: :csv) %></li>
-<li><%= link_to "Completed Courses", admin_report_export_path(report: :completed_courses, format: :csv) %></li>
-<li><%= link_to "Completed Lessons", admin_report_export_path(report: :completed_lessons, format: :csv) %></li>
-<li><%= link_to "Users that have not started a course", admin_report_export_path(report: :no_courses, format: :csv) %></li>
-<li><%= link_to "All Registrations", admin_report_export_path(report: :registrations, format: :csv) %></li>
 
 <% if I18n.exists?("google_analytics_url.#{current_organization.subdomain}", I18n.locale) %>
   <li><%= link_to "Google Analytics Dashboard", t("google_analytics_url.#{current_organization.subdomain}"), target: "_blank" %></li>

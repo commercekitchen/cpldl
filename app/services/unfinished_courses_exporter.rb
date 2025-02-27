@@ -4,23 +4,27 @@ require 'csv'
 
 class UnfinishedCoursesExporter
 
-  def initialize(org)
+  def initialize(org, start_date: nil, end_date: nil)
+    @start_date = start_date || Time.at(0)
+    @end_date = end_date || Time.zone.now
     @org = org
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
   def to_csv
-    users = User.includes(:roles).where(organization_id: @org).order(:email, :library_card_number, :phone_number)
+    course_progresses = CourseProgress
+                          .includes(:course, user: [:roles, :program, :profile, :school])
+                          .where(completed_at: nil, users: { organization: @org })
+                          .where(created_at: @start_date..@end_date)
+                          .order('users.email', 'users.library_card_number', 'users.phone_number', 'courses.title')
+    
     CSV.generate do |csv|
       csv << column_headers
-      users.each do |user|
-        next unless user.reportable_role?(@org)
 
-        user.course_progresses.each do |cp|
-          next if cp.complete?
+      course_progresses.each do |cp|
+        next unless cp.user.reportable_role?(@org)
 
-          csv.add_row course_progress_row(cp)
-        end
+        csv.add_row course_progress_row(cp)
       end
     end
   end

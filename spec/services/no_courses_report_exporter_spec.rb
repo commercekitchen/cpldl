@@ -43,6 +43,13 @@ describe NoCoursesReportExporter do
       FactoryBot.create(:course_progress, user: user)
       expect(report.to_s).to_not match(user.email)
     end
+
+    it 'should use time range if specified' do
+      old_user = create(:user, organization: organization)
+      old_user.update_columns(created_at: 2.months.ago)
+      exporter = described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now)
+      expect(exporter.to_csv).not_to match(old_user.email)
+    end
   end
 
   describe 'library_card_login organization report' do
