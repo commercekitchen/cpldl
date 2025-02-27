@@ -13,7 +13,7 @@ describe NoCoursesReportExporter do
     let!(:trainer_user) { FactoryBot.create(:user, :trainer, organization: organization) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should contain correct headers' do
       expect(report.headers).to eq(['Email', 'Registration Date'])
@@ -48,7 +48,8 @@ describe NoCoursesReportExporter do
       old_user = create(:user, organization: organization)
       old_user.update_columns(created_at: 2.months.ago)
       exporter = described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now)
-      expect(exporter.to_csv).not_to match(old_user.email)
+      report = CSV.parse(exporter.stream_csv.to_a.join, headers: true)
+      expect(report.to_s).not_to match(old_user.email)
     end
   end
 
@@ -57,7 +58,7 @@ describe NoCoursesReportExporter do
     let!(:library_card_user) { FactoryBot.create(:user, :library_card_login_user, organization: library_card_organization) }
 
     let(:exporter) { described_class.new(library_card_organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Library Card Number', 'Registration Date'])
@@ -73,7 +74,7 @@ describe NoCoursesReportExporter do
     let!(:user) { FactoryBot.create(:phone_number_user, phone_number: '1231231234', organization: organization) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should have correct headers' do
       expect(report.headers).to eq(['Phone Number', 'Registration Date'])

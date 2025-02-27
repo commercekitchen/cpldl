@@ -11,24 +11,28 @@ class RegistrationExporter
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
-  def to_csv
-    users = User.includes(:roles)
-              .where(organization_id: @org)
-              .where(created_at: @start_date..@end_date)
-              .order(:email, :library_card_number)
+  def stream_csv
+    Enumerator.new do |yielder|
+      yielder << CSV.generate_line(column_headers)
 
-    CSV.generate do |csv|
-      csv << column_headers
+      users.find_in_batches(batch_size: 1000) do |batch|
+        batch.each do |user|
+          next unless user.reportable_role?(@org)
 
-      users.each do |user|
-        next unless user.reportable_role?(@org)
-
-        csv.add_row registration_row(user)
+          yielder << CSV.generate_line(registration_row(user))
+        end
       end
     end
   end
 
   private
+
+  def users
+    User.includes(:roles)
+        .where(organization_id: @org)
+        .where(created_at: @start_date..@end_date)
+        .order(:email, :library_card_number)
+  end
 
   def column_headers
     headers = [User.human_attribute_name(@primary_id_field), 'Registration Date']

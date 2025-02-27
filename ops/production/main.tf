@@ -98,8 +98,8 @@ module "application" {
   public_subnet_ids           = module.vpc.public_subnet_ids
   instance_type               = "t3.medium"
   desired_instance_count      = 2
-  service_memory              = "1GB"
-  service_cpu                 = 1024
+  service_memory              = 3800
+  service_cpu                 = 1800
   lb_target_group_arn         = module.load_balancer.lb_target_group_arn
   ssh_key_name                = "ec2_test_key"
   rails_master_key            = var.rails_master_key

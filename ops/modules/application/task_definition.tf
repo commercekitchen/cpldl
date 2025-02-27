@@ -8,6 +8,7 @@ resource "aws_ecs_task_definition" "app_service" {
   container_definitions = jsonencode([
     {
       name      = "application",
+      hostname  = "app",
       image     = "917415714855.dkr.ecr.us-west-2.amazonaws.com/${var.project_name}:${var.environment_name}",
       essential = true,
       portMappings = [
