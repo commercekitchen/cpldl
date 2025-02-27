@@ -47,6 +47,10 @@ describe UnfinishedCoursesExporter do
       expect(report.to_s).to match(parent_user.email)
     end
 
+    it 'should contain program user' do
+      expect(report.to_s).to match(user_with_program.email)
+    end
+
     it 'should not contain admins' do
       expect(report.to_s).to_not match(admin_user.email)
     end
@@ -95,6 +99,20 @@ describe UnfinishedCoursesExporter do
 
       it 'should contain school name' do
         expect(report.to_s).to match(school.school_name)
+      end
+    end
+
+    context 'time ranges' do
+      it 'only includes progresses within time range' do
+        out_of_range_user = FactoryBot.create(:user, organization: organization, profile: profile)
+        out_of_range_course_progress = FactoryBot.create(:course_progress, user: out_of_range_user)
+        out_of_range_course_progress.update_columns(created_at: 1.year.ago)
+
+        time_range_exporter = described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now)
+        time_range_report = CSV.parse(time_range_exporter.to_csv, headers: true)
+
+        expect(time_range_report.count).to eq(4)
+        expect(time_range_report.to_s).not_to match(out_of_range_user.email)
       end
     end
   end

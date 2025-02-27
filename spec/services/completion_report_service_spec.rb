@@ -85,6 +85,19 @@ describe CompletionReportService do
     it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},1")
     end
+
+    context 'time ranges' do
+      it 'only includes completions within range' do
+        user2.update_columns(created_at: 2.years.ago)
+        course_progress2.update_columns(completed_at: 2.years.ago)
+        time_range_report = report_service.generate_completion_report(group_by: 'zip_code', start_date: 1.month.ago, end_date: Time.zone.now)
+        time_range_csv = CSV.parse(time_range_report, headers: true)
+
+        expect(time_range_csv.to_s).to match("#{user.profile.zip_code},1")
+        expect(time_range_csv.to_s).to match("#{course1.title},1")
+        expect(time_range_csv.to_s).to match("#{course2.title},1")
+      end
+    end
   end
 
   describe 'course completions by partner' do
@@ -114,6 +127,20 @@ describe CompletionReportService do
     it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},2")
     end
+
+    context 'time ranges' do
+      it 'only includes completions within range' do
+        course_progress2.update_columns(completed_at: 2.years.ago)
+        user3.update_columns(created_at: 2.years.ago)
+
+        time_range_report = report_service.generate_completion_report(group_by: 'partner', start_date: 1.month.ago, end_date: Time.zone.now)
+        time_range_csv = CSV.parse(time_range_report, headers: true)
+
+        expect(time_range_csv.to_s).to match("#{partner1.name},1")
+        expect(time_range_csv.to_s).to match("#{course1.title},1")
+        expect(time_range_csv.to_s).to match("#{course2.title},1")
+      end
+    end
   end
 
   describe 'return completions by library' do
@@ -138,6 +165,19 @@ describe CompletionReportService do
 
     it 'includes completions count for course 2' do
       expect(parsed_report.to_s).to match("#{course2.title},1")
+    end
+
+    context 'time ranges' do
+      it 'only includes completions within range' do
+        course_progress2.update_columns(completed_at: 2.years.ago)
+        user2.update_columns(created_at: 2.years.ago)
+        time_range_report = report_service.generate_completion_report(group_by: 'library', start_date: 1.month.ago, end_date: Time.zone.now)
+        time_range_csv = CSV.parse(time_range_report, headers: true)
+
+        expect(time_range_csv.to_s).to match("#{library1.name},1")
+        expect(time_range_csv.to_s).to match("#{course1.title},1")
+        expect(time_range_csv.to_s).to match("#{course2.title},1")
+      end
     end
   end
 
@@ -179,6 +219,21 @@ describe CompletionReportService do
 
       it 'includes completions count for course 2' do
         expect(parsed_report.to_s).to match("#{course2.title},1")
+      end
+
+      context 'time ranges' do
+        it 'only includes completions within range' do
+          course_progress2.update_columns(completed_at: 2.years.ago)
+          user2.update_columns(created_at: 2.years.ago)
+          time_range_report = report_service.generate_completion_report(group_by: 'survey_responses', start_date: 1.month.ago, end_date: Time.zone.now)
+          time_range_csv = CSV.parse(time_range_report, headers: true)
+  
+          expect(time_range_csv.to_s).to match("#{course1.title},1")
+          expect(time_range_csv.to_s).not_to match(course2.title)
+
+          # Don't match user2's responses
+          expect(time_range_csv.to_s).not_to match(I18n.t("#{translation_prefix}.desktop.intermediate"))
+        end
       end
     end
 
@@ -224,6 +279,24 @@ describe CompletionReportService do
       it 'exports correctly with no topic selected' do
         phone_user.update(quiz_responses_object: custom_responses.merge('topic' => '0'))
         expect(parsed_report.to_s).to match(I18n.t("#{translation_prefix}.topics.none"))
+      end
+
+      context 'time ranges' do
+        it 'only includes completions within range' do
+          course_progress1.update_columns(completed_at: 2.years.ago)
+
+          time_range_report = phone_report_service.generate_completion_report(group_by: 'survey_responses', start_date: 1.month.ago, end_date: Time.zone.now)
+          time_range_csv = CSV.parse(time_range_report, headers: true)
+          expect(time_range_csv.to_s).not_to match(course1.title)
+        end
+
+        it 'only includes completions within range' do
+          phone_user.update_columns(created_at: 2.years.ago)
+
+          time_range_report = phone_report_service.generate_completion_report(group_by: 'survey_responses', start_date: 1.month.ago, end_date: Time.zone.now)
+          time_range_csv = CSV.parse(time_range_report, headers: true)
+          expect(time_range_csv.to_s).not_to match(course1.title)
+        end
       end
     end
   end

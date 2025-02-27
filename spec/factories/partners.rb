@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :partner do
-    name { Faker::Lorem.characters(number: 10) }
+    name { "partner-#{Faker::Lorem.characters(number: 4)}" }
     association :organization, :accepts_partners
   end
 end

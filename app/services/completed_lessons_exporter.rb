@@ -3,7 +3,9 @@
 require 'csv'
 
 class CompletedLessonsExporter
-  def initialize(org)
+  def initialize(org, start_date: nil, end_date: nil)
+    @start_date = start_date || Time.at(0)
+    @end_date = end_date || Time.zone.now
     @org = org
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
@@ -12,7 +14,8 @@ class CompletedLessonsExporter
     lesson_completions = LessonCompletion
                           .includes(:lesson, course_progress: [:course, user: [:roles, :program, :profile, :school]])
                           .where(course_progresses: { users: { organization: @org } })
-                          .order('users.email', 'users.library_card_number')
+                          .where(created_at: @start_date..@end_date)
+                          .order('users.email', 'users.library_card_number', 'lessons.lesson_order')
     
     CSV.generate do |csv|
       csv << column_headers
