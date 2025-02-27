@@ -22,6 +22,10 @@ FactoryBot.define do
       end
     end
 
+    trait :with_last_name do
+      profile { build(:profile, :with_last_name, user: nil) }
+    end
+
     trait :first_time_user do
       sign_in_count 0
     end

@@ -5,14 +5,19 @@ class CompletionReportService
     @organization = organization
   end
 
-  def generate_completion_report(group_by:)
+  def generate_completion_report(group_by:, start_date: nil, end_date: nil)
+    @start_date = start_date || Time.at(0)
+    @end_date = end_date || Time.zone.now
     Export.to_csv_for_completion_report(self.send("report_data_by_#{group_by}"), @organization)
   end
 
   private
 
   def report_data_by_partner
-    partner_counts = subsite_users.includes(:partner).group('partners.id').pluck('partners.name', 'partners.id', Arel.sql('count(users)'))
+    partner_counts = subsite_users.includes(:partner)
+                      .group('partners.id')
+                      .where(created_at: @start_date..@end_date)
+                      .pluck('partners.name', 'partners.id', Arel.sql('count(users)'))
 
     data = { version: 'partner' }
 
@@ -29,6 +34,7 @@ class CompletionReportService
     CourseProgress.completed
                   .includes(:course, :user)
                   .where(users: { partner_id: partner_id, id: subsite_users.map(&:id) })
+                  .where(completed_at: @start_date..@end_date)
                   .group('courses.title')
                   .pluck('courses.title', Arel.sql('count(course_progresses)'))
   end
@@ -39,13 +45,12 @@ class CompletionReportService
 
   def report_data_by_zip_code
     grouped = { version: 'zip_code' }
-    course_progs = CourseProgress.completed_with_profile
-    zip_codes = course_progs.merge(User.with_role(:user, @organization)).pluck(:zip_code).uniq
+    course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
+    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
+    zip_codes = course_progs.merge(users).pluck(:zip_code).uniq
 
     zip_codes.each do |z|
-
-      progress_by_zip = course_progs.merge(User.with_role(:user, @organization)
-                                    .joins(:profile).merge(Profile.where(zip_code: z)))
+      progress_by_zip = course_progs.merge(users.joins(:profile).where(profiles: { zip_code: z}))
       progresses = {}
 
       progress_by_zip.each do |p|
@@ -54,7 +59,7 @@ class CompletionReportService
         end
       end
 
-      users_by_zip = User.with_role(:user, @organization).joins(:profile).merge(Profile.where(zip_code: z)).count
+      users_by_zip = users.joins(:profile).where(profiles: { zip_code: z }).count
 
       data = { sign_ups: users_by_zip, completions: progresses }
 
@@ -66,12 +71,12 @@ class CompletionReportService
 
   def report_data_by_library
     grouped = { version: 'library' }
-    course_progs = CourseProgress.completed_with_profile
-    lib_ids = course_progs.merge(User.with_role(:user, @organization)).pluck(:library_location_id).uniq
+    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
+    course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
+    lib_ids = course_progs.merge(users).pluck(:library_location_id).uniq
 
     lib_ids.each do |l_id|
-      progress_by_location = course_progs.merge(User.with_role(:user, @organization)
-                                         .joins(:profile).merge(Profile.where(library_location_id: l_id)))
+      progress_by_location = course_progs.merge(users.joins(:profile).where(profiles: { library_location_id: l_id }))
       progresses = {}
 
       progress_by_location.each do |p|
@@ -80,7 +85,7 @@ class CompletionReportService
         end
       end
 
-      users_by_lib = User.with_role(:user, @organization).joins(:profile).merge(Profile.where(library_location_id: l_id)).count
+      users_by_lib = users.joins(:profile).where(profiles: { library_location_id: l_id }).count
 
       data = { sign_ups: users_by_lib, completions: progresses }
 
@@ -92,11 +97,12 @@ class CompletionReportService
 
   def report_data_by_survey_responses
     grouped = { version: 'survey_responses' }
-    course_progs = CourseProgress.completed_with_profile
-    quiz_response_combinations = course_progs.merge(User.with_role(:user, @organization)).map { |prog| prog.user.quiz_responses_object }.compact.uniq
+    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
+    course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
+    quiz_response_combinations = course_progs.merge(users).map { |prog| prog.user.quiz_responses_object }.compact.uniq
 
     quiz_response_combinations.each do |responses_hash|
-      users_with_responses = User.with_role(:user, @organization).where('users.quiz_responses_object = ?', responses_hash.to_yaml)
+      users_with_responses = users.where('users.quiz_responses_object = ?', responses_hash.to_yaml)
       progresses_by_quiz_responses = course_progs.merge(users_with_responses)
 
       progresses = {}

@@ -3,7 +3,7 @@
 FactoryBot.define do
 
   factory :course do
-    title { Faker::Lorem.characters(number: 25) }
+    title { "course-#{Faker::Lorem.characters(number: 10)}" }
     meta_desc 'A first course in computing'
     summary 'In this course you will...'
     description 'Description'

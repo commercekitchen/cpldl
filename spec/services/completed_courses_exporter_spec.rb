@@ -135,4 +135,25 @@ describe CompletedCoursesExporter do
       expect(report.to_s).to match('1231231234')
     end
   end
+
+  describe 'date range' do
+    let(:organization) { FactoryBot.create(:organization) }
+
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+    let!(:user_course_progress) { FactoryBot.create(:course_progress, user: user, completed_at: Time.zone.now) }
+
+    let(:out_of_range_user) { FactoryBot.create(:user, organization: organization) }
+    let!(:out_of_range_course_progress) { FactoryBot.create(:course_progress, user: user, completed_at: 2.years.ago) }
+
+    let(:exporter) { described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
+    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+
+    it 'should contain recent completion user email' do
+      expect(report.to_s).to match(user.email)
+    end
+
+    it 'should not contain older completion user email' do
+      expect(report.to_s).not_to match(out_of_range_user.email)
+    end
+  end
 end

@@ -8,8 +8,8 @@ describe RegistrationExporter do
     describe 'no branches organization' do
       let(:organization) { FactoryBot.create(:organization, accepts_programs: true) }
       let(:program) { FactoryBot.create(:program, organization: organization) }
-      let!(:user) { FactoryBot.create(:user, organization: organization, profile: FactoryBot.create(:profile, :with_last_name)) }
-      let!(:program_user) { FactoryBot.create(:user, program: program, organization: organization, profile: FactoryBot.create(:profile, :with_last_name)) }
+      let!(:user) { FactoryBot.create(:user, :with_last_name, organization: organization) }
+      let!(:program_user) { FactoryBot.create(:user, :with_last_name, program: program, organization: organization) }
 
       let(:subject) { RegistrationExporter.new(organization) }
       let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
@@ -127,6 +127,25 @@ describe RegistrationExporter do
 
     it 'should include user uuid' do
       expect(report.to_s).to match(user.uuid)
+    end
+  end
+
+  describe 'date ranges' do
+    let(:organization) { FactoryBot.create(:organization) }
+    let!(:user) { FactoryBot.create(:user, organization: organization) }
+    let(:out_of_range_user) { FactoryBot.create(:user, organization: organization) }
+
+    let(:subject) { RegistrationExporter.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
+    let(:parsed_report) { CSV.parse(subject.to_csv, headers: true) }
+
+    before { out_of_range_user.update_columns(created_at: 2.years.ago) }
+
+    it 'should include user email' do
+      expect(parsed_report.to_s).to match(user.email)
+    end
+
+    it 'should not include out of range user' do
+      expect(parsed_report.to_s).not_to match(out_of_range_user.email)
     end
   end
 end

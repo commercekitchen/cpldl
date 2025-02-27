@@ -3,28 +3,28 @@
 require 'csv'
 
 class CompletedCoursesExporter
-  def initialize(org)
+  def initialize(org, start_date: nil, end_date: nil)
+    @start_date = start_date || Time.at(0)
+    @end_date = end_date || Time.zone.now
     @org = org
     @primary_id_field = @org.deidentify_reports ? :uuid : @org.authentication_key_field
   end
 
   def to_csv
-    users = User.includes(:roles, :program, :profile, :school, course_progresses: :course)
-                .where(organization_id: @org)
-                .where_exists(:course_progresses, CourseProgress.arel_table[:completed_at].not_eq(nil))
-                .order(:email, :library_card_number)
+    course_completions = CourseProgress
+                          .includes(:course, user: [:roles, :program, :profile, :school])
+                          .where.not(completed_at: nil)
+                          .where(completed_at: @start_date..@end_date)
+                          .where(users: { organization: @org })
+                          .order('users.email', 'users.library_card_number')
 
     CSV.generate do |csv|
       csv << column_headers
 
-      users.each do |user|
-        next unless user.reportable_role?(@org)
+      course_completions.each do |cc|
+        next unless cc.user.reportable_role?(@org)
 
-        user.course_progresses.each do |cp|
-          next unless cp.complete?
-
-          csv.add_row course_progress_row(user, cp)
-        end
+        csv.add_row course_progress_row(cc.user, cc)
       end
     end
   end
