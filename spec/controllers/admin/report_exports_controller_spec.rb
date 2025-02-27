@@ -6,6 +6,7 @@ describe Admin::ReportExportsController do
   let(:organization) { FactoryBot.create(:organization) }
   let(:user) { FactoryBot.create(:user, :admin, organization: organization) }
   let(:csv) { file_fixture('example_report.csv') }
+  let(:csv_lines) { csv.read.split("\n") }
   let(:default_start) { 1.month.ago.beginning_of_month }
   let(:default_end) { 1.month.ago.end_of_month }
 
@@ -20,7 +21,7 @@ describe Admin::ReportExportsController do
   end
 
   it 'uses default start_date and end_date if not provided' do
-    exporter = instance_double(RegistrationExporter, to_csv: csv)
+    exporter = instance_double(RegistrationExporter, stream_csv: csv_lines.each)
     expect(RegistrationExporter).to receive(:new).with(organization, start_date: default_start, end_date: default_end).and_return(exporter)
     get :show, params: { report: 'registrations' }, format: :csv
     expect(response).to have_http_status(:ok)
@@ -54,9 +55,10 @@ describe Admin::ReportExportsController do
       end
 
       it "should call correct exporter for #{report_type[:report_param]}" do
-        exporter = instance_double(report_type[:exporter_class], to_csv: csv)
+        exporter = instance_double(report_type[:exporter_class], stream_csv: csv_lines.each)
         expect(report_type[:exporter_class]).to receive(:new).with(organization, start_date: Date.parse(start_date), end_date: Date.parse(end_date)).and_return(exporter)
         get :show, params: { report: report_type[:report_param], start_date: start_date, end_date: end_date }, format: :csv
+        expect(response).to have_http_status(:ok)
       end
     end
 
