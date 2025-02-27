@@ -3,10 +3,10 @@
 source 'https://rubygems.org'
 
 # Base set of gems
-gem 'jquery-rails', '>= 4.3.0'
+gem 'jquery-rails'
 gem 'pg'
 gem 'puma'
-gem 'rails', '~> 5.2.8'
+gem 'rails', '~> 6.0'
 gem 'sass-rails', '>= 6.0.0'
 gem 'uglifier'
 
@@ -30,9 +30,7 @@ gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem 'sidekiq', '>= 5.0', '< 7.0'
-gem 'sidekiq-failures'
-gem 'sinatra', '>= 2.0', require: nil # For the sidekiq web interface.
+gem 'sidekiq', '< 8'
 
 # Error reporting
 gem 'rollbar'
@@ -120,14 +118,11 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'database_cleaner'
-  gem 'factory_bot_rails', '~> 4.10.0'
-  gem 'launchy'
+  gem 'factory_bot_rails'
   gem 'mocha'
   gem 'rails-controller-testing'
+  gem 'selenium-webdriver', '~> 4.0'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'timecop'
-  gem 'webdrivers'
-  gem 'webmock'
 end
