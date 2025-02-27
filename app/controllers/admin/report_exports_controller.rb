@@ -16,7 +16,6 @@ module Admin
 
       if streamable_report?
         stream_csv(filename) do |yielder|
-          puts "inside of stream_csv block"
           exporter.stream_csv.each { |row| yielder << row }
         end
       else
@@ -80,16 +79,13 @@ module Admin
     end
 
     def stream_csv(filename)
-      puts "streaming csv"
       headers['Content-Type'] = 'text/csv; header=present'
       headers['Content-Disposition'] = "attachment; filename=#{filename}"
       headers['Cache-Control'] = 'no-cache'
 
       self.response_body = Enumerator.new do |yielder|
-        puts "inside of Enumerator"
         yield yielder
       end
-      puts "after enumerator"
     end
   end
 end
