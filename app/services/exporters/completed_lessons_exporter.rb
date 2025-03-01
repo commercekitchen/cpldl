@@ -15,7 +15,6 @@ module Exporters
       Enumerator.new do |yielder|
         yielder << CSV.generate_line(column_headers)
 
-
         lesson_completions.find_in_batches(batch_size: 1000) do |batch|
           batch.each do |lc|
             user = lc.course_progress.user
@@ -36,10 +35,10 @@ module Exporters
       included_user_associations << :school if @org.student_programs?
 
       LessonCompletion
-        .includes(:lesson, course_progress: [:course, user: included_user_associations])
+        .includes(:lesson, course_progress: [:course, { user: included_user_associations }])
         .where(course_progresses: { users: { organization: @org } })
         .where(created_at: @start_date..@end_date)
-        .where('roles.name IN (?)', ['user', 'parent', 'student'])
+        .where('roles.name IN (?)', %w[user parent student])
         .order('users.email', 'users.library_card_number', 'lessons.lesson_order')
     end
 

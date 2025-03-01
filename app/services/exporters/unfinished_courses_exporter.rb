@@ -36,7 +36,7 @@ module Exporters
         .includes(:course, user: included_user_associations)
         .where(completed_at: nil, users: { organization: @org })
         .where(created_at: @start_date..@end_date)
-        .where('roles.name IN (?)', ['user', 'parent', 'student'])
+        .where('roles.name IN (?)', %w[user parent student])
         .order('users.email', 'users.library_card_number', 'users.phone_number', 'courses.title')
     end
 

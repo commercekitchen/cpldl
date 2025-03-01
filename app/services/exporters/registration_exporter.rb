@@ -36,7 +36,7 @@ module Exporters
           .where(organization_id: @org)
           .where(created_at: @start_date..@end_date)
           .order(:email, :library_card_number)
-          .where('roles.name IN (?)', ['user', 'parent', 'student'])
+          .where('roles.name IN (?)', %w[user parent student])
     end
 
     def column_headers

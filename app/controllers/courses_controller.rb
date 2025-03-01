@@ -42,10 +42,10 @@ class CoursesController < ApplicationController
       respond_to do |format|
         format.html do
           # Need to handle the change of course slug, which should 301 redirect.
-          if request.path != course_path(@course)
-            redirect_to @course, status: :moved_permanently
-          else
+          if request.path == course_path(@course)
             render :show
+          else
+            redirect_to @course, status: :moved_permanently
           end
         end
         format.json { render json: @course }

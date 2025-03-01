@@ -37,7 +37,7 @@ module Exporters
         .where.not(completed_at: nil)
         .where(completed_at: @start_date..@end_date)
         .where(users: { organization: @org })
-        .where('roles.name IN (?)', ['user', 'parent', 'student'])
+        .where('roles.name IN (?)', %w[user parent student])
         .order('users.email', 'users.library_card_number')
     end
 

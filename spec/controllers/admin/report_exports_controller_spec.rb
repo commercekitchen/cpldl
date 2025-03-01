@@ -29,7 +29,7 @@ describe Admin::ReportExportsController do
 
   describe 'report types' do
     let(:start_date) { '2025-01-01' }
-    let(:end_date) { '2025-03-01'}
+    let(:end_date) { '2025-03-01' }
 
     [
       { report_param: 'registrations', exporter_class: RegistrationExporter },
@@ -44,13 +44,13 @@ describe Admin::ReportExportsController do
       end
 
       it "should respond with csv header for #{report_type[:report_param]}" do
-        get :show, params: { report: report_type[:report_param]}, format: :csv
-        expect(response.content_type).to eq("text/csv; header=present")
+        get :show, params: { report: report_type[:report_param] }, format: :csv
+        expect(response.content_type).to eq('text/csv; header=present')
       end
 
       it "should respond with csv header for #{report_type[:report_param]}" do
         get :show, params: { report: report_type[:report_param] }, format: :csv
-        expected_filename = "#{organization.subdomain}-#{report_type[:report_param]}-#{default_start.strftime("%Y-%m-%d")}-#{default_end.strftime("%Y-%m-%d")}.csv"
+        expected_filename = "#{organization.subdomain}-#{report_type[:report_param]}-#{default_start.strftime('%Y-%m-%d')}-#{default_end.strftime('%Y-%m-%d')}.csv"
         expect(response.headers['Content-Disposition']).to include(expected_filename)
       end
 

@@ -21,8 +21,8 @@ class CompletionReportService
     data = { version: 'partner' }
 
     partner_counts = subsite_users.includes(:partner)
-                      .group('partners.id')
-                      .pluck('partners.name', 'partners.id', Arel.sql('count(users)'))
+                                  .group('partners.id')
+                                  .pluck('partners.name', 'partners.id', Arel.sql('count(users)'))
 
     partner_counts.each do |partner_name, partner_id, user_count|
       key = partner_name || 'No Partner Selected'
@@ -48,7 +48,7 @@ class CompletionReportService
     zip_codes = course_progs.merge(subsite_users).pluck(:zip_code).uniq
 
     zip_codes.each do |z|
-      progress_by_zip = course_progs.merge(subsite_users.joins(:profile).where(profiles: { zip_code: z}))
+      progress_by_zip = course_progs.merge(subsite_users.joins(:profile).where(profiles: { zip_code: z }))
       progresses = {}
 
       progress_by_zip.each do |p|
