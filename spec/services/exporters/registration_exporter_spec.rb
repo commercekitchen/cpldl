@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-describe RegistrationExporter do
+describe Exporters::RegistrationExporter do
   describe 'email user' do
     describe 'no branches organization' do
       let(:organization) { FactoryBot.create(:organization, accepts_programs: true) }
@@ -11,7 +11,7 @@ describe RegistrationExporter do
       let!(:user) { FactoryBot.create(:user, :with_last_name, organization: organization) }
       let!(:program_user) { FactoryBot.create(:user, :with_last_name, program: program, organization: organization) }
 
-      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:exporter) { described_class.new(organization) }
       let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       it 'should generate correct column headers' do
@@ -37,7 +37,7 @@ describe RegistrationExporter do
       let(:profile) { FactoryBot.build(:profile, library_location: branch) }
       let!(:branch_user) { FactoryBot.create(:user, profile: profile, organization: organization) }
 
-      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:exporter) { described_class.new(organization) }
       let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       it 'should generate correct column headers' do
@@ -59,7 +59,7 @@ describe RegistrationExporter do
       let(:school) { FactoryBot.create(:school, organization: organization) }
       let(:profile) { FactoryBot.build(:profile, :with_last_name) }
 
-      let(:exporter) { RegistrationExporter.new(organization) }
+      let(:exporter) { described_class.new(organization) }
       let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
       before do
@@ -92,7 +92,7 @@ describe RegistrationExporter do
     let(:library_card_organization) { FactoryBot.create(:organization, :library_card_login) }
     let!(:library_card_user) { FactoryBot.create(:user, :library_card_login_user, organization: library_card_organization) }
 
-    let(:exporter) { RegistrationExporter.new(library_card_organization) }
+    let(:exporter) { described_class.new(library_card_organization) }
     let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     it 'should include correct column headers' do
@@ -137,7 +137,7 @@ describe RegistrationExporter do
     let!(:user) { FactoryBot.create(:user, organization: organization) }
     let(:out_of_range_user) { FactoryBot.create(:user, organization: organization) }
 
-    let(:exporter) { RegistrationExporter.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
+    let(:exporter) { described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now) }
     let(:parsed_report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     before { out_of_range_user.update_columns(created_at: 2.years.ago) }

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-describe CompletedLessonsExporter do
+describe Exporters::CompletedLessonsExporter do
   describe 'standard organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let(:course) { create(:course_with_lessons, organization: organization) }

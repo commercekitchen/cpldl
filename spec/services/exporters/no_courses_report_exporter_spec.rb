@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-describe NoCoursesReportExporter do
+describe Exporters::NoCoursesReportExporter do
   describe 'email login organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let!(:user) { FactoryBot.create(:user, organization: organization) }
