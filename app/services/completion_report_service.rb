@@ -45,11 +45,10 @@ class CompletionReportService
   def report_data_by_zip_code
     grouped = { version: 'zip_code' }
     course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
-    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
-    zip_codes = course_progs.merge(users).pluck(:zip_code).uniq
+    zip_codes = course_progs.merge(subsite_users).pluck(:zip_code).uniq
 
     zip_codes.each do |z|
-      progress_by_zip = course_progs.merge(users.joins(:profile).where(profiles: { zip_code: z}))
+      progress_by_zip = course_progs.merge(subsite_users.joins(:profile).where(profiles: { zip_code: z}))
       progresses = {}
 
       progress_by_zip.each do |p|
@@ -58,7 +57,7 @@ class CompletionReportService
         end
       end
 
-      users_by_zip = users.joins(:profile).where(profiles: { zip_code: z }).count
+      users_by_zip = subsite_users.joins(:profile).where(profiles: { zip_code: z }).count
 
       data = { sign_ups: users_by_zip, completions: progresses }
 
@@ -70,12 +69,11 @@ class CompletionReportService
 
   def report_data_by_library
     grouped = { version: 'library' }
-    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
     course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
-    lib_ids = course_progs.merge(users).pluck(:library_location_id).uniq
+    lib_ids = course_progs.merge(subsite_users).pluck(:library_location_id).uniq
 
     lib_ids.each do |l_id|
-      progress_by_location = course_progs.merge(users.joins(:profile).where(profiles: { library_location_id: l_id }))
+      progress_by_location = course_progs.merge(subsite_users.joins(:profile).where(profiles: { library_location_id: l_id }))
       progresses = {}
 
       progress_by_location.each do |p|
@@ -84,7 +82,7 @@ class CompletionReportService
         end
       end
 
-      users_by_lib = users.joins(:profile).where(profiles: { library_location_id: l_id }).count
+      users_by_lib = subsite_users.joins(:profile).where(profiles: { library_location_id: l_id }).count
 
       data = { sign_ups: users_by_lib, completions: progresses }
 
@@ -96,12 +94,11 @@ class CompletionReportService
 
   def report_data_by_survey_responses
     grouped = { version: 'survey_responses' }
-    users = User.with_role(:user, @organization).where(created_at: @start_date..@end_date)
     course_progs = CourseProgress.completed_with_profile.where(completed_at: @start_date..@end_date)
-    quiz_response_combinations = course_progs.merge(users).map { |prog| prog.user.quiz_responses_object }.compact.uniq
+    quiz_response_combinations = course_progs.merge(subsite_users).map { |prog| prog.user.quiz_responses_object }.compact.uniq
 
     quiz_response_combinations.each do |responses_hash|
-      users_with_responses = users.where('users.quiz_responses_object = ?', responses_hash.to_yaml)
+      users_with_responses = subsite_users.where('users.quiz_responses_object = ?', responses_hash.to_yaml)
       progresses_by_quiz_responses = course_progs.merge(users_with_responses)
 
       progresses = {}

@@ -138,7 +138,7 @@ describe CompletionReportService do
 
         expect(time_range_csv.to_s).to match("#{partner1.name},1")
         expect(time_range_csv.to_s).to match("#{course1.title},1")
-        expect(time_range_csv.to_s).to match("#{course2.title},1")
+        expect(time_range_csv.to_s).not_to match(course2.title)
       end
     end
   end
