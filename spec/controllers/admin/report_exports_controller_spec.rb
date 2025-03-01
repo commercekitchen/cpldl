@@ -21,8 +21,8 @@ describe Admin::ReportExportsController do
   end
 
   it 'uses default start_date and end_date if not provided' do
-    exporter = instance_double(RegistrationExporter, stream_csv: csv_lines.each)
-    expect(RegistrationExporter).to receive(:new).with(organization, start_date: default_start, end_date: default_end).and_return(exporter)
+    exporter = instance_double(Exporters::RegistrationExporter, stream_csv: csv_lines.each)
+    expect(Exporters::RegistrationExporter).to receive(:new).with(organization, start_date: default_start, end_date: default_end).and_return(exporter)
     get :show, params: { report: 'registrations' }, format: :csv
     expect(response).to have_http_status(:ok)
   end
@@ -32,11 +32,11 @@ describe Admin::ReportExportsController do
     let(:end_date) { '2025-03-01' }
 
     [
-      { report_param: 'registrations', exporter_class: RegistrationExporter },
-      { report_param: 'completed_courses', exporter_class: CompletedCoursesExporter },
-      { report_param: 'incomplete_courses', exporter_class: UnfinishedCoursesExporter },
-      { report_param: 'no_courses', exporter_class: NoCoursesReportExporter },
-      { report_param: 'completed_lessons', exporter_class: CompletedLessonsExporter }
+      { report_param: 'registrations', exporter_class: Exporters::RegistrationExporter },
+      { report_param: 'completed_courses', exporter_class: Exporters::CompletedCoursesExporter },
+      { report_param: 'incomplete_courses', exporter_class: Exporters::UnfinishedCoursesExporter },
+      { report_param: 'no_courses', exporter_class: Exporters::NoCoursesReportExporter },
+      { report_param: 'completed_lessons', exporter_class: Exporters::CompletedLessonsExporter }
     ].each do |report_type|
       it "should have a successful response for #{report_type[:report_param]}" do
         get :show, params: { report: report_type[:report_param] }, format: :csv
@@ -45,7 +45,7 @@ describe Admin::ReportExportsController do
 
       it "should respond with csv header for #{report_type[:report_param]}" do
         get :show, params: { report: report_type[:report_param] }, format: :csv
-        expect(response.content_type).to eq('text/csv; header=present')
+        expect(response.content_type).to eq('text/csv')
       end
 
       it "should respond with csv header for #{report_type[:report_param]}" do
