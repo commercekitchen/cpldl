@@ -7,7 +7,7 @@ namespace :data_import do
   task :import_branches, [:subdomain] => :environment do |_t, args|
     subdomain = args[:subdomain]
     missing_subdomain_error = 'You must provide a subdomain argument to import'\
-      ' branches: `rake data_import:import_branches[subdomain]`'
+                              ' branches: `rake data_import:import_branches[subdomain]`'
     abort(missing_subdomain_error) if subdomain.blank?
 
     organization = Organization.find_by(subdomain: subdomain)

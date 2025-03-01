@@ -28,12 +28,12 @@ module Exporters
 
     def users
       User.joins(:roles)
-        .left_joins(:course_progresses)
-        .where(organization_id: @org)
-        .where(created_at: @start_date..@end_date)
-        .where(course_progresses: { id: nil })
-        .where('roles.name IN (?)', ['user', 'parent', 'student'])
-        .order(:email, :library_card_number)
+          .left_joins(:course_progresses)
+          .where(organization_id: @org)
+          .where(created_at: @start_date..@end_date)
+          .where(course_progresses: { id: nil })
+          .where('roles.name IN (?)', %w[user parent student])
+          .order(:email, :library_card_number)
     end
 
     def column_headers

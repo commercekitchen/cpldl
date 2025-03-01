@@ -8,7 +8,7 @@ class CourseProgress < ApplicationRecord
 
   has_one :profile, through: :user
 
-  scope :completed, -> { where('completed_at IS NOT NULL') }
+  scope :completed, -> { where.not(completed_at: nil) }
   scope :tracked, -> { where(tracked: true) }
   scope :completed_with_profile, -> { joins(:user).left_outer_joins(:profile).where.not(completed_at: nil) }
 
