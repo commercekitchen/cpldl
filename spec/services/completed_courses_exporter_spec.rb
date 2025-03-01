@@ -3,6 +3,8 @@
 require 'rails_helper'
 require 'csv'
 
+require 'benchmark'
+
 describe CompletedCoursesExporter do
   describe 'email login organization report' do
     let(:organization) { FactoryBot.create(:organization, accepts_programs: true, branches: true) }

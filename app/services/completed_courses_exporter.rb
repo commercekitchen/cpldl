@@ -16,8 +16,6 @@ class CompletedCoursesExporter
 
       course_completions.find_in_batches(batch_size: 1000) do |batch|
         batch.each do |cc|
-          next unless cc.user.reportable_role?(@org)
-
           yielder << CSV.generate_line(course_progress_row(cc.user, cc))
         end
       end
@@ -27,11 +25,18 @@ class CompletedCoursesExporter
   private
 
   def course_completions
+    included_associations = [:roles]
+
+    included_associations << :program if @org.accepts_programs?
+    included_associations << :profile if @org.branches?
+    included_associations << :school if @org.student_programs?
+
     CourseProgress
-      .includes(:course, user: [:roles, :program, :profile, :school])
+      .includes(:course, user: included_associations)
       .where.not(completed_at: nil)
       .where(completed_at: @start_date..@end_date)
       .where(users: { organization: @org })
+      .where('roles.name IN (?)', ['user', 'parent', 'student'])
       .order('users.email', 'users.library_card_number')
   end
 
@@ -50,7 +55,7 @@ class CompletedCoursesExporter
       course_progress.completed_at.strftime('%m-%d-%Y')
     ]
     values << (user.program&.program_name || '') if @org.accepts_programs?
-    values << (user.profile&.library_location&.name || '') if @org.branches?
+    values << (user.library_location_name || '') if @org.branches?
     values.concat([user.school&.school_type&.titleize, user.school&.school_name]) if @org.student_programs?
     values
   end

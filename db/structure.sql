@@ -1699,6 +1699,20 @@ CREATE INDEX index_course_progresses_on_completed_at ON public.course_progresses
 
 
 --
+-- Name: index_course_progresses_on_course_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_course_progresses_on_course_id ON public.course_progresses USING btree (course_id);
+
+
+--
+-- Name: index_course_progresses_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_course_progresses_on_user_id ON public.course_progresses USING btree (user_id);
+
+
+--
 -- Name: index_courses_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1766,6 +1780,13 @@ CREATE INDEX index_friendly_id_slugs_on_sluggable_id ON public.friendly_id_slugs
 --
 
 CREATE INDEX index_friendly_id_slugs_on_sluggable_type ON public.friendly_id_slugs USING btree (sluggable_type);
+
+
+--
+-- Name: index_lesson_completions_on_course_progress_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lesson_completions_on_course_progress_id ON public.lesson_completions USING btree (course_progress_id);
 
 
 --
@@ -1874,6 +1895,20 @@ CREATE INDEX index_pg_search_documents_on_searchable_type_and_searchable_id ON p
 
 
 --
+-- Name: index_profiles_on_library_location_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_profiles_on_library_location_id ON public.profiles USING btree (library_location_id);
+
+
+--
+-- Name: index_profiles_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_profiles_on_user_id ON public.profiles USING btree (user_id);
+
+
+--
 -- Name: index_program_locations_on_program_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1979,6 +2014,13 @@ CREATE INDEX index_users_on_partner_id ON public.users USING btree (partner_id);
 
 
 --
+-- Name: index_users_on_program_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_program_id ON public.users USING btree (program_id);
+
+
+--
 -- Name: index_users_on_program_location_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1990,6 +2032,13 @@ CREATE INDEX index_users_on_program_location_id ON public.users USING btree (pro
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: index_users_on_school_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_school_id ON public.users USING btree (school_id);
 
 
 --
@@ -2016,11 +2065,27 @@ ALTER TABLE ONLY public.schools
 
 
 --
+-- Name: course_progresses fk_rails_1cd5cd5fd5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.course_progresses
+    ADD CONSTRAINT fk_rails_1cd5cd5fd5 FOREIGN KEY (course_id) REFERENCES public.courses(id);
+
+
+--
 -- Name: oauth_access_grants fk_rails_330c32d8d9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.oauth_access_grants
     ADD CONSTRAINT fk_rails_330c32d8d9 FOREIGN KEY (resource_owner_id) REFERENCES public.users(id);
+
+
+--
+-- Name: course_progresses fk_rails_33c9f86ef0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.course_progresses
+    ADD CONSTRAINT fk_rails_33c9f86ef0 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2056,6 +2121,14 @@ ALTER TABLE ONLY public.topics
 
 
 --
+-- Name: profiles fk_rails_b050fe832c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT fk_rails_b050fe832c FOREIGN KEY (library_location_id) REFERENCES public.library_locations(id);
+
+
+--
 -- Name: oauth_access_grants fk_rails_b4b53e07b8; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2080,6 +2153,14 @@ ALTER TABLE ONLY public.footer_links
 
 
 --
+-- Name: lesson_completions fk_rails_c7fb804932; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.lesson_completions
+    ADD CONSTRAINT fk_rails_c7fb804932 FOREIGN KEY (course_progress_id) REFERENCES public.course_progresses(id);
+
+
+--
 -- Name: lesson_completions fk_rails_d03dba97f9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2096,6 +2177,22 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: profiles fk_rails_e424190865; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT fk_rails_e424190865 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: users fk_rails_e7d0538b2c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_e7d0538b2c FOREIGN KEY (school_id) REFERENCES public.schools(id);
+
+
+--
 -- Name: oauth_access_tokens fk_rails_ee63f25419; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2109,6 +2206,14 @@ ALTER TABLE ONLY public.oauth_access_tokens
 
 ALTER TABLE ONLY public.library_locations
     ADD CONSTRAINT fk_rails_fe22bb8133 FOREIGN KEY (organization_id) REFERENCES public.organizations(id);
+
+
+--
+-- Name: users fk_rails_fe4cd6e9a2; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_fe4cd6e9a2 FOREIGN KEY (program_id) REFERENCES public.programs(id);
 
 
 --
@@ -2253,6 +2358,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20231114043940'),
 ('20240501021406'),
 ('20241202023432'),
-('20250227102452');
+('20250227102452'),
+('20250301063457');
 
 
