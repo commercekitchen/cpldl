@@ -49,15 +49,15 @@ module Admin
     def exporter
       case @report_type
       when 'registrations'
-        RegistrationExporter.new(current_organization, start_date: start_date, end_date: end_date)
+        Exporters::RegistrationExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'completed_courses'
-        CompletedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
+        Exporters::CompletedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'completed_lessons'
-        CompletedLessonsExporter.new(current_organization, start_date: start_date, end_date: end_date)
+        Exporters::CompletedLessonsExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'incomplete_courses'
-        UnfinishedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
+        Exporters::UnfinishedCoursesExporter.new(current_organization, start_date: start_date, end_date: end_date)
       when 'no_courses'
-        NoCoursesReportExporter.new(current_organization, start_date: start_date, end_date: end_date)
+        Exporters::NoCoursesReportExporter.new(current_organization, start_date: start_date, end_date: end_date)
       end
     end
 
