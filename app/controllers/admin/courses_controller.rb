@@ -47,7 +47,7 @@ module Admin
           redirect_to edit_admin_course_path(@course), notice: 'Course was successfully created.'
         end
       else
-        @course.errors.delete(:"attachments.document_content_type")
+        @course.errors.delete(:'attachments.document_content_type')
         @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
         render :new
@@ -93,7 +93,7 @@ module Admin
           render :edit, alert: 'Unknown Action'
         end
       else
-        @course.errors.delete(:"attachments.document_content_type")
+        @course.errors.delete(:'attachments.document_content_type')
         @custom = course_params[:category_id] == '0'
         @custom_category = course_params[:category_attributes][:name] if course_params[:category_attributes].present?
 

@@ -51,11 +51,10 @@ class Organization < ApplicationRecord
   validates_attachment_size :footer_logo, in: 0.megabytes..2.megabytes
 
   validates :footer_logo_link, url: { allow_blank: true }
+  before_validation :add_survey_url_protocols
   after_validation :clean_up_paperclip_errors
 
   validates :user_survey_link, presence: { if: :user_survey_enabled? }
-
-  before_validation :add_survey_url_protocols
 
   def user_count
     users.count

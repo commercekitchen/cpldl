@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'csv'
 
-describe CompletedLessonsExporter do
+describe Exporters::CompletedLessonsExporter do
   describe 'standard organization report' do
     let(:organization) { FactoryBot.create(:organization) }
     let(:course) { create(:course_with_lessons, organization: organization) }
@@ -15,7 +15,7 @@ describe CompletedLessonsExporter do
     let!(:course_progress) { FactoryBot.create(:course_progress, course: course, user: course_incomplete_user) }
 
     let(:exporter) { described_class.new(organization) }
-    let(:report) { CSV.parse(exporter.to_csv, headers: true) }
+    let(:report) { CSV.parse(exporter.stream_csv.to_a.join, headers: true) }
 
     before do
       course.lessons.each do |lesson|
@@ -67,7 +67,7 @@ describe CompletedLessonsExporter do
         out_of_range_lesson_completion.update_columns(created_at: 1.year.ago)
 
         time_range_exporter = described_class.new(organization, start_date: 1.month.ago, end_date: Time.zone.now)
-        time_range_report = CSV.parse(time_range_exporter.to_csv, headers: true)
+        time_range_report = CSV.parse(time_range_exporter.stream_csv.to_a.join, headers: true)
 
         expect(time_range_report.count).to eq(4)
         expect(time_range_report.to_s).not_to match(out_of_range_user.email)

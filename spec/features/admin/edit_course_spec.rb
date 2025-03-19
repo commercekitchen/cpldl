@@ -207,7 +207,6 @@ feature 'Admin user updates course' do
       expect(page).to have_field('Course Completion Survey URL', with: 'https://survey.example.com')
     end
 
-
     scenario 'can mark as new course' do
       visit edit_admin_course_path(custom_subsite_course)
       check 'AT&T Course'
