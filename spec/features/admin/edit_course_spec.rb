@@ -34,6 +34,7 @@ feature 'Admin user updates course' do
   before(:each) do
     switch_to_subdomain(org.subdomain)
     log_in_with user.email, user.password
+    expect(page).to have_content('Admin Dashboard')
   end
 
   context 'imported PLA Course' do

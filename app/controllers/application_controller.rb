@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   helper_method :hide_language_links?
   helper_method :in_subdomain?
 
-  after_action :verify_authorized, except: %i[index export_user_info sort], unless: :ckeditor_controller?
-  after_action :verify_policy_scoped, only: %i[index export_user_info sort], unless: :ckeditor_controller?
+  after_action :verify_authorized, unless: -> { action_name == 'index' || skip_pundit? }
+  after_action :verify_policy_scoped, if: -> { index_action_defined? }, unless: -> { skip_pundit? }
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
   def user_language_override?
     if current_user.profile.language.present?
       user_lang_abbrv2 = current_user.profile.language.name == 'English' ? 'en' : 'es'
-      return true if session[:locale] != user_lang_abbrv2
+      true if session[:locale] != user_lang_abbrv2
     else
       false
     end
@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
   end
 
   def subdomain?
-    !(current_organization.subdomain == 'www' || current_organization.subdomain == '')
+    !['www', ''].include?(current_organization.subdomain)
   end
 
   def after_sign_in_path_for(user)
@@ -188,8 +188,11 @@ class ApplicationController < ActionController::Base
     redirect_to(request.referer || root_path)
   end
 
-  def ckeditor_controller?
+  def skip_pundit?
     self.class.to_s.starts_with?('Ckeditor::')
   end
 
+  def index_action_defined?
+    action_name == 'index' && self.class.instance_methods(false).include?(:index)
+  end
 end

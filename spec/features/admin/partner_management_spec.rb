@@ -13,6 +13,7 @@ feature 'Admin manages partners' do
   before do
     switch_to_subdomain(organization.subdomain)
     log_in_with user.email, user.password
+    expect(page).to have_content('Admin Dashboard')
   end
 
   scenario 'admin navigates to partner management page' do

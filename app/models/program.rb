@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Program < ApplicationRecord
-  enum parent_type: { seniors: 0, adults: 1, young_adults: 2, students_and_parents: 3 }
+  enum :parent_type, { seniors: 0, adults: 1, young_adults: 2, students_and_parents: 3 }
   PARENT_TYPES = {
     'Programs for Seniors' => :seniors,
     'Programs for Adults' => :adults,
@@ -17,5 +17,5 @@ class Program < ApplicationRecord
   accepts_nested_attributes_for :program_locations
 
   scope :active, -> { where(active: true) }
-  scope :for_subdomain, ->(subdomain) { joins(:organization).where('organizations.subdomain = ?', subdomain) }
+  scope :for_subdomain, ->(subdomain) { joins(:organization).where(organizations: { subdomain: subdomain }) }
 end

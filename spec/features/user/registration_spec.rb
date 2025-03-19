@@ -3,7 +3,7 @@
 require 'feature_helper'
 
 feature 'User signs up' do
-  let(:email) { Faker::Internet.free_email }
+  let(:email) { Faker::Internet.email }
   let(:password) { Faker::Internet.password }
   let(:first_name) { Faker::Name.first_name }
   let(:last_name) { Faker::Name.last_name }
@@ -170,7 +170,7 @@ feature 'User signs up' do
 
   context 'with a custom branch name', js: true do
     let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
-    let(:email) { Faker::Internet.free_email }
+    let(:email) { Faker::Internet.email }
     let(:password) { Faker::Internet.password }
     let(:first_name) { Faker::Name.first_name }
     let(:last_name) { Faker::Name.last_name }
@@ -201,6 +201,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(LibraryLocation, :count).by(1)
     end
 
@@ -223,6 +224,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(LibraryLocation, :count).by(1)
     end
   end
@@ -246,6 +248,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(Profile, :count).by(1)
     end
   end

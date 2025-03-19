@@ -17,6 +17,7 @@ feature 'Admin user updates lesson' do
   before do
     switch_to_subdomain(pla.subdomain)
     log_in_with user.email, user.password
+    expect(page).to have_content('Admin Dashboard')
   end
 
   scenario 'can change lesson title', js: true do
@@ -43,7 +44,7 @@ feature 'Admin user updates lesson' do
     attach_file 'Articulate Storyline Package', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     click_button 'Save Lesson'
 
-    expect(current_path).to eq(edit_admin_course_lesson_path(course.to_param, Lesson.last.to_param))
+    expect(page).to have_current_path(edit_admin_course_lesson_path(course.to_param, Lesson.last.to_param))
     expect(page).to have_content('Lesson successfully updated.')
   end
 end

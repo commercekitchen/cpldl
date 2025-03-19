@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :user do
-    sequence(:email) { |n| "jane#{n}@example.com" }
-    password 'abcd1234'
-    sign_in_count 2
     organization
+    sequence(:email) { |n| "jane#{n}@example.com" }
+    password { 'abcd1234' }
+    sign_in_count { 2 }
     profile { build(:profile, user: nil) }
 
     after(:create) do |user|
@@ -27,7 +27,7 @@ FactoryBot.define do
     end
 
     trait :first_time_user do
-      sign_in_count 0
+      sign_in_count { 0 }
     end
 
     trait :admin do

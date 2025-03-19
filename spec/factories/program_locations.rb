@@ -2,11 +2,11 @@
 
 FactoryBot.define do
   factory :program_location do
-    location_name Faker::Lorem.word
     program
+    location_name { Faker::Lorem.word }
 
     trait :disabled do
-      enabled false
+      enabled { false }
     end
   end
 end

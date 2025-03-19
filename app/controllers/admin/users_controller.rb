@@ -7,6 +7,7 @@ module Admin
     before_action :enable_sidebar, except: [:index]
 
     skip_before_action :authorize_admin, only: :index
+    skip_after_action :verify_authorized, only: :export_user_info
     before_action :authorize_admin_or_trainer, only: :index
 
     def index

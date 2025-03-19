@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-# Code coverage - configuration is in .simplecov file
 require 'simplecov'
+
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter
+]
+SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV['RAILS_ENV'] ||= 'test'
@@ -29,7 +33,7 @@ require 'validate_url/rspec_matcher'
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[Rails.root.join('spec', 'support', '**', '*.rb')].sort.each { |f| require f }
+Rails.root.glob('spec/support/**/*.rb').sort.each { |f| require f }
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -39,7 +43,10 @@ RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false # Set to false when using database_cleaner
+  config.use_transactional_fixtures = true
+
+  # Fixture file upload methods
+  include ActionDispatch::TestProcess
 
   config.include Devise::Test::ControllerHelpers, type: :helper
 
@@ -48,9 +55,9 @@ RSpec.configure do |config|
     config.include Devise::Test::ControllerHelpers, type: type
 
     # Controller tests
-    config.include ::Rails::Controller::Testing::TestProcess, type: type
-    config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
-    config.include ::Rails::Controller::Testing::Integration, type: type
+    config.include Rails::Controller::Testing::TestProcess, type: type
+    config.include Rails::Controller::Testing::TemplateAssertions, type: type
+    config.include Rails::Controller::Testing::Integration, type: type
   end
 
   # Lines 43 to 53 are to allow views to mock access to helper methods in
@@ -80,7 +87,7 @@ RSpec.configure do |config|
 
   # Remove test storylines
   config.after(:suite) do
-    FileUtils.rm_rf Rails.root.join('public', 'system', 'lessons', 'story_lines')
+    FileUtils.rm_rf Rails.public_path.join('system', 'lessons', 'story_lines')
   end
 
   include ActionDispatch::TestProcess

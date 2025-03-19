@@ -4,7 +4,42 @@ require 'rails_helper'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium/webdriver'
-require 'webmock/rspec'
+
+Capybara.register_driver :selenium_headless do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless=new') # Use the new headless mode (Chrome 109+)
+  options.add_argument('--disable-gpu')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--window-size=1920,1400')
+  options.add_argument('--disable-software-rasterizer') # Don't use SwiftShader to render images via CPU
+
+  # options.add_argument('--disable-dev-shm-usage') # Use tmp instead of shm memory for storage
+  options.add_argument('--remote-debugging-port=9222') # Improve stability by using a dedicated remote debugging port
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
+Capybara.default_driver = :rack_test
+Capybara.javascript_driver = :selenium_headless
+
+Capybara.default_host =
+  "http://#{Rails.application.routes.default_url_options[:host]}:#{Rails.application.routes.default_url_options[:port]}"
+
+# Don't run animations in browser
+Capybara.disable_animation = true
+
+RSpec.configure do |config|
+  config.before(:each, type: :system) { driven_by Capybara.default_driver }
+
+  config.before(:each, type: :system, js: true) do
+    driven_by Capybara.javascript_driver
+    Capybara.current_session.driver.browser.manage.delete_all_cookies
+
+    # Use capybara host & port in url helpers
+    Rails.application.routes.default_url_options[:host] = Capybara.current_session.server.host
+    Rails.application.routes.default_url_options[:port] = Capybara.current_session.server.port
+  end
+end
 
 # TODO: Consolidate these 4 methods into one method with keyword args, maybe?
 def log_in_with(email, password, admin = nil)
@@ -72,13 +107,3 @@ def fill_in_ckeditor(locator, opts)
     $('textarea##{locator}').text(#{content});
   SCRIPT
 end
-
-Capybara.server = :webrick
-
-# Use Selenium and Chromedriver for feature specs
-Capybara.javascript_driver = :selenium_chrome_headless
-
-# Configure webmock to disallow network connections
-allowed_hosts = ['storage.googleapis.com', 'googlechromelabs.github.io', 'edgedl.me.gvt1.com']
-WebMock.disable_net_connect!({ allow_localhost: true,
-                               allow: allowed_hosts })

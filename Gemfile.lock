@@ -449,8 +449,6 @@ GEM
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.1)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
@@ -543,7 +541,6 @@ DEPENDENCIES
   sprockets-rails (>= 3.0)
   terser (~> 1.2)
   timecop
-  uglifier
   validate_url
   web-console (~> 3.7.0)
   where_exists (>= 1.0.0)
