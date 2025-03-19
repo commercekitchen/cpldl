@@ -59,7 +59,7 @@ plugin :tmp_restart
 preload_app!
 
 # Allow streaming responses to avoid buffering
-rackup DefaultRackup
+# rackup DefaultRackup
 
 on_worker_boot do
   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)

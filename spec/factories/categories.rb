@@ -6,7 +6,7 @@ FactoryBot.define do
     organization
 
     trait :disabled do
-      enabled false
+      enabled { false }
     end
   end
 end

@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory(:topic) do
-    title 'Topic A'
+    title { 'Topic A' }
   end
 end

@@ -26,7 +26,7 @@ class Course < ApplicationRecord
                                    tsearch: { any_word: true }
                                  }
 
-  enum access_level: { everyone: 0, authenticated_users: 1 }
+  enum :access_level, { everyone: 0, authenticated_users: 1 }
 
   # Attributes not saved to db, but still needed for validation
   attr_accessor :other_topic, :org_id, :subdomain

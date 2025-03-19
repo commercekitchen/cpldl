@@ -72,7 +72,6 @@ module Admin
       authorize @course
 
       @course.slug = nil if @course.title != params[:course][:title]
-
       if @course.update(new_course_params)
         if @course.parent_course?
           failures = CoursePropagationService.new(course: @course).propagate_course_changes!
@@ -133,7 +132,7 @@ module Admin
     end
 
     def course_params
-      params.require(:course).permit(policy(@course).permitted_attributes)
+      params.require(:course).permit(*policy(@course).permitted_attributes)
     end
 
     def new_course_params

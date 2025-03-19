@@ -2,12 +2,12 @@
 
 FactoryBot.define do
   factory :school do
+    organization
     school_name { Faker::Lorem.sentence(word_count: 3) }
     school_type { :middle }
-    organization
 
     trait :disabled do
-      enabled false
+      enabled { false }
     end
   end
 end
