@@ -3,28 +3,9 @@
 require 'uri'
 
 class Organization < ApplicationRecord
-  include Storext.model
+  include OrganizationSettings
 
   resourcify
-
-  store_attributes :preferences do
-    footer_logo_file_name        String
-    footer_logo_file_size        Integer
-    footer_logo_link             String
-    footer_logo_content_type     String
-    user_survey_enabled          Boolean, default: false
-    user_survey_link             String
-    spanish_survey_link          String
-    custom_certificate_enabled   Boolean, default: false
-    phone_number_users_enabled   Boolean, default: false
-    custom_recommendation_survey Boolean, default: false
-    custom_topics                Boolean, default: false
-    survey_required              Boolean, default: false
-    deidentify_reports           Boolean, default: false
-  end
-
-  # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
-  # :user_survey_enabled, :user_survey_button_text, :user_survey_link
 
   has_many :cms_pages, dependent: :destroy
   has_many :library_locations, dependent: :destroy
@@ -128,7 +109,7 @@ class Organization < ApplicationRecord
     end
 
     if url.present? && user
-      url = url % { user_uuid: user.uuid }
+      url %= { user_uuid: user.uuid }
     end
 
     url if url.present?

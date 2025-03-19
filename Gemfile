@@ -6,9 +6,9 @@ source 'https://rubygems.org'
 gem 'jquery-rails'
 gem 'pg'
 gem 'puma'
-gem 'rails', '~> 6.0'
-gem 'sass-rails', '>= 6.0.0'
-gem 'uglifier'
+gem 'rails', '~> 7.1.4'
+gem 'sassc-rails'
+gem 'terser', '~> 1.2'
 
 gem 'sprockets-rails', '>= 3.0'
 
@@ -59,12 +59,8 @@ gem 'attr_encrypted'
 gem 'nilify_blanks'
 
 # Use data migrations in addition to schema migrations
-gem 'data_migrate', '~> 5.3.2'
+gem 'data_migrate', '~> 11.2'
 
-# integrate chosen library
-# gem 'select2-rails'
-
-gem 'storext'
 gem 'validate_url'
 
 # Rails 5 gems
@@ -111,7 +107,7 @@ group :development, :test do
   gem 'pry'
   gem 'pry-nav'
   gem 'rspec-rails', '>= 3.8.0'
-  gem 'sunspot_solr'
+  # gem 'sunspot_solr'
   # gem 'spring'
   # gem 'httplog' # Note: uncomment and bundle to see api calls, if needed.
 end

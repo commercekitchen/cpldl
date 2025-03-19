@@ -1,4 +1,4 @@
-module CPLDigitalLearn
+module DigitalLearn
   class Application < Rails::Application
     config.s3_enabled = true
 

@@ -35,7 +35,7 @@ module Admin
 
       def update_translations
         @translation_errors = []
-        params.require(:translation).permit!.each do |_locale, values|
+        params.require(:translation).permit!.each_value do |values|
           translation = Translation.find_or_initialize_by(key: values[:key], locale: values[:locale])
 
           unless translation.update(values.except(:id))

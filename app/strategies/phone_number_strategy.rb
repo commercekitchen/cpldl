@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require Rails.root.join('app', 'helpers', 'application_helper')
+
 class PhoneNumberStrategy < Warden::Strategies::Base
   include ApplicationHelper
 
