@@ -19,7 +19,7 @@ resource "aws_wafv2_web_acl" "waf" {
     }
 
     override_action {
-      none {}
+      count {}
     }
 
     visibility_config {
@@ -41,7 +41,7 @@ resource "aws_wafv2_web_acl" "waf" {
     }
 
     override_action {
-      none {}
+      count {}
     }
 
     visibility_config {
@@ -63,7 +63,7 @@ resource "aws_wafv2_web_acl" "waf" {
     }
 
     override_action {
-      none {}
+      count {}
     }
 
     visibility_config {
