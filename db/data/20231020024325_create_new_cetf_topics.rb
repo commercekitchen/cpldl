@@ -7,11 +7,11 @@ class CreateNewCetfTopics < ActiveRecord::Migration[5.2]
       topic_key = topic[:topic_key]
       data = topic[:data]
 
-      Rails.logger.debug("Topic key: #{topic_key}")
+      Rails.logger.debug { "Topic key: #{topic_key}" }
       topic = Topic.find_by(translation_key: topic_key)
 
       if topic.blank?
-        Rails.logger.debug("Creating topic: #{topic_key}")
+        Rails.logger.debug { "Creating topic: #{topic_key}" }
         topic = Topic.create!(organization: org, translation_key: topic_key, title: data[:topic_title])
       end
 
@@ -22,9 +22,9 @@ class CreateNewCetfTopics < ActiveRecord::Migration[5.2]
         if course.blank?
           # Fail if course doesn't exist
           raise MissingCourseError.new("Couldn't find course: #{title}") if Rails.env.production?
-          Rails.logger.debug("Skipping course: #{title}")
+          Rails.logger.debug { "Skipping course: #{title}" }
         else
-          Rails.logger.debug("Adding topic #{topic_key} to course: #{title}")
+          Rails.logger.debug { "Adding topic #{topic_key} to course: #{title}" }
           course.topics << topic unless course.topics.include?(topic)
         end
       end

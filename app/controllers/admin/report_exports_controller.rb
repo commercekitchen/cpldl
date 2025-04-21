@@ -28,22 +28,22 @@ module Admin
 
     def start_date
       @start_date ||= if params[:start_date]
-        Date.parse(params[:start_date])
-      else
-        1.month.ago.beginning_of_month
-      end
+                        Date.parse(params[:start_date])
+                      else
+                        1.month.ago.beginning_of_month
+                      end
     end
 
     def end_date
       @end_date ||= if params[:end_date]
-        Date.parse(params[:end_date])
-      else
-        1.month.ago.end_of_month
-      end
+                      Date.parse(params[:end_date])
+                    else
+                      1.month.ago.end_of_month
+                    end
     end
 
     def streamable_report?
-      ['registrations', 'completed_courses', 'completed_lessons', 'incomplete_courses', 'no_courses'].include? @report_type
+      %w[registrations completed_courses completed_lessons incomplete_courses no_courses].include? @report_type
     end
 
     def exporter
@@ -78,17 +78,15 @@ module Admin
       @completion_report_service ||= CompletionReportService.new(organization: current_organization)
     end
 
-    def stream_csv(filename)
-      headers["X-Accel-Buffering"] = "no"
-      headers["Cache-Control"] = "no-cache"
-      headers["Content-Type"] = "text/csv; charset=utf-8"
+    def stream_csv(filename, &block)
+      headers['X-Accel-Buffering'] = 'no'
+      headers['Cache-Control'] = 'no-cache'
+      headers['Content-Type'] = 'text/csv; charset=utf-8'
       headers['Content-Disposition'] = "attachment; filename=#{filename}"
-      headers["Last-Modified"] = Time.zone.now.ctime.to_s
+      headers['Last-Modified'] = Time.zone.now.ctime.to_s
       headers.delete('Content-Length')
 
-      self.response_body = Enumerator.new do |yielder|
-        yield yielder
-      end
+      self.response_body = Enumerator.new(&block)
     end
   end
 end

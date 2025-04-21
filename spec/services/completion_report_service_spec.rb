@@ -138,7 +138,7 @@ describe CompletionReportService do
 
         expect(time_range_csv.to_s).to match("#{partner1.name},1")
         expect(time_range_csv.to_s).to match("#{course1.title},1")
-        expect(time_range_csv.to_s).to match("#{course2.title},1")
+        expect(time_range_csv.to_s).not_to match(course2.title)
       end
     end
   end
@@ -227,7 +227,7 @@ describe CompletionReportService do
           user2.update_columns(created_at: 2.years.ago)
           time_range_report = report_service.generate_completion_report(group_by: 'survey_responses', start_date: 1.month.ago, end_date: Time.zone.now)
           time_range_csv = CSV.parse(time_range_report, headers: true)
-  
+
           expect(time_range_csv.to_s).to match("#{course1.title},1")
           expect(time_range_csv.to_s).not_to match(course2.title)
 

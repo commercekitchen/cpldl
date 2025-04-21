@@ -126,3 +126,13 @@ module "pipeline" {
   docker_username    = var.docker_username
   docker_password    = var.docker_password
 }
+
+module "waf" {
+  project_name     = var.project_name
+  environment_name = var.environment_name
+  source           = "../modules/waf"
+  region           = var.region
+  web_acl_name     = "DLProductionWAFACL"
+  alb_arn          = module.load_balancer.load_balancer_arn
+  enable_shield    = false
+}
