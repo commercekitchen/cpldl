@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   resources 'cms_pages', only: [:show]
 
+  get 'qr-success', to: 'qr_successes#show', as: :qr_success
+
   get '/static/customization', to: redirect('/cms_pages/pricing-features')
   get '/static/portfolio', to: redirect('/cms_pages/see-our-work-in-action')
   get '/static/overview', to: redirect('/cms_pages/get-digitallearn-for-your-library')

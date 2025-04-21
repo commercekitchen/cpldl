@@ -1,0 +1,26 @@
+.qr-success-page {
+  h1.congrats-message {
+    font-size: 4rem;
+    color: $att-light-blue;
+
+    @media (max-width: $breakpoint-mobile-large) {
+      font-size: 3rem;
+    }
+  }
+
+  .body-large {
+    font-size: 2rem;
+
+    @media (max-width: $breakpoint-mobile-large) {
+      font-size: 1.4rem;
+    }
+  }
+
+  .image-container img {
+    width: 100%;
+    max-width: 30rem;
+    margin: 2rem 0;
+  }
+
+
+}
