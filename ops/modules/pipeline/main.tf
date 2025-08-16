@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "pipeline_store" {
   bucket        = "${var.project_name}-${var.environment_name}-pipeline-store"
-  acl           = "private"
   force_destroy = true
 }
 
