@@ -64,24 +64,8 @@ resource "aws_wafv2_web_acl" "waf" {
     priority = 1
     statement {
       rate_based_statement {
-        limit              = 300     # per 5 min per IP; tune to baseline
+        limit              = 100     # per 5 min per IP; tune to baseline
         aggregate_key_type = "IP"
-        scope_down_statement {
-          not_statement {
-            statement {
-              regex_pattern_set_reference_statement {
-                arn = aws_wafv2_regex_pattern_set.static_paths.arn
-                field_to_match {
-                  uri_path {}
-                }
-                text_transformation {
-                  priority = 0
-                  type = "NONE"
-                }
-              }
-            }
-          }
-        }
       }
     }
 
