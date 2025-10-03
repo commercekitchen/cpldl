@@ -128,11 +128,12 @@ module "pipeline" {
 }
 
 module "waf" {
-  project_name     = var.project_name
-  environment_name = var.environment_name
-  source           = "../modules/waf"
-  region           = var.region
-  web_acl_name     = "DLProductionWAFACL"
-  alb_arn          = module.load_balancer.load_balancer_arn
-  enable_shield    = false
+  project_name           = var.project_name
+  environment_name       = var.environment_name
+  source                 = "../modules/waf"
+  region                 = var.region
+  web_acl_name           = "DLProductionWAFACL"
+  alb_arn                = module.load_balancer.load_balancer_arn
+  enable_shield          = false
+  rate_limiter_threshold = 1200 # We sometimes get entire labs of students hitting the site at once
 }
