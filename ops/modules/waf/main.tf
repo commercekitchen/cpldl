@@ -64,7 +64,7 @@ resource "aws_wafv2_web_acl" "waf" {
     priority = 1
     statement {
       rate_based_statement {
-        limit              = 100     # per 5 min per IP; tune to baseline
+        limit              = var.rate_limiter_threshold
         aggregate_key_type = "IP"
       }
     }
