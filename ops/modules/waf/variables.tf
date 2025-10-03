@@ -29,3 +29,9 @@ variable "enable_shield" {
   type        = bool
   default     = false
 }
+
+variable "rate_limiter_threshold" {
+  description = "Threshold for rate limiting (requests per 5 minutes per IP)"
+  type        = number
+  default     = 1000
+}

@@ -87,6 +87,18 @@ resource "aws_autoscaling_group" "asg" {
   health_check_grace_period = 300
   health_check_type         = "EC2"
 
+  tag {
+    key                 = "ecs_cluster"
+    value               = aws_ecs_cluster.ecs_cluster.name
+    propagate_at_launch = true
+  }
+
+  tag {
+    key                 = "Name"
+    value               = "${var.project_name} App Instance ${var.environment_name}"
+    propagate_at_launch = true
+  }
+
   lifecycle {
     create_before_destroy = true
   }

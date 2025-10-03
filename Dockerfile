@@ -1,26 +1,24 @@
-FROM ruby:2.7.7-slim-buster
+FROM ruby:2.7.8-slim-bullseye
 
 # install rails dependencies
-RUN apt-get clean all && \
-  apt-get update -qq && \
-  apt-get install -qq -y \
-  build-essential \
-  libpq-dev \
-  curl \
-  gnupg2 \
-  apt-utils \
-  default-libmysqlclient-dev \
-  git \
-  libcurl3-dev \
-  cmake \
-  libssl-dev \
-  pkg-config \
-  openssl \
-  imagemagick \
-  file \
-  nodejs \
-  yarn \
-  graphviz
+RUN apt-get update -qq && \
+    apt-get install -y --no-install-recommends \
+      build-essential \
+      libpq-dev \
+      curl \
+      gnupg2 \
+      git \
+      cmake \
+      libssl-dev \
+      pkg-config \
+      openssl \
+      imagemagick \
+      file \
+      graphviz \
+      default-libmysqlclient-dev \
+      libcurl4-openssl-dev \
+      shared-mime-info \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 RUN mkdir /rails-app
