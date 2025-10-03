@@ -17,6 +17,7 @@ RUN apt-get update -qq && \
       graphviz \
       default-libmysqlclient-dev \
       libcurl4-openssl-dev \
+      shared-mime-info \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
