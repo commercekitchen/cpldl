@@ -91,6 +91,9 @@ gem 'nokogiri', '~> 1.15.5'
 # Tools to make the site an OAuth Provider
 gem 'doorkeeper', '~> 5.8'
 
+# Small JS Runtime
+gem 'mini_racer', platforms: :ruby
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
