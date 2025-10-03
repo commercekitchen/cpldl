@@ -26,7 +26,7 @@ feature 'User registers and selects a partner' do
 
     click_button 'Sign Up'
 
-    expect(current_path).to eq(profile_path)
+    expect(page).to have_current_path(profile_path)
     expect(User.last.reload.partner).to eq(partner)
   end
 end

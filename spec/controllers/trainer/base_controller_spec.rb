@@ -4,12 +4,13 @@ require 'rails_helper'
 
 describe Trainer::BaseController do
   describe '#authorize_trainer' do
+    let(:organization) { create(:chicago) }
+    let(:user) { create(:user, organization: organization) }
+
     before(:each) do
-      @organization = create(:organization)
+      user.add_role(:trainer, organization)
       @request.host = 'chipublib.test.host'
-      @user = create(:user, organization: @organization)
-      @user.add_role(:trainer, @organization)
-      sign_in @user
+      sign_in user
     end
     it 'authorizes a trainer' do
       controller.authorize_trainer

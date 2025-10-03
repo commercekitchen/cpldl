@@ -3,14 +3,13 @@
 require 'feature_helper'
 
 feature 'Registered user visits account pages' do
-
   context 'belongs to non-program subdomain' do
+    let(:organization) { create(:organization) }
+    let(:user) { create(:user, organization: organization) }
 
     before(:each) do
-      switch_to_subdomain('chipublib')
-      @organization = create(:organization)
-      @user = create(:user, organization: @organization)
-      login_as(@user)
+      switch_to_subdomain(organization.subdomain)
+      login_as(user)
     end
 
     scenario 'sees the correct sidebar options' do
@@ -21,15 +20,15 @@ feature 'Registered user visits account pages' do
     end
 
     scenario 'can change login information' do
-      original_encrypted_pw = @user.encrypted_password
+      original_encrypted_pw = user.encrypted_password
       visit account_path
       fill_in 'Email', with: 'alex@commercekitchen.com'
       fill_in 'user_password', with: 'password'
       fill_in 'user_password_confirmation', with: 'password'
       click_button 'Save'
 
-      @user.reload
-      expect(@user.encrypted_password).not_to eq original_encrypted_pw
+      user.reload
+      expect(user.encrypted_password).not_to eq original_encrypted_pw
     end
 
     scenario 'can update their profile information' do
@@ -39,10 +38,10 @@ feature 'Registered user visits account pages' do
       select('English', from: 'profile_language_id')
       click_button 'Save'
 
-      @user.reload
-      expect(@user.first_name).to eq('Alex')
-      expect(@user.profile.zip_code).to eq('12345')
-      expect(@user.profile.language.name).to eq('English')
+      user.reload
+      expect(user.first_name).to eq('Alex')
+      expect(user.profile.zip_code).to eq('12345')
+      expect(user.profile.language.name).to eq('English')
     end
 
     scenario 'can change language preference' do
@@ -62,13 +61,13 @@ feature 'Registered user visits account pages' do
   end
 
   context 'belongs to program subdomain' do
+    let(:program_organization) { create(:organization, :accepts_programs, subdomain: 'npl') }
+    let(:program_profile) { build(:profile, :with_last_name) }
+    let(:program_user) { create(:user, organization: program_organization, profile: program_profile) }
 
     before(:each) do
-      @program_organization = create(:organization, :accepts_programs, subdomain: 'npl')
-      @program_profile = build(:profile, :with_last_name)
-      @program_user = create(:user, organization: @program_organization, profile: @program_profile)
-      switch_to_subdomain(@program_organization.subdomain)
-      login_as(@program_user)
+      switch_to_subdomain(program_organization.subdomain)
+      login_as(program_user)
     end
 
     scenario 'can update profile information' do
@@ -80,11 +79,11 @@ feature 'Registered user visits account pages' do
       select('English', from: 'profile_language_id')
       click_button 'Save'
 
-      @program_user.reload
-      expect(@program_user.first_name).to eq('Alex')
-      expect(@program_user.last_name).to eq('Monroe')
-      expect(@program_user.profile.zip_code).to eq('12345')
-      expect(@program_user.profile.language.name).to eq('English')
+      program_user.reload
+      expect(program_user.first_name).to eq('Alex')
+      expect(program_user.last_name).to eq('Monroe')
+      expect(program_user.profile.zip_code).to eq('12345')
+      expect(program_user.profile.language.name).to eq('English')
     end
 
     scenario 'last name required' do
@@ -187,5 +186,4 @@ feature 'Registered user visits account pages' do
       expect(page).to have_select('chzn', selected: 'New Branch')
     end
   end
-
 end

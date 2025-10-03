@@ -14,20 +14,20 @@ feature 'Admin manages schools' do
   end
 
   scenario 'Admin view a list of schools' do
-    @elementary_school = FactoryBot.create(:school, organization: organization, school_type: 'elementary')
-    @middle_school = FactoryBot.create(:school, organization: organization, school_type: 'middle')
-    @high_school = FactoryBot.create(:school, organization: organization, school_type: 'high')
-    @charter_school = FactoryBot.create(:school, organization: organization, school_type: 'charter')
-    @specialty_school = FactoryBot.create(:school, organization: organization, school_type: 'specialty')
+    elementary_school = FactoryBot.create(:school, organization: organization, school_type: 'elementary')
+    middle_school = FactoryBot.create(:school, organization: organization, school_type: 'middle')
+    high_school = FactoryBot.create(:school, organization: organization, school_type: 'high')
+    FactoryBot.create(:school, organization: organization, school_type: 'charter')
+    FactoryBot.create(:school, organization: organization, school_type: 'specialty')
 
     visit admin_dashboard_index_path
     click_link 'Manage Schools'
 
     expect(current_path).to eq(admin_schools_path)
 
-    expect(page).to have_content(@elementary_school.school_name)
-    expect(page).to have_content(@middle_school.school_name)
-    expect(page).to have_content(@high_school.school_name)
+    expect(page).to have_content(elementary_school.school_name)
+    expect(page).to have_content(middle_school.school_name)
+    expect(page).to have_content(high_school.school_name)
 
     expect(page).to have_select('school_school_type', selected: 'Elementary')
     expect(page).to have_select('school_school_type', selected: 'Middle')
@@ -37,7 +37,7 @@ feature 'Admin manages schools' do
   end
 
   scenario 'Admin changes a school type', js: true do
-    @elementary_school = FactoryBot.create(:school, organization: organization, school_type: 'elementary')
+    FactoryBot.create(:school, organization: organization, school_type: 'elementary')
 
     visit admin_schools_path
 
@@ -54,6 +54,8 @@ feature 'Admin manages schools' do
 
   scenario 'Admin creates a new school', js: true do
     visit admin_schools_path
+
+    expect(page).to have_current_path(admin_schools_path)
 
     fill_in 'School Name', with: 'New School'
 

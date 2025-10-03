@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
+
   factory :organization do
-    name 'Chicago Public Library'
-    subdomain 'chipublib'
+    sequence(:name) { |n| "Organization #{n}" }
+    sequence(:subdomain) { |n| "org-#{n}" }
 
     trait :accepts_programs do
       accepts_programs true
@@ -19,6 +20,11 @@ FactoryBot.define do
 
     trait :accepts_partners do
       accepts_partners true
+    end
+
+    factory :chicago do
+      name 'Chicago Public Library'
+      subdomain 'chipublib'
     end
 
     factory :default_organization do

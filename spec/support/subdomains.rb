@@ -8,7 +8,10 @@ def switch_to_subdomain(subdomain, tld = nil)
   # lvh.me always resolves to 127.0.0.1
   tld ||= 'lvh.me'
   host = subdomain ? "#{subdomain}.#{tld}" : tld
-  Capybara.app_host = "http://#{host}"
+
+  url = "http://#{host}"
+  Capybara.default_host = url
+  Capybara.app_host = url
 end
 
 def switch_to_main_domain

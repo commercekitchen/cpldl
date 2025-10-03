@@ -137,7 +137,7 @@ class User < ApplicationRecord
   end
 
   def library_card_login?
-    organization.library_card_login? && !admin?
+    organization&.library_card_login? && !admin?
   end
 
   def phone_number_user?

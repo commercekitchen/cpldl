@@ -4,12 +4,12 @@ require 'feature_helper'
 
 feature 'Admin user logs in' do
   context 'traditional log in organization' do
+    let(:org) { create(:organization) }
+    let(:user) { create(:user, :first_time_user, organization: org) }
+
     before(:each) do
-      @org = create(:organization)
-      switch_to_subdomain(@org.subdomain)
-      @user = create(:user, :first_time_user, organization: @org)
-      @user.add_role(:admin, @org)
-      switch_to_subdomain('chipublib')
+      user.add_role(:admin, org)
+      switch_to_subdomain(org.subdomain)
     end
 
     context 'with valid profile' do
@@ -23,30 +23,30 @@ feature 'Admin user logs in' do
         expect(page).to have_content('Invalid Email or Password')
 
         # Successful login
-        log_in_with @user.email, @user.password
+        log_in_with user.email, user.password
         expect(current_path).to eq(admin_dashboard_index_path)
       end
 
       scenario "isn't prompted for quiz" do
-        @user.update(quiz_modal_complete: false)
-        log_in_with @user.email, @user.password
+        user.update(quiz_modal_complete: false)
+        log_in_with user.email, user.password
         expect(page).not_to have_css('#quiz-start-modal')
       end
     end
 
     context 'with invalid profile' do
       before(:each) do
-        @user.profile.first_name = nil
-        @user.profile.save(validate: false)
+        user.profile.first_name = nil
+        user.profile.save(validate: false)
       end
 
       scenario 'is sent to profile page' do
-        log_in_with @user.email, @user.password
+        log_in_with user.email, user.password
         expect(current_path).to eq(profile_path)
       end
 
       scenario "can't navigate away from profile page with invalid profile" do
-        log_in_with @user.email, @user.password
+        log_in_with user.email, user.password
         visit new_admin_library_location_path
         expect(current_path).to eq(invalid_profile_path)
         expect(page).to have_content('You must have a valid profile before you can continue:')
@@ -56,19 +56,19 @@ feature 'Admin user logs in' do
 
     context 'with no profile' do
       before(:each) do
-        @user.profile.destroy
+        user.profile.destroy
       end
 
       scenario 'is prompted to update profile on first time sign in' do
-        expect(@user.sign_in_count).to eq(0)
-        log_in_with @user.email, @user.password
+        expect(user.sign_in_count).to eq(0)
+        log_in_with user.email, user.password
         expect(current_path).to eq(profile_path)
         expect(page).to have_content('This is the first time you have logged in, please update your profile.')
         click_link 'Sign Out'
       end
 
       scenario "can't navigate away from profile page with no profile" do
-        log_in_with @user.email, @user.password
+        log_in_with user.email, user.password
         visit new_admin_library_location_path
         expect(current_path).to eq(invalid_profile_path)
         expect(page).to have_content('You must have a valid profile before you can continue:')
@@ -78,11 +78,15 @@ feature 'Admin user logs in' do
   end
 
   context 'for library card login organization' do
-    let(:location) { create(:library_location) }
     let(:org) do
-      create(:organization, :library_card_login, subdomain: 'kclibrary', branches: true,
-                       accepts_custom_branches: true, library_locations: [location])
+      create(:organization,
+             :library_card_login,
+             name: 'Kansas City Public Library',
+             subdomain: 'kclibrary',
+             branches: true,
+             accepts_custom_branches: true)
     end
+    let(:location) { create(:library_location, org: org) }
     let(:user) { build(:user, sign_in_count: 2) }
 
     before(:each) do
@@ -117,7 +121,7 @@ feature 'Admin user logs in' do
   end
 
   context 'phone number organization' do
-    let(:org) { create(:organization, subdomain: 'getconnected', phone_number_users_enabled: true) }
+    let(:org) { create(:organization, name: 'Get Connected', subdomain: 'getconnected', phone_number_users_enabled: true) }
     let(:user) { create(:user) }
 
     before(:each) do

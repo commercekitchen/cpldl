@@ -3,9 +3,10 @@
 require 'rails_helper'
 
 describe 'error pages' do
+  let(:organization) { create(:organization) }
+
   before do
-    create(:organization)
-    switch_to_subdomain('chipublib')
+    switch_to_subdomain(organization.subdomain)
   end
 
   describe '404 page' do

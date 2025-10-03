@@ -76,7 +76,7 @@ feature 'Admin user updates course' do
         select('Authenticated Users', from: 'course_access_level')
         click_button 'Save Course'
       end
-      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(page).to have_current_path(edit_admin_course_path(subsite_course))
       expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_select('course_access_level', selected: 'Authenticated Users')
     end
@@ -88,7 +88,7 @@ feature 'Admin user updates course' do
         select('Draft', from: 'Publication Status')
         click_button 'Save Course'
       end
-      expect(current_path).to eq(edit_admin_course_path(subsite_course))
+      expect(page).to have_current_path(edit_admin_course_path(subsite_course))
       expect(page).to have_content('Course was successfully updated.')
       expect(page).to have_select('Publication Status', selected: 'Draft')
     end
@@ -109,7 +109,7 @@ feature 'Admin user updates course' do
         fill_in :course_category_attributes_name, with: category.name
         click_button 'Save Course'
       end
-      expect(current_path).to eq(admin_course_path(subsite_course))
+      expect(page).to have_current_path(admin_course_path(subsite_course))
       expect(page).to have_content('Category Name is already in use by your organization.')
       expect(page).to have_select('course_category_id', selected: 'Create new category')
       expect(page).to have_selector(:css, ".field_with_errors #course_category_attributes_name[value='#{category.name}']")
@@ -195,7 +195,7 @@ feature 'Admin user updates course' do
       expect(page).to have_field('SEO Page Title', with: 'New Course Title')
       click_button 'Save Course'
       expect(page).to have_content('Course was successfully updated.')
-      expect(current_path).to eq(edit_admin_course_path(custom_subsite_course.reload))
+      expect(page).to have_current_path(edit_admin_course_path(custom_subsite_course.reload))
       expect(page).to have_field('Title', with: 'New Course Title')
     end
 

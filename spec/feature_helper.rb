@@ -12,6 +12,7 @@ def log_in_with(email, password, admin = nil)
   find('#login_email').set(email)
   find('#login_password').set(password)
   click_button 'Access Courses'
+  expect(page).to have_link('Sign Out')
 end
 
 def library_card_log_in_with(card_number, password)

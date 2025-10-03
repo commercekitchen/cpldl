@@ -46,15 +46,14 @@ class Organization < ApplicationRecord
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
   scope :active, -> { where(active: true) }
 
-   # Paperclip Legacy
+  # Paperclip Legacy
   has_attached_file :footer_logo
 
   # ActiveStorage
   has_one_attached :footer_logo_file
   validate :footer_logo_file_validation
-
-  validates :name, presence: true
-  validates :subdomain, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :subdomain, presence: true, uniqueness: true
 
   validates :footer_logo_link, url: { allow_blank: true }
   before_validation :add_survey_url_protocols

@@ -3,7 +3,7 @@
 require 'feature_helper'
 
 feature 'User logs in' do
-  let(:org) { create(:organization) }
+  let(:org) { create(:chicago) }
 
   context 'non-program subdomain' do
     before(:each) do
@@ -129,7 +129,7 @@ feature 'User logs in' do
 
   scenario 'for chicago subdomain' do
     user = create(:user, organization: org)
-    switch_to_subdomain('chicago')
+    switch_to_subdomain(org.subdomain)
     log_in_with(user.email, user.password)
     expect(current_path).to eq(root_path)
   end

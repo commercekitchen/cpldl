@@ -201,6 +201,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(LibraryLocation, :count).by(1)
     end
 
@@ -223,6 +224,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(LibraryLocation, :count).by(1)
     end
   end
@@ -231,6 +233,7 @@ feature 'User signs up' do
     let!(:org) { create(:organization, subdomain: 'programs', accepts_programs: true) }
 
     scenario 'registers' do
+      expect(org).to be_valid
       switch_to_subdomain(org.subdomain)
 
       visit login_path
@@ -246,6 +249,7 @@ feature 'User signs up' do
 
       expect do
         click_button 'Sign Up'
+        expect(page).to have_current_path(profile_path)
       end.to change(Profile, :count).by(1)
     end
   end

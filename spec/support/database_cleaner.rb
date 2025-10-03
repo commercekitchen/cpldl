@@ -2,22 +2,24 @@
 
 RSpec.configure do |config|
   config.before(:suite) do
-    DatabaseCleaner.clean_with(:deletion)
+    DatabaseCleaner.clean_with(:truncation)
   end
 
+  # Default
   config.before(:each) do
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :deletion
+  # ALL feature/system specs use non-transactional cleaning
+  config.before(:each, type: :feature) do
+    DatabaseCleaner.strategy = :truncation # (or :deletion if you prefer)
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
+  # If you also use :system specs:
+  config.before(:each, type: :system) do
+    DatabaseCleaner.strategy = :truncation
   end
 
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
+  config.before(:each) { DatabaseCleaner.start }
+  config.append_after(:each) { DatabaseCleaner.clean }
 end
