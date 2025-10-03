@@ -68,7 +68,7 @@ module ApplicationHelper
       return
     end
 
-    org = Organization.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
+    org = Organization.active.find_by(subdomain: current_subdomain) || Organization.find_by(subdomain: 'www')
 
     unless org.subdomain == current_subdomain
       redirect_to_www && (return org)
