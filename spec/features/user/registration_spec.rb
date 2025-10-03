@@ -67,6 +67,7 @@ feature 'User signs up' do
   end
 
   context 'for a library_card_login organization' do
+    let!(:org) { create(:organization, :library_card_login) }
     let(:lib_card_number) { Array.new(7) { rand(10) }.join }
     let(:lib_card_pin) { Array.new(4) { rand(10) }.join }
     let(:invalid_card_number_short) { Array.new(6) { rand(10) }.join }
@@ -75,8 +76,7 @@ feature 'User signs up' do
     let(:invalid_pin_long) { Array.new(5) { rand(10) }.join }
 
     before(:each) do
-      @org = create(:organization, :library_card_login)
-      switch_to_subdomain(@org.subdomain)
+      switch_to_subdomain(org.subdomain)
     end
 
     scenario 'with valid library card, library card pin, first name' do
@@ -140,7 +140,7 @@ feature 'User signs up' do
   end
 
   context 'by selecting a branch' do
-    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let!(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
     let(:library_location) { create(:library_location, organization: org) }
 
     before do
@@ -169,7 +169,7 @@ feature 'User signs up' do
   end
 
   context 'with a custom branch name', js: true do
-    let(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
+    let!(:org) { create(:organization, branches: true, accepts_custom_branches: true) }
     let(:email) { Faker::Internet.free_email }
     let(:password) { Faker::Internet.password }
     let(:first_name) { Faker::Name.first_name }
@@ -228,7 +228,7 @@ feature 'User signs up' do
   end
 
   context 'accepts_programs', js: true, focus: true do
-    let(:org) { create(:organization, accepts_programs: true) }
+    let!(:org) { create(:organization, subdomain: 'programs', accepts_programs: true) }
 
     scenario 'registers' do
       switch_to_subdomain(org.subdomain)
@@ -249,5 +249,4 @@ feature 'User signs up' do
       end.to change(Profile, :count).by(1)
     end
   end
-
 end

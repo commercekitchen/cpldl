@@ -22,12 +22,12 @@ feature 'subdomain redirect' do
     expect(current_url).to include('chipublib')
   end
 
-  scenario 'user visits unknown stage subdomain' do
+  scenario 'user visits unknown staging subdomain' do
     ActionDispatch::Http::URL.tld_length = 2
-    switch_to_subdomain('foobar', 'stage.lvh.me')
+    switch_to_subdomain('foobar', 'staging.lvh.me')
     visit root_path
     expect(current_url).to_not include('foobar')
-    expect(current_url).to include('www.stage.')
+    expect(current_url).to include('www.staging.')
     ActionDispatch::Http::URL.tld_length = 1
   end
 
@@ -38,9 +38,27 @@ feature 'subdomain redirect' do
 
   scenario 'user visits staging with no subdomain' do
     ActionDispatch::Http::URL.tld_length = 2
-    switch_to_subdomain('', 'stage.lvh.me')
+    switch_to_subdomain('', 'staging.lvh.me')
     visit(root_path)
-    expect(current_url).to include('www.stage.')
+    expect(current_url).to include('www.staging.')
+    ActionDispatch::Http::URL.tld_length = 1
+  end
+
+  scenario 'user visits subdomain for inactive organization' do
+    create(:organization, subdomain: 'inactiveorg', active: false)
+    switch_to_subdomain('inactiveorg')
+    visit root_path
+    expect(current_url).to_not include('inactiveorg')
+    expect(current_url).to include('www')
+  end
+
+  scenario 'user visits inactive subdomain in staging' do
+    create(:organization, subdomain: 'inactiveorg', active: false)
+    ActionDispatch::Http::URL.tld_length = 2
+    switch_to_subdomain('inactiveorg', 'staging.lvh.me')
+    visit root_path
+    expect(current_url).to_not include('inactiveorg')
+    expect(current_url).to include('www.staging.')
     ActionDispatch::Http::URL.tld_length = 1
   end
 end

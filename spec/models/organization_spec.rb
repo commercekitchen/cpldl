@@ -5,10 +5,6 @@ require 'rails_helper'
 RSpec.describe Organization, type: :model do
   let(:org) { FactoryBot.create(:organization) }
   let!(:pla) { FactoryBot.create(:default_organization) }
-  let!(:admin1) { FactoryBot.create(:user, :admin, organization: org) }
-  let!(:admin2) { FactoryBot.create(:user, :admin, organization: org) }
-  let!(:user1) { FactoryBot.create(:user, organization: org) }
-  let!(:user2) { FactoryBot.create(:user) }
 
   it { should have_many(:cms_pages) }
   it { should have_many(:library_locations) }
@@ -31,6 +27,15 @@ RSpec.describe Organization, type: :model do
 
       it 'includes only orgs using the passed course' do
         expect(Organization.using_course(parent_course.id)).to eq([org])
+      end
+    end
+
+    describe 'active' do
+      let!(:active_org) { create(:organization, name: 'Active Org', active: true) }
+      let!(:inactive_org) { create(:organization, name: 'Inactive Org', active: false) }
+
+      it 'includes only active orgs' do
+        expect(Organization.active).to contain_exactly(active_org, org, pla)
       end
     end
   end
@@ -75,17 +80,27 @@ RSpec.describe Organization, type: :model do
   end
 
   describe '#users_count' do
+    let!(:admin1) { FactoryBot.create(:user, :admin, organization: org) }
+    let!(:admin2) { FactoryBot.create(:user, :admin, organization: org) }
+    let!(:user1) { FactoryBot.create(:user, organization: org) }
+    let!(:other_org_user) { FactoryBot.create(:user) }
+
     it 'returns the count of its users' do
       expect(org.user_count).to eq(3)
     end
   end
 
   describe '#admin_user_emails' do
+    let!(:admin1) { FactoryBot.create(:user, :admin, organization: org) }
+    let!(:admin2) { FactoryBot.create(:user, :admin, organization: org) }
+    let!(:user1) { FactoryBot.create(:user, organization: org) }
+    let!(:other_org_user) { FactoryBot.create(:user) }
+
     it 'returns emails of the admins' do
       expect(org.admin_user_emails).to include(admin1.email)
       expect(org.admin_user_emails).to include(admin2.email)
       expect(org.admin_user_emails).not_to include(user1.email)
-      expect(org.admin_user_emails).not_to include(user2.email)
+      expect(org.admin_user_emails).not_to include(other_org_user.email)
     end
   end
 

@@ -41,6 +41,7 @@ class Organization < ApplicationRecord
 
   scope :using_lesson, ->(lesson_id) { includes(courses: :lessons).where(lessons: { parent_id: lesson_id }) }
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
+  scope :active, -> { where(active: true) }
 
   has_attached_file :footer_logo
 
@@ -48,7 +49,7 @@ class Organization < ApplicationRecord
   validates :subdomain, presence: true
 
   validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
-  validates_attachment_size :footer_logo, in: 0.megabytes..2.megabytes
+  validates_attachment_size :footer_logo, in: (0.megabytes)..(2.megabytes)
 
   validates :footer_logo_link, url: { allow_blank: true }
   before_validation :add_survey_url_protocols
