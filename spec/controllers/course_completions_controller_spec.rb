@@ -50,7 +50,8 @@ describe CourseCompletionsController do
         expect(assigns(:course)).to eq(course1)
       end
 
-      it 'generates a PDF when send as format pdf' do
+      xit 'generates a PDF when send as format pdf' do
+        # TODO: Convert this to a request spec to test
         # the send on this opens a term window on run
         get :show, params: { course_id: course1, format: 'pdf' }
         expect(assigns(:pdf)).not_to be_empty

@@ -5,7 +5,7 @@ require 'feature_helper'
 feature 'User registers and selects a partner' do
   let(:partner) { FactoryBot.create(:partner) }
   let(:organization) { partner.organization }
-  let(:email) { Faker::Internet.free_email }
+  let(:email) { Faker::Internet.email }
   let(:password) { Faker::Internet.password }
   let(:first_name) { Faker::Name.first_name }
 

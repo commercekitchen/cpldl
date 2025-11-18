@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe AdminInvitationService do
   let(:organization) { FactoryBot.create(:organization) }
-  let(:email) { Faker::Internet.free_email }
+  let(:email) { Faker::Internet.email }
   let(:user) { FactoryBot.create(:user) }
 
   it 'should create an admin user' do

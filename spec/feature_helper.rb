@@ -42,12 +42,15 @@ RSpec.configure do |config|
 end
 
 # TODO: Consolidate these 4 methods into one method with keyword args, maybe?
-def log_in_with(email, password, admin = nil)
+def log_in_with(email, password, admin = nil, expect_success: true)
   visit new_user_session_path(admin: admin)
   find('#login_email').set(email)
   find('#login_password').set(password)
   click_button 'Access Courses'
-  expect(page).to have_link('Sign Out')
+
+  if expect_success
+    expect(page).to have_link('Sign Out')
+  end
 end
 
 def library_card_log_in_with(card_number, password)

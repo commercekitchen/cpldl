@@ -45,7 +45,7 @@ describe Admin::ReportExportsController do
 
       it "should respond with csv header for #{report_type[:report_param]}" do
         get :show, params: { report: report_type[:report_param] }, format: :csv
-        expect(response.content_type).to eq('text/csv')
+        expect(response.content_type).to eq('text/csv; charset=utf-8')
       end
 
       it "should respond with csv header for #{report_type[:report_param]}" do

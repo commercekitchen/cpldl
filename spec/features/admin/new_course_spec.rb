@@ -145,7 +145,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'adds a lesson', js: true do
     visit edit_admin_course_path(course_id: course, id: course.id)
     click_button 'Save & Edit Lessons'
-    expect(current_path).to eq(new_admin_course_lesson_path(course))
+    expect(current_path).to eq(new_admin_course_lesson_path(course.to_param))
     fill_in :lesson_title, with: 'New Lesson Title'
     fill_in :lesson_summary, with: 'Summary for new lesson'
     fill_in :lesson_duration, with: '05:15'

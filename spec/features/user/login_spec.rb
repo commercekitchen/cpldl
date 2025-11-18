@@ -22,19 +22,19 @@ feature 'User logs in' do
     end
 
     scenario 'with invalid or blank email' do
-      log_in_with '', 'password'
+      log_in_with '', 'password', expect_success: false
 
       expect(page).to have_content('Invalid Email or Password.')
 
-      log_in_with 'not@real.com', 'password'
+      log_in_with 'not@real.com', 'password', expect_success: false
       expect(page).to have_content('Invalid Email or Password.')
     end
 
     scenario 'with blank password' do
-      log_in_with 'valid@example.com', ''
+      log_in_with 'valid@example.com', '', expect_success: false
       expect(page).to have_content('Invalid Email or Password.')
 
-      log_in_with 'valid@example.com', 'no correct pwd'
+      log_in_with 'valid@example.com', 'no correct pwd', expect_success: false
       expect(page).to have_content('Invalid Email or Password.')
     end
 
@@ -122,7 +122,7 @@ feature 'User logs in' do
     other_org = create(:organization, subdomain: 'foobar')
     switch_to_subdomain(other_org.subdomain)
     user = create(:user, organization: org)
-    log_in_with(user.email, user.password)
+    log_in_with(user.email, user.password, expect_success: false)
     expect(current_path).to eq(user_session_path)
     expect(page).to have_content('Invalid Email or Password')
   end

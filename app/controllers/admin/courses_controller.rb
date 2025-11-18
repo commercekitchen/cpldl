@@ -6,6 +6,7 @@ module Admin
     before_action :set_category_options, only: %i[new edit create update]
 
     def index
+      authorize current_organization, :customize?
       @courses = policy_scope(Course)
 
       @category_ids = current_organization.categories.map(&:id)
@@ -38,7 +39,7 @@ module Admin
 
       authorize @course
 
-      @course.assign_attributes(new_course_params)
+      @course.assign_attributes(new_course_params.to_h)
 
       if @course.save
         if params[:commit] == 'Save & Edit Lessons'
