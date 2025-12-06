@@ -91,4 +91,7 @@ Rails.application.configure do
   #   bucket: 'dl-development-lessons-zipped',
   #   s3_region: config.s3_region
   # }
+  
+  # ActiveStorage config
+  config.active_storage.service = :local
 end

@@ -36,6 +36,8 @@ class Lesson < ApplicationRecord
   validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
+  has_one_attached :story_line_file
+
   before_destroy :delete_associated_asl_files
 
   default_scope { order(:lesson_order) }
@@ -60,5 +62,4 @@ class Lesson < ApplicationRecord
                       duration_param.to_i
                     end
   end
-
 end
