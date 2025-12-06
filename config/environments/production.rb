@@ -129,4 +129,6 @@ Rails.application.configure do
     bucket: config.zip_bucket_name,
     s3_region: config.s3_region
   }
+
+  config.active_storage.service = :amazon
 end

@@ -51,6 +51,8 @@ class Organization < ApplicationRecord
   validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
   validates_attachment_size :footer_logo, in: (0.megabytes)..(2.megabytes)
 
+  has_one_attached :footer_logo
+
   validates :footer_logo_link, url: { allow_blank: true }
   before_validation :add_survey_url_protocols
   after_validation :clean_up_paperclip_errors

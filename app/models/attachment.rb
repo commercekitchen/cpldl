@@ -17,4 +17,6 @@ class Attachment < ApplicationRecord
   validates :doc_type, allow_blank: true,
                          inclusion: { in: %w[text-copy additional-resource],
                            message: '%<value>s is not a doc_type' }
+
+  has_one_attached :document_file
 end

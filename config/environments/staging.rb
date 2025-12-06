@@ -98,4 +98,7 @@ Rails.application.configure do
     s3_region: config.s3_region,
     s3_permissions: 'private'
   }
+
+  # ActiveStorage config
+  config.active_storage.service = :amazon
 end
