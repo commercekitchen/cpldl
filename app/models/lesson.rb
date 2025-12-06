@@ -36,9 +36,11 @@ class Lesson < ApplicationRecord
   validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
-  has_one_attached :story_line_file
+  has_one_attached :story_line_archive, service: :lessons_zip
 
   before_destroy :delete_associated_asl_files
+
+  after_commit :enqueue_storyline_unzip, if: :saved_change_to_story_line_archive_attachment?
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
@@ -61,5 +63,32 @@ class Lesson < ApplicationRecord
                     else
                       duration_param.to_i
                     end
+  end
+
+  def story_line_directory
+    story_line_slug.presence ||
+      (if respond_to?(:story_line_file_name) && story_line_file_name.present?
+         story_line_file_name.sub(/\.zip\z/, '')
+       end)
+  end
+
+  def storyline_root_path
+    return nil if story_line_directory.blank?
+
+    "storylines/#{id}/#{story_line_directory}"
+  end
+
+  def storyline_entry_path
+    return nil unless storyline_root_path
+
+    "#{storyline_root_path}/story.html"
+  end
+
+  private
+
+  def enqueue_storyline_unzip
+    return if story_line_directory.blank?
+
+    UnzipStorylineJob.perform_later(id)
   end
 end
