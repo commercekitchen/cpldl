@@ -1,10 +1,6 @@
-resource "aws_ecs_cluster" "ecs_cluster" {
-  name = "${var.project_name}-cluster-${var.environment_name}"
-}
-
 resource "aws_ecs_service" "ecs_service" {
   name                              = "${var.project_name}-${var.environment_name}-service"
-  cluster                           = aws_ecs_cluster.ecs_cluster.id
+  cluster                           = var.ecs_cluster_id
   task_definition                   = aws_ecs_task_definition.app_service.arn
   desired_count                     = var.desired_instance_count
   iam_role                          = aws_iam_role.instance.name
@@ -36,7 +32,7 @@ resource "aws_ecs_service" "ecs_service" {
   }
 }
 
-data "aws_ami" "ecs_ami" {
+data "aws_ami" "web_server_ami" {
   most_recent = true
   owners      = ["amazon"]
 
@@ -54,19 +50,20 @@ resource "aws_key_pair" "app_instance_key" {
 resource "aws_launch_configuration" "instance" {
   name_prefix                 = "${var.project_name}-instance-"
   instance_type               = var.instance_type
-  image_id                    = data.aws_ami.ecs_ami.id
+  image_id                    = data.aws_ami.web_server_ami.id
   associate_public_ip_address = true
   iam_instance_profile        = aws_iam_instance_profile.instance.name
   key_name                    = aws_key_pair.app_instance_key.key_name
   security_groups = [
     var.default_security_group_id,
     aws_security_group.application_sg.id,
-    var.db_access_security_group_id
+    var.db_access_security_group_id,
+    var.redis_access_security_group_id
   ]
 
   user_data = <<-EOF
                   #!/bin/bash
-                  echo ECS_CLUSTER=${aws_ecs_cluster.ecs_cluster.name} >> /etc/ecs/ecs.config
+                  echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
                 EOF
 
   lifecycle {
@@ -89,7 +86,7 @@ resource "aws_autoscaling_group" "asg" {
 
   tag {
     key                 = "ecs_cluster"
-    value               = aws_ecs_cluster.ecs_cluster.name
+    value               = var.ecs_cluster_name
     propagate_at_launch = true
   }
 

@@ -9,7 +9,7 @@ variable "policy_cooldown" {
 }
 
 resource "aws_autoscaling_policy" "up" {
-  name                   = "${aws_ecs_cluster.ecs_cluster.name}-scaleUp"
+  name                   = "${var.ecs_cluster_name}-scaleUp"
   scaling_adjustment     = 1
   adjustment_type        = var.adjustment_type
   cooldown               = var.policy_cooldown
@@ -19,7 +19,7 @@ resource "aws_autoscaling_policy" "up" {
 }
 
 resource "aws_autoscaling_policy" "down" {
-  name                   = "${aws_ecs_cluster.ecs_cluster.name}-scaleDown"
+  name                   = "${var.ecs_cluster_name}-scaleDown"
   scaling_adjustment     = -1
   adjustment_type        = var.adjustment_type
   cooldown               = var.policy_cooldown
@@ -32,7 +32,7 @@ resource "aws_autoscaling_policy" "down" {
  * Create CloudWatch alarms to trigger scaling of ASG
  */
 resource "aws_cloudwatch_metric_alarm" "scaleUp" {
-  alarm_name          = "${aws_ecs_cluster.ecs_cluster.name}-scaleUp"
+  alarm_name          = "${var.ecs_cluster_name}-scaleUp"
   alarm_description   = "ECS cluster scaling metric above threshold"
   comparison_operator = "GreaterThanOrEqualToThreshold"
   evaluation_periods  = 2
@@ -46,12 +46,12 @@ resource "aws_cloudwatch_metric_alarm" "scaleUp" {
   alarm_actions       = [aws_autoscaling_policy.up[0].arn]
 
   dimensions = {
-    ClusterName = aws_ecs_cluster.ecs_cluster.name
+    ClusterName = var.ecs_cluster_name
   }
 }
 
 resource "aws_cloudwatch_metric_alarm" "scaleDown" {
-  alarm_name          = "${aws_ecs_cluster.ecs_cluster.name}-scaleDown"
+  alarm_name          = "${var.ecs_cluster_name}-scaleDown"
   alarm_description   = "ECS cluster scaling metric under threshold"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 2
@@ -65,6 +65,6 @@ resource "aws_cloudwatch_metric_alarm" "scaleDown" {
   alarm_actions       = [aws_autoscaling_policy.down[0].arn]
 
   dimensions = {
-    ClusterName = aws_ecs_cluster.ecs_cluster.name
+    ClusterName = var.ecs_cluster_name
   }
 }

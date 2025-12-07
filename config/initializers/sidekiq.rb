@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-redis_url = Rails.application.credentials.dig(:redis, :url)
+redis_url = Rails.application.credentials.dig(Rails.env.to_sym, :redis, :url)
 
 Sidekiq.configure_server do |config|
   config.redis = { url: redis_url }

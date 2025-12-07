@@ -3,8 +3,8 @@ default: &default
   encoding: unicode
   host: <%= ENV['POSTGRES_HOST'] %>
   database: railsapp_<%= Rails.env %>
-  username: <%= ENV['POSTGRES_USER'] %>
-  password: <%= ENV['POSTGRES_PASSWORD'] %>
+  username: <%= Rails.application.credentials.dig(Rails.env.to_sym, :database, :username) || ENV['POSTGRES_USER'] %>
+  password: <%= Rails.application.credentials.dig(Rails.env.to_sym, :database, :password) || ENV['POSTGRES_PASSWORD'] %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 staging:
