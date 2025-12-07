@@ -53,6 +53,12 @@ resource "aws_codebuild_project" "codebuild_project" {
       type  = "SECRETS_MANAGER"
       value = "${var.dockerhub_secret_arn}:password"
     }
+
+    environment_variable {
+      name  = "RAILS_MASTER_KEY"
+      type  = "SECRETS_MANAGER"
+      value = var.rails_master_key_arn  # secret whose value is the raw master key string
+    }
   }
 
   source {

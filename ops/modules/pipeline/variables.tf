@@ -12,3 +12,4 @@ variable "github_owner" {}
 variable "github_repo" {}
 variable "branch" {}
 variable "dockerhub_secret_arn" {}
+variable "rails_master_key_arn" {}

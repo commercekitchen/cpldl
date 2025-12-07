@@ -194,6 +194,7 @@ module "pipeline" {
   github_repo          = "cpldl"
   branch               = "develop"
   dockerhub_secret_arn = data.aws_secretsmanager_secret.docker_credentials.arn
+  rails_master_key_arn = data.aws_secretsmanager_secret.rails_master_key.arn
 }
 
 module "waf" {

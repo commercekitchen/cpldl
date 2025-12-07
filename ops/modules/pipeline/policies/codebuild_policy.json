@@ -33,6 +33,17 @@
         "${aws_s3_bucket_arn}",
         "${aws_s3_bucket_arn}/*"
       ]
+    },
+    {
+      "Sid": "CodeBuildSecretsAccess",
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetSecretValue"
+      ],
+      "Resource": [
+        "${dockerhub_secret_arn}",
+        "${rails_master_key_arn}"
+      ]
     }
   ]
 }

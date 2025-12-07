@@ -16,7 +16,7 @@ phases:
       - echo "$${DOCKER_PASSWORD}" | docker login -u "$${DOCKER_USERNAME}" --password-stdin
       - echo Building the Docker image...
       - REPOSITORY_URI=${ecr_project_uri}
-      - docker build --build-arg RAILS_ENV=${rails_env} -t "$REPOSITORY_URI:latest" .
+      - docker build --build-arg RAILS_ENV=${rails_env} --build-arg RAILS_MASTER_KEY=$${RAILS_MASTER_KEY} -t "$REPOSITORY_URI:latest" .
       - docker tag "$REPOSITORY_URI:latest" "$REPOSITORY_URI:$IMAGE_TAG"
   post_build:
     commands:
