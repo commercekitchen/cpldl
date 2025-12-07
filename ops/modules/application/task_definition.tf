@@ -4,6 +4,7 @@ resource "aws_ecs_task_definition" "app_service" {
   network_mode             = "bridge"
   memory                   = var.service_memory
   cpu                      = var.service_cpu
+  execution_role_arn       = var.task_execution_role_arn
 
   container_definitions = jsonencode([
     {
@@ -17,20 +18,8 @@ resource "aws_ecs_task_definition" "app_service" {
           containerPort = 3000
         }
       ],
-      command = ["puma", "-C", "config/puma.rb"],
+      command = ["bundle", "exec", "puma", "-C", "config/puma.rb"],
       environment = [
-        {
-          name  = "RAILS_MASTER_KEY",
-          value = "${var.rails_master_key}"
-        },
-        {
-          name  = "POSTGRES_USER",
-          value = "${var.db_username}"
-        },
-        {
-          name  = "POSTGRES_PASSWORD",
-          value = "${var.db_password}"
-        },
         {
           name  = "POSTGRES_HOST",
           value = "${var.db_host}"
@@ -51,6 +40,13 @@ resource "aws_ecs_task_definition" "app_service" {
           name  = "ROLLBAR_ENV",
           value = "${var.environment_name}"
         }
+      ],
+      secrets = [
+        {
+          # single-value secret (string)
+          name      = "RAILS_MASTER_KEY"
+          valueFrom = var.rails_master_key_arn
+        },
       ],
       logConfiguration = {
         logDriver = "awslogs",

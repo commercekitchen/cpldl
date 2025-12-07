@@ -60,3 +60,24 @@ resource "aws_iam_role_policy" "codebuild_policy" {
   policy = local.codebuild_policy_template
 }
 
+resource "aws_iam_policy" "codebuild_dockerhub_secrets" {
+  name        = "${var.project_name}-${var.environment_name}-codebuild-dockerhub-secrets"
+  description = "Allow CodeBuild to read Docker Hub credentials from Secrets Manager"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = ["secretsmanager:GetSecretValue"]
+        Resource = [var.dockerhub_secret_arn]
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "codebuild_dockerhub_secrets" {
+  role       = aws_iam_role.codebuild_role.name
+  policy_arn = aws_iam_policy.codebuild_dockerhub_secrets.arn
+}
+
