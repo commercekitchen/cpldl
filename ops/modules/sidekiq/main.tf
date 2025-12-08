@@ -53,7 +53,7 @@ resource "aws_ecs_service" "sidekiq" {
   deployment_minimum_healthy_percent = 50
   deployment_maximum_percent         = 200 # Allow double capacity during deployment/load
 
-  wait_for_steady_state = true
+  wait_for_steady_state = false # Don't fail terraform apply if this doesn't start
 
   ordered_placement_strategy {
     type  = "binpack"
@@ -74,10 +74,10 @@ resource "aws_ecs_service" "sidekiq" {
   lifecycle {
     # Don't overwrite latest task definition revision
     # WARNING: changing the task_definition will case ECS to use the latest
-    # sidekiq image, which is usually the one deployed to staging (sidekiq-latest tag)
+    # sidekiq image, which is usually the one deployed to staging (latest tag)
     # Sometimes, we want to update the task_definition, but it should be
     # done with care to avoid releasing untested code to production sidekiq
-    ignore_changes = [task_definition]
+    # ignore_changes = [task_definition]
   }
 
   tags = {

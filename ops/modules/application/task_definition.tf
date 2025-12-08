@@ -21,6 +21,10 @@ resource "aws_ecs_task_definition" "app_service" {
       command = ["bundle", "exec", "puma", "-C", "config/puma.rb"],
       environment = [
         {
+          name = "SKIP_MIGRATIONS",
+          value = "false"
+        }, // Run migrations on app deployment
+        {
           name  = "POSTGRES_HOST",
           value = "${var.db_host}"
         },

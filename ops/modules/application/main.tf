@@ -28,7 +28,7 @@ resource "aws_ecs_service" "ecs_service" {
     # image, which is usually the one deployed to staging (latest tag)
     # Sometimes, we want to update the task_definition, but it should be
     # done with care to avoid releasing untested code to production sidekiq
-    ignore_changes = [task_definition]
+    # ignore_changes = [task_definition]
   }
 }
 

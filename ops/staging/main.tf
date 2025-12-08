@@ -161,7 +161,7 @@ module "sidekiq" {
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   private_subnet_ids             = module.vpc.private_subnet_ids
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:sidekiq-latest"
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:latest"
   log_retention_days             = 7
   instance_type                  = "t3.small"
   desired_instance_count         = 1
@@ -175,6 +175,7 @@ module "sidekiq" {
   
   redis_host                     = module.redis.redis_endpoint
   redis_port                     = 6379
+  db_host                        = module.database.database_host
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   task_execution_role_arn        = module.ecs_cluster.ecs_task_execution_role_arn
 }
@@ -186,10 +187,10 @@ module "pipeline" {
   environment_name     = var.environment_name
   region               = var.region
   ecs_cluster_name     = module.ecs_cluster.cluster_name
-  ecs_service_name     = module.application.service_name
+  app_service_name     = module.application.service_name
+  sidekiq_service_name = module.sidekiq.service_name
   ecr_repository_url   = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
   ecr_project_uri      = aws_ecr_repository.ecr_repo.repository_url
-  sidekiq_service_name = module.sidekiq.service_name
   github_owner         = "commercekitchen"
   github_repo          = "cpldl"
   branch               = "develop"

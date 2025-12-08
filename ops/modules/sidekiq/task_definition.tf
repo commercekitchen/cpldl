@@ -16,9 +16,17 @@ resource "aws_ecs_task_definition" "sidekiq" {
       command = ["bundle", "exec", "sidekiq", "-C", "config/sidekiq.yml"]
 
       environment = [
-        { name = "SKIP_ASSETS",         value = "true" }, // Don't precompile assets for sidekiq
+        { name = "SKIP_MIGRATIONS",     value = "true" }, // Don't run migrations again in sidekiq
         { name = "RAILS_ENV",           value = var.environment_name },
-        { name = "RAILS_LOG_TO_STDOUT", value = "true" }
+        { name = "RAILS_LOG_TO_STDOUT", value = "true" },
+        {
+          name  = "POSTGRES_HOST",
+          value = "${var.db_host}"
+        },
+        {
+          name  = "ROLLBAR_ENV",
+          value = "${var.environment_name}"
+        }
       ]
 
       secrets = [

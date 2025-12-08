@@ -154,7 +154,7 @@ module "sidekiq" {
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   private_subnet_ids             = module.vpc.private_subnet_ids
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:sidekiq-latest"
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:latest"
   log_retention_days             = 7
   instance_type                  = "t3.medium"
   desired_instance_count         = 1
@@ -180,7 +180,7 @@ module "pipeline" {
   environment_name     = var.environment_name
   region               = var.region
   ecs_cluster_name     = module.application.cluster_name
-  ecs_service_name     = module.application.service_name
+  app_service_name     = module.application.service_name
   ecr_repository_url   = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
   ecr_project_uri      = data.aws_ecr_repository.ecr_repo.repository_url
   github_owner         = "commercekitchen"

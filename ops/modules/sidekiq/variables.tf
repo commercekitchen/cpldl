@@ -25,6 +25,7 @@ variable "redis_access_security_group_id" {}
 
 variable "redis_host" {}
 variable "redis_port" { default = 6379 }
+variable "db_host" {}
 
 variable "rails_master_key_arn" {}
 

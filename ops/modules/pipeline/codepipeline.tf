@@ -48,16 +48,17 @@ resource "aws_codepipeline" "pipeline" {
     name = "Deploy"
 
     action {
-      name            = "Deploy"
+      name            = "DeployWeb"
       category        = "Deploy"
       owner           = "AWS"
       provider        = "ECS"
-      input_artifacts = ["build_output"]
       version         = "1"
+      input_artifacts = ["build_output"]
+      run_order       = 1
 
       configuration = {
         ClusterName = var.ecs_cluster_name
-        ServiceName = var.ecs_service_name
+        ServiceName = var.app_service_name
         FileName    = "imagedefinitions.json"
       }
     }
@@ -69,6 +70,8 @@ resource "aws_codepipeline" "pipeline" {
       provider         = "ECS"
       version          = "1"
       input_artifacts  = ["build_output"]
+      run_order        = 2
+
       configuration = {
         ClusterName = var.ecs_cluster_name
         ServiceName = var.sidekiq_service_name
