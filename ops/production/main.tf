@@ -158,8 +158,8 @@ module "sidekiq" {
   log_retention_days             = 7
   instance_type                  = "t3.medium"
   desired_instance_count         = 1
-  max_instance_count             = 2
-  min_instance_count             = 1
+  max_task_count             = 2
+  min_task_count             = 1
   task_cpu                       = 1024
   memory_reservation             = 1024
 

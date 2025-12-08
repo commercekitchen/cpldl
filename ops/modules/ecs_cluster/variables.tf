@@ -23,3 +23,13 @@ variable "rails_master_key_arn" {
   type        = string
   description = "Secrets Manager ARN for Rails master key"
 }
+
+variable "app_capacity_provider_name" {
+  type = string
+  description = "Name of the app capacity provider"
+}
+
+variable "sidekiq_capacity_provider_name" {
+  type = string
+  description = "Name of the sidekiq capacity provider"
+}

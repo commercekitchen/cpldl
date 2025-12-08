@@ -2,8 +2,8 @@ resource "aws_appautoscaling_target" "sidekiq_scaling_target" {
   service_namespace  = "ecs"
   resource_id        = "service/${var.ecs_cluster_name}/${aws_ecs_service.sidekiq.name}"
   scalable_dimension = "ecs:service:DesiredCount"
-  min_capacity       = var.min_instance_count
-  max_capacity       = var.max_instance_count
+  min_capacity       = var.min_task_count
+  max_capacity       = var.max_task_count
 }
 
 resource "aws_appautoscaling_policy" "sidekiq_cpu_policy" {

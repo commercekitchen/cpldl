@@ -60,6 +60,10 @@ resource "aws_ecs_service" "sidekiq" {
     field = "memory"
   }
 
+  placement_constraints {
+    type = "distinctInstance"
+  }
+
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.sidekiq_capacity_provider.name
     weight            = 1

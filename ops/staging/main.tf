@@ -93,11 +93,13 @@ module "database" {
 module "ecs_cluster" {
   source = "../modules/ecs_cluster"
 
-  project_name         = var.project_name
-  environment_name     = var.environment_name
-  region               = var.region
-  insights_enabled     = false
-  rails_master_key_arn = data.aws_secretsmanager_secret.rails_master_key.arn
+  project_name                   = var.project_name
+  environment_name               = var.environment_name
+  region                         = var.region
+  insights_enabled               = false
+  rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
+  app_capacity_provider_name     = module.application.capacity_provider_name
+  sidekiq_capacity_provider_name = module.sidekiq.capacity_provider_name
 }
 
 data "aws_secretsmanager_secret" "rails_master_key" {
@@ -136,6 +138,8 @@ module "application" {
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
   desired_instance_count         = 1
+  min_task_count             = 1
+  max_task_count             = 2
   instance_type                  = "t3.small"
   service_memory                 = 512
   service_cpu                    = 512
@@ -165,8 +169,8 @@ module "sidekiq" {
   log_retention_days             = 7
   instance_type                  = "t3.small"
   desired_instance_count         = 1
-  max_instance_count             = 2
-  min_instance_count             = 1
+  min_task_count             = 1
+  max_task_count             = 2
   task_cpu                       = 1600
   memory_reservation             = 1600
 
@@ -178,6 +182,9 @@ module "sidekiq" {
   db_host                        = module.database.database_host
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   task_execution_role_arn        = module.ecs_cluster.ecs_task_execution_role_arn
+
+  # TODO: Remove after deploy
+  app_capacity_provider_name     = module.application.capacity_provider_name
 }
 
 module "pipeline" {

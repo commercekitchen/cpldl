@@ -15,16 +15,3 @@ resource "aws_ecs_capacity_provider" "sidekiq_capacity_provider" {
     }
   }
 }
-
-# Associate capacity provider with cluster
-resource "aws_ecs_cluster_capacity_providers" "sidekiq_cluster_capacity_providers" {
-  cluster_name = var.ecs_cluster_name
-
-  capacity_providers = [aws_ecs_capacity_provider.sidekiq_capacity_provider.name]
-
-  default_capacity_provider_strategy {
-    base              = 0
-    weight            = 1
-    capacity_provider = aws_ecs_capacity_provider.sidekiq_capacity_provider.name
-  }
-}

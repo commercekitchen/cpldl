@@ -15,8 +15,8 @@ variable "image" {}
 variable "log_retention_days" { default = 7 }
 variable "instance_type" {}
 variable "desired_instance_count" { default = 1 }
-variable "max_instance_count" { default = 2 }
-variable "min_instance_count" { default = 1 }
+variable "min_task_count" { default = 1 }
+variable "max_task_count" { default = 2 }
 variable "task_cpu" { default = 256 }
 variable "memory_reservation" { default = 1700 }
 
@@ -32,4 +32,9 @@ variable "rails_master_key_arn" {}
 variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"
+}
+
+variable "app_capacity_provider_name" {
+  type = string
+  description = "Placeholder app capacity provider"
 }
