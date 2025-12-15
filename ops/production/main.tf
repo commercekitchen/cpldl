@@ -28,8 +28,25 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-data "aws_ecr_repository" "ecr_repo" {
+data "aws_secretsmanager_secret" "rails_master_key" {
+  name = "digitallearn/rails_master_key"
+}
+
+data "aws_secretsmanager_secret" "docker_credentials" {
+  name = "digitallearn/docker_credentials"
+}
+
+resource "aws_ecr_repository" "ecr_repo" {
   name = var.project_name
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+
+  tags = {
+    Environment = "Multiple"
+  }
 }
 
 module "vpc" {
@@ -91,14 +108,8 @@ module "ecs_cluster" {
   region               = var.region
   insights_enabled     = true
   rails_master_key_arn = data.aws_secretsmanager_secret.rails_master_key.arn
-}
-
-data "aws_secretsmanager_secret" "staging_rails_master_key" {
-  name = "digitallearn/rails_master_key"
-}
-
-data "aws_secretsmanager_secret" "docker_credentials" {
-  name = "digitallearn/docker_credentials"
+  app_capacity_provider_name     = module.application.capacity_provider_name
+  sidekiq_capacity_provider_name = module.sidekiq.capacity_provider_name
 }
 
 module "redis" {
@@ -135,6 +146,7 @@ module "application" {
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
   ssh_key_name                   = "ec2_test_key"
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
     "arn:aws:s3:::dl-uploads-${var.environment_name}",
     "arn:aws:s3:::dl-prodapp-lessons-zipped"
@@ -154,20 +166,21 @@ module "sidekiq" {
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   private_subnet_ids             = module.vpc.private_subnet_ids
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:latest"
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.medium"
   desired_instance_count         = 1
-  max_task_count             = 2
-  min_task_count             = 1
-  task_cpu                       = 1024
-  memory_reservation             = 1024
+  min_task_count                 = 1
+  max_task_count                 = 2
+  task_cpu                       = 1600
+  memory_reservation             = 3000
 
   db_access_security_group_id    = module.database.db_access_security_group_id
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   
   redis_host                     = module.redis.redis_endpoint
   redis_port                     = 6379
+  db_host                        = module.database.database_host
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   task_execution_role_arn        = module.ecs_cluster.ecs_task_execution_role_arn
 }
@@ -181,13 +194,15 @@ module "pipeline" {
   region               = var.region
   ecs_cluster_name     = module.application.cluster_name
   app_service_name     = module.application.service_name
+  sidekiq_service_name = module.sidekiq.service_name
   ecr_repository_url   = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
   ecr_project_uri      = data.aws_ecr_repository.ecr_repo.repository_url
   github_owner         = "commercekitchen"
   github_repo          = "cpldl"
   branch               = "main"
   dockerhub_secret_arn = data.aws_secretsmanager_secret.docker_credentials
-  sidekiq_service_name = module.sidekiq.service_name
+  rails_master_key_arn = data.aws_secretsmanager_secret.rails_master_key.arn
+
 }
 
 module "waf" {

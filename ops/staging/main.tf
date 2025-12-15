@@ -28,6 +28,14 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
+data "aws_secretsmanager_secret" "rails_master_key" {
+  name = "digitallearn/rails_master_key"
+}
+
+data "aws_secretsmanager_secret" "docker_credentials" {
+  name = "digitallearn/docker_credentials"
+}
+
 resource "aws_ecr_repository" "ecr_repo" {
   name                 = var.project_name
   image_tag_mutability = "MUTABLE"
@@ -102,13 +110,6 @@ module "ecs_cluster" {
   sidekiq_capacity_provider_name = module.sidekiq.capacity_provider_name
 }
 
-data "aws_secretsmanager_secret" "rails_master_key" {
-  name = "digitallearn/rails_master_key"
-}
-
-data "aws_secretsmanager_secret" "docker_credentials" {
-  name = "digitallearn/docker_credentials"
-}
 
 module "redis" {
   source = "../modules/redis"
@@ -138,14 +139,15 @@ module "application" {
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
   desired_instance_count         = 1
-  min_task_count             = 1
-  max_task_count             = 2
+  min_task_count                 = 1
+  max_task_count                 = 2
   instance_type                  = "t3.small"
   service_memory                 = 512
   service_cpu                    = 512
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
   ssh_key_name                   = "ec2_test_key"
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
     "arn:aws:s3:::dl-uploads-${var.environment_name}",
     "arn:aws:s3:::dl-stageapp-lessons-zipped"
@@ -165,12 +167,12 @@ module "sidekiq" {
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   private_subnet_ids             = module.vpc.private_subnet_ids
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:latest"
+  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.small"
   desired_instance_count         = 1
-  min_task_count             = 1
-  max_task_count             = 2
+  min_task_count                 = 1
+  max_task_count                 = 2
   task_cpu                       = 1600
   memory_reservation             = 1600
 
@@ -182,9 +184,6 @@ module "sidekiq" {
   db_host                        = module.database.database_host
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   task_execution_role_arn        = module.ecs_cluster.ecs_task_execution_role_arn
-
-  # TODO: Remove after deploy
-  app_capacity_provider_name     = module.application.capacity_provider_name
 }
 
 module "pipeline" {
@@ -214,9 +213,4 @@ module "waf" {
   alb_arn                = module.load_balancer.load_balancer_arn
   enable_shield          = false
   rate_limiter_threshold = 300
-}
-
-moved {
-  from = module.application.aws_ecs_cluster.ecs_cluster
-  to   = module.ecs_cluster.aws_ecs_cluster.ecs_cluster
 }
