@@ -25,15 +25,6 @@ resource "aws_ecs_service" "ecs_service" {
     type  = "spread"
     field = "instanceId"
   }
-
-  lifecycle {
-    # Don't overwrite latest task definition revision
-    # WARNING: changing the task_definition will case ECS to use the latest
-    # image, which is usually the one deployed to staging (latest tag)
-    # Sometimes, we want to update the task_definition, but it should be
-    # done with care to avoid releasing untested code to production sidekiq
-    # ignore_changes = [task_definition]
-  }
 }
 
 data "aws_ssm_parameter" "web_server_ami" {

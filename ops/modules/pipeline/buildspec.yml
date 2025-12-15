@@ -16,8 +16,9 @@ phases:
       - echo "$${DOCKER_PASSWORD}" | docker login -u "$${DOCKER_USERNAME}" --password-stdin
       - echo Building the Docker image...
       - REPOSITORY_URI=${ecr_project_uri}
-      - docker build --build-arg RAILS_ENV=${rails_env} --build-arg RAILS_MASTER_KEY=$${RAILS_MASTER_KEY} -t "$REPOSITORY_URI:latest" .
-      - docker tag "$REPOSITORY_URI:latest" "$REPOSITORY_URI:$IMAGE_TAG"
+      - docker build --build-arg RAILS_ENV=${rails_env} --build-arg RAILS_MASTER_KEY=$${RAILS_MASTER_KEY} -t "$REPOSITORY_URI:$IMAGE_TAG" .
+      - docker tag "$REPOSITORY_URI:$IMAGE_TAG" "$REPOSITORY_URI:latest"
+      - docker tag "$REPOSITORY_URI:$IMAGE_TAG" "$REPOSITORY_URI:${rails_env}"
   post_build:
     commands:
       - echo Build completed on "$(date)"
@@ -25,6 +26,7 @@ phases:
       - REPOSITORY_URI=${ecr_project_uri}
       - echo Pushing the Docker images...
       - docker push "$REPOSITORY_URI:latest"
+      - docker push "$REPOSITORY_URI:${rails_env}"
       - docker push "$REPOSITORY_URI:$IMAGE_TAG"
       - echo Writing image definitions file...
       - printf '[{"name":"application","imageUri":"%s"}]' "$REPOSITORY_URI:$IMAGE_TAG" > imagedefinitions.json

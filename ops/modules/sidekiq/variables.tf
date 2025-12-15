@@ -33,8 +33,3 @@ variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"
 }
-
-variable "app_capacity_provider_name" {
-  type = string
-  description = "Placeholder app capacity provider"
-}

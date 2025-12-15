@@ -75,15 +75,6 @@ resource "aws_ecs_service" "sidekiq" {
     rollback = true
   }
 
-  lifecycle {
-    # Don't overwrite latest task definition revision
-    # WARNING: changing the task_definition will case ECS to use the latest
-    # sidekiq image, which is usually the one deployed to staging (latest tag)
-    # Sometimes, we want to update the task_definition, but it should be
-    # done with care to avoid releasing untested code to production sidekiq
-    # ignore_changes = [task_definition]
-  }
-
   tags = {
     Project     = var.project_name
     Environment = var.environment_name

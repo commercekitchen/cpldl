@@ -23,3 +23,7 @@ variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"
 }
+variable "image" {
+  type = string
+  description = "Default image URI for the application container (overridden by CodePipeline deployments)."
+} 
