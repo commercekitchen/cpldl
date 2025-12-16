@@ -36,17 +36,8 @@ data "aws_secretsmanager_secret" "docker_credentials" {
   name = "digitallearn/docker_credentials"
 }
 
-resource "aws_ecr_repository" "ecr_repo" {
+data "aws_ecr_repository" "ecr_repo" {
   name = var.project_name
-  image_tag_mutability = "MUTABLE"
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = {
-    Environment = "Multiple"
-  }
 }
 
 module "vpc" {
@@ -146,7 +137,7 @@ module "application" {
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
   ssh_key_name                   = "ec2_test_key"
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
+  image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
     "arn:aws:s3:::dl-uploads-${var.environment_name}",
     "arn:aws:s3:::dl-prodapp-lessons-zipped"
@@ -161,12 +152,12 @@ module "sidekiq" {
   environment_name               = var.environment_name
   region                         = var.region
   vpc_id                         = module.vpc.vpc_id
-  ecr_repository_url             = split("/", aws_ecr_repository.ecr_repo.repository_url)[0] # Repository base url for authentication
-  ecr_project_uri                = aws_ecr_repository.ecr_repo.repository_url # Repository url ex/ /digitallearn
+  ecr_repository_url             = split("/", data.aws_ecr_repository.ecr_repo.repository_url)[0] # Repository base url for authentication
+  ecr_project_uri                = data.aws_ecr_repository.ecr_repo.repository_url # Repository url ex/ /digitallearn
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   private_subnet_ids             = module.vpc.private_subnet_ids
-  image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
+  image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.medium"
   desired_instance_count         = 1
@@ -192,7 +183,7 @@ module "pipeline" {
   project_name         = var.project_name
   environment_name     = var.environment_name
   region               = var.region
-  ecs_cluster_name     = module.application.cluster_name
+  ecs_cluster_name     = module.ecs_cluster.cluster_name
   app_service_name     = module.application.service_name
   sidekiq_service_name = module.sidekiq.service_name
   ecr_repository_url   = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${var.region}.amazonaws.com"
@@ -200,7 +191,7 @@ module "pipeline" {
   github_owner         = "commercekitchen"
   github_repo          = "cpldl"
   branch               = "main"
-  dockerhub_secret_arn = data.aws_secretsmanager_secret.docker_credentials
+  dockerhub_secret_arn = data.aws_secretsmanager_secret.docker_credentials.arn
   rails_master_key_arn = data.aws_secretsmanager_secret.rails_master_key.arn
 
 }
@@ -215,3 +206,9 @@ module "waf" {
   enable_shield          = false
   rate_limiter_threshold = 1200 # We sometimes get entire labs of students hitting the site at once
 }
+
+moved {
+  from = module.application.aws_ecs_cluster.ecs_cluster
+  to   = module.ecs_cluster.aws_ecs_cluster.ecs_cluster
+}
+
