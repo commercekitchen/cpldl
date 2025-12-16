@@ -34,13 +34,8 @@ module CPLDigitalLearn
       Devise::SessionsController.skip_before_action :require_valid_profile
     end
 
-    # Load local env (aws credentials)
-    config.before_configuration do
-      env_file = File.join(Rails.root, 'config', 'local_env.yml')
-      YAML.load(File.open(env_file)).each do |key, value|
-        ENV[key.to_s] = value
-      end if File.exists?(env_file)
-    end
+    # Use sidekiq
+    config.active_job.queue_adapter = :sidekiq
 
     # S3 Proxy
     require Rails.root.join("lib/s3_proxy.rb")

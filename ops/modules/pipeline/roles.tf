@@ -51,6 +51,8 @@ EOF
 locals {
   codebuild_policy_template = templatefile("${path.module}/policies/codebuild_policy.json", {
     aws_s3_bucket_arn = aws_s3_bucket.pipeline_store.arn
+    dockerhub_secret_arn    = var.dockerhub_secret_arn
+    rails_master_key_arn    = var.rails_master_key_arn
   })
 }
 
@@ -59,4 +61,3 @@ resource "aws_iam_role_policy" "codebuild_policy" {
   role   = aws_iam_role.codebuild_role.id
   policy = local.codebuild_policy_template
 }
-

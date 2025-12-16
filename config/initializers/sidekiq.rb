@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-sidekiq_config = { url: "redis://#{ENV['REDIS_HOST']}:#{ENV['REDIS_PORT']}/12" }
+redis_url = Rails.application.credentials.dig(Rails.env.to_sym, :redis, :url)
 
 Sidekiq.configure_server do |config|
-  config.redis = sidekiq_config
+  config.redis = { url: redis_url }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = sidekiq_config
+  config.redis = { url: redis_url }
 end

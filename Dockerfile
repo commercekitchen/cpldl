@@ -1,6 +1,6 @@
 FROM ruby:2.7.8-slim-bullseye
 
-# install rails dependencies
+# Install OS / Rails dependencies
 RUN apt-get update -qq && \
     apt-get install -y --no-install-recommends \
       build-essential \
@@ -24,26 +24,31 @@ RUN apt-get update -qq && \
 RUN mkdir /rails-app
 WORKDIR /rails-app
 
-# Consume build args
+# Build args (injected from CodeBuild)
 ARG RAILS_ENV
 ARG RAILS_MASTER_KEY
 ARG ROLLBAR_ENV
 
-# Add gems
+# Set ENV so Rails sees them during asset precompile
+ENV RAILS_ENV=${RAILS_ENV}
+ENV RAILS_MASTER_KEY=${RAILS_MASTER_KEY}
+ENV ROLLBAR_ENV=${ROLLBAR_ENV}
+
+# Install gems
 COPY Gemfile Gemfile
 COPY Gemfile.lock Gemfile.lock
 
-# Install gems
 COPY install_gems.sh install_gems.sh
 RUN chmod u+x install_gems.sh && ./install_gems.sh
 
+# Copy app code
 COPY . /rails-app
 
-# Precompile assets
+# Precompile assets (this will load Rails & credentials)
 COPY precompile_assets.sh precompile_assets.sh
 RUN chmod u+x precompile_assets.sh && ./precompile_assets.sh
 
-# Add entrypoint script
+# Entrypoint
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 

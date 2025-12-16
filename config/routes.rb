@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   use_doorkeeper
   root 'courses#index'
@@ -128,6 +130,10 @@ Rails.application.routes.draw do
       resource :branches, only: [:show, :update]
     end
 
+  end
+
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
   end
 
   devise_for :users, controllers: {
