@@ -15,27 +15,3 @@ resource "aws_internet_gateway" "gateway" {
     Name = "${var.project_name} Gateway (${var.environment_name})"
   }
 }
-
-/* Elastic IP for NAT */
-resource "aws_eip" "nat_eip" {
-  depends_on = [
-    aws_internet_gateway.gateway
-  ]
-
-  tags = {
-    Name = "${var.project_name} EIP (${var.environment_name})"
-  }
-}
-
-/* NAT */
-resource "aws_nat_gateway" "nat" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = element(aws_subnet.public_subnet.*.id, 0)
-  depends_on = [
-    aws_internet_gateway.gateway
-  ]
-
-  tags = {
-    Name = "${var.project_name} NAT ${var.environment_name}"
-  }
-}

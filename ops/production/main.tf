@@ -156,7 +156,7 @@ module "sidekiq" {
   ecr_project_uri                = data.aws_ecr_repository.ecr_repo.repository_url # Repository url ex/ /digitallearn
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
-  private_subnet_ids             = module.vpc.private_subnet_ids
+  public_subnet_ids              = module.vpc.public_subnet_ids
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.medium"

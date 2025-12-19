@@ -2,8 +2,8 @@ variable "project_name" {}
 variable "environment_name" {}
 variable "region" {}
 variable "vpc_id" {}
-variable "private_subnet_ids" {
-  description = "List of private subnet IDs for the ECS cluster"
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs for the ECS cluster"
   type        = list(string)
 }
 

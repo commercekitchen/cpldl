@@ -15,11 +15,14 @@ resource "aws_launch_template" "instance" {
     name = aws_iam_instance_profile.sidekiq_instance_profile.name
   }
 
-  vpc_security_group_ids = [
-    aws_security_group.sidekiq_sg.id,
-    var.db_access_security_group_id,
-    var.redis_access_security_group_id
-  ]
+  network_interfaces {
+    associate_public_ip_address = true
+    security_groups = [
+      aws_security_group.sidekiq_sg.id,
+      var.db_access_security_group_id,
+      var.redis_access_security_group_id
+    ]
+  }
 
   # Required: base64-encoded user_data for launch templates
   user_data = base64encode(<<-EOF
@@ -27,6 +30,13 @@ resource "aws_launch_template" "instance" {
     echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
   EOF
   )
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 2
+  }
+
 
   tag_specifications {
     resource_type = "instance"
