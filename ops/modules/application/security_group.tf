@@ -19,3 +19,13 @@ resource "aws_security_group" "application_sg" {
     description = "Allow all outbound traffic from application"
   }
 }
+
+resource "aws_security_group_rule" "alb_to_ecs_ephemeral" {
+  type                     = "ingress"
+  security_group_id        = aws_security_group.application_sg.id
+  source_security_group_id = var.load_balancer_sg_id
+  protocol                 = "tcp"
+  from_port                = 32768
+  to_port                  = 65535
+  description              = "ALB to ECS tasks on dynamic host ports"
+}

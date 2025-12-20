@@ -55,7 +55,7 @@ resource "aws_ecs_service" "sidekiq" {
   name                     = "${var.project_name}-${var.environment_name}-sidekiq-service"
   cluster                  = var.ecs_cluster_id
   task_definition          = aws_ecs_task_definition.sidekiq.arn
-  desired_count            = var.desired_instance_count
+  desired_count            = var.desired_task_count
 
   enable_ecs_managed_tags  = true
   propagate_tags           = "SERVICE"

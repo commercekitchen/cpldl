@@ -8,7 +8,7 @@ resource "aws_ecs_capacity_provider" "app_capacity_provider" {
 
     managed_scaling {
       status                    = "ENABLED"
-      target_capacity           = 75
+      target_capacity           = 100
       minimum_scaling_step_size = 1
       maximum_scaling_step_size = 2
       instance_warmup_period    = 300
