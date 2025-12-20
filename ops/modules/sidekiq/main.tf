@@ -27,9 +27,15 @@ resource "aws_launch_template" "instance" {
   # Required: base64-encoded user_data for launch templates
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
+    set -euxo pipefail
+
+    mkdir -p /etc/ecs
+    cat >/etc/ecs/ecs.config <<CONFIG
+  ECS_CLUSTER=${var.ecs_cluster_name}
+  CONFIG
   EOF
   )
+
 
   metadata_options {
     http_endpoint               = "enabled"

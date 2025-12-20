@@ -5,6 +5,7 @@ resource "aws_ecs_service" "ecs_service" {
   desired_count                     = var.desired_task_count
   health_check_grace_period_seconds = 60
 
+  force_new_deployment = true
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.app_capacity_provider.name
     weight            = 1
@@ -58,9 +59,15 @@ resource "aws_launch_template" "instance" {
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
+    set -euxo pipefail
+
+    mkdir -p /etc/ecs
+    cat >/etc/ecs/ecs.config <<CONFIG
+  ECS_CLUSTER=${var.ecs_cluster_name}
+  CONFIG
   EOF
   )
+
 
   tag_specifications {
     resource_type = "instance"
