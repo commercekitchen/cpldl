@@ -49,6 +49,38 @@ resource "aws_ecr_repository" "ecr_repo" {
   }
 }
 
+resource "aws_ecr_lifecycle_policy" "dl_learners" {
+  repository = "dl-learners"
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Expire untagged images older than 1 day"
+        selection = {
+          tagStatus   = "untagged"
+          countType   = "sinceImagePushed"
+          countUnit   = "days"
+          countNumber = 1
+        }
+        action = { type = "expire" }
+      },
+      {
+        rulePriority = 2
+        description  = "Keep last 20 tagged images (any tag)"
+        selection = {
+          tagStatus      = "tagged"
+          tagPatternList = ["*"]
+          countType      = "imageCountMoreThan"
+          countNumber    = 20
+        }
+        action = { type = "expire" }
+      }
+    ]
+  })
+}
+
+
 module "vpc" {
   source = "../modules/vpc"
 
@@ -139,10 +171,10 @@ module "application" {
   db_host                        = module.database.database_host
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
-  max_instance_count             = 2
+  max_instance_count             = 1
   desired_task_count             = 1
   min_task_count                 = 1
-  max_task_count                 = 2
+  max_task_count                 = 1
   instance_type                  = "t3.small"
   service_memory                 = 512
   service_cpu                    = 512

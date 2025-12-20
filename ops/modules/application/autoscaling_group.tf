@@ -14,6 +14,12 @@ resource "aws_autoscaling_group" "asg" {
   health_check_grace_period = 300
   health_check_type = "EC2"
 
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = "true"
+    propagate_at_launch = true
+  }
+
   # You can keep these tags, or rely on tag_specifications in the LT.
   tag {
     key                 = "ecs_cluster"
