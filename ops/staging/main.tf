@@ -135,10 +135,12 @@ module "application" {
   ecs_cluster_name               = module.ecs_cluster.cluster_name 
   default_security_group_id      = module.vpc.default_security_group_id
   db_access_security_group_id    = module.database.db_access_security_group_id
+  load_balancer_sg_id            = module.load_balancer.load_balancer_sg_id
   db_host                        = module.database.database_host
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
-  desired_instance_count         = 1
+  max_instance_count             = 2
+  desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 2
   instance_type                  = "t3.small"
@@ -166,11 +168,11 @@ module "sidekiq" {
   ecr_project_uri                = aws_ecr_repository.ecr_repo.repository_url # Repository url ex/ /digitallearn
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
-  private_subnet_ids             = module.vpc.private_subnet_ids
+  public_subnet_ids              = module.vpc.public_subnet_ids
   image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.small"
-  desired_instance_count         = 1
+  desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 2
   task_cpu                       = 1600
