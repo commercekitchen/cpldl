@@ -13,7 +13,8 @@ variable "rails_master_key_arn" {}
 variable "instance_type" {}
 variable "lb_target_group_arn" {}
 variable "ssh_key_name" {}
-variable "desired_instance_count" {}
+variable "desired_task_count" {}
+variable "max_instance_count" { default = 2 }
 variable "min_task_count" { default = 1 }
 variable "max_task_count" { default = 2 }
 variable "s3_bucket_arns" {}
@@ -27,3 +28,7 @@ variable "image" {
   type = string
   description = "Default image URI for the application container (overridden by CodePipeline deployments)."
 } 
+variable "load_balancer_sg_id" {
+  type = string
+  description = "ID of load balancer security group"
+}

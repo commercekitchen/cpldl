@@ -8,12 +8,17 @@ resource "aws_autoscaling_group" "asg" {
 
   termination_policies = ["OldestLaunchTemplate", "Default"]
   vpc_zone_identifier  = var.public_subnet_ids
-  target_group_arns    = [var.lb_target_group_arn]
-  max_size             = 3
+  max_size             = var.max_instance_count
   min_size             = 1
 
   health_check_grace_period = 300
-  health_check_type         = "EC2"
+  health_check_type = "EC2"
+
+  tag {
+    key                 = "AmazonECSManaged"
+    value               = "true"
+    propagate_at_launch = true
+  }
 
   # You can keep these tags, or rely on tag_specifications in the LT.
   tag {
