@@ -33,6 +33,12 @@ resource "aws_autoscaling_group" "asg" {
     propagate_at_launch = true
   }
 
+  tag {
+    key = "Role"
+    value = "app-server"
+    propagate_at_launch = true
+  }
+
   lifecycle {
     create_before_destroy = true
   }
