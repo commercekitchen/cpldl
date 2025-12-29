@@ -27,8 +27,10 @@ variable "redis_host" {}
 variable "redis_port" { default = 6379 }
 variable "db_host" {}
 
-variable "rails_master_key_arn" {}
-
+variable "rails_master_key_arn" {
+  type = string
+  description = "ARN of AWS Secrets manager secret for rails master key"
+}
 variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"

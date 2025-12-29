@@ -44,18 +44,16 @@ resource "aws_launch_template" "instance" {
   key_name      = aws_key_pair.app_instance_key.key_name
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.instance.name
+    name = aws_iam_instance_profile.ecs_instance.name
   }
 
-  network_interfaces {
-    associate_public_ip_address = true
-    security_groups = [
-      var.default_security_group_id,
-      aws_security_group.application_sg.id,
-      var.db_access_security_group_id,
-      var.redis_access_security_group_id
-    ]
-  }
+
+  vpc_security_group_ids = [
+    var.default_security_group_id,
+    aws_security_group.application_sg.id,
+    var.db_access_security_group_id,
+    var.redis_access_security_group_id
+  ]
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
