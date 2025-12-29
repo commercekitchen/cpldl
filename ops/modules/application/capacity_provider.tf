@@ -10,8 +10,12 @@ resource "aws_ecs_capacity_provider" "app_capacity_provider" {
       status                    = "ENABLED"
       target_capacity           = 75
       minimum_scaling_step_size = 1
-      maximum_scaling_step_size = 2
+      maximum_scaling_step_size = 1
       instance_warmup_period    = 300
     }
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }

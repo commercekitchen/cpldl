@@ -2,9 +2,10 @@ resource "aws_ecs_service" "ecs_service" {
   name                              = "${var.project_name}-${var.environment_name}-service"
   cluster                           = var.ecs_cluster_id
   task_definition                   = aws_ecs_task_definition.app_service.arn
-  desired_count                     = var.desired_instance_count
+  desired_count                     = var.desired_task_count
   health_check_grace_period_seconds = 60
 
+  force_new_deployment = true
   capacity_provider_strategy {
     capacity_provider = aws_ecs_capacity_provider.app_capacity_provider.name
     weight            = 1
@@ -22,8 +23,8 @@ resource "aws_ecs_service" "ecs_service" {
   }
 
   ordered_placement_strategy {
-    type  = "spread"
-    field = "instanceId"
+    type  = "binpack"
+    field = "memory"
   }
 }
 
@@ -43,24 +44,28 @@ resource "aws_launch_template" "instance" {
   key_name      = aws_key_pair.app_instance_key.key_name
 
   iam_instance_profile {
-    name = aws_iam_instance_profile.instance.name
+    name = aws_iam_instance_profile.ecs_instance.name
   }
 
-  network_interfaces {
-    associate_public_ip_address = true
-    security_groups = [
-      var.default_security_group_id,
-      aws_security_group.application_sg.id,
-      var.db_access_security_group_id,
-      var.redis_access_security_group_id
-    ]
-  }
+
+  vpc_security_group_ids = [
+    var.default_security_group_id,
+    aws_security_group.application_sg.id,
+    var.db_access_security_group_id,
+    var.redis_access_security_group_id
+  ]
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
+    set -euxo pipefail
+
+    mkdir -p /etc/ecs
+    cat >/etc/ecs/ecs.config <<CONFIG
+  ECS_CLUSTER=${var.ecs_cluster_name}
+  CONFIG
   EOF
   )
+
 
   tag_specifications {
     resource_type = "instance"

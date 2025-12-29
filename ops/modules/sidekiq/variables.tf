@@ -2,8 +2,8 @@ variable "project_name" {}
 variable "environment_name" {}
 variable "region" {}
 variable "vpc_id" {}
-variable "private_subnet_ids" {
-  description = "List of private subnet IDs for the ECS cluster"
+variable "public_subnet_ids" {
+  description = "List of public subnet IDs for the ECS cluster"
   type        = list(string)
 }
 
@@ -14,7 +14,7 @@ variable "ecs_cluster_name" {}
 variable "image" {}
 variable "log_retention_days" { default = 7 }
 variable "instance_type" {}
-variable "desired_instance_count" { default = 1 }
+variable "desired_task_count" { default = 1 }
 variable "min_task_count" { default = 1 }
 variable "max_task_count" { default = 2 }
 variable "task_cpu" { default = 256 }
@@ -27,8 +27,10 @@ variable "redis_host" {}
 variable "redis_port" { default = 6379 }
 variable "db_host" {}
 
-variable "rails_master_key_arn" {}
-
+variable "rails_master_key_arn" {
+  type = string
+  description = "ARN of AWS Secrets manager secret for rails master key"
+}
 variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"
