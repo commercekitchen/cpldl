@@ -15,14 +15,11 @@ resource "aws_launch_template" "instance" {
     name = aws_iam_instance_profile.sidekiq_instance_profile.name
   }
 
-  network_interfaces {
-    associate_public_ip_address = true
-    security_groups = [
-      aws_security_group.sidekiq_sg.id,
-      var.db_access_security_group_id,
-      var.redis_access_security_group_id
-    ]
-  }
+  vpc_security_group_ids = [
+    aws_security_group.sidekiq_sg.id,
+    var.db_access_security_group_id,
+    var.redis_access_security_group_id
+  ]
 
   # Required: base64-encoded user_data for launch templates
   user_data = base64encode(<<-EOF
