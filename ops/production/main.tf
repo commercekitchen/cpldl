@@ -58,18 +58,7 @@ module "load_balancer" {
   environment_name          = var.environment_name
   vpc_id                    = module.vpc.vpc_id
   public_subnet_ids         = module.vpc.public_subnet_ids
-  default_security_group_id = module.vpc.default_security_group_id
   certificate_arn           = var.certificate_arn
-}
-
-module "bastian" {
-  source = "../modules/bastian"
-
-  project_name              = var.project_name
-  environment_name          = var.environment_name
-  vpc_id                    = module.vpc.vpc_id
-  public_subnet_ids         = module.vpc.public_subnet_ids
-  default_security_group_id = module.vpc.default_security_group_id
 }
 
 module "database" {
@@ -81,7 +70,6 @@ module "database" {
   vpc_id              = module.vpc.vpc_id
   db_snapshot_name    = "prod-db-snapshot"
   multi_az            = true
-  bastian_sg_id       = module.bastian.bastian_sg_id
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
@@ -125,7 +113,6 @@ module "application" {
   environment_name               = var.environment_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   ecs_cluster_name               = module.ecs_cluster.cluster_name
-  default_security_group_id      = module.vpc.default_security_group_id
   db_access_security_group_id    = module.database.db_access_security_group_id
   load_balancer_sg_id            = module.load_balancer.load_balancer_sg_id
   db_host                        = module.database.database_host
@@ -139,7 +126,6 @@ module "application" {
   service_memory                 = 3800
   service_cpu                    = 1800
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
-  ssh_key_name                   = "ec2_test_key"
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
