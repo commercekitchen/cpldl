@@ -63,8 +63,8 @@ resource "aws_ecs_service" "sidekiq" {
   enable_ecs_managed_tags  = true
   propagate_tags           = "SERVICE"
 
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent         = 200 # Allow double capacity during deployment/load
+  deployment_minimum_healthy_percent = 0 # Allow downtime during deployments
+  deployment_maximum_percent         = 100
 
   wait_for_steady_state = false # Don't fail terraform apply if this doesn't start
 
