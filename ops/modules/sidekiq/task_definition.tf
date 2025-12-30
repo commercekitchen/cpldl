@@ -24,6 +24,14 @@ resource "aws_ecs_task_definition" "sidekiq" {
           value = "${var.db_host}"
         },
         {
+          name  = "REDIS_HOST",
+          value = "${var.redis_host}"
+        },
+        {
+          name  = "REDIS_PORT",
+          value = "${var.redis_port}"
+        },
+        {
           name  = "ROLLBAR_ENV",
           value = "${var.environment_name}"
         }
