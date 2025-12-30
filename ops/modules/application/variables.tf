@@ -8,6 +8,8 @@ variable "redis_access_security_group_id" {}
 variable "project_name" {}
 variable "environment_name" {}
 variable "db_host" {}
+variable "redis_host" {}
+variable "redis_port" { default = 6379 }
 variable "rails_master_key_arn" {}
 variable "instance_type" {}
 variable "lb_target_group_arn" {}

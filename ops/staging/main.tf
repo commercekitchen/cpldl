@@ -156,6 +156,8 @@ module "application" {
   db_access_security_group_id    = module.database.db_access_security_group_id
   load_balancer_sg_id            = module.load_balancer.load_balancer_sg_id
   db_host                        = module.database.database_host
+  redis_host                     = module.redis.redis_endpoint
+  redis_port                     = 6379
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
   max_instance_count             = 1
