@@ -11,8 +11,9 @@ resource "aws_autoscaling_group" "asg" {
   max_size             = var.max_instance_count
   min_size             = 1
 
+
+  health_check_type         = "EC2"
   health_check_grace_period = 300
-  health_check_type = "EC2"
 
   tag {
     key                 = "AmazonECSManaged"
@@ -37,9 +38,5 @@ resource "aws_autoscaling_group" "asg" {
     key = "Role"
     value = "app-server"
     propagate_at_launch = true
-  }
-
-  lifecycle {
-    create_before_destroy = true
   }
 }

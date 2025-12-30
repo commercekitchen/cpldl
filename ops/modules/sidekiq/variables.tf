@@ -14,6 +14,7 @@ variable "ecs_cluster_name" {}
 variable "image" {}
 variable "log_retention_days" { default = 7 }
 variable "instance_type" {}
+variable "max_instance_count" { default = 2 }
 variable "desired_task_count" { default = 1 }
 variable "min_task_count" { default = 1 }
 variable "max_task_count" { default = 2 }

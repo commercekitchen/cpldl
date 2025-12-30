@@ -8,7 +8,7 @@ resource "aws_ecs_capacity_provider" "sidekiq_capacity_provider" {
     
     managed_scaling {
       status                    = "ENABLED"
-      target_capacity           = 100
+      target_capacity           = 80
       minimum_scaling_step_size = 1
       maximum_scaling_step_size = 1
       instance_warmup_period    = 300

@@ -24,7 +24,13 @@ resource "aws_ecs_service" "ecs_service" {
 
   ordered_placement_strategy {
     type  = "binpack"
-    field = "memory"
+    field = "cpu"
+  }
+
+  lifecycle {
+    ignore_changes = [
+      task_definition, # deployment pipeline owns releases
+    ]
   }
 }
 

@@ -14,8 +14,4 @@ resource "aws_ecs_capacity_provider" "app_capacity_provider" {
       instance_warmup_period    = 300
     }
   }
-
-  lifecycle {
-    create_before_destroy = true
-  }
 }
