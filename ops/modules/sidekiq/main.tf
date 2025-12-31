@@ -92,10 +92,4 @@ resource "aws_ecs_service" "sidekiq" {
     Project     = var.project_name
     Environment = var.environment_name
   }
-
-  lifecycle {
-    ignore_changes = [
-      task_definition, # deployment pipeline owns releases
-    ]
-  }
 }
