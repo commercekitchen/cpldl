@@ -26,12 +26,6 @@ resource "aws_ecs_service" "ecs_service" {
     type  = "binpack"
     field = "cpu"
   }
-
-  lifecycle {
-    ignore_changes = [
-      task_definition, # deployment pipeline owns releases
-    ]
-  }
 }
 
 data "aws_ssm_parameter" "web_server_ami" {
