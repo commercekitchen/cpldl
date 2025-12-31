@@ -1,5 +1,5 @@
 resource "aws_ecs_service" "ecs_service" {
-  name                              = "${var.project_name}-${var.environment_name}-service"
+  name                              = "${var.project_name}-${var.environment_name}-app-service"
   cluster                           = var.ecs_cluster_id
   task_definition                   = aws_ecs_task_definition.app_service.arn
   desired_count                     = var.desired_task_count
