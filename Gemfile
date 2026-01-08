@@ -94,7 +94,10 @@ gem 'mini_racer', platforms: :ruby
 
 # ActiveStorage variants
 gem "image_processing"
-gem "ruby-vips"  
+gem "ruby-vips"
+
+# Vite for asset bundling
+gem 'vite_rails'
 
 group :development do
   gem 'better_errors'
