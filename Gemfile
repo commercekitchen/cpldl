@@ -92,6 +92,9 @@ gem 'doorkeeper', '~> 5.8'
 # Small JS Runtime
 gem 'mini_racer', platforms: :ruby
 
+# Vite for asset bundling
+gem 'vite_rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

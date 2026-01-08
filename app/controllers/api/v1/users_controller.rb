@@ -1,6 +1,6 @@
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < Api::V1::BaseController
       before_action :doorkeeper_authorize! # Require a valid access token
 
       def me

@@ -155,8 +155,15 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/me', to: 'users#me'
+
+      resources :organizations, param: :subdomain, only: [:show] do
+        resource :config, only: [:show], controller: "organizations/configs"
+      end
     end
   end
+
+  get "/ui-preview", to: "react_frontend#index"
+  get "/ui-preview/*path", to: "react_frontend#index", format: false
 
   match '/404', to: 'errors#error404', via: [:get, :post, :patch, :delete]
   match '/500', to: 'errors#error500', via: [:get, :post, :patch, :delete]
