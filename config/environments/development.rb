@@ -84,6 +84,7 @@ Rails.application.configure do
 
   # S3 bucket name
   # config.zip_bucket_name = 'dl-development-lessons-zipped'
+  # config.unzipped_lessons_bucket = 'dl-development-lessons'
 
   # config.storyline_paperclip_opts = {
   #   storage: :s3,

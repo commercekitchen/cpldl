@@ -5,7 +5,7 @@
     <%= link_to attachment_path(a), target: "_blank", class: "block_link" do %>
       <li class="attachment-download" data-cpl-ga-event="on" data-cpl-ga-value="supplemental-material-download" data-document-name='<%= "#{a.document_file_name}" %>'>
         <i class="icon-download"></i>
-        <%= a.document_file_name %>
+        <%= <%= a.document_file.attached? ? a.document_file.filename.to_s : a.document_file_name %>
         <% if a.file_description.present? %>
           <small class="note file-description"><%= a.file_description %></small>
         <% end %>

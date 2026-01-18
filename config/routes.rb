@@ -5,6 +5,11 @@ Rails.application.routes.draw do
   root 'courses#index'
 
   mount Ckeditor::Engine => '/ckeditor'
+
+  # CKEditor Asset paths
+  get "/ckeditor_assets/attachments/:id/:filename", to: "legacy_ckeditor_assets#attachment"
+  get "/ckeditor_assets/pictures/:id/:style_:basename.:extension", to: "legacy_ckeditor_assets#picture"
+
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
     post 'select_program'
