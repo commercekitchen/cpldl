@@ -6,7 +6,7 @@ class OrganizationConfigPresenter
     @request = request
   end
 
-  def as_json(*)
+  def as_json
     {
       subdomain: @organization.subdomain,
       displayName: @organization.name,

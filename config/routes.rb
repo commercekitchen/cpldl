@@ -168,6 +168,7 @@ Rails.application.routes.draw do
       resources :organizations, param: :subdomain, only: [:show] do
         resource :config, only: [:show], controller: "organizations/configs"
       end
+      resources :lessons, only: [:index, :show]
     end
   end
 
