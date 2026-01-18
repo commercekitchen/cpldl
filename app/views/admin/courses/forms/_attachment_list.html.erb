@@ -3,7 +3,7 @@
     <% attachments.each do |a| %>
       <li class='attachment sortable-item' data-id=<%= a.id %>>
         <div class='attachment-filename'>
-          <%= a.document_file_name %>
+          <%= a.document_file.attached? ? a.document_file.filename.to_s : a.document_file_name %>
         </div>
         <% if allow_delete %>
           <div class='attachment-delete'>

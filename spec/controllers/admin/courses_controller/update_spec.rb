@@ -108,7 +108,7 @@ describe Admin::CoursesController do
           let(:attachment_attributes) do
             { attachments_attributes: {
               '0' => {
-                document: document,
+                document_file: document,
                 title: '',
                 doc_type: 'additional-resource',
                 file_description: 'additional-resource attachment test'

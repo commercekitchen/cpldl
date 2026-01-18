@@ -48,7 +48,7 @@ class UnzipStorylineJob < ApplicationJob
     root_path = lesson.storyline_root_path
     raise InvalidStorylineError, "Missing storyline_root_path for Lesson #{lesson.id}" if root_path.blank?
 
-    bucket = Rails.configuration.s3_bucket_name
+    bucket = Rails.configuration.unzipped_lessons_bucket
     s3     = Aws::S3::Client.new
 
     # Make the operation idempotent (re-upload yields exact contents)
@@ -82,7 +82,7 @@ class UnzipStorylineJob < ApplicationJob
     end
   rescue Zip::Error, Zip::CentralDirectoryError => e
     # Deterministic “bad zip”; don’t endlessly retry unless you want to.
-    raise InvalidStorylineError, "Unable to unzip storyline archive for lesson #{lesson_id}: #{e.class}: #{e.message}"
+    raise InvalidStorylineError, "Unable to unzip storyline archive for lesson #{lesson.id}: #{e.class}: #{e.message}"
   end
 
   # Mirror the Lambda “fixLessonJs” behavior

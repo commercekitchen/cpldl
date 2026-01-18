@@ -3,6 +3,7 @@
 module Ckeditor
   class Asset < ApplicationRecord
     include Ckeditor::Orm::ActiveRecord::AssetBase
-    include Ckeditor::Backend::Paperclip
+
+    has_one_attached :data_file
   end
 end

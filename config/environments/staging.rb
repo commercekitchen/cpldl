@@ -90,6 +90,7 @@ Rails.application.configure do
   ### S3 Lesson Configuration ###
   config.lesson_store = :s3
   config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
+  config.unzipped_lessons_bucket = 'dl-prodapp-lessons'
 
   config.storyline_paperclip_opts = {
     storage: :s3,

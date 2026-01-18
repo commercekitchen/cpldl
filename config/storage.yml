@@ -13,9 +13,8 @@ amazon:
 
 lessons_zip:
   service: S3
-  bucket: dl-prodapp-lessons-zipped
-  upload:
-    prefix: lessons
+  bucket: <%= Rails.application.config.zip_bucket_name %>
+  region: <%= Rails.application.config.s3_region %>
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:
