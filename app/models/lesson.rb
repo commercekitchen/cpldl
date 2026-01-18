@@ -61,4 +61,12 @@ class Lesson < ApplicationRecord
                     end
   end
 
+  def storyline_path
+    effective_lesson = parent || self
+    filename = effective_lesson.story_line_file_name
+    return nil if filename.blank?
+
+    directory = filename.delete_suffix('.zip')
+    "/storylines/#{effective_lesson.id}/#{directory}/story.html"
+  end
 end

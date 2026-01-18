@@ -74,21 +74,25 @@ Rails.application.configure do
   ### S3 Configuration ###
 
   # Use cloudfront as s3 alias
-  # config.paperclip_defaults = config.paperclip_defaults.merge({
-  #   url: ":s3_alias_url",
-  #   s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
-  # })
+  config.paperclip_defaults = config.paperclip_defaults.merge({
+    url: ":s3_alias_url",
+    s3_host_alias: "d1z9a55lsj1i7f.cloudfront.net"
+  })
 
   # Lesson storage type
-  # config.lesson_store = :s3
+  config.lesson_store = :s3
 
   # S3 bucket name
-  # config.zip_bucket_name = 'dl-development-lessons-zipped'
+  config.zip_bucket_name = 'dl-learners-storylines-development-zipped'
 
-  # config.storyline_paperclip_opts = {
-  #   storage: :s3,
-  #   path: 'storylines/:id/:basename.:extension',
-  #   bucket: 'dl-development-lessons-zipped',
-  #   s3_region: config.s3_region
-  # }
+  config.storyline_paperclip_opts = {
+    storage: :s3,
+    path: 'storylines/:id/:basename.:extension',
+    bucket: 'dl-learners-storylines-development-zipped',
+    s3_region: config.s3_region
+  }
+
+  # Cloudfront options
+  config.cloudfront_host = 'd1z9a55lsj1i7f.cloudfront.net'
+  config.cloudfront_url = "https://#{config.cloudfront_host}"
 end
