@@ -5,6 +5,9 @@ require 'uri'
 class Organization < ApplicationRecord
   include Storext.model
 
+  MAX_FOOTER_LOGO_SIZE = 2.megabytes
+  FOOTER_LOGO_TYPES = %w[image/png image/jpeg].freeze
+
   resourcify
 
   store_attributes :preferences do
@@ -43,14 +46,15 @@ class Organization < ApplicationRecord
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
   scope :active, -> { where(active: true) }
 
-  has_attached_file :footer_logo # Paperclip Legacy
-  has_one_attached :footer_logo_file # ActiveStorage
+   # Paperclip Legacy
+  has_attached_file :footer_logo
+
+  # ActiveStorage
+  has_one_attached :footer_logo_file
+  validate :footer_logo_file_validation
 
   validates :name, presence: true
   validates :subdomain, presence: true
-
-  validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
-  validates_attachment_size :footer_logo, in: (0.megabytes)..(2.megabytes)
 
   validates :footer_logo_link, url: { allow_blank: true }
   before_validation :add_survey_url_protocols
@@ -149,6 +153,21 @@ class Organization < ApplicationRecord
 
     unless spanish_survey_link.blank? || spanish_survey_link[/\Ahttp:\/\//] || spanish_survey_link[/\Ahttps:\/\//]
       self.spanish_survey_link = "https://#{spanish_survey_link}"
+    end
+  end
+
+  def footer_logo_file_validation
+    return unless respond_to?(:footer_logo_file)
+    return unless footer_logo_file.attached?
+
+    blob = footer_logo_file.blob
+
+    if blob.byte_size > MAX_FOOTER_LOGO_SIZE
+      errors.add(:footer_logo_file, "must be smaller than 2MB")
+    end
+
+    unless FOOTER_LOGO_TYPES.include?(blob.content_type)
+      errors.add(:footer_logo_file, "should be png or jpeg format.")
     end
   end
 end

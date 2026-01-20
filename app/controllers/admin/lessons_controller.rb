@@ -84,7 +84,7 @@ module Admin
       params.require(:lesson).permit(:title,
                                      :summary,
                                      :duration,
-                                     :story_line,
+                                     :story_line_archive,
                                      :seo_page_title,
                                      :meta_desc,
                                      :is_assessment,

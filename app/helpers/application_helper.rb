@@ -15,8 +15,14 @@ module ApplicationHelper
     link_to number_to_phone(number, area_code: true), "tel:#{number}"
   end
 
-  def footer_logo_url
-    current_organization.footer_logo.exists? ? current_organization.footer_logo.url : "#{current_organization.subdomain}_logo_footer.png"
+  def footer_logo_source
+    org = current_organization
+
+    if org.footer_logo_file.attached?
+      org.footer_logo_file
+    else
+      "#{org.subdomain}_logo_footer.png"
+    end
   end
 
   def footer_logo_link_url

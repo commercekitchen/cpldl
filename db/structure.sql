@@ -630,6 +630,7 @@ CREATE TABLE public.lessons (
     story_line_file_size bigint,
     story_line_updated_at timestamp without time zone,
     parent_id integer,
+    migrated_to_active_storage_at timestamp without time zone,
     storyline_unzip_error character varying,
     storyline_unzip_failed_at timestamp without time zone,
     storyline_unzip_status integer
