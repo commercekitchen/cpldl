@@ -162,7 +162,8 @@ CREATE TABLE public.attachments (
     document_updated_at timestamp without time zone,
     doc_type character varying,
     file_description character varying,
-    attachment_order integer DEFAULT 0
+    attachment_order integer DEFAULT 0,
+    migrated_to_active_storage_at timestamp without time zone
 );
 
 
@@ -236,7 +237,8 @@ CREATE TABLE public.ckeditor_assets (
     width integer,
     height integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    migrated_to_active_storage_at timestamp without time zone
 );
 
 
@@ -627,7 +629,10 @@ CREATE TABLE public.lessons (
     story_line_content_type character varying,
     story_line_file_size bigint,
     story_line_updated_at timestamp without time zone,
-    parent_id integer
+    parent_id integer,
+    storyline_unzip_error character varying,
+    storyline_unzip_failed_at timestamp without time zone,
+    storyline_unzip_status integer
 );
 
 
@@ -814,7 +819,8 @@ CREATE TABLE public.organizations (
     preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
     accepts_partners boolean DEFAULT false,
     use_subdomain_for_training_site boolean DEFAULT false NOT NULL,
-    active boolean DEFAULT true NOT NULL
+    active boolean DEFAULT true NOT NULL,
+    theme_data jsonb
 );
 
 
@@ -1932,6 +1938,13 @@ CREATE INDEX index_lessons_on_slug ON public.lessons USING btree (slug);
 
 
 --
+-- Name: index_lessons_on_storyline_unzip_status; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lessons_on_storyline_unzip_status ON public.lessons USING btree (storyline_unzip_status);
+
+
+--
 -- Name: index_library_locations_on_organization_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2494,6 +2507,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20250319042138'),
 ('20250319202556'),
 ('20251003020440'),
-('20251201194715');
+('20251201194715'),
+('20260108054313'),
+('20260118063042'),
+('20260120042608');
 
 

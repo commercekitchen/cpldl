@@ -36,23 +36,23 @@ class Lesson < ApplicationRecord
   validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
-  has_one_attached :story_line_archive, service: :lessons_zip
-
-  before_destroy :delete_associated_asl_files
+  has_one_attached :story_line_archive
 
   after_commit :enqueue_storyline_unzip, if: :saved_change_to_story_line_archive_attachment?
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
 
+  enum storyline_unzip_status: {
+    queued: 0,
+    processing: 1,
+    complete: 2,
+    failed: 3
+  }, _prefix: true
+
   def skip_for_zip
     %w[application/zip application/x-zip].include?(story_line_content_type)
   end
-
-  def delete_associated_asl_files
-    FileUtils.remove_dir "#{Rails.root}/public/storylines/#{id}", true
-  end
-
   def duration_str
     Duration.duration_str(duration)
   end
@@ -65,29 +65,57 @@ class Lesson < ApplicationRecord
                     end
   end
 
+  def effective_storyline_lesson
+    parent || self
+  end
+
   def story_line_directory
-    story_line_slug.presence ||
-      (if respond_to?(:story_line_file_name) && story_line_file_name.present?
-         story_line_file_name.sub(/\.zip\z/, '')
-       end)
+    effective = effective_storyline_lesson
+
+    # ActiveStorage first
+    if effective.respond_to?(:story_line_archive) && effective.story_line_archive.attached?
+      name = effective.story_line_archive.filename.to_s
+      return name.sub(/\.zip\z/i, "") if name.present?
+    end
+
+    # Paperclip fallback (migration window only)
+    if effective.respond_to?(:story_line_file_name) && effective.story_line_file_name.present?
+      return effective.story_line_file_name.sub(/\.zip\z/i, "")
+    end
+
+    nil
   end
 
   def storyline_root_path
-    return nil if story_line_directory.blank?
+    dir = story_line_directory
+    return nil if dir.blank?
 
-    "storylines/#{id}/#{story_line_directory}"
+    effective = effective_storyline_lesson
+    "storylines/#{effective.id}/#{dir}"
   end
 
   def storyline_entry_path
-    return nil unless storyline_root_path
+    root = storyline_root_path
+    return nil if root.blank?
 
-    "#{storyline_root_path}/story.html"
+    "#{root}/story.html"
+  end
+
+  def storyline_unzip_tracked?
+    !storyline_unzip_status.nil?
   end
 
   private
 
   def enqueue_storyline_unzip
     return if story_line_directory.blank?
+
+    update_columns(
+      storyline_unzip_status: Lesson.storyline_unzip_statuses[:queued],
+      storyline_unzip_error: nil,
+      storyline_unzip_failed_at: nil,
+      updated_at: Time.current
+    )
 
     UnzipStorylineJob.perform_later(id)
   end

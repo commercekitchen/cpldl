@@ -1,5 +1,5 @@
 class LegacyCkeditorAssetsController < ApplicationController
-  skip_before_action :authenticate_user!
+  #skip_before_action :authenticate_user!
 
   def attachment
     asset = Ckeditor::AttachmentFile.find(params[:id])

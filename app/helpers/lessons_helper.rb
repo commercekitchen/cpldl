@@ -2,8 +2,7 @@
 
 module LessonsHelper
   def asl_iframe(lesson)
-    parent_or_self = lesson.parent || lesson
-    entry_path = parent_or_self.storyline_entry_path
+    entry_path = lesson.storyline_entry_path
 
     if entry_path.present?
       story_line_url = "/#{entry_path}"

@@ -11,11 +11,6 @@ amazon:
   bucket: <%= Rails.application.config.s3_bucket_name %>
   region: <%= Rails.application.config.s3_region %>
 
-lessons_zip:
-  service: S3
-  bucket: <%= Rails.application.config.zip_bucket_name %>
-  region: <%= Rails.application.config.s3_region %>
-
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

@@ -43,15 +43,14 @@ class Organization < ApplicationRecord
   scope :using_course, ->(course_id) { includes(:courses).where(courses: { parent_id: course_id }) }
   scope :active, -> { where(active: true) }
 
-  has_attached_file :footer_logo
+  has_attached_file :footer_logo # Paperclip Legacy
+  has_one_attached :footer_logo_file # ActiveStorage
 
   validates :name, presence: true
   validates :subdomain, presence: true
 
   validates_attachment_content_type :footer_logo, content_type: ['image/png', 'image/jpeg'], message: 'should be png or jpeg format.'
   validates_attachment_size :footer_logo, in: (0.megabytes)..(2.megabytes)
-
-  has_one_attached :footer_logo
 
   validates :footer_logo_link, url: { allow_blank: true }
   before_validation :add_survey_url_protocols

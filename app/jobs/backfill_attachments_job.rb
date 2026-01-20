@@ -4,16 +4,19 @@ require "tempfile"
 class BackfillAttachmentsJob < ApplicationJob
   queue_as :maintenance
 
-  retry_on(
-    Aws::S3::Errors::ServiceError,
-    OpenURI::HTTPError,
-    Timeout::Error,
-    Errno::ECONNRESET,
-    Errno::ETIMEDOUT,
-    SocketError,
-    wait: :exponentially_longer,
-    attempts: 3
-  )
+  retry_on StandardError, wait: :exponentially_longer, attempts: 3
+
+  # Not available in Rails 5
+  # retry_on(
+  #   Aws::S3::Errors::ServiceError,
+  #   OpenURI::HTTPError,
+  #   Timeout::Error,
+  #   Errno::ECONNRESET,
+  #   Errno::ETIMEDOUT,
+  #   SocketError,
+  #   wait: :exponentially_longer,
+  #   attempts: 3
+  # )
 
   discard_on ActiveRecord::RecordNotFound
 

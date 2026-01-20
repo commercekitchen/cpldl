@@ -6,16 +6,19 @@ require "stringio"
 class UnzipStorylineJob < ApplicationJob
   queue_as :default
 
+  retry_on StandardError, wait: :exponentially_longer, attempts: 3
+
+  # Not available in Rails 5
   # Retry transient failures (network/S3). Tune attempts + backoff to your tolerance.
-  retry_on(
-    Aws::S3::Errors::ServiceError,
-    Timeout::Error,
-    Errno::ECONNRESET,
-    Errno::ETIMEDOUT,
-    SocketError,
-    wait: :exponentially_longer,
-    attempts: 10
-  )
+  # retry_on(
+  #   Aws::S3::Errors::ServiceError,
+  #   Timeout::Error,
+  #   Errno::ECONNRESET,
+  #   Errno::ETIMEDOUT,
+  #   SocketError,
+  #   wait: :exponentially_longer,
+  #   attempts: 10
+  # )
 
   class InvalidStorylineError < StandardError; end
 
@@ -26,11 +29,14 @@ class UnzipStorylineJob < ApplicationJob
   def perform(lesson_id, purge_destination: true, refuse_child_lessons: true)
     lesson = Lesson.find(lesson_id)
 
+    mark_processing!(lesson)
+
     begin
-      unzip!(lesson, purge_destination:, refuse_child_lessons:)
+      unzip!(lesson, purge_destination: purge_destination, refuse_child_lessons: refuse_child_lessons)
+      mark_complete!(lesson)
       clear_unzip_error!(lesson)
     rescue InvalidStorylineError => e
-      record_unzip_error!(lesson, e)
+      mark_failed!(lesson, e)
       raise # re-raise with original backtrace
     end
   end
@@ -181,6 +187,22 @@ class UnzipStorylineJob < ApplicationJob
       break unless resp.is_truncated
       continuation_token = resp.next_continuation_token
     end
+  end
+
+  def mark_processing!(lesson)
+    return unless lesson.respond_to?(:storyline_unzip_status=)
+    lesson.update_columns(storyline_unzip_status: Lesson.storyline_unzip_statuses[:processing], updated_at: Time.current)
+  end
+
+  def mark_complete!(lesson)
+    return unless lesson.respond_to?(:storyline_unzip_status=)
+    lesson.update_columns(storyline_unzip_status: Lesson.storyline_unzip_statuses[:complete], updated_at: Time.current)
+  end
+
+  def mark_failed!(lesson, exception)
+    record_unzip_error!(lesson, exception)
+    return unless lesson.respond_to?(:storyline_unzip_status=)
+    lesson.update_columns(storyline_unzip_status: Lesson.storyline_unzip_statuses[:failed], updated_at: Time.current)
   end
 
   def record_unzip_error!(lesson, exception)

@@ -57,9 +57,8 @@ module Admin
       @lesson = @course.lessons.friendly.find(params[:lesson_id])
       authorize @lesson, :update?
 
-      @lesson.story_line.destroy
-      @lesson.save
-      FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
+      @lesson.story_line_archive.purge if @lesson.story_line_archive.attached?
+
       flash[:notice] = 'Story Line successfully removed, please upload a new story line .zip file.'
       render :edit
     end
