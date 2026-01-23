@@ -46,4 +46,7 @@ Ckeditor.setup do |config|
   # Used when CKEditor CDN enabled
   # By default: "/assets/ckeditor/config.js"
   # config.js_config_url = "/assets/ckeditor/config.js"
+
+  # Use admin controller as base controller to limit use to admins
+  config.parent_controller = "Admin::BaseController"
 end
