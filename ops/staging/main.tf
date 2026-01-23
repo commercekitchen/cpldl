@@ -20,7 +20,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project     = "DigitalLearn Learners"
+      Project     = var.project_name
       Environment = var.environment_name
     }
   }
@@ -49,6 +49,38 @@ resource "aws_ecr_repository" "ecr_repo" {
   }
 }
 
+resource "aws_ecr_lifecycle_policy" "dl_learners" {
+  repository = "dl-learners"
+
+  policy = jsonencode({
+    rules = [
+      {
+        rulePriority = 1
+        description  = "Expire untagged images older than 1 day"
+        selection = {
+          tagStatus   = "untagged"
+          countType   = "sinceImagePushed"
+          countUnit   = "days"
+          countNumber = 1
+        }
+        action = { type = "expire" }
+      },
+      {
+        rulePriority = 2
+        description  = "Keep last 20 tagged images (any tag)"
+        selection = {
+          tagStatus      = "tagged"
+          tagPatternList = ["*"]
+          countType      = "imageCountMoreThan"
+          countNumber    = 20
+        }
+        action = { type = "expire" }
+      }
+    ]
+  })
+}
+
+
 module "vpc" {
   source = "../modules/vpc"
 
@@ -67,18 +99,7 @@ module "load_balancer" {
   environment_name          = var.environment_name
   vpc_id                    = module.vpc.vpc_id
   public_subnet_ids         = module.vpc.public_subnet_ids
-  default_security_group_id = module.vpc.default_security_group_id
   certificate_arn           = var.certificate_arn
-}
-
-module "bastian" {
-  source = "../modules/bastian"
-
-  project_name              = var.project_name
-  environment_name          = var.environment_name
-  vpc_id                    = module.vpc.vpc_id
-  public_subnet_ids         = module.vpc.public_subnet_ids
-  default_security_group_id = module.vpc.default_security_group_id
 }
 
 module "database" {
@@ -89,7 +110,6 @@ module "database" {
   region              = var.region
   vpc_id              = module.vpc.vpc_id
   db_snapshot_name    = "learners-db-snapshot-staging"
-  bastian_sg_id       = module.bastian.bastian_sg_id
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
@@ -133,19 +153,21 @@ module "application" {
   environment_name               = var.environment_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   ecs_cluster_name               = module.ecs_cluster.cluster_name 
-  default_security_group_id      = module.vpc.default_security_group_id
   db_access_security_group_id    = module.database.db_access_security_group_id
+  load_balancer_sg_id            = module.load_balancer.load_balancer_sg_id
   db_host                        = module.database.database_host
+  redis_host                     = module.redis.redis_endpoint
+  redis_port                     = 6379
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
-  desired_instance_count         = 1
+  max_instance_count             = 1
+  desired_task_count             = 1
   min_task_count                 = 1
-  max_task_count                 = 2
+  max_task_count                 = 1
   instance_type                  = "t3.small"
   service_memory                 = 512
   service_cpu                    = 512
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
-  ssh_key_name                   = "ec2_test_key"
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
@@ -166,11 +188,12 @@ module "sidekiq" {
   ecr_project_uri                = aws_ecr_repository.ecr_repo.repository_url # Repository url ex/ /digitallearn
   ecs_cluster_name               = module.ecs_cluster.cluster_name
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
-  private_subnet_ids             = module.vpc.private_subnet_ids
+  public_subnet_ids              = module.vpc.public_subnet_ids
   image                          = "${aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.small"
-  desired_instance_count         = 1
+  max_instance_count             = 2
+  desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 2
   task_cpu                       = 1600

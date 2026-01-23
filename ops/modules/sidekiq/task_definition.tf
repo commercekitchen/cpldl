@@ -21,11 +21,19 @@ resource "aws_ecs_task_definition" "sidekiq" {
         { name = "RAILS_LOG_TO_STDOUT", value = "true" },
         {
           name  = "POSTGRES_HOST",
-          value = "${var.db_host}"
+          value = var.db_host
+        },
+        {
+          name  = "REDIS_HOST",
+          value = var.redis_host
+        },
+        {
+          name  = "REDIS_PORT",
+          value = tostring(var.redis_port)
         },
         {
           name  = "ROLLBAR_ENV",
-          value = "${var.environment_name}"
+          value = var.environment_name
         }
       ]
 

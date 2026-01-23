@@ -9,7 +9,7 @@ resource "aws_db_subnet_group" "application" {
 
 resource "aws_db_instance" "app_db" {
   snapshot_identifier                   = var.db_snapshot_name
-  engine_version                        = "13.20"
+  engine_version                        = "14.20"
   allow_major_version_upgrade           = true
   instance_class                        = var.instance_size
   monitoring_interval                   = var.enable_monitoring ? var.monitoring_interval : 0

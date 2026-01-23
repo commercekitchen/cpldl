@@ -24,9 +24,22 @@ resource "aws_launch_template" "instance" {
   # Required: base64-encoded user_data for launch templates
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo ECS_CLUSTER=${var.ecs_cluster_name} >> /etc/ecs/ecs.config
+    set -euxo pipefail
+
+    mkdir -p /etc/ecs
+    cat >/etc/ecs/ecs.config <<CONFIG
+  ECS_CLUSTER=${var.ecs_cluster_name}
+  CONFIG
   EOF
   )
+
+
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 2
+  }
+
 
   tag_specifications {
     resource_type = "instance"
@@ -45,13 +58,13 @@ resource "aws_ecs_service" "sidekiq" {
   name                     = "${var.project_name}-${var.environment_name}-sidekiq-service"
   cluster                  = var.ecs_cluster_id
   task_definition          = aws_ecs_task_definition.sidekiq.arn
-  desired_count            = var.desired_instance_count
+  desired_count            = var.desired_task_count
 
   enable_ecs_managed_tags  = true
   propagate_tags           = "SERVICE"
 
-  deployment_minimum_healthy_percent = 50
-  deployment_maximum_percent         = 200 # Allow double capacity during deployment/load
+  deployment_minimum_healthy_percent = 0 # Allow downtime during deployments
+  deployment_maximum_percent         = 100
 
   wait_for_steady_state = false # Don't fail terraform apply if this doesn't start
 
