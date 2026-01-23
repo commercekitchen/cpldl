@@ -5,7 +5,6 @@ class BackfillCkeditorAssetsJob < ApplicationJob
   class MissingSourceObjectError < StandardError; end
 
   queue_as :maintenance
-
   retry_on StandardError, wait: :exponentially_longer, attempts: 3
   discard_on ActiveRecord::RecordNotFound
 
@@ -22,11 +21,11 @@ class BackfillCkeditorAssetsJob < ApplicationJob
     return if batch.empty?
 
     batch.each do |asset|
-      next if asset.migrated_to_active_storage_at.present?
+      next if asset.respond_to?(:migrated_to_active_storage_at) && asset.migrated_to_active_storage_at.present?
       next if asset.data_file.attached?
-      next unless asset.respond_to?(:data) && asset.data.exists?
+      next unless asset.respond_to?(:data)
 
-      migrate_one!(asset)
+      migrate_one_by_trying_paths!(asset)
       asset.update_columns(migrated_to_active_storage_at: Time.current, updated_at: Time.current) if asset.respond_to?(:migrated_to_active_storage_at)
     end
 
@@ -35,7 +34,7 @@ class BackfillCkeditorAssetsJob < ApplicationJob
 
   private
 
-  def migrate_one!(asset)
+  def migrate_one_by_trying_paths!(asset)
     filename = asset.data_file_name.to_s
     filename = "ckeditor_asset#{asset.id}" if filename.blank?
 
@@ -46,8 +45,10 @@ class BackfillCkeditorAssetsJob < ApplicationJob
 
       begin
         if Rails.application.config.s3_enabled
-          download_paperclip_from_s3_to!(asset.data, tmp)
+          download_from_s3_trying_candidates!(asset, tmp)
         else
+          # Local disk fallback still can use Paperclip's path
+          raise MissingSourceObjectError, "Local file missing: #{asset.data.path}" unless asset.data.exists?
           File.open(asset.data.path, "rb") { |f| IO.copy_stream(f, tmp) }
         end
       rescue MissingSourceObjectError => e
@@ -65,21 +66,57 @@ class BackfillCkeditorAssetsJob < ApplicationJob
     end
   end
 
-  def download_paperclip_from_s3_to!(paperclip_attachment, tmp)
-    s3_obj = paperclip_attachment.s3_object
-    bucket = s3_obj.bucket_name
-    key    = s3_obj.key
-
+  def download_from_s3_trying_candidates!(asset, tmp)
     s3 = Aws::S3::Client.new(region: Rails.application.config.s3_region)
 
-    begin
-      s3.get_object(bucket: bucket, key: key) { |chunk| tmp.write(chunk) }
-    rescue Aws::S3::Errors::NoSuchKey, Aws::S3::Errors::NotFound
-      raise MissingSourceObjectError, "S3 object missing (bucket=#{bucket} key=#{key})"
+    bucket = ckeditor_bucket_name(asset)
+    keys   = candidate_s3_keys_for(asset)
+
+    keys.each do |key|
+      begin
+        s3.get_object(bucket: bucket, key: key) { |chunk| tmp.write(chunk) }
+        return
+      rescue Aws::S3::Errors::NoSuchKey
+        tmp.truncate(0)
+        tmp.rewind
+      end
     end
+
+    raise MissingSourceObjectError, "S3 object missing (bucket=#{bucket} keys_tried=#{keys.take(15).join(', ')}#{'...' if keys.size > 15})"
+  end
+
+  # ---- Key generation ----
+
+  def candidate_s3_keys_for(asset)
+    filename = asset.data_file_name.to_s
+    id       = asset.id
+
+    base =
+      case asset
+      when Ckeditor::Picture
+        "ckeditor/pictures"
+      when Ckeditor::AttachmentFile
+        "ckeditor/attachment_files"
+      else
+        raise ArgumentError, "Unsupported CKEditor asset type: #{asset.class.name}"
+      end
+
+    [
+      "#{base}/data/#{id}/#{filename}",
+      "#{base.sub('/', '::')}/data/#{id}/#{filename}"
+    ]
+  end
+
+
+  def ckeditor_bucket_name(asset)
+    # If you have the bucket configured globally (recommended), use that.
+    # Otherwise, fall back to paperclip's bucket if available.
+    Rails.application.config.try(:paperclip_s3_bucket).presence ||
+      asset.data.try(:s3_object).try(:bucket_name) ||
+      raise("Cannot determine S3 bucket for CKEditor assets")
   end
 
   def log_missing_source(asset, msg)
-    Rails.logger.error("[CKEditor Backfill] Missing source for Ckeditor::Asset #{asset.id}: #{msg}")
+    Rails.logger.error("[CKEditor Backfill] Missing source for #{asset.class.name} #{asset.id}: #{msg}")
   end
 end
