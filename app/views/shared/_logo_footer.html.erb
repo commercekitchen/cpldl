@@ -1,7 +1,17 @@
 <div class="footer-logo">
   <% if subdomain? %>
-    <%= link_to footer_logo_link_url || '#', target: "_blank" do %>
-      <%= safe_image_tag footer_logo_url, class: "medium-logo link-#{current_organization.subdomain}", alt: "#{current_organization.name} Footer Logo" %>
+    <%= link_to footer_logo_link_url || "#", target: "_blank" do %>
+      <% source = footer_logo_source %>
+
+      <% if source.is_a?(ActiveStorage::Attached::One) && source.attached? %>
+        <%= image_tag url_for(source),
+              class: "medium-logo link-#{current_organization.subdomain}",
+              alt: "#{current_organization.name} Footer Logo" %>
+      <% else %>
+        <%= safe_image_tag source,
+              class: "medium-logo link-#{current_organization.subdomain}",
+              alt: "#{current_organization.name} Footer Logo" %>
+      <% end %>
     <% end %>
   <% end %>
 

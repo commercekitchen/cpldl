@@ -18,7 +18,7 @@ module Admin
       private
 
       def org_params
-        params.require(:organization).permit(:footer_logo_link, :footer_logo)
+        params.require(:organization).permit(:footer_logo_link, :footer_logo_file)
       end
     end
   end

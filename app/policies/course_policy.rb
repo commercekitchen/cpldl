@@ -34,7 +34,7 @@ class CoursePolicy < AdminOnlyPolicy
                     :notes,
                     :survey_url,
                     category_attributes: %i[name organization_id],
-                    attachments_attributes: %i[document title doc_type file_description _destroy],
+                    attachments_attributes: %i[document_file title doc_type file_description _destroy],
                     resource_links_attributes: %i[id label url _destroy]] 
       
       if user.organization.custom_topics?
@@ -65,7 +65,7 @@ class CoursePolicy < AdminOnlyPolicy
        topic_ids: [],
        course_topics_attributes: [topic_attributes: [:title]],
        category_attributes: %i[name organization_id],
-       attachments_attributes: %i[document title doc_type file_description _destroy],
+       attachments_attributes: %i[document_file title doc_type file_description _destroy],
        resource_links_attributes: %i[id label url _destroy]]
     end
   end

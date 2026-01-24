@@ -42,7 +42,8 @@ class Course < ApplicationRecord
   has_many :attachments, dependent: :destroy
   has_many :resource_links, dependent: :destroy
   accepts_nested_attributes_for :attachments,
-                                reject_if: proc { |a| a[:document].blank? }, allow_destroy: true
+    reject_if: proc { |a| a[:document_file].blank? && a[:document].blank? },
+    allow_destroy: true
 
   belongs_to :language
   belongs_to :category, optional: true

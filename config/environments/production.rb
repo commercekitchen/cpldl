@@ -122,6 +122,7 @@ Rails.application.configure do
   ### S3 Storyline Configuration ###
   config.lesson_store = :s3
   config.zip_bucket_name = 'dl-prodapp-lessons-zipped'
+  config.unzipped_lessons_bucket = 'dl-prodapp-lessons'
 
   config.storyline_paperclip_opts = {
     storage: :s3,
@@ -129,4 +130,6 @@ Rails.application.configure do
     bucket: config.zip_bucket_name,
     s3_region: config.s3_region
   }
+
+  config.active_storage.service = :amazon
 end
