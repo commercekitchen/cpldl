@@ -91,22 +91,27 @@ class BackfillCkeditorAssetsJob < ApplicationJob
     filename = asset.data_file_name.to_s
     id       = asset.id
 
-    base =
-      case asset
-      when Ckeditor::Picture
-        "ckeditor/pictures"
-      when Ckeditor::AttachmentFile
-        "ckeditor/attachment_files"
-      else
-        raise ArgumentError, "Unsupported CKEditor asset type: #{asset.class.name}"
-      end
+    case asset
+    when Ckeditor::Picture
+      [
+        # Matches: ckeditor::pictures/data/18/content/cosla_logo.gif
+        "ckeditor::pictures/data/#{id}/content/#{filename}",
+        "ckeditor::pictures/data/#{id}/thumb/#{filename}",
 
-    [
-      "#{base}/data/#{id}/#{filename}",
-      "#{base.sub('/', '::')}/data/#{id}/#{filename}"
-    ]
+        # Matches: ckeditor/pictures/data/25/puppy.jpeg
+        "ckeditor/pictures/data/#{id}/#{filename}"
+      ]
+    when Ckeditor::AttachmentFile
+      [
+        # Matches: ckeditor::attachmentfiles/data/41/How_Do_I..._Zoom.pdf
+        "ckeditor::attachmentfiles/data/#{id}/#{filename}",
+
+        # If there is any chance you have mixed variants over time, these two are cheap insurance.
+        "ckeditor::attachment_files/data/#{id}/#{filename}",
+        "ckeditor/attachment_files/data/#{id}/#{filename}"
+      ]
+    end
   end
-
 
   def ckeditor_bucket_name(asset)
     # If you have the bucket configured globally (recommended), use that.
