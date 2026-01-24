@@ -27,6 +27,10 @@ class UnzipStorylineJob < ApplicationJob
   discard_on UnzipStorylineJob::InvalidStorylineError
 
   def perform(lesson_id, purge_destination: true, refuse_child_lessons: true)
+    Rails.logger.info(
+      "UnzipStorylineJob started for Lesson #{lesson_id}, purge_destination=#{purge_destination}, refuse_child_lessons=#{refuse_child_lessons}"
+    )
+    return # We don't want to do this yet
     lesson = Lesson.find(lesson_id)
 
     mark_processing!(lesson)
