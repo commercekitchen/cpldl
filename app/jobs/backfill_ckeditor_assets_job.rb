@@ -111,7 +111,7 @@ class BackfillCkeditorAssetsJob < ApplicationJob
   def ckeditor_bucket_name(asset)
     # If you have the bucket configured globally (recommended), use that.
     # Otherwise, fall back to paperclip's bucket if available.
-    Rails.application.config.try(:paperclip_s3_bucket).presence ||
+    Rails.application.config.try(:s3_bucket_name).presence ||
       asset.data.try(:s3_object).try(:bucket_name) ||
       raise("Cannot determine S3 bucket for CKEditor assets")
   end
