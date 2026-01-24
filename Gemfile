@@ -92,6 +92,10 @@ gem 'doorkeeper', '~> 5.8'
 # Small JS Runtime
 gem 'mini_racer', platforms: :ruby
 
+# ActiveStorage variants
+gem "image_processing"
+gem "ruby-vips"  
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
