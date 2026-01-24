@@ -38,7 +38,9 @@ class Lesson < ApplicationRecord
 
   has_one_attached :story_line_archive
 
-  after_commit :enqueue_storyline_unzip, if: :saved_change_to_story_line_archive_attachment?
+  # TODO: Swap for Rails 7+
+  after_commit :enqueue_storyline_unzip, on: %i[create update], if: :storyline_archive_present? # < 7
+  # after_commit :enqueue_storyline_unzip, on: %i[create update], if: :saved_change_to_story_line_archive_attachment? 7+
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
@@ -106,6 +108,13 @@ class Lesson < ApplicationRecord
   end
 
   private
+
+  def storyline_archive_present?
+    story_line_archive.attached?
+  rescue => e
+    Rails.logger.warn("Lesson##{id} story_line_archive check failed: #{e.class}: #{e.message}")
+    false
+  end
 
   def enqueue_storyline_unzip
     return if story_line_directory.blank?
