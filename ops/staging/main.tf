@@ -160,11 +160,11 @@ module "application" {
   redis_port                     = 6379
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
+  instance_type                  = "t3.small"
   max_instance_count             = 1
   desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 1
-  instance_type                  = "t3.small"
   service_memory                 = 512
   service_cpu                    = 512
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
