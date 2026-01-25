@@ -13,3 +13,4 @@ variable "skip_final_snapshot" { default = false }
 variable "database_name" {}
 variable "private_subnet_ids" {}
 variable "multi_az" { default = false }
+variable "db_engine_version" { default = "14.20" }
