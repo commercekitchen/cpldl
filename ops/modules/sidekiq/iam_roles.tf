@@ -1,6 +1,6 @@
 # This IAM role is used by the ECS instances to run the Sidekiq workers.
 resource "aws_iam_role" "sidekiq_ecs_instance_role" {
-  name = "${var.project_name}-${var.environment_name}-ecs-instance-role"
+  name = "${var.project_name}-${var.environment_name}-ecs-instance-role-sidekiq"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",

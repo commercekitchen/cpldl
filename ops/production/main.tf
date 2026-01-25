@@ -73,6 +73,7 @@ module "database" {
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
+  db_engine_version   = "13.20"
   instance_size       = "db.t3.small"
   skip_final_snapshot = false
   enable_monitoring   = true
@@ -116,6 +117,8 @@ module "application" {
   db_access_security_group_id    = module.database.db_access_security_group_id
   load_balancer_sg_id            = module.load_balancer.load_balancer_sg_id
   db_host                        = module.database.database_host
+  redis_host                     = module.redis.redis_endpoint
+  redis_port                     = 6379
   redis_access_security_group_id = module.redis.redis_access_security_group_id
   public_subnet_ids              = module.vpc.public_subnet_ids
   instance_type                  = "t3.medium"

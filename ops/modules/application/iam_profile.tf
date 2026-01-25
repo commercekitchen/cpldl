@@ -85,7 +85,7 @@ resource "aws_iam_policy" "ecs_instance_inline" {
 #############################################
 
 resource "aws_iam_role" "ecs_instance" {
-  name               = "${var.project_name}-${var.environment_name}-ecs-instance-role"
+  name               = "${var.project_name}-${var.environment_name}-ecs-instance-role-application"
   assume_role_policy = data.aws_iam_policy_document.ecs_instance_assume_role.json
 }
 
