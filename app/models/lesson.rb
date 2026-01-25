@@ -32,14 +32,15 @@ class Lesson < ApplicationRecord
   validates :meta_desc, length: { maximum: 156 }
 
   has_attached_file :story_line, Rails.configuration.storyline_paperclip_opts
-  before_post_process :skip_for_zip
   validates_attachment_content_type :story_line, content_type: ['application/zip', 'application/x-zip'],
                                                       message: ', Please provide a .zip Articulate StoryLine File.'
 
   has_one_attached :story_line_archive
 
+  attr_accessor :storyline_archive_assigned
+
   # TODO: Swap for Rails 7+
-  after_commit :enqueue_storyline_unzip, on: %i[create update], if: :storyline_archive_present? # < 7
+  after_commit :enqueue_storyline_unzip, on: %i[create update], if: :storyline_archive_assigned? # < 7
   # after_commit :enqueue_storyline_unzip, on: %i[create update], if: :saved_change_to_story_line_archive_attachment? 7+
 
   default_scope { order(:lesson_order) }
@@ -52,9 +53,11 @@ class Lesson < ApplicationRecord
     failed: 3
   }, _prefix: true
 
-  def skip_for_zip
-    %w[application/zip application/x-zip].include?(story_line_content_type)
+  def story_line_archive=(attachable)
+    self.storyline_archive_assigned = true
+    super
   end
+
   def duration_str
     Duration.duration_str(duration)
   end
@@ -109,22 +112,14 @@ class Lesson < ApplicationRecord
 
   private
 
-  def storyline_archive_present?
-    story_line_archive.attached?
-  rescue => e
-    Rails.logger.warn("Lesson##{id} story_line_archive check failed: #{e.class}: #{e.message}")
-    false
+  def storyline_archive_assigned?
+    storyline_archive_assigned
   end
 
   def enqueue_storyline_unzip
+    return if parent_id.present?
+    return unless story_line_archive.attached?
     return if story_line_directory.blank?
-
-    update_columns(
-      storyline_unzip_status: Lesson.storyline_unzip_statuses[:queued],
-      storyline_unzip_error: nil,
-      storyline_unzip_failed_at: nil,
-      updated_at: Time.current
-    )
 
     UnzipStorylineJob.perform_later(id)
   end
