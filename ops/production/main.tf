@@ -153,7 +153,7 @@ module "sidekiq" {
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.medium"
-  desired_task_count         = 1
+  desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 2
   task_cpu                       = 1600
