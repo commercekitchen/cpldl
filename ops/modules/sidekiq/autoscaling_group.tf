@@ -10,6 +10,7 @@ resource "aws_autoscaling_group" "sidekiq_asg" {
   vpc_zone_identifier  = var.public_subnet_ids
   max_size             = var.max_instance_count
   min_size             = 1
+  desired_capacity     = 1
 
   health_check_type         = "EC2"
   health_check_grace_period = 300
