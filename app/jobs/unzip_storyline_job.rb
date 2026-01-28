@@ -30,7 +30,6 @@ class UnzipStorylineJob < ApplicationJob
     Rails.logger.info(
       "UnzipStorylineJob started for Lesson #{lesson_id}, purge_destination=#{purge_destination}, refuse_child_lessons=#{refuse_child_lessons}"
     )
-    return # We don't want to do this yet
     lesson = Lesson.find(lesson_id)
 
     mark_processing!(lesson)
@@ -41,6 +40,9 @@ class UnzipStorylineJob < ApplicationJob
       clear_unzip_error!(lesson)
     rescue InvalidStorylineError => e
       mark_failed!(lesson, e)
+      Rails.logger.error(
+        "Failed to unzip storyline for Lesson #{lesson.id}: #{e.message}"
+      )
       raise # re-raise with original backtrace
     end
   end
