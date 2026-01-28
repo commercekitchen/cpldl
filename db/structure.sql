@@ -163,7 +163,9 @@ CREATE TABLE public.attachments (
     doc_type character varying,
     file_description character varying,
     attachment_order integer DEFAULT 0,
-    migrated_to_active_storage_at timestamp without time zone
+    migrated_to_active_storage_at timestamp without time zone,
+    backfill_error text,
+    backfill_failed_at timestamp without time zone
 );
 
 
@@ -2511,6 +2513,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20251201194715'),
 ('20260108054313'),
 ('20260118063042'),
-('20260120042608');
+('20260120042608'),
+('20260128055908');
 
 
