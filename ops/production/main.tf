@@ -73,7 +73,7 @@ module "database" {
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
-  db_engine_version   = "13.20"
+  db_engine_version   = "16.11"
   instance_size       = "db.t3.small"
   skip_final_snapshot = false
   enable_monitoring   = true
@@ -153,7 +153,7 @@ module "sidekiq" {
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   log_retention_days             = 7
   instance_type                  = "t3.medium"
-  desired_task_count         = 1
+  desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 2
   task_cpu                       = 1600
