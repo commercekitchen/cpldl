@@ -24,7 +24,7 @@ namespace :active_storage do
     start_id = args[:start_id].presence&.to_i
     batch_size = (args[:batch_size].presence || 200).to_i
 
-    BackfillStorylineArchivesJob.perform_later(start_id: start_id, batch_size: batch_size)
+    BackfillStorylineArchivesJob.perform_later(start_id: start_id, batch_size: batch_size, verbose: true)
 
     puts "Enqueued BackfillStorylineArchivesJob (start_id=#{start_id || 'nil'}, batch_size=#{batch_size})"
   end
