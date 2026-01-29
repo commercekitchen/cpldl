@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class CourseImportService
+  class ImportError < StandardError; end
+
   def initialize(organization:, course_id:)
     @organization = organization
     @parent_course = Course.find(course_id)
@@ -12,10 +14,13 @@ class CourseImportService
       save_new_course!
       copy_parent_lessons!
       copy_topics!
+      copy_resource_links!
       copy_attachments!
     end
 
     @new_course
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => e
+    raise ImportError, e.message
   end
 
   private
@@ -27,19 +32,18 @@ class CourseImportService
     @new_course.category_id = new_or_existing_subsite_category_id(@parent_course.category)
     @new_course.organization = @organization
     @new_course.survey_url = nil
+    @new_course.slug = nil if @new_course.respond_to?(:slug=)
     @new_course.save!
   end
 
   def new_or_existing_subsite_category_id(category)
     return nil if category.blank?
 
-    @organization.categories.each do |org_category|
-      if org_category.name.downcase == category.name.downcase
-        @subsite_category_id = org_category.id
-      end
+    existing = @organization.categories.detect do |org_category|
+      org_category.name.to_s.casecmp?(category.name.to_s)
     end
 
-    @subsite_category_id || @organization.categories.create(name: category.name).id
+    (existing || @organization.categories.create!(name: category.name)).id
   end
 
   def copy_parent_lessons!
@@ -49,7 +53,6 @@ class CourseImportService
   end
 
   def copy_topics!
-    # Create copies of the topics
     @parent_course.course_topics.each do |course_topic|
       new_topic = course_topic.dup
       new_topic.course_id = @new_course.id
@@ -57,12 +60,29 @@ class CourseImportService
     end
   end
 
+  def copy_resource_links!
+    @parent_course.resource_links.each do |link|
+      new_link = link.dup
+      new_link.course_id = @new_course.id
+      new_link.save!
+    end
+  end
+
   def copy_attachments!
-    # Create copies of the attachments
     @parent_course.additional_resource_attachments.each do |attachment|
+      unless attachment.respond_to?(:document_file) &&
+             attachment.document_file.respond_to?(:attached?) &&
+             attachment.document_file.attached?
+        raise ImportError,
+              "Attachment #{attachment.class}(id=#{attachment.id}) has no ActiveStorage document_file attached"
+      end
+
       new_attachment = attachment.dup
-      new_attachment.document = attachment.document
       new_attachment.course_id = @new_course.id
+
+      # Reuse the same blob (recommended: fast + no duplicate storage)
+      new_attachment.document_file.attach(attachment.document_file.blob)
+
       new_attachment.save!
     end
   end

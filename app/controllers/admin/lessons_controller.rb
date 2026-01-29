@@ -28,6 +28,7 @@ module Admin
       end
 
       if @lesson.save
+        @lesson.enqueue_storyline_unzip if lesson_params[:story_line_archive].present?
         add_lesson_to_child_courses!
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: 'Lesson was successfully created.'
       else
@@ -44,7 +45,10 @@ module Admin
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
 
+      archive_uploaded = lesson_params[:story_line_archive].present?
+
       if @lesson.update(@lesson_params)
+        @lesson.enqueue_storyline_unzip if archive_uploaded
         LessonPropagationService.new(lesson: @lesson).update_children!
         success_message = 'Lesson successfully updated.'
         redirect_to edit_admin_course_lesson_path, notice: success_message

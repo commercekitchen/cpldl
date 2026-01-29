@@ -37,10 +37,7 @@ class Lesson < ApplicationRecord
 
   has_one_attached :story_line_archive
 
-  attr_accessor :storyline_archive_assigned
-
   # TODO: Swap for Rails 7+
-  after_commit :enqueue_storyline_unzip, on: %i[create update], if: :storyline_archive_assigned? # < 7
   # after_commit :enqueue_storyline_unzip, on: %i[create update], if: :saved_change_to_story_line_archive_attachment? 7+
 
   default_scope { order(:lesson_order) }
@@ -52,11 +49,6 @@ class Lesson < ApplicationRecord
     complete: 2,
     failed: 3
   }, _prefix: true
-
-  def story_line_archive=(attachable)
-    self.storyline_archive_assigned = true
-    super
-  end
 
   def duration_str
     Duration.duration_str(duration)
@@ -108,12 +100,6 @@ class Lesson < ApplicationRecord
 
   def storyline_unzip_tracked?
     !storyline_unzip_status.nil?
-  end
-
-  private
-
-  def storyline_archive_assigned?
-    storyline_archive_assigned
   end
 
   def enqueue_storyline_unzip

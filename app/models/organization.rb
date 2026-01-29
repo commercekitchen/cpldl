@@ -144,6 +144,10 @@ class Organization < ApplicationRecord
     find_by(subdomain: 'www')
   end
 
+  def main_site?
+    subdomain == 'www'
+  end
+
   private
 
   def add_survey_url_protocols

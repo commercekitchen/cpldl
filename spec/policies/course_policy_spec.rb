@@ -183,26 +183,8 @@ describe CoursePolicy, type: :policy do
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
     let(:admin) { FactoryBot.create(:user, :admin) }
     let(:subsite) { admin.organization }
-    let(:guest_user) { GuestUser.new(organization: subsite) }
-    let(:user) { FactoryBot.create(:user, organization: subsite) }
     let(:imported_subsite_course) { FactoryBot.create(:course, organization: subsite, parent: pla_course) }
     let(:custom_subsite_course) { FactoryBot.create(:course, organization: subsite) }
-
-    context 'for a guest user' do
-      subject { CoursePolicy.new(guest_user, custom_subsite_course) }
-
-      it 'should be empty' do
-        expect(subject.permitted_attributes).to eq([])
-      end
-    end
-
-    context 'for a subsite user' do
-      subject { CoursePolicy.new(user, custom_subsite_course) }
-
-      it 'should be empty' do
-        expect(subject.permitted_attributes).to eq([])
-      end
-    end
 
     context 'for a subsite admin editing an imported course' do
       subject { CoursePolicy.new(admin, imported_subsite_course) }

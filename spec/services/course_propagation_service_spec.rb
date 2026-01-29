@@ -10,28 +10,22 @@ describe CoursePropagationService do
 
   describe '#propagate_course_changes' do
     describe 'model attribute changes' do
-      let(:new_attributes) do
-        {
-          title: 'New Course Title',
-          contributor: 'New Contributor',
-          summary: 'New Summary',
-          description: 'New Description',
-          notes: 'New Notes',
-          language: @spanish,
-          format: 'M',
-          level: 'Advanced',
-          seo_page_title: 'New SEO Title',
-          meta_desc: 'New Meta Desc'
-        }
+      let(:updated_course_source) { FactoryBot.create(:course) }
+      let(:updated_attrs) do
+        updated_course_source.attributes.symbolize_keys.slice(*CoursePropagationService::PROPAGATED_ATTRS)
+      end
+
+      before do
+        course.update!(updated_attrs)
       end
 
       subject { described_class.new(course: course) }
 
       it 'should update child course info' do
-        subject.propagate_course_changes(new_attributes)
+        subject.propagate_course_changes!
         child_course.reload
-        new_attributes.keys.each do |k|
-          expect(child_course.send(k)).to eq(new_attributes[k])
+        CoursePropagationService::PROPAGATED_ATTRS.each do |attr|
+          expect(child_course.public_send(attr)).to eq(course.public_send(attr))
         end
       end
     end
@@ -46,8 +40,22 @@ describe CoursePropagationService do
       subject { described_class.new(course: course) }
 
       it 'should add correct topic to child course' do
-        subject.propagate_course_changes({})
+        subject.propagate_course_changes!
         expect(child_course.reload.topics).to contain_exactly(topic)
+      end
+    end
+
+    describe 'error reporting' do
+      subject { described_class.new(course: course) }
+
+      it 'returns error details when propagation fails' do
+        course.update_columns(format: 'Z')
+
+        failures = subject.propagate_course_changes!
+
+        expect(failures).to include(
+          hash_including(child_id: child_course.id, error: a_string_including('Format'))
+        )
       end
     end
   end

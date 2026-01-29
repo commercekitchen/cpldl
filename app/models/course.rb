@@ -41,6 +41,7 @@ class Course < ApplicationRecord
   belongs_to :organization, optional: false
   has_many :attachments, dependent: :destroy
   has_many :resource_links, dependent: :destroy
+  has_many :child_courses, class_name: 'Course', foreign_key: 'parent_id', dependent: :nullify
   accepts_nested_attributes_for :attachments,
     reject_if: proc { |a| a[:document_file].blank? && a[:document].blank? },
     allow_destroy: true
@@ -146,6 +147,14 @@ class Course < ApplicationRecord
 
   def imported_course?
     parent.present?
+  end
+
+  def importable_course?
+    organization.main_site? && parent.nil?
+  end
+
+  def parent_course?
+    child_courses.exists?
   end
 
   def find_or_create_category
