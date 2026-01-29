@@ -43,7 +43,7 @@ describe Admin::LessonsController do
         meta_desc:  'Its good to Meta-Tate',
         summary:  'Sum-tings-smelly',
         is_assessment: false,
-        story_line: story_line,
+        story_line_archive: story_line,
         pub_status: 'P' }
     end
 
@@ -54,7 +54,7 @@ describe Admin::LessonsController do
         meta_desc:  'is this like inception',
         summary:  'Sum-tings-smelly',
         is_assessment: true,
-        story_line: story_line,
+        story_line_archive: story_line,
         pub_status: 'P' }
     end
 
@@ -65,7 +65,6 @@ describe Admin::LessonsController do
         meta_desc:  '',
         summary:  '',
         is_assessment: '',
-        story_line: nil,
         pub_status: nil }
     end
 
@@ -200,8 +199,14 @@ describe Admin::LessonsController do
     let(:params) { { course_id: pla_course.id, lesson_id: lesson1.id } }
 
     it 'should remove lesson upload' do
+      lesson1.story_line_archive.attach(
+        io: File.open(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')),
+        filename: 'BasicSearch1.zip',
+        content_type: 'application/zip'
+      )
+
       delete :destroy_asl_attachment, params: params
-      expect(lesson1.reload.story_line.exists?).to be_falsey
+      expect(lesson1.reload.story_line_archive.attached?).to be_falsey
     end
   end
 end

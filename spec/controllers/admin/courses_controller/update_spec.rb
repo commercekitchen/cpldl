@@ -164,16 +164,16 @@ describe Admin::CoursesController do
 
         let(:additional_resource_attachment_attributes) do
           { '0' => {
-            document: document,
-              title: '',
-              doc_type: 'additional-resource',
-              file_description: 'additional-resource attachment test'
+            document_file: document,
+            title: '',
+            doc_type: 'additional-resource',
+            file_description: 'additional-resource attachment test'
           } }
         end
 
         let(:text_copy_attachment_attributes) do
           { '0' => {
-            document: document,
+            document_file: document,
             title: '',
             doc_type: 'text-copy',
             file_description: 'text-copy attachment test'

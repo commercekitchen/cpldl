@@ -9,8 +9,9 @@ describe CourseImportService do
   let(:pla_course) { FactoryBot.create(:course_with_lessons, organization: pla, topics: [topic], category: category) }
 
   let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
-  let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', document: document, course: pla_course) }
-  let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', document: document, course: pla_course) }
+  let!(:text_copy_attachment) { FactoryBot.create(:attachment, doc_type: 'text-copy', document_file: document, course: pla_course) }
+  let!(:additional_resource_attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', document_file: document, course: pla_course) }
+  let!(:resource_link) { FactoryBot.create(:resource_link, course: pla_course) }
 
   let(:subsite) { FactoryBot.create(:organization) }
 
@@ -62,6 +63,15 @@ describe CourseImportService do
     expect do
       subject.import!
     end.to change(CourseTopic, :count).by(1)
+  end
+
+  it 'should copy resource links' do
+    expect do
+      subject.import!
+    end.to change(ResourceLink, :count).by(1)
+    new_course = Course.last
+    expect(new_course.resource_links.count).to eq(1)
+    expect(new_course.resource_links.first.url).to eq(resource_link.url)
   end
 
   it 'should not copy survey_url into imported course' do

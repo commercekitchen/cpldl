@@ -74,8 +74,12 @@ module Admin
       @course.slug = nil if @course.title != params[:course][:title]
 
       if @course.update(new_course_params)
-        if @course.parent.blank?
-          CoursePropagationService.new(course: @course).propagate_course_changes(attributes_to_propagate)
+        if @course.parent_course?
+          failures = CoursePropagationService.new(course: @course).propagate_course_changes!
+          if failures.any?
+            redirect_to edit_admin_course_path(@course),
+                        alert: "Updated, but failed to propagate to #{failures.size} imported course(s)." and return
+          end
         end
 
         success_message = 'Course was successfully updated.'
@@ -133,15 +137,12 @@ module Admin
     end
 
     def new_course_params
+      # What is this for?
       @new_course_params ||= if course_params[:category_id].present? && course_params[:category_id] == '0'
                                course_params
                              else
                                course_params.except(:category_attributes)
                              end
-    end
-
-    def attributes_to_propagate
-      course_params.except(:category_id, :category_attributes, :access_level, :course_topics_attributes, :attachments_attributes, :pub_status, :notes)
     end
   end
 end

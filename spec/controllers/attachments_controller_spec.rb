@@ -11,7 +11,7 @@ describe AttachmentsController do
   let(:other_subsite_user) { FactoryBot.create(:user) }
 
   let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
-  let(:attachment) { FactoryBot.create(:attachment, document: document, course: pla_course) }
+  let(:attachment) { FactoryBot.create(:attachment, document_file: document, course: pla_course) }
 
   describe '#show' do
     context 'visitor on subsite' do
@@ -21,7 +21,9 @@ describe AttachmentsController do
 
       it 'allows the visitor to view an attachment' do
         get :show, params: { id: attachment.id }
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(
+          rails_blob_path(attachment.document_file, disposition: 'inline')
+        )
       end
 
       it 'does not allow visitor to view attachment if course is private' do
@@ -39,13 +41,17 @@ describe AttachmentsController do
 
       it 'allows the user to view an attachment' do
         get :show, params: { id: attachment.id }
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(
+          rails_blob_path(attachment.document_file, disposition: 'inline')
+        )
       end
 
       it 'allows user to view attachment if course is private' do
         subsite_course.update!(access_level: 'authenticated_users')
         get :show, params: { id: attachment.id }
-        expect(response).to have_http_status(:success)
+        expect(response).to redirect_to(
+          rails_blob_path(attachment.document_file, disposition: 'inline')
+        )
       end
     end
 
