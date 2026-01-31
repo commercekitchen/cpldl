@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   use_doorkeeper
   root 'courses#index'
 
+  # Block CKEditor upload routes until we can upgrade
+  match "/ckeditor/pictures",         to: proc { [404, {}, ["Not Found"]] }, via: [:get, :post]
+  match "/ckeditor/attachment_files", to: proc { [404, {}, ["Not Found"]] }, via: [:get, :post]
+
   mount Ckeditor::Engine => '/ckeditor'
 
   # CKEditor Asset paths
