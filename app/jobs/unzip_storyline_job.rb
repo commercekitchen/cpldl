@@ -54,8 +54,11 @@ class UnzipStorylineJob < ApplicationJob
       raise InvalidStorylineError, "Refusing to unzip storyline for child lesson #{lesson.id} (parent #{lesson.parent_id})"
     end
 
-    blob = lesson.story_line_archive&.blob
-    return unless blob
+    unless lesson.story_line_archive.attached?
+      raise InvalidStorylineError, "No story_line_archive attached for Lesson #{lesson.id}"
+    end
+
+    blob = lesson.story_line_archive.blob
 
     root_path = lesson.storyline_root_path
     raise InvalidStorylineError, "Missing storyline_root_path for Lesson #{lesson.id}" if root_path.blank?
@@ -63,10 +66,8 @@ class UnzipStorylineJob < ApplicationJob
     bucket = Rails.configuration.unzipped_lessons_bucket
     s3     = Aws::S3::Client.new
 
-    # Make the operation idempotent (re-upload yields exact contents)
     delete_prefix!(s3, bucket: bucket, prefix: "#{root_path}/") if purge_destination
 
-    # Avoid loading entire zip into memory
     blob.open(tmpdir: Dir.tmpdir) do |file|
       Zip::File.open(file.path) do |zip|
         zip.each do |entry|
@@ -78,7 +79,6 @@ class UnzipStorylineJob < ApplicationJob
 
           body_io, content_type = build_body_and_content_type(entry)
 
-          # Upload; body can be IO (streamed) or StringIO (for patched file)
           s3.put_object(
             bucket: bucket,
             key: key,
@@ -86,16 +86,15 @@ class UnzipStorylineJob < ApplicationJob
             acl: "private",
             content_type: content_type,
             content_disposition: "inline"
-            # Optional: cache headers (often helpful for Storyline assets behind CDN)
-            # cache_control: "public, max-age=31536000, immutable"
           )
         end
       end
     end
-  rescue Zip::Error, Zip::CentralDirectoryError => e
-    # Deterministic “bad zip”; don’t endlessly retry unless you want to.
-    raise InvalidStorylineError, "Unable to unzip storyline archive for lesson #{lesson.id}: #{e.class}: #{e.message}"
+  rescue Zip::Error, Zlib::Error => e
+    raise InvalidStorylineError,
+          "Unable to unzip storyline archive for lesson #{lesson.id}: #{e.class}: #{e.message}"
   end
+
 
   # Mirror the Lambda “fixLessonJs” behavior
   def patch_user_js(bytes)
