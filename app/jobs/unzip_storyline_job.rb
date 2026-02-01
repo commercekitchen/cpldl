@@ -88,15 +88,16 @@ class UnzipStorylineJob < ApplicationJob
             safe_rel_path = sanitize_zip_entry_path!(entry.name)
             key = "#{root_path}/#{safe_rel_path}"
 
-            body_io, content_type = build_body_and_content_type(entry)
-
-            s3.put_object(
-              bucket: bucket,
-              key: key,
-              body: body_io,
-              content_type: content_type,
-              content_disposition: "inline"
-            )
+            build_body_content_type_and_length(entry) do |io, content_type, length|
+              s3.put_object(
+                bucket: bucket,
+                key: key,
+                body: io,                 # <- rewindable file
+                content_length: length,   # <- explicit
+                content_type: content_type,
+                content_disposition: "inline"
+              )
+            end
           end
         end
       rescue Zip::Error, Zlib::Error => e
@@ -108,7 +109,6 @@ class UnzipStorylineJob < ApplicationJob
       end
     end
   end
-
 
   # Mirror the Lambda “fixLessonJs” behavior
   def patch_user_js(bytes)
@@ -125,27 +125,35 @@ class UnzipStorylineJob < ApplicationJob
     patched
   end
 
-  def build_body_and_content_type(entry)
+  def build_body_content_type_and_length(entry)
     name = entry.name
 
-    if name.end_with?("user.js")
-      original = entry.get_input_stream.read
-      patched  = patch_user_js(original)
-      io = StringIO.new(patched)
-      io.rewind
-      [io, "application/javascript"]
-    else
-      # Stream entry content rather than reading entire file into memory.
-      # Aws SDK will read from IO; Zip stream is fine for put_object.
-      io = entry.get_input_stream
+    content_type =
+      if name.end_with?("user.js")
+        "application/javascript"
+      else
+        Marcel::MimeType.for(
+          name: name,
+          extension: File.extname(name),
+          declared_type: "application/octet-stream"
+        ) || "application/octet-stream"
+      end
 
-      content_type = Marcel::MimeType.for(
-        name: name,
-        extension: File.extname(name),
-        declared_type: "application/octet-stream"
-      ) || "application/octet-stream"
+    Tempfile.create(["storyline-", File.extname(name)], Dir.tmpdir) do |tmp|
+      tmp.binmode
 
-      [io, content_type]
+      if name.end_with?("user.js")
+        patched = patch_user_js(entry.get_input_stream.read)
+        tmp.write(patched)
+      else
+        # stream zip entry -> tempfile
+        IO.copy_stream(entry.get_input_stream, tmp)
+      end
+
+      tmp.flush
+      tmp.rewind
+
+      yield tmp, content_type, tmp.size
     end
   end
 
