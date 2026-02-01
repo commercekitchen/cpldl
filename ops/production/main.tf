@@ -133,7 +133,8 @@ module "application" {
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
   s3_bucket_arns = [
     "arn:aws:s3:::dl-uploads-${var.environment_name}",
-    "arn:aws:s3:::dl-prodapp-lessons-zipped"
+    "arn:aws:s3:::dl-prodapp-lessons-zipped",
+    "arn:aws:s3:::dl-prodapp-lessons"
   ]
   task_execution_role_arn = module.ecs_cluster.ecs_task_execution_role_arn
 }
@@ -167,6 +168,11 @@ module "sidekiq" {
   db_host                        = module.database.database_host
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   task_execution_role_arn        = module.ecs_cluster.ecs_task_execution_role_arn
+  s3_bucket_arns = [
+    "arn:aws:s3:::dl-uploads-${var.environment_name}",
+    "arn:aws:s3:::dl-prodapp-lessons-zipped",
+    "arn:aws:s3:::dl-prodapp-lessons"
+  ]
 }
 
 
