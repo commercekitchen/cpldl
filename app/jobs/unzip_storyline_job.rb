@@ -68,30 +68,45 @@ class UnzipStorylineJob < ApplicationJob
 
     delete_prefix!(s3, bucket: bucket, prefix: "#{root_path}/") if purge_destination
 
-    blob.open(tmpdir: Dir.tmpdir) do |file|
-      Zip::File.open(file.path) do |zip|
-        zip.each do |entry|
-          next if entry.name_is_directory?
-          next if skip_entry?(entry.name)
+    # TODO: After rails 7 upgrade, use ActiveStorage::Blob#open with a block.
+    # Rails 5.2: ActiveStorage::Blob#open is private; use download -> Tempfile instead.
+    Tempfile.create(["storyline-#{lesson.id}-", ".zip"], Dir.tmpdir) do |tmp|
+      tmp.binmode
 
-          safe_rel_path = sanitize_zip_entry_path!(entry.name)
-          key = "#{root_path}/#{safe_rel_path}"
+      begin
+        # This reads the blob into memory; if your zips get huge, we can switch to a streaming download,
+        # but for typical Storyline packages this is usually acceptable.
+        tmp.write(blob.download)
+        tmp.flush
+        tmp.rewind
 
-          body_io, content_type = build_body_and_content_type(entry)
+        Zip::File.open(tmp.path) do |zip|
+          zip.each do |entry|
+            next if entry.name_is_directory?
+            next if skip_entry?(entry.name)
 
-          s3.put_object(
-            bucket: bucket,
-            key: key,
-            body: body_io,
-            content_type: content_type,
-            content_disposition: "inline"
-          )
+            safe_rel_path = sanitize_zip_entry_path!(entry.name)
+            key = "#{root_path}/#{safe_rel_path}"
+
+            body_io, content_type = build_body_and_content_type(entry)
+
+            s3.put_object(
+              bucket: bucket,
+              key: key,
+              body: body_io,
+              content_type: content_type,
+              content_disposition: "inline"
+            )
+          end
         end
+      rescue Zip::Error, Zlib::Error => e
+        raise InvalidStorylineError,
+              "Unable to unzip storyline archive for lesson #{lesson.id}: #{e.class}: #{e.message}"
+      ensure
+        # Ensure we don't leave a partial file around if something goes sideways.
+        tmp.close! rescue nil
       end
     end
-  rescue Zip::Error, Zlib::Error => e
-    raise InvalidStorylineError,
-          "Unable to unzip storyline archive for lesson #{lesson.id}: #{e.class}: #{e.message}"
   end
 
 
