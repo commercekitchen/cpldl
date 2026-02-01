@@ -27,7 +27,10 @@ variable "redis_access_security_group_id" {}
 variable "redis_host" {}
 variable "redis_port" { default = 6379 }
 variable "db_host" {}
-
+variable "s3_bucket_arns" {
+  description = "List of S3 bucket ARNs that Sidekiq needs access to"
+  type        = list(string)
+}
 variable "rails_master_key_arn" {
   type = string
   description = "ARN of AWS Secrets manager secret for rails master key"

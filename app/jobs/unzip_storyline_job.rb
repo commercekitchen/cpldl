@@ -83,7 +83,6 @@ class UnzipStorylineJob < ApplicationJob
             bucket: bucket,
             key: key,
             body: body_io,
-            acl: "private",
             content_type: content_type,
             content_disposition: "inline"
           )

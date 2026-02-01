@@ -33,3 +33,4 @@ resource "aws_iam_instance_profile" "sidekiq_instance_profile" {
   name = "${var.project_name}-${var.environment_name}-sidekiq-ecs-profile"
   role = aws_iam_role.sidekiq_ecs_instance_role.name
 }
+
