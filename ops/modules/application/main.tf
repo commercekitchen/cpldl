@@ -49,6 +49,11 @@ resource "aws_launch_template" "instance" {
     name = aws_iam_instance_profile.ecs_instance.name
   }
 
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required" # IMDSv2
+    http_put_response_hop_limit = 1          # blocks container hops in most cases
+  }
 
   vpc_security_group_ids = [
     aws_security_group.application_sg.id,

@@ -41,11 +41,15 @@ module CPLDigitalLearn
     require Rails.root.join("lib/s3_proxy.rb")
     config.middleware.use S3Proxy, streaming: false
 
+    # ActiveStorage variant processor
+    config.active_storage.variant_processor = :vips
+
     # Attachment options
     config.s3_enabled = false # override to use S3 attachments
     config.s3_region = 'us-west-2'
     config.s3_bucket_name = "dl-uploads-#{Rails.env}"
 
+    ### Legacy Paperclip settings
     config.paperclip_defaults = {
       storage: :filesystem
     }

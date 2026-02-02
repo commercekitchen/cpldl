@@ -21,10 +21,10 @@ feature 'Admin user updates course' do
   let(:pla_course) { FactoryBot.create(:course, organization: pla) }
   let(:subsite_course) { FactoryBot.create(:course, organization: org, parent: pla_course) }
   let!(:additional_resource_attachment) do
-    FactoryBot.create(:attachment, document: additional_resource_file, doc_type: 'additional-resource', course: subsite_course)
+    FactoryBot.create(:attachment, document_file: additional_resource_file, doc_type: 'additional-resource', course: subsite_course)
   end
   let!(:text_copy_attachment) do
-    FactoryBot.create(:attachment, document: text_copy_file, doc_type: 'text-copy', course: pla_course)
+    FactoryBot.create(:attachment, document_file: text_copy_file, doc_type: 'text-copy', course: pla_course)
   end
 
   let!(:topic) { FactoryBot.create(:topic) }

@@ -90,6 +90,7 @@ Rails.application.configure do
   ### S3 Lesson Configuration ###
   config.lesson_store = :s3
   config.zip_bucket_name = 'dl-stageapp-lessons-zipped'
+  config.unzipped_lessons_bucket = 'dl-stageapp-lessons'
 
   config.storyline_paperclip_opts = {
     storage: :s3,
@@ -98,4 +99,7 @@ Rails.application.configure do
     s3_region: config.s3_region,
     s3_permissions: 'private'
   }
+
+  # ActiveStorage config
+  config.active_storage.service = :amazon
 end

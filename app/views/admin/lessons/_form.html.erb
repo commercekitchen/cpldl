@@ -47,24 +47,24 @@
     </div>
 
     <div class="inline-item">
-      <% if @lesson.story_line.blank? %>
+      <% if !@lesson.story_line_archive.attached? %>
         <fieldset>
-          <%= f.label :story_line, class: "text-color" do %>
+          <%= f.label :story_line_archive, class: "text-color" do %>
             Articulate Storyline Package<span class="required"></span>
           <% end %>
           <p class="note">Upload a zip file containing all of the directories and
           files exported from Articulate for this lesson.</p>
-          <%= f.file_field :story_line, class: "upload-field" %>
+          <%= f.file_field :story_line_archive, class: "upload-field" %>
         </fieldset>
       <% else %>
         <fieldset>
-          <%= f.label :story_line, class: "text-color" do %>
+          <%= f.label :story_line_archive, class: "text-color" do %>
             Articulate Storyline Package<span class="required"></span>
           <% end %>
           <p class="note">There can only be one story line per lesson. If you want
           to upload a new one, you need to delete the current one first.</p>
           <p class="upload-field">
-            <%= @lesson.story_line.instance.story_line_file_name %>
+            <%= @lesson.story_line_archive.filename.to_s %>
             <%= link_to "Remove", destroy_asl_attachment_admin_course_lessons_path(course_id: @course.id, lesson_id: @lesson.id), method: "delete", data: { confirm: "Are you sure?" } %>
           </p>
         </fieldset>

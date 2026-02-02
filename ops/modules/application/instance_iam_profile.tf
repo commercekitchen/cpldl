@@ -1,5 +1,5 @@
 #############################################
-# Assume role policy (no heredoc JSON)
+# Instance assume role policy (no heredoc JSON)
 #############################################
 
 data "aws_iam_policy_document" "ecs_instance_assume_role" {
@@ -39,38 +39,6 @@ data "aws_iam_policy_document" "ecs_instance_inline" {
       aws_cloudwatch_log_group.instance.arn,
       "${aws_cloudwatch_log_group.instance.arn}:log-stream:*",
     ]
-  }
-
-  ###########################################
-  # S3: bucket-level vs object-level
-  ###########################################
-
-  # ListBucket must be against the *bucket ARN*
-  statement {
-    sid     = "S3ListBuckets"
-    effect  = "Allow"
-    actions = ["s3:ListBucket"]
-    resources = var.s3_bucket_arns
-  }
-
-  # Object operations must be against bucket/* ARNs
-  statement {
-    sid     = "S3ObjectRW"
-    effect  = "Allow"
-    actions = [
-      "s3:GetObject",
-      "s3:PutObject",
-    ]
-    resources = formatlist("%s/*", var.s3_bucket_arns)
-  }
-
-  statement {
-    sid     = "S3GetBucketLocation"
-    effect  = "Allow"
-    actions = [
-      "s3:GetBucketLocation",
-    ]
-    resources = var.s3_bucket_arns
   }
 }
 

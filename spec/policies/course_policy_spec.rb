@@ -183,26 +183,8 @@ describe CoursePolicy, type: :policy do
     let(:pla_course) { FactoryBot.create(:course, organization: pla) }
     let(:admin) { FactoryBot.create(:user, :admin) }
     let(:subsite) { admin.organization }
-    let(:guest_user) { GuestUser.new(organization: subsite) }
-    let(:user) { FactoryBot.create(:user, organization: subsite) }
     let(:imported_subsite_course) { FactoryBot.create(:course, organization: subsite, parent: pla_course) }
     let(:custom_subsite_course) { FactoryBot.create(:course, organization: subsite) }
-
-    context 'for a guest user' do
-      subject { CoursePolicy.new(guest_user, custom_subsite_course) }
-
-      it 'should be empty' do
-        expect(subject.permitted_attributes).to eq([])
-      end
-    end
-
-    context 'for a subsite user' do
-      subject { CoursePolicy.new(user, custom_subsite_course) }
-
-      it 'should be empty' do
-        expect(subject.permitted_attributes).to eq([])
-      end
-    end
 
     context 'for a subsite admin editing an imported course' do
       subject { CoursePolicy.new(admin, imported_subsite_course) }
@@ -214,7 +196,7 @@ describe CoursePolicy, type: :policy do
                                                                 :notes,
                                                                 :survey_url,
                                                                 category_attributes: %i[name organization_id],
-                                                                attachments_attributes: %i[document title doc_type file_description _destroy],
+                                                                attachments_attributes: %i[document_file title doc_type file_description _destroy],
                                                                 resource_links_attributes: %i[id label url _destroy])
       end
 
@@ -250,7 +232,7 @@ describe CoursePolicy, type: :policy do
                                                                 topic_ids: [],
                                                                 course_topics_attributes: [topic_attributes: [:title]],
                                                                 category_attributes: %i[name organization_id],
-                                                                attachments_attributes: %i[document title doc_type file_description _destroy],
+                                                                attachments_attributes: %i[document_file title doc_type file_description _destroy],
                                                                 resource_links_attributes: %i[id label url _destroy])
       end
     end

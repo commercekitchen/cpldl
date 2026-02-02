@@ -4,6 +4,7 @@ resource "aws_ecs_task_definition" "sidekiq" {
   network_mode             = "bridge"
   cpu                      = var.task_cpu
   execution_role_arn       = var.task_execution_role_arn
+  task_role_arn            = aws_iam_role.sidekiq_task_role.arn
 
   container_definitions = jsonencode([
     {

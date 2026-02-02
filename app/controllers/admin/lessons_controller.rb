@@ -28,6 +28,7 @@ module Admin
       end
 
       if @lesson.save
+        @lesson.enqueue_storyline_unzip if lesson_params[:story_line_archive].present?
         add_lesson_to_child_courses!
         redirect_to edit_admin_course_lesson_path(@course, @lesson), notice: 'Lesson was successfully created.'
       else
@@ -44,7 +45,10 @@ module Admin
       @lesson_params = lesson_params
       @lesson_params[:duration] = @lesson.duration_to_int(lesson_params[:duration])
 
+      archive_uploaded = lesson_params[:story_line_archive].present?
+
       if @lesson.update(@lesson_params)
+        @lesson.enqueue_storyline_unzip if archive_uploaded
         LessonPropagationService.new(lesson: @lesson).update_children!
         success_message = 'Lesson successfully updated.'
         redirect_to edit_admin_course_lesson_path, notice: success_message
@@ -57,9 +61,8 @@ module Admin
       @lesson = @course.lessons.friendly.find(params[:lesson_id])
       authorize @lesson, :update?
 
-      @lesson.story_line.destroy
-      @lesson.save
-      FileUtils.remove_dir "#{Rails.root}/public/storylines/#{@lesson.id}", true
+      @lesson.story_line_archive.purge if @lesson.story_line_archive.attached?
+
       flash[:notice] = 'Story Line successfully removed, please upload a new story line .zip file.'
       render :edit
     end
@@ -85,7 +88,7 @@ module Admin
       params.require(:lesson).permit(:title,
                                      :summary,
                                      :duration,
-                                     :story_line,
+                                     :story_line_archive,
                                      :seo_page_title,
                                      :meta_desc,
                                      :is_assessment,

@@ -18,6 +18,8 @@ RUN apt-get update -qq && \
       default-libmysqlclient-dev \
       libcurl4-openssl-dev \
       shared-mime-info \
+      libvips \
+      libvips-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
