@@ -20,7 +20,7 @@ class BackfillStorylineArchivesJob < ApplicationJob
 
     run_id = args[:run_id].presence || SecureRandom.hex(6)
 
-    scope = Lesson.order(:id)
+    scope = Lesson.reorder(id: :asc) 
     scope = scope.where("id >= ?", start_id) if start_id.present?
 
     batch = scope.limit(batch_size).to_a
@@ -29,7 +29,8 @@ class BackfillStorylineArchivesJob < ApplicationJob
     stats = Hash.new(0)
     stats[:batch_size] = batch.size
 
-    Rails.logger.info("[BackfillStorylineArchivesJob][run=#{run_id}] Starting batch start_id=#{start_id.inspect} size=#{batch.size}")
+    ids = batch.map(&:id)
+    Rails.logger.info("[BackfillStorylineArchivesJob][run=#{run_id}] batch min_id=#{ids.min} max_id=#{ids.max} last_row_id=#{batch.last.id}")
 
     batch.each do |lesson|
       stats[:examined] += 1
