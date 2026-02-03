@@ -13,7 +13,7 @@ feature 'User logs in' do
     scenario 'with valid email and password' do
       user = create(:user, organization: org)
       log_in_with(user.email, user.password)
-      expect(current_path).to eq(root_path)
+      expect(page).to have_current_path(root_path)
       expect(page).to_not have_content('Signed in successfully.')
       expect(page).to have_content('Use a computer to do almost anything!')
       expect(page).to have_content(

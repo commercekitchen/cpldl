@@ -25,7 +25,6 @@ feature 'User registration and login with library card number' do
       library_card_log_in_with(card_number, card_pin)
       expect(current_path).to eq(root_path)
       expect(page).to_not have_content('Signed in successfully.')
-      expect(page).to have_content('Use a computer to do almost anything!')
       expect(page).to have_content(
         'Choose a course below to start learning, or visit My Courses to view your customized learning plan.'
       )

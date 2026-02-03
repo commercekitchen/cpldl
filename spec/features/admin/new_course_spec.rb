@@ -95,7 +95,7 @@ feature 'Admin user creates new course and lesson' do
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
     click_button 'Save Course'
-    expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
+    expect(page).to have_content('Attachments document file is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
 
     attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_1.pdf')
     attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'Why_Use_a_Computer_Worksheet.pdf')
@@ -145,7 +145,7 @@ feature 'Admin user creates new course and lesson' do
   scenario 'adds a lesson', js: true do
     visit edit_admin_course_path(course_id: course, id: course.id)
     click_button 'Save & Edit Lessons'
-    expect(current_path).to eq(new_admin_course_lesson_path(course.to_param))
+    expect(page).to have_current_path(new_admin_course_lesson_path(course.to_param))
     fill_in :lesson_title, with: 'New Lesson Title'
     fill_in :lesson_summary, with: 'Summary for new lesson'
     fill_in :lesson_duration, with: '05:15'

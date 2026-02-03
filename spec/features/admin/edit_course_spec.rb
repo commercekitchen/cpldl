@@ -64,7 +64,7 @@ feature 'Admin user updates course' do
       expect(page).to have_link('Add Attachment', count: 1)
 
       expect(page).to have_content('Text copies of the course to allow users to download content and view offline or follow along with the online course.')
-      expect(page).to have_content(text_copy_attachment.document_file_name)
+      expect(page).to have_content(text_copy_attachment.document_file.filename)
 
       expect(page).to have_button('Save Course')
       expect(page).to have_content('If you wish to edit additional details of this course and use the PLA-created Storyline files, please contact a PLA Administrator.')
@@ -186,7 +186,7 @@ feature 'Admin user updates course' do
       attach_file 'Text Copies of Course', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
       attach_file 'Additional Resources', Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip')
       click_button 'Save Course'
-      expect(page).to have_content('Attachments document is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
+      expect(page).to have_content('Attachments document file is invalid. Only PDF, Word, PowerPoint, or Excel files are allowed.', count: 1)
     end
 
     scenario 'can edit course title', js: true do

@@ -9,7 +9,7 @@ FactoryBot.define do
     summary { 'Lesson summary' }
     duration { 90 }
     lesson_order { 1 }
-    story_line { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip') }
+    story_line_archive { Rack::Test::UploadedFile.new(Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip'), 'application/zip') }
   end
 
   factory :lesson_without_story, class: Lesson do
