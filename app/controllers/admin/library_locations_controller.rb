@@ -5,6 +5,7 @@ module Admin
     before_action :enable_sidebar
 
     def index
+      authorize LibraryLocation
       @library_locations = policy_scope(LibraryLocation)
     end
 
@@ -52,6 +53,7 @@ module Admin
     end
 
     def sort
+      authorize LibraryLocation, :sort?
       library_locations = policy_scope(LibraryLocation)
       SortService.sort(model: library_locations, order_params: params[:order], attribute_key: :sort_order, user: current_user)
 

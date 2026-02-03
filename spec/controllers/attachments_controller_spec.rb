@@ -10,8 +10,7 @@ describe AttachmentsController do
   let(:subsite_user) { FactoryBot.create(:user, organization: subsite) }
   let(:other_subsite_user) { FactoryBot.create(:user) }
 
-  let(:document) { fixture_file_upload(Rails.root.join('spec', 'fixtures', 'testfile.pdf'), 'application/pdf') }
-  let(:attachment) { FactoryBot.create(:attachment, document_file: document, course: pla_course) }
+  let(:attachment) { FactoryBot.create(:attachment, :with_document_file, course: pla_course) }
 
   describe '#show' do
     context 'visitor on subsite' do

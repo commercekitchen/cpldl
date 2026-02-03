@@ -68,6 +68,7 @@ module Admin
     end
 
     def sort
+      authorize Lesson, :sort?
       lessons = policy_scope(Lesson)
       SortService.sort(model: lessons, order_params: params[:order], attribute_key: :lesson_order, user: current_user)
 

@@ -10,7 +10,7 @@ feature 'User visits course listing page' do
   let!(:course2) { FactoryBot.create(:course, title: 'Course 2', course_order: 2, organization: organization) }
   let!(:course3) { FactoryBot.create(:course, title: 'Course 3', course_order: 3, organization: organization) }
   let(:www_course) { FactoryBot.create(:course_with_lessons, organization: www) }
-  let!(:attachment) { FactoryBot.create(:attachment, doc_type: 'additional-resource', course: course1) }
+  let!(:attachment) { FactoryBot.create(:attachment, :with_document_file, doc_type: 'additional-resource', course: course1) }
   let!(:resource_link) { FactoryBot.create(:resource_link, course: course1) }
 
   before(:each) do

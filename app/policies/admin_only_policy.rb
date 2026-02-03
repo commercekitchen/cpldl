@@ -5,6 +5,10 @@ class AdminOnlyPolicy < ApplicationPolicy
     admin_user?
   end
 
+  def index?
+    admin_user?(any_organization: true)
+  end
+
   def create?
     admin_user?
   end
@@ -15,6 +19,11 @@ class AdminOnlyPolicy < ApplicationPolicy
 
   def update?
     admin_user?
+  end
+
+  def sort?
+    # These should be protected by scopes
+    admin_user?(any_organization: true)
   end
 
   class Scope < Scope
@@ -28,8 +37,12 @@ class AdminOnlyPolicy < ApplicationPolicy
 
   protected
 
-  def admin_user?
-    subsite_admin?(organization)
+  def admin_user?(any_organization: false)
+    if any_organization
+      user.admin?
+    else
+      subsite_admin?(organization)
+    end
   end
 
   def organization

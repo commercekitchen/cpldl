@@ -37,9 +37,6 @@ class Lesson < ApplicationRecord
 
   has_one_attached :story_line_archive
 
-  # TODO: Swap for Rails 7+
-  # after_commit :enqueue_storyline_unzip, on: %i[create update], if: :saved_change_to_story_line_archive_attachment? 7+
-
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
 

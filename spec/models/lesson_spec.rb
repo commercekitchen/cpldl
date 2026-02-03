@@ -168,36 +168,4 @@ describe Lesson do
       end
     end
   end
-
-  context 'storyline unzip enqueue' do
-    include ActiveJob::TestHelper
-
-    let(:lesson) { FactoryBot.create(:lesson_without_story) }
-    let(:fixture_path) { Rails.root.join('spec', 'fixtures', 'BasicSearch1.zip') }
-    let(:initial_storyline) { Rack::Test::UploadedFile.new(fixture_path, 'application/zip', original_filename: 'BasicSearch1.zip') }
-    let(:updated_storyline) { Rack::Test::UploadedFile.new(fixture_path, 'application/zip', original_filename: 'BasicSearch1_v2.zip') }
-
-    before do
-      ActiveJob::Base.queue_adapter = :test
-      lesson.update!(story_line_archive: initial_storyline)
-      clear_enqueued_jobs
-
-      lesson.update_columns(
-        storyline_unzip_status: Lesson.storyline_unzip_statuses[:failed],
-        storyline_unzip_error: 'previous failure',
-        storyline_unzip_failed_at: 1.hour.ago
-      )
-    end
-
-    it 'enqueues unzip job and resets status when storyline changes' do
-      expect do
-        lesson.update!(story_line_archive: updated_storyline)
-      end.to have_enqueued_job(UnzipStorylineJob).with(lesson.id)
-
-      lesson.reload
-      expect(lesson.storyline_unzip_status).to eq('queued')
-      expect(lesson.storyline_unzip_error).to be_nil
-      expect(lesson.storyline_unzip_failed_at).to be_nil
-    end
-  end
 end

@@ -4,6 +4,7 @@ module Admin
   class CategoriesController < BaseController
 
     def index
+      authorize Category
       @categories = policy_scope(Category)
       @new_category = current_organization.categories.new
       authorize @new_category, :create?
@@ -26,6 +27,7 @@ module Admin
     end
 
     def sort
+      authorize Category, :sort?
       categories = policy_scope(Category)
       SortService.sort(model: categories, order_params: params[:order], attribute_key: :category_order, user: current_user)
 

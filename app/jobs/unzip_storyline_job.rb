@@ -6,7 +6,7 @@ require "stringio"
 class UnzipStorylineJob < ApplicationJob
   queue_as :default
 
-  retry_on StandardError, wait: :exponentially_longer, attempts: 3
+  retry_on StandardError, wait: :polynomially_longer, attempts: 3
 
   # Not available in Rails 5
   # Retry transient failures (network/S3). Tune attempts + backoff to your tolerance.

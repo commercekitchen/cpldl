@@ -5,6 +5,7 @@ module Admin
     before_action :set_page, only: %i[edit update destroy]
 
     def index
+      authorize CmsPage
       @cms_pages = policy_scope(CmsPage)
       enable_sidebar
     end
@@ -72,6 +73,7 @@ module Admin
     end
 
     def sort
+      authorize CmsPage, :sort?
       pages = policy_scope(CmsPage)
       SortService.sort(model: pages, order_params: params[:order], attribute_key: :cms_page_order, user: current_user)
 
