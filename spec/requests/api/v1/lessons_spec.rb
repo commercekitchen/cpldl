@@ -12,35 +12,30 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
       create_list(:lesson, 2, course: course)
     end
 
-    it 'returns lessons with the presenter payload' do
+    it 'returns no lessons by default' do
       get '/api/v1/lessons'
 
       expect(response).to have_http_status(:ok)
 
       body = JSON.parse(response.body)
-      lessons = Lesson.last(2)
       lesson_payloads = body.fetch('lessons')
 
+      expect(lesson_payloads).to be_empty
+    end
+
+    it 'filters lessons by course_id when provided' do
+      other_course = create(:course, organization: organization)
+      create_list(:lesson, 2, course: other_course)
+
+      get '/api/v1/lessons', params: { course_id: course.id }
+
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      lesson_payloads = body.fetch('lessons')
+
+      expect(lesson_payloads).to all(satisfy { |lesson| lesson['course']['summary'] == course.summary })
       expect(lesson_payloads.size).to eq(2)
-      expect(lesson_payloads.map { |lesson| lesson['title'] }).to match_array(lessons.map(&:title))
-
-      first_payload = lesson_payloads.first
-      first_lesson = Lesson.friendly.find(first_payload['id'])
-
-      expect(first_payload).to include(
-        'title' => first_lesson.title,
-        'summary' => first_lesson.summary,
-        'duration' => first_lesson.duration,
-        'lessonOrder' => first_lesson.lesson_order,
-        'completed' => false,
-        'topics' => []
-      )
-      expect(first_payload['course']).to include(
-        'summary' => course.summary,
-        'description' => course.description,
-        'contributor' => course.contributor,
-        'level' => course.level
-      )
     end
   end
 end

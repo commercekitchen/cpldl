@@ -72,12 +72,12 @@ class Lesson < ApplicationRecord
     # ActiveStorage first
     if effective.respond_to?(:story_line_archive) && effective.story_line_archive.attached?
       name = effective.story_line_archive.filename.to_s
-      return name.sub(/\.zip\z/i, "") if name.present?
+      return name.sub(/\.zip\z/i, '') if name.present?
     end
 
     # Paperclip fallback (migration window only)
     if effective.respond_to?(:story_line_file_name) && effective.story_line_file_name.present?
-      return effective.story_line_file_name.sub(/\.zip\z/i, "")
+      return effective.story_line_file_name.sub(/\.zip\z/i, '')
     end
 
     nil
@@ -88,7 +88,7 @@ class Lesson < ApplicationRecord
     return nil if dir.blank?
 
     effective = effective_storyline_lesson
-    "storylines/#{effective.id}/#{dir}"
+    "/storylines/#{effective.id}/#{dir}"
   end
 
   def storyline_entry_path

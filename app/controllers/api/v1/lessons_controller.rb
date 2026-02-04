@@ -4,7 +4,12 @@ module Api
   module V1
     class LessonsController < Api::V1::BaseController
       def index
-        lessons = Lesson.last(10)
+        lessons = Lesson.none
+
+        course_id = params[:course_id]
+        if course_id.present?
+          lessons = Lesson.where(course_id: course_id)
+        end
         render json: LessonCollectionPresenter.new(lessons).as_json
       end
 
