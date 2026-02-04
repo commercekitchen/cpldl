@@ -3,6 +3,7 @@
 module Api
   module V1
     class BaseController < ActionController::API
+      include ApplicationHelper
       include Pundit::Authorization
 
       before_action :current_organization
@@ -11,6 +12,10 @@ module Api
       # after_action :verify_policy_scoped
 
       rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+      def pundit_user
+        current_user || GuestUser.new(organization: current_organization)
+      end
 
       private
 

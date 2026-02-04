@@ -25,64 +25,62 @@ class CoursePolicy < AdminOnlyPolicy
   end
 
   def permitted_attributes
-    self.class.permitted_attributes_for(record)
+    record.imported_course? ? imported_course_attributes : standard_course_attributes
   end
 
-  def permitted_attributes
-    self.class.permitted_attributes_for(record)
-  end
+  private
 
-  def self.permitted_attributes_for(record)
-    if record.imported_course?
-      attrs = [
-        :category_id,
-        :access_level,
-        :pub_status,
-        :notes,
-        :survey_url,
-        category_attributes: %i[name organization_id],
-        attachments_attributes: %i[document_file title doc_type file_description _destroy],
-        resource_links_attributes: %i[id label url _destroy]
-      ]
+  def imported_course_attributes
+    attrs = [
+      :category_id,
+      :access_level,
+      :pub_status,
+      :notes,
+      :survey_url,
+      category_attributes: %i[name organization_id],
+      attachments_attributes: %i[document_file title doc_type file_description _destroy],
+      resource_links_attributes: %i[id label url _destroy]
+    ]
 
-      if record.organization.custom_topics?
-        attrs << { topic_ids: [] } # can also be :topic_ids, topic_ids: [] depending on style
-        # Better: keep it consistent with the “strong params style”:
-        attrs << { course_topics_attributes: [topic_attributes: %i[title organization_id]] }
-      end
-
-      # If you want *exactly* your prior style, do:
-      # attrs << :topic_ids
-      # attrs << { course_topics_attributes: [topic_attributes: %i[title organization_id]] }
-      # BUT: :topic_ids alone does NOT permit arrays. You need topic_ids: [] somewhere.
-      attrs
-    else
-      [
-        :title,
-        :seo_page_title,
-        :meta_desc,
-        :summary,
-        :description,
-        :contributor,
-        :pub_status,
-        :language_id,
-        :level,
-        :notes,
-        :delete_document,
-        :course_order,
-        :pub_date,
-        :format,
-        :access_level,
-        :category_id,
-        :survey_url,
-        :new_course,
-        topic_ids: [],
-        course_topics_attributes: [topic_attributes: [:title]],
-        category_attributes: %i[name organization_id],
-        attachments_attributes: %i[document_file title doc_type file_description _destroy],
-        resource_links_attributes: %i[id label url _destroy]
-      ]
+    if record.organization.custom_topics?
+      attrs << { topic_ids: [] } # can also be :topic_ids, topic_ids: [] depending on style
+      # Better: keep it consistent with the “strong params style”:
+      attrs << { course_topics_attributes: [topic_attributes: %i[title organization_id]] }
     end
+
+    # If you want *exactly* your prior style, do:
+    # attrs << :topic_ids
+    # attrs << { course_topics_attributes: [topic_attributes: %i[title organization_id]] }
+    # BUT: :topic_ids alone does NOT permit arrays. You need topic_ids: [] somewhere.
+    attrs
+  end
+
+  def standard_course_attributes
+    [
+      :title,
+      :seo_page_title,
+      :meta_desc,
+      :summary,
+      :description,
+      :contributor,
+      :pub_status,
+      :language_id,
+      :level,
+      :notes,
+      :delete_document,
+      :course_order,
+      :pub_date,
+      :format,
+      :access_level,
+      :category_id,
+      :survey_url,
+      :new_course,
+      topic_ids: [],
+      course_topics_attributes: [topic_attributes: [:title]],
+      category_attributes: %i[name organization_id],
+      attachments_attributes: %i[document_file title doc_type file_description _destroy],
+      resource_links_attributes: %i[id label url _destroy]
+    ]
   end
 
   class Scope < Scope

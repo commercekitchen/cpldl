@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class LessonPresenter
-  def initialize(lesson, current_user: nil)
+  def initialize(lesson, user: nil)
     @lesson = lesson
-    @current_user = current_user
+    @user = user
     @course = @lesson.course
   end
 
@@ -30,13 +30,13 @@ class LessonPresenter
   private
 
   def completed?
-    return false unless @current_user
+    return false unless @user
 
     user.completed_lesson_ids(@course).include?(@lesson)
   end
 
   def storyline_path
-    @lesson.storyline_path
+    @lesson.storyline_entry_path
   end
 
   def storyline_url
