@@ -128,6 +128,7 @@ module "application" {
   max_task_count                 = 3
   service_memory                 = 3072
   service_cpu                    = 1536
+  log_retention_days             = 90
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
@@ -152,7 +153,7 @@ module "sidekiq" {
   ecs_cluster_id                 = module.ecs_cluster.cluster_id
   public_subnet_ids              = module.vpc.public_subnet_ids
   image                          = "${data.aws_ecr_repository.ecr_repo.repository_url}:${var.environment_name}"
-  log_retention_days             = 7
+  log_retention_days             = 90
   instance_type                  = "t3.medium"
   desired_task_count             = 1
   min_task_count                 = 1
