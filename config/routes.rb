@@ -165,6 +165,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       get '/me', to: 'users#me'
 
+      resources :autocomplete, only: [:index]
+      resources :search, only: [:index]
       resources :organizations, param: :subdomain, only: [:show] do
         resource :config, only: [:show], controller: "organizations/configs"
       end

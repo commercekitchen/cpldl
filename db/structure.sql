@@ -822,8 +822,8 @@ CREATE TABLE public.organizations (
     preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
     accepts_partners boolean DEFAULT false,
     use_subdomain_for_training_site boolean DEFAULT false NOT NULL,
-    active boolean DEFAULT true NOT NULL,
-    theme_data jsonb
+    theme_data jsonb,
+    active boolean DEFAULT true NOT NULL
 );
 
 
@@ -2505,9 +2505,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241202023432'),
 ('20250227102452'),
 ('20250301063457'),
-('20250319042136'),
-('20250319042137'),
-('20250319042138'),
 ('20250319202556'),
 ('20251003020440'),
 ('20251201194715'),
