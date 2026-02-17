@@ -25,8 +25,7 @@ class LessonPresenter
       category: @course.category&.name,
       topics: @course.topics.map(&:title),
       storylinePath: storyline_path,
-      storylineUrl: storyline_url,
-      previewImageUrl: nil # TODO
+      storylineUrl: storyline_url
     }
   end
 

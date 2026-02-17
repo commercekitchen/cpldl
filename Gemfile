@@ -30,7 +30,7 @@ gem 'redis'
 gem 'redis-namespace'
 
 # Background processing
-gem "sidekiq", "~> 6.5"
+gem 'sidekiq', '~> 6.5'
 
 # Error reporting
 gem 'rollbar'
@@ -93,11 +93,8 @@ gem 'doorkeeper', '~> 5.8'
 gem 'mini_racer', platforms: :ruby
 
 # ActiveStorage variants
-gem "image_processing"
-gem "ruby-vips"
-
-# Vite for asset bundling
-gem 'vite_rails'
+gem 'image_processing'
+gem 'ruby-vips'
 
 group :development do
   gem 'better_errors'

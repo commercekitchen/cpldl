@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include ViteSpaHelper
+
   def current_organization
     @current_organization ||= find_organization
   end

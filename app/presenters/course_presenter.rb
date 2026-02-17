@@ -25,8 +25,7 @@ class CoursePresenter
       categoryName: @course.category&.name,
       categoryId: @course.category&.id,
       attachments: attachments_payload,
-      completed: completed?,
-      previewImageUrl: nil # TODO
+      completed: completed?
     }
   end
 
@@ -35,7 +34,7 @@ class CoursePresenter
   def completed?
     return false if @user.blank?
 
-    @user.course_progresses.find_by(course_id: @course.id).completed_at.present?
+    @user.course_progresses.find_by(course_id: @course.id)&.completed_at.present?
   end
 
   def attachments_payload

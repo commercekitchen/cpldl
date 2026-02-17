@@ -2,7 +2,6 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   use_doorkeeper
-  root 'courses#index'
 
   # Block CKEditor upload routes until we can upgrade
   match "/ckeditor/pictures",         to: proc { [404, {}, ["Not Found"]] }, via: [:get, :post]
@@ -248,4 +247,24 @@ Rails.application.routes.draw do
   get '/learn/using-pc-windows-7/what-windows', to: redirect('/courses/using-a-pc-windows-7/lessons/what-is-windows')
   get '/learn/getting-started-computer/ports', to: redirect('/courses/getting-started-on-a-computer/lessons/ports-9af76a46-c0b7-485a-9422-bcb32f624f8a')
   # ~~~ End of redirect matchers ~~~ #
+
+
+  unless Rails.env.production?
+    # SPA frontend
+    root to: "spa#index"
+
+    get "*path", to: "spa#index", constraints: lambda { |req|
+      path = req.path
+
+      # exclude API, admin, and any other prefixes you want Rails to own
+      !path.start_with?("/api") &&
+        !path.start_with?("/admin") &&
+        !path.start_with?("/rails") &&          # ActiveStorage, etc. if needed
+        !path.start_with?("/assets") &&         # if you serve assets separately
+        !path.start_with?("/spa")               # where Vite build lives
+    }
+  else
+    # SPA is disabled
+    root 'courses#index'
+  end
 end

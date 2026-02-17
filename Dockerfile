@@ -22,6 +22,12 @@ RUN apt-get update -qq && \
       libvips-tools \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Node.js (for Vite build)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get update -qq && \
+    apt-get install -y --no-install-recommends nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
 # Set working directory
 RUN mkdir /rails-app
 WORKDIR /rails-app
@@ -43,10 +49,18 @@ COPY Gemfile.lock Gemfile.lock
 COPY install_gems.sh install_gems.sh
 RUN chmod u+x install_gems.sh && ./install_gems.sh
 
+# Frontend install (cacheable)
+COPY frontend/package.json frontend/package.json
+COPY frontend/package-lock.json frontend/package-lock.json
+RUN cd frontend && npm ci
+
 # Copy app code
 COPY . /rails-app
 
-# Precompile assets (this will load Rails & credentials)
+# Build SPA (outputs to public/spa per your vite.config.ts)
+RUN cd frontend && npm run build
+
+# Precompile Rails assets (sprockets/admin)
 COPY precompile_assets.sh precompile_assets.sh
 RUN chmod u+x precompile_assets.sh && ./precompile_assets.sh
 

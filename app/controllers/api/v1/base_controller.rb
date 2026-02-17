@@ -9,8 +9,6 @@ module Api
       include Pundit::Authorization
 
       before_action :current_organization
-      before_action :enforce_same_origin!, if: :state_changing_request?
-
       protect_from_forgery with: :exception
 
       # after_action :verify_authorized
@@ -27,15 +25,6 @@ module Api
 
       def state_changing_request?
         request.post? || request.put? || request.patch? || request.delete?
-      end
-
-      def enforce_same_origin!
-        expected_origin = request.base_url
-        request_origin = request.headers['Origin'].presence || origin_from_referer
-
-        return if request_origin.present? && request_origin == expected_origin
-
-        render status: :forbidden, json: { message: 'Cross-origin API requests are not allowed.' }
       end
 
       def origin_from_referer
