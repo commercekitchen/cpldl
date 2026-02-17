@@ -261,7 +261,8 @@ Rails.application.routes.draw do
         !path.start_with?("/admin") &&
         !path.start_with?("/rails") &&          # ActiveStorage, etc. if needed
         !path.start_with?("/assets") &&         # if you serve assets separately
-        !path.start_with?("/spa")               # where Vite build lives
+        !path.start_with?("/spa") &&            # where Vite build lives
+        !path.include?(".")
     }
   else
     # SPA is disabled
