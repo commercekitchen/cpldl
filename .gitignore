@@ -84,5 +84,7 @@ erd.pdf
 # Ignore direnv variables
 .envrc
 
-# Ignore frontend build artifacts
+# Ignore frontend modules & build artifacts
+/frontend/node_modules
+/frontend/dist
 /public/spa

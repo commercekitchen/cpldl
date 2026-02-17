@@ -1,0 +1,145 @@
+import { NavLink, useLoaderData, Outlet, useMatch, useNavigate, useLocation } from 'react-router-dom';
+import {
+  ThemeProvider,
+  CssBaseline,
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+import { createMuiThemeForOrganization } from '../app/organization/theme';
+import { useGaPageViews } from '../app/useGaPageViews';
+import type { OrganizationConfig } from '../app/organization/types';
+import { AccountCircle, Category, Home } from '@mui/icons-material';
+import SearchIcon from '@mui/icons-material/Search';
+import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
+
+type NavButtonProps = {
+  to: string;
+  label: string;
+  end?: boolean;
+  icon?: React.ReactNode;
+};
+
+function NavButton({ to, label, end = true, icon }: NavButtonProps) {
+  const isActive = Boolean(useMatch({ path: to, end }));
+
+  return (
+    <Button
+      component={NavLink}
+      to={to}
+      variant="text"
+      color="inherit"
+      startIcon={icon}
+      sx={{
+        textTransform: 'none',
+        borderBottom: '2px solid transparent',
+        borderRadius: 0,
+        ...(isActive && { borderBottomColor: 'currentColor' }),
+      }}
+    >
+      {label}
+    </Button>
+  );
+}
+
+export function RootLayout() {
+  useGaPageViews();
+  const { orgConfig } = useLoaderData() as { orgConfig: OrganizationConfig };
+  const theme = createMuiThemeForOrganization(orgConfig);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isSearchPage = location.pathname === '/search';
+  const query = new URLSearchParams(location.search).get('q')?.trim() ?? '';
+
+  const [searchActive, setSearchActive] = useState(isSearchPage);
+  const [searchValue, setSearchValue] = useState(query);
+
+  useEffect(() => {
+    if (isSearchPage) {
+      setSearchActive(true);
+      setSearchValue(query);
+      return;
+    }
+
+    setSearchActive(false);
+    setSearchValue('');
+  }, [location.pathname, isSearchPage, query]);
+
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AppBar
+        position="static"
+        color="transparent"
+        sx={{
+          backgroundColor: (theme) => theme.palette.background.default,
+          color: (theme) => theme.palette.text.primary,
+        }}
+        elevation={0}
+      >
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {orgConfig.theme.logoUrl ? (
+              <Box
+                component="img"
+                src={orgConfig.theme.logoUrl}
+                alt={`${orgConfig.displayName} logo`}
+                sx={{ height: 50, width: 'auto' }}
+              />
+            ) : (
+              <Typography variant="h6">{orgConfig.displayName}</Typography>
+            )}
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            {searchActive ? (
+              <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }}>
+                <CourseSearchBar
+                  value={searchValue}
+                  onValueChange={setSearchValue}
+                  onSelect={(course) => {
+                    setSearchActive(false);
+                    setSearchValue('');
+                    navigate(`/courses/${course.id}`);
+                  }}
+                  onSubmit={(nextQuery) => {
+                    const trimmed = nextQuery.trim();
+                    if (!trimmed) return;
+                    setSearchActive(true);
+                    setSearchValue(trimmed);
+                    navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+                  }}
+                  autoFocus
+                  fullWidth
+                />
+              </Box>
+            ) : (
+              <Button
+                variant="text"
+                color="inherit"
+                startIcon={<SearchIcon />}
+                onClick={() => setSearchActive(true)}
+                onFocus={() => setSearchActive(true)}
+                sx={{
+                  textTransform: 'none',
+                  borderBottom: '2px solid transparent',
+                  borderRadius: 0,
+                }}
+                aria-label="Open search"
+              >
+                Search
+              </Button>
+            )}
+            <NavButton to="/" label="Home" icon={<Home />} />
+            <NavButton to="/courses" label="Categories" icon={<Category />} />
+            <NavButton to="/login" label="User Login (Optional)" icon={<AccountCircle />} />
+          </Box>
+        </Toolbar>
+      </AppBar>
+      <Outlet />
+    </ThemeProvider>
+  );
+}
