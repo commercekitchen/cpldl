@@ -5,10 +5,11 @@ import { LessonCard } from './LessonCard';
 
 type Props = {
   lessons: Lesson[];
-  onSelect: (lessonId: string) => void;
+  onPlayLesson: (lessonId: string) => void;
+  onViewCourse: (courseId: string) => void;
 };
 
-export function LessonList({ lessons, onSelect }: Props) {
+export function LessonList({ lessons, onPlayLesson, onViewCourse }: Props) {
   if (lessons.length === 0) {
     return <Typography variant="body2">No lessons available.</Typography>;
   }
@@ -39,7 +40,13 @@ export function LessonList({ lessons, onSelect }: Props) {
             height: '100%',
           }}
         >
-          <LessonCard onClick={(lesson) => onSelect(lesson.id)} lesson={l} />
+          <LessonCard
+            lesson={l}
+            onPlayLesson={(lesson) => onPlayLesson(lesson.id)}
+            onViewCourse={(lesson) => {
+              if (lesson.courseId) onViewCourse(lesson.courseId);
+            }}
+          />
         </Box>
       ))}
     </Box>

@@ -1,44 +1,91 @@
 import Card from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import type { Lesson } from '../types';
-import { Schedule, Speed } from '@mui/icons-material';
+import { PlayArrow, Schedule, Speed } from '@mui/icons-material';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 
 type Props = {
   lesson: Lesson;
   metadata?: React.ReactNode;
-  onClick?: (lesson: Lesson) => void;
+  onPlayLesson?: (lesson: Lesson) => void;
+  onViewCourse?: (lesson: Lesson) => void;
 };
 
-export function LessonCard({ lesson, metadata, onClick }: Props) {
-  const handleClick = () => onClick?.(lesson);
+export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Props) {
   const imageUrl = previewImageForRecord(lesson.id);
-  const durationLabel = lesson.duration ? `${Math.floor(lesson.duration / 60).toString()} mins` : 'Unknown';
+  const durationLabel = lesson.duration
+    ? `${Math.floor(lesson.duration / 60).toString()} mins`
+    : 'Unknown';
   const levelLabel = lesson.level?.trim() || 'Level TBD';
 
   const content = (
     <>
-      <CardMedia
-        component="img"
-        image={imageUrl}
-        alt={`${lesson.title} preview`}
-        sx={{
-          height: 180,
-          minHeight: 120,
-          flexShrink: 1,
-          objectFit: 'cover',
-        }}
-      />
-      <CardContent sx={{ flex: '1 1 auto' }}>
+      <Box sx={{ position: 'relative' }}>
+        <CardMedia
+          component="img"
+          image={imageUrl}
+          alt={`${lesson.title} preview`}
+          sx={{
+            height: 180,
+            minHeight: 120,
+            flexShrink: 1,
+            objectFit: 'cover',
+          }}
+        />
+        {onPlayLesson ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              background: 'linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.45) 100%)',
+            }}
+          >
+            <Button
+              variant="text"
+              color="inherit"
+              startIcon={<PlayArrow />}
+              onClick={() => onPlayLesson(lesson)}
+              aria-label={`Play lesson ${lesson.title}`}
+              sx={{
+                color: '#fff',
+                fontWeight: 700,
+                textTransform: 'none',
+                backgroundColor: 'rgba(0, 0, 0, 0.35)',
+                '&:hover, &:focus-visible': {
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                },
+              }}
+            >
+              Play Lesson
+            </Button>
+          </Box>
+        ) : null}
+      </Box>
+      <CardContent
+        sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}
+      >
         <Typography variant="h6" sx={{ mb: 1 }}>
           {lesson.title}
         </Typography>
         {lesson.summary && (
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              mb: 2,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
             {lesson.summary}
           </Typography>
         )}
@@ -65,6 +112,17 @@ export function LessonCard({ lesson, metadata, onClick }: Props) {
           </Box>
         </Box>
         {metadata && <Box>{metadata}</Box>}
+        {onViewCourse && lesson.courseId ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => onViewCourse(lesson)}
+            sx={{ mt: 2 }}
+          >
+            View Full Course
+          </Button>
+        ) : null}
       </CardContent>
     </>
   );
@@ -72,30 +130,12 @@ export function LessonCard({ lesson, metadata, onClick }: Props) {
   return (
     <Card
       sx={{
-        height: 'clamp(376px, 40vh, 460px)',
         minHeight: 'clamp(376px, 40vh, 460px)',
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      {onClick ? (
-        <CardActionArea
-          onClick={handleClick}
-          aria-label={`View ${lesson.title}`}
-          sx={{
-            height: '100%',
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'stretch',
-            justifyContent: 'flex-start',
-          }}
-        >
-          {content}
-        </CardActionArea>
-      ) : (
-        content
-      )}
+      {content}
     </Card>
   );
 }

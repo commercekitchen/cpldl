@@ -23,7 +23,11 @@ export function LessonListContainer({ title, params }: Props) {
       {error && <Alert severity="error">{error.message}</Alert>}
 
       {!isLoading && !error && (
-        <LessonList lessons={lessons} onSelect={(id) => navigate(`/lessons/${id}`)} />
+        <LessonList
+          lessons={lessons}
+          onPlayLesson={(id) => navigate(`/lessons/${id}`)}
+          onViewCourse={(courseId) => navigate(`/courses/${courseId}`)}
+        />
       )}
     </Box>
   );

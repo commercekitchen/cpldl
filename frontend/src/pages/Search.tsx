@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { searchCourses } from '../features/search/api/searchApi';
 import { CourseCard } from '../features/courses/components/CourseCard';
 import type { Course } from '../features/courses/types';
+import { listLessons } from '../features/lessons/api/lessonsApi';
 
 export default function Search() {
   const navigate = useNavigate();
@@ -16,6 +17,24 @@ export default function Search() {
   const [results, setResults] = useState<Course[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const startCourse = async (courseId: string) => {
+    try {
+      const lessons = await listLessons({ courseId }, {});
+      const firstLesson = [...lessons].sort((a, b) => {
+        if (a.lessonOrder !== b.lessonOrder) return a.lessonOrder - b.lessonOrder;
+        return a.id.localeCompare(b.id);
+      })[0];
+      if (firstLesson) {
+        navigate(`/lessons/${firstLesson.id}`);
+        return;
+      }
+    } catch {
+      // Fall through to course detail page.
+    }
+
+    navigate(`/courses/${courseId}`);
+  };
 
   useEffect(() => {
     if (!query) {
@@ -78,7 +97,10 @@ export default function Search() {
             <CourseCard
               key={course.id}
               course={course}
-              onClick={() => navigate(`/courses/${course.id}`)}
+              onViewLessons={() => navigate(`/courses/${course.id}`)}
+              onStartCourse={() => {
+                void startCourse(course.id);
+              }}
             />
           ))}
         </Box>

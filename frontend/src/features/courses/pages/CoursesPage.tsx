@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
 import type { Course } from '../types';
 import { CourseList } from '../components/CourseList';
+import { listLessons } from '../../lessons/api/lessonsApi';
 
 type CategorySection = {
   id: string;
@@ -38,6 +39,24 @@ function compareCourseOrder(a: Course, b: Course) {
 export function CoursesPage() {
   const navigate = useNavigate();
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
+
+  const startCourse = async (courseId: string) => {
+    try {
+      const lessons = await listLessons({ courseId }, {});
+      const firstLesson = [...lessons].sort((a, b) => {
+        if (a.lessonOrder !== b.lessonOrder) return a.lessonOrder - b.lessonOrder;
+        return a.id.localeCompare(b.id);
+      })[0];
+      if (firstLesson) {
+        navigate(`/lessons/${firstLesson.id}`);
+        return;
+      }
+    } catch {
+      // Fall through to course detail page.
+    }
+
+    navigate(`/courses/${courseId}`);
+  };
 
   const sections = useMemo(() => {
     const byCategory = new Map<string, CategorySection>();
@@ -114,7 +133,13 @@ export function CoursesPage() {
               <Typography variant="h5" sx={{ mb: 1 }}>
                 {section.name}
               </Typography>
-              <CourseList courses={section.courses} onSelect={(id) => navigate(`/courses/${id}`)} />
+              <CourseList
+                courses={section.courses}
+                onViewLessons={(id) => navigate(`/courses/${id}`)}
+                onStartCourse={(id) => {
+                  void startCourse(id);
+                }}
+              />
             </Box>
           ))}
         </Box>

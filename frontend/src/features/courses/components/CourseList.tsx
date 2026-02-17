@@ -7,11 +7,12 @@ import { CourseCard } from './CourseCard';
 
 type Props = {
   courses: Course[];
-  onSelect: (courseId: string) => void;
+  onViewLessons: (courseId: string) => void;
+  onStartCourse: (courseId: string) => void;
   viewAllHref?: string;
 };
 
-export function CourseList({ courses, onSelect, viewAllHref }: Props) {
+export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref }: Props) {
   if (courses.length === 0) {
     return <Typography variant="body2">No courses available.</Typography>;
   }
@@ -42,7 +43,11 @@ export function CourseList({ courses, onSelect, viewAllHref }: Props) {
             height: '100%',
           }}
         >
-          <CourseCard onClick={(course) => onSelect(course.id)} course={c} />
+          <CourseCard
+            course={c}
+            onViewLessons={(course) => onViewLessons(course.id)}
+            onStartCourse={(course) => onStartCourse(course.id)}
+          />
         </Box>
       ))}
       {viewAllHref && (

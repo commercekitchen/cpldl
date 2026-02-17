@@ -6,12 +6,31 @@ import { useNavigate } from 'react-router-dom';
 import { CourseList } from './CourseList';
 import type { ListCoursesParams } from '../api/coursesApi';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
+import { listLessons } from '../../lessons/api/lessonsApi';
 
 type Props = { title: string; params?: ListCoursesParams };
 
 export function CourseListContainer({ title, params }: Props) {
   const navigate = useNavigate();
   const { data: courses = [], isLoading, error } = useCoursesListQuery(params);
+
+  const startCourse = async (courseId: string) => {
+    try {
+      const lessons = await listLessons({ courseId }, {});
+      const firstLesson = [...lessons].sort((a, b) => {
+        if (a.lessonOrder !== b.lessonOrder) return a.lessonOrder - b.lessonOrder;
+        return a.id.localeCompare(b.id);
+      })[0];
+      if (firstLesson) {
+        navigate(`/lessons/${firstLesson.id}`);
+        return;
+      }
+    } catch {
+      // Fall through to course detail page.
+    }
+
+    navigate(`/courses/${courseId}`);
+  };
 
   return (
     <Box sx={{ my: 3 }}>
@@ -25,7 +44,10 @@ export function CourseListContainer({ title, params }: Props) {
       {!isLoading && !error && (
         <CourseList
           courses={courses}
-          onSelect={(id) => navigate(`/courses/${id}`)}
+          onViewLessons={(id) => navigate(`/courses/${id}`)}
+          onStartCourse={(id) => {
+            void startCourse(id);
+          }}
           viewAllHref="/courses"
         />
       )}
