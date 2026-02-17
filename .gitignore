@@ -87,4 +87,5 @@ erd.pdf
 # Ignore frontend modules & build artifacts
 /frontend/node_modules
 /frontend/dist
+/frontend/.vite
 /public/spa

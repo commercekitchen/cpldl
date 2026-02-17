@@ -9,6 +9,7 @@ export type Organization = {
 export type OrganizationConfig = {
   subdomain: string;
   displayName: string;
+  bannerText: string;
 
   theme: {
     logoUrl?: string;

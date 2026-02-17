@@ -1,12 +1,9 @@
 {
   "editor.formatOnSave": true,
-
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -16,6 +13,5 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-
   "prettier.requireConfig": true
 }
