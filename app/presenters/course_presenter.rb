@@ -25,7 +25,8 @@ class CoursePresenter
       categoryName: @course.category&.name,
       categoryId: @course.category&.id,
       attachments: attachments_payload,
-      completed: completed?
+      completed: completed?,
+      previewImageUrl: nil # TODO
     }
   end
 

@@ -38,4 +38,77 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
       expect(lesson_payloads.size).to eq(2)
     end
   end
+
+  describe 'POST /api/v1/lessons/complete' do
+    let(:organization) { create(:organization) }
+    let(:course) { create(:course, organization: organization) }
+    let(:user) { create(:user, organization: organization) }
+    let(:same_origin_headers) { { 'Origin' => "http://#{organization.subdomain}.test.host" } }
+
+    before do
+      host! "#{organization.subdomain}.test.host"
+    end
+
+    it 'marks a lesson complete and returns course_completed false for non-assessment lessons' do
+      lesson = create(:lesson, course: course, is_assessment: false)
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
+
+      post '/api/v1/lessons/complete',
+           params: { course_id: course.to_param, lesson_id: lesson.to_param },
+           headers: same_origin_headers
+
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      progress = user.course_progresses.find_by(course_id: course.id)
+
+      expect(progress.completed_lessons).to include(lesson)
+      expect(body['course_completed']).to eq(false)
+      expect(body['redirect_path']).to eq(course_lesson_lesson_complete_path(course, lesson, preview: nil))
+    end
+
+    it 'marks the course complete and returns course_completed true for assessments' do
+      lesson = create(:lesson, course: course, is_assessment: true)
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
+
+      post '/api/v1/lessons/complete',
+           params: { course_id: course.to_param, lesson_id: lesson.to_param },
+           headers: same_origin_headers
+
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      progress = user.course_progresses.find_by(course_id: course.id)
+
+      expect(progress.complete?).to be(true)
+      expect(body['course_completed']).to eq(true)
+      expect(body['redirect_path']).to eq(course_completion_path(course))
+    end
+
+    it 'supports guest completion and returns course_completed false' do
+      lesson = create(:lesson, course: course, is_assessment: false)
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(nil)
+
+      post '/api/v1/lessons/complete',
+           params: { course_id: course.to_param, lesson_id: lesson.to_param },
+           headers: same_origin_headers
+
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      expect(body['course_completed']).to eq(false)
+    end
+
+    it 'rejects cross-origin requests' do
+      lesson = create(:lesson, course: course, is_assessment: false)
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
+
+      post '/api/v1/lessons/complete',
+           params: { course_id: course.to_param, lesson_id: lesson.to_param },
+           headers: { 'Origin' => 'https://evil.example.com' }
+
+      expect(response).to have_http_status(:forbidden)
+      expect(JSON.parse(response.body)['message']).to eq('Cross-origin API requests are not allowed.')
+    end
+  end
 end
