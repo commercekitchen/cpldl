@@ -26,7 +26,7 @@ class OrganizationConfigPresenter
 
       features: {
         phoneNumberSignIn: @organization.phone_number_users_enabled,
-        signUpAllowed: !@organization.main_site?,
+        signUpAllowed: !@organization.main_site? && !@organization.phone_number_users_enabled,
         surveyRequired: @organization.survey_required,
         userSurveyEnabled: @organization.user_survey_enabled,
         userSurveyLink: @organization.user_survey_link,

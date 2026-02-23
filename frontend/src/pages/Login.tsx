@@ -13,11 +13,14 @@ import type { OrganizationConfig } from '../app/organization/types';
 import { useAuth } from '../auth/useAuth';
 
 export default function Login() {
-  const { login } = useAuth();
+  const { login, loginWithPhone } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
   const signUpAllowed = rootData?.orgConfig.features.signUpAllowed !== false;
+  const phoneNumberSignIn = rootData?.orgConfig.features.phoneNumberSignIn === true;
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const usePhoneLogin = phoneNumberSignIn && !showAdminLogin;
 
   const from =
     typeof location.state === 'object' &&
@@ -29,6 +32,7 @@ export default function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -37,7 +41,9 @@ export default function Login() {
     setError(null);
     setSubmitting(true);
     try {
-      const session = await login(email, password);
+      const session = usePhoneLogin
+        ? await loginWithPhone(phone)
+        : await login(email, password);
       if (session?.redirect_to) {
         window.location.assign(session.redirect_to);
         return;
@@ -71,10 +77,12 @@ export default function Login() {
         <Stack spacing={2.5}>
           <Box>
             <Typography variant="h4" sx={{ mb: 0.75 }}>
-              Log in
+              {usePhoneLogin ? 'Continue with Phone Number' : 'Log in'}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Sign in with your DigitalLearn account to track progress and continue courses.
+              {usePhoneLogin
+                ? 'Enter your phone number to continue and track your course progress.'
+                : 'Sign in with your DigitalLearn account to track progress and continue courses.'}
             </Typography>
           </Box>
 
@@ -82,33 +90,70 @@ export default function Login() {
 
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>
-              <TextField
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="email"
-                fullWidth
-                required
-              />
+              {usePhoneLogin ? (
+                <TextField
+                  label="Phone Number"
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  autoComplete="tel"
+                  fullWidth
+                  required
+                  helperText="Numbers only are fine; formatting will be ignored."
+                />
+              ) : (
+                <>
+                  <TextField
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="email"
+                    fullWidth
+                    required
+                  />
 
-              <TextField
-                label="Password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                autoComplete="current-password"
-                fullWidth
-                required
-              />
+                  <TextField
+                    label="Password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete="current-password"
+                    fullWidth
+                    required
+                  />
+                </>
+              )}
 
               <Button type="submit" variant="contained" size="large" disabled={submitting} fullWidth>
-                {submitting ? 'Signing in…' : 'Sign in'}
+                {submitting ? 'Signing in…' : usePhoneLogin ? 'Continue' : 'Sign in'}
               </Button>
             </Stack>
           </Box>
 
-          {signUpAllowed ? (
+          {phoneNumberSignIn ? (
+            <Typography
+              component="div"
+              variant="body2"
+              color="text.secondary"
+              sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
+            >
+              <Box component="span">{usePhoneLogin ? 'Organization admin?' : 'Not an admin?'}</Box>
+              <Button
+                size="small"
+                variant="text"
+                sx={{ p: 0, minWidth: 0 }}
+                onClick={() => {
+                  setError(null);
+                  setShowAdminLogin((v) => !v);
+                }}
+              >
+                {usePhoneLogin ? 'Log in as admin' : 'Use phone number instead'}
+              </Button>
+            </Typography>
+          ) : null}
+
+          {signUpAllowed && !usePhoneLogin ? (
             <Typography variant="body2" color="text.secondary">
               No account?{' '}
               <Button component={Link} to="/signup" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>

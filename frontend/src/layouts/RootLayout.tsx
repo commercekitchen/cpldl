@@ -1,4 +1,11 @@
-import { NavLink, useLoaderData, Outlet, useMatch, useNavigate, useLocation } from 'react-router-dom';
+import {
+  NavLink,
+  useLoaderData,
+  Outlet,
+  useMatch,
+  useNavigate,
+  useLocation,
+} from 'react-router-dom';
 import {
   ThemeProvider,
   CssBaseline,
@@ -12,9 +19,10 @@ import { useState } from 'react';
 import { createMuiThemeForOrganization } from '../app/organization/theme';
 import { useGaPageViews } from '../app/useGaPageViews';
 import type { OrganizationConfig } from '../app/organization/types';
-import { AccountCircle, Category, Home } from '@mui/icons-material';
+import { AccountCircle, AdminPanelSettings, Category, Home } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
+import { useAuth } from '../auth/useAuth';
 
 type NavButtonProps = {
   to: string;
@@ -48,6 +56,7 @@ function NavButton({ to, label, end = true, icon }: NavButtonProps) {
 export function RootLayout() {
   useGaPageViews();
   const { orgConfig } = useLoaderData() as { orgConfig: OrganizationConfig };
+  const { status, user } = useAuth();
   const theme = createMuiThemeForOrganization(orgConfig);
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,6 +67,8 @@ export function RootLayout() {
   const [searchDraft, setSearchDraft] = useState('');
   const searchActive = isSearchPage || isSearchOpen;
   const searchValue = isSearchPage ? query : searchDraft;
+  const isAuthenticated = status === 'authenticated';
+  const isAdmin = Boolean(user?.is_org_admin);
 
   return (
     <ThemeProvider theme={theme}>
@@ -126,7 +137,26 @@ export function RootLayout() {
             )}
             <NavButton to="/" label="Home" icon={<Home />} />
             <NavButton to="/courses" label="Categories" icon={<Category />} />
-            <NavButton to="/login" label="User Login (Optional)" icon={<AccountCircle />} />
+            {isAdmin ? (
+              <Button
+                variant="text"
+                color="inherit"
+                startIcon={<AdminPanelSettings />}
+                onClick={() => window.location.assign('/admin')}
+                sx={{
+                  textTransform: 'none',
+                  borderBottom: '2px solid transparent',
+                  borderRadius: 0,
+                }}
+              >
+                Admin Dashboard
+              </Button>
+            ) : null}
+            <NavButton
+              to={isAuthenticated ? '/account' : '/login'}
+              label={isAuthenticated ? 'Account' : 'User Login (Optional)'}
+              icon={<AccountCircle />}
+            />
           </Box>
         </Toolbar>
       </AppBar>

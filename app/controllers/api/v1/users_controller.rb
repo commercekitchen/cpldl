@@ -13,6 +13,7 @@ module Api
         render json: {
           id: user.id,
           email: user.email,
+          phoneNumber: user.phone_number,
           organization_subdomain: user.organization.subdomain,
           is_org_admin: user.has_role?(:admin, user.organization)
         }

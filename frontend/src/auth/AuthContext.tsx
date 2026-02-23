@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { apiFetch } from '../app/api/apiFetch';
 import { AuthContext, type AuthContextValue, type AuthStatus, type User } from './authState';
 
@@ -23,7 +23,7 @@ async function apiJson(path: string, init: RequestInit = {}) {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [status, setStatus] = useState<AuthStatus>('unauthenticated');
+  const [status, setStatus] = useState<AuthStatus>('loading');
   const [user, setUser] = useState<User | null>(null);
 
   const refresh = async () => {
@@ -47,6 +47,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return session;
   };
 
+  const loginWithPhone = async (phone: string) => {
+    const session = (await apiJson('/api/v1/session', {
+      method: 'POST',
+      body: JSON.stringify({ phone_number: { phone } }),
+    })) as { is_org_admin?: boolean; redirect_to?: string } | null;
+    await refresh();
+    return session;
+  };
+
   const logout = async () => {
     await apiJson('/api/v1/session', { method: 'DELETE' });
     setUser(null);
@@ -54,9 +63,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const value = useMemo<AuthContextValue>(
-    () => ({ status, user, refresh, login, logout }),
+    () => ({ status, user, refresh, login, loginWithPhone, logout }),
     [status, user],
   );
+
+  useEffect(() => {
+    void refresh();
+  }, []);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
