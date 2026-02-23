@@ -9,7 +9,7 @@ import '@fontsource/plus-jakarta-sans/500.css';
 import '@fontsource/plus-jakarta-sans/600.css';
 
 const DEFAULT_PRIMARY = '#002536';
-const DEFAULT_SECONDARY = '#226E56';
+const DEFAULT_SECONDARY = '#663053';
 
 // Good global baseline (don’t customize these unless you validate contrast)
 const LIGHT_BASE_PALETTE = {
