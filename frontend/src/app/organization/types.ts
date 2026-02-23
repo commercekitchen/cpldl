@@ -26,6 +26,7 @@ export type OrganizationConfig = {
     userSurveyLink?: string;
     spanishSurveyLink?: string;
     phoneNumberSignIn: boolean;
+    signUpAllowed?: boolean;
     surveyRequired: boolean;
   };
 };

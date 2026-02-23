@@ -1,14 +1,14 @@
 module Api
   module V1
     class UsersController < Api::V1::BaseController
-      before_action :doorkeeper_authorize! # Require a valid access token
-
       def me
-        # TODO: Authorize with Pundit
-        skip_authorization # Skip required Pundit authorization (for now)
+        skip_authorization
+        user = current_user || current_resource_owner
 
-        # Assuming the user is authenticated through Doorkeeper
-        user = current_resource_owner
+        unless user
+          render status: :unauthorized, json: { message: 'Not authenticated.' }
+          return
+        end
 
         render json: {
           id: user.id,

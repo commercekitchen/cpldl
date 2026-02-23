@@ -1,7 +1,7 @@
 import { type FormEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../app/api/apiFetch';
-import { useAuth } from '../auth/AuthContext';
+import { useAuth } from '../auth/useAuth';
 
 export default function Signup() {
   const { refresh } = useAuth();

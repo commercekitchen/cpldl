@@ -8,7 +8,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createMuiThemeForOrganization } from '../app/organization/theme';
 import { useGaPageViews } from '../app/useGaPageViews';
 import type { OrganizationConfig } from '../app/organization/types';
@@ -54,19 +54,10 @@ export function RootLayout() {
   const isSearchPage = location.pathname === '/search';
   const query = new URLSearchParams(location.search).get('q')?.trim() ?? '';
 
-  const [searchActive, setSearchActive] = useState(isSearchPage);
-  const [searchValue, setSearchValue] = useState(query);
-
-  useEffect(() => {
-    if (isSearchPage) {
-      setSearchActive(true);
-      setSearchValue(query);
-      return;
-    }
-
-    setSearchActive(false);
-    setSearchValue('');
-  }, [location.pathname, isSearchPage, query]);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchDraft, setSearchDraft] = useState('');
+  const searchActive = isSearchPage || isSearchOpen;
+  const searchValue = isSearchPage ? query : searchDraft;
 
   return (
     <ThemeProvider theme={theme}>
@@ -99,17 +90,17 @@ export function RootLayout() {
               <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }}>
                 <CourseSearchBar
                   value={searchValue}
-                  onValueChange={setSearchValue}
+                  onValueChange={setSearchDraft}
                   onSelect={(course) => {
-                    setSearchActive(false);
-                    setSearchValue('');
+                    setIsSearchOpen(false);
+                    setSearchDraft('');
                     navigate(`/courses/${course.id}`);
                   }}
                   onSubmit={(nextQuery) => {
                     const trimmed = nextQuery.trim();
                     if (!trimmed) return;
-                    setSearchActive(true);
-                    setSearchValue(trimmed);
+                    setIsSearchOpen(true);
+                    setSearchDraft(trimmed);
                     navigate(`/search?q=${encodeURIComponent(trimmed)}`);
                   }}
                   autoFocus
@@ -121,8 +112,8 @@ export function RootLayout() {
                 variant="text"
                 color="inherit"
                 startIcon={<SearchIcon />}
-                onClick={() => setSearchActive(true)}
-                onFocus={() => setSearchActive(true)}
+                onClick={() => setIsSearchOpen(true)}
+                onFocus={() => setIsSearchOpen(true)}
                 sx={{
                   textTransform: 'none',
                   borderBottom: '2px solid transparent',

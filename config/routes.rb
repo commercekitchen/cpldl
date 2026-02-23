@@ -162,6 +162,7 @@ Rails.application.routes.draw do
   # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
+      resource :session, only: [:create, :destroy]
       get '/me', to: 'users#me'
 
       resources :autocomplete, only: [:index]

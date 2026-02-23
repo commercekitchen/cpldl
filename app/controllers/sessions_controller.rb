@@ -4,6 +4,10 @@ class SessionsController < Devise::SessionsController
   before_action :skip_authorization
 
   def new
+    if request.format.html?
+      redirect_to('/login') && (return)
+    end
+
     @library_card_login = current_organization.library_card_login? && !params[:admin]
     @phone_number_login = current_organization.phone_number_users_enabled && !params[:admin]
     super
