@@ -13,6 +13,16 @@ Rails.application.routes.draw do
   get "/ckeditor_assets/attachments/:id/:filename", to: "legacy_ckeditor_assets#attachment"
   get "/ckeditor_assets/pictures/:id/:style_:basename.:extension", to: "legacy_ckeditor_assets#picture"
 
+  # SPA routes should win over legacy routes on direct browser loads.
+  root to: 'spa#index'
+  get '/login', to: 'spa#index', as: :spa_login
+  get '/account', to: 'spa#index'
+  get '/search', to: 'spa#index'
+  get '/courses', to: 'spa#index'
+  get '/courses/:course_id', to: 'spa#index'
+  get '/courses/:course_id/completed', to: 'spa#index'
+  get '/lessons/:lesson_id', to: 'spa#index'
+
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
     post 'select_program'
@@ -163,6 +173,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :session, only: [:create, :destroy]
+      resource :profile, only: [:show, :update]
+      resource :account, only: [:show, :update]
       get '/me', to: 'users#me'
 
       resources :autocomplete, only: [:index]
@@ -251,9 +263,7 @@ Rails.application.routes.draw do
 
 
   unless Rails.env.production?
-    # SPA frontend
-    root to: "spa#index"
-
+    # SPA frontend catch-all in non-production.
     get "*path", to: "spa#index", constraints: lambda { |req|
       path = req.path
 
@@ -265,8 +275,5 @@ Rails.application.routes.draw do
         !path.start_with?("/spa") &&            # where Vite build lives
         !path.include?(".")
     }
-  else
-    # SPA is disabled
-    root 'courses#index'
   end
 end
