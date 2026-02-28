@@ -68,7 +68,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 
   useEffect(() => {
-    void refresh();
+    let active = true;
+
+    const bootstrapAuth = async () => {
+      try {
+        const me = await apiJson('/api/v1/me', { method: 'GET' });
+        if (!active) return;
+        setUser(me);
+        setStatus('authenticated');
+      } catch {
+        if (!active) return;
+        setUser(null);
+        setStatus('unauthenticated');
+      }
+    };
+
+    void bootstrapAuth();
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
