@@ -1,5 +1,4 @@
 const PREVIEW_IMAGES = [
-  '/preview_images/JPG_Test.jpg',
   '/preview_images/focused_expression_at_computer.png',
   '/preview_images/focused_expression_at_desk.png',
   '/preview_images/focused_person_at_computer.png',
