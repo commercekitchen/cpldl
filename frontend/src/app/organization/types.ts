@@ -10,11 +10,18 @@ export type OrganizationConfig = {
   subdomain: string;
   displayName: string;
   bannerText: string;
+  footerLinks?: Array<{
+    title: string;
+    url: string;
+    openInNewTab?: boolean;
+  }>;
 
   theme: {
     logoUrl?: string;
     footerLogoUrl?: string;
-    footerLogoDestinationUrl: string;
+    footerLogoDestinationUrl?: string;
+    plaFooterLogoUrl?: string;
+    plaFooterLogoDestinationUrl?: string;
     primaryColor?: string;
     secondaryColor?: string;
     fontFamily?: string;
