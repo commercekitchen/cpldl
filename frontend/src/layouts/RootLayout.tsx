@@ -15,6 +15,7 @@ import {
   Button,
   Box,
   Link as MuiLink,
+  Fab,
 } from '@mui/material';
 import { useState } from 'react';
 import { createMuiThemeForOrganization } from '../app/organization/theme';
@@ -66,16 +67,32 @@ export function RootLayout() {
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchDraft, setSearchDraft] = useState('');
+  const [searchFocusSignal, setSearchFocusSignal] = useState(0);
   const searchActive = isSearchPage || isSearchOpen;
   const searchValue = isSearchPage ? query : searchDraft;
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
   const footerLinks = orgConfig.footerLinks ?? [];
+  const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
+  const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
+
+  const openSearch = () => {
+    setIsSearchOpen(true);
+    setSearchFocusSignal((value) => value + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          pb: { xs: '88px', md: 0 },
+        }}
+      >
         <AppBar
           position="static"
           color="transparent"
@@ -85,7 +102,7 @@ export function RootLayout() {
           }}
           elevation={0}
         >
-          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', minHeight: 72 }}>
             <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {orgConfig.theme.logoUrl ? (
                 <Box
@@ -99,7 +116,25 @@ export function RootLayout() {
               )}
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
+              <Button
+                component={NavLink}
+                to={isAuthenticated ? '/account' : '/login'}
+                variant="text"
+                color="inherit"
+                startIcon={<AccountCircle />}
+                sx={{
+                  textTransform: 'none',
+                  borderBottom: '2px solid transparent',
+                  borderRadius: 0,
+                  px: 0.5,
+                }}
+              >
+                {isAuthenticated ? 'Account' : 'Sign In'}
+              </Button>
+            </Box>
+
+            <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
               {searchActive ? (
                 <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }}>
                   <CourseSearchBar
@@ -119,6 +154,7 @@ export function RootLayout() {
                     }}
                     autoFocus
                     fullWidth
+                    focusSignal={searchFocusSignal}
                   />
                 </Box>
               ) : (
@@ -126,8 +162,8 @@ export function RootLayout() {
                   variant="text"
                   color="inherit"
                   startIcon={<SearchIcon />}
-                  onClick={() => setIsSearchOpen(true)}
-                  onFocus={() => setIsSearchOpen(true)}
+                  onClick={openSearch}
+                  onFocus={openSearch}
                   sx={{
                     textTransform: 'none',
                     borderBottom: '2px solid transparent',
@@ -162,6 +198,28 @@ export function RootLayout() {
               />
             </Box>
           </Toolbar>
+
+          <Box sx={{ display: { xs: searchActive ? 'block' : 'none', md: 'none' }, px: 2, pb: 1.5 }}>
+            <CourseSearchBar
+              value={searchValue}
+              onValueChange={setSearchDraft}
+              onSelect={(course) => {
+                setIsSearchOpen(false);
+                setSearchDraft('');
+                navigate(`/courses/${course.id}`);
+              }}
+              onSubmit={(nextQuery) => {
+                const trimmed = nextQuery.trim();
+                if (!trimmed) return;
+                setIsSearchOpen(true);
+                setSearchDraft(trimmed);
+                navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+              }}
+              autoFocus
+              fullWidth
+              focusSignal={searchFocusSignal}
+            />
+          </Box>
         </AppBar>
 
         <Box sx={{ flex: 1 }}>
@@ -312,6 +370,88 @@ export function RootLayout() {
                 Send us an Email
               </Button>
             </Box>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            display: { xs: 'block', md: 'none' },
+            position: 'fixed',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: (theme) => theme.zIndex.appBar + 1,
+          }}
+        >
+          <Box
+            sx={{
+              position: 'relative',
+              borderTop: '1px solid',
+              borderColor: 'divider',
+              backgroundColor: 'background.paper',
+              px: 2,
+              pt: 1,
+              pb: 'calc(8px + env(safe-area-inset-bottom))',
+              display: 'flex',
+              alignItems: 'flex-end',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Button
+              component={NavLink}
+              to="/"
+              variant="text"
+              color={isHomeActive ? 'primary' : 'inherit'}
+              sx={{
+                textTransform: 'none',
+                minWidth: 120,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                lineHeight: 1.1,
+                gap: 0.25,
+                '& .MuiSvgIcon-root': { fontSize: 28 },
+              }}
+            >
+              <Home />
+              Home
+            </Button>
+
+            <Fab
+              color="primary"
+              aria-label="Open search"
+              onClick={openSearch}
+              sx={{
+                position: 'absolute',
+                left: '50%',
+                top: 0,
+                transform: 'translate(-50%, -45%)',
+              }}
+            >
+              <SearchIcon />
+            </Fab>
+
+            <Button
+              component={NavLink}
+              to="/courses"
+              variant="text"
+              color={isCategoriesActive ? 'primary' : 'inherit'}
+              sx={{
+                textTransform: 'none',
+                minWidth: 120,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                lineHeight: 1.1,
+                gap: 0.25,
+                '& .MuiSvgIcon-root': { fontSize: 28 },
+              }}
+            >
+              <Category />
+              Categories
+            </Button>
           </Box>
         </Box>
       </Box>

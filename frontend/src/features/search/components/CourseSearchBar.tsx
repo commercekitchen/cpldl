@@ -14,6 +14,7 @@ type Props = {
   onSubmit: (query: string) => void;
   autoFocus?: boolean;
   fullWidth?: boolean;
+  focusSignal?: number;
 };
 
 export function CourseSearchBar({
@@ -23,6 +24,7 @@ export function CourseSearchBar({
   onSubmit,
   autoFocus = false,
   fullWidth = false,
+  focusSignal = 0,
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [options, setOptions] = useState<CourseSearchSuggestion[]>([]);
@@ -36,6 +38,12 @@ export function CourseSearchBar({
     }
     return;
   }, [autoFocus]);
+
+  useEffect(() => {
+    if (focusSignal === 0) return;
+    const id = window.setTimeout(() => inputRef.current?.focus(), 0);
+    return () => window.clearTimeout(id);
+  }, [focusSignal]);
 
   useEffect(() => {
     const trimmed = value.trim();
