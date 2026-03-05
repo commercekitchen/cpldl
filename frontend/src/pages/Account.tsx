@@ -11,6 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
+import Link from '@mui/material/Link';
 import { type FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiFetch } from '../app/api/apiFetch';
@@ -163,7 +164,10 @@ export default function Account() {
               </Typography>
               {user.is_org_admin ? (
                 <Alert severity="info" sx={{ mt: 2 }}>
-                  You are signed in as an organization admin.
+                  You are signed in as an organization admin.{' '}
+                  <Link href="/admin">
+                    Go to Admin Dashboard
+                  </Link>
                 </Alert>
               ) : null}
             </Box>
