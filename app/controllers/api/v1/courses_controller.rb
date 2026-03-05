@@ -11,7 +11,7 @@ module Api
           courses = courses.joins(:category).where(categories: { id: category_id })
         end
 
-        render json: CourseCollectionPresenter.new(courses).as_json
+        render json: CourseCollectionPresenter.new(courses, user: current_user).as_json
       end
 
       def show

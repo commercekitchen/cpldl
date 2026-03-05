@@ -13,7 +13,8 @@ import { useCourseQuery } from '../queries/courseQuery';
 import { LessonListContainer } from '../../lessons/components/LessonListContainer';
 import { Container } from '@mui/material';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
-import { CheckCircleOutline, Schedule, Speed } from '@mui/icons-material';
+import { CourseCompletedBadge } from '../components/CourseCompletedBadge';
+import { Schedule, Speed } from '@mui/icons-material';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 
 function buildCourseTitle(course: Course) {
@@ -56,9 +57,10 @@ export function CoursePage() {
   const levelLabel = course.level ?? 'Unspecified';
   const lessonsCount = course.lessonsCount;
   const lessonsCompletedCount = course.lessonsCompletedCount;
-  const progressLabel =
-    typeof lessonsCount === 'number' && typeof lessonsCompletedCount === 'number'
-      ? `${lessonsCompletedCount} of ${lessonsCount} lesson${lessonsCount === 1 ? '' : 's'} completed`
+  const titleBadge = course.completed
+    ? 'Completed'
+    : typeof lessonsCount === 'number' && typeof lessonsCompletedCount === 'number'
+      ? `[${lessonsCompletedCount} of ${lessonsCount} completed]`
       : null;
 
   return (
@@ -83,9 +85,18 @@ export function CoursePage() {
           }}
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
-          <Typography variant="h4" sx={{ mb: 1 }}>
-            {course.title}
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 1 }}>
+            <Typography variant="h4">
+              {course.title}
+            </Typography>
+            {course.completed ? (
+              <CourseCompletedBadge />
+            ) : titleBadge && (
+              <Typography component="span" variant="body2" color="text.secondary">
+                {titleBadge}
+              </Typography>
+            )}
+          </Box>
           {course.summary && (
             <Typography variant="body1" sx={{ mb: 2 }}>
               {course.summary}
@@ -113,14 +124,6 @@ export function CoursePage() {
                 {levelLabel}
               </Typography>
             </Box>
-            {progressLabel && (
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <CheckCircleOutline fontSize="small" />
-                <Typography variant="body2" color="text.secondary">
-                  {progressLabel}
-                </Typography>
-              </Box>
-            )}
           </Box>
         </Box>
       </Box>

@@ -42,7 +42,7 @@ class Lesson < ApplicationRecord
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
-  scope :completed_for_user, ->(user) { joins(lesson_completions: :course_progress).where(course_progresses: { user: user }) }
+  scope :completed_for_user, ->(user) { joins(lesson_completions: :course_progress).where(course_progresses: { user_id: user.id }) }
 
   enum storyline_unzip_status: {
     queued: 0,

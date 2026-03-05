@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import type { Course } from '../types';
 import { PlayArrow, PlayLesson, Schedule, Speed } from '@mui/icons-material';
 import { CourseCategoryPill } from './CourseCategoryPill';
+import { CourseCompletedBadge } from './CourseCompletedBadge';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import attLogo from '../../../assets/att_logo.svg';
 
@@ -80,9 +81,11 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
       <CardContent
         sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}
       >
-        <Typography variant="h6" sx={{ mb: 1 }}>
-          {course.title}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1, mb: 1 }}>
+          <Typography variant="h6">{course.title}</Typography>
+          <>{console.log('Course completed:', course.completed)}</>
+          {course.completed && <CourseCompletedBadge />}
+        </Box>
         {course.summary && (
           <Typography
             variant="body2"

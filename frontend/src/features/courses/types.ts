@@ -13,6 +13,7 @@ export type Course = {
   categoryName?: string;
   level?: string;
   totalDuration?: string;
+  completed?: boolean;
   lessonsCount?: number;
   lessonsCompletedCount?: number;
   previewImageUrl?: string;
