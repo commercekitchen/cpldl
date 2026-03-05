@@ -1,6 +1,7 @@
 export type Lesson = {
   id: string;
   courseId?: string;
+  courseTitle?: string;
   title: string;
   summary: string;
   duration: number;

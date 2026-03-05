@@ -5,9 +5,10 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { Course } from '../types';
-import { PlayArrow, PlayLesson, Schedule, Speed } from '@mui/icons-material';
+import { PlayArrow } from '@mui/icons-material';
 import { CourseCategoryPill } from './CourseCategoryPill';
 import { CourseCompletedBadge } from './CourseCompletedBadge';
+import { CourseStats } from './CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import attLogo from '../../../assets/att_logo.svg';
 
@@ -21,17 +22,6 @@ type Props = {
 export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: Props) {
   const imageUrl = previewImageForRecord(course.id);
   const categoryLabel = course.categoryName?.trim();
-  const durationSeconds = Number(course.totalDuration);
-  const durationLabel =
-    Number.isFinite(durationSeconds) && durationSeconds > 0
-      ? `${Math.floor(durationSeconds / 60).toString()} mins`
-      : 'Duration TBD';
-  const levelLabel = course.level?.trim() || 'Level TBD';
-  const lessonsLabel =
-    typeof course.lessonsCount === 'number'
-      ? `${course.lessonsCount} lesson${course.lessonsCount === 1 ? '' : 's'}`
-      : 'Lessons TBD';
-
   const content = (
     <>
       <Box sx={{ position: 'relative' }}>
@@ -102,34 +92,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
           </Typography>
         )}
         {categoryLabel && <CourseCategoryPill label={categoryLabel} />}
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: 2,
-            flexWrap: 'wrap',
-          }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Schedule />
-            <Typography variant="body2" color="text.secondary">
-              {durationLabel}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Speed />
-            <Typography variant="body2" color="text.secondary">
-              {levelLabel}
-            </Typography>
-          </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <PlayLesson />
-            <Typography variant="body2" color="text.secondary">
-              {lessonsLabel}
-            </Typography>
-          </Box>
-        </Box>
+        <CourseStats course={course} showLessons />
         {metadata && <Box>{metadata}</Box>}
         {onViewLessons ? (
           <Button

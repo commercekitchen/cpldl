@@ -14,7 +14,7 @@ import { LessonListContainer } from '../../lessons/components/LessonListContaine
 import { Container } from '@mui/material';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseCompletedBadge } from '../components/CourseCompletedBadge';
-import { Schedule, Speed } from '@mui/icons-material';
+import { CourseStats } from '../components/CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 
 function buildCourseTitle(course: Course) {
@@ -49,12 +49,6 @@ export function CoursePage() {
   const additionalResources = attachments.filter((item) => item.docType === 'additional-resource');
   const textCopies = attachments.filter((item) => item.docType === 'text-copy');
   const previewImageUrl = previewImageForRecord(course.id);
-  const durationSeconds = Number(course.totalDuration);
-  const durationLabel =
-    Number.isFinite(durationSeconds) && durationSeconds > 0
-      ? `${Math.floor(durationSeconds / 60).toString()} mins`
-      : 'Duration TBD';
-  const levelLabel = course.level ?? 'Unspecified';
   const lessonsCount = course.lessonsCount;
   const lessonsCompletedCount = course.lessonsCompletedCount;
   const titleBadge = course.completed
@@ -103,28 +97,7 @@ export function CoursePage() {
             </Typography>
           )}
           {course.categoryName && <CourseCategoryPill label={course.categoryName.trim()} />}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'row',
-              alignItems: 'center',
-              gap: 2,
-              flexWrap: 'wrap',
-            }}
-          >
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Schedule />
-              <Typography variant="body2" color="text.secondary">
-                {durationLabel}
-              </Typography>
-            </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <Speed />
-              <Typography variant="body2" color="text.secondary">
-                {levelLabel}
-              </Typography>
-            </Box>
-          </Box>
+          <CourseStats course={course} />
         </Box>
       </Box>
 

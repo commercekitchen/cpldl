@@ -11,6 +11,7 @@ class LessonPresenter
     {
       id: @lesson.slug,
       courseId: @course&.id,
+      courseTitle: @course&.title,
       title: @lesson.title,
       summary: @lesson.summary,
       duration: @lesson.duration,

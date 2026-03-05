@@ -1,8 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // or your router
+import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'; // or your router
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import { ArrowBack } from '@mui/icons-material';
 import { StorylinePlayer } from '../components/StorylinePlayer';
 import { useLessonCompletionListener } from '../hooks/useLessonCompletionListener';
 import { completeLesson, listLessons } from '../api/lessonsApi';
@@ -105,8 +108,42 @@ export function LessonPlayerPage() {
   if (error) return <Alert severity="error">{error ?? 'Error completing lesson'}</Alert>;
 
   return (
-    <Box sx={{ width: '100vw', height: '100vh' }}>
-      <Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100vw', height: '100vh' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 2,
+          px: 2,
+          py: 1,
+          borderBottom: '1px solid',
+          borderColor: 'divider',
+          bgcolor: 'background.paper',
+          flexShrink: 0,
+        }}
+      >
+        {lesson.courseId && (
+          <Link
+            component={RouterLink}
+            to={`/courses/${lesson.courseId}`}
+            underline="hover"
+            color="text.secondary"
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}
+          >
+            <ArrowBack fontSize="small" />
+            <Typography variant="body2">{lesson.courseTitle ?? 'Back to Course'}</Typography>
+          </Link>
+        )}
+        {lesson.courseId && (
+          <Typography variant="body2" color="divider" sx={{ userSelect: 'none' }}>
+            /
+          </Typography>
+        )}
+        <Typography variant="body2" fontWeight={600} noWrap>
+          {lesson.title}
+        </Typography>
+      </Box>
+      <Box sx={{ flex: 1, position: 'relative', minHeight: 0 }}>
         <StorylinePlayer ref={iframeRef} src={lesson.storylineUrl} title={iframeTitle} />
 
         {completing && (
@@ -125,4 +162,5 @@ export function LessonPlayerPage() {
       </Box>
     </Box>
   );
+
 }
