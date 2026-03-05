@@ -99,8 +99,12 @@ export default function Account() {
       });
 
       if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as { errors?: string[]; message?: string } | null;
-        const message = body?.errors?.join(', ') || body?.message || `Failed to save profile (${res.status})`;
+        const body = (await res.json().catch(() => null)) as {
+          errors?: string[];
+          message?: string;
+        } | null;
+        const message =
+          body?.errors?.join(', ') || body?.message || `Failed to save profile (${res.status})`;
         throw new Error(message);
       }
 
@@ -131,8 +135,14 @@ export default function Account() {
       });
 
       if (!res.ok) {
-        const body = (await res.json().catch(() => null)) as { errors?: string[]; message?: string } | null;
-        const message = body?.errors?.join(', ') || body?.message || `Failed to update login information (${res.status})`;
+        const body = (await res.json().catch(() => null)) as {
+          errors?: string[];
+          message?: string;
+        } | null;
+        const message =
+          body?.errors?.join(', ') ||
+          body?.message ||
+          `Failed to update login information (${res.status})`;
         throw new Error(message);
       }
 
@@ -149,7 +159,10 @@ export default function Account() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Paper elevation={0} sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}>
+      <Paper
+        elevation={0}
+        sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}
+      >
         <Stack spacing={2}>
           <Typography variant="h4">Account</Typography>
           <Typography variant="body2" color="text.secondary">
@@ -165,9 +178,7 @@ export default function Account() {
               {user.is_org_admin ? (
                 <Alert severity="info" sx={{ mt: 2 }}>
                   You are signed in as an organization admin.{' '}
-                  <Link href="/admin">
-                    Go to Admin Dashboard
-                  </Link>
+                  <Link href="/admin">Go to Admin Dashboard</Link>
                 </Alert>
               ) : null}
             </Box>
@@ -221,7 +232,14 @@ export default function Account() {
               </Stack>
             </Box>
           ) : null}
+        </Stack>
+      </Paper>
 
+      <Paper
+        elevation={0}
+        sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2, mt: 4 }}
+      >
+        <Stack spacing={2}>
           {!loading ? (
             <Box component="form" onSubmit={onSubmitAccount}>
               <Stack spacing={2}>
@@ -256,7 +274,12 @@ export default function Account() {
             </Box>
           ) : null}
 
-          <Button variant="outlined" color="primary" onClick={() => void onLogout()} sx={{ alignSelf: 'flex-start' }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => void onLogout()}
+            sx={{ alignSelf: 'flex-start' }}
+          >
             Log Out
           </Button>
         </Stack>

@@ -13,7 +13,7 @@ import { useCourseQuery } from '../queries/courseQuery';
 import { LessonListContainer } from '../../lessons/components/LessonListContainer';
 import { Container } from '@mui/material';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
-import { Schedule, Speed } from '@mui/icons-material';
+import { CheckCircleOutline, Schedule, Speed } from '@mui/icons-material';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 
 function buildCourseTitle(course: Course) {
@@ -54,6 +54,12 @@ export function CoursePage() {
       ? `${Math.floor(durationSeconds / 60).toString()} mins`
       : 'Duration TBD';
   const levelLabel = course.level ?? 'Unspecified';
+  const lessonsCount = course.lessonsCount;
+  const lessonsCompletedCount = course.lessonsCompletedCount;
+  const progressLabel =
+    typeof lessonsCount === 'number' && typeof lessonsCompletedCount === 'number'
+      ? `${lessonsCompletedCount} of ${lessonsCount} lesson${lessonsCount === 1 ? '' : 's'} completed`
+      : null;
 
   return (
     <Container sx={{ py: 3 }}>
@@ -107,6 +113,14 @@ export function CoursePage() {
                 {levelLabel}
               </Typography>
             </Box>
+            {progressLabel && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <CheckCircleOutline fontSize="small" />
+                <Typography variant="body2" color="text.secondary">
+                  {progressLabel}
+                </Typography>
+              </Box>
+            )}
           </Box>
         </Box>
       </Box>

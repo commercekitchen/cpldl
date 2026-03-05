@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { apiFetch } from '../app/api/apiFetch';
+import { apiFetch, invalidateCsrfCache } from '../app/api/apiFetch';
 import { AuthContext, type AuthContextValue, type AuthStatus, type User } from './authState';
 
 async function apiJson(path: string, init: RequestInit = {}) {
@@ -43,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     })) as { is_org_admin?: boolean; redirect_to?: string } | null;
+    invalidateCsrfCache();
     await refresh();
     return session;
   };
@@ -52,12 +53,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       method: 'POST',
       body: JSON.stringify({ phone_number: { phone } }),
     })) as { is_org_admin?: boolean; redirect_to?: string } | null;
+    invalidateCsrfCache();
     await refresh();
     return session;
   };
 
   const logout = async () => {
     await apiJson('/api/v1/session', { method: 'DELETE' });
+    invalidateCsrfCache();
     setUser(null);
     setStatus('unauthenticated');
   };

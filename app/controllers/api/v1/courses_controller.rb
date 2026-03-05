@@ -16,7 +16,7 @@ module Api
 
       def show
         course = Course.friendly.find(params[:id])
-        render json: CoursePresenter.new(course).as_json
+        render json: CoursePresenter.new(course, user: current_user).as_json
       end
     end
   end

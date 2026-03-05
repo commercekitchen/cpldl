@@ -188,6 +188,8 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: [:index, :show]
+
+      get '/csrf', to: 'csrf#show' if Rails.env.development?
     end
   end
 

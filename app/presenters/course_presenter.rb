@@ -25,7 +25,9 @@ class CoursePresenter
       categoryName: @course.category&.name,
       categoryId: @course.category&.id,
       attachments: attachments_payload,
-      completed: completed?
+      completed: completed?,
+      lessonsCount: @course.lessons.count,
+      lessonsCompletedCount: lessons_completed_count
     }
   end
 
@@ -35,6 +37,12 @@ class CoursePresenter
     return false if @user.blank?
 
     @user.course_progresses.find_by(course_id: @course.id)&.completed_at.present?
+  end
+
+  def lessons_completed_count
+    return 0 unless @user.is_a?(User)
+
+    @course.lessons.completed_for_user(@user).count
   end
 
   def attachments_payload
