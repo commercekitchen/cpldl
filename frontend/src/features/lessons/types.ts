@@ -11,4 +11,5 @@ export type Lesson = {
   lessonOrder: number;
   level: string;
   previewImageUrl?: string;
+  completed?: boolean;
 };

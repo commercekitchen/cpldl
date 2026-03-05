@@ -5,8 +5,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { Lesson } from '../types';
-import { PlayArrow, Schedule, Speed } from '@mui/icons-material';
+import { PlayArrow, Replay, Schedule, Speed } from '@mui/icons-material';
 import { previewImageForRecord } from '../../../app/images/previewImages';
+import { CourseCompletedBadge } from '../../courses/components/CourseCompletedBadge';
 
 type Props = {
   lesson: Lesson;
@@ -50,9 +51,9 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
             <Button
               variant="text"
               color="inherit"
-              startIcon={<PlayArrow />}
+              startIcon={lesson.completed ? <Replay /> : <PlayArrow />}
               onClick={() => onPlayLesson(lesson)}
-              aria-label={`Play lesson ${lesson.title}`}
+              aria-label={lesson.completed ? `Replay lesson ${lesson.title}` : `Play lesson ${lesson.title}`}
               sx={{
                 color: '#fff',
                 fontWeight: 700,
@@ -63,7 +64,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
                 },
               }}
             >
-              Play Lesson
+              {lesson.completed ? 'Replay' : 'Play Lesson'}
             </Button>
           </Box>
         ) : null}
@@ -71,9 +72,10 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
       <CardContent
         sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}
       >
-        <Typography variant="h6" sx={{ mb: 1 }}>
-          {lesson.title}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1, mb: 1 }}>
+          <Typography variant="h6">{lesson.title}</Typography>
+          {lesson.completed && <CourseCompletedBadge />}
+        </Box>
         {lesson.summary && (
           <Typography
             variant="body2"

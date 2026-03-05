@@ -34,7 +34,7 @@ class LessonPresenter
   def completed?
     return false unless @user
 
-    user.completed_lesson_ids(@course).include?(@lesson)
+    @user.completed_lesson_ids(@course).include?(@lesson.id)
   end
 
   def storyline_path

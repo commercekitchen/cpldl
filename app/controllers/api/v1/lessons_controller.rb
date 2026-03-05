@@ -5,12 +5,12 @@ module Api
     class LessonsController < Api::V1::BaseController
       def index
         lessons = fetch_lessons_for_index
-        render json: LessonCollectionPresenter.new(lessons).as_json
+        render json: LessonCollectionPresenter.new(lessons, user: current_user).as_json
       end
 
       def show
         lesson = Lesson.friendly.find(params[:id])
-        render json: LessonPresenter.new(lesson).as_json
+        render json: LessonPresenter.new(lesson, user: current_user).as_json
       end
 
       def complete
