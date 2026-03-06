@@ -4,7 +4,7 @@ module Api
   module V1
     class CoursesController < Api::V1::BaseController
       def index
-        courses = policy_scope(Course).where(language: current_language, pub_status: %w[P C])
+        courses = policy_scope(Course).where(language: current_language, pub_status: %w[P C]).order(updated_at: :desc)
 
         category_id = params[:category_id]
         if category_id.present?

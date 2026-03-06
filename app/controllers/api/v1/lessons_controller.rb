@@ -112,7 +112,11 @@ module Api
       end
 
       def lessons_for_popular_scope
-        Lesson.all
+        Lesson
+          .left_joins(:lesson_completions)
+          .where('lesson_completions.created_at > ? OR lesson_completions.id IS NULL', 1.year.ago)
+          .group('lessons.id')
+          .order('COUNT(lesson_completions.id) DESC')
       end
 
       def lessons_for_all_scope

@@ -1,12 +1,9 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
 import type { Course } from '../types';
@@ -39,6 +36,7 @@ function compareCourseOrder(a: Course, b: Course) {
 export function CoursesPage() {
   const navigate = useNavigate();
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
+  const [activeId, setActiveId] = useState<string | null>(null);
 
   const startCourse = async (courseId: string) => {
     try {
@@ -61,7 +59,6 @@ export function CoursesPage() {
   const sections = useMemo(() => {
     const byCategory = new Map<string, CategorySection>();
     for (const course of courses) {
-      console.log(course);
       const id = toCategoryId(course);
       const name = toCategoryName(course);
       const existing = byCategory.get(id);
@@ -79,6 +76,30 @@ export function CoursesPage() {
     result.sort((a, b) => a.name.localeCompare(b.name));
     return result;
   }, [courses]);
+
+  useEffect(() => {
+    const getActiveId = () => {
+      const threshold = window.innerHeight * 0.3;
+      let result: string | null = null;
+      for (const section of sections) {
+        const el = document.getElementById(`category-${section.id}`);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= threshold) {
+          result = section.id;
+        }
+      }
+      return result;
+    };
+
+    const handleScroll = () => {
+      const next = getActiveId();
+      if (next !== null) setActiveId(next);
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [sections]);
 
   if (isLoading) return <CircularProgress />;
   if (error) return <Alert severity="error">{error.message}</Alert>;
@@ -110,21 +131,57 @@ export function CoursesPage() {
             pr: { md: 2 },
           }}
         >
-          <Typography variant="h6" sx={{ mb: 1 }}>
+          <Typography variant="h6" sx={{ mb: 1.5 }}>
             Categories
           </Typography>
-          <List disablePadding>
-            {sections.map((section) => (
-              <ListItemButton
-                key={section.id}
-                component="a"
-                href={`#category-${section.id}`}
-                sx={{ px: 0 }}
-              >
-                <ListItemText primary={section.name} />
-              </ListItemButton>
-            ))}
-          </List>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {sections.map((section) => {
+              const active = activeId === section.id;
+              return (
+                <Box
+                  key={section.id}
+                  component="a"
+                  href={`#category-${section.id}`}
+                  sx={{
+                    position: 'relative',
+                    display: 'flex',
+                    alignItems: 'center',
+                    px: 1.5,
+                    py: 0.75,
+                    borderRadius: 1,
+                    border: '1.5px solid',
+                    borderColor: active ? 'primary.main' : 'divider',
+                    color: active ? 'primary.main' : 'text.primary',
+                    fontWeight: active ? 600 : 400,
+                    fontSize: '0.875rem',
+                    textDecoration: 'none',
+                    transition: 'border-color 0.15s, color 0.15s',
+                    '&:hover': {
+                      borderColor: 'primary.main',
+                      color: 'primary.main',
+                    },
+                  }}
+                >
+                  {section.name}
+                  <Box
+                    sx={{
+                      position: 'absolute',
+                      right: 0,
+                      top: '50%',
+                      transform: 'translate(1.5px, -50%)',
+                      width: 0,
+                      height: 0,
+                      borderTop: '9px solid transparent',
+                      borderBottom: '9px solid transparent',
+                      borderRight: '12px solid',
+                      borderRightColor: active ? 'primary.main' : 'transparent',
+                      transition: 'border-right-color 0.15s',
+                    }}
+                  />
+                </Box>
+              );
+            })}
+          </Box>
         </Box>
 
         <Box sx={{ flex: 1, minWidth: 0 }}>
