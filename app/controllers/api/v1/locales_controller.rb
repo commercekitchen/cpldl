@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class LocaleController < Api::V1::BaseController
+    class LocalesController < Api::V1::BaseController
       begin
         skip_after_action :verify_authorized
       rescue StandardError

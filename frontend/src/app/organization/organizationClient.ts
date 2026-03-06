@@ -39,6 +39,11 @@ class OrganizationClient {
     return this.getConfigForOrganization(organization);
   }
 
+  clearCache(): void {
+    const organization = resolveOrganizationFromSubdomain(window.location.hostname);
+    this.cache.delete(organization.subdomain);
+  }
+
   private async fetchConfig(subdomain: string): Promise<OrganizationConfig> {
     const res = await apiFetch(`/api/v1/organizations/${encodeURIComponent(subdomain)}/config`, {
       credentials: "include", // important if you use cookie-based auth

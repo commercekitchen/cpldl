@@ -1,6 +1,7 @@
 import {
   NavLink,
   useLoaderData,
+  useRevalidator,
   Outlet,
   useMatch,
   useNavigate,
@@ -16,16 +17,21 @@ import {
   Box,
   Link as MuiLink,
   Fab,
+  Menu,
+  MenuItem,
 } from '@mui/material';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createMuiThemeForOrganization } from '../app/organization/theme';
 import { useGaPageViews } from '../app/useGaPageViews';
 import type { OrganizationConfig } from '../app/organization/types';
-import { AccountCircle, AdminPanelSettings, Category, Home } from '@mui/icons-material';
+import { AccountCircle, AdminPanelSettings, Category, Home, Language } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
-import { LocaleProvider } from '../app/locale/LocaleContext';
+import { LocaleProvider } from '../app/locale/LocaleProvider';
+import { useLocale } from '../app/locale/LocaleContext';
+import { organizationClient } from '../app/organization/organizationClient';
 
 type NavButtonProps = {
   to: string;
@@ -33,6 +39,46 @@ type NavButtonProps = {
   end?: boolean;
   icon?: React.ReactNode;
 };
+
+const LOCALES = [
+  { code: 'en', label: 'English' },
+  { code: 'es', label: 'Español' },
+];
+
+function LocaleToggle() {
+  const { locale, setLocale } = useLocale();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+  const currentLabel = LOCALES.find((l) => l.code === locale)?.label ?? locale;
+
+  return (
+    <>
+      <Button
+        variant="text"
+        color="inherit"
+        size="small"
+        startIcon={<Language />}
+        onClick={(e) => setAnchorEl(e.currentTarget)}
+        sx={{ textTransform: 'none', borderRadius: 0, whiteSpace: 'nowrap', px: 0.5 }}
+      >
+        {currentLabel}
+      </Button>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+        {LOCALES.map((l) => (
+          <MenuItem
+            key={l.code}
+            selected={l.code === locale}
+            onClick={() => {
+              void setLocale(l.code);
+              setAnchorEl(null);
+            }}
+          >
+            {l.label}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+}
 
 function NavButton({ to, label, end = true, icon }: NavButtonProps) {
   const isActive = Boolean(useMatch({ path: to, end }));
@@ -58,7 +104,26 @@ function NavButton({ to, label, end = true, icon }: NavButtonProps) {
 
 export function RootLayout() {
   useGaPageViews();
-  const { orgConfig, locale } = useLoaderData() as { orgConfig: OrganizationConfig; locale: string };
+  const { orgConfig, locale } = useLoaderData() as {
+    orgConfig: OrganizationConfig;
+    locale: string;
+  };
+  const { revalidate } = useRevalidator();
+
+  const handleAfterLocaleChange = () => {
+    organizationClient.clearCache();
+    revalidate();
+  };
+
+  return (
+    <LocaleProvider initialLocale={locale} onAfterChange={handleAfterLocaleChange}>
+      <LayoutContent orgConfig={orgConfig} />
+    </LocaleProvider>
+  );
+}
+
+function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
+  const { t } = useTranslation();
   const { status, user } = useAuth();
   const theme = createMuiThemeForOrganization(orgConfig);
   const navigate = useNavigate();
@@ -84,7 +149,6 @@ export function RootLayout() {
   };
 
   return (
-    <LocaleProvider initialLocale={locale}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -104,36 +168,25 @@ export function RootLayout() {
           }}
           elevation={0}
         >
-          <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', minHeight: 72 }}>
+          <Toolbar
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              minHeight: { xs: 56, md: 72 },
+            }}
+          >
             <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {orgConfig.theme.logoUrl ? (
                 <Box
                   component="img"
                   src={orgConfig.theme.logoUrl}
                   alt={`${orgConfig.displayName} logo`}
-                  sx={{ height: 50, width: 'auto' }}
+                  sx={{ height: { xs: 32, md: 50 }, width: 'auto' }}
                 />
               ) : (
                 <Typography variant="h6">{orgConfig.displayName}</Typography>
               )}
-            </Box>
-
-            <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center' }}>
-              <Button
-                component={NavLink}
-                to={isAuthenticated ? '/account' : '/login'}
-                variant="text"
-                color="inherit"
-                startIcon={<AccountCircle />}
-                sx={{
-                  textTransform: 'none',
-                  borderBottom: '2px solid transparent',
-                  borderRadius: 0,
-                  px: 0.5,
-                }}
-              >
-                {isAuthenticated ? 'Account' : 'Sign In'}
-              </Button>
             </Box>
 
             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
@@ -171,13 +224,13 @@ export function RootLayout() {
                     borderBottom: '2px solid transparent',
                     borderRadius: 0,
                   }}
-                  aria-label="Open search"
+                  aria-label={t('nav.openSearch')}
                 >
-                  Search
+                  {t('nav.search')}
                 </Button>
               )}
-              <NavButton to="/" label="Home" icon={<Home />} />
-              <NavButton to="/courses" label="Categories" icon={<Category />} />
+              <NavButton to="/" label={t('nav.home')} icon={<Home />} />
+              <NavButton to="/courses" label={t('nav.categories')} icon={<Category />} />
               {isAdmin ? (
                 <Button
                   variant="text"
@@ -190,18 +243,34 @@ export function RootLayout() {
                     borderRadius: 0,
                   }}
                 >
-                  Admin Dashboard
+                  {t('nav.adminDashboard')}
                 </Button>
               ) : null}
               <NavButton
                 to={isAuthenticated ? '/account' : '/login'}
-                label={isAuthenticated ? 'Account' : 'User Login (Optional)'}
+                label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
                 icon={<AccountCircle />}
               />
+              <LocaleToggle />
+            </Box>
+
+            <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 2 }}>
+              <LocaleToggle />
+              <Button
+                component={NavLink}
+                to={isAuthenticated ? '/account' : '/login'}
+                variant="text"
+                color="inherit"
+                sx={{ minWidth: 0, p: 0.5 }}
+              >
+                <AccountCircle />
+              </Button>
             </Box>
           </Toolbar>
 
-          <Box sx={{ display: { xs: searchActive ? 'block' : 'none', md: 'none' }, px: 2, pb: 1.5 }}>
+          <Box
+            sx={{ display: { xs: searchActive ? 'block' : 'none', md: 'none' }, px: 2, pb: 1.5 }}
+          >
             <CourseSearchBar
               value={searchValue}
               onValueChange={setSearchDraft}
@@ -242,7 +311,7 @@ export function RootLayout() {
           }}
         >
           <Typography variant="body1" sx={{ mb: 2 }}>
-            This work is licensed under an MIT License
+            {t('footer.license')}
           </Typography>
 
           <Box
@@ -324,7 +393,7 @@ export function RootLayout() {
               }}
             >
               <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-                Learn More
+                {t('footer.learnMore')}
               </Typography>
               {footerLinks.length > 0 ? (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
@@ -342,7 +411,7 @@ export function RootLayout() {
                 </Box>
               ) : (
                 <Typography variant="body2" color="text.secondary">
-                  Links coming soon.
+                  {t('footer.linksComingSoon')}
                 </Typography>
               )}
             </Box>
@@ -357,11 +426,10 @@ export function RootLayout() {
               }}
             >
               <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-                Get in Touch
+                {t('footer.getInTouch')}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                Provide feedback, ask a question, or request additional content. Click the button
-                to send us an email.
+                {t('footer.feedbackText')}
               </Typography>
               <Button
                 variant="outlined"
@@ -369,7 +437,7 @@ export function RootLayout() {
                 component="a"
                 href="mailto:digitallearnhelp@ala.org"
               >
-                Send us an Email
+                {t('footer.sendEmail')}
               </Button>
             </Box>
           </Box>
@@ -417,12 +485,12 @@ export function RootLayout() {
               }}
             >
               <Home />
-              Home
+              {t('nav.home')}
             </Button>
 
             <Fab
               color="primary"
-              aria-label="Open search"
+              aria-label={t('nav.openSearch')}
               onClick={openSearch}
               sx={{
                 position: 'absolute',
@@ -452,12 +520,11 @@ export function RootLayout() {
               }}
             >
               <Category />
-              Categories
+              {t('nav.categories')}
             </Button>
           </Box>
         </Box>
       </Box>
     </ThemeProvider>
-    </LocaleProvider>
   );
 }

@@ -1,0 +1,38 @@
+{
+  "nav": {
+    "home": "Home",
+    "categories": "Categories",
+    "search": "Search",
+    "account": "Account",
+    "signIn": "Sign In",
+    "userLogin": "User Login (Optional)",
+    "adminDashboard": "Admin Dashboard",
+    "openSearch": "Open search"
+  },
+  "courses": {
+    "pageTitle": "Courses",
+    "categories": "Categories"
+  },
+  "survey": {
+    "banner": {
+      "heading": "Start Here!",
+      "subheading": "Take a short technology survey",
+      "description": "Based on your answers, we will be able to recommend what courses might be of interest for you so that you can learn what you need quickly and easily.",
+      "cta": "Take the Survey"
+    },
+    "pageTitle": "Course Recommendation Survey",
+    "instructions": "Answer three questions and we'll recommend which courses to take.",
+    "submit": "Submit",
+    "skip": "Skip",
+    "loadError": "Unable to load the survey. Please try again later.",
+    "submitError": "Something went wrong submitting the survey. Please try again."
+  },
+  "footer": {
+    "license": "This work is licensed under an MIT License",
+    "learnMore": "Learn More",
+    "linksComingSoon": "Links coming soon.",
+    "getInTouch": "Get in Touch",
+    "feedbackText": "Provide feedback, ask a question, or request additional content. Click the button to send us an email.",
+    "sendEmail": "Send us an Email"
+  }
+}

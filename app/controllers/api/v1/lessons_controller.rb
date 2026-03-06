@@ -75,6 +75,7 @@ module Api
       def scoped_lessons
         lessons = lessons_for_scope(requested_scope)
         apply_limit(lessons)
+        apply_language(lessons)
       end
 
       def requested_scope
@@ -100,6 +101,10 @@ module Api
         limit = parsed_limit || 20
 
         lessons.limit(limit)
+      end
+
+      def apply_language(lessons)
+        lessons.joins(:course).where(courses: { language: current_language })
       end
 
       def parsed_limit

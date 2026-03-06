@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -35,6 +36,7 @@ function compareCourseOrder(a: Course, b: Course) {
 
 export function CoursesPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -107,7 +109,7 @@ export function CoursesPage() {
   return (
     <Container sx={{ py: 3 }}>
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Courses
+        {t('courses.pageTitle')}
       </Typography>
 
       <Box
@@ -132,7 +134,7 @@ export function CoursesPage() {
           }}
         >
           <Typography variant="h6" sx={{ mb: 1.5 }}>
-            Categories
+            {t('courses.categories')}
           </Typography>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
             {sections.map((section) => {
