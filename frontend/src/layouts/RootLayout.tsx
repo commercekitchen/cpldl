@@ -25,6 +25,7 @@ import { AccountCircle, AdminPanelSettings, Category, Home } from '@mui/icons-ma
 import SearchIcon from '@mui/icons-material/Search';
 import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
+import { LocaleProvider } from '../app/locale/LocaleContext';
 
 type NavButtonProps = {
   to: string;
@@ -57,7 +58,7 @@ function NavButton({ to, label, end = true, icon }: NavButtonProps) {
 
 export function RootLayout() {
   useGaPageViews();
-  const { orgConfig } = useLoaderData() as { orgConfig: OrganizationConfig };
+  const { orgConfig, locale } = useLoaderData() as { orgConfig: OrganizationConfig; locale: string };
   const { status, user } = useAuth();
   const theme = createMuiThemeForOrganization(orgConfig);
   const navigate = useNavigate();
@@ -83,6 +84,7 @@ export function RootLayout() {
   };
 
   return (
+    <LocaleProvider initialLocale={locale}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
@@ -456,5 +458,6 @@ export function RootLayout() {
         </Box>
       </Box>
     </ThemeProvider>
+    </LocaleProvider>
   );
 }

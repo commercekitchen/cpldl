@@ -3,9 +3,9 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
   include Pundit::Authorization
+  include LocaleSetting
 
   before_action :current_organization
-  before_action :set_locale
   before_action :set_cms_footer_pages
   before_action :set_cms_marketing_pages
   before_action :require_valid_profile
@@ -19,51 +19,6 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, only: %i[index export_user_info sort], unless: :ckeditor_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  ### TODO: Rework language settings to be more conventional
-
-  #  around_action :switch_locale
-
-  #  def default_url_options
-  #    { locale: I18n.locale } unless I18n.locale == I18n.default_locale
-  #  end
-  #
-  #  def switch_locale(&action)
-  #    locale = language_preference || I18n.default_locale
-  #    I18n.with_locale(locale, &action)
-  #  end
-  #
-  #  def language_preference
-  #    current_user&.locale || session[:locale]
-  #  end
-
-  def set_locale
-    if current_user&.profile && current_user.profile.language.present?
-      if user_language_override? == true
-        I18n.locale = session[:locale].to_sym if session[:locale].present?
-      else
-        case current_user.profile.language.name
-        when 'English'
-          I18n.locale = :en
-        when 'Spanish'
-          I18n.locale = :es
-        end
-        session[:locale] = I18n.locale.to_s
-      end
-    else
-      I18n.locale = session[:locale].nil? ? :en : session[:locale].to_sym
-    end
-  end
-
-  def user_language_override?
-    if current_user.profile.language.present?
-      user_lang_abbrv2 = current_user.profile.language.name == 'English' ? 'en' : 'es'
-      return true if session[:locale] != user_lang_abbrv2
-    else
-      false
-    end
-  end
-  #########################
 
   def pundit_user
     current_user || GuestUser.new(organization: current_organization)

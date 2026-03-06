@@ -7,6 +7,7 @@ module Api
       include ActionController::Cookies
       include ActionController::RequestForgeryProtection
       include Pundit::Authorization
+      include LocaleSetting
 
       before_action :current_organization
       protect_from_forgery with: :exception
