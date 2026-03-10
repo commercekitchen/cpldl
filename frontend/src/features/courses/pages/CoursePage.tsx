@@ -4,9 +4,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Link from '@mui/material/Link';
+import { DownloadAttachmentRow } from '../components/DownloadAttachmentRow';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import type { Course } from '../types';
 import { useCourseQuery } from '../queries/courseQuery';
@@ -16,6 +14,7 @@ import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseCompletedBadge } from '../components/CourseCompletedBadge';
 import { CourseStats } from '../components/CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
+
 
 function buildCourseTitle(course: Course) {
   return course.seoPageTitle?.trim() || course.title.trim() || 'Course';
@@ -80,15 +79,15 @@ export function CoursePage() {
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 1 }}>
-            <Typography variant="h4">
-              {course.title}
-            </Typography>
+            <Typography variant="h4">{course.title}</Typography>
             {course.completed ? (
               <CourseCompletedBadge />
-            ) : titleBadge && (
-              <Typography component="span" variant="body2" color="text.secondary">
-                {titleBadge}
-              </Typography>
+            ) : (
+              titleBadge && (
+                <Typography component="span" variant="body2" color="text.secondary">
+                  {titleBadge}
+                </Typography>
+              )
             )}
           </Box>
           {course.summary && (
@@ -110,15 +109,16 @@ export function CoursePage() {
               <Typography variant="h6" sx={{ mb: 1 }}>
                 Additional Resources
               </Typography>
-              <List disablePadding>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {additionalResources.map((item) => (
-                  <ListItem key={`${item.docType}-${item.url}`} disableGutters>
-                    <Link href={item.url} download>
-                      {item.fileName}
-                    </Link>
-                  </ListItem>
+                  <DownloadAttachmentRow
+                    key={`${item.docType}-${item.url}`}
+                    fileName={item.fileName}
+                    url={item.url}
+                    contentType={item.contentType}
+                  />
                 ))}
-              </List>
+              </Box>
             </Box>
           )}
           {textCopies.length > 0 && (
@@ -126,15 +126,16 @@ export function CoursePage() {
               <Typography variant="h6" sx={{ mb: 1 }}>
                 Text Copies of Course
               </Typography>
-              <List disablePadding>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {textCopies.map((item) => (
-                  <ListItem key={`${item.docType}-${item.url}`} disableGutters>
-                    <Link href={item.url} download>
-                      {item.fileName}
-                    </Link>
-                  </ListItem>
+                  <DownloadAttachmentRow
+                    key={`${item.docType}-${item.url}`}
+                    fileName={item.fileName}
+                    url={item.url}
+                    contentType={item.contentType}
+                  />
                 ))}
-              </List>
+              </Box>
             </Box>
           )}
         </Box>
