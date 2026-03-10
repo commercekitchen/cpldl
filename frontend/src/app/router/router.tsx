@@ -9,28 +9,33 @@ import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
 import { CourseCompletedPage } from '../../features/courses/pages/CourseCompletedPage';
+import Signup from '../../pages/Signup';
 
 export function createAppRouter() {
   const basename = '/';
 
-  return createBrowserRouter([
-    {
-      id: 'root',
-      path: '/',
-      loader: rootLoader,
-      element: <RootLayout />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: 'search', element: <Search /> },
-        { path: 'login', element: <Login /> },
-        { path: 'account', element: <Account /> },
-        { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
-        lessonRoute,
-        coursesRoute,
-        courseRoute,
-        // { path: "courses", element: <Courses /> },
-        // { path: "sign-in", element: <SignIn /> },
-      ],
-    },
-  ], { basename });
+  return createBrowserRouter(
+    [
+      {
+        id: 'root',
+        path: '/',
+        loader: rootLoader,
+        element: <RootLayout />,
+        children: [
+          { index: true, element: <Home /> },
+          { path: 'search', element: <Search /> },
+          { path: 'login', element: <Login /> },
+          { path: 'signup', element: <Signup /> },
+          { path: 'account', element: <Account /> },
+          { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
+          lessonRoute,
+          coursesRoute,
+          courseRoute,
+          // { path: "courses", element: <Courses /> },
+          // { path: "sign-in", element: <SignIn /> },
+        ],
+      },
+    ],
+    { basename },
+  );
 }

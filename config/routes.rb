@@ -173,6 +173,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resource :session, only: [:create, :destroy]
+      resource :registration, only: [:create]
       resource :locale, only: [:show, :update]
       resource :profile, only: [:show, :update]
       resource :account, only: [:show, :update]
