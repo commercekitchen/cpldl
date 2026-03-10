@@ -53,7 +53,9 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
               color="inherit"
               startIcon={lesson.completed ? <Replay /> : <PlayArrow />}
               onClick={() => onPlayLesson(lesson)}
-              aria-label={lesson.completed ? `Replay lesson ${lesson.title}` : `Play lesson ${lesson.title}`}
+              aria-label={
+                lesson.completed ? `Replay lesson ${lesson.title}` : `Play lesson ${lesson.title}`
+              }
               sx={{
                 color: '#fff',
                 fontWeight: 700,

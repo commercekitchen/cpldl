@@ -98,7 +98,7 @@ module Api
       end
 
       def apply_limit(lessons)
-        limit = parsed_limit || 20
+        limit = parsed_limit || 10
 
         lessons.limit(limit)
       end

@@ -35,9 +35,8 @@ export function SubHeaderBanner({ text }: Props) {
         variant="h2"
         component="h2"
         sx={{ fontSize: '16px', lineHeight: 1.5, fontWeight: 400 }}
-      >
-        {text}
-      </Typography>
+        dangerouslySetInnerHTML={{ __html: text }}
+      />
     </Box>
   );
 }
