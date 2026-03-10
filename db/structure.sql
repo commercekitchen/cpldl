@@ -1927,6 +1927,13 @@ CREATE INDEX index_lesson_completions_on_lesson_id ON public.lesson_completions 
 
 
 --
+-- Name: index_lesson_completions_on_lesson_id_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lesson_completions_on_lesson_id_and_created_at ON public.lesson_completions USING btree (lesson_id, created_at);
+
+
+--
 -- Name: index_lessons_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2511,6 +2518,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20260108054313'),
 ('20260118063042'),
 ('20260120042608'),
-('20260128055908');
+('20260128055908'),
+('20260310000000');
 
 
