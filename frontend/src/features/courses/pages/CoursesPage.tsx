@@ -14,6 +14,7 @@ import { listLessons } from '../../lessons/api/lessonsApi';
 type CategorySection = {
   id: string;
   name: string;
+  slug: string;
   courses: Course[];
 };
 
@@ -23,6 +24,16 @@ function toCategoryId(course: Course) {
 
 function toCategoryName(course: Course) {
   return course.categoryName?.trim() || 'Uncategorized';
+}
+
+function toCategorySlug(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '') || 'uncategorized';
 }
 
 function compareCourseOrder(a: Course, b: Course) {
@@ -67,7 +78,7 @@ export function CoursesPage() {
       if (existing) {
         existing.courses.push(course);
       } else {
-        byCategory.set(id, { id, name, courses: [course] });
+        byCategory.set(id, { id, name, slug: toCategorySlug(name), courses: [course] });
       }
     }
 
@@ -84,7 +95,7 @@ export function CoursesPage() {
       const threshold = window.innerHeight * 0.3;
       let result: string | null = null;
       for (const section of sections) {
-        const el = document.getElementById(`category-${section.id}`);
+        const el = document.getElementById(`category-${section.slug}`);
         if (!el) continue;
         if (el.getBoundingClientRect().top <= threshold) {
           result = section.id;
@@ -143,7 +154,7 @@ export function CoursesPage() {
                 <Box
                   key={section.id}
                   component="a"
-                  href={`#category-${section.id}`}
+                  href={`#category-${section.slug}`}
                   sx={{
                     position: 'relative',
                     display: 'flex',
@@ -188,7 +199,7 @@ export function CoursesPage() {
 
         <Box sx={{ flex: 1, minWidth: 0 }}>
           {sections.map((section) => (
-            <Box key={section.id} id={`category-${section.id}`} sx={{ mb: 4, scrollMarginTop: 80 }}>
+            <Box key={section.id} id={`category-${section.slug}`} sx={{ mb: 4, scrollMarginTop: 80 }}>
               <Typography variant="h5" sx={{ mb: 1 }}>
                 {section.name}
               </Typography>
