@@ -132,15 +132,37 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
   const query = new URLSearchParams(location.search).get('q')?.trim() ?? '';
 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchDraft, setSearchDraft] = useState('');
+  const [searchDraft, setSearchDraft] = useState(() => (isSearchPage ? query : ''));
   const [searchFocusSignal, setSearchFocusSignal] = useState(0);
   const searchActive = isSearchPage || isSearchOpen;
-  const searchValue = isSearchPage ? query : searchDraft;
+  const searchValue = searchDraft;
+
+  // Sync search state with route changes (getDerivedStateFromProps pattern — avoids effect)
+  const [prevPathname, setPrevPathname] = useState(location.pathname);
+  const [prevQuery, setPrevQuery] = useState(query);
+  if (prevPathname !== location.pathname) {
+    setPrevPathname(location.pathname);
+    if (location.pathname !== '/search') {
+      setIsSearchOpen(false);
+      setSearchDraft('');
+      if (prevQuery !== '') setPrevQuery('');
+    }
+  }
+  if (isSearchPage && prevQuery !== query) {
+    setPrevQuery(query);
+    setSearchDraft(query);
+  }
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
   const footerLinks = orgConfig.footerLinks ?? [];
   const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
   const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
+
+  const handleSearchBlur = (e: React.FocusEvent) => {
+    if (!e.currentTarget.contains(e.relatedTarget as Node) && !searchDraft.trim()) {
+      setIsSearchOpen(false);
+    }
+  };
 
   const openSearch = () => {
     setIsSearchOpen(true);
@@ -191,7 +213,7 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
 
             <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
               {searchActive ? (
-                <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }}>
+                <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }} onBlur={handleSearchBlur}>
                   <CourseSearchBar
                     value={searchValue}
                     onValueChange={setSearchDraft}
@@ -270,6 +292,7 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
 
           <Box
             sx={{ display: { xs: searchActive ? 'block' : 'none', md: 'none' }, px: 2, pb: 1.5 }}
+            onBlur={handleSearchBlur}
           >
             <CourseSearchBar
               value={searchValue}
@@ -420,7 +443,7 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
               sx={{
                 flex: 1,
                 border: '2px solid',
-                borderColor: 'secondary.main',
+                borderColor: 'primary.main',
                 borderRadius: 0,
                 p: 2,
               }}
@@ -428,12 +451,12 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
               <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
                 {t('footer.getInTouch')}
               </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
                 {t('footer.feedbackText')}
               </Typography>
               <Button
                 variant="outlined"
-                color="secondary"
+                color="primary"
                 component="a"
                 href="mailto:digitallearnhelp@ala.org"
               >
