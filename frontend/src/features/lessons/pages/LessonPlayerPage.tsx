@@ -108,12 +108,20 @@ export function LessonPlayerPage() {
   if (error) return <Alert severity="error">{error ?? 'Error completing lesson'}</Alert>;
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100vw', height: '100vh' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100vw',
+        height: { xs: '70vh', sm: '100vh' },
+      }}
+    >
       <Box
         sx={{
           display: 'flex',
           alignItems: 'center',
-          gap: 2,
+          flexWrap: 'wrap',
+          gap: { xs: 0.5, sm: 2 },
           px: 2,
           py: 1,
           borderBottom: '1px solid',
@@ -128,18 +136,18 @@ export function LessonPlayerPage() {
             to={`/courses/${lesson.courseId}`}
             underline="hover"
             color="text.secondary"
-            sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}
+            sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}
           >
             <ArrowBack fontSize="small" />
             <Typography variant="body2">{lesson.courseTitle ?? 'Back to Course'}</Typography>
           </Link>
         )}
         {lesson.courseId && (
-          <Typography variant="body2" color="divider" sx={{ userSelect: 'none' }}>
+          <Typography variant="body2" color="divider" sx={{ userSelect: 'none', flexShrink: 0 }}>
             /
           </Typography>
         )}
-        <Typography variant="body2" fontWeight={600} noWrap>
+        <Typography variant="body2" fontWeight={600} sx={{ wordBreak: 'break-word', minWidth: 0 }}>
           {lesson.title}
         </Typography>
       </Box>
@@ -162,5 +170,4 @@ export function LessonPlayerPage() {
       </Box>
     </Box>
   );
-
 }
