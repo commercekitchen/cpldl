@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { PlayLesson, Schedule, Speed } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import type { Course } from '../types';
 
 type Props = {
@@ -10,17 +11,18 @@ type Props = {
 };
 
 export function CourseStats({ course, showLessons = false, color = 'text.secondary' }: Props) {
+  const { t } = useTranslation();
   const durationSeconds = Number(course.totalDuration);
   const durationLabel =
     Number.isFinite(durationSeconds) && durationSeconds > 0
-      ? `${Math.floor(durationSeconds / 60)} mins`
-      : 'Duration TBD';
-  const levelLabel = course.level?.trim() || 'Level TBD';
+      ? t('courses.durationMins', { count: Math.floor(durationSeconds / 60) })
+      : t('courses.durationTbd');
+  const levelLabel = course.level?.trim() || t('courses.levelTbd');
   const lessonsCount = course.lessonsCount;
   const lessonsLabel =
     typeof lessonsCount === 'number'
-      ? `${lessonsCount} lesson${lessonsCount === 1 ? '' : 's'}`
-      : 'Lessons TBD';
+      ? t('courses.lessonCount', { count: lessonsCount })
+      : t('courses.lessonsTbd');
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useParams } from 'react-router-dom'; // or your router
+import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
@@ -25,6 +26,7 @@ function buildCourseDescription(course: Course) {
 }
 
 export function CoursePage() {
+  const { t } = useTranslation();
   const { courseId = '' } = useParams();
   const { data: course, isLoading, error: loadError } = useCourseQuery(courseId);
 
@@ -107,7 +109,7 @@ export function CoursePage() {
           {additionalResources.length > 0 && (
             <Box sx={{ mb: 3 }}>
               <Typography variant="h6" sx={{ mb: 1 }}>
-                Additional Resources
+                {t('courses.additionalResources')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {additionalResources.map((item) => (
@@ -124,7 +126,7 @@ export function CoursePage() {
           {textCopies.length > 0 && (
             <Box>
               <Typography variant="h6" sx={{ mb: 1 }}>
-                Text Copies of Course
+                {t('courses.textCopies')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {textCopies.map((item) => (

@@ -9,9 +9,30 @@
     "adminDashboard": "Admin Dashboard",
     "openSearch": "Open search"
   },
+  "home": {
+    "featuredCourses": "Featured Courses",
+    "popularLessons": "Popular Lessons"
+  },
   "courses": {
     "pageTitle": "Courses",
-    "categories": "Categories"
+    "categories": "Categories",
+    "startCourse": "Start Course",
+    "viewLessons": "View Lessons",
+    "additionalResources": "Additional Resources",
+    "textCopies": "Text Copies of Course",
+    "durationTbd": "Duration TBD",
+    "levelTbd": "Level TBD",
+    "lessonsTbd": "Lessons TBD",
+    "lessonCount_one": "{{count}} lesson",
+    "lessonCount_other": "{{count}} lessons",
+    "durationMins": "{{count}} mins"
+  },
+  "lessons": {
+    "playLesson": "Play Lesson",
+    "replay": "Replay",
+    "viewFullCourse": "View Full Course",
+    "durationUnknown": "Unknown",
+    "levelTbd": "Level TBD"
   },
   "survey": {
     "banner": {

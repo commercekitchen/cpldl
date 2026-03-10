@@ -9,9 +9,30 @@
     "adminDashboard": "Panel de administración",
     "openSearch": "Abrir búsqueda"
   },
+  "home": {
+    "featuredCourses": "Cursos destacados",
+    "popularLessons": "Lecciones populares"
+  },
   "courses": {
     "pageTitle": "Cursos",
-    "categories": "Categorías"
+    "categories": "Categorías",
+    "startCourse": "Iniciar curso",
+    "viewLessons": "Ver lecciones",
+    "additionalResources": "Recursos adicionales",
+    "textCopies": "Copias de texto del curso",
+    "durationTbd": "Duración por determinar",
+    "levelTbd": "Nivel por determinar",
+    "lessonsTbd": "Lecciones por determinar",
+    "lessonCount_one": "{{count}} lección",
+    "lessonCount_other": "{{count}} lecciones",
+    "durationMins": "{{count}} min"
+  },
+  "lessons": {
+    "playLesson": "Reproducir lección",
+    "replay": "Repetir",
+    "viewFullCourse": "Ver curso completo",
+    "durationUnknown": "Desconocida",
+    "levelTbd": "Nivel por determinar"
   },
   "survey": {
     "banner": {

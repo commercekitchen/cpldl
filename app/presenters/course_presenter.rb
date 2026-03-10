@@ -27,7 +27,8 @@ class CoursePresenter
       attachments: attachments_payload,
       completed: completed?,
       lessonsCount: @course.lessons.count,
-      lessonsCompletedCount: lessons_completed_count
+      lessonsCompletedCount: lessons_completed_count,
+      totalDuration: @course.lessons.sum(:duration)
     }
   end
 

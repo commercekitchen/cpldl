@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { Course } from '../types';
 import { PlayArrow } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { CourseCategoryPill } from './CourseCategoryPill';
 import { CourseCompletedBadge } from './CourseCompletedBadge';
 import { CourseStats } from './CourseStats';
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: Props) {
+  const { t } = useTranslation();
   const imageUrl = previewImageForRecord(course.id);
   const categoryLabel = course.categoryName?.trim();
   const content = (
@@ -52,7 +54,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
               color="inherit"
               startIcon={<PlayArrow />}
               onClick={() => onStartCourse(course)}
-              aria-label={`Start course ${course.title}`}
+              aria-label={`${t('courses.startCourse')} ${course.title}`}
               sx={{
                 color: '#fff',
                 fontWeight: 700,
@@ -63,7 +65,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
                 },
               }}
             >
-              Start Course
+              {t('courses.startCourse')}
             </Button>
           </Box>
         ) : null}
@@ -102,7 +104,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
             onClick={() => onViewLessons(course)}
             sx={{ mt: 2 }}
           >
-            View Lessons
+            {t('courses.viewLessons')}
           </Button>
         ) : null}
       </CardContent>

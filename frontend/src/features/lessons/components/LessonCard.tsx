@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import type { Lesson } from '../types';
 import { PlayArrow, Replay, Schedule, Speed } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import { CourseCompletedBadge } from '../../courses/components/CourseCompletedBadge';
 
@@ -17,11 +18,12 @@ type Props = {
 };
 
 export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Props) {
+  const { t } = useTranslation();
   const imageUrl = previewImageForRecord(lesson.id);
   const durationLabel = lesson.duration
-    ? `${Math.floor(lesson.duration / 60).toString()} mins`
-    : 'Unknown';
-  const levelLabel = lesson.level?.trim() || 'Level TBD';
+    ? t('courses.durationMins', { count: Math.floor(lesson.duration / 60) })
+    : t('lessons.durationUnknown');
+  const levelLabel = lesson.level?.trim() || t('lessons.levelTbd');
 
   const content = (
     <>
@@ -54,7 +56,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
               startIcon={lesson.completed ? <Replay /> : <PlayArrow />}
               onClick={() => onPlayLesson(lesson)}
               aria-label={
-                lesson.completed ? `Replay lesson ${lesson.title}` : `Play lesson ${lesson.title}`
+                lesson.completed ? `${t('lessons.replay')} ${lesson.title}` : `${t('lessons.playLesson')} ${lesson.title}`
               }
               sx={{
                 color: '#fff',
@@ -66,7 +68,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
                 },
               }}
             >
-              {lesson.completed ? 'Replay' : 'Play Lesson'}
+              {lesson.completed ? t('lessons.replay') : t('lessons.playLesson')}
             </Button>
           </Box>
         ) : null}
@@ -124,7 +126,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
             onClick={() => onViewCourse(lesson)}
             sx={{ mt: 2 }}
           >
-            View Full Course
+            {t('lessons.viewFullCourse')}
           </Button>
         ) : null}
       </CardContent>
