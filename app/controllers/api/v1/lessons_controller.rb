@@ -74,7 +74,7 @@ module Api
 
       def scoped_lessons
         lessons = lessons_for_scope(requested_scope)
-        apply_limit(lessons)
+        lessons = apply_limit(lessons)
         apply_language(lessons)
       end
 
@@ -117,11 +117,14 @@ module Api
       end
 
       def lessons_for_popular_scope
+        recent_counts = LessonCompletion
+                        .where('created_at > ?', 1.year.ago)
+                        .group(:lesson_id)
+                        .select('lesson_id, COUNT(*) AS completion_count')
+
         Lesson
-          .left_joins(:lesson_completions)
-          .where('lesson_completions.created_at > ? OR lesson_completions.id IS NULL', 1.year.ago)
-          .group('lessons.id')
-          .order('COUNT(lesson_completions.id) DESC')
+          .joins("LEFT JOIN (#{recent_counts.to_sql}) AS recent_completions ON recent_completions.lesson_id = lessons.id")
+          .order('COALESCE(recent_completions.completion_count, 0) DESC')
       end
 
       def lessons_for_all_scope
