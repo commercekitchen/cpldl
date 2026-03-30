@@ -34,6 +34,25 @@
     "durationUnknown": "Desconocida",
     "levelTbd": "Nivel por determinar"
   },
+  "auth": {
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "forgotPasswordTitle": "Restablecer contraseña",
+    "forgotPasswordSubtitle": "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+    "sendResetLink": "Enviar enlace",
+    "sending": "Enviando…",
+    "resetEmailSent": "Si existe una cuenta con ese correo, recibirá un enlace para restablecer la contraseña en breve.",
+    "backToLogin": "Volver al inicio de sesión",
+    "resetError": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "resetPasswordTitle": "Cambiar contraseña",
+    "resetPasswordSubtitle": "Ingrese y confirme su nueva contraseña.",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "changePassword": "Cambiar contraseña",
+    "changingPassword": "Guardando…",
+    "passwordChanged": "Su contraseña ha sido cambiada. Ha iniciado sesión.",
+    "invalidResetToken": "Este enlace de restablecimiento es inválido o ha expirado. Por favor, solicite uno nuevo.",
+    "passwordsMustMatch": "Las contraseñas no coinciden."
+  },
   "survey": {
     "banner": {
       "heading": "¡Empieza aquí!",

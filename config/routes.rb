@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   # SPA routes should win over legacy routes on direct browser loads.
   root to: 'spa#index'
   get '/login', to: 'spa#index', as: :spa_login
+  get '/forgot-password', to: 'spa#index'
+  get '/reset-password', to: 'spa#index'
   get '/account', to: 'spa#index'
   get '/search', to: 'spa#index'
   get '/courses', to: 'spa#index'
@@ -154,6 +156,12 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # Redirect Devise's password reset email link to the new React page.
+  get '/users/password/edit', to: redirect { |_params, request|
+    token = request.params[:reset_password_token].to_s
+    "/reset-password?reset_password_token=#{CGI.escape(token)}"
+  }
+
   devise_for :users, controllers: {
     registrations: 'registrations',
     invitations: 'admin/invites',
@@ -174,6 +182,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :session, only: [:create, :destroy]
       resource :registration, only: [:create]
+      resource :password_reset, only: [:create, :update]
       resource :locale, only: [:show, :update]
       resource :profile, only: [:show, :update]
       resource :account, only: [:show, :update]

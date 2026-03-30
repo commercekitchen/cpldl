@@ -10,6 +10,8 @@ import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
 import { CourseCompletedPage } from '../../features/courses/pages/CourseCompletedPage';
 import Signup from '../../pages/Signup';
+import ForgotPassword from '../../pages/ForgotPassword';
+import ResetPassword from '../../pages/ResetPassword';
 
 export function createAppRouter() {
   const basename = '/';
@@ -26,6 +28,8 @@ export function createAppRouter() {
           { path: 'search', element: <Search /> },
           { path: 'login', element: <Login /> },
           { path: 'signup', element: <Signup /> },
+          { path: 'forgot-password', element: <ForgotPassword /> },
+          { path: 'reset-password', element: <ResetPassword /> },
           { path: 'account', element: <Account /> },
           { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
           lessonRoute,

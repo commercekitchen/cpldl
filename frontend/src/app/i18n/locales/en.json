@@ -34,6 +34,25 @@
     "durationUnknown": "Unknown",
     "levelTbd": "Level TBD"
   },
+  "auth": {
+    "forgotPassword": "Forgot your password?",
+    "forgotPasswordTitle": "Reset your password",
+    "forgotPasswordSubtitle": "Enter your email address and we'll send you a link to reset your password.",
+    "sendResetLink": "Send reset link",
+    "sending": "Sending…",
+    "resetEmailSent": "If an account with that email exists, you'll receive a password reset link shortly.",
+    "backToLogin": "Back to log in",
+    "resetError": "Something went wrong. Please try again.",
+    "resetPasswordTitle": "Change your password",
+    "resetPasswordSubtitle": "Enter and confirm your new password below.",
+    "newPassword": "New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "changePassword": "Change my password",
+    "changingPassword": "Saving…",
+    "passwordChanged": "Your password has been changed. You are now signed in.",
+    "invalidResetToken": "This password reset link is invalid or has expired. Please request a new one.",
+    "passwordsMustMatch": "Passwords do not match."
+  },
   "survey": {
     "banner": {
       "heading": "Start Here!",

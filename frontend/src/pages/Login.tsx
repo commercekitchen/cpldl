@@ -9,10 +9,12 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useRouteLoaderData } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { OrganizationConfig } from '../app/organization/types';
 import { useAuth } from '../auth/useAuth';
 
 export default function Login() {
+  const { t } = useTranslation();
   const { login, loginWithPhone } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -128,6 +130,14 @@ export default function Login() {
               <Button type="submit" variant="contained" size="large" disabled={submitting} fullWidth>
                 {submitting ? 'Signing in…' : usePhoneLogin ? 'Continue' : 'Sign in'}
               </Button>
+
+              {!usePhoneLogin ? (
+                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
+                  <Button component={Link} to="/forgot-password" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
+                    {t('auth.forgotPassword')}
+                  </Button>
+                </Typography>
+              ) : null}
             </Stack>
           </Box>
 
