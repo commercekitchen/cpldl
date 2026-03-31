@@ -5,16 +5,17 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import { searchCourses } from '../features/search/api/searchApi';
+import { searchAll } from '../features/search/api/searchApi';
+import type { SearchResults } from '../features/search/api/searchApi';
 import { CourseCard } from '../features/courses/components/CourseCard';
-import type { Course } from '../features/courses/types';
+import { LessonCard } from '../features/lessons/components/LessonCard';
 import { listLessons } from '../features/lessons/api/lessonsApi';
 
 export default function Search() {
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const query = params.get('q')?.trim() ?? '';
-  const [results, setResults] = useState<Course[]>([]);
+  const [results, setResults] = useState<SearchResults>({ courses: [], lessons: [] });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +39,7 @@ export default function Search() {
 
   useEffect(() => {
     if (!query) {
-      setResults([]);
+      setResults({ courses: [], lessons: [] });
       setError(null);
       return;
     }
@@ -48,7 +49,7 @@ export default function Search() {
       setLoading(true);
       setError(null);
       try {
-        const data = await searchCourses(query, { signal: controller.signal });
+        const data = await searchAll(query, { signal: controller.signal });
         setResults(data);
       } catch (err: unknown) {
         if (!controller.signal.aborted) {
@@ -63,6 +64,8 @@ export default function Search() {
     run();
     return () => controller.abort();
   }, [query]);
+
+  const hasResults = results.courses.length > 0 || results.lessons.length > 0;
 
   return (
     <Container sx={{ py: 3 }}>
@@ -84,28 +87,45 @@ export default function Search() {
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
 
-      {!loading && !error && results.length > 0 && (
-        <Box
-          sx={{
-            mt: 2,
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: 2,
-          }}
-        >
-          {results.map((course) => (
-            <CourseCard
-              key={course.id}
-              course={course}
-              onViewLessons={() => navigate(`/courses/${course.id}`)}
-              onStartCourse={() => {
-                void startCourse(course.id);
-              }}
-            />
-          ))}
-        </Box>
+      {!loading && !error && results.courses.length > 0 && (
+        <>
+          <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+            Courses
+          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+            {results.courses.map((course) => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                onViewLessons={() => navigate(`/courses/${course.id}`)}
+                onStartCourse={() => {
+                  void startCourse(course.id);
+                }}
+              />
+            ))}
+          </Box>
+        </>
       )}
-      {!loading && !error && query && results.length === 0 && (
+
+      {!loading && !error && results.lessons.length > 0 && (
+        <>
+          <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
+            Lessons
+          </Typography>
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+            {results.lessons.map((lesson) => (
+              <LessonCard
+                key={lesson.id}
+                lesson={lesson}
+                onPlayLesson={() => navigate(`/lessons/${lesson.id}`)}
+                onViewCourse={lesson.courseId ? () => navigate(`/courses/${lesson.courseId!}`) : undefined}
+              />
+            ))}
+          </Box>
+        </>
+      )}
+
+      {!loading && !error && query && !hasResults && (
         <Typography variant="body1" color="text.secondary">
           No results found.
         </Typography>

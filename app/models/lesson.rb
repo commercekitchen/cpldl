@@ -19,6 +19,10 @@ class Lesson < ApplicationRecord
 
   attr_accessor :subdomain
 
+  # PgSearch gem config
+  include PgSearch::Model
+  multisearchable against: %i[title summary]
+
   belongs_to :course
   belongs_to :parent, class_name: 'Lesson', optional: true
   has_many :lesson_completions, dependent: :destroy
