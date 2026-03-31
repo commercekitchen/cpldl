@@ -1,8 +1,10 @@
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import Paper from '@mui/material/Paper';
 import Select from '@mui/material/Select';
@@ -19,7 +21,7 @@ import { useAuth } from '../auth/useAuth';
 
 type LanguageOption = { id: number; name: string };
 type ProfilePayload = {
-  profile: { firstName: string | null; zipCode: string | null; languageId: number | null };
+  profile: { firstName: string | null; zipCode: string | null; languageId: number | null; optOutOfRecommendations: boolean };
   languages: LanguageOption[];
 };
 type AccountPayload = {
@@ -44,6 +46,7 @@ export default function Account() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+  const [optOutOfRecommendations, setOptOutOfRecommendations] = useState(false);
 
   const onLogout = async () => {
     await logout();
@@ -69,6 +72,7 @@ export default function Account() {
         setLanguageId(profileData.profile.languageId ?? '');
         setFirstName(profileData.profile.firstName ?? '');
         setZipCode(profileData.profile.zipCode ?? '');
+        setOptOutOfRecommendations(profileData.profile.optOutOfRecommendations ?? false);
         setEmail(accountData.account.email ?? '');
       } catch (err: unknown) {
         setLoadError(err instanceof Error ? err.message : 'Failed to load account');
@@ -94,6 +98,7 @@ export default function Account() {
             language_id: languageId || null,
             first_name: firstName,
             zip_code: zipCode,
+            opt_out_of_recommendations: optOutOfRecommendations,
           },
         }),
       });
@@ -109,6 +114,7 @@ export default function Account() {
       }
 
       setProfileSuccess('Profile saved.');
+      await refresh();
     } catch (err: unknown) {
       setProfileError(err instanceof Error ? err.message : 'Failed to save profile');
     } finally {
@@ -224,6 +230,16 @@ export default function Account() {
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                   fullWidth
+                />
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={optOutOfRecommendations}
+                      onChange={(e) => setOptOutOfRecommendations(e.target.checked)}
+                    />
+                  }
+                  label="Opt out of course recommendations"
                 />
 
                 <Button type="submit" variant="contained" disabled={profileSaving}>

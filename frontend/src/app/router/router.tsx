@@ -5,6 +5,7 @@ import Home from '../../pages/Home';
 import Search from '../../pages/Search';
 import Login from '../../pages/Login';
 import Account from '../../pages/Account';
+import CourseRecommendationSurvey from '../../pages/CourseRecommendationSurvey';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -31,6 +32,7 @@ export function createAppRouter() {
           { path: 'forgot-password', element: <ForgotPassword /> },
           { path: 'reset-password', element: <ResetPassword /> },
           { path: 'account', element: <Account /> },
+          { path: 'survey', element: <CourseRecommendationSurvey /> },
           { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
           lessonRoute,
           coursesRoute,

@@ -31,14 +31,15 @@ module Api
           profile: {
             firstName: p.first_name,
             zipCode: p.zip_code,
-            languageId: p.language_id
+            languageId: p.language_id,
+            optOutOfRecommendations: p.opt_out_of_recommendations == true
           },
           languages: Language.all.order(:name).map { |lang| { id: lang.id, name: lang.name } }
         }
       end
 
       def profile_params
-        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code)
+        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code, :opt_out_of_recommendations)
         raw[:language_id] = raw[:language_id].presence
         raw
       end

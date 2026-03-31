@@ -5,15 +5,24 @@ import { SubHeaderBanner } from '../app/components/SubHeaderBanner';
 import type { OrganizationConfig } from '../app/organization/types';
 import { CourseListContainer } from '../features/courses/components/CourseListContainer';
 import { LessonListContainer } from '../features/lessons/components/LessonListContainer';
+import { SurveyBanner } from '../features/survey/components/SurveyBanner';
+import { useAuth } from '../auth/useAuth';
 
 export default function Home() {
   const { t } = useTranslation();
+  const { status, user } = useAuth();
   const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
   const bannerText = rootData?.orgConfig.bannerText?.trim();
+
+  const showSurveyBanner =
+    status === 'authenticated' &&
+    !user?.surveyCompleted &&
+    !user?.optOutOfRecommendations;
 
   return (
     <>
       {bannerText ? <SubHeaderBanner text={bannerText} /> : null}
+      {showSurveyBanner ? <SurveyBanner /> : null}
       <Container
         maxWidth={false}
         disableGutters

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get '/reset-password', to: 'spa#index'
   get '/account', to: 'spa#index'
   get '/search', to: 'spa#index'
+  get '/survey', to: 'spa#index'
   get '/courses', to: 'spa#index'
   get '/courses/:course_id', to: 'spa#index'
   get '/courses/:course_id/completed', to: 'spa#index'
@@ -199,6 +200,7 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: [:index, :show]
+      resource :course_recommendation_survey, only: [:show, :create]
 
       get '/csrf', to: 'csrf#show' if Rails.env.development?
     end

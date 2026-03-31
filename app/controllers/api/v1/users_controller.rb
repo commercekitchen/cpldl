@@ -15,7 +15,9 @@ module Api
           email: user.email,
           phoneNumber: user.phone_number,
           organization_subdomain: user.organization.subdomain,
-          is_org_admin: user.has_role?(:admin, user.organization)
+          is_org_admin: user.has_role?(:admin, user.organization),
+          surveyCompleted: user.quiz_responses_object.present?,
+          optOutOfRecommendations: user.profile&.opt_out_of_recommendations == true
         }
       end
 
