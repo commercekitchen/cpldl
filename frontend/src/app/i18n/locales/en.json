@@ -10,6 +10,7 @@
     "openSearch": "Open search"
   },
   "home": {
+    "coursesForYou": "Courses for You",
     "featuredCourses": "Featured Courses",
     "popularLessons": "Popular Lessons"
   },
@@ -58,9 +59,14 @@
       "heading": "Start Here!",
       "subheading": "Take a short technology survey",
       "description": "Based on your answers, we will be able to recommend what courses might be of interest for you so that you can learn what you need quickly and easily.",
-      "cta": "Take the Survey"
+      "cta": "Take the Survey",
+      "notRightNow": "Not right now"
     },
-    "pageTitle": "Course Recommendation Survey",
+    "retake": "Retake Survey",
+    "completed": "Recommendation survey responses received.",
+    "recommendedCourses": "Recommended Courses",
+    "recommendedCoursesPlaceholder": "Your personalized course recommendations will appear here.",
+    "pageTitle": "Technology Survey",
     "instructions": "Answer three questions and we'll recommend which courses to take.",
     "submit": "Submit",
     "skip": "Skip",

@@ -10,6 +10,7 @@
     "openSearch": "Abrir búsqueda"
   },
   "home": {
+    "coursesForYou": "Cursos para ti",
     "featuredCourses": "Cursos destacados",
     "popularLessons": "Lecciones populares"
   },
@@ -58,9 +59,14 @@
       "heading": "¡Empieza aquí!",
       "subheading": "Responde una breve encuesta tecnológica",
       "description": "Según tus respuestas, podremos recomendarte los cursos que podrían interesarte para que aprendas lo que necesitas de forma rápida y sencilla.",
-      "cta": "Realizar la encuesta"
+      "cta": "Realizar la encuesta",
+      "notRightNow": "Ahora no"
     },
-    "pageTitle": "Encuesta de recomendación de cursos",
+    "retake": "Repetir encuesta",
+    "completed": "Respuestas de la encuesta de recomendación recibidas.",
+    "recommendedCourses": "Cursos recomendados",
+    "recommendedCoursesPlaceholder": "Tus recomendaciones de cursos personalizadas aparecerán aquí.",
+    "pageTitle": "Encuesta de tecnología",
     "instructions": "Responde tres preguntas y te recomendaremos qué cursos tomar.",
     "submit": "Enviar",
     "skip": "Omitir",

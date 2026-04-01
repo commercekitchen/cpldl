@@ -8,9 +8,9 @@ import type { ListCoursesParams } from '../api/coursesApi';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
 import { listLessons } from '../../lessons/api/lessonsApi';
 
-type Props = { title: string; params?: ListCoursesParams };
+type Props = { title: string; params?: ListCoursesParams; headerAction?: React.ReactNode };
 
-export function CourseListContainer({ title, params }: Props) {
+export function CourseListContainer({ title, params, headerAction }: Props) {
   const navigate = useNavigate();
   const { data: courses = [], isLoading, error } = useCoursesListQuery(params);
 
@@ -34,9 +34,10 @@ export function CourseListContainer({ title, params }: Props) {
 
   return (
     <Box sx={{ my: 3 }}>
-      <Typography variant="h6" sx={{ mb: 1 }}>
-        {title}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+        <Typography variant="h6">{title}</Typography>
+        {headerAction}
+      </Box>
 
       {isLoading && <CircularProgress />}
       {error && <Alert severity="error">{error.message}</Alert>}

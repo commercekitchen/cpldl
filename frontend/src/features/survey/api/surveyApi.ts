@@ -36,3 +36,8 @@ export async function submitSurvey(responses: SurveyResponses): Promise<void> {
   });
   if (!res.ok) throw new Error(`Failed to submit survey: ${res.status}`);
 }
+
+export async function dismissSurvey(): Promise<void> {
+  const res = await apiFetch('/api/v1/profile/dismiss_survey', { method: 'POST' });
+  if (!res.ok) throw new Error(`Failed to dismiss survey: ${res.status}`);
+}

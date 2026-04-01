@@ -7,6 +7,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import RequireAuth from '../auth/RequireAuth';
+import { useAuth } from '../auth/useAuth';
 import { fetchSurvey, submitSurvey } from '../features/survey/api/surveyApi';
 import { SurveyForm } from '../features/survey/components/SurveyForm';
 import type { Survey, SurveyResponses } from '../features/survey/types';
@@ -14,6 +15,7 @@ import type { Survey, SurveyResponses } from '../features/survey/types';
 function CourseRecommendationSurveyInner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { refresh } = useAuth();
   const [survey, setSurvey] = useState<Survey | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +37,8 @@ function CourseRecommendationSurveyInner() {
 
   const handleSubmit = async (responses: SurveyResponses) => {
     await submitSurvey(responses);
-    navigate('/');
+    void refresh();
+    navigate('/', { state: { surveyJustCompleted: true } });
   };
 
   const handleSkip = () => navigate('/');
