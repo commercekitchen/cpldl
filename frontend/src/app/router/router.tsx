@@ -1,6 +1,7 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { rootLoader } from './loaders';
-import { RootLayout } from '../../layouts/RootLayout';
+import { OrgConfigLayout } from '../../layouts/OrgConfigLayout';
+import { UserLayout } from '../../layouts/UserLayout';
 import { AdminLayout } from '../../layouts/AdminLayout';
 import Home from '../../pages/Home';
 import Search from '../../pages/Search';
@@ -25,36 +26,39 @@ export function createAppRouter() {
   return createBrowserRouter(
     [
       {
-        path: '/admin',
-        element: <AdminLayout />,
-        children: [
-          { index: true, element: <Navigate to="/admin/courses" replace /> },
-          { path: 'reports', element: <AdminReports /> },
-          { path: 'courses', element: <AdminCourses /> },
-          { path: 'users', element: <AdminUsers /> },
-          { path: 'settings', element: <AdminSettings /> },
-        ],
-      },
-      {
-        id: 'root',
+        id: 'org',
         path: '/',
         loader: rootLoader,
-        element: <RootLayout />,
+        element: <OrgConfigLayout />,
         children: [
-          { index: true, element: <Home /> },
-          { path: 'search', element: <Search /> },
-          { path: 'login', element: <Login /> },
-          { path: 'signup', element: <Signup /> },
-          { path: 'forgot-password', element: <ForgotPassword /> },
-          { path: 'reset-password', element: <ResetPassword /> },
-          { path: 'account', element: <Account /> },
-          { path: 'survey', element: <CourseRecommendationSurvey /> },
-          { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
-          lessonRoute,
-          coursesRoute,
-          courseRoute,
-          // { path: "courses", element: <Courses /> },
-          // { path: "sign-in", element: <SignIn /> },
+          {
+            path: 'admin',
+            element: <AdminLayout />,
+            children: [
+              { index: true, element: <Navigate to="/admin/courses" replace /> },
+              { path: 'reports', element: <AdminReports /> },
+              { path: 'courses', element: <AdminCourses /> },
+              { path: 'users', element: <AdminUsers /> },
+              { path: 'settings', element: <AdminSettings /> },
+            ],
+          },
+          {
+            element: <UserLayout />,
+            children: [
+              { index: true, element: <Home /> },
+              { path: 'search', element: <Search /> },
+              { path: 'login', element: <Login /> },
+              { path: 'signup', element: <Signup /> },
+              { path: 'forgot-password', element: <ForgotPassword /> },
+              { path: 'reset-password', element: <ResetPassword /> },
+              { path: 'account', element: <Account /> },
+              { path: 'survey', element: <CourseRecommendationSurvey /> },
+              { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
+              lessonRoute,
+              coursesRoute,
+              courseRoute,
+            ],
+          },
         ],
       },
     ],

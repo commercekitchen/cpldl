@@ -78,7 +78,7 @@
     "courses": "Courses",
     "users": "Users",
     "settings": "Settings",
-    "backToSite": "Back to site",
+    "backToSite": "Return to User View",
     "accessDenied": "You must be an admin to access this page.",
     "reportsPage": {
       "title": "Reports",
@@ -86,6 +86,7 @@
       "startDate": "Start Date",
       "endDate": "End Date",
       "download": "Download Report",
+      "analyticsTitle": "Analytics Dashboards",
       "loadError": "Unable to load reports. Please try again later.",
       "dateRangeError": "Start date must be before end date."
     }

@@ -18,7 +18,7 @@ export default function Login() {
   const { login, loginWithPhone } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
+  const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const signUpAllowed = rootData?.orgConfig.features.signUpAllowed !== false;
   const phoneNumberSignIn = rootData?.orgConfig.features.phoneNumberSignIn === true;
   const [showAdminLogin, setShowAdminLogin] = useState(false);

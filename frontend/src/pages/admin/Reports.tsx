@@ -9,13 +9,21 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
+import Divider from '@mui/material/Divider';
+import Link from '@mui/material/Link';
 import DownloadIcon from '@mui/icons-material/Download';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../../app/api/apiFetch';
 
 interface Report {
   key: string;
   title: string;
+}
+
+interface AnalyticsLink {
+  title: string;
+  url: string;
 }
 
 function defaultStartDate(): string {
@@ -35,6 +43,7 @@ export default function AdminReports() {
   const { t } = useTranslation();
 
   const [reports, setReports] = useState<Report[]>([]);
+  const [analyticsLinks, setAnalyticsLinks] = useState<AnalyticsLink[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -48,11 +57,12 @@ export default function AdminReports() {
     apiFetch('/api/v1/admin/reports')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load reports');
-        return res.json() as Promise<{ reports: Report[] }>;
+        return res.json() as Promise<{ reports: Report[]; analyticsLinks: AnalyticsLink[] }>;
       })
       .then((data) => {
         if (cancelled) return;
         setReports(data.reports);
+        setAnalyticsLinks(data.analyticsLinks ?? []);
         if (data.reports.length > 0) setSelectedReport(data.reports[0].key);
       })
       .catch(() => {
@@ -113,7 +123,7 @@ export default function AdminReports() {
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
               fullWidth
             />
             <TextField
@@ -121,7 +131,7 @@ export default function AdminReports() {
               type="date"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
-              InputLabelProps={{ shrink: true }}
+              slotProps={{ inputLabel: { shrink: true } }}
               fullWidth
             />
           </Box>
@@ -136,6 +146,29 @@ export default function AdminReports() {
           >
             {t('admin.reportsPage.download')}
           </Button>
+
+          {analyticsLinks.length > 0 && (
+            <>
+              <Divider />
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Typography variant="subtitle1" fontWeight={600}>
+                  {t('admin.reportsPage.analyticsTitle')}
+                </Typography>
+                {analyticsLinks.map((link) => (
+                  <Link
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}
+                  >
+                    {link.title}
+                    <OpenInNewIcon fontSize="inherit" />
+                  </Link>
+                ))}
+              </Box>
+            </>
+          )}
         </Box>
       )}
     </Box>

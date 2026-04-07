@@ -86,6 +86,7 @@
       "startDate": "Fecha de inicio",
       "endDate": "Fecha de fin",
       "download": "Descargar reporte",
+      "analyticsTitle": "Paneles de análisis",
       "loadError": "No se pudieron cargar los reportes. Por favor, inténtalo más tarde.",
       "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin."
     }
