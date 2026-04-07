@@ -14,6 +14,13 @@ Rails.application.routes.draw do
   get "/ckeditor_assets/pictures/:id/:style_:basename.:extension", to: "legacy_ckeditor_assets#picture"
 
   # SPA routes should win over legacy routes on direct browser loads.
+  # Admin SPA routes — these must come before the `namespace :admin` block.
+  get '/admin', to: 'spa#index'
+  get '/admin/reports', to: 'spa#index'
+  get '/admin/courses', to: 'spa#index'
+  get '/admin/users', to: 'spa#index'
+  get '/admin/settings', to: 'spa#index'
+
   root to: 'spa#index'
   get '/login', to: 'spa#index', as: :spa_login
   get '/forgot-password', to: 'spa#index'
@@ -181,6 +188,10 @@ Rails.application.routes.draw do
   # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
+      namespace :admin do
+        resources :reports, only: [:index]
+      end
+
       resource :session, only: [:create, :destroy]
       resource :registration, only: [:create]
       resource :password_reset, only: [:create, :update]

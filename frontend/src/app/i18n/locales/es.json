@@ -73,6 +73,23 @@
     "loadError": "No se pudo cargar la encuesta. Por favor, inténtalo más tarde.",
     "submitError": "Algo salió mal al enviar la encuesta. Por favor, inténtalo de nuevo."
   },
+  "admin": {
+    "reports": "Reportes",
+    "courses": "Cursos",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "backToSite": "Volver al sitio",
+    "accessDenied": "Debes ser administrador para acceder a esta página.",
+    "reportsPage": {
+      "title": "Reportes",
+      "reportType": "Tipo de reporte",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "download": "Descargar reporte",
+      "loadError": "No se pudieron cargar los reportes. Por favor, inténtalo más tarde.",
+      "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin."
+    }
+  },
   "footer": {
     "license": "Este trabajo está bajo una licencia MIT",
     "learnMore": "Más información",

@@ -258,7 +258,7 @@ function LayoutContent({ orgConfig }: { orgConfig: OrganizationConfig }) {
                   variant="text"
                   color="inherit"
                   startIcon={<AdminPanelSettings />}
-                  onClick={() => window.location.assign('/admin')}
+                  onClick={() => navigate('/admin')}
                   sx={{
                     textTransform: 'none',
                     borderBottom: '2px solid transparent',

@@ -1,11 +1,16 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { rootLoader } from './loaders';
 import { RootLayout } from '../../layouts/RootLayout';
+import { AdminLayout } from '../../layouts/AdminLayout';
 import Home from '../../pages/Home';
 import Search from '../../pages/Search';
 import Login from '../../pages/Login';
 import Account from '../../pages/Account';
 import CourseRecommendationSurvey from '../../pages/CourseRecommendationSurvey';
+import AdminReports from '../../pages/admin/Reports';
+import AdminCourses from '../../pages/admin/Courses';
+import AdminUsers from '../../pages/admin/Users';
+import AdminSettings from '../../pages/admin/Settings';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -19,6 +24,17 @@ export function createAppRouter() {
 
   return createBrowserRouter(
     [
+      {
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+          { index: true, element: <Navigate to="/admin/courses" replace /> },
+          { path: 'reports', element: <AdminReports /> },
+          { path: 'courses', element: <AdminCourses /> },
+          { path: 'users', element: <AdminUsers /> },
+          { path: 'settings', element: <AdminSettings /> },
+        ],
+      },
       {
         id: 'root',
         path: '/',

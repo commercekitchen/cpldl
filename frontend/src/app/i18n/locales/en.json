@@ -73,6 +73,23 @@
     "loadError": "Unable to load the survey. Please try again later.",
     "submitError": "Something went wrong submitting the survey. Please try again."
   },
+  "admin": {
+    "reports": "Reports",
+    "courses": "Courses",
+    "users": "Users",
+    "settings": "Settings",
+    "backToSite": "Back to site",
+    "accessDenied": "You must be an admin to access this page.",
+    "reportsPage": {
+      "title": "Reports",
+      "reportType": "Report Type",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "download": "Download Report",
+      "loadError": "Unable to load reports. Please try again later.",
+      "dateRangeError": "Start date must be before end date."
+    }
+  },
   "footer": {
     "license": "This work is licensed under an MIT License",
     "learnMore": "Learn More",
