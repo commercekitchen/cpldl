@@ -13,6 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -24,19 +25,20 @@ import type { OrganizationConfig } from '../app/organization/types';
 
 const DRAWER_WIDTH = 240;
 
-const NAV_ITEMS = [
-  { key: 'reports', path: '/admin/reports', icon: <BarChartIcon /> },
-  { key: 'courses', path: '/admin/courses', icon: <SchoolIcon /> },
-  { key: 'users', path: '/admin/users', icon: <PeopleIcon /> },
-  { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
-] as const;
-
 export function AdminLayout() {
   const { t } = useTranslation();
   const { status, user } = useAuth();
   const navigate = useNavigate();
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
   const isAuthenticated = status === 'authenticated';
+
+  const navItems = [
+    { key: 'reports', path: '/admin/reports', icon: <BarChartIcon /> },
+    { key: 'courses', path: '/admin/courses', icon: <SchoolIcon /> },
+    ...(!orgConfig.mainSite ? [{ key: 'plaLibrary', path: '/admin/pla-library', icon: <CollectionsBookmarkIcon /> }] : []),
+    { key: 'users', path: '/admin/users', icon: <PeopleIcon /> },
+    { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
+  ];
 
   if (status === 'loading') {
     return (
@@ -115,7 +117,7 @@ export function AdminLayout() {
           }}
         >
           <List sx={{ flex: 1, pt: 1 }}>
-            {NAV_ITEMS.map(({ key, path, icon }) => (
+            {navItems.map(({ key, path, icon }) => (
               <ListItem key={key} disablePadding>
                 <ListItemButton
                   component={NavLink}

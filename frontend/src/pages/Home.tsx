@@ -15,7 +15,7 @@ export default function Home() {
   const { status, user } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
+  const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const bannerText = rootData?.orgConfig.bannerText?.trim();
 
   const surveyJustCompleted = (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;

@@ -15,7 +15,7 @@ export function SurveyBanner() {
   const { refresh } = useAuth();
   const [dismissing, setDismissing] = useState(false);
 
-  const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
+  const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const surveyRequired = rootData?.orgConfig.features.surveyRequired ?? false;
 
   const handleDismiss = async () => {

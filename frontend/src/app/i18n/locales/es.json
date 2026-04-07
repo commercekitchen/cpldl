@@ -78,6 +78,7 @@
     "courses": "Cursos",
     "users": "Usuarios",
     "settings": "Configuración",
+    "plaLibrary": "Biblioteca de cursos PLA",
     "backToSite": "Volver al sitio",
     "accessDenied": "Debes ser administrador para acceder a esta página.",
     "reportsPage": {

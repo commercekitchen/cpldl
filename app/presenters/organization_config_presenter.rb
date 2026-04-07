@@ -13,6 +13,7 @@ class OrganizationConfigPresenter
     {
       subdomain: @organization.subdomain,
       displayName: @organization.name,
+      mainSite: @organization.main_site?,
       bannerText: banner_text,
       footerLinks: footer_links_payload,
 

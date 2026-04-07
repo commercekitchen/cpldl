@@ -78,6 +78,7 @@
     "courses": "Courses",
     "users": "Users",
     "settings": "Settings",
+    "plaLibrary": "PLA Course Library",
     "backToSite": "Return to User View",
     "accessDenied": "You must be an admin to access this page.",
     "reportsPage": {
