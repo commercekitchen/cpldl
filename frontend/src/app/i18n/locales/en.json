@@ -79,6 +79,19 @@
     "users": "Users",
     "settings": "Settings",
     "plaLibrary": "PLA Course Library",
+    "plaLibraryPage": {
+      "colTitle": "Title",
+      "colCategory": "Category",
+      "colTopics": "Topic(s)",
+      "colLanguage": "Language",
+      "colStatus": "Status",
+      "imported": "Imported",
+      "notImported": "Not Imported",
+      "import": "Import Course",
+      "importing": "Importing…",
+      "importError": "Failed to import course. Please try again.",
+      "loadError": "Unable to load courses. Please try again later."
+    },
     "backToSite": "Return to User View",
     "accessDenied": "You must be an admin to access this page.",
     "reportsPage": {

@@ -79,6 +79,19 @@
     "users": "Usuarios",
     "settings": "Configuración",
     "plaLibrary": "Biblioteca de cursos PLA",
+    "plaLibraryPage": {
+      "colTitle": "Título",
+      "colCategory": "Categoría",
+      "colTopics": "Tema(s)",
+      "colLanguage": "Idioma",
+      "colStatus": "Estado",
+      "imported": "Importado",
+      "notImported": "No importado",
+      "import": "Importar curso",
+      "importing": "Importando…",
+      "importError": "Error al importar el curso. Por favor, inténtalo de nuevo.",
+      "loadError": "No se pudieron cargar los cursos. Por favor, inténtalo más tarde."
+    },
     "backToSite": "Volver al sitio",
     "accessDenied": "Debes ser administrador para acceder a esta página.",
     "reportsPage": {
