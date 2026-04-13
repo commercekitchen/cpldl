@@ -17,6 +17,9 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../../app/api/apiFetch';
 
@@ -65,6 +68,7 @@ function sortCourses(courses: PlaCourse[], key: SortKey, dir: SortDir): PlaCours
 
 export default function AdminPlaCatalog() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [courses, setCourses] = useState<PlaCourse[]>([]);
   const [loading, setLoading] = useState(true);
@@ -212,6 +216,7 @@ export default function AdminPlaCatalog() {
                 {col('language', t('admin.plaCatalogPage.colLanguage'))}
                 {col('imported', t('admin.plaCatalogPage.colImported'))}
                 <TableCell />
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -264,6 +269,17 @@ export default function AdminPlaCatalog() {
                           ? t('admin.plaCatalogPage.importing')
                           : t('admin.plaCatalogPage.import')}
                       </Button>
+                    )}
+                  </TableCell>
+                  <TableCell align="right" padding="checkbox">
+                    {course.imported && course.importedCourseId !== null && (
+                      <IconButton
+                        size="small"
+                        onClick={() => navigate(`/admin/courses/${course.importedCourseId}/edit`)}
+                        aria-label={t('admin.plaCatalogPage.editCourse')}
+                      >
+                        <EditIcon fontSize="small" />
+                      </IconButton>
                     )}
                   </TableCell>
                 </TableRow>

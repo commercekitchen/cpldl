@@ -10,6 +10,8 @@ import Account from '../../pages/Account';
 import CourseRecommendationSurvey from '../../pages/CourseRecommendationSurvey';
 import AdminReports from '../../pages/admin/Reports';
 import AdminCourses from '../../pages/admin/Courses';
+import AdminEditCourse from '../../pages/admin/EditCourse';
+import AdminEditLesson from '../../pages/admin/EditLesson';
 import AdminPlaCatalog from '../../pages/admin/PlaCatalog';
 import AdminUsers from '../../pages/admin/Users';
 import AdminSettings from '../../pages/admin/Settings';
@@ -39,6 +41,8 @@ export function createAppRouter() {
               { index: true, element: <Navigate to="/admin/courses" replace /> },
               { path: 'reports', element: <AdminReports /> },
               { path: 'courses', element: <AdminCourses /> },
+              { path: 'courses/:courseId/edit', element: <AdminEditCourse /> },
+              { path: 'courses/:courseId/lessons/:lessonId/edit', element: <AdminEditLesson /> },
               { path: 'pla-catalog', element: <AdminPlaCatalog /> },
               { path: 'users', element: <AdminUsers /> },
               { path: 'settings', element: <AdminSettings /> },

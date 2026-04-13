@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -15,7 +16,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
+import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../../app/api/apiFetch';
 
@@ -63,6 +66,7 @@ function sortCourses(courses: AdminCourse[], key: SortKey, dir: SortDir): AdminC
 
 export default function AdminCourses() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [courses, setCourses] = useState<AdminCourse[]>([]);
@@ -165,6 +169,7 @@ export default function AdminCourses() {
                 {col('language', t('admin.adminCoursesPage.colLanguage'))}
                 {col('imported', t('admin.adminCoursesPage.colType'))}
                 {col('pubStatus', t('admin.adminCoursesPage.colPubStatus'))}
+                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,6 +199,15 @@ export default function AdminCourses() {
                         </MenuItem>
                       ))}
                     </Select>
+                  </TableCell>
+                  <TableCell align="right" padding="checkbox">
+                    <IconButton
+                      size="small"
+                      onClick={() => navigate(`/admin/courses/${course.id}/edit`)}
+                      aria-label={t('admin.adminCoursesPage.editCourse')}
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

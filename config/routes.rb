@@ -191,8 +191,12 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         resources :reports, only: [:index]
-        resources :courses, only: [:index] do
+        resources :courses, only: [:index, :show, :update] do
           patch :pub_status, on: :member
+          resources :lessons, only: [:index, :create, :destroy] do
+            patch :sort, on: :collection
+          end
+          resources :attachments, only: [:create, :destroy]
         end
         resources :pla_courses, only: [:index] do
           post :import, on: :member
