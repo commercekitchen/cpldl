@@ -61,7 +61,7 @@ function sortCourses(courses: PlaCourse[], key: SortKey, dir: SortDir): PlaCours
   });
 }
 
-export default function AdminPlaLibrary() {
+export default function AdminPlaCatalog() {
   const { t } = useTranslation();
 
   const [courses, setCourses] = useState<PlaCourse[]>([]);
@@ -83,12 +83,14 @@ export default function AdminPlaLibrary() {
         if (!cancelled) setCourses(data.courses);
       })
       .catch(() => {
-        if (!cancelled) setError(t('admin.plaLibraryPage.loadError'));
+        if (!cancelled) setError(t('admin.plaCatalogPage.loadError'));
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [t]);
 
   const handleSort = (key: SortKey) => {
@@ -100,56 +102,58 @@ export default function AdminPlaLibrary() {
     }
   };
 
-  const handleImport = useCallback(async (courseId: number) => {
-    setImporting(courseId);
-    setImportError(null);
-    try {
-      const res = await apiFetch(`/api/v1/admin/pla_courses/${courseId}/import`, { method: 'POST' });
-      if (!res.ok) {
-        const body = await res.json() as { message?: string };
-        throw new Error(body.message ?? 'Import failed');
+  const handleImport = useCallback(
+    async (courseId: number) => {
+      setImporting(courseId);
+      setImportError(null);
+      try {
+        const res = await apiFetch(`/api/v1/admin/pla_courses/${courseId}/import`, {
+          method: 'POST',
+        });
+        if (!res.ok) {
+          const body = (await res.json()) as { message?: string };
+          throw new Error(body.message ?? 'Import failed');
+        }
+        const { importedCourseId, importedPubStatus } = (await res.json()) as {
+          importedCourseId: number;
+          importedPubStatus: string;
+        };
+        setCourses((prev) =>
+          prev.map((c) =>
+            c.id === courseId ? { ...c, imported: true, importedCourseId, importedPubStatus } : c,
+          ),
+        );
+      } catch (err) {
+        setImportError(err instanceof Error ? err.message : t('admin.plaCatalogPage.importError'));
+      } finally {
+        setImporting(null);
       }
-      const { importedCourseId, importedPubStatus } = await res.json() as {
-        importedCourseId: number;
-        importedPubStatus: string;
-      };
-      setCourses((prev) =>
-        prev.map((c) =>
-          c.id === courseId
-            ? { ...c, imported: true, importedCourseId, importedPubStatus }
-            : c
-        )
-      );
-    } catch (err) {
-      setImportError(err instanceof Error ? err.message : t('admin.plaLibraryPage.importError'));
-    } finally {
-      setImporting(null);
-    }
-  }, [t]);
+    },
+    [t],
+  );
 
-  const handlePubStatus = useCallback(async (courseId: number, importedCourseId: number, pubStatus: string) => {
-    // Optimistic update
-    setCourses((prev) =>
-      prev.map((c) =>
-        c.id === courseId ? { ...c, importedPubStatus: pubStatus } : c
-      )
-    );
-    try {
-      const res = await apiFetch(`/api/v1/admin/pla_courses/${importedCourseId}/pub_status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ pub_status: pubStatus }),
-      });
-      if (!res.ok) throw new Error('Failed to update status');
-    } catch {
-      // Revert on failure — refetch would be cleaner but keep it simple
+  const handlePubStatus = useCallback(
+    async (courseId: number, importedCourseId: number, pubStatus: string) => {
+      // Optimistic update
       setCourses((prev) =>
-        prev.map((c) =>
-          c.id === courseId ? { ...c, importedPubStatus: null } : c
-        )
+        prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: pubStatus } : c)),
       );
-    }
-  }, []);
+      try {
+        const res = await apiFetch(`/api/v1/admin/pla_courses/${importedCourseId}/pub_status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pub_status: pubStatus }),
+        });
+        if (!res.ok) throw new Error('Failed to update status');
+      } catch {
+        // Revert on failure — refetch would be cleaner but keep it simple
+        setCourses((prev) =>
+          prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: null } : c)),
+        );
+      }
+    },
+    [],
+  );
 
   const sorted = sortCourses(courses, sortKey, sortDir);
 
@@ -168,23 +172,27 @@ export default function AdminPlaLibrary() {
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
-        {t('admin.plaLibrary')}
+        {t('admin.plaCatalog')}
       </Typography>
 
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
-      {importError && <Alert severity="error" sx={{ mb: 2 }}>{importError}</Alert>}
+      {importError && (
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {importError}
+        </Alert>
+      )}
 
       {!loading && !error && (
         <TableContainer component={Paper} variant="outlined">
           <Table size="small">
             <TableHead>
               <TableRow>
-                {col('title', t('admin.plaLibraryPage.colTitle'))}
-                {col('category', t('admin.plaLibraryPage.colCategory'))}
-                {col('topics', t('admin.plaLibraryPage.colTopics'))}
-                {col('language', t('admin.plaLibraryPage.colLanguage'))}
-                {col('imported', t('admin.plaLibraryPage.colStatus'))}
+                {col('title', t('admin.plaCatalogPage.colTitle'))}
+                {col('category', t('admin.plaCatalogPage.colCategory'))}
+                {col('topics', t('admin.plaCatalogPage.colTopics'))}
+                {col('language', t('admin.plaCatalogPage.colLanguage'))}
+                {col('imported', t('admin.plaCatalogPage.colStatus'))}
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -197,12 +205,16 @@ export default function AdminPlaLibrary() {
                   <TableCell>{course.language ?? '—'}</TableCell>
                   <TableCell>
                     {course.imported ? (
-                      <Chip label={t('admin.plaLibraryPage.imported')} color="success" size="small" />
+                      <Chip
+                        label={t('admin.plaCatalogPage.imported')}
+                        color="success"
+                        size="small"
+                      />
                     ) : (
-                      <Chip label={t('admin.plaLibraryPage.notImported')} size="small" />
+                      <Chip label={t('admin.plaCatalogPage.notImported')} size="small" />
                     )}
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell align="left">
                     {course.imported && course.importedCourseId !== null ? (
                       <Select
                         size="small"
@@ -226,8 +238,8 @@ export default function AdminPlaLibrary() {
                         onClick={() => handleImport(course.id)}
                       >
                         {importing === course.id
-                          ? t('admin.plaLibraryPage.importing')
-                          : t('admin.plaLibraryPage.import')}
+                          ? t('admin.plaCatalogPage.importing')
+                          : t('admin.plaCatalogPage.import')}
                       </Button>
                     )}
                   </TableCell>

@@ -35,14 +35,18 @@ export function AdminLayout() {
   const navItems = [
     { key: 'reports', path: '/admin/reports', icon: <BarChartIcon /> },
     { key: 'courses', path: '/admin/courses', icon: <SchoolIcon /> },
-    ...(!orgConfig.mainSite ? [{ key: 'plaLibrary', path: '/admin/pla-library', icon: <CollectionsBookmarkIcon /> }] : []),
+    ...(!orgConfig.mainSite
+      ? [{ key: 'plaCatalog', path: '/admin/pla-catalog', icon: <CollectionsBookmarkIcon /> }]
+      : []),
     { key: 'users', path: '/admin/users', icon: <PeopleIcon /> },
     { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
   ];
 
   if (status === 'loading') {
     return (
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -68,7 +72,11 @@ export function AdminLayout() {
       >
         <Toolbar sx={{ minHeight: { xs: 56, md: 64 } }}>
           <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-            <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2, textDecoration: 'none' }}>
+            <Box
+              component={NavLink}
+              to="/"
+              sx={{ display: 'flex', alignItems: 'center', gap: 2, textDecoration: 'none' }}
+            >
               {orgConfig.theme.logoUrl ? (
                 <Box
                   component="img"
@@ -77,12 +85,18 @@ export function AdminLayout() {
                   sx={{ height: { xs: 32, md: 40 }, width: 'auto' }}
                 />
               ) : (
-                <Typography variant="h6" color="text.primary">{orgConfig.displayName}</Typography>
+                <Typography variant="h6" color="text.primary">
+                  {orgConfig.displayName}
+                </Typography>
               )}
             </Box>
           </Box>
 
-          <Typography variant="h6" fontWeight={600} sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <Typography
+            variant="h6"
+            fontWeight={600}
+            sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+          >
             {t('nav.adminDashboard')}
           </Typography>
 
@@ -142,10 +156,7 @@ export function AdminLayout() {
 
           <List>
             <ListItem disablePadding>
-              <ListItemButton
-                onClick={() => navigate('/')}
-                sx={{ borderRadius: 1, mx: 0.5 }}
-              >
+              <ListItemButton onClick={() => navigate('/')} sx={{ borderRadius: 1, mx: 0.5 }}>
                 <ListItemIcon sx={{ minWidth: 36 }}>
                   <ArrowBackIcon />
                 </ListItemIcon>

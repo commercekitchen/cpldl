@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get '/admin', to: 'spa#index'
   get '/admin/reports', to: 'spa#index'
   get '/admin/courses', to: 'spa#index'
-  get '/admin/pla-library', to: 'spa#index'
+  get '/admin/pla-catalog', to: 'spa#index'
   get '/admin/users', to: 'spa#index'
   get '/admin/settings', to: 'spa#index'
 

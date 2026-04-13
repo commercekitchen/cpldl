@@ -78,8 +78,8 @@
     "courses": "Cursos",
     "users": "Usuarios",
     "settings": "Configuración",
-    "plaLibrary": "Biblioteca de cursos PLA",
-    "plaLibraryPage": {
+    "plaCatalog": "Catálogo de cursos PLA",
+    "plaCatalogPage": {
       "colTitle": "Título",
       "colCategory": "Categoría",
       "colTopics": "Tema(s)",
