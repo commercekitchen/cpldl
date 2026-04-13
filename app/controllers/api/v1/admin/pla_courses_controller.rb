@@ -43,19 +43,6 @@ module Api
           render status: :unprocessable_entity, json: { message: e.message }
         end
 
-        def pub_status
-          course = current_organization.courses.find(params[:id])
-          authorize course, :update?
-
-          unless Course.pub_status_options.map(&:last).include?(params[:pub_status])
-            render status: :unprocessable_entity, json: { message: 'Invalid publication status.' }
-            return
-          end
-
-          course.update!(pub_status: params[:pub_status])
-          render json: { importedPubStatus: course.pub_status }
-        end
-
         private
 
         def require_admin
@@ -66,9 +53,9 @@ module Api
 
         def imported_courses_by_parent_id
           current_organization.courses
-            .where.not(pub_status: 'A')
-            .where.not(parent_id: nil)
-            .index_by(&:parent_id)
+                              .where.not(pub_status: 'A')
+                              .where.not(parent_id: nil)
+                              .index_by(&:parent_id)
         end
       end
     end

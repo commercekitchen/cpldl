@@ -84,7 +84,7 @@
       "colCategory": "Categoría",
       "colTopics": "Tema(s)",
       "colLanguage": "Idioma",
-      "colStatus": "Estado",
+      "colImported": "Importado",
       "imported": "Importado",
       "notImported": "No importado",
       "import": "Importar curso",

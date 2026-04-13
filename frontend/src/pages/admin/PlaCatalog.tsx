@@ -137,13 +137,18 @@ export default function AdminPlaCatalog() {
   );
 
   const handlePubStatus = useCallback(
-    async (courseId: number, importedCourseId: number, pubStatus: string, previousPubStatus: string | null) => {
+    async (
+      courseId: number,
+      importedCourseId: number,
+      pubStatus: string,
+      previousPubStatus: string | null,
+    ) => {
       // Optimistic update
       setCourses((prev) =>
         prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: pubStatus } : c)),
       );
       try {
-        const res = await apiFetch(`/api/v1/admin/pla_courses/${importedCourseId}/pub_status`, {
+        const res = await apiFetch(`/api/v1/admin/courses/${importedCourseId}/pub_status`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ pub_status: pubStatus }),
@@ -205,7 +210,7 @@ export default function AdminPlaCatalog() {
                 {col('category', t('admin.plaCatalogPage.colCategory'))}
                 {col('topics', t('admin.plaCatalogPage.colTopics'))}
                 {col('language', t('admin.plaCatalogPage.colLanguage'))}
-                {col('imported', t('admin.plaCatalogPage.colStatus'))}
+                {col('imported', t('admin.plaCatalogPage.colImported'))}
                 <TableCell />
               </TableRow>
             </TableHead>
@@ -233,7 +238,12 @@ export default function AdminPlaCatalog() {
                         size="small"
                         value={course.importedPubStatus ?? ''}
                         onChange={(e) =>
-                          handlePubStatus(course.id, course.importedCourseId!, e.target.value, course.importedPubStatus)
+                          handlePubStatus(
+                            course.id,
+                            course.importedCourseId!,
+                            e.target.value,
+                            course.importedPubStatus,
+                          )
                         }
                         sx={{ minWidth: 130 }}
                       >
