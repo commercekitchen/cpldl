@@ -9,7 +9,7 @@ module Api
       end
 
       def show
-        lesson = Lesson.friendly.find(params[:id])
+        lesson = policy_scope(Lesson).friendly.find(params[:id])
         render json: LessonPresenter.new(lesson, user: current_user).as_json
       end
 
@@ -62,7 +62,7 @@ module Api
       end
 
       def fetch_lessons_for_index
-        return Lesson.where(course_id: params[:course_id]) if params[:course_id].present?
+        return policy_scope(Lesson).where(course_id: params[:course_id]) if params[:course_id].present?
         return scoped_lessons if scope_or_limit_present?
 
         Lesson.none
@@ -122,22 +122,22 @@ module Api
                         .group(:lesson_id)
                         .select('lesson_id, COUNT(*) AS completion_count')
 
-        Lesson
+        policy_scope(Lesson)
           .joins("LEFT JOIN (#{recent_counts.to_sql}) AS recent_completions ON recent_completions.lesson_id = lessons.id")
           .order('COALESCE(recent_completions.completion_count, 0) DESC')
       end
 
       def lessons_for_all_scope
-        Lesson.all
+        policy_scope(Lesson)
       end
 
       def lessons_for_recommended_scope
         # Do we need this?
-        Lesson.all
+        policy_scope(Lesson)
       end
 
       def lessons_for_newest_scope
-        Lesson.all.order(created_at: :desc)
+        policy_scope(Lesson).order(created_at: :desc)
       end
     end
   end

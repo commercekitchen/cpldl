@@ -16,9 +16,7 @@ class LessonPolicy < AdminOnlyPolicy
 
   class Scope < Scope
     def resolve
-      raise Pundit::NotAuthorizedError unless user.admin?
-
-      user.organization.lessons
+      Lesson.joins(:course).where(courses: { organization_id: user.organization.id })
     end
   end
 
