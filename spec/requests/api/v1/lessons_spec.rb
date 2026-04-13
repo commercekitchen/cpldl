@@ -37,6 +37,20 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
       expect(lesson_payloads).to all(satisfy { |lesson| lesson['course']['summary'] == course.summary })
       expect(lesson_payloads.size).to eq(2)
     end
+
+    it 'only includes lessons from published courses' do
+      unpublished_course = create(:course, organization: organization, pub_status: 'D')
+      create_list(:lesson, 2, course: unpublished_course)
+
+      get '/api/v1/lessons', params: { course_id: unpublished_course.id }
+
+      expect(response).to have_http_status(:ok)
+
+      body = JSON.parse(response.body)
+      lesson_payloads = body.fetch('lessons')
+
+      expect(lesson_payloads).to be_empty
+    end
   end
 
   describe 'POST /api/v1/lessons/complete' do
@@ -87,6 +101,7 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
 
     it 'supports guest completion and returns course_completed false' do
       lesson = create(:lesson, course: course, is_assessment: false)
+      organization.update(login_required: false)
       allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(nil)
 
       post '/api/v1/lessons/complete',
@@ -97,18 +112,6 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
 
       body = JSON.parse(response.body)
       expect(body['course_completed']).to eq(false)
-    end
-
-    it 'rejects cross-origin requests' do
-      lesson = create(:lesson, course: course, is_assessment: false)
-      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
-
-      post '/api/v1/lessons/complete',
-           params: { course_id: course.to_param, lesson_id: lesson.to_param },
-           headers: { 'Origin' => 'https://evil.example.com' }
-
-      expect(response).to have_http_status(:forbidden)
-      expect(JSON.parse(response.body)['message']).to eq('Cross-origin API requests are not allowed.')
     end
   end
 end

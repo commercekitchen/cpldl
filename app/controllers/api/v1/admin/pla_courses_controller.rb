@@ -43,7 +43,7 @@ module Api
           render status: :unprocessable_entity, json: { message: e.message }
         end
 
-        def update_pub_status
+        def pub_status
           course = current_organization.courses.find(params[:id])
           authorize course, :update?
 

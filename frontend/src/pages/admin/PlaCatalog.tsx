@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -6,6 +7,7 @@ import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Snackbar from '@mui/material/Snackbar';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -69,8 +71,10 @@ export default function AdminPlaCatalog() {
   const [error, setError] = useState<string | null>(null);
   const [sortKey, setSortKey] = useState<SortKey>('title');
   const [sortDir, setSortDir] = useState<SortDir>('asc');
+  const queryClient = useQueryClient();
   const [importing, setImporting] = useState<number | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
+  const [pubStatusError, setPubStatusError] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -133,7 +137,7 @@ export default function AdminPlaCatalog() {
   );
 
   const handlePubStatus = useCallback(
-    async (courseId: number, importedCourseId: number, pubStatus: string) => {
+    async (courseId: number, importedCourseId: number, pubStatus: string, previousPubStatus: string | null) => {
       // Optimistic update
       setCourses((prev) =>
         prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: pubStatus } : c)),
@@ -145,14 +149,16 @@ export default function AdminPlaCatalog() {
           body: JSON.stringify({ pub_status: pubStatus }),
         });
         if (!res.ok) throw new Error('Failed to update status');
+        void queryClient.invalidateQueries({ queryKey: ['courses'] });
+        void queryClient.invalidateQueries({ queryKey: ['lessons'] });
       } catch {
-        // Revert on failure — refetch would be cleaner but keep it simple
         setCourses((prev) =>
-          prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: null } : c)),
+          prev.map((c) => (c.id === courseId ? { ...c, importedPubStatus: previousPubStatus } : c)),
         );
+        setPubStatusError(true);
       }
     },
-    [],
+    [queryClient],
   );
 
   const sorted = sortCourses(courses, sortKey, sortDir);
@@ -182,6 +188,13 @@ export default function AdminPlaCatalog() {
           {importError}
         </Alert>
       )}
+
+      <Snackbar
+        open={pubStatusError}
+        autoHideDuration={4000}
+        onClose={() => setPubStatusError(false)}
+        message="Failed to update publication status"
+      />
 
       {!loading && !error && (
         <TableContainer component={Paper} variant="outlined">
@@ -220,7 +233,7 @@ export default function AdminPlaCatalog() {
                         size="small"
                         value={course.importedPubStatus ?? ''}
                         onChange={(e) =>
-                          handlePubStatus(course.id, course.importedCourseId!, e.target.value)
+                          handlePubStatus(course.id, course.importedCourseId!, e.target.value, course.importedPubStatus)
                         }
                         sx={{ minWidth: 130 }}
                       >

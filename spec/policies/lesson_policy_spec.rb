@@ -122,4 +122,54 @@ RSpec.describe LessonPolicy, type: :policy do
       end
     end
   end
+
+  describe 'Scope' do
+    subject { described_class::Scope.new(pundit_user, Lesson).resolve }
+
+    context 'non-admin user' do
+      let(:pundit_user) { user }
+
+      it 'includes lessons from published courses' do
+        expect(subject).to include(everyone_lesson)
+      end
+
+      it 'includes lessons from coming soon courses' do
+        coming_soon_course = FactoryBot.create(:course, organization: organization, pub_status: 'C')
+        lesson = FactoryBot.create(:lesson, course: coming_soon_course)
+        expect(subject).to include(lesson)
+      end
+
+      it 'excludes lessons from draft courses' do
+        expect(subject).not_to include(draft_course_lesson)
+      end
+
+      it 'excludes lessons from archived courses' do
+        expect(subject).not_to include(archived_course_lesson)
+      end
+
+      it 'excludes lessons from other organizations' do
+        expect(subject).not_to include(other_subsite_lesson)
+      end
+    end
+
+    context 'admin user' do
+      let(:pundit_user) { admin }
+
+      it 'includes lessons from published courses' do
+        expect(subject).to include(everyone_lesson)
+      end
+
+      it 'includes lessons from draft courses' do
+        expect(subject).to include(draft_course_lesson)
+      end
+
+      it 'includes lessons from archived courses' do
+        expect(subject).to include(archived_course_lesson)
+      end
+
+      it 'excludes lessons from other organizations' do
+        expect(subject).not_to include(other_subsite_lesson)
+      end
+    end
+  end
 end
