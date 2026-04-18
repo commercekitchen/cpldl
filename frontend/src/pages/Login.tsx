@@ -47,11 +47,16 @@ export default function Login() {
         ? await loginWithPhone(phone)
         : await login(email, password);
       if (session?.redirect_to) {
-        window.location.assign(session.redirect_to);
+        const target = session.redirect_to;
+        if (target.startsWith('http://') || target.startsWith('https://')) {
+          window.location.assign(target);
+        } else {
+          navigate(target, { replace: true });
+        }
         return;
       }
       if (session?.is_org_admin) {
-        window.location.assign('/admin');
+        navigate('/admin', { replace: true });
         return;
       }
       navigate(from, { replace: true });
