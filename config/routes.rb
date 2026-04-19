@@ -205,6 +205,10 @@ Rails.application.routes.draw do
           patch :update_role, on: :member
           get :export, on: :collection
         end
+        resource :settings, only: [:show, :update] do
+          patch :footer_logo, on: :member
+        end
+        resources :footer_links, only: [:create, :destroy]
         resources :pla_courses, only: [:index] do
           post :import, on: :member
         end
