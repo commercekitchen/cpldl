@@ -213,6 +213,23 @@
         "statusFailed": "Lesson Upload Failed"
       }
     },
+    "usersPage": {
+      "title": "Users",
+      "searchPlaceholder": "Search by name or email…",
+      "export": "Export CSV",
+      "colFirstName": "First Name",
+      "colLastName": "Last Name",
+      "colEmail": "Email",
+      "colRole": "Role",
+      "colJoined": "Joined",
+      "loadError": "Unable to load users. Please try again later.",
+      "roleError": "Failed to update role.",
+      "roleUser": "User",
+      "roleAdmin": "Admin",
+      "roleTrainer": "Trainer",
+      "empty": "No users found.",
+      "of": "of"
+    },
     "backToSite": "Return to User View",
     "accessDenied": "You must be an admin to access this page.",
     "reportsPage": {

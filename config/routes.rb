@@ -201,6 +201,10 @@ Rails.application.routes.draw do
           end
           resources :attachments, only: [:create, :destroy]
         end
+        resources :users, only: [:index] do
+          patch :update_role, on: :member
+          get :export, on: :collection
+        end
         resources :pla_courses, only: [:index] do
           post :import, on: :member
         end
