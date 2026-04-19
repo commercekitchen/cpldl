@@ -209,6 +209,7 @@ Rails.application.routes.draw do
           patch :footer_logo, on: :member
         end
         resources :footer_links, only: [:create, :destroy]
+        resources :library_locations, only: [:create, :update, :destroy]
         resources :pla_courses, only: [:index] do
           post :import, on: :member
         end
