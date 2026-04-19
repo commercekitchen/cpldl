@@ -52,7 +52,7 @@ module Api
         end
 
         def general_params
-          params.require(:general).permit(:footer_logo_link, :login_required)
+          params.require(:general).permit(:footer_logo_link, :login_required, :branches)
         end
 
         def survey_org_params
@@ -78,6 +78,7 @@ module Api
 
         def settings_payload
           {
+            isMainSite: current_organization.main_site?,
             general: {
               footerLogoUrl: footer_logo_url,
               footerLogoLink: current_organization.footer_logo_link,
@@ -91,8 +92,18 @@ module Api
               enButtonText: survey_button_text('en'),
               esButtonText: survey_button_text('es')
             },
+            branches: {
+              enabled: current_organization.branches || false,
+              locations: library_locations_payload
+            },
             languages: Language.order(:name).map { |l| { id: l.id, name: l.name } }
           }
+        end
+
+        def library_locations_payload
+          current_organization.library_locations.map do |loc|
+            { id: loc.id, name: loc.name, zipcode: loc.zipcode, sortOrder: loc.sort_order }
+          end
         end
 
         def footer_links_payload

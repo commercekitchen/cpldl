@@ -27,6 +27,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import SaveIcon from '@mui/icons-material/Save';
+import CloseIcon from '@mui/icons-material/Close';
 import { apiFetch } from '../../app/api/apiFetch';
 
 interface Language {
@@ -56,10 +59,24 @@ interface SurveySettings {
   esButtonText: string | null;
 }
 
+interface LibraryLocation {
+  id: number;
+  name: string;
+  zipcode: number | null;
+  sortOrder: number;
+}
+
+interface BranchesSettings {
+  enabled: boolean;
+  locations: LibraryLocation[];
+}
+
 interface SettingsData {
+  isMainSite: boolean;
   general: GeneralSettings;
   footerLinks: FooterLink[];
   survey: SurveySettings;
+  branches: BranchesSettings;
   languages: Language[];
 }
 
@@ -95,6 +112,7 @@ export default function AdminSettings() {
         <Tab label={t('admin.settingsPage.tabGeneral')} />
         <Tab label={t('admin.settingsPage.tabFooterLinks')} />
         <Tab label={t('admin.settingsPage.tabSurvey')} />
+        {!data.isMainSite && <Tab label={t('admin.settingsPage.tabBranches')} />}
       </Tabs>
 
       {tab === 0 && (
@@ -105,6 +123,9 @@ export default function AdminSettings() {
       )}
       {tab === 2 && (
         <SurveySection data={data.survey} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
+      )}
+      {tab === 3 && !data.isMainSite && (
+        <BranchesSection data={data.branches} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
       )}
 
       <Snackbar open={Boolean(successMsg)} autoHideDuration={4000} onClose={() => setSuccessMsg(null)} message={successMsg} />
@@ -512,5 +533,244 @@ function SurveySection({
         </Button>
       </Box>
     </Paper>
+  );
+}
+
+// ─── Branches Section ─────────────────────────────────────────────────────────
+
+function BranchesSection({
+  data,
+  onSuccess,
+  onError,
+  queryClient,
+}: {
+  data: BranchesSettings;
+  onSuccess: (m: string) => void;
+  onError: (m: string) => void;
+  queryClient: ReturnType<typeof useQueryClient>;
+}) {
+  const { t } = useTranslation();
+  const [enabled, setEnabled] = useState(data.enabled);
+  const [togglingEnabled, setTogglingEnabled] = useState(false);
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editForm, setEditForm] = useState({ name: '', zipcode: '' });
+  const [savingId, setSavingId] = useState<number | null>(null);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [addForm, setAddForm] = useState({ name: '', zipcode: '' });
+  const [adding, setAdding] = useState(false);
+  const [addError, setAddError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setEnabled(data.enabled);
+  }, [data.enabled]);
+
+  const handleToggleEnabled = async (checked: boolean) => {
+    setTogglingEnabled(true);
+    try {
+      const res = await apiFetch('/api/v1/admin/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ general: { branches: checked } }),
+      });
+      if (!res.ok) throw new Error();
+      setEnabled(checked);
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+    } catch {
+      onError(t('admin.settingsPage.saveError'));
+    } finally {
+      setTogglingEnabled(false);
+    }
+  };
+
+  const startEdit = (loc: LibraryLocation) => {
+    setEditingId(loc.id);
+    setEditForm({ name: loc.name, zipcode: String(loc.zipcode ?? '') });
+  };
+
+  const cancelEdit = () => setEditingId(null);
+
+  const handleSaveEdit = async (id: number) => {
+    setSavingId(id);
+    try {
+      const res = await apiFetch(`/api/v1/admin/library_locations/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ library_location: { name: editForm.name, zipcode: editForm.zipcode } }),
+      });
+      if (!res.ok) {
+        const d = await res.json() as { errors?: string[] };
+        onError(d.errors?.join(', ') ?? t('admin.settingsPage.branches.saveError'));
+        return;
+      }
+      setEditingId(null);
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      onSuccess(t('admin.settingsPage.branches.saveSuccess'));
+    } catch {
+      onError(t('admin.settingsPage.branches.saveError'));
+    } finally {
+      setSavingId(null);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    setDeletingId(id);
+    try {
+      const res = await apiFetch(`/api/v1/admin/library_locations/${id}`, { method: 'DELETE' });
+      if (!res.ok) throw new Error();
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      onSuccess(t('admin.settingsPage.branches.deleteSuccess'));
+    } catch {
+      onError(t('admin.settingsPage.branches.deleteError'));
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
+  const handleAdd = async () => {
+    setAddError(null);
+    if (!addForm.name.trim() || !addForm.zipcode.trim()) {
+      setAddError(t('admin.settingsPage.branches.validationError'));
+      return;
+    }
+    setAdding(true);
+    try {
+      const res = await apiFetch('/api/v1/admin/library_locations', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ library_location: { name: addForm.name, zipcode: addForm.zipcode } }),
+      });
+      if (!res.ok) {
+        const d = await res.json() as { errors?: string[] };
+        onError(d.errors?.join(', ') ?? t('admin.settingsPage.branches.addError'));
+        return;
+      }
+      setAddForm({ name: '', zipcode: '' });
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      onSuccess(t('admin.settingsPage.branches.addSuccess'));
+    } catch {
+      onError(t('admin.settingsPage.branches.addError'));
+    } finally {
+      setAdding(false);
+    }
+  };
+
+  return (
+    <Box sx={{ maxWidth: 700 }}>
+      <Paper variant="outlined" sx={{ p: 3, mb: 3 }}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={enabled}
+              onChange={(e) => void handleToggleEnabled(e.target.checked)}
+              disabled={togglingEnabled}
+            />
+          }
+          label={t('admin.settingsPage.branches.enabledLabel')}
+        />
+      </Paper>
+
+      {enabled && (
+        <>
+          <Paper variant="outlined" sx={{ mb: 3 }}>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>{t('admin.settingsPage.branches.colName')}</TableCell>
+                    <TableCell>{t('admin.settingsPage.branches.colZipcode')}</TableCell>
+                    <TableCell />
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {data.locations.length === 0 ? (
+                    <TableRow>
+                      <TableCell colSpan={3} align="center" sx={{ py: 3, color: 'text.secondary' }}>
+                        {t('admin.settingsPage.branches.empty')}
+                      </TableCell>
+                    </TableRow>
+                  ) : (
+                    data.locations.map((loc) => (
+                      <TableRow key={loc.id}>
+                        {editingId === loc.id ? (
+                          <>
+                            <TableCell>
+                              <TextField
+                                value={editForm.name}
+                                onChange={(e) => setEditForm((f) => ({ ...f, name: e.target.value }))}
+                                size="small"
+                                fullWidth
+                                disabled={savingId === loc.id}
+                              />
+                            </TableCell>
+                            <TableCell>
+                              <TextField
+                                value={editForm.zipcode}
+                                onChange={(e) => setEditForm((f) => ({ ...f, zipcode: e.target.value }))}
+                                size="small"
+                                sx={{ width: 120 }}
+                                disabled={savingId === loc.id}
+                                inputProps={{ inputMode: 'numeric' }}
+                              />
+                            </TableCell>
+                            <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
+                              <IconButton size="small" onClick={() => void handleSaveEdit(loc.id)} disabled={savingId === loc.id} color="primary" aria-label={t('admin.settingsPage.branches.save')}>
+                                {savingId === loc.id ? <CircularProgress size={16} /> : <SaveIcon fontSize="small" />}
+                              </IconButton>
+                              <IconButton size="small" onClick={cancelEdit} disabled={savingId === loc.id} aria-label={t('admin.settingsPage.branches.cancel')}>
+                                <CloseIcon fontSize="small" />
+                              </IconButton>
+                            </TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell>{loc.name}</TableCell>
+                            <TableCell>{loc.zipcode ?? '—'}</TableCell>
+                            <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
+                              <IconButton size="small" onClick={() => startEdit(loc)} aria-label={t('admin.settingsPage.branches.edit')}>
+                                <EditIcon fontSize="small" />
+                              </IconButton>
+                              <IconButton size="small" onClick={() => void handleDelete(loc.id)} disabled={deletingId === loc.id} aria-label={t('admin.settingsPage.branches.delete')}>
+                                {deletingId === loc.id ? <CircularProgress size={16} /> : <DeleteIcon fontSize="small" />}
+                              </IconButton>
+                            </TableCell>
+                          </>
+                        )}
+                      </TableRow>
+                    ))
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
+
+          <Paper variant="outlined" sx={{ p: 3 }}>
+            <Typography variant="subtitle2" sx={{ mb: 2 }}>{t('admin.settingsPage.branches.addTitle')}</Typography>
+            {addError && <Alert severity="error" sx={{ mb: 2 }}>{addError}</Alert>}
+            <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', flexWrap: 'wrap' }}>
+              <TextField
+                label={t('admin.settingsPage.branches.colName')}
+                value={addForm.name}
+                onChange={(e) => setAddForm((f) => ({ ...f, name: e.target.value }))}
+                size="small"
+                sx={{ flex: 2, minWidth: 200 }}
+                disabled={adding}
+              />
+              <TextField
+                label={t('admin.settingsPage.branches.colZipcode')}
+                value={addForm.zipcode}
+                onChange={(e) => setAddForm((f) => ({ ...f, zipcode: e.target.value }))}
+                size="small"
+                sx={{ width: 130 }}
+                disabled={adding}
+                inputProps={{ inputMode: 'numeric' }}
+              />
+              <Button variant="contained" onClick={() => void handleAdd()} disabled={adding} sx={{ mt: 0.5 }}>
+                {adding ? t('admin.settingsPage.branches.adding') : t('admin.settingsPage.branches.add')}
+              </Button>
+            </Box>
+          </Paper>
+        </>
+      )}
+    </Box>
   );
 }
