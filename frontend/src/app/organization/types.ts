@@ -9,6 +9,7 @@ export type Organization = {
 export type OrganizationConfig = {
   subdomain: string;
   displayName: string;
+  mainSite: boolean;
   bannerText: string;
   footerLinks?: Array<{
     title: string;

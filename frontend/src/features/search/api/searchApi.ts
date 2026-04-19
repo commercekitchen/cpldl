@@ -1,7 +1,13 @@
 import type { Course } from '../../courses/types';
+import type { Lesson } from '../../lessons/types';
 import { apiFetch } from '../../../app/api/apiFetch';
 
 export type CourseSearchSuggestion = Pick<Course, 'id' | 'title' | 'summary' | 'categoryName'>;
+
+export type SearchResults = {
+  courses: Course[];
+  lessons: Lesson[];
+};
 
 const SEARCH_ENDPOINT = '/api/v1/search';
 
@@ -9,13 +15,12 @@ async function fetchSearch(
   query: string,
   opts: { signal?: AbortSignal } = {},
 ): Promise<unknown> {
-  if (!query.trim()) return [];
+  if (!query.trim()) return { courses: [], lessons: [] };
   const url = new URL(SEARCH_ENDPOINT, window.location.origin);
   url.searchParams.set('q', query);
-  url.searchParams.set('type', 'course');
 
   const res = await apiFetch(url.toString(), { signal: opts.signal });
-  if (!res.ok) throw new Error(`Failed to search courses: ${res.status}`);
+  if (!res.ok) throw new Error(`Failed to search: ${res.status}`);
   return await res.json();
 }
 
@@ -31,12 +36,17 @@ export async function searchCourseSuggestions(
   return json.courses ?? json.results ?? [];
 }
 
-export async function searchCourses(
+export async function searchAll(
   query: string,
   opts: { signal?: AbortSignal } = {},
-): Promise<Course[]> {
-  const json = (await fetchSearch(query, opts)) as Course[] | { courses?: Course[]; results?: Course[] };
+): Promise<SearchResults> {
+  const json = (await fetchSearch(query, opts)) as {
+    courses?: Course[];
+    lessons?: Lesson[];
+  };
 
-  if (Array.isArray(json)) return json;
-  return json.courses ?? json.results ?? [];
+  return {
+    courses: json.courses ?? [],
+    lessons: json.lessons ?? [],
+  };
 }

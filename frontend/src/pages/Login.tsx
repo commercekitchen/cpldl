@@ -9,14 +9,16 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { useRouteLoaderData } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { OrganizationConfig } from '../app/organization/types';
 import { useAuth } from '../auth/useAuth';
 
 export default function Login() {
+  const { t } = useTranslation();
   const { login, loginWithPhone } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const rootData = useRouteLoaderData('root') as { orgConfig: OrganizationConfig } | undefined;
+  const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const signUpAllowed = rootData?.orgConfig.features.signUpAllowed !== false;
   const phoneNumberSignIn = rootData?.orgConfig.features.phoneNumberSignIn === true;
   const [showAdminLogin, setShowAdminLogin] = useState(false);
@@ -45,11 +47,16 @@ export default function Login() {
         ? await loginWithPhone(phone)
         : await login(email, password);
       if (session?.redirect_to) {
-        window.location.assign(session.redirect_to);
+        const target = session.redirect_to;
+        if (target.startsWith('http://') || target.startsWith('https://')) {
+          window.location.assign(target);
+        } else {
+          navigate(target, { replace: true });
+        }
         return;
       }
       if (session?.is_org_admin) {
-        window.location.assign('/admin');
+        navigate('/admin', { replace: true });
         return;
       }
       navigate(from, { replace: true });
@@ -128,6 +135,14 @@ export default function Login() {
               <Button type="submit" variant="contained" size="large" disabled={submitting} fullWidth>
                 {submitting ? 'Signing in…' : usePhoneLogin ? 'Continue' : 'Sign in'}
               </Button>
+
+              {!usePhoneLogin ? (
+                <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
+                  <Button component={Link} to="/forgot-password" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
+                    {t('auth.forgotPassword')}
+                  </Button>
+                </Typography>
+              ) : null}
             </Stack>
           </Box>
 

@@ -8,6 +8,8 @@ export type User = {
   phoneNumber: string | null;
   is_org_admin?: boolean;
   organization_subdomain?: string;
+  surveyCompleted?: boolean;
+  optOutOfRecommendations?: boolean;
 };
 
 export type AuthContextValue = {

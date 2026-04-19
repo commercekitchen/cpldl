@@ -14,10 +14,23 @@ Rails.application.routes.draw do
   get "/ckeditor_assets/pictures/:id/:style_:basename.:extension", to: "legacy_ckeditor_assets#picture"
 
   # SPA routes should win over legacy routes on direct browser loads.
+  # Admin SPA routes — these must come before the `namespace :admin` block.
+  get '/admin', to: 'spa#index'
+  get '/admin/reports', to: 'spa#index'
+  get '/admin/courses', to: 'spa#index'
+  get '/admin/courses/:course_id/edit', to: 'spa#index'
+  get '/admin/courses/:course_id/lessons/:lesson_id/edit', to: 'spa#index'
+  get '/admin/pla-catalog', to: 'spa#index'
+  get '/admin/users', to: 'spa#index'
+  get '/admin/settings', to: 'spa#index'
+
   root to: 'spa#index'
   get '/login', to: 'spa#index', as: :spa_login
+  get '/forgot-password', to: 'spa#index'
+  get '/reset-password', to: 'spa#index'
   get '/account', to: 'spa#index'
   get '/search', to: 'spa#index'
+  get '/survey', to: 'spa#index'
   get '/courses', to: 'spa#index'
   get '/courses/:course_id', to: 'spa#index'
   get '/courses/:course_id/completed', to: 'spa#index'
@@ -154,6 +167,12 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # Redirect Devise's password reset email link to the new React page.
+  get '/users/password/edit', to: redirect { |_params, request|
+    token = request.params[:reset_password_token].to_s
+    "/reset-password?reset_password_token=#{CGI.escape(token)}"
+  }
+
   devise_for :users, controllers: {
     registrations: 'registrations',
     invitations: 'admin/invites',
@@ -172,10 +191,37 @@ Rails.application.routes.draw do
   # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
+      namespace :admin do
+        resources :reports, only: [:index]
+        resources :courses, only: [:index, :show, :update] do
+          patch :pub_status, on: :member
+          resources :lessons, only: [:index, :show, :create, :update, :destroy] do
+            patch :sort, on: :collection
+            get :storyline_status, on: :member
+          end
+          resources :attachments, only: [:create, :destroy]
+        end
+        resources :users, only: [:index] do
+          patch :update_role, on: :member
+          get :export, on: :collection
+        end
+        resource :settings, only: [:show, :update] do
+          patch :footer_logo, on: :member
+        end
+        resources :footer_links, only: [:create, :destroy]
+        resources :library_locations, only: [:create, :update, :destroy]
+        resources :pla_courses, only: [:index] do
+          post :import, on: :member
+        end
+      end
+
       resource :session, only: [:create, :destroy]
       resource :registration, only: [:create]
+      resource :password_reset, only: [:create, :update]
       resource :locale, only: [:show, :update]
-      resource :profile, only: [:show, :update]
+      resource :profile, only: [:show, :update] do
+        post :dismiss_survey, on: :member
+      end
       resource :account, only: [:show, :update]
       get '/me', to: 'users#me'
 
@@ -190,6 +236,7 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: [:index, :show]
+      resource :course_recommendation_survey, only: [:show, :create]
 
       get '/csrf', to: 'csrf#show' if Rails.env.development?
     end

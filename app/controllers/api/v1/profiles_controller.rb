@@ -10,6 +10,20 @@ module Api
         render json: profile_payload
       end
 
+      # POST /api/v1/profile/dismiss_survey
+      # Opts the user out of the recommendation survey banner without touching any
+      # other profile fields (avoids triggering first_name presence validation).
+      def dismiss_survey
+        profile = Profile.find_or_initialize_by(user: current_user)
+        if profile.persisted?
+          profile.update_column(:opt_out_of_recommendations, true)
+        else
+          profile.opt_out_of_recommendations = true
+          profile.save(validate: false)
+        end
+        render json: { ok: true }
+      end
+
       def update
         profile = Profile.find_or_initialize_by(user: current_user)
         previous_language_id = profile.language_id
@@ -31,14 +45,15 @@ module Api
           profile: {
             firstName: p.first_name,
             zipCode: p.zip_code,
-            languageId: p.language_id
+            languageId: p.language_id,
+            optOutOfRecommendations: p.opt_out_of_recommendations == true
           },
           languages: Language.all.order(:name).map { |lang| { id: lang.id, name: lang.name } }
         }
       end
 
       def profile_params
-        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code)
+        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code, :opt_out_of_recommendations)
         raw[:language_id] = raw[:language_id].presence
         raw
       end

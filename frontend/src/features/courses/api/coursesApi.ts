@@ -12,7 +12,7 @@ export async function fetchCourse(
 
 export type ListCoursesParams = {
   limit?: number;
-  scope?: 'homepage' | 'all' | 'recommended' | 'newest';
+  scope?: 'homepage' | 'all' | 'recommended' | 'newest' | 'tracked';
 };
 
 export async function listCourses(
