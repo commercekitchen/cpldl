@@ -189,7 +189,29 @@
     "editLessonPage": {
       "title": "Edit Lesson",
       "backToCourse": "Back to Course",
-      "placeholder": "Lesson editing coming soon."
+      "loadError": "Unable to load lesson. Please try again later.",
+      "saveError": "Failed to save lesson. Please try again.",
+      "saveSuccess": "Lesson saved successfully.",
+      "saving": "Saving…",
+      "save": "Save Changes",
+      "discard": "Discard Changes",
+      "fieldTitle": "Title",
+      "fieldSummary": "Summary",
+      "fieldDuration": "Duration (mins)",
+      "fieldSeoTitle": "SEO Page Title",
+      "fieldMetaDesc": "SEO Meta Description",
+      "fieldAssessment": "This lesson is an assessment",
+      "storyline": {
+        "label": "Articulate Storyline Package",
+        "currentFile": "Current file",
+        "upload": "Upload ZIP",
+        "replace": "Replace ZIP",
+        "uploading": "Uploading…",
+        "uploadError": "Upload failed. Please provide a valid ZIP file.",
+        "statusProcessing": "Processing Lesson Content",
+        "statusComplete": "Lesson Content Uploaded",
+        "statusFailed": "Lesson Upload Failed"
+      }
     },
     "backToSite": "Return to User View",
     "accessDenied": "You must be an admin to access this page.",

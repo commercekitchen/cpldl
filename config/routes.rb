@@ -195,8 +195,9 @@ Rails.application.routes.draw do
         resources :reports, only: [:index]
         resources :courses, only: [:index, :show, :update] do
           patch :pub_status, on: :member
-          resources :lessons, only: [:index, :create, :destroy] do
+          resources :lessons, only: [:index, :show, :create, :update, :destroy] do
             patch :sort, on: :collection
+            get :storyline_status, on: :member
           end
           resources :attachments, only: [:create, :destroy]
         end
