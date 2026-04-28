@@ -75,6 +75,7 @@ export function CourseSearchBar({
     <Autocomplete
       disablePortal
       clearOnBlur={false}
+      filterOptions={(x) => x}
       options={options}
       getOptionLabel={(option) => option.title}
       loading={loading}
@@ -100,22 +101,24 @@ export function CourseSearchBar({
               if (q) onSubmit(q);
             }
           }}
-          InputProps={{
-            ...params.InputProps,
-            startAdornment: (
-              <InputAdornment position="start" sx={{ ml: 0.5 }}>
-                <SearchIcon fontSize="small" color="action" />
-              </InputAdornment>
-            ),
-            endAdornment: (
-              <>
-                {loading ? <CircularProgress color="inherit" size={16} /> : null}
-                {params.InputProps.endAdornment}
-              </>
-            ),
-            sx: {
-              borderRadius: 999,
-              pr: 1,
+          slotProps={{
+            input: {
+              ...params.InputProps,
+              startAdornment: (
+                <InputAdornment position="start" sx={{ ml: 0.5 }}>
+                  <SearchIcon fontSize="small" color="action" />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <>
+                  {loading ? <CircularProgress color="inherit" size={16} /> : null}
+                  {params.InputProps.endAdornment}
+                </>
+              ),
+              sx: {
+                borderRadius: 999,
+                pr: 1,
+              },
             },
           }}
           fullWidth={fullWidth}
