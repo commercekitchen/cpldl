@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { useNavigate, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -50,9 +51,11 @@ export function CourseCompletedPage() {
           Course Overview
         </Typography>
         {course?.description && (
-          <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
-            {course.description}
-          </Typography>
+          <Box
+            color="text.secondary"
+            sx={{ mb: 3, '& p': { mt: 0 }, '& p:last-child': { mb: 0 } }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(course.description) }}
+          />
         )}
         {course && <CourseStats course={course} showLessons />}
 

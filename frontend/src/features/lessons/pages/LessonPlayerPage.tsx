@@ -12,6 +12,8 @@ import { completeLesson, listLessons } from '../api/lessonsApi';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import type { Lesson } from '../types';
 import { useLessonQuery } from '../queries/lessonQuery';
+import { useAuth } from '../../../auth/useAuth';
+import { markGuestLessonComplete } from '../../progress/guestProgress';
 
 function buildLessonTitle(lesson: Lesson) {
   return lesson.seoPageTitle?.trim() || lesson.title.trim() || 'Lesson';
@@ -26,6 +28,7 @@ export function LessonPlayerPage() {
   const { data: lesson, isLoading, error: loadError } = useLessonQuery(lessonId);
 
   const navigate = useNavigate();
+  const { status } = useAuth();
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [completing, setCompleting] = useState(false);
@@ -48,6 +51,10 @@ export function LessonPlayerPage() {
         lessonId: lesson.id,
         courseId: lesson.courseId,
       });
+
+      if (status === 'unauthenticated') {
+        markGuestLessonComplete(lesson.id, lesson.courseId);
+      }
 
       if (resp.course_completed) {
         if (lesson.courseId) {

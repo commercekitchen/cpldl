@@ -1,6 +1,7 @@
 import {
   NavLink,
   Outlet,
+  ScrollRestoration,
   useMatch,
   useNavigate,
   useLocation,
@@ -26,6 +27,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
+import { useGuestProgress } from '../features/progress/useGuestProgress';
 
 type NavButtonProps = {
   to: string;
@@ -131,6 +133,8 @@ export function UserLayout() {
 
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
+  const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
+  const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
   const footerLinks = orgConfig.footerLinks ?? [];
   const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
   const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
@@ -243,25 +247,29 @@ export function UserLayout() {
                 {t('nav.adminDashboard')}
               </Button>
             ) : null}
-            <NavButton
-              to={isAuthenticated ? '/account' : '/login'}
-              label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
-              icon={<AccountCircle />}
-            />
+            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
+              <NavButton
+                to={isAuthenticated ? '/account' : '/login'}
+                label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
+                icon={<AccountCircle />}
+              />
+            )}
             <LocaleToggle />
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 2 }}>
             <LocaleToggle />
-            <Button
-              component={NavLink}
-              to={isAuthenticated ? '/account' : '/login'}
-              variant="text"
-              color="inherit"
-              sx={{ minWidth: 0, p: 0.5 }}
-            >
-              <AccountCircle />
-            </Button>
+            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
+              <Button
+                component={NavLink}
+                to={isAuthenticated ? '/account' : '/login'}
+                variant="text"
+                color="inherit"
+                sx={{ minWidth: 0, p: 0.5 }}
+              >
+                <AccountCircle />
+              </Button>
+            )}
           </Box>
         </Toolbar>
 
@@ -291,6 +299,65 @@ export function UserLayout() {
         </Box>
       </AppBar>
 
+      {showGuestBanner && (
+        <Box
+          sx={{
+            bgcolor: 'secondary.main',
+            color: 'secondary.contrastText',
+            px: 2,
+            py: 0.75,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: { xs: 0.5, sm: 2 },
+            fontSize: '0.8125rem',
+          }}
+        >
+          <Typography variant="inherit" component="span">
+            {guestCount} lesson{guestCount !== 1 ? 's' : ''} completed as guest.
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            <Button
+              size="small"
+              onClick={clearGuestProgress}
+              sx={{
+                color: 'inherit',
+                textDecoration: 'underline',
+                textTransform: 'none',
+                p: 0,
+                minWidth: 0,
+                fontSize: 'inherit',
+                fontWeight: 600,
+                '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
+              }}
+            >
+              Clear Progress
+            </Button>
+            {orgConfig.features?.signUpAllowed && (
+              <Button
+                component={NavLink}
+                to="/signup"
+                size="small"
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                  textTransform: 'none',
+                  p: 0,
+                  minWidth: 0,
+                  fontSize: 'inherit',
+                  fontWeight: 600,
+                  '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
+                }}
+              >
+                Sign Up to Save Progress
+              </Button>
+            )}
+          </Box>
+        </Box>
+      )}
+
+      <ScrollRestoration />
       <Box sx={{ flex: 1 }}>
         <Outlet />
       </Box>
@@ -376,67 +443,38 @@ export function UserLayout() {
       <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: 1,
+            border: '2px solid',
+            borderColor: 'primary.main',
+            borderRadius: 0,
+            p: 2,
           }}
         >
-          <Box
-            sx={{
-              flex: 1,
-              border: '2px solid',
-              borderColor: 'primary.main',
-              borderRadius: 0,
-              p: 2,
-            }}
-          >
-            <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-              {t('footer.learnMore')}
+          <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
+            {t('footer.learnMore')}
+          </Typography>
+          {footerLinks.length > 0 ? (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+              {footerLinks.map((link) => (
+                <Box key={`${link.title}-${link.url}`}>
+                  <MuiLink
+                    href={link.url}
+                    target={link.openInNewTab ? '_blank' : undefined}
+                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                  >
+                    {link.title}
+                  </MuiLink>
+                </Box>
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              {t('footer.linksComingSoon')}
             </Typography>
-            {footerLinks.length > 0 ? (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
-                {footerLinks.map((link) => (
-                  <Box key={`${link.title}-${link.url}`}>
-                    <MuiLink
-                      href={link.url}
-                      target={link.openInNewTab ? '_blank' : undefined}
-                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                    >
-                      {link.title}
-                    </MuiLink>
-                  </Box>
-                ))}
-              </Box>
-            ) : (
-              <Typography variant="body2" color="text.secondary">
-                {t('footer.linksComingSoon')}
-              </Typography>
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              flex: 1,
-              border: '2px solid',
-              borderColor: 'primary.main',
-              borderRadius: 0,
-              p: 2,
-            }}
-          >
-            <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-              {t('footer.getInTouch')}
-            </Typography>
-            <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-              {t('footer.feedbackText')}
-            </Typography>
-            <Button
-              variant="outlined"
-              color="primary"
-              component="a"
-              href="mailto:digitallearnhelp@ala.org"
-            >
-              {t('footer.sendEmail')}
-            </Button>
+          )}
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            <MuiLink component={NavLink} to="/login" variant="body2" color="text.secondary" underline="hover">
+              Admin Login
+            </MuiLink>
           </Box>
         </Box>
       </Box>

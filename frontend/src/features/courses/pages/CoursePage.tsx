@@ -15,6 +15,7 @@ import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseCompletedBadge } from '../components/CourseCompletedBadge';
 import { CourseStats } from '../components/CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
+import DOMPurify from 'dompurify';
 
 
 function buildCourseTitle(course: Course) {
@@ -75,8 +76,10 @@ export function CoursePage() {
           sx={{
             width: { xs: '100%', md: 280 },
             maxWidth: 360,
+            aspectRatio: '4/3',
             borderRadius: 2,
             objectFit: 'cover',
+            bgcolor: 'action.hover',
           }}
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -101,6 +104,14 @@ export function CoursePage() {
           <CourseStats course={course} />
         </Box>
       </Box>
+
+      {course.description && (
+        <Box
+          color="text.secondary"
+          sx={{ mt: 2, '& p': { mt: 0 }, '& p:last-child': { mb: 0 } }}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(course.description) }}
+        />
+      )}
 
       <LessonListContainer title="Lessons" params={{ courseId: course.id }} />
 

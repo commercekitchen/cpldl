@@ -19,12 +19,20 @@ function fileTypeLabel(contentType?: string): string {
   return ext ?? 'File';
 }
 
+function isBrowserOpenable(contentType?: string): boolean {
+  if (!contentType) return false;
+  return contentType.includes('pdf') || contentType.startsWith('image/');
+}
+
 export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
+  const openable = isBrowserOpenable(contentType);
   return (
     <Paper
       component="a"
       href={url}
-      download
+      target="_blank"
+      rel="noopener noreferrer"
+      {...(!openable && { download: true })}
       variant="elevation"
       sx={{
         display: 'flex',

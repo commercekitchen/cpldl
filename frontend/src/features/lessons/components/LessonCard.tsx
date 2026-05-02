@@ -4,6 +4,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import { Link as RouterLink } from 'react-router-dom';
 import type { Lesson } from '../types';
 import { PlayArrow, Replay, Schedule, Speed } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
@@ -14,10 +16,11 @@ type Props = {
   lesson: Lesson;
   metadata?: React.ReactNode;
   onPlayLesson?: (lesson: Lesson) => void;
-  onViewCourse?: (lesson: Lesson) => void;
+  lessonPosition?: { index: number; total: number };
+  hideCourseContext?: boolean;
 };
 
-export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Props) {
+export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hideCourseContext }: Props) {
   const { t } = useTranslation();
   const imageUrl = previewImageForRecord(lesson.id);
   const durationLabel = lesson.duration
@@ -118,16 +121,16 @@ export function LessonCard({ lesson, metadata, onPlayLesson, onViewCourse }: Pro
           </Box>
         </Box>
         {metadata && <Box>{metadata}</Box>}
-        {onViewCourse && lesson.courseId ? (
-          <Button
-            variant="outlined"
-            color="primary"
-            size="small"
-            onClick={() => onViewCourse(lesson)}
-            sx={{ mt: 2 }}
-          >
-            {t('lessons.viewFullCourse')}
-          </Button>
+        {lesson.courseId && (lessonPosition || lesson.courseTitle) ? (
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+            {lessonPosition ? `Lesson ${lessonPosition.index} of ${lessonPosition.total}` : null}
+            {lessonPosition && !hideCourseContext && lesson.courseTitle ? ' · ' : null}
+            {!hideCourseContext && lesson.courseTitle ? (
+              <Link component={RouterLink} to={`/courses/${lesson.courseId}`} underline="hover" color="inherit">
+                {lesson.courseTitle}
+              </Link>
+            ) : null}
+          </Typography>
         ) : null}
       </CardContent>
     </>
