@@ -36,7 +36,7 @@ export function LessonListContainer({ title, params }: Props) {
         <LessonList
           lessons={displayedLessons}
           onPlayLesson={(id) => navigate(`/lessons/${id}`)}
-          onViewCourse={(courseId) => navigate(`/courses/${courseId}`)}
+          hideCourseContext={!!params?.courseId}
         />
       )}
     </Box>

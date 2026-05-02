@@ -118,7 +118,6 @@ export default function Search() {
                 key={lesson.id}
                 lesson={lesson}
                 onPlayLesson={() => navigate(`/lessons/${lesson.id}`)}
-                onViewCourse={lesson.courseId ? () => navigate(`/courses/${lesson.courseId!}`) : undefined}
               />
             ))}
           </Box>

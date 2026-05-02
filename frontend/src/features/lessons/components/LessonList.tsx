@@ -6,15 +6,29 @@ import { LessonCard } from './LessonCard';
 type Props = {
   lessons: Lesson[];
   onPlayLesson: (lessonId: string) => void;
-  onViewCourse: (courseId: string) => void;
+  hideCourseContext?: boolean;
 };
 
-export function LessonList({ lessons, onPlayLesson, onViewCourse }: Props) {
+export function LessonList({ lessons, onPlayLesson, hideCourseContext }: Props) {
   if (lessons.length === 0) {
     return <Typography variant="body2">No lessons available.</Typography>;
   }
 
   const cardWidth = 'clamp(216px, 50vw, 488px)';
+
+  const lessonPosition: Record<string, { index: number; total: number }> = {};
+  const courseGroups: Record<string, Lesson[]> = {};
+  for (const lesson of lessons) {
+    if (lesson.courseId) {
+      (courseGroups[lesson.courseId] ??= []).push(lesson);
+    }
+  }
+  for (const group of Object.values(courseGroups)) {
+    group.sort((a, b) => a.lessonOrder - b.lessonOrder || a.id.localeCompare(b.id));
+    group.forEach((lesson, i) => {
+      lessonPosition[lesson.id] = { index: i + 1, total: group.length };
+    });
+  }
 
   return (
     <Box
@@ -43,9 +57,8 @@ export function LessonList({ lessons, onPlayLesson, onViewCourse }: Props) {
           <LessonCard
             lesson={l}
             onPlayLesson={(lesson) => onPlayLesson(lesson.id)}
-            onViewCourse={(lesson) => {
-              if (lesson.courseId) onViewCourse(lesson.courseId);
-            }}
+            lessonPosition={lessonPosition[l.id]}
+            hideCourseContext={hideCourseContext}
           />
         </Box>
       ))}
