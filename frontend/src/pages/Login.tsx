@@ -169,8 +169,13 @@ export default function Login() {
           ) : null}
 
           {signUpAllowed && !usePhoneLogin ? (
-            <Typography variant="body2" color="text.secondary">
-              No account?{' '}
+            <Typography
+              component="div"
+              variant="body2"
+              color="text.secondary"
+              sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
+            >
+              <Box component="span">No account?</Box>
               <Button component={Link} to="/signup" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
                 Create one
               </Button>

@@ -246,25 +246,29 @@ export function UserLayout() {
                 {t('nav.adminDashboard')}
               </Button>
             ) : null}
-            <NavButton
-              to={isAuthenticated ? '/account' : '/login'}
-              label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
-              icon={<AccountCircle />}
-            />
+            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
+              <NavButton
+                to={isAuthenticated ? '/account' : '/login'}
+                label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
+                icon={<AccountCircle />}
+              />
+            )}
             <LocaleToggle />
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 2 }}>
             <LocaleToggle />
-            <Button
-              component={NavLink}
-              to={isAuthenticated ? '/account' : '/login'}
-              variant="text"
-              color="inherit"
-              sx={{ minWidth: 0, p: 0.5 }}
-            >
-              <AccountCircle />
-            </Button>
+            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
+              <Button
+                component={NavLink}
+                to={isAuthenticated ? '/account' : '/login'}
+                variant="text"
+                color="inherit"
+                sx={{ minWidth: 0, p: 0.5 }}
+              >
+                <AccountCircle />
+              </Button>
+            )}
           </Box>
         </Toolbar>
 
@@ -437,67 +441,38 @@ export function UserLayout() {
       <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
         <Box
           sx={{
-            display: 'flex',
-            flexDirection: { xs: 'column', md: 'row' },
-            gap: 1,
+            border: '2px solid',
+            borderColor: 'primary.main',
+            borderRadius: 0,
+            p: 2,
           }}
         >
-          <Box
-            sx={{
-              flex: 1,
-              border: '2px solid',
-              borderColor: 'primary.main',
-              borderRadius: 0,
-              p: 2,
-            }}
-          >
-            <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-              {t('footer.learnMore')}
+          <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
+            {t('footer.learnMore')}
+          </Typography>
+          {footerLinks.length > 0 ? (
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+              {footerLinks.map((link) => (
+                <Box key={`${link.title}-${link.url}`}>
+                  <MuiLink
+                    href={link.url}
+                    target={link.openInNewTab ? '_blank' : undefined}
+                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                  >
+                    {link.title}
+                  </MuiLink>
+                </Box>
+              ))}
+            </Box>
+          ) : (
+            <Typography variant="body2" color="text.secondary">
+              {t('footer.linksComingSoon')}
             </Typography>
-            {footerLinks.length > 0 ? (
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
-                {footerLinks.map((link) => (
-                  <Box key={`${link.title}-${link.url}`}>
-                    <MuiLink
-                      href={link.url}
-                      target={link.openInNewTab ? '_blank' : undefined}
-                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                    >
-                      {link.title}
-                    </MuiLink>
-                  </Box>
-                ))}
-              </Box>
-            ) : (
-              <Typography variant="body2" color="text.secondary">
-                {t('footer.linksComingSoon')}
-              </Typography>
-            )}
-          </Box>
-
-          <Box
-            sx={{
-              flex: 1,
-              border: '2px solid',
-              borderColor: 'primary.main',
-              borderRadius: 0,
-              p: 2,
-            }}
-          >
-            <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-              {t('footer.getInTouch')}
-            </Typography>
-            <Typography variant="body2" color="text.primary" sx={{ mb: 2 }}>
-              {t('footer.feedbackText')}
-            </Typography>
-            <Button
-              variant="outlined"
-              color="primary"
-              component="a"
-              href="mailto:digitallearnhelp@ala.org"
-            >
-              {t('footer.sendEmail')}
-            </Button>
+          )}
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+            <MuiLink component={NavLink} to="/login" variant="body2" color="text.secondary" underline="hover">
+              Admin Login
+            </MuiLink>
           </Box>
         </Box>
       </Box>
