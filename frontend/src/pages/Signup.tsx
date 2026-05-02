@@ -10,6 +10,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { apiFetch } from '../app/api/apiFetch';
 import { useAuth } from '../auth/useAuth';
+import { migrateGuestProgress } from '../features/progress/guestProgress';
+import { completeLesson } from '../features/lessons/api/lessonsApi';
 
 export default function Signup() {
   const { refresh } = useAuth();
@@ -52,6 +54,9 @@ export default function Signup() {
         }
       });
 
+      await migrateGuestProgress((lessonId, courseId) =>
+        completeLesson({ lessonId, courseId }),
+      );
       await refresh();
       navigate(from, { replace: true });
     } catch (err: unknown) {

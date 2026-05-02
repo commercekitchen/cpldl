@@ -26,6 +26,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
+import { useGuestProgress } from '../features/progress/useGuestProgress';
 
 type NavButtonProps = {
   to: string;
@@ -131,6 +132,8 @@ export function UserLayout() {
 
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
+  const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
+  const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
   const footerLinks = orgConfig.footerLinks ?? [];
   const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
   const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
@@ -290,6 +293,64 @@ export function UserLayout() {
           />
         </Box>
       </AppBar>
+
+      {showGuestBanner && (
+        <Box
+          sx={{
+            bgcolor: 'secondary.main',
+            color: 'secondary.contrastText',
+            px: 2,
+            py: 0.75,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexWrap: 'wrap',
+            gap: { xs: 0.5, sm: 2 },
+            fontSize: '0.8125rem',
+          }}
+        >
+          <Typography variant="inherit" component="span">
+            {guestCount} lesson{guestCount !== 1 ? 's' : ''} completed as guest.
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
+            <Button
+              size="small"
+              onClick={clearGuestProgress}
+              sx={{
+                color: 'inherit',
+                textDecoration: 'underline',
+                textTransform: 'none',
+                p: 0,
+                minWidth: 0,
+                fontSize: 'inherit',
+                fontWeight: 600,
+                '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
+              }}
+            >
+              Clear Progress
+            </Button>
+            {orgConfig.features?.signUpAllowed && (
+              <Button
+                component={NavLink}
+                to="/signup"
+                size="small"
+                sx={{
+                  color: 'inherit',
+                  textDecoration: 'underline',
+                  textTransform: 'none',
+                  p: 0,
+                  minWidth: 0,
+                  fontSize: 'inherit',
+                  fontWeight: 600,
+                  '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
+                }}
+              >
+                Sign Up to Save Progress
+              </Button>
+            )}
+          </Box>
+        </Box>
+      )}
 
       <Box sx={{ flex: 1 }}>
         <Outlet />
