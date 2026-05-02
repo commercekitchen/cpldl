@@ -75,8 +75,10 @@ export function CoursePage() {
           sx={{
             width: { xs: '100%', md: 280 },
             maxWidth: 360,
+            aspectRatio: '4/3',
             borderRadius: 2,
             objectFit: 'cover',
+            bgcolor: 'action.hover',
           }}
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
