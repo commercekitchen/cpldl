@@ -1,6 +1,7 @@
 import {
   NavLink,
   Outlet,
+  ScrollRestoration,
   useMatch,
   useNavigate,
   useLocation,
@@ -356,6 +357,7 @@ export function UserLayout() {
         </Box>
       )}
 
+      <ScrollRestoration />
       <Box sx={{ flex: 1 }}>
         <Outlet />
       </Box>
