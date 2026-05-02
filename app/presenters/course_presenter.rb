@@ -10,7 +10,7 @@ class CoursePresenter
 
   def as_json
     {
-      id: @course.id,
+      id: @course.slug,
       title: @course.title,
       seoPageTitle: @course.seo_page_title,
       seoMetaDescription: @course.meta_desc,

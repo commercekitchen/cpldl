@@ -10,7 +10,7 @@ class LessonPresenter
   def as_json
     {
       id: @lesson.slug,
-      courseId: @course&.id,
+      courseId: @course&.slug,
       courseTitle: @course&.title,
       title: @lesson.title,
       summary: @lesson.summary,
