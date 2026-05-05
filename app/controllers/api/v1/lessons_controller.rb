@@ -62,7 +62,10 @@ module Api
       end
 
       def fetch_lessons_for_index
-        return published_lessons.where(course_id: params[:course_id]) if params[:course_id].present?
+        if params[:course_id].present?
+          course = Course.friendly.find(params[:course_id])
+          return published_lessons.where(course_id: course.id)
+        end
         return scoped_lessons if scope_or_limit_present?
 
         Lesson.none
