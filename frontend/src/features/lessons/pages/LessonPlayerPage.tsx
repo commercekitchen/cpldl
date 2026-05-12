@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'; // or your router
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -32,6 +32,33 @@ export function LessonPlayerPage() {
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [completing, setCompleting] = useState(false);
+  const [storylineStatus, setStorylineStatus] = useState<'checking' | 'ready' | 'unavailable'>(
+    'checking',
+  );
+
+  useEffect(() => {
+    if (!lesson) return;
+
+    const url = lesson.storylineUrl;
+    if (!url) {
+      setStorylineStatus('unavailable');
+      return;
+    }
+
+    const controller = new AbortController();
+
+    fetch(url, { method: 'HEAD', signal: controller.signal })
+      .then((response) => {
+        setStorylineStatus(response.ok ? 'ready' : 'unavailable');
+      })
+      .catch((err: unknown) => {
+        if (err instanceof Error && err.name === 'AbortError') return;
+        // CORS failure or network error — can't determine availability, let the iframe attempt to load
+        setStorylineStatus('ready');
+      });
+
+    return () => controller.abort();
+  }, [lesson?.storylineUrl]);
 
   usePageMetadata(
     lesson
@@ -113,6 +140,14 @@ export function LessonPlayerPage() {
   if (loadError || !lesson)
     return <Alert severity="error">{loadError?.message ?? 'Lesson not found'}</Alert>;
   if (error) return <Alert severity="error">{error ?? 'Error completing lesson'}</Alert>;
+  if (storylineStatus === 'checking') return <CircularProgress />;
+  if (storylineStatus === 'unavailable')
+    return (
+      <Alert severity="error">
+        This lesson content could not be loaded. Please contact your administrator if this problem
+        persists.
+      </Alert>
+    );
 
   return (
     <Box
