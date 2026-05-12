@@ -181,7 +181,12 @@ function GeneralSection({
     formData.append('footer_logo_file', file);
     try {
       const res = await apiFetch('/api/v1/admin/settings/footer_logo', { method: 'PATCH', body: formData });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const body = await res.json().catch(() => null) as { errors?: string[] } | null;
+        const message = body?.errors?.[0] ?? t('admin.settingsPage.logoUploadError');
+        onError(message);
+        return;
+      }
       await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
       onSuccess(t('admin.settingsPage.logoUploaded'));
     } catch {
