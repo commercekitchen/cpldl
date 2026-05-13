@@ -11,6 +11,7 @@ export type OrganizationConfig = {
   displayName: string;
   mainSite: boolean;
   bannerText: string;
+  trainingSiteLink?: string;
   footerLinks?: Array<{
     title: string;
     url: string;
