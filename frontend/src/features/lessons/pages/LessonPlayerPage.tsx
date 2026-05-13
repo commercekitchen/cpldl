@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'; // or your router
+import { useQueryClient } from '@tanstack/react-query';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
@@ -29,6 +30,7 @@ export function LessonPlayerPage() {
 
   const navigate = useNavigate();
   const { status } = useAuth();
+  const queryClient = useQueryClient();
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [completing, setCompleting] = useState(false);
@@ -83,6 +85,11 @@ export function LessonPlayerPage() {
         markGuestLessonComplete(lesson.id, lesson.courseId);
       }
 
+      void queryClient.invalidateQueries({ queryKey: ['lessons', 'list'] });
+      if (lesson.courseId) {
+        void queryClient.invalidateQueries({ queryKey: ['course', lesson.courseId] });
+      }
+
       if (resp.course_completed) {
         if (lesson.courseId) {
           navigate(`/courses/${lesson.courseId}/completed`);
@@ -125,7 +132,7 @@ export function LessonPlayerPage() {
     } finally {
       setCompleting(false);
     }
-  }, [lesson, navigate]);
+  }, [lesson, navigate, queryClient, status]);
 
   // Install listener only once lesson is loaded and iframe is present.
   useLessonCompletionListener({

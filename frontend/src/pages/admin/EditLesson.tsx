@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -119,7 +118,6 @@ export default function AdminEditLesson() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [saveErrors, setSaveErrors] = useState<string[]>([]);
-  const [saveSuccess, setSaveSuccess] = useState(false);
   const [uploadingStoryline, setUploadingStoryline] = useState(false);
   const [storylineUploadError, setStorylineUploadError] = useState<string | null>(null);
 
@@ -205,9 +203,7 @@ export default function AdminEditLesson() {
         return;
       }
 
-      setLesson(data);
-      setForm(data);
-      setSaveSuccess(true);
+      navigate(`/admin/courses/${courseId}/edit?tab=lessons`);
     } catch {
       setSaveErrors([t('admin.editLessonPage.saveError')]);
     } finally {
@@ -418,12 +414,6 @@ export default function AdminEditLesson() {
         </Paper>
       )}
 
-      <Snackbar
-        open={saveSuccess}
-        autoHideDuration={4000}
-        onClose={() => setSaveSuccess(false)}
-        message={t('admin.editLessonPage.saveSuccess')}
-      />
     </Box>
   );
 }

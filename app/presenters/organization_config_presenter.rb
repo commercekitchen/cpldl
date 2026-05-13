@@ -15,6 +15,7 @@ class OrganizationConfigPresenter
       displayName: @organization.name,
       mainSite: @organization.main_site?,
       bannerText: banner_text,
+      trainingSiteLink: @organization.training_site_link.presence,
       footerLinks: footer_links_payload,
 
       theme: {

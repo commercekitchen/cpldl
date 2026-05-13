@@ -58,8 +58,9 @@ interface SortableLessonRowProps {
 
 function SortableLessonRow({ lesson, onEdit, onDelete }: SortableLessonRowProps) {
   const { t } = useTranslation();
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } =
-    useSortable({ id: lesson.id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id: lesson.id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -84,7 +85,12 @@ function SortableLessonRow({ lesson, onEdit, onDelete }: SortableLessonRowProps)
       }}
     >
       <Tooltip title={t('admin.editCoursePage.lessons.dragToReorder')}>
-        <IconButton size="small" sx={{ cursor: 'grab', color: 'text.disabled' }} {...attributes} {...listeners}>
+        <IconButton
+          size="small"
+          sx={{ cursor: 'grab', color: 'text.disabled' }}
+          {...attributes}
+          {...listeners}
+        >
           <DragIndicatorIcon fontSize="small" />
         </IconButton>
       </Tooltip>
@@ -100,7 +106,7 @@ function SortableLessonRow({ lesson, onEdit, onDelete }: SortableLessonRowProps)
         </Typography>
         {lesson.duration != null && (
           <Typography variant="caption" color="text.secondary">
-            {lesson.duration} {t('admin.editCoursePage.lessons.mins')}
+            {Math.floor(lesson.duration / 60)} {t('admin.editCoursePage.lessons.mins')}
           </Typography>
         )}
       </Box>
@@ -165,8 +171,15 @@ function AddLessonForm({ onSave, onCancel, saving }: AddLessonFormProps) {
         inputProps={{ min: 1 }}
       />
       <Box sx={{ display: 'flex', gap: 1 }}>
-        <Button variant="contained" size="small" onClick={handleSave} disabled={saving || !title.trim()}>
-          {saving ? t('admin.editCoursePage.lessons.saving') : t('admin.editCoursePage.lessons.save')}
+        <Button
+          variant="contained"
+          size="small"
+          onClick={handleSave}
+          disabled={saving || !title.trim()}
+        >
+          {saving
+            ? t('admin.editCoursePage.lessons.saving')
+            : t('admin.editCoursePage.lessons.save')}
         </Button>
         <Button variant="outlined" size="small" onClick={onCancel} disabled={saving}>
           {t('admin.editCoursePage.lessons.cancel')}
@@ -202,10 +215,18 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
         if (!res.ok) throw new Error();
         return res.json() as Promise<{ lessons: Lesson[] }>;
       })
-      .then((data) => { if (!cancelled) setLessons(data.lessons); })
-      .catch(() => { if (!cancelled) setError(t('admin.editCoursePage.lessons.loadError')); })
-      .finally(() => { if (!cancelled) setLoading(false); });
-    return () => { cancelled = true; };
+      .then((data) => {
+        if (!cancelled) setLessons(data.lessons);
+      })
+      .catch(() => {
+        if (!cancelled) setError(t('admin.editCoursePage.lessons.loadError'));
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [courseId, t]);
 
   const handleDragEnd = async (event: DragEndEvent) => {
@@ -230,7 +251,15 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
     }
   };
 
-  const handleAdd = async ({ title, summary, duration }: { title: string; summary: string; duration: string }) => {
+  const handleAdd = async ({
+    title,
+    summary,
+    duration,
+  }: {
+    title: string;
+    summary: string;
+    duration: string;
+  }) => {
     setAddSaving(true);
     setAddError(null);
     try {
@@ -239,9 +268,12 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ lesson: { title, summary, duration: parseInt(duration, 10) || 0 } }),
       });
-      const data = await res.json() as Lesson | { errors: string[] };
+      const data = (await res.json()) as Lesson | { errors: string[] };
       if (!res.ok) {
-        setAddError(('errors' in data ? data.errors.join(', ') : null) ?? t('admin.editCoursePage.lessons.addError'));
+        setAddError(
+          ('errors' in data ? data.errors.join(', ') : null) ??
+            t('admin.editCoursePage.lessons.addError'),
+        );
         return;
       }
       setLessons((prev) => [...prev, data as Lesson]);
@@ -276,11 +308,20 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
       <Paper variant="outlined">
         {lessons.length === 0 && !adding ? (
           <Box sx={{ p: 3, textAlign: 'center' }}>
-            <Typography color="text.secondary">{t('admin.editCoursePage.lessons.empty')}</Typography>
+            <Typography color="text.secondary">
+              {t('admin.editCoursePage.lessons.empty')}
+            </Typography>
           </Box>
         ) : (
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={(e) => void handleDragEnd(e)}>
-            <SortableContext items={lessons.map((l) => l.id)} strategy={verticalListSortingStrategy}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={(e) => void handleDragEnd(e)}
+          >
+            <SortableContext
+              items={lessons.map((l) => l.id)}
+              strategy={verticalListSortingStrategy}
+            >
               {lessons.map((lesson) => (
                 <SortableLessonRow
                   key={lesson.id}
@@ -298,10 +339,17 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
         <Collapse in={adding}>
           <AddLessonForm
             onSave={handleAdd}
-            onCancel={() => { setAdding(false); setAddError(null); }}
+            onCancel={() => {
+              setAdding(false);
+              setAddError(null);
+            }}
             saving={addSaving}
           />
-          {addError && <Alert severity="error" sx={{ mx: 2, mb: 2 }}>{addError}</Alert>}
+          {addError && (
+            <Alert severity="error" sx={{ mx: 2, mb: 2 }}>
+              {addError}
+            </Alert>
+          )}
         </Collapse>
 
         {!adding && (
@@ -320,10 +368,16 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
           <DialogContentText>
             {t('admin.editCoursePage.lessons.deleteConfirm', { title: deleteTarget?.title })}
           </DialogContentText>
-          {deleteError && <Alert severity="error" sx={{ mt: 1 }}>{deleteError}</Alert>}
+          {deleteError && (
+            <Alert severity="error" sx={{ mt: 1 }}>
+              {deleteError}
+            </Alert>
+          )}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setDeleteTarget(null)}>{t('admin.editCoursePage.lessons.cancel')}</Button>
+          <Button onClick={() => setDeleteTarget(null)}>
+            {t('admin.editCoursePage.lessons.cancel')}
+          </Button>
           <Button onClick={() => void handleDeleteConfirm()} color="error" variant="contained">
             {t('admin.editCoursePage.lessons.delete')}
           </Button>

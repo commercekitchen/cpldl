@@ -449,9 +449,22 @@ export function UserLayout() {
             p: 2,
           }}
         >
-          <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
-            {t('footer.learnMore')}
-          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+            <Typography component="h3" variant="h6">
+              {t('footer.learnMore')}
+            </Typography>
+            {orgConfig.trainingSiteLink && (
+              <MuiLink
+                href={orgConfig.trainingSiteLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="body2"
+                underline="hover"
+              >
+                {t('footer.trainerResources')}
+              </MuiLink>
+            )}
+          </Box>
           {footerLinks.length > 0 ? (
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
               {footerLinks.map((link) => (

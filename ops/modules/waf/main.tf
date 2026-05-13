@@ -134,7 +134,7 @@ resource "aws_wafv2_web_acl" "waf" {
 
   ########################################
   # 3) CommonRuleSet for allowlisted upload/form paths ONLY
-  #    - Excludes only SizeRestrictions_BODY
+  #    - Body-inspection rules counted (not blocked) to avoid false positives on binary uploads
   ########################################
   rule {
     name     = "CommonRuleSetUploadBypass"
@@ -147,6 +147,34 @@ resource "aws_wafv2_web_acl" "waf" {
 
         rule_action_override {
           name = "SizeRestrictions_BODY"
+          action_to_use {
+            count {}
+          }
+        }
+
+        rule_action_override {
+          name = "GenericLFI_BODY"
+          action_to_use {
+            count {}
+          }
+        }
+
+        rule_action_override {
+          name = "GenericRFI_BODY"
+          action_to_use {
+            count {}
+          }
+        }
+
+        rule_action_override {
+          name = "EC2MetaDataSSRF_BODY"
+          action_to_use {
+            count {}
+          }
+        }
+
+        rule_action_override {
+          name = "CrossSiteScripting_BODY"
           action_to_use {
             count {}
           }
@@ -248,8 +276,10 @@ resource "aws_wafv2_web_acl" "waf" {
 
   ########################################
   # 5) KnownBadInputsRuleSet
-  #    - Applied broadly, excluding static assets
-  #    - (No admin-wide bypass)
+  #    - Applied broadly, excluding static assets and upload paths
+  #    - Upload paths excluded because binary ZIP content (e.g. Storyline archives)
+  #      can contain path-traversal-looking strings in ZIP metadata that trigger
+  #      false positives against path traversal rules.
   ########################################
   rule {
     name     = "AWS-AWSManagedRulesKnownBadInputsRuleSet"
@@ -261,18 +291,40 @@ resource "aws_wafv2_web_acl" "waf" {
         vendor_name = "AWS"
 
         scope_down_statement {
-          not_statement {
+          and_statement {
+
+            # NOT (upload bypass paths) — binary file uploads produce false positives
             statement {
-              regex_pattern_set_reference_statement {
-                arn = aws_wafv2_regex_pattern_set.static_paths.arn
-
-                field_to_match {
-                  uri_path {}
+              not_statement {
+                statement {
+                  regex_pattern_set_reference_statement {
+                    arn = aws_wafv2_regex_pattern_set.upload_bypass_paths.arn
+                    field_to_match {
+                      uri_path {}
+                    }
+                    text_transformation {
+                      priority = 0
+                      type     = "NONE"
+                    }
+                  }
                 }
+              }
+            }
 
-                text_transformation {
-                  priority = 0
-                  type     = "NONE"
+            # NOT (static file extensions)
+            statement {
+              not_statement {
+                statement {
+                  regex_pattern_set_reference_statement {
+                    arn = aws_wafv2_regex_pattern_set.static_paths.arn
+                    field_to_match {
+                      uri_path {}
+                    }
+                    text_transformation {
+                      priority = 0
+                      type     = "NONE"
+                    }
+                  }
                 }
               }
             }

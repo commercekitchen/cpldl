@@ -6,7 +6,7 @@ class Organization < ApplicationRecord
   include Storext.model
 
   MAX_FOOTER_LOGO_SIZE = 2.megabytes
-  FOOTER_LOGO_TYPES = %w[image/png image/jpeg].freeze
+  FOOTER_LOGO_TYPES = %w[image/png image/x-png image/jpeg image/jpg].freeze
 
   resourcify
 

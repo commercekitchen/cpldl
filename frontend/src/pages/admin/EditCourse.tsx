@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -70,7 +70,8 @@ export default function AdminEditCourse() {
   const [options, setOptions] = useState<FormOptions>({ languages: [], categories: [], topics: [] });
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [tab, setTab] = useState(0);
+  const [searchParams] = useSearchParams();
+  const [tab, setTab] = useState(() => searchParams.get('tab') === 'lessons' ? 1 : 0);
 
   useEffect(() => {
     if (!courseId) return;
