@@ -15,26 +15,30 @@ Rails.application.routes.draw do
 
   # SPA routes should win over legacy routes on direct browser loads.
   # Admin SPA routes — these must come before the `namespace :admin` block.
-  get '/admin', to: 'spa#index'
-  get '/admin/reports', to: 'spa#index'
-  get '/admin/courses', to: 'spa#index'
-  get '/admin/courses/:course_id/edit', to: 'spa#index'
-  get '/admin/courses/:course_id/lessons/:lesson_id/edit', to: 'spa#index'
-  get '/admin/pla-catalog', to: 'spa#index'
-  get '/admin/users', to: 'spa#index'
-  get '/admin/settings', to: 'spa#index'
+  constraints SpaConstraint.new do
+    get '/admin', to: 'spa#index'
+    get '/admin/reports', to: 'spa#index'
+    get '/admin/courses', to: 'spa#index'
+    get '/admin/courses/:course_id/edit', to: 'spa#index'
+    get '/admin/courses/:course_id/lessons/:lesson_id/edit', to: 'spa#index'
+    get '/admin/pla-catalog', to: 'spa#index'
+    get '/admin/users', to: 'spa#index'
+    get '/admin/settings', to: 'spa#index'
 
-  root to: 'spa#index'
-  get '/login', to: 'spa#index', as: :spa_login
-  get '/forgot-password', to: 'spa#index'
-  get '/reset-password', to: 'spa#index'
-  get '/account', to: 'spa#index'
-  get '/search', to: 'spa#index'
-  get '/survey', to: 'spa#index'
-  get '/courses', to: 'spa#index'
-  get '/courses/:course_id', to: 'spa#index'
-  get '/courses/:course_id/completed', to: 'spa#index'
-  get '/lessons/:lesson_id', to: 'spa#index'
+    root to: 'spa#index'
+    get '/login', to: 'spa#index', as: :spa_login
+    get '/forgot-password', to: 'spa#index'
+    get '/reset-password', to: 'spa#index'
+    get '/account', to: 'spa#index'
+    get '/search', to: 'spa#index'
+    get '/survey', to: 'spa#index'
+    get '/courses', to: 'spa#index'
+    get '/courses/:course_id', to: 'spa#index'
+    get '/courses/:course_id/completed', to: 'spa#index'
+    get '/lessons/:lesson_id', to: 'spa#index'
+  end
+
+  root 'courses#index'
 
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
@@ -315,11 +319,13 @@ Rails.application.routes.draw do
 
   unless Rails.env.production?
     # SPA frontend catch-all in non-production.
+    spa_constraint = SpaConstraint.new
     get "*path", to: "spa#index", constraints: lambda { |req|
       path = req.path
 
-      # exclude API, admin, and any other prefixes you want Rails to own
-      !path.start_with?("/api") &&
+      spa_constraint.matches?(req) &&
+        # exclude API, admin, and any other prefixes you want Rails to own
+        !path.start_with?("/api") &&
         !path.start_with?("/admin") &&
         !path.start_with?("/rails") &&          # ActiveStorage, etc. if needed
         !path.start_with?("/assets") &&         # if you serve assets separately
