@@ -22,6 +22,8 @@ import { CourseCompletedPage } from '../../features/courses/pages/CourseComplete
 import Signup from '../../pages/Signup';
 import ForgotPassword from '../../pages/ForgotPassword';
 import ResetPassword from '../../pages/ResetPassword';
+import TermsOfUse from '../../pages/TermsOfUse';
+import PrivacyPolicy from '../../pages/PrivacyPolicy';
 
 export function createAppRouter() {
   const basename = '/';
@@ -59,6 +61,8 @@ export function createAppRouter() {
               { path: 'reset-password', element: <ResetPassword /> },
               { path: 'account', element: <Account /> },
               { path: 'survey', element: <CourseRecommendationSurvey /> },
+              { path: 'terms-of-use', element: <TermsOfUse /> },
+              { path: 'privacy-policy', element: <PrivacyPolicy /> },
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
               lessonRoute,
               coursesRoute,

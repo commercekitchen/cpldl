@@ -376,8 +376,34 @@ export function UserLayout() {
         }}
       >
         <Typography variant="body1" sx={{ mb: 2 }}>
-          {t('footer.license')}
+          <MuiLink
+            href="https://opensource.org/license/mit"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="inherit"
+            underline="always"
+          >
+            Platform: MIT
+          </MuiLink>
+          {' | '}
+          <MuiLink
+            href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+            target="_blank"
+            rel="noopener noreferrer"
+            color="inherit"
+            underline="always"
+          >
+            Content: CC BY-NC-SA 4.0
+          </MuiLink>
         </Typography>
+        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }}>
+          <MuiLink component={NavLink} to="/terms-of-use" color="inherit" underline="always">
+            {t('footer.termsOfUse')}
+          </MuiLink>
+          <MuiLink component={NavLink} to="/privacy-policy" color="inherit" underline="always">
+            {t('footer.privacyPolicy')}
+          </MuiLink>
+        </Box>
 
         <Box
           sx={{
