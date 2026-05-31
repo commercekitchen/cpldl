@@ -24,6 +24,7 @@ class Organization < ApplicationRecord
     custom_topics                Boolean, default: false
     survey_required              Boolean, default: false
     deidentify_reports           Boolean, default: false
+    use_spa                      Boolean, default: false
   end
 
   store_accessor :theme_data,
