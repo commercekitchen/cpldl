@@ -386,6 +386,24 @@ resource "aws_wafv2_web_acl" "waf" {
               }
             }
 
+            # NOT (upload bypass paths) — rich-text/HTML content triggers false positives
+            statement {
+              not_statement {
+                statement {
+                  regex_pattern_set_reference_statement {
+                    arn = aws_wafv2_regex_pattern_set.upload_bypass_paths.arn
+                    field_to_match {
+                      uri_path {}
+                    }
+                    text_transformation {
+                      priority = 0
+                      type     = "NONE"
+                    }
+                  }
+                }
+              }
+            }
+
             # NOT (static file extensions)
             statement {
               not_statement {
