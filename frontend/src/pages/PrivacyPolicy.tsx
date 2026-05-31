@@ -146,10 +146,6 @@ export default function PrivacyPolicy() {
           configure your browser to refuse cookies, though some features of the site may not
           function correctly if you do so.
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Consider adding a cookie consent banner if you serve users in the EU, UK, or other
-          jurisdictions with explicit consent requirements.
-        </Typography>
       </Box>
 
       <Box sx={{ mt: 3 }}>
