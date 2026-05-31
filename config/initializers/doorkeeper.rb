@@ -53,6 +53,8 @@ Doorkeeper.configure do
   #
   # For example:
   #
+  application_class "DoorkeeperApplication"
+
   # access_token_class "MyAccessToken"
   #
   # class MyAccessToken < ApplicationRecord
