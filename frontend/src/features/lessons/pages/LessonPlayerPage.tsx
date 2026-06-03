@@ -71,6 +71,15 @@ export function LessonPlayerPage() {
       : { title: 'Lesson' },
   );
 
+  useEffect(() => {
+    if (!lesson || storylineStatus !== 'ready') return;
+    window.gtag?.('event', 'lesson_progress', {
+      lesson_id: lesson.id,
+      lesson_name: lesson.title,
+      course_id: lesson.courseId ?? undefined,
+    });
+  }, [lesson?.id, storylineStatus]);
+
   const onCompleted = useCallback(async () => {
     if (!lesson) return;
 
@@ -79,6 +88,12 @@ export function LessonPlayerPage() {
       const resp = await completeLesson({
         lessonId: lesson.id,
         courseId: lesson.courseId,
+      });
+
+      window.gtag?.('event', 'lesson_completed', {
+        lesson_id: lesson.id,
+        lesson_name: lesson.title,
+        course_id: lesson.courseId ?? undefined,
       });
 
       if (status === 'unauthenticated') {

@@ -57,7 +57,14 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
               variant="text"
               color="inherit"
               startIcon={lesson.completed ? <Replay /> : <PlayArrow />}
-              onClick={() => onPlayLesson(lesson)}
+              onClick={() => {
+                window.gtag?.('event', 'lesson_start', {
+                  lesson_id: lesson.id,
+                  lesson_name: lesson.title,
+                  course_id: lesson.courseId,
+                });
+                onPlayLesson(lesson);
+              }}
               aria-label={
                 lesson.completed ? `${t('lessons.replay')} ${lesson.title}` : `${t('lessons.playLesson')} ${lesson.title}`
               }

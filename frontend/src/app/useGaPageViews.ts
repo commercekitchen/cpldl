@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 declare global {
   interface Window {
     gtag?: (command: "event", action: string, params?: Record<string, unknown>) => void;
+    dataLayer?: Record<string, unknown>[];
   }
 }
 

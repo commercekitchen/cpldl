@@ -33,6 +33,7 @@ export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
       target="_blank"
       rel="noopener noreferrer"
       {...(!openable && { download: true })}
+      onClick={() => window.gtag?.('event', 'material_downloaded', { file_name: fileName })}
       variant="elevation"
       sx={{
         display: 'flex',
