@@ -48,6 +48,10 @@ variable "waf_upload_bypass_path_regexes" {
     "^/admin/courses/[^/]+/lessons(?:/|$)",
     "^/admin/courses/[^/]+/lessons/[^/]+(?:/|$)",
 
+    "^/api/v1/admin/courses/[^/]+/lessons/[^/]+(?:/|$)",
+    "^/api/v1/admin/courses/[^/]+/attachments(?:/|$)",
+    "^/api/v1/admin/settings/footer_logo(?:/|$)",
+
     "^/admin/cms_pages(?:/|$)",
     "^/admin/cms_pages/[^/]+(?:/|$)",
   ]

@@ -6,7 +6,7 @@ class Organization < ApplicationRecord
   include Storext.model
 
   MAX_FOOTER_LOGO_SIZE = 2.megabytes
-  FOOTER_LOGO_TYPES = %w[image/png image/jpeg].freeze
+  FOOTER_LOGO_TYPES = %w[image/png image/x-png image/jpeg image/jpg].freeze
 
   resourcify
 
@@ -24,10 +24,14 @@ class Organization < ApplicationRecord
     custom_topics                Boolean, default: false
     survey_required              Boolean, default: false
     deidentify_reports           Boolean, default: false
+    use_spa                      Boolean, default: false
   end
 
-  # store_accessor :preferences, :footer_logo_file_name, :footer_logo_link, :footer_logo_content_type,
-  # :user_survey_enabled, :user_survey_button_text, :user_survey_link
+  store_accessor :theme_data,
+                 :primary_color,
+                 :secondary_color,
+                 :font_family,
+                 :radius
 
   has_many :cms_pages, dependent: :destroy
   has_many :library_locations, dependent: :destroy
@@ -146,6 +150,26 @@ class Organization < ApplicationRecord
 
   def main_site?
     subdomain == 'www'
+  end
+
+  def theme
+    theme_data || {}
+  end
+
+  def theme_primary_color
+    primary_color.presence || '#003366'
+  end
+
+  def theme_secondary_color
+    secondary_color.presence || '#0066CC'
+  end
+
+  def theme_font_family
+    font_family.presence || 'Roboto, sans-serif'
+  end
+
+  def theme_radius
+    radius.present? ? radius.to_i : 6
   end
 
   private

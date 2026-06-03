@@ -822,8 +822,8 @@ CREATE TABLE public.organizations (
     preferences jsonb DEFAULT '{}'::jsonb NOT NULL,
     accepts_partners boolean DEFAULT false,
     use_subdomain_for_training_site boolean DEFAULT false NOT NULL,
-    active boolean DEFAULT true NOT NULL,
-    theme_data jsonb
+    theme_data jsonb,
+    active boolean DEFAULT true NOT NULL
 );
 
 
@@ -1927,6 +1927,13 @@ CREATE INDEX index_lesson_completions_on_lesson_id ON public.lesson_completions 
 
 
 --
+-- Name: index_lesson_completions_on_lesson_id_and_created_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_lesson_completions_on_lesson_id_and_created_at ON public.lesson_completions USING btree (lesson_id, created_at);
+
+
+--
 -- Name: index_lessons_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2505,15 +2512,14 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20241202023432'),
 ('20250227102452'),
 ('20250301063457'),
-('20250319042136'),
-('20250319042137'),
-('20250319042138'),
 ('20250319202556'),
 ('20251003020440'),
 ('20251201194715'),
 ('20260108054313'),
 ('20260118063042'),
 ('20260120042608'),
-('20260128055908');
+('20260128055908'),
+('20260310000000'),
+('20260330000000');
 
 

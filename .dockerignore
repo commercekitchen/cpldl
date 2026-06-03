@@ -9,3 +9,9 @@ public/ckeditor_assets/**
 public/storylines/**
 public/system/**
 public/trainings/**
+
+frontend/node_modules
+public/spa
+log
+tmp
+.git

@@ -1,0 +1,118 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "categories": "Categorías",
+    "search": "Buscar",
+    "account": "Cuenta",
+    "signIn": "Iniciar sesión",
+    "userLogin": "Inicio de sesión (Opcional)",
+    "adminDashboard": "Panel de administración",
+    "openSearch": "Abrir búsqueda"
+  },
+  "home": {
+    "coursesForYou": "Cursos para ti",
+    "featuredCourses": "Cursos destacados",
+    "popularLessons": "Lecciones populares"
+  },
+  "courses": {
+    "pageTitle": "Cursos",
+    "categories": "Categorías",
+    "startCourse": "Iniciar curso",
+    "viewLessons": "Ver detalles del curso",
+    "additionalResources": "Recursos adicionales",
+    "textCopies": "Copias de texto del curso",
+    "durationTbd": "Duración por determinar",
+    "levelTbd": "Nivel por determinar",
+    "lessonsTbd": "Lecciones por determinar",
+    "lessonCount_one": "{{count}} lección",
+    "lessonCount_other": "{{count}} lecciones",
+    "durationMins": "{{count}} min"
+  },
+  "lessons": {
+    "playLesson": "Reproducir lección",
+    "replay": "Repetir",
+    "viewFullCourse": "Ver curso completo",
+    "durationUnknown": "Desconocida",
+    "levelTbd": "Nivel por determinar"
+  },
+  "auth": {
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "forgotPasswordTitle": "Restablecer contraseña",
+    "forgotPasswordSubtitle": "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+    "sendResetLink": "Enviar enlace",
+    "sending": "Enviando…",
+    "resetEmailSent": "Si existe una cuenta con ese correo, recibirá un enlace para restablecer la contraseña en breve.",
+    "backToLogin": "Volver al inicio de sesión",
+    "resetError": "Algo salió mal. Por favor, inténtelo de nuevo.",
+    "resetPasswordTitle": "Cambiar contraseña",
+    "resetPasswordSubtitle": "Ingrese y confirme su nueva contraseña.",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "changePassword": "Cambiar contraseña",
+    "changingPassword": "Guardando…",
+    "passwordChanged": "Su contraseña ha sido cambiada. Ha iniciado sesión.",
+    "invalidResetToken": "Este enlace de restablecimiento es inválido o ha expirado. Por favor, solicite uno nuevo.",
+    "passwordsMustMatch": "Las contraseñas no coinciden."
+  },
+  "survey": {
+    "banner": {
+      "heading": "¡Empieza aquí!",
+      "subheading": "Responde una breve encuesta tecnológica",
+      "description": "Según tus respuestas, podremos recomendarte los cursos que podrían interesarte para que aprendas lo que necesitas de forma rápida y sencilla.",
+      "cta": "Realizar la encuesta",
+      "notRightNow": "Ahora no"
+    },
+    "retake": "Repetir encuesta",
+    "completed": "Respuestas de la encuesta de recomendación recibidas.",
+    "recommendedCourses": "Cursos recomendados",
+    "recommendedCoursesPlaceholder": "Tus recomendaciones de cursos personalizadas aparecerán aquí.",
+    "pageTitle": "Encuesta de tecnología",
+    "instructions": "Responde tres preguntas y te recomendaremos qué cursos tomar.",
+    "submit": "Enviar",
+    "skip": "Omitir",
+    "loadError": "No se pudo cargar la encuesta. Por favor, inténtalo más tarde.",
+    "submitError": "Algo salió mal al enviar la encuesta. Por favor, inténtalo de nuevo."
+  },
+  "admin": {
+    "reports": "Reportes",
+    "courses": "Cursos",
+    "users": "Usuarios",
+    "settings": "Configuración",
+    "plaCatalog": "Catálogo de cursos PLA",
+    "plaCatalogPage": {
+      "colTitle": "Título",
+      "colCategory": "Categoría",
+      "colTopics": "Tema(s)",
+      "colLanguage": "Idioma",
+      "colImported": "Importado",
+      "imported": "Importado",
+      "notImported": "No importado",
+      "import": "Importar curso",
+      "importing": "Importando…",
+      "importError": "Error al importar el curso. Por favor, inténtalo de nuevo.",
+      "loadError": "No se pudieron cargar los cursos. Por favor, inténtalo más tarde."
+    },
+    "backToSite": "Volver al sitio",
+    "accessDenied": "Debes ser administrador para acceder a esta página.",
+    "reportsPage": {
+      "title": "Reportes",
+      "reportType": "Tipo de reporte",
+      "startDate": "Fecha de inicio",
+      "endDate": "Fecha de fin",
+      "download": "Descargar reporte",
+      "analyticsTitle": "Paneles de análisis",
+      "loadError": "No se pudieron cargar los reportes. Por favor, inténtalo más tarde.",
+      "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin."
+    }
+  },
+  "footer": {
+    "license": "Este trabajo está bajo una licencia MIT",
+    "learnMore": "Más información",
+    "linksComingSoon": "Próximamente.",
+    "getInTouch": "Contáctanos",
+    "feedbackText": "Envía comentarios, haz una pregunta o solicita contenido adicional. Haz clic en el botón para enviarnos un correo electrónico.",
+    "sendEmail": "Envíanos un correo",
+    "termsOfUse": "Términos de uso",
+    "privacyPolicy": "Política de privacidad"
+  }
+}

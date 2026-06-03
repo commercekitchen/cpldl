@@ -31,6 +31,12 @@ Rails.application.configure do
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
 
+  # Api::V1::BaseController inherits from ActionController::API and manually
+  # includes RequestForgeryProtection, so it doesn't inherit the setting above.
+  config.after_initialize do
+    Api::V1::BaseController.allow_forgery_protection = false
+  end
+
   # Store uploaded files on the local file system in a temporary directory
   config.active_storage.service = :test
 

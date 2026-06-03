@@ -2,7 +2,6 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   use_doorkeeper
-  root 'courses#index'
 
   # Block CKEditor upload routes until we can upgrade
   match "/ckeditor/pictures",         to: proc { [404, {}, ["Not Found"]] }, via: [:get, :post]
@@ -13,6 +12,33 @@ Rails.application.routes.draw do
   # CKEditor Asset paths
   get "/ckeditor_assets/attachments/:id/:filename", to: "legacy_ckeditor_assets#attachment"
   get "/ckeditor_assets/pictures/:id/:style_:basename.:extension", to: "legacy_ckeditor_assets#picture"
+
+  # SPA routes should win over legacy routes on direct browser loads.
+  # Admin SPA routes — these must come before the `namespace :admin` block.
+  constraints SpaConstraint.new do
+    get '/admin', to: 'spa#index'
+    get '/admin/reports', to: 'spa#index'
+    get '/admin/courses', to: 'spa#index'
+    get '/admin/courses/:course_id/edit', to: 'spa#index'
+    get '/admin/courses/:course_id/lessons/:lesson_id/edit', to: 'spa#index'
+    get '/admin/pla-catalog', to: 'spa#index'
+    get '/admin/users', to: 'spa#index'
+    get '/admin/settings', to: 'spa#index'
+
+    root to: 'spa#index'
+    get '/login', to: 'spa#index', as: :spa_login
+    get '/forgot-password', to: 'spa#index'
+    get '/reset-password', to: 'spa#index'
+    get '/account', to: 'spa#index'
+    get '/search', to: 'spa#index'
+    get '/survey', to: 'spa#index'
+    get '/courses', to: 'spa#index'
+    get '/courses/:course_id', to: 'spa#index'
+    get '/courses/:course_id/completed', to: 'spa#index'
+    get '/lessons/:lesson_id', to: 'spa#index'
+  end
+
+  root 'courses#index'
 
   resource :account, only: [:show, :update]
   resource :profile, only: [:show, :update] do
@@ -145,6 +171,12 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # Redirect Devise's password reset email link to the new React page.
+  get '/users/password/edit', to: redirect { |_params, request|
+    token = request.params[:reset_password_token].to_s
+    "/reset-password?reset_password_token=#{CGI.escape(token)}"
+  }
+
   devise_for :users, controllers: {
     registrations: 'registrations',
     invitations: 'admin/invites',
@@ -163,9 +195,59 @@ Rails.application.routes.draw do
   # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
+      namespace :admin do
+        resources :reports, only: [:index]
+        resources :courses, only: [:index, :show, :update] do
+          patch :pub_status, on: :member
+          resources :lessons, only: [:index, :show, :create, :update, :destroy] do
+            patch :sort, on: :collection
+            get :storyline_status, on: :member
+          end
+          resources :attachments, only: [:create, :destroy]
+        end
+        resources :users, only: [:index] do
+          patch :update_role, on: :member
+          get :export, on: :collection
+        end
+        resource :settings, only: [:show, :update] do
+          patch :footer_logo, on: :member
+        end
+        resources :footer_links, only: [:create, :destroy]
+        resources :library_locations, only: [:create, :update, :destroy]
+        resources :pla_courses, only: [:index] do
+          post :import, on: :member
+        end
+      end
+
+      resource :session, only: [:create, :destroy]
+      resource :registration, only: [:create]
+      resource :password_reset, only: [:create, :update]
+      resource :locale, only: [:show, :update]
+      resource :profile, only: [:show, :update] do
+        post :dismiss_survey, on: :member
+      end
+      resource :account, only: [:show, :update]
       get '/me', to: 'users#me'
+
+      resources :autocomplete, only: [:index]
+      resources :search, only: [:index]
+      resources :organizations, param: :subdomain, only: [:show] do
+        resource :config, only: [:show], controller: "organizations/configs"
+      end
+      resources :lessons, only: [:index, :show] do
+        collection do
+          post :complete
+        end
+      end
+      resources :courses, only: [:index, :show]
+      resource :course_recommendation_survey, only: [:show, :create]
+
+      get '/csrf', to: 'csrf#show' if Rails.env.development?
     end
   end
+
+  get "/ui-preview", to: "react_frontend#index"
+  get "/ui-preview/*path", to: "react_frontend#index", format: false
 
   match '/404', to: 'errors#error404', via: [:get, :post, :patch, :delete]
   match '/500', to: 'errors#error500', via: [:get, :post, :patch, :delete]
@@ -233,4 +315,22 @@ Rails.application.routes.draw do
   get '/learn/using-pc-windows-7/what-windows', to: redirect('/courses/using-a-pc-windows-7/lessons/what-is-windows')
   get '/learn/getting-started-computer/ports', to: redirect('/courses/getting-started-on-a-computer/lessons/ports-9af76a46-c0b7-485a-9422-bcb32f624f8a')
   # ~~~ End of redirect matchers ~~~ #
+
+
+  unless Rails.env.production?
+    # SPA frontend catch-all in non-production.
+    spa_constraint = SpaConstraint.new
+    get "*path", to: "spa#index", constraints: lambda { |req|
+      path = req.path
+
+      spa_constraint.matches?(req) &&
+        # exclude API, admin, and any other prefixes you want Rails to own
+        !path.start_with?("/api") &&
+        !path.start_with?("/admin") &&
+        !path.start_with?("/rails") &&          # ActiveStorage, etc. if needed
+        !path.start_with?("/assets") &&         # if you serve assets separately
+        !path.start_with?("/spa") &&            # where Vite build lives
+        !path.include?(".")
+    }
+  end
 end

@@ -4,6 +4,12 @@ A Public Library Association curated collection of course materials to be used f
 digital literacy courses, online trainings on developing courses and content, and a community of
 practice for digital literacy trainers.
 
+## Licensing
+
+This software is licensed under the MIT License.
+
+Educational content, lesson materials, media assets, and course data are proprietary and are not covered by the MIT License unless explicitly stated.
+
 ## Contributions
 
 If you find a bug, please open an issue.

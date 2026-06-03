@@ -1,0 +1,69 @@
+# frozen_string_literal: true
+
+module Api
+  module V1
+    class ProfilesController < Api::V1::BaseController
+      before_action :authenticate_user!
+      before_action :skip_authorization
+
+      def show
+        render json: profile_payload
+      end
+
+      # POST /api/v1/profile/dismiss_survey
+      # Opts the user out of the recommendation survey banner without touching any
+      # other profile fields (avoids triggering first_name presence validation).
+      def dismiss_survey
+        profile = Profile.find_or_initialize_by(user: current_user)
+        if profile.persisted?
+          profile.update_column(:opt_out_of_recommendations, true)
+        else
+          profile.opt_out_of_recommendations = true
+          profile.save(validate: false)
+        end
+        render json: { ok: true }
+      end
+
+      def update
+        profile = Profile.find_or_initialize_by(user: current_user)
+        previous_language_id = profile.language_id
+
+        if profile.context_update(profile_params)
+          update_locale(profile) if previous_language_id != profile.language_id
+          render json: profile_payload(profile), status: :ok
+        else
+          render status: :unprocessable_entity, json: { errors: profile.errors.full_messages }
+        end
+      end
+
+      private
+
+      def profile_payload(profile = nil)
+        p = profile || Profile.find_or_initialize_by(user: current_user)
+
+        {
+          profile: {
+            firstName: p.first_name,
+            zipCode: p.zip_code,
+            languageId: p.language_id,
+            optOutOfRecommendations: p.opt_out_of_recommendations == true
+          },
+          languages: Language.all.order(:name).map { |lang| { id: lang.id, name: lang.name } }
+        }
+      end
+
+      def profile_params
+        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code, :opt_out_of_recommendations)
+        raw[:language_id] = raw[:language_id].presence
+        raw
+      end
+
+      def update_locale(profile)
+        language = Language.find_by(id: profile.language_id) || Language.first
+        I18n.locale = language&.name == 'Spanish' ? :es : :en
+        session[:locale] = I18n.locale.to_s
+      end
+    end
+  end
+end
+

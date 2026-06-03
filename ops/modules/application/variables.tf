@@ -20,6 +20,7 @@ variable "max_task_count" { default = 2 }
 variable "s3_bucket_arns" {}
 variable "service_memory" { default = 512 }
 variable "service_cpu" { default = 512 }
+variable "log_retention_days" { default = 7 }
 variable "task_execution_role_arn" {
   type        = string
   description = "ARN of the ECS task execution role"
@@ -27,7 +28,7 @@ variable "task_execution_role_arn" {
 variable "image" {
   type = string
   description = "Default image URI for the application container (overridden by CodePipeline deployments)."
-} 
+}
 variable "load_balancer_sg_id" {
   type = string
   description = "ID of load balancer security group"

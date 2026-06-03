@@ -19,6 +19,10 @@ class Lesson < ApplicationRecord
 
   attr_accessor :subdomain
 
+  # PgSearch gem config
+  include PgSearch::Model
+  multisearchable against: %i[title summary]
+
   belongs_to :course
   belongs_to :parent, class_name: 'Lesson', optional: true
   has_many :lesson_completions, dependent: :destroy
@@ -42,6 +46,7 @@ class Lesson < ApplicationRecord
 
   default_scope { order(:lesson_order) }
   scope :copied_from_lesson, ->(lesson) { joins(course: :organization).where(parent_id: lesson.id) }
+  scope :completed_for_user, ->(user) { joins(lesson_completions: :course_progress).where(course_progresses: { user_id: user.id }) }
 
   enum storyline_unzip_status: {
     queued: 0,
@@ -72,12 +77,12 @@ class Lesson < ApplicationRecord
     # ActiveStorage first
     if effective.respond_to?(:story_line_archive) && effective.story_line_archive.attached?
       name = effective.story_line_archive.filename.to_s
-      return name.sub(/\.zip\z/i, "") if name.present?
+      return name.sub(/\.zip\z/i, '') if name.present?
     end
 
     # Paperclip fallback (migration window only)
     if effective.respond_to?(:story_line_file_name) && effective.story_line_file_name.present?
-      return effective.story_line_file_name.sub(/\.zip\z/i, "")
+      return effective.story_line_file_name.sub(/\.zip\z/i, '')
     end
 
     nil
@@ -88,7 +93,7 @@ class Lesson < ApplicationRecord
     return nil if dir.blank?
 
     effective = effective_storyline_lesson
-    "storylines/#{effective.id}/#{dir}"
+    "/storylines/#{effective.id}/#{dir}"
   end
 
   def storyline_entry_path

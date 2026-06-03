@@ -49,6 +49,10 @@ module CPLDigitalLearn
     config.s3_region = 'us-west-2'
     config.s3_bucket_name = "dl-uploads-#{Rails.env}"
 
+    # Cloudfront 
+    config.cloudfront_host = ''
+    config.cloudfront_url = ''
+
     ### Legacy Paperclip settings
     config.paperclip_defaults = {
       storage: :filesystem

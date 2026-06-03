@@ -26,6 +26,12 @@ class Course < ApplicationRecord
                                    tsearch: { any_word: true }
                                  }
 
+  pg_search_scope :autocomplete,
+                  against: :title,
+                  using: {
+                    tsearch: { prefix: true }
+                  }
+
   enum access_level: { everyone: 0, authenticated_users: 1 }
 
   # Attributes not saved to db, but still needed for validation
