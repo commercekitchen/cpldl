@@ -264,6 +264,7 @@ export default function AdminPlaCatalog() {
                         size="small"
                         disabled={importing === course.id}
                         onClick={() => handleImport(course.id)}
+                        sx={{ whiteSpace: 'nowrap' }}
                       >
                         {importing === course.id
                           ? t('admin.plaCatalogPage.importing')

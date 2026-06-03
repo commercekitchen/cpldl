@@ -208,9 +208,11 @@ Rails.application.routes.draw do
         resources :users, only: [:index] do
           patch :update_role, on: :member
           get :export, on: :collection
+          post :invite, on: :collection
         end
         resource :settings, only: [:show, :update] do
           patch :footer_logo, on: :member
+          patch :header_logo, on: :member
         end
         resources :footer_links, only: [:create, :destroy]
         resources :library_locations, only: [:create, :update, :destroy]
@@ -222,6 +224,7 @@ Rails.application.routes.draw do
       resource :session, only: [:create, :destroy]
       resource :registration, only: [:create]
       resource :password_reset, only: [:create, :update]
+      resource :invitation, only: [:update]
       resource :locale, only: [:show, :update]
       resource :profile, only: [:show, :update] do
         post :dismiss_survey, on: :member

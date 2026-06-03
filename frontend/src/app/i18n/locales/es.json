@@ -52,7 +52,13 @@
     "changingPassword": "Guardando…",
     "passwordChanged": "Su contraseña ha sido cambiada. Ha iniciado sesión.",
     "invalidResetToken": "Este enlace de restablecimiento es inválido o ha expirado. Por favor, solicite uno nuevo.",
-    "passwordsMustMatch": "Las contraseñas no coinciden."
+    "passwordsMustMatch": "Las contraseñas no coinciden.",
+    "acceptInvitationTitle": "Establece tu contraseña",
+    "acceptInvitationSubtitle": "Crea una contraseña para activar tu cuenta.",
+    "acceptInvitation": "Activar cuenta",
+    "acceptingInvitation": "Activando…",
+    "acceptInvitationError": "Algo salió mal. Es posible que este enlace de invitación sea inválido o haya expirado.",
+    "invalidInvitationToken": "Este enlace de invitación es inválido o ya fue utilizado."
   },
   "survey": {
     "banner": {
@@ -91,6 +97,31 @@
       "importing": "Importando…",
       "importError": "Error al importar el curso. Por favor, inténtalo de nuevo.",
       "loadError": "No se pudieron cargar los cursos. Por favor, inténtalo más tarde."
+    },
+    "usersPage": {
+      "title": "Usuarios",
+      "searchPlaceholder": "Buscar por nombre o correo…",
+      "export": "Exportar CSV",
+      "colFirstName": "Nombre",
+      "colLastName": "Apellido",
+      "colEmail": "Correo",
+      "colRole": "Rol",
+      "colJoined": "Registrado",
+      "loadError": "No se pudieron cargar los usuarios. Por favor, inténtalo más tarde.",
+      "roleError": "Error al actualizar el rol.",
+      "roleUser": "Usuario",
+      "roleAdmin": "Administrador",
+      "roleTrainer": "Entrenador",
+      "empty": "No se encontraron usuarios.",
+      "of": "de",
+      "inviteUser": "Invitar usuario",
+      "inviteDialogTitle": "Invitar nuevo usuario",
+      "inviteEmailLabel": "Correo electrónico",
+      "inviteSend": "Enviar invitación",
+      "inviteSending": "Enviando…",
+      "inviteCancel": "Cancelar",
+      "inviteSuccess": "Invitación enviada correctamente.",
+      "inviteError": "Error al enviar la invitación. Por favor, inténtalo de nuevo."
     },
     "backToSite": "Volver al sitio",
     "accessDenied": "Debes ser administrador para acceder a esta página.",

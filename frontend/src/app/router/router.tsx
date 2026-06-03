@@ -22,6 +22,7 @@ import { CourseCompletedPage } from '../../features/courses/pages/CourseComplete
 import Signup from '../../pages/Signup';
 import ForgotPassword from '../../pages/ForgotPassword';
 import ResetPassword from '../../pages/ResetPassword';
+import AcceptInvitation from '../../pages/AcceptInvitation';
 import TermsOfUse from '../../pages/TermsOfUse';
 import PrivacyPolicy from '../../pages/PrivacyPolicy';
 
@@ -59,6 +60,7 @@ export function createAppRouter() {
               { path: 'signup', element: <Signup /> },
               { path: 'forgot-password', element: <ForgotPassword /> },
               { path: 'reset-password', element: <ResetPassword /> },
+              { path: 'accept-invitation', element: <AcceptInvitation /> },
               { path: 'account', element: <Account /> },
               { path: 'survey', element: <CourseRecommendationSurvey /> },
               { path: 'terms-of-use', element: <TermsOfUse /> },
