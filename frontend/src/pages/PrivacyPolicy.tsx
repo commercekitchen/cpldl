@@ -94,8 +94,7 @@ export default function PrivacyPolicy() {
           account or request deletion, we will delete or anonymize your personal information within
           90 days, except where retention is required by law or legitimate business necessity (for
           example, records of transactions or legal disputes). Google Analytics data is retained for
-          [X months/years — confirm in your GA4 settings] in accordance with Google&rsquo;s data
-          retention settings.
+          14 months in accordance with Google&rsquo;s data retention settings.
         </Typography>
       </Box>
 
@@ -194,7 +193,7 @@ export default function PrivacyPolicy() {
           </Typography>
         </Box>
         <Typography variant="body1">
-          To exercise any of these rights, please contact us at [privacy contact email]. We will
+          To exercise any of these rights, please contact us at digitallearnhelp@ala.org. We will
           respond to verifiable requests within a reasonable timeframe.
         </Typography>
       </Box>
@@ -233,9 +232,9 @@ export default function PrivacyPolicy() {
         <Typography variant="body1">
           DigitalLearn.org
           <br />
-          [Mailing Address]
+          225 N Michigan Ave., Ste 1300
           <br />
-          [Email address]
+          digitallearnhelp@ala.org
         </Typography>
       </Box>
     </Container>

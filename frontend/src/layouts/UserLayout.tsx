@@ -383,7 +383,7 @@ export function UserLayout() {
             color="inherit"
             underline="always"
           >
-            Platform: MIT
+            Platform License: MIT
           </MuiLink>
           {' | '}
           <MuiLink
@@ -393,7 +393,7 @@ export function UserLayout() {
             color="inherit"
             underline="always"
           >
-            Content: CC BY-NC-SA 4.0
+            Content License: CC BY-NC-SA 4.0
           </MuiLink>
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }}>
@@ -475,7 +475,14 @@ export function UserLayout() {
             p: 2,
           }}
         >
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'flex-start',
+              mb: 1.5,
+            }}
+          >
             <Typography component="h3" variant="h6">
               {t('footer.learnMore')}
             </Typography>
@@ -511,7 +518,13 @@ export function UserLayout() {
             </Typography>
           )}
           <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-            <MuiLink component={NavLink} to="/login" variant="body2" color="text.secondary" underline="hover">
+            <MuiLink
+              component={NavLink}
+              to="/login"
+              variant="body2"
+              color="text.secondary"
+              underline="hover"
+            >
               Admin Login
             </MuiLink>
           </Box>

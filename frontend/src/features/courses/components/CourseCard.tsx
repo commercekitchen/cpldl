@@ -53,7 +53,13 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
               variant="text"
               color="inherit"
               startIcon={<PlayArrow />}
-              onClick={() => onStartCourse(course)}
+              onClick={() => {
+                window.gtag?.('event', 'user_open_course', {
+                  course_id: course.id,
+                  course_name: course.title,
+                });
+                onStartCourse(course);
+              }}
               aria-label={`${t('courses.startCourse')} ${course.title}`}
               sx={{
                 color: '#fff',
@@ -75,7 +81,6 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1, mb: 1 }}>
           <Typography variant="h6">{course.title}</Typography>
-          <>{console.log('Course completed:', course.completed)}</>
           {course.completed && <CourseCompletedBadge />}
         </Box>
         {course.summary && (
@@ -101,7 +106,13 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
             variant="outlined"
             color="primary"
             size="small"
-            onClick={() => onViewLessons(course)}
+            onClick={() => {
+              window.gtag?.('event', 'user_open_course', {
+                course_id: course.id,
+                course_name: course.title,
+              });
+              onViewLessons(course);
+            }}
             sx={{ mt: 2 }}
           >
             {t('courses.viewLessons')}

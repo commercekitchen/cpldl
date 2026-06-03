@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
@@ -41,6 +41,22 @@ export function CoursePage() {
         }
       : { title: 'Course' },
   );
+
+  useEffect(() => {
+    if (!course) return;
+    // Signal to GTM that the new UI is handling course_progress, suppressing its page-view trigger.
+    // Old-UI subsites never push this, so the GTM trigger continues to work for them unchanged.
+    window.dataLayer?.push({ course_progress_js_handled: true });
+    if (!course.completed) {
+      window.gtag?.('event', 'course_progress', {
+        course_id: course.id,
+        course_name: course.title,
+        lessons_completed: course.lessonsCompletedCount ?? 0,
+        lessons_total: course.lessonsCount ?? 0,
+      });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [course?.id, course?.completed]);
 
   if (isLoading) return <CircularProgress />;
   if (loadError || !course)
