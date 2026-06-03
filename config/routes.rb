@@ -29,9 +29,13 @@ Rails.application.routes.draw do
     get '/login', to: 'spa#index', as: :spa_login
     get '/forgot-password', to: 'spa#index'
     get '/reset-password', to: 'spa#index'
+    get '/accept-invitation', to: 'spa#index'
+    get '/signup', to: 'spa#index'
     get '/account', to: 'spa#index'
     get '/search', to: 'spa#index'
     get '/survey', to: 'spa#index'
+    get '/terms-of-use', to: 'spa#index'
+    get '/privacy-policy', to: 'spa#index'
     get '/courses', to: 'spa#index'
     get '/courses/:course_id', to: 'spa#index'
     get '/courses/:course_id/completed', to: 'spa#index'
