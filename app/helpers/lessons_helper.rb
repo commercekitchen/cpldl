@@ -5,7 +5,7 @@ module LessonsHelper
     entry_path = lesson.storyline_entry_path
 
     if entry_path.present?
-      story_line_url = "/#{entry_path}"
+      story_line_url = entry_path
       content_tag(
         :iframe, nil,
         src: story_line_url,
