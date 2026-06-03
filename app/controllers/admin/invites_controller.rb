@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'cgi'
+
 module Admin
   class InvitesController < Devise::InvitationsController
     before_action :enable_sidebar, except: %i[edit update]
@@ -23,7 +25,12 @@ module Admin
     end
 
     def edit
-      super
+      if current_organization.use_spa?
+        token = params[:invitation_token].to_s
+        redirect_to "/accept-invitation?invitation_token=#{CGI.escape(token)}", allow_other_host: false
+      else
+        super
+      end
     end
 
     def update

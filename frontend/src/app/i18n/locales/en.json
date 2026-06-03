@@ -52,7 +52,13 @@
     "changingPassword": "Saving…",
     "passwordChanged": "Your password has been changed. You are now signed in.",
     "invalidResetToken": "This password reset link is invalid or has expired. Please request a new one.",
-    "passwordsMustMatch": "Passwords do not match."
+    "passwordsMustMatch": "Passwords do not match.",
+    "acceptInvitationTitle": "Set Your Password",
+    "acceptInvitationSubtitle": "Create a password to activate your account.",
+    "acceptInvitation": "Activate Account",
+    "acceptingInvitation": "Activating…",
+    "acceptInvitationError": "Something went wrong. This invitation link may be invalid or expired.",
+    "invalidInvitationToken": "This invitation link is invalid or has already been used."
   },
   "survey": {
     "banner": {

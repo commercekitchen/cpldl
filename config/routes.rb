@@ -224,6 +224,7 @@ Rails.application.routes.draw do
       resource :session, only: [:create, :destroy]
       resource :registration, only: [:create]
       resource :password_reset, only: [:create, :update]
+      resource :invitation, only: [:update]
       resource :locale, only: [:show, :update]
       resource :profile, only: [:show, :update] do
         post :dismiss_survey, on: :member

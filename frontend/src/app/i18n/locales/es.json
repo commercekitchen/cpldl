@@ -52,7 +52,13 @@
     "changingPassword": "Guardando…",
     "passwordChanged": "Su contraseña ha sido cambiada. Ha iniciado sesión.",
     "invalidResetToken": "Este enlace de restablecimiento es inválido o ha expirado. Por favor, solicite uno nuevo.",
-    "passwordsMustMatch": "Las contraseñas no coinciden."
+    "passwordsMustMatch": "Las contraseñas no coinciden.",
+    "acceptInvitationTitle": "Establece tu contraseña",
+    "acceptInvitationSubtitle": "Crea una contraseña para activar tu cuenta.",
+    "acceptInvitation": "Activar cuenta",
+    "acceptingInvitation": "Activando…",
+    "acceptInvitationError": "Algo salió mal. Es posible que este enlace de invitación sea inválido o haya expirado.",
+    "invalidInvitationToken": "Este enlace de invitación es inválido o ya fue utilizado."
   },
   "survey": {
     "banner": {
