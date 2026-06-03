@@ -115,9 +115,9 @@ class ApplicationController < ActionController::Base
   def admin_after_sign_in_path_for(user)
     if user.profile.nil?
       flash[:notice] = 'This is the first time you have logged in, please update your profile.'
-      profile_path
+      profile_or_account_path
     elsif invalid_user_profile?(user)
-      profile_path
+      profile_or_account_path
     elsif org_admin?(user)
       admin_dashboard_index_path
     else
@@ -131,13 +131,17 @@ class ApplicationController < ActionController::Base
         new_course_recommendation_survey_path
       else
         flash[:notice] = 'This is the first time you have logged in, please update your profile.'
-        profile_path
+        profile_or_account_path
       end
     elsif invalid_user_profile?(user)
-      profile_path
+      profile_or_account_path
     else
       stored_location_for(user) || root_path
     end
+  end
+
+  def profile_or_account_path
+    current_organization.use_spa? ? '/account' : profile_path
   end
 
   def invalid_user_profile?(user)

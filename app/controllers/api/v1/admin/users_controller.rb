@@ -47,6 +47,37 @@ module Api
           end
         end
 
+        def invite
+          email = params[:email].to_s.strip
+          role  = params[:role].to_s.downcase
+
+          if email.blank?
+            render status: :unprocessable_entity, json: { message: 'Email is required.' }
+            return
+          end
+
+          unless ALLOWED_ROLES.include?(role)
+            render status: :unprocessable_entity, json: { message: 'Invalid role.' }
+            return
+          end
+
+          if current_organization.users.exists?(email: email)
+            render status: :unprocessable_entity, json: { message: 'A user with that email already exists.' }
+            return
+          end
+
+          UserInvitationService.invite(
+            email: email,
+            organization: current_organization,
+            role: role,
+            inviter: current_user
+          )
+
+          render json: { message: 'Invitation sent.' }
+        rescue StandardError => e
+          render status: :unprocessable_entity, json: { message: e.message }
+        end
+
         def export
           users = policy_scope(User)
                     .includes(:profile, :roles, course_progresses: [:course])

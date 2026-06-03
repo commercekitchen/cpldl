@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
+import { useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import type { OrganizationConfig } from '../../app/organization/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -46,6 +48,7 @@ interface FooterLink {
 }
 
 interface GeneralSettings {
+  logoUrl: string | null;
   footerLogoUrl: string | null;
   footerLogoLink: string | null;
   loginRequired: boolean;
@@ -148,10 +151,14 @@ function GeneralSection({
   queryClient: ReturnType<typeof useQueryClient>;
 }) {
   const { t } = useTranslation();
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
+  const secondaryColor = orgConfig.theme.secondaryColor;
+  const footerLogoInputRef = useRef<HTMLInputElement>(null);
+  const headerLogoInputRef = useRef<HTMLInputElement>(null);
   const [form, setForm] = useState({ footerLogoLink: data.footerLogoLink ?? '', loginRequired: data.loginRequired });
   const [saving, setSaving] = useState(false);
-  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
+  const [uploadingHeaderLogo, setUploadingHeaderLogo] = useState(false);
 
   useEffect(() => {
     setForm({ footerLogoLink: data.footerLogoLink ?? '', loginRequired: data.loginRequired });
@@ -175,16 +182,15 @@ function GeneralSection({
     }
   };
 
-  const handleLogoUpload = async (file: File) => {
-    setUploadingLogo(true);
+  const handleFooterLogoUpload = async (file: File) => {
+    setUploadingFooterLogo(true);
     const formData = new FormData();
     formData.append('footer_logo_file', file);
     try {
       const res = await apiFetch('/api/v1/admin/settings/footer_logo', { method: 'PATCH', body: formData });
       if (!res.ok) {
         const body = await res.json().catch(() => null) as { errors?: string[] } | null;
-        const message = body?.errors?.[0] ?? t('admin.settingsPage.logoUploadError');
-        onError(message);
+        onError(body?.errors?.[0] ?? t('admin.settingsPage.logoUploadError'));
         return;
       }
       await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
@@ -192,46 +198,117 @@ function GeneralSection({
     } catch {
       onError(t('admin.settingsPage.logoUploadError'));
     } finally {
-      setUploadingLogo(false);
+      setUploadingFooterLogo(false);
+    }
+  };
+
+  const handleHeaderLogoUpload = async (file: File) => {
+    setUploadingHeaderLogo(true);
+    const formData = new FormData();
+    formData.append('header_logo_file', file);
+    try {
+      const res = await apiFetch('/api/v1/admin/settings/header_logo', { method: 'PATCH', body: formData });
+      if (!res.ok) {
+        const body = await res.json().catch(() => null) as { errors?: string[] } | null;
+        onError(body?.errors?.[0] ?? t('admin.settingsPage.headerLogoUploadError'));
+        return;
+      }
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      await queryClient.invalidateQueries({ queryKey: ['org-config'] });
+      onSuccess(t('admin.settingsPage.headerLogoUploaded'));
+    } catch {
+      onError(t('admin.settingsPage.headerLogoUploadError'));
+    } finally {
+      setUploadingHeaderLogo(false);
     }
   };
 
   return (
     <Paper variant="outlined" sx={{ p: 3, maxWidth: 600 }}>
       <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
-        {t('admin.settingsPage.footerLogo')}
+        {t('admin.settingsPage.headerLogo')}
       </Typography>
 
       <Box sx={{ mb: 3 }}>
-        {data.footerLogoUrl && (
+        {data.logoUrl && (
           <Box sx={{ mb: 1 }}>
-            <img src={data.footerLogoUrl} alt="Footer logo" style={{ maxHeight: 60, maxWidth: 200, display: 'block' }} />
+            <img src={data.logoUrl} alt="Header logo" style={{ maxHeight: 60, maxWidth: 200, display: 'block' }} />
           </Box>
         )}
         <Button
           component="label"
           variant="outlined"
           size="small"
-          startIcon={uploadingLogo ? <CircularProgress size={14} /> : <CloudUploadIcon />}
-          disabled={uploadingLogo}
+          startIcon={uploadingHeaderLogo ? <CircularProgress size={14} /> : <CloudUploadIcon />}
+          disabled={uploadingHeaderLogo}
         >
-          {uploadingLogo
+          {uploadingHeaderLogo
             ? t('admin.settingsPage.uploading')
-            : data.footerLogoUrl
-              ? t('admin.settingsPage.replaceLogo')
-              : t('admin.settingsPage.uploadLogo')}
+            : data.logoUrl
+              ? t('admin.settingsPage.replaceHeaderLogo')
+              : t('admin.settingsPage.uploadHeaderLogo')}
           <input
-            ref={fileInputRef}
+            ref={headerLogoInputRef}
             type="file"
             hidden
-            accept="image/png,image/jpeg"
+            accept="image/png,image/jpeg,image/svg+xml"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) void handleLogoUpload(file);
+              if (file) void handleHeaderLogoUpload(file);
               e.target.value = '';
             }}
           />
         </Button>
+      </Box>
+
+      <Divider sx={{ mb: 3 }} />
+
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+        {t('admin.settingsPage.footerLogo')}
+      </Typography>
+
+      <Box sx={{ mb: 3 }}>
+        {data.footerLogoUrl && (
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              bgcolor: secondaryColor,
+              borderRadius: 1,
+              p: 1.5,
+              mb: 1,
+            }}
+          >
+            <img src={data.footerLogoUrl} alt="Footer logo" style={{ maxHeight: 60, maxWidth: 200, display: 'block' }} />
+          </Box>
+        )}
+        <Box>
+          <Button
+            component="label"
+            variant="outlined"
+            size="small"
+            startIcon={uploadingFooterLogo ? <CircularProgress size={14} /> : <CloudUploadIcon />}
+            disabled={uploadingFooterLogo}
+          >
+            {uploadingFooterLogo
+              ? t('admin.settingsPage.uploading')
+              : data.footerLogoUrl
+                ? t('admin.settingsPage.replaceLogo')
+                : t('admin.settingsPage.uploadLogo')}
+            <input
+              ref={footerLogoInputRef}
+              type="file"
+              hidden
+              accept="image/png,image/jpeg"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) void handleFooterLogoUpload(file);
+                e.target.value = '';
+              }}
+            />
+          </Button>
+        </Box>
       </Box>
 
       <Divider sx={{ mb: 3 }} />

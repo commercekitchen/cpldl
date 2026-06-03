@@ -7,6 +7,8 @@ class Organization < ApplicationRecord
 
   MAX_FOOTER_LOGO_SIZE = 2.megabytes
   FOOTER_LOGO_TYPES = %w[image/png image/x-png image/jpeg image/jpg].freeze
+  MAX_HEADER_LOGO_SIZE = 2.megabytes
+  HEADER_LOGO_TYPES = %w[image/png image/x-png image/jpeg image/jpg image/svg+xml].freeze
 
   resourcify
 
@@ -55,7 +57,9 @@ class Organization < ApplicationRecord
 
   # ActiveStorage
   has_one_attached :footer_logo_file
+  has_one_attached :logo
   validate :footer_logo_file_validation
+  validate :logo_validation
 
   validates :name, presence: true
   validates :subdomain, presence: true
@@ -196,6 +200,20 @@ class Organization < ApplicationRecord
 
     unless FOOTER_LOGO_TYPES.include?(blob.content_type)
       errors.add(:footer_logo_file, "should be png or jpeg format.")
+    end
+  end
+
+  def logo_validation
+    return unless logo.attached?
+
+    blob = logo.blob
+
+    if blob.byte_size > MAX_HEADER_LOGO_SIZE
+      errors.add(:logo, "must be smaller than 2MB")
+    end
+
+    unless HEADER_LOGO_TYPES.include?(blob.content_type)
+      errors.add(:logo, "should be png, jpeg, or svg format.")
     end
   end
 end

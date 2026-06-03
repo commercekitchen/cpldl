@@ -52,7 +52,13 @@
     "changingPassword": "Saving…",
     "passwordChanged": "Your password has been changed. You are now signed in.",
     "invalidResetToken": "This password reset link is invalid or has expired. Please request a new one.",
-    "passwordsMustMatch": "Passwords do not match."
+    "passwordsMustMatch": "Passwords do not match.",
+    "acceptInvitationTitle": "Set Your Password",
+    "acceptInvitationSubtitle": "Create a password to activate your account.",
+    "acceptInvitation": "Activate Account",
+    "acceptingInvitation": "Activating…",
+    "acceptInvitationError": "Something went wrong. This invitation link may be invalid or expired.",
+    "invalidInvitationToken": "This invitation link is invalid or has already been used."
   },
   "survey": {
     "banner": {
@@ -228,7 +234,15 @@
       "roleAdmin": "Admin",
       "roleTrainer": "Trainer",
       "empty": "No users found.",
-      "of": "of"
+      "of": "of",
+      "inviteUser": "Invite User",
+      "inviteDialogTitle": "Invite New User",
+      "inviteEmailLabel": "Email address",
+      "inviteSend": "Send Invitation",
+      "inviteSending": "Sending…",
+      "inviteCancel": "Cancel",
+      "inviteSuccess": "Invitation sent successfully.",
+      "inviteError": "Failed to send invitation. Please try again."
     },
     "settingsPage": {
       "loadError": "Unable to load settings. Please try again later.",
@@ -240,11 +254,16 @@
       "tabFooterLinks": "Footer Links",
       "tabSurvey": "Course Completion Survey",
       "tabBranches": "Branches",
+      "headerLogo": "Header Logo",
+      "uploadHeaderLogo": "Upload Header Logo",
+      "replaceHeaderLogo": "Replace Header Logo",
+      "headerLogoUploaded": "Header logo uploaded successfully.",
+      "headerLogoUploadError": "Failed to upload header logo. Please use a PNG, JPEG, or SVG file.",
       "footerLogo": "Footer Logo",
-      "uploadLogo": "Upload Logo",
-      "replaceLogo": "Replace Logo",
+      "uploadLogo": "Upload Footer Logo",
+      "replaceLogo": "Replace Footer Logo",
       "uploading": "Uploading…",
-      "logoUploaded": "Logo uploaded successfully.",
+      "logoUploaded": "Footer logo uploaded successfully.",
       "logoUploadError": "Failed to upload logo. Please use a PNG or JPEG file.",
       "footerLogoLink": "Footer Logo Link URL",
       "loginRequired": "Require login to access site",
