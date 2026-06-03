@@ -212,6 +212,7 @@ Rails.application.routes.draw do
         end
         resource :settings, only: [:show, :update] do
           patch :footer_logo, on: :member
+          patch :header_logo, on: :member
         end
         resources :footer_links, only: [:create, :destroy]
         resources :library_locations, only: [:create, :update, :destroy]

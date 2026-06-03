@@ -43,6 +43,21 @@ module Api
           end
         end
 
+        def header_logo
+          file = params[:header_logo_file]
+          unless file
+            render status: :unprocessable_entity, json: { errors: ['No file provided'] }
+            return
+          end
+
+          current_organization.logo.attach(file)
+          if current_organization.save
+            render json: { logoUrl: logo_url }
+          else
+            render status: :unprocessable_entity, json: { errors: current_organization.errors.full_messages }
+          end
+        end
+
         private
 
         def require_admin
@@ -76,10 +91,17 @@ module Api
           rails_blob_path(current_organization.footer_logo_file, only_path: true)
         end
 
+        def logo_url
+          return nil unless current_organization.logo.attached?
+
+          rails_blob_path(current_organization.logo, only_path: true)
+        end
+
         def settings_payload
           {
             isMainSite: current_organization.main_site?,
             general: {
+              logoUrl: logo_url,
               footerLogoUrl: footer_logo_url,
               footerLogoLink: current_organization.footer_logo_link,
               loginRequired: current_organization.login_required
