@@ -208,6 +208,7 @@ Rails.application.routes.draw do
         resources :users, only: [:index] do
           patch :update_role, on: :member
           get :export, on: :collection
+          post :invite, on: :collection
         end
         resource :settings, only: [:show, :update] do
           patch :footer_logo, on: :member

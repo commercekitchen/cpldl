@@ -228,7 +228,15 @@
       "roleAdmin": "Admin",
       "roleTrainer": "Trainer",
       "empty": "No users found.",
-      "of": "of"
+      "of": "of",
+      "inviteUser": "Invite User",
+      "inviteDialogTitle": "Invite New User",
+      "inviteEmailLabel": "Email address",
+      "inviteSend": "Send Invitation",
+      "inviteSending": "Sending…",
+      "inviteCancel": "Cancel",
+      "inviteSuccess": "Invitation sent successfully.",
+      "inviteError": "Failed to send invitation. Please try again."
     },
     "settingsPage": {
       "loadError": "Unable to load settings. Please try again later.",
