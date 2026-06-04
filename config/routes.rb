@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     get '/admin', to: 'spa#index'
     get '/admin/reports', to: 'spa#index'
     get '/admin/courses', to: 'spa#index'
+    get '/admin/courses/new', to: 'spa#index'
     get '/admin/courses/:course_id/edit', to: 'spa#index'
     get '/admin/courses/:course_id/lessons/:lesson_id/edit', to: 'spa#index'
     get '/admin/pla-catalog', to: 'spa#index'
@@ -201,7 +202,8 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         resources :reports, only: [:index]
-        resources :courses, only: [:index, :show, :update] do
+        resources :courses, only: [:index, :show, :create, :update] do
+          get :new_form_options, on: :collection
           patch :pub_status, on: :member
           resources :lessons, only: [:index, :show, :create, :update, :destroy] do
             patch :sort, on: :collection

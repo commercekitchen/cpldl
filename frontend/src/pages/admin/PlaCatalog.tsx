@@ -19,6 +19,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../../app/api/apiFetch';
@@ -186,9 +187,18 @@ export default function AdminPlaCatalog() {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        {t('admin.plaCatalog')}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+        <Typography variant="h4">
+          {t('admin.plaCatalog')}
+        </Typography>
+        <Button
+          variant="outlined"
+          startIcon={<AddIcon />}
+          onClick={() => navigate('/admin/courses/new')}
+        >
+          {t('admin.adminCoursesPage.createCourse')}
+        </Button>
+      </Box>
 
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}
