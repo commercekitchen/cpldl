@@ -86,6 +86,7 @@ function NavButton({ to, label, end = true, icon }: NavButtonProps) {
       variant="text"
       color="inherit"
       startIcon={icon}
+      aria-current={isActive ? 'page' : undefined}
       sx={{
         textTransform: 'none',
         borderBottom: '2px solid transparent',
@@ -160,6 +161,29 @@ export function UserLayout() {
         pb: { xs: '88px', md: 0 },
       }}
     >
+      <Box
+        component="a"
+        href="#main-content"
+        sx={{
+          position: 'absolute',
+          top: '-100%',
+          left: 8,
+          zIndex: 9999,
+          px: 2,
+          py: 1,
+          bgcolor: 'background.paper',
+          color: 'text.primary',
+          border: '2px solid',
+          borderColor: 'primary.main',
+          borderRadius: 1,
+          fontWeight: 600,
+          fontSize: '0.875rem',
+          textDecoration: 'none',
+          '&:focus': { top: 8 },
+        }}
+      >
+        {t('a11y.skipToMainContent')}
+      </Box>
       <AppBar
         position="static"
         color="transparent"
@@ -190,7 +214,7 @@ export function UserLayout() {
             )}
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
+          <Box component="nav" aria-label={t('a11y.mainNav')} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
             {searchActive ? (
               <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }} onBlur={handleSearchBlur}>
                 <CourseSearchBar
@@ -265,6 +289,7 @@ export function UserLayout() {
                 to={isAuthenticated ? '/account' : '/login'}
                 variant="text"
                 color="inherit"
+                aria-label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
                 sx={{ minWidth: 0, p: 0.5 }}
               >
                 <AccountCircle />
@@ -358,7 +383,7 @@ export function UserLayout() {
       )}
 
       <ScrollRestoration />
-      <Box sx={{ flex: 1 }}>
+      <Box component="main" id="main-content" sx={{ flex: 1 }}>
         <Outlet />
       </Box>
 
@@ -542,6 +567,8 @@ export function UserLayout() {
         }}
       >
         <Box
+          component="nav"
+          aria-label={t('a11y.mobileNav')}
           sx={{
             position: 'relative',
             borderTop: '1px solid',
@@ -560,6 +587,7 @@ export function UserLayout() {
             to="/"
             variant="text"
             color={isHomeActive ? 'primary' : 'inherit'}
+            aria-current={isHomeActive ? 'page' : undefined}
             sx={{
               textTransform: 'none',
               minWidth: 120,
@@ -595,6 +623,7 @@ export function UserLayout() {
             to="/courses"
             variant="text"
             color={isCategoriesActive ? 'primary' : 'inherit'}
+            aria-current={isCategoriesActive ? 'page' : undefined}
             sx={{
               textTransform: 'none',
               minWidth: 120,

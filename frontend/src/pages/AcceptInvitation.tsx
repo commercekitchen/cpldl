@@ -29,7 +29,7 @@ export default function AcceptInvitation() {
   if (!token) {
     return (
       <Container maxWidth="sm" sx={{ py: { xs: 4, sm: 6 } }}>
-        <Alert severity="error">{t('auth.invalidInvitationToken')}</Alert>
+        <Alert severity="error" role="alert">{t('auth.invalidInvitationToken')}</Alert>
       </Container>
     );
   }
@@ -87,7 +87,7 @@ export default function AcceptInvitation() {
             </Typography>
           </Box>
 
-          {error ? <Alert severity="error">{error}</Alert> : null}
+          {error ? <Alert severity="error" role="alert">{error}</Alert> : null}
 
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>

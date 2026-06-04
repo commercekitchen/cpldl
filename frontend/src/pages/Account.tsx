@@ -192,11 +192,11 @@ export default function Account() {
             <Alert severity="warning">You are not currently signed in.</Alert>
           )}
 
-          {loadError ? <Alert severity="error">{loadError}</Alert> : null}
-          {profileError ? <Alert severity="error">{profileError}</Alert> : null}
-          {profileSuccess ? <Alert severity="success">{profileSuccess}</Alert> : null}
-          {accountError ? <Alert severity="error">{accountError}</Alert> : null}
-          {accountSuccess ? <Alert severity="success">{accountSuccess}</Alert> : null}
+          {loadError ? <Alert severity="error" role="alert">{loadError}</Alert> : null}
+          {profileError ? <Alert severity="error" role="alert">{profileError}</Alert> : null}
+          {profileSuccess ? <Alert severity="success" role="status">{profileSuccess}</Alert> : null}
+          {accountError ? <Alert severity="error" role="alert">{accountError}</Alert> : null}
+          {accountSuccess ? <Alert severity="success" role="status">{accountSuccess}</Alert> : null}
 
           {!loading ? (
             <Box component="form" onSubmit={onSubmitProfile}>
