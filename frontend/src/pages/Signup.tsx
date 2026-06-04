@@ -90,7 +90,7 @@ export default function Signup() {
             </Typography>
           </Box>
 
-          {error ? <Alert severity="error">{error}</Alert> : null}
+          {error ? <Alert severity="error" role="alert">{error}</Alert> : null}
 
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>

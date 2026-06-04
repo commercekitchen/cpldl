@@ -52,7 +52,7 @@ export function SurveyForm({ survey, onSubmit, onSkip }: Props) {
         return null;
       })}
 
-      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+      {error && <Alert severity="error" role="alert" sx={{ mb: 2 }}>{error}</Alert>}
 
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <Button

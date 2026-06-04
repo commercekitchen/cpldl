@@ -136,6 +136,11 @@
       "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin."
     }
   },
+  "a11y": {
+    "skipToMainContent": "Saltar al contenido principal",
+    "mainNav": "Navegación principal",
+    "mobileNav": "Navegación móvil"
+  },
   "footer": {
     "license": "Este trabajo está bajo una licencia MIT",
     "learnMore": "Más información",

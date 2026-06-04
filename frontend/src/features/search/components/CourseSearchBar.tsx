@@ -95,6 +95,7 @@ export function CourseSearchBar({
           {...params}
           placeholder="Search courses"
           inputRef={inputRef}
+          inputProps={{ ...params.inputProps, 'aria-label': 'Search courses' }}
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               const q = value.trim();

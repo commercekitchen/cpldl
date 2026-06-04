@@ -335,6 +335,11 @@
       "dateRangeError": "Start date must be before end date."
     }
   },
+  "a11y": {
+    "skipToMainContent": "Skip to main content",
+    "mainNav": "Main navigation",
+    "mobileNav": "Mobile navigation"
+  },
   "footer": {
     "license": "This work is licensed under an MIT License",
     "learnMore": "Learn More",

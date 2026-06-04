@@ -60,10 +60,10 @@ export default function ForgotPassword() {
           </Box>
 
           {submitted ? (
-            <Alert severity="success">{t('auth.resetEmailSent')}</Alert>
+            <Alert severity="success" role="status">{t('auth.resetEmailSent')}</Alert>
           ) : (
             <>
-              {error ? <Alert severity="error">{error}</Alert> : null}
+              {error ? <Alert severity="error" role="alert">{error}</Alert> : null}
 
               <Box component="form" onSubmit={onSubmit}>
                 <Stack spacing={2}>

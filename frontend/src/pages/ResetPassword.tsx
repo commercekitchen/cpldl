@@ -29,7 +29,7 @@ export default function ResetPassword() {
   if (!token) {
     return (
       <Container maxWidth="sm" sx={{ py: { xs: 4, sm: 6 } }}>
-        <Alert severity="error">
+        <Alert severity="error" role="alert">
           {t('auth.invalidResetToken')}{' '}
           <Button component={Link} to="/forgot-password" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
             {t('auth.forgotPassword')}
@@ -94,7 +94,7 @@ export default function ResetPassword() {
             </Typography>
           </Box>
 
-          {error ? <Alert severity="error">{error}</Alert> : null}
+          {error ? <Alert severity="error" role="alert">{error}</Alert> : null}
 
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>

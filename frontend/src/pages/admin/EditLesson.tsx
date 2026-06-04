@@ -148,7 +148,9 @@ export default function AdminEditLesson() {
 
   // Stable ref so the interval always sees the latest lesson without being in the dep array
   const lessonRef = useRef<LessonDetail | null>(null);
-  lessonRef.current = lesson;
+  useEffect(() => {
+    lessonRef.current = lesson;
+  });
 
   // Poll while storyline is processing — interval is stable for the lifetime of the page
   useEffect(() => {
