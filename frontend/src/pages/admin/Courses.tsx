@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import MenuItem from '@mui/material/MenuItem';
@@ -18,6 +19,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Paper from '@mui/material/Paper';
+import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { useTranslation } from 'react-i18next';
 import { apiFetch } from '../../app/api/apiFetch';
@@ -144,9 +146,18 @@ export default function AdminCourses() {
 
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        {t('admin.courses')}
-      </Typography>
+      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
+        <Typography variant="h4">
+          {t('admin.courses')}
+        </Typography>
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={() => navigate('/admin/courses/new')}
+        >
+          {t('admin.adminCoursesPage.createCourse')}
+        </Button>
+      </Box>
 
       {loading && <CircularProgress />}
       {error && <Alert severity="error">{error}</Alert>}

@@ -20,6 +20,26 @@ module Api
           render json: { course: course_detail_payload(course), options: form_options }
         end
 
+        def new_form_options
+          authorize Course.new(organization: current_organization), :create?
+          render json: { options: form_options }
+        end
+
+        def create
+          course = current_organization.courses.new
+          authorize course
+          permitted = standard_course_params
+          inject_category_org!(permitted)
+          course.assign_attributes(permitted)
+
+          if course.save
+            course.reload
+            render status: :created, json: { course: course_detail_payload(course), options: form_options }
+          else
+            render status: :unprocessable_entity, json: { errors: course.errors.full_messages }
+          end
+        end
+
         def update
           course = current_organization.courses
                                        .includes(:category, :topics, :language, :resource_links,

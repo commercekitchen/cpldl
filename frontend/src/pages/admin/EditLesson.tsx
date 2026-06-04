@@ -247,7 +247,7 @@ export default function AdminEditLesson() {
     <Box sx={{ maxWidth: 800 }}>
       <Button
         startIcon={<ArrowBackIcon />}
-        onClick={() => navigate(`/admin/courses/${courseId}/edit`)}
+        onClick={() => navigate(`/admin/courses/${courseId}/edit?tab=lessons`)}
         variant="text"
         color="inherit"
         sx={{ mb: 2 }}
@@ -299,7 +299,7 @@ export default function AdminEditLesson() {
               onChange={(e) => handleChange('duration', e.target.value ? Number(e.target.value) : null)}
               disabled={saving}
               inputProps={{ min: 1 }}
-              sx={{ maxWidth: 200 }}
+              sx={{ maxWidth: 220 }}
             />
             <FormControlLabel
               control={

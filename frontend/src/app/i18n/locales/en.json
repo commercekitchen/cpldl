@@ -110,7 +110,16 @@
       "custom": "Custom",
       "loadError": "Unable to load courses. Please try again later.",
       "pubStatusError": "Failed to update publication status.",
-      "editCourse": "Edit course"
+      "editCourse": "Edit course",
+      "createCourse": "Create New Course"
+    },
+    "newCoursePage": {
+      "title": "Create New Course",
+      "loadError": "Unable to load form options. Please try again later.",
+      "saveError": "Failed to create course. Please try again.",
+      "saving": "Creating…",
+      "create": "Create Course",
+      "cancel": "Cancel"
     },
     "editCoursePage": {
       "title": "Edit Course",

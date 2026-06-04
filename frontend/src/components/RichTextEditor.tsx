@@ -20,6 +20,8 @@ interface Props {
 }
 
 export function RichTextEditor({ label, value, onChange, disabled, helperText }: Props) {
+  const prevValueRef = useRef(value);
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -27,10 +29,12 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
     ],
     content: value ?? '',
     editable: !disabled,
-    onUpdate: ({ editor }) => onChange(editor.getHTML()),
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      prevValueRef.current = html;
+      onChange(html);
+    },
   });
-
-  const prevValueRef = useRef(value);
   useEffect(() => {
     if (!editor || value === prevValueRef.current) return;
     prevValueRef.current = value;
@@ -120,6 +124,7 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
           </IconButton>
         </Box>
         <Box
+          onClick={() => editor?.commands.focus()}
           sx={{
             p: 1.5,
             minHeight: 120,

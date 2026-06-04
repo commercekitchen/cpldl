@@ -126,7 +126,7 @@ function SortableLessonRow({ lesson, onEdit, onDelete }: SortableLessonRowProps)
 }
 
 interface AddLessonFormProps {
-  onSave: (lesson: { title: string; summary: string; duration: string }) => Promise<void>;
+  onSave: (lesson: { title: string; summary: string }) => Promise<void>;
   onCancel: () => void;
   saving: boolean;
 }
@@ -135,9 +135,8 @@ function AddLessonForm({ onSave, onCancel, saving }: AddLessonFormProps) {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
-  const [duration, setDuration] = useState('');
 
-  const handleSave = () => void onSave({ title, summary, duration });
+  const handleSave = () => void onSave({ title, summary });
 
   return (
     <Box sx={{ p: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -150,6 +149,7 @@ function AddLessonForm({ onSave, onCancel, saving }: AddLessonFormProps) {
         inputProps={{ maxLength: 100 }}
         size="small"
         fullWidth
+        autoFocus
       />
       <TextField
         label={t('admin.editCoursePage.lessons.fieldSummary')}
@@ -159,16 +159,6 @@ function AddLessonForm({ onSave, onCancel, saving }: AddLessonFormProps) {
         inputProps={{ maxLength: 255 }}
         size="small"
         fullWidth
-      />
-      <TextField
-        label={t('admin.editCoursePage.lessons.fieldDuration')}
-        value={duration}
-        onChange={(e) => setDuration(e.target.value)}
-        disabled={saving}
-        type="number"
-        size="small"
-        sx={{ width: 160 }}
-        inputProps={{ min: 1 }}
       />
       <Box sx={{ display: 'flex', gap: 1 }}>
         <Button
@@ -251,22 +241,14 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
     }
   };
 
-  const handleAdd = async ({
-    title,
-    summary,
-    duration,
-  }: {
-    title: string;
-    summary: string;
-    duration: string;
-  }) => {
+  const handleAdd = async ({ title, summary }: { title: string; summary: string }) => {
     setAddSaving(true);
     setAddError(null);
     try {
       const res = await apiFetch(`/api/v1/admin/courses/${courseId}/lessons`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ lesson: { title, summary, duration: parseInt(duration, 10) || 0 } }),
+        body: JSON.stringify({ lesson: { title, summary } }),
       });
       const data = (await res.json()) as Lesson | { errors: string[] };
       if (!res.ok) {
@@ -276,8 +258,7 @@ export function EditCourseLessonsTab({ courseId }: { courseId: string }) {
         );
         return;
       }
-      setLessons((prev) => [...prev, data as Lesson]);
-      setAdding(false);
+      navigate(`/admin/courses/${courseId}/lessons/${(data as Lesson).id}/edit`);
     } catch {
       setAddError(t('admin.editCoursePage.lessons.addError'));
     } finally {
