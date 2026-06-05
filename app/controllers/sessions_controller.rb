@@ -4,7 +4,7 @@ class SessionsController < Devise::SessionsController
   before_action :skip_authorization
 
   def new
-    if request.format.html?
+    if request.format.html? && current_organization.use_spa?
       redirect_to('/login') && return
     end
 
