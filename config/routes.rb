@@ -192,7 +192,8 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
-    get 'login/new', to: 'sessions#new', as: :login
+    get '/login', to: 'sessions#new', as: :login
+    get 'login/new', to: 'sessions#new'
   end
   
   get 'users/invitation/accept', to: 'devise/invitations#edit'
