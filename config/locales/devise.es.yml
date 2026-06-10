@@ -18,7 +18,7 @@ es:
       confirmation_instructions:
         subject: Instrucciones de confirmación
       reset_password_instructions:
-        subject: Instrucciones de recuperación de contraseña
+        subject: Tu enlace para restablecer la contraseña de DigitalLearn
       unlock_instructions:
         subject: Instrucciones para desbloquear
     omniauth_callbacks:
