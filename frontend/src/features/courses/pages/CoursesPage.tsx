@@ -15,6 +15,7 @@ type CategorySection = {
   id: string;
   name: string;
   slug: string;
+  categoryOrder: number | null;
   courses: Course[];
 };
 
@@ -78,7 +79,13 @@ export function CoursesPage() {
       if (existing) {
         existing.courses.push(course);
       } else {
-        byCategory.set(id, { id, name, slug: toCategorySlug(name), courses: [course] });
+        byCategory.set(id, {
+          id,
+          name,
+          slug: toCategorySlug(name),
+          categoryOrder: course.categoryOrder ?? null,
+          courses: [course],
+        });
       }
     }
 
@@ -86,7 +93,12 @@ export function CoursesPage() {
     for (const section of result) {
       section.courses.sort(compareCourseOrder);
     }
-    result.sort((a, b) => a.name.localeCompare(b.name));
+    result.sort((a, b) => {
+      const aOrder = a.categoryOrder ?? Infinity;
+      const bOrder = b.categoryOrder ?? Infinity;
+      if (aOrder !== bOrder) return aOrder - bOrder;
+      return a.name.localeCompare(b.name);
+    });
     return result;
   }, [courses]);
 

@@ -16,6 +16,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import PeopleIcon from '@mui/icons-material/People';
 import SchoolIcon from '@mui/icons-material/School';
+import LabelIcon from '@mui/icons-material/Label';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -38,6 +39,7 @@ export function AdminLayout() {
     ...(!orgConfig.mainSite
       ? [{ key: 'plaCatalog', path: '/admin/pla-catalog', icon: <CollectionsBookmarkIcon /> }]
       : []),
+    { key: 'categories', path: '/admin/categories', icon: <LabelIcon /> },
     { key: 'users', path: '/admin/users', icon: <PeopleIcon /> },
     { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
   ];

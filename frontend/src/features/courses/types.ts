@@ -11,6 +11,7 @@ export type Course = {
   notes: string;
   categoryId: string;
   categoryName?: string;
+  categoryOrder?: number;
   level?: string;
   totalDuration?: string;
   completed?: boolean;
