@@ -183,6 +183,11 @@ Rails.application.routes.draw do
     "/reset-password?reset_password_token=#{CGI.escape(token)}"
   }
 
+  # Fallback for non-SPA subdomains: serve the Devise password reset view directly.
+  devise_scope :user do
+    get '/reset-password', to: 'passwords#edit'
+  end
+
   devise_for :users, controllers: {
     registrations: 'registrations',
     invitations: 'admin/invites',
