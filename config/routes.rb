@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get '/admin/pla-catalog', to: 'spa#index'
     get '/admin/users', to: 'spa#index'
     get '/admin/settings', to: 'spa#index'
+    get '/admin/categories', to: 'spa#index'
 
     root to: 'spa#index'
     get '/login', to: 'spa#index', as: :spa_login
@@ -223,6 +224,9 @@ Rails.application.routes.draw do
         end
         resources :footer_links, only: [:create, :destroy]
         resources :library_locations, only: [:create, :update, :destroy]
+        resources :categories, only: [:index, :create, :update, :destroy] do
+          put :sort, on: :collection
+        end
         resources :pla_courses, only: [:index] do
           post :import, on: :member
         end

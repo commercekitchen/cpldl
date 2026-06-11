@@ -24,6 +24,7 @@ class CoursePresenter
       attCourse: @course.new_course,
       categoryName: @course.category&.name,
       categoryId: @course.category&.id,
+      categoryOrder: @course.category&.category_order,
       attachments: attachments_payload,
       completed: completed?,
       lessonsCount: @course.lessons.count,

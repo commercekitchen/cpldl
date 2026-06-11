@@ -16,6 +16,7 @@ import AdminPlaCatalog from '../../pages/admin/PlaCatalog';
 import AdminNewCourse from '../../pages/admin/NewCourse';
 import AdminUsers from '../../pages/admin/Users';
 import AdminSettings from '../../pages/admin/Settings';
+import AdminCategories from '../../pages/admin/Categories';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -51,6 +52,7 @@ export function createAppRouter() {
               { path: 'pla-catalog', element: <AdminPlaCatalog /> },
               { path: 'users', element: <AdminUsers /> },
               { path: 'settings', element: <AdminSettings /> },
+              { path: 'categories', element: <AdminCategories /> },
             ],
           },
           {
