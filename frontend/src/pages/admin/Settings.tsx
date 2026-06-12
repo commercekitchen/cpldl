@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { useRouteLoaderData } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { useRouteLoaderData, useRevalidator } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { OrganizationConfig } from '../../app/organization/types';
+import { organizationClient } from '../../app/organization/organizationClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -54,6 +55,11 @@ interface GeneralSettings {
   loginRequired: boolean;
 }
 
+interface ThemeSettings {
+  primaryColor: string;
+  secondaryColor: string;
+}
+
 interface SurveySettings {
   userSurveyEnabled: boolean;
   userSurveyLink: string | null;
@@ -77,6 +83,7 @@ interface BranchesSettings {
 interface SettingsData {
   isMainSite: boolean;
   general: GeneralSettings;
+  theme: ThemeSettings;
   footerLinks: FooterLink[];
   survey: SurveySettings;
   branches: BranchesSettings;
@@ -109,7 +116,9 @@ export default function AdminSettings() {
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3 }}>{t('admin.settings')}</Typography>
+      <Typography variant="h4" sx={{ mb: 3 }}>
+        {t('admin.settings')}
+      </Typography>
 
       <Tabs value={tab} onChange={(_, v: number) => setTab(v)} sx={{ mb: 3 }}>
         <Tab label={t('admin.settingsPage.tabGeneral')} />
@@ -119,20 +128,110 @@ export default function AdminSettings() {
       </Tabs>
 
       {tab === 0 && (
-        <GeneralSection data={data.general} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
+        <GeneralSection
+          data={data.general}
+          theme={data.theme}
+          onSuccess={showSuccess}
+          onError={showError}
+          queryClient={queryClient}
+        />
       )}
       {tab === 1 && (
-        <FooterLinksSection links={data.footerLinks} languages={data.languages} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
+        <FooterLinksSection
+          links={data.footerLinks}
+          languages={data.languages}
+          onSuccess={showSuccess}
+          onError={showError}
+          queryClient={queryClient}
+        />
       )}
       {tab === 2 && (
-        <SurveySection data={data.survey} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
+        <SurveySection
+          data={data.survey}
+          onSuccess={showSuccess}
+          onError={showError}
+          queryClient={queryClient}
+        />
       )}
       {tab === 3 && !data.isMainSite && (
-        <BranchesSection data={data.branches} onSuccess={showSuccess} onError={showError} queryClient={queryClient} />
+        <BranchesSection
+          data={data.branches}
+          onSuccess={showSuccess}
+          onError={showError}
+          queryClient={queryClient}
+        />
       )}
 
-      <Snackbar open={Boolean(successMsg)} autoHideDuration={4000} onClose={() => setSuccessMsg(null)} message={successMsg} />
-      <Snackbar open={Boolean(errorMsg)} autoHideDuration={5000} onClose={() => setErrorMsg(null)} message={errorMsg} />
+      <Snackbar
+        open={Boolean(successMsg)}
+        autoHideDuration={4000}
+        onClose={() => setSuccessMsg(null)}
+        message={successMsg}
+      />
+      <Snackbar
+        open={Boolean(errorMsg)}
+        autoHideDuration={5000}
+        onClose={() => setErrorMsg(null)}
+        message={errorMsg}
+      />
+    </Box>
+  );
+}
+
+// ─── Color Field ─────────────────────────────────────────────────────────────
+
+function ColorField({
+  label,
+  value,
+  onChange,
+  disabled,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  disabled: boolean;
+}) {
+  return (
+    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+      <Box
+        component="label"
+        sx={{
+          width: 44,
+          height: 44,
+          borderRadius: 1,
+          bgcolor: value,
+          cursor: disabled ? 'default' : 'pointer',
+          border: '1px solid',
+          borderColor: 'divider',
+          flexShrink: 0,
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <input
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          disabled={disabled}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0,
+            width: '100%',
+            height: '100%',
+            cursor: disabled ? 'default' : 'pointer',
+          }}
+        />
+      </Box>
+      <TextField
+        label={label}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        disabled={disabled}
+        size="small"
+        sx={{ width: 160 }}
+        inputProps={{ maxLength: 7 }}
+      />
     </Box>
   );
 }
@@ -141,11 +240,13 @@ export default function AdminSettings() {
 
 function GeneralSection({
   data,
+  theme,
   onSuccess,
   onError,
   queryClient,
 }: {
   data: GeneralSettings;
+  theme: ThemeSettings;
   onSuccess: (m: string) => void;
   onError: (m: string) => void;
   queryClient: ReturnType<typeof useQueryClient>;
@@ -153,16 +254,18 @@ function GeneralSection({
   const { t } = useTranslation();
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
   const secondaryColor = orgConfig.theme.secondaryColor;
+  const { revalidate } = useRevalidator();
   const footerLogoInputRef = useRef<HTMLInputElement>(null);
   const headerLogoInputRef = useRef<HTMLInputElement>(null);
-  const [form, setForm] = useState({ footerLogoLink: data.footerLogoLink ?? '', loginRequired: data.loginRequired });
+  const [form, setForm] = useState({
+    footerLogoLink: data.footerLogoLink ?? '',
+    loginRequired: data.loginRequired,
+    primaryColor: theme.primaryColor,
+    secondaryColor: theme.secondaryColor,
+  });
   const [saving, setSaving] = useState(false);
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
   const [uploadingHeaderLogo, setUploadingHeaderLogo] = useState(false);
-
-  useEffect(() => {
-    setForm({ footerLogoLink: data.footerLogoLink ?? '', loginRequired: data.loginRequired });
-  }, [data.footerLogoLink, data.loginRequired]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -170,10 +273,15 @@ function GeneralSection({
       const res = await apiFetch('/api/v1/admin/settings', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ general: { footer_logo_link: form.footerLogoLink, login_required: form.loginRequired } }),
+        body: JSON.stringify({
+          general: { footer_logo_link: form.footerLogoLink, login_required: form.loginRequired },
+          theme: { primary_color: form.primaryColor, secondary_color: form.secondaryColor },
+        }),
       });
       if (!res.ok) throw new Error();
       await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      organizationClient.clearCache();
+      revalidate();
       onSuccess(t('admin.settingsPage.saveSuccess'));
     } catch {
       onError(t('admin.settingsPage.saveError'));
@@ -187,13 +295,18 @@ function GeneralSection({
     const formData = new FormData();
     formData.append('footer_logo_file', file);
     try {
-      const res = await apiFetch('/api/v1/admin/settings/footer_logo', { method: 'PATCH', body: formData });
+      const res = await apiFetch('/api/v1/admin/settings/footer_logo', {
+        method: 'PATCH',
+        body: formData,
+      });
       if (!res.ok) {
-        const body = await res.json().catch(() => null) as { errors?: string[] } | null;
+        const body = (await res.json().catch(() => null)) as { errors?: string[] } | null;
         onError(body?.errors?.[0] ?? t('admin.settingsPage.logoUploadError'));
         return;
       }
       await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      organizationClient.clearCache();
+      revalidate();
       onSuccess(t('admin.settingsPage.logoUploaded'));
     } catch {
       onError(t('admin.settingsPage.logoUploadError'));
@@ -207,14 +320,18 @@ function GeneralSection({
     const formData = new FormData();
     formData.append('header_logo_file', file);
     try {
-      const res = await apiFetch('/api/v1/admin/settings/header_logo', { method: 'PATCH', body: formData });
+      const res = await apiFetch('/api/v1/admin/settings/header_logo', {
+        method: 'PATCH',
+        body: formData,
+      });
       if (!res.ok) {
-        const body = await res.json().catch(() => null) as { errors?: string[] } | null;
+        const body = (await res.json().catch(() => null)) as { errors?: string[] } | null;
         onError(body?.errors?.[0] ?? t('admin.settingsPage.headerLogoUploadError'));
         return;
       }
       await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
-      await queryClient.invalidateQueries({ queryKey: ['org-config'] });
+      organizationClient.clearCache();
+      revalidate();
       onSuccess(t('admin.settingsPage.headerLogoUploaded'));
     } catch {
       onError(t('admin.settingsPage.headerLogoUploadError'));
@@ -232,7 +349,11 @@ function GeneralSection({
       <Box sx={{ mb: 3 }}>
         {data.logoUrl && (
           <Box sx={{ mb: 1 }}>
-            <img src={data.logoUrl} alt="Header logo" style={{ maxHeight: 60, maxWidth: 200, display: 'block' }} />
+            <img
+              src={data.logoUrl}
+              alt="Header logo"
+              style={{ maxHeight: 60, maxWidth: 200, display: 'block' }}
+            />
           </Box>
         )}
         <Button
@@ -280,7 +401,11 @@ function GeneralSection({
               mb: 1,
             }}
           >
-            <img src={data.footerLogoUrl} alt="Footer logo" style={{ maxHeight: 60, maxWidth: 200, display: 'block' }} />
+            <img
+              src={data.footerLogoUrl}
+              alt="Footer logo"
+              style={{ maxHeight: 60, maxWidth: 200, display: 'block' }}
+            />
           </Box>
         )}
         <Box>
@@ -311,8 +436,6 @@ function GeneralSection({
         </Box>
       </Box>
 
-      <Divider sx={{ mb: 3 }} />
-
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
         <TextField
           label={t('admin.settingsPage.footerLogoLink')}
@@ -322,6 +445,10 @@ function GeneralSection({
           fullWidth
           placeholder="https://"
         />
+      </Box>
+
+      <Divider sx={{ my: 3 }} />
+      <Box sx={{ mt: 3, display: 'flex', alignItems: 'center' }}>
         <FormControlLabel
           control={
             <Switch
@@ -332,6 +459,29 @@ function GeneralSection({
           }
           label={t('admin.settingsPage.loginRequired')}
         />
+      </Box>
+
+      <Divider sx={{ my: 3 }} />
+
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 2 }}>
+        {t('admin.settingsPage.theme.title')}
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        <ColorField
+          label={t('admin.settingsPage.theme.primaryColor')}
+          value={form.primaryColor}
+          onChange={(v) => setForm((f) => ({ ...f, primaryColor: v }))}
+          disabled={saving}
+        />
+        <ColorField
+          label={t('admin.settingsPage.theme.secondaryColor')}
+          value={form.secondaryColor}
+          onChange={(v) => setForm((f) => ({ ...f, secondaryColor: v }))}
+          disabled={saving}
+        />
+        <Typography variant="caption" color="text.secondary">
+          {t('admin.settingsPage.theme.hint')}
+        </Typography>
       </Box>
 
       <Box sx={{ mt: 3 }}>
@@ -375,10 +525,12 @@ function FooterLinksSection({
       const res = await apiFetch('/api/v1/admin/footer_links', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ footer_link: { label: form.label, url: form.url, language_id: form.languageId || null } }),
+        body: JSON.stringify({
+          footer_link: { label: form.label, url: form.url, language_id: form.languageId || null },
+        }),
       });
       if (!res.ok) {
-        const d = await res.json() as { errors?: string[] };
+        const d = (await res.json()) as { errors?: string[] };
         onError(d.errors?.join(', ') ?? t('admin.settingsPage.footerLinks.addError'));
         return;
       }
@@ -439,7 +591,11 @@ function FooterLinksSection({
                         disabled={deletingId === link.id}
                         aria-label={t('admin.settingsPage.footerLinks.delete')}
                       >
-                        {deletingId === link.id ? <CircularProgress size={16} /> : <DeleteIcon fontSize="small" />}
+                        {deletingId === link.id ? (
+                          <CircularProgress size={16} />
+                        ) : (
+                          <DeleteIcon fontSize="small" />
+                        )}
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -451,8 +607,14 @@ function FooterLinksSection({
       </Paper>
 
       <Paper variant="outlined" sx={{ p: 3 }}>
-        <Typography variant="subtitle2" sx={{ mb: 2 }}>{t('admin.settingsPage.footerLinks.addTitle')}</Typography>
-        {formError && <Alert severity="error" sx={{ mb: 2 }}>{formError}</Alert>}
+        <Typography variant="subtitle2" sx={{ mb: 2 }}>
+          {t('admin.settingsPage.footerLinks.addTitle')}
+        </Typography>
+        {formError && (
+          <Alert severity="error" sx={{ mb: 2 }}>
+            {formError}
+          </Alert>
+        )}
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'flex-start' }}>
           <TextField
             label={t('admin.settingsPage.footerLinks.colLabel')}
@@ -478,14 +640,26 @@ function FooterLinksSection({
               label={t('admin.settingsPage.footerLinks.colLanguage')}
               onChange={(e) => setForm((f) => ({ ...f, languageId: String(e.target.value) }))}
             >
-              <MenuItem value=""><em>{t('admin.settingsPage.footerLinks.anyLanguage')}</em></MenuItem>
+              <MenuItem value="">
+                <em>{t('admin.settingsPage.footerLinks.anyLanguage')}</em>
+              </MenuItem>
               {languages.map((l) => (
-                <MenuItem key={l.id} value={String(l.id)}>{l.name}</MenuItem>
+                <MenuItem key={l.id} value={String(l.id)}>
+                  {l.name}
+                </MenuItem>
               ))}
             </Select>
           </FormControl>
-          <Button variant="contained" onClick={() => void handleAdd()} disabled={adding} size="medium" sx={{ mt: 0.5 }}>
-            {adding ? t('admin.settingsPage.footerLinks.adding') : t('admin.settingsPage.footerLinks.add')}
+          <Button
+            variant="contained"
+            onClick={() => void handleAdd()}
+            disabled={adding}
+            size="medium"
+            sx={{ mt: 0.5 }}
+          >
+            {adding
+              ? t('admin.settingsPage.footerLinks.adding')
+              : t('admin.settingsPage.footerLinks.add')}
           </Button>
         </Box>
       </Paper>
@@ -515,16 +689,6 @@ function SurveySection({
     esButtonText: data.esButtonText ?? '',
   });
   const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    setForm({
-      userSurveyEnabled: data.userSurveyEnabled,
-      userSurveyLink: data.userSurveyLink ?? '',
-      spanishSurveyLink: data.spanishSurveyLink ?? '',
-      enButtonText: data.enButtonText ?? '',
-      esButtonText: data.esButtonText ?? '',
-    });
-  }, [data]);
 
   const handleSave = async () => {
     setSaving(true);
@@ -642,10 +806,6 @@ function BranchesSection({
   const [adding, setAdding] = useState(false);
   const [addError, setAddError] = useState<string | null>(null);
 
-  useEffect(() => {
-    setEnabled(data.enabled);
-  }, [data.enabled]);
-
   const handleToggleEnabled = async (checked: boolean) => {
     setTogglingEnabled(true);
     try {
@@ -677,10 +837,12 @@ function BranchesSection({
       const res = await apiFetch(`/api/v1/admin/library_locations/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ library_location: { name: editForm.name, zipcode: editForm.zipcode } }),
+        body: JSON.stringify({
+          library_location: { name: editForm.name, zipcode: editForm.zipcode },
+        }),
       });
       if (!res.ok) {
-        const d = await res.json() as { errors?: string[] };
+        const d = (await res.json()) as { errors?: string[] };
         onError(d.errors?.join(', ') ?? t('admin.settingsPage.branches.saveError'));
         return;
       }
@@ -719,10 +881,12 @@ function BranchesSection({
       const res = await apiFetch('/api/v1/admin/library_locations', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ library_location: { name: addForm.name, zipcode: addForm.zipcode } }),
+        body: JSON.stringify({
+          library_location: { name: addForm.name, zipcode: addForm.zipcode },
+        }),
       });
       if (!res.ok) {
-        const d = await res.json() as { errors?: string[] };
+        const d = (await res.json()) as { errors?: string[] };
         onError(d.errors?.join(', ') ?? t('admin.settingsPage.branches.addError'));
         return;
       }
@@ -778,7 +942,9 @@ function BranchesSection({
                             <TableCell>
                               <TextField
                                 value={editForm.name}
-                                onChange={(e) => setEditForm((f) => ({ ...f, name: e.target.value }))}
+                                onChange={(e) =>
+                                  setEditForm((f) => ({ ...f, name: e.target.value }))
+                                }
                                 size="small"
                                 fullWidth
                                 disabled={savingId === loc.id}
@@ -787,7 +953,9 @@ function BranchesSection({
                             <TableCell>
                               <TextField
                                 value={editForm.zipcode}
-                                onChange={(e) => setEditForm((f) => ({ ...f, zipcode: e.target.value }))}
+                                onChange={(e) =>
+                                  setEditForm((f) => ({ ...f, zipcode: e.target.value }))
+                                }
                                 size="small"
                                 sx={{ width: 120 }}
                                 disabled={savingId === loc.id}
@@ -795,10 +963,25 @@ function BranchesSection({
                               />
                             </TableCell>
                             <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-                              <IconButton size="small" onClick={() => void handleSaveEdit(loc.id)} disabled={savingId === loc.id} color="primary" aria-label={t('admin.settingsPage.branches.save')}>
-                                {savingId === loc.id ? <CircularProgress size={16} /> : <SaveIcon fontSize="small" />}
+                              <IconButton
+                                size="small"
+                                onClick={() => void handleSaveEdit(loc.id)}
+                                disabled={savingId === loc.id}
+                                color="primary"
+                                aria-label={t('admin.settingsPage.branches.save')}
+                              >
+                                {savingId === loc.id ? (
+                                  <CircularProgress size={16} />
+                                ) : (
+                                  <SaveIcon fontSize="small" />
+                                )}
                               </IconButton>
-                              <IconButton size="small" onClick={cancelEdit} disabled={savingId === loc.id} aria-label={t('admin.settingsPage.branches.cancel')}>
+                              <IconButton
+                                size="small"
+                                onClick={cancelEdit}
+                                disabled={savingId === loc.id}
+                                aria-label={t('admin.settingsPage.branches.cancel')}
+                              >
                                 <CloseIcon fontSize="small" />
                               </IconButton>
                             </TableCell>
@@ -808,11 +991,24 @@ function BranchesSection({
                             <TableCell>{loc.name}</TableCell>
                             <TableCell>{loc.zipcode ?? '—'}</TableCell>
                             <TableCell align="right" sx={{ whiteSpace: 'nowrap' }}>
-                              <IconButton size="small" onClick={() => startEdit(loc)} aria-label={t('admin.settingsPage.branches.edit')}>
+                              <IconButton
+                                size="small"
+                                onClick={() => startEdit(loc)}
+                                aria-label={t('admin.settingsPage.branches.edit')}
+                              >
                                 <EditIcon fontSize="small" />
                               </IconButton>
-                              <IconButton size="small" onClick={() => void handleDelete(loc.id)} disabled={deletingId === loc.id} aria-label={t('admin.settingsPage.branches.delete')}>
-                                {deletingId === loc.id ? <CircularProgress size={16} /> : <DeleteIcon fontSize="small" />}
+                              <IconButton
+                                size="small"
+                                onClick={() => void handleDelete(loc.id)}
+                                disabled={deletingId === loc.id}
+                                aria-label={t('admin.settingsPage.branches.delete')}
+                              >
+                                {deletingId === loc.id ? (
+                                  <CircularProgress size={16} />
+                                ) : (
+                                  <DeleteIcon fontSize="small" />
+                                )}
                               </IconButton>
                             </TableCell>
                           </>
@@ -826,8 +1022,14 @@ function BranchesSection({
           </Paper>
 
           <Paper variant="outlined" sx={{ p: 3 }}>
-            <Typography variant="subtitle2" sx={{ mb: 2 }}>{t('admin.settingsPage.branches.addTitle')}</Typography>
-            {addError && <Alert severity="error" sx={{ mb: 2 }}>{addError}</Alert>}
+            <Typography variant="subtitle2" sx={{ mb: 2 }}>
+              {t('admin.settingsPage.branches.addTitle')}
+            </Typography>
+            {addError && (
+              <Alert severity="error" sx={{ mb: 2 }}>
+                {addError}
+              </Alert>
+            )}
             <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start', flexWrap: 'wrap' }}>
               <TextField
                 label={t('admin.settingsPage.branches.colName')}
@@ -846,8 +1048,15 @@ function BranchesSection({
                 disabled={adding}
                 inputProps={{ inputMode: 'numeric' }}
               />
-              <Button variant="contained" onClick={() => void handleAdd()} disabled={adding} sx={{ mt: 0.5 }}>
-                {adding ? t('admin.settingsPage.branches.adding') : t('admin.settingsPage.branches.add')}
+              <Button
+                variant="contained"
+                onClick={() => void handleAdd()}
+                disabled={adding}
+                sx={{ mt: 0.5 }}
+              >
+                {adding
+                  ? t('admin.settingsPage.branches.adding')
+                  : t('admin.settingsPage.branches.add')}
               </Button>
             </Box>
           </Paper>
