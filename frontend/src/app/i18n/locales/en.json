@@ -341,6 +341,12 @@
         "deleteError": "Failed to delete branch. Please try again.",
         "validationError": "Branch name and zip code are required."
       },
+      "theme": {
+        "title": "Theme Colors",
+        "primaryColor": "Primary Color",
+        "secondaryColor": "Secondary Color",
+        "hint": "Changes take effect immediately after saving."
+      },
       "survey": {
         "enabled": "Course completion survey enabled",
         "surveyLinks": "Survey Links",

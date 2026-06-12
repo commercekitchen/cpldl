@@ -14,6 +14,7 @@ module Api
           org_attrs = {}
           org_attrs.merge!(general_params.to_h) if params[:general].present?
           org_attrs.merge!(survey_org_params.to_h) if params[:survey].present?
+          org_attrs.merge!(theme_params.to_h) if params[:theme].present?
 
           if org_attrs.present? && !current_organization.update(org_attrs)
             render status: :unprocessable_entity, json: { errors: current_organization.errors.full_messages }
@@ -70,6 +71,10 @@ module Api
           params.require(:general).permit(:footer_logo_link, :login_required, :branches)
         end
 
+        def theme_params
+          params.require(:theme).permit(:primary_color, :secondary_color)
+        end
+
         def survey_org_params
           params.require(:survey).permit(:user_survey_enabled, :user_survey_link, :spanish_survey_link)
         end
@@ -105,6 +110,10 @@ module Api
               footerLogoUrl: footer_logo_url,
               footerLogoLink: current_organization.footer_logo_link,
               loginRequired: current_organization.login_required
+            },
+            theme: {
+              primaryColor: current_organization.primary_color.presence || DefaultTheme::PRIMARY_COLOR,
+              secondaryColor: current_organization.secondary_color.presence || DefaultTheme::SECONDARY_COLOR
             },
             footerLinks: footer_links_payload,
             survey: {
