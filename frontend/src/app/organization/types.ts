@@ -31,6 +31,7 @@ export type OrganizationConfig = {
   };
 
   features: {
+    loginRequired?: boolean;
     userSurveyEnabled?: string;
     userSurveyLink?: string;
     spanishSurveyLink?: string;

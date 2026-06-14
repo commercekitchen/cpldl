@@ -4,6 +4,7 @@ export type AuthStatus = 'loading' | 'authenticated' | 'unauthenticated';
 
 export type User = {
   id: number;
+  uuid?: string;
   email: string | null;
   phoneNumber: string | null;
   is_org_admin?: boolean;

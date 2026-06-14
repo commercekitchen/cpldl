@@ -1,5 +1,6 @@
 import {
   NavLink,
+  Navigate,
   Outlet,
   ScrollRestoration,
   useMatch,
@@ -134,11 +135,17 @@ export function UserLayout() {
 
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
+
+  const AUTH_EXEMPT_PATHS = new Set(['/login', '/signup', '/forgot-password', '/reset-password', '/accept-invitation', '/terms-of-use', '/privacy-policy']);
+  const shouldRedirectToLogin = orgConfig.features?.loginRequired === true && status === 'unauthenticated' && !AUTH_EXEMPT_PATHS.has(location.pathname);
+
   const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
   const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
   const footerLinks = orgConfig.footerLinks ?? [];
   const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
   const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
+
+  if (shouldRedirectToLogin) return <Navigate to="/login" replace />;
 
   const handleSearchBlur = (e: React.FocusEvent) => {
     if (!e.currentTarget.contains(e.relatedTarget as Node) && !searchDraft.trim()) {

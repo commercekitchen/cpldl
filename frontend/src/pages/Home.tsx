@@ -1,6 +1,9 @@
 import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Paper from '@mui/material/Paper';
+import Typography from '@mui/material/Typography';
 import { useLocation, useNavigate, useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SubHeaderBanner } from '../app/components/SubHeaderBanner';
@@ -18,18 +21,25 @@ export default function Home() {
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const bannerText = rootData?.orgConfig.bannerText?.trim();
 
-  const surveyJustCompleted = (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;
+  const surveyJustCompleted =
+    (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;
   const isAuthenticated = status === 'authenticated';
+  const subdomain = rootData?.orgConfig.subdomain;
 
   const showSurveyBanner =
+    isAuthenticated && !user?.surveyCompleted && !user?.optOutOfRecommendations;
+
+  const showGetconnectedPromo =
+    subdomain === 'getconnected' &&
     isAuthenticated &&
-    !user?.surveyCompleted &&
-    !user?.optOutOfRecommendations;
+    user?.surveyCompleted === true &&
+    Boolean(user?.uuid);
 
   return (
     <>
       {bannerText ? <SubHeaderBanner text={bannerText} /> : null}
       {showSurveyBanner ? <SurveyBanner /> : null}
+      {showGetconnectedPromo && <GetconnectedPromo uuid={user!.uuid!} />}
       <Container
         maxWidth={false}
         disableGutters
@@ -56,10 +66,56 @@ export default function Home() {
           />
         )}
 
-        <CourseListContainer title={t('home.featuredCourses')} params={{ scope: 'homepage', limit: 10 }} />
+        <CourseListContainer
+          title={t('home.featuredCourses')}
+          params={{ scope: 'homepage', limit: 10 }}
+        />
 
-        <LessonListContainer title={t('home.popularLessons')} params={{ scope: 'popular', limit: 10 }} />
+        <LessonListContainer
+          title={t('home.popularLessons')}
+          params={{ scope: 'popular', limit: 10 }}
+        />
       </Container>
     </>
+  );
+}
+
+function GetconnectedPromo({ uuid }: { uuid: string }) {
+  const { t } = useTranslation();
+  const surveyUrl = `${t('home.getconnectedPromo.surveyUrl')}?guest=${uuid}`;
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        mx: { xs: 1, sm: 2, md: 3 },
+        mt: 2,
+        mb: 1,
+        p: { xs: 2, sm: 3 },
+        border: '1px solid',
+        borderColor: 'divider',
+        borderRadius: 2,
+      }}
+    >
+      <Typography variant="h6" fontWeight={700} sx={{ mb: 1.5 }}>
+        {t('home.getconnectedPromo.heading')}
+      </Typography>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+        <Typography variant="body2">{t('home.getconnectedPromo.p1')}</Typography>
+        <Typography variant="body2">{t('home.getconnectedPromo.p2')}</Typography>
+        <Typography variant="body2">{t('home.getconnectedPromo.p3')}</Typography>
+        <Typography variant="body2">{t('home.getconnectedPromo.p4')}</Typography>
+      </Box>
+      <Button
+        component="a"
+        href={surveyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        variant="contained"
+        sx={{ mt: 2 }}
+      >
+        {t('home.getconnectedPromo.cta')}
+      </Button>
+    </Paper>
   );
 }

@@ -31,6 +31,7 @@ class OrganizationConfigPresenter
       }.compact,
 
       features: {
+        loginRequired: @organization.login_required,
         phoneNumberSignIn: @organization.phone_number_users_enabled,
         signUpAllowed: !@organization.main_site? && !@organization.phone_number_users_enabled,
         surveyRequired: @organization.survey_required,

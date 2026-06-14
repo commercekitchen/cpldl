@@ -12,6 +12,7 @@ module Api
 
         render json: {
           id: user.id,
+          uuid: user.uuid,
           email: user.email,
           phoneNumber: user.phone_number,
           organization_subdomain: user.organization.subdomain,
