@@ -195,11 +195,11 @@ class Organization < ApplicationRecord
     blob = footer_logo_file.blob
 
     if blob.byte_size > MAX_FOOTER_LOGO_SIZE
-      errors.add(:footer_logo_file, "must be smaller than 2MB")
+      errors.add(:footer_logo_file, 'must be smaller than 2MB')
     end
 
     unless FOOTER_LOGO_TYPES.include?(blob.content_type)
-      errors.add(:footer_logo_file, "should be png or jpeg format.")
+      errors.add(:footer_logo_file, 'should be png or jpeg format.')
     end
   end
 
@@ -209,11 +209,11 @@ class Organization < ApplicationRecord
     blob = logo.blob
 
     if blob.byte_size > MAX_HEADER_LOGO_SIZE
-      errors.add(:logo, "must be smaller than 2MB")
+      errors.add(:logo, 'must be smaller than 2MB')
     end
 
     unless HEADER_LOGO_TYPES.include?(blob.content_type)
-      errors.add(:logo, "should be png, jpeg, or svg format.")
+      errors.add(:logo, 'should be png, jpeg, or svg format.')
     end
   end
 end

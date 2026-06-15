@@ -113,7 +113,7 @@ module "database" {
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
-  db_engine_version   = "16.11"
+  db_engine_version   = "16.13"
   instance_size       = "db.t3.micro"
   skip_final_snapshot = true
   monitoring_interval = 0
@@ -166,8 +166,8 @@ module "application" {
   desired_task_count             = 1
   min_task_count                 = 1
   max_task_count                 = 1
-  service_memory                 = 512
-  service_cpu                    = 512
+  service_memory                 = 1024
+  service_cpu                    = 1024
   log_retention_days             = 7
   lb_target_group_arn            = module.load_balancer.lb_target_group_arn
   rails_master_key_arn           = data.aws_secretsmanager_secret.rails_master_key.arn

@@ -73,7 +73,7 @@ module "database" {
   application_sg_id   = module.application.application_sg_id
   private_subnet_ids  = module.vpc.private_subnet_ids
   database_name       = var.database_name
-  db_engine_version   = "16.11"
+  db_engine_version   = "16.13"
   instance_size       = "db.t3.small"
   skip_final_snapshot = false
   enable_monitoring   = true
