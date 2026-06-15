@@ -32,7 +32,7 @@ Doorkeeper.configure do
     if current_user
       head :forbidden unless current_user.has_role?(:admin, Organization.find_by(subdomain: 'www'))
     else
-      redirect_to sign_in_url
+      redirect_to login_url
     end
   end
 

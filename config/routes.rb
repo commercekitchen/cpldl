@@ -208,7 +208,6 @@ Rails.application.routes.draw do
   
   get 'users/invitation/accept', to: 'devise/invitations#edit'
 
-  # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
       namespace :admin do
@@ -253,6 +252,8 @@ Rails.application.routes.draw do
         post :dismiss_survey, on: :member
       end
       resource :account, only: [:show, :update]
+      
+      # Doorkeeper auth route
       get '/me', to: 'users#me'
 
       resources :autocomplete, only: [:index]
