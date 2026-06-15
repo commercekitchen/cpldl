@@ -10,6 +10,8 @@ import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import InsertLinkIcon from '@mui/icons-material/InsertLink';
+import LinkOffIcon from '@mui/icons-material/LinkOff';
 
 interface Props {
   label: string;
@@ -122,6 +124,34 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
           >
             <FormatListNumberedIcon fontSize="small" />
           </IconButton>
+          {editor?.isActive('link') ? (
+            <IconButton
+              size="small"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                editor.chain().focus().unsetLink().run();
+              }}
+              disabled={disabled}
+              color="primary"
+              title="Remove link"
+            >
+              <LinkOffIcon fontSize="small" />
+            </IconButton>
+          ) : (
+            <IconButton
+              size="small"
+              onMouseDown={(e) => {
+                e.preventDefault();
+                const url = window.prompt('Enter URL');
+                if (url) editor?.chain().focus().setLink({ href: url }).run();
+              }}
+              disabled={disabled}
+              color="default"
+              title="Insert link"
+            >
+              <InsertLinkIcon fontSize="small" />
+            </IconButton>
+          )}
         </Box>
         <Box
           onClick={() => editor?.commands.focus()}

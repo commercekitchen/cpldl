@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     get '/admin/users', to: 'spa#index'
     get '/admin/settings', to: 'spa#index'
     get '/admin/categories', to: 'spa#index'
+    get '/admin/cms_pages', to: 'spa#index'
+    get '/admin/cms_pages/new', to: 'spa#index'
+    get '/admin/cms_pages/:page_id/edit', to: 'spa#index'
 
     root to: 'spa#index'
     get '/login', to: 'spa#index', as: :spa_login
@@ -235,6 +238,9 @@ Rails.application.routes.draw do
         end
         resources :pla_courses, only: [:index] do
           post :import, on: :member
+        end
+        resources :cms_pages, only: [:index, :show, :create, :update, :destroy] do
+          get :form_options_action, on: :collection, path: 'form_options'
         end
       end
 

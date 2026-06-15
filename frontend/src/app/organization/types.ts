@@ -16,6 +16,7 @@ export type OrganizationConfig = {
     title: string;
     url: string;
     openInNewTab?: boolean;
+    isInternal?: boolean;
   }>;
 
   theme: {

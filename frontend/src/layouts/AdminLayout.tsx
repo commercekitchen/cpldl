@@ -42,6 +42,7 @@ export function AdminLayout() {
     { key: 'categories', path: '/admin/categories', icon: <LabelIcon /> },
     { key: 'users', path: '/admin/users', icon: <PeopleIcon /> },
     { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
+    { key: 'cmsPages', path: '/admin/cms_pages', icon: <CollectionsBookmarkIcon /> },
   ];
 
   if (status === 'loading') {

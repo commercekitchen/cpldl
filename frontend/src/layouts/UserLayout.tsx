@@ -534,13 +534,19 @@ export function UserLayout() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
               {footerLinks.map((link) => (
                 <Box key={`${link.title}-${link.url}`}>
-                  <MuiLink
-                    href={link.url}
-                    target={link.openInNewTab ? '_blank' : undefined}
-                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                  >
-                    {link.title}
-                  </MuiLink>
+                  {link.isInternal ? (
+                    <MuiLink component={NavLink} to={link.url}>
+                      {link.title}
+                    </MuiLink>
+                  ) : (
+                    <MuiLink
+                      href={link.url}
+                      target={link.openInNewTab ? '_blank' : undefined}
+                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                    >
+                      {link.title}
+                    </MuiLink>
+                  )}
                 </Box>
               ))}
             </Box>

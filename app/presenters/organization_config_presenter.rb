@@ -82,7 +82,8 @@ class OrganizationConfigPresenter
       {
         title: page.title,
         url: Rails.application.routes.url_helpers.cms_page_path(page),
-        openInNewTab: false
+        openInNewTab: false,
+        isInternal: true
       }
     end
 

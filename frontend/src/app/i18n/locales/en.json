@@ -94,6 +94,7 @@
     "categories": "Categories",
     "users": "Users",
     "settings": "Settings",
+    "cmsPages": "CMS Pages",
     "categoriesPage": {
       "loadError": "Unable to load categories. Please try again later.",
       "empty": "No categories yet.",

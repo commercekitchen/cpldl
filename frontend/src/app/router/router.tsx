@@ -17,6 +17,9 @@ import AdminNewCourse from '../../pages/admin/NewCourse';
 import AdminUsers from '../../pages/admin/Users';
 import AdminSettings from '../../pages/admin/Settings';
 import AdminCategories from '../../pages/admin/Categories';
+import AdminCmsPages from '../../pages/admin/CmsPages';
+import AdminNewCmsPage from '../../pages/admin/NewCmsPage';
+import AdminEditCmsPage from '../../pages/admin/EditCmsPage';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -54,6 +57,9 @@ export function createAppRouter() {
               { path: 'users', element: <AdminUsers /> },
               { path: 'settings', element: <AdminSettings /> },
               { path: 'categories', element: <AdminCategories /> },
+              { path: 'cms_pages', element: <AdminCmsPages /> },
+              { path: 'cms_pages/new', element: <AdminNewCmsPage /> },
+              { path: 'cms_pages/:pageId/edit', element: <AdminEditCmsPage /> },
             ],
           },
           {
