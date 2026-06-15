@@ -42,6 +42,7 @@ Rails.application.routes.draw do
     get '/courses/:course_id', to: 'spa#index'
     get '/courses/:course_id/completed', to: 'spa#index'
     get '/lessons/:lesson_id', to: 'spa#index'
+    get '/cms_pages/:id', to: 'spa#index'
   end
 
   root 'courses#index'
@@ -259,6 +260,7 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: [:index, :show]
+      resources :cms_pages, only: [:show]
       resource :course_recommendation_survey, only: [:show, :create]
 
       get '/csrf', to: 'csrf#show' if Rails.env.development?

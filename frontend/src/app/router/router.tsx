@@ -27,6 +27,7 @@ import ResetPassword from '../../pages/ResetPassword';
 import AcceptInvitation from '../../pages/AcceptInvitation';
 import TermsOfUse from '../../pages/TermsOfUse';
 import PrivacyPolicy from '../../pages/PrivacyPolicy';
+import CmsPage from '../../pages/CmsPage';
 
 export function createAppRouter() {
   const basename = '/';
@@ -70,6 +71,7 @@ export function createAppRouter() {
               { path: 'terms-of-use', element: <TermsOfUse /> },
               { path: 'privacy-policy', element: <PrivacyPolicy /> },
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
+              { path: 'cms_pages/:slug', element: <CmsPage /> },
               lessonRoute,
               coursesRoute,
               courseRoute,
