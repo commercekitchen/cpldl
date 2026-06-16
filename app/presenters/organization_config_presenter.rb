@@ -25,8 +25,8 @@ class OrganizationConfigPresenter
         footerLogoDestinationUrl: @organization.footer_logo_link,
         plaFooterLogoUrl: ActionController::Base.helpers.asset_path('pla_logo_footer.png'),
         plaFooterLogoDestinationUrl: 'http://www.ala.org/pla/',
-        primaryColor: @organization.primary_color || DefaultTheme::PRIMARY_COLOR,
-        secondaryColor: @organization.secondary_color || DefaultTheme::SECONDARY_COLOR,
+        primaryColor: safe_color(@organization.primary_color, DefaultTheme::PRIMARY_COLOR),
+        secondaryColor: safe_color(@organization.secondary_color, DefaultTheme::SECONDARY_COLOR),
         fontFamily: @organization.font_family || DefaultTheme::FONT_FAMILY,
         radius: @organization.theme_radius || DefaultTheme::RADIUS
       }.compact,
@@ -44,6 +44,10 @@ class OrganizationConfigPresenter
   end
 
   private
+
+  def safe_color(value, default)
+    value.present? && value.match?(Organization::HEX_COLOR_REGEX) ? value : default
+  end
 
   def banner_text
     CGI.unescape_html(i18n_with_default("home.#{@organization.subdomain}.custom_banner_greeting"))

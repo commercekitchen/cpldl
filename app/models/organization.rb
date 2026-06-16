@@ -68,7 +68,11 @@ class Organization < ApplicationRecord
   validates :name, presence: true
   validates :subdomain, presence: true
 
+  HEX_COLOR_REGEX = /\A#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})\z/.freeze
+
   validates :footer_logo_link, url: { allow_blank: true }
+  validates :primary_color, format: { with: HEX_COLOR_REGEX, message: 'must be a valid hex color (e.g. #FF0000)' }, allow_blank: true
+  validates :secondary_color, format: { with: HEX_COLOR_REGEX, message: 'must be a valid hex color (e.g. #FF0000)' }, allow_blank: true
   before_validation :add_survey_url_protocols
   after_validation :clean_up_paperclip_errors
 

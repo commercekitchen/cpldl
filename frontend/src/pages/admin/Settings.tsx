@@ -199,6 +199,12 @@ export default function AdminSettings() {
 
 // ─── Color Field ─────────────────────────────────────────────────────────────
 
+const HEX_COLOR_REGEX = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+
+function isValidHex(value: string): boolean {
+  return HEX_COLOR_REGEX.test(value);
+}
+
 function ColorField({
   label,
   value,
@@ -210,6 +216,8 @@ function ColorField({
   onChange: (v: string) => void;
   disabled: boolean;
 }) {
+  const isValid = isValidHex(value);
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
       <Box
@@ -218,10 +226,10 @@ function ColorField({
           width: 44,
           height: 44,
           borderRadius: 1,
-          bgcolor: value,
+          bgcolor: isValid ? value : 'action.disabledBackground',
           cursor: disabled ? 'default' : 'pointer',
           border: '1px solid',
-          borderColor: 'divider',
+          borderColor: isValid ? 'divider' : 'error.main',
           flexShrink: 0,
           position: 'relative',
           overflow: 'hidden',
@@ -229,7 +237,7 @@ function ColorField({
       >
         <input
           type="color"
-          value={value}
+          value={isValid ? value : '#000000'}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           style={{
@@ -250,6 +258,8 @@ function ColorField({
         size="small"
         sx={{ width: 160 }}
         inputProps={{ maxLength: 7 }}
+        error={!isValid}
+        helperText={!isValid ? 'Must be a valid hex color (e.g. #FF0000)' : undefined}
       />
     </Box>
   );
@@ -282,6 +292,7 @@ function GeneralSection({
     primaryColor: theme.primaryColor,
     secondaryColor: theme.secondaryColor,
   });
+  const colorsValid = isValidHex(form.primaryColor) && isValidHex(form.secondaryColor);
   const [saving, setSaving] = useState(false);
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
   const [uploadingHeaderLogo, setUploadingHeaderLogo] = useState(false);
@@ -504,7 +515,7 @@ function GeneralSection({
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Button variant="contained" onClick={() => void handleSave()} disabled={saving}>
+        <Button variant="contained" onClick={() => void handleSave()} disabled={saving || !colorsValid}>
           {saving ? t('admin.settingsPage.saving') : t('admin.settingsPage.save')}
         </Button>
       </Box>
