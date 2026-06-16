@@ -17,6 +17,9 @@ import AdminNewCourse from '../../pages/admin/NewCourse';
 import AdminUsers from '../../pages/admin/Users';
 import AdminSettings from '../../pages/admin/Settings';
 import AdminCategories from '../../pages/admin/Categories';
+import AdminCmsPages from '../../pages/admin/CmsPages';
+import AdminNewCmsPage from '../../pages/admin/NewCmsPage';
+import AdminEditCmsPage from '../../pages/admin/EditCmsPage';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -27,6 +30,7 @@ import ResetPassword from '../../pages/ResetPassword';
 import AcceptInvitation from '../../pages/AcceptInvitation';
 import TermsOfUse from '../../pages/TermsOfUse';
 import PrivacyPolicy from '../../pages/PrivacyPolicy';
+import CmsPage from '../../pages/CmsPage';
 
 export function createAppRouter() {
   const basename = '/';
@@ -53,6 +57,9 @@ export function createAppRouter() {
               { path: 'users', element: <AdminUsers /> },
               { path: 'settings', element: <AdminSettings /> },
               { path: 'categories', element: <AdminCategories /> },
+              { path: 'cms_pages', element: <AdminCmsPages /> },
+              { path: 'cms_pages/new', element: <AdminNewCmsPage /> },
+              { path: 'cms_pages/:pageId/edit', element: <AdminEditCmsPage /> },
             ],
           },
           {
@@ -70,6 +77,7 @@ export function createAppRouter() {
               { path: 'terms-of-use', element: <TermsOfUse /> },
               { path: 'privacy-policy', element: <PrivacyPolicy /> },
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
+              { path: 'cms_pages/:slug', element: <CmsPage /> },
               lessonRoute,
               coursesRoute,
               courseRoute,

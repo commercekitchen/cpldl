@@ -15,6 +15,7 @@ class OrganizationConfigPresenter
       displayName: @organization.name,
       mainSite: @organization.main_site?,
       bannerText: banner_text,
+      customText: custom_text_payload,
       trainingSiteLink: @organization.training_site_link.presence,
       footerLinks: footer_links_payload,
 
@@ -24,13 +25,14 @@ class OrganizationConfigPresenter
         footerLogoDestinationUrl: @organization.footer_logo_link,
         plaFooterLogoUrl: ActionController::Base.helpers.asset_path('pla_logo_footer.png'),
         plaFooterLogoDestinationUrl: 'http://www.ala.org/pla/',
-        primaryColor: @organization.primary_color || DefaultTheme::PRIMARY_COLOR,
-        secondaryColor: @organization.secondary_color || DefaultTheme::SECONDARY_COLOR,
+        primaryColor: safe_color(@organization.primary_color, DefaultTheme::PRIMARY_COLOR),
+        secondaryColor: safe_color(@organization.secondary_color, DefaultTheme::SECONDARY_COLOR),
         fontFamily: @organization.font_family || DefaultTheme::FONT_FAMILY,
         radius: @organization.theme_radius || DefaultTheme::RADIUS
       }.compact,
 
       features: {
+        loginRequired: @organization.login_required,
         phoneNumberSignIn: @organization.phone_number_users_enabled,
         signUpAllowed: !@organization.main_site? && !@organization.phone_number_users_enabled,
         surveyRequired: @organization.survey_required,
@@ -43,8 +45,21 @@ class OrganizationConfigPresenter
 
   private
 
+  def safe_color(value, default)
+    value.present? && value.match?(Organization::HEX_COLOR_REGEX) ? value : default
+  end
+
   def banner_text
     CGI.unescape_html(i18n_with_default("home.#{@organization.subdomain}.custom_banner_greeting"))
+  end
+
+  def custom_text_payload
+    {
+      homeHeaderEn: @organization.home_header_en.presence,
+      homeSubheaderEn: @organization.home_subheader_en.presence,
+      homeHeaderEs: @organization.home_header_es.presence,
+      homeSubheaderEs: @organization.home_subheader_es.presence
+    }.compact
   end
 
   def footer_logo_url
@@ -81,7 +96,8 @@ class OrganizationConfigPresenter
       {
         title: page.title,
         url: Rails.application.routes.url_helpers.cms_page_path(page),
-        openInNewTab: false
+        openInNewTab: false,
+        isInternal: true
       }
     end
 

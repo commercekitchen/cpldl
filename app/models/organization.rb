@@ -27,6 +27,10 @@ class Organization < ApplicationRecord
     survey_required              Boolean, default: false
     deidentify_reports           Boolean, default: false
     use_spa                      Boolean, default: false
+    home_header_en               String
+    home_subheader_en            String
+    home_header_es               String
+    home_subheader_es            String
   end
 
   store_accessor :theme_data,
@@ -64,7 +68,11 @@ class Organization < ApplicationRecord
   validates :name, presence: true
   validates :subdomain, presence: true
 
+  HEX_COLOR_REGEX = /\A#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})\z/.freeze
+
   validates :footer_logo_link, url: { allow_blank: true }
+  validates :primary_color, format: { with: HEX_COLOR_REGEX, message: 'must be a valid hex color (e.g. #FF0000)' }, allow_blank: true
+  validates :secondary_color, format: { with: HEX_COLOR_REGEX, message: 'must be a valid hex color (e.g. #FF0000)' }, allow_blank: true
   before_validation :add_survey_url_protocols
   after_validation :clean_up_paperclip_errors
 
@@ -195,11 +203,11 @@ class Organization < ApplicationRecord
     blob = footer_logo_file.blob
 
     if blob.byte_size > MAX_FOOTER_LOGO_SIZE
-      errors.add(:footer_logo_file, "must be smaller than 2MB")
+      errors.add(:footer_logo_file, 'must be smaller than 2MB')
     end
 
     unless FOOTER_LOGO_TYPES.include?(blob.content_type)
-      errors.add(:footer_logo_file, "should be png or jpeg format.")
+      errors.add(:footer_logo_file, 'should be png or jpeg format.')
     end
   end
 
@@ -209,11 +217,11 @@ class Organization < ApplicationRecord
     blob = logo.blob
 
     if blob.byte_size > MAX_HEADER_LOGO_SIZE
-      errors.add(:logo, "must be smaller than 2MB")
+      errors.add(:logo, 'must be smaller than 2MB')
     end
 
     unless HEADER_LOGO_TYPES.include?(blob.content_type)
-      errors.add(:logo, "should be png, jpeg, or svg format.")
+      errors.add(:logo, 'should be png, jpeg, or svg format.')
     end
   end
 end

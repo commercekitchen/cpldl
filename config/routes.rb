@@ -26,6 +26,9 @@ Rails.application.routes.draw do
     get '/admin/users', to: 'spa#index'
     get '/admin/settings', to: 'spa#index'
     get '/admin/categories', to: 'spa#index'
+    get '/admin/cms_pages', to: 'spa#index'
+    get '/admin/cms_pages/new', to: 'spa#index'
+    get '/admin/cms_pages/:page_id/edit', to: 'spa#index'
 
     root to: 'spa#index'
     get '/login', to: 'spa#index', as: :spa_login
@@ -42,6 +45,7 @@ Rails.application.routes.draw do
     get '/courses/:course_id', to: 'spa#index'
     get '/courses/:course_id/completed', to: 'spa#index'
     get '/lessons/:lesson_id', to: 'spa#index'
+    get '/cms_pages/:id', to: 'spa#index'
   end
 
   root 'courses#index'
@@ -204,7 +208,6 @@ Rails.application.routes.draw do
   
   get 'users/invitation/accept', to: 'devise/invitations#edit'
 
-  # Doorkeeper auth routes
   namespace :api do
     namespace :v1 do
       namespace :admin do
@@ -235,6 +238,9 @@ Rails.application.routes.draw do
         resources :pla_courses, only: [:index] do
           post :import, on: :member
         end
+        resources :cms_pages, only: [:index, :show, :create, :update, :destroy] do
+          get :form_options_action, on: :collection, path: 'form_options'
+        end
       end
 
       resource :session, only: [:create, :destroy]
@@ -246,6 +252,8 @@ Rails.application.routes.draw do
         post :dismiss_survey, on: :member
       end
       resource :account, only: [:show, :update]
+      
+      # Doorkeeper auth route
       get '/me', to: 'users#me'
 
       resources :autocomplete, only: [:index]
@@ -259,6 +267,7 @@ Rails.application.routes.draw do
         end
       end
       resources :courses, only: [:index, :show]
+      resources :cms_pages, only: [:show]
       resource :course_recommendation_survey, only: [:show, :create]
 
       get '/csrf', to: 'csrf#show' if Rails.env.development?

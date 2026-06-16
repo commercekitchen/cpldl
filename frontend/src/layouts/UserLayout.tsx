@@ -1,5 +1,6 @@
 import {
   NavLink,
+  Navigate,
   Outlet,
   ScrollRestoration,
   useMatch,
@@ -134,11 +135,18 @@ export function UserLayout() {
 
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
+
+  const AUTH_EXEMPT_PATHS = new Set(['/login', '/signup', '/forgot-password', '/reset-password', '/accept-invitation', '/terms-of-use', '/privacy-policy']);
+  const isCmsPage = location.pathname.startsWith('/cms_pages/');
+  const shouldRedirectToLogin = orgConfig.features?.loginRequired === true && status === 'unauthenticated' && !AUTH_EXEMPT_PATHS.has(location.pathname) && !isCmsPage;
+
   const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
   const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
   const footerLinks = orgConfig.footerLinks ?? [];
   const isHomeActive = Boolean(useMatch({ path: '/', end: true }));
   const isCategoriesActive = Boolean(useMatch({ path: '/courses', end: true }));
+
+  if (shouldRedirectToLogin) return <Navigate to="/login" replace />;
 
   const handleSearchBlur = (e: React.FocusEvent) => {
     if (!e.currentTarget.contains(e.relatedTarget as Node) && !searchDraft.trim()) {
@@ -494,9 +502,6 @@ export function UserLayout() {
       <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
         <Box
           sx={{
-            border: '2px solid',
-            borderColor: 'primary.main',
-            borderRadius: 0,
             p: 2,
           }}
         >
@@ -527,13 +532,19 @@ export function UserLayout() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
               {footerLinks.map((link) => (
                 <Box key={`${link.title}-${link.url}`}>
-                  <MuiLink
-                    href={link.url}
-                    target={link.openInNewTab ? '_blank' : undefined}
-                    rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                  >
-                    {link.title}
-                  </MuiLink>
+                  {link.isInternal ? (
+                    <MuiLink component={NavLink} to={link.url}>
+                      {link.title}
+                    </MuiLink>
+                  ) : (
+                    <MuiLink
+                      href={link.url}
+                      target={link.openInNewTab ? '_blank' : undefined}
+                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                    >
+                      {link.title}
+                    </MuiLink>
+                  )}
                 </Box>
               ))}
             </Box>

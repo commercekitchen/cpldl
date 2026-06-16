@@ -48,7 +48,7 @@ export default function Login() {
         : await login(email, password);
       if (session?.redirect_to) {
         const target = session.redirect_to;
-        if (target.startsWith('http://') || target.startsWith('https://')) {
+        if (target.startsWith('http://') || target.startsWith('https://') || target.startsWith('/oauth')) {
           window.location.assign(target);
         } else {
           navigate(target, { replace: true });

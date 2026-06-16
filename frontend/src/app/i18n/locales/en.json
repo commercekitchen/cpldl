@@ -12,7 +12,16 @@
   "home": {
     "coursesForYou": "Courses for You",
     "featuredCourses": "Featured Courses",
-    "popularLessons": "Popular Lessons"
+    "popularLessons": "Popular Lessons",
+    "getconnectedPromo": {
+      "heading": "⭐ Share Your Opinions, Claim Your Reward! ⭐",
+      "p1": "Ready to shape the future of digital learning? Take our quick survey and let us know your thoughts! As a token of our appreciation, we're offering a $25 gift card to thank you for your time.",
+      "p2": "Simply click the link below to get started, and your survey will pop up in a new tab.",
+      "p3": "Please note: This survey is conducted independently; any information you choose to share is neither associated with the Public Library Association (PLA) nor does PLA bear responsibility for it.",
+      "p4": "Thank you for being a part of our learning community! Let's make learning better, together. 💡",
+      "cta": "Start Survey Here",
+      "surveyUrl": "https://myinternetlearning.com"
+    }
   },
   "courses": {
     "pageTitle": "Courses",
@@ -85,6 +94,7 @@
     "categories": "Categories",
     "users": "Users",
     "settings": "Settings",
+    "cmsPages": "CMS Pages",
     "categoriesPage": {
       "loadError": "Unable to load categories. Please try again later.",
       "empty": "No categories yet.",

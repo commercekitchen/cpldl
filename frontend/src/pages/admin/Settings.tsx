@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { useRouteLoaderData, useRevalidator } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { OrganizationConfig } from '../../app/organization/types';
@@ -20,6 +20,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Switch from '@mui/material/Switch';
 import Tab from '@mui/material/Tab';
 import Table from '@mui/material/Table';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -80,6 +82,13 @@ interface BranchesSettings {
   locations: LibraryLocation[];
 }
 
+interface CustomTextSettings {
+  homeHeaderEn: string | null;
+  homeSubheaderEn: string | null;
+  homeHeaderEs: string | null;
+  homeSubheaderEs: string | null;
+}
+
 interface SettingsData {
   isMainSite: boolean;
   general: GeneralSettings;
@@ -87,6 +96,7 @@ interface SettingsData {
   footerLinks: FooterLink[];
   survey: SurveySettings;
   branches: BranchesSettings;
+  customText: CustomTextSettings;
   languages: Language[];
 }
 
@@ -124,6 +134,7 @@ export default function AdminSettings() {
         <Tab label={t('admin.settingsPage.tabGeneral')} />
         <Tab label={t('admin.settingsPage.tabFooterLinks')} />
         <Tab label={t('admin.settingsPage.tabSurvey')} />
+        <Tab label="Custom Text" />
         {!data.isMainSite && <Tab label={t('admin.settingsPage.tabBranches')} />}
       </Tabs>
 
@@ -153,7 +164,15 @@ export default function AdminSettings() {
           queryClient={queryClient}
         />
       )}
-      {tab === 3 && !data.isMainSite && (
+      {tab === 3 && (
+        <CustomTextSection
+          data={data.customText}
+          onSuccess={showSuccess}
+          onError={showError}
+          queryClient={queryClient}
+        />
+      )}
+      {tab === 4 && !data.isMainSite && (
         <BranchesSection
           data={data.branches}
           onSuccess={showSuccess}
@@ -180,6 +199,12 @@ export default function AdminSettings() {
 
 // ─── Color Field ─────────────────────────────────────────────────────────────
 
+const HEX_COLOR_REGEX = /^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+
+function isValidHex(value: string): boolean {
+  return HEX_COLOR_REGEX.test(value);
+}
+
 function ColorField({
   label,
   value,
@@ -191,6 +216,8 @@ function ColorField({
   onChange: (v: string) => void;
   disabled: boolean;
 }) {
+  const isValid = isValidHex(value);
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
       <Box
@@ -199,10 +226,10 @@ function ColorField({
           width: 44,
           height: 44,
           borderRadius: 1,
-          bgcolor: value,
+          bgcolor: isValid ? value : 'action.disabledBackground',
           cursor: disabled ? 'default' : 'pointer',
           border: '1px solid',
-          borderColor: 'divider',
+          borderColor: isValid ? 'divider' : 'error.main',
           flexShrink: 0,
           position: 'relative',
           overflow: 'hidden',
@@ -210,7 +237,7 @@ function ColorField({
       >
         <input
           type="color"
-          value={value}
+          value={isValid ? value : '#000000'}
           onChange={(e) => onChange(e.target.value)}
           disabled={disabled}
           style={{
@@ -231,6 +258,8 @@ function ColorField({
         size="small"
         sx={{ width: 160 }}
         inputProps={{ maxLength: 7 }}
+        error={!isValid}
+        helperText={!isValid ? 'Must be a valid hex color (e.g. #FF0000)' : undefined}
       />
     </Box>
   );
@@ -263,6 +292,7 @@ function GeneralSection({
     primaryColor: theme.primaryColor,
     secondaryColor: theme.secondaryColor,
   });
+  const colorsValid = isValidHex(form.primaryColor) && isValidHex(form.secondaryColor);
   const [saving, setSaving] = useState(false);
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
   const [uploadingHeaderLogo, setUploadingHeaderLogo] = useState(false);
@@ -485,7 +515,7 @@ function GeneralSection({
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Button variant="contained" onClick={() => void handleSave()} disabled={saving}>
+        <Button variant="contained" onClick={() => void handleSave()} disabled={saving || !colorsValid}>
           {saving ? t('admin.settingsPage.saving') : t('admin.settingsPage.save')}
         </Button>
       </Box>
@@ -776,6 +806,145 @@ function SurveySection({
       <Box sx={{ mt: 3 }}>
         <Button variant="contained" onClick={() => void handleSave()} disabled={saving}>
           {saving ? t('admin.settingsPage.saving') : t('admin.settingsPage.save')}
+        </Button>
+      </Box>
+    </Paper>
+  );
+}
+
+// ─── Custom Text Section ──────────────────────────────────────────────────────
+
+const HOME_HEADER_DEFAULT_EN = 'Digital Literacy Hub';
+const HOME_SUBHEADER_DEFAULT_EN = 'Gain skills and confidence for today\'s digital world.';
+
+function SectionLabel({ children }: { children: ReactNode }) {
+  return (
+    <Typography variant="body2" color="text.secondary" fontWeight={500} sx={{ mb: 1 }}>
+      {children}
+    </Typography>
+  );
+}
+
+function CustomTextSection({
+  data,
+  onSuccess,
+  onError,
+  queryClient,
+}: {
+  data: CustomTextSettings;
+  onSuccess: (m: string) => void;
+  onError: (m: string) => void;
+  queryClient: ReturnType<typeof useQueryClient>;
+}) {
+  const { revalidate } = useRevalidator();
+  const [locale, setLocale] = useState<'en' | 'es'>('en');
+  const [form, setForm] = useState({
+    homeHeaderEn: data.homeHeaderEn ?? '',
+    homeSubheaderEn: data.homeSubheaderEn ?? '',
+    homeHeaderEs: data.homeHeaderEs ?? '',
+    homeSubheaderEs: data.homeSubheaderEs ?? '',
+  });
+  const [saving, setSaving] = useState(false);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const res = await apiFetch('/api/v1/admin/settings', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          custom_text: {
+            home_header_en: form.homeHeaderEn || null,
+            home_subheader_en: form.homeSubheaderEn || null,
+            home_header_es: form.homeHeaderEs || null,
+            home_subheader_es: form.homeSubheaderEs || null,
+          },
+        }),
+      });
+      if (!res.ok) throw new Error();
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      organizationClient.clearCache();
+      revalidate();
+      onSuccess('Custom text saved.');
+    } catch {
+      onError('Failed to save custom text.');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const isEn = locale === 'en';
+
+  return (
+    <Paper variant="outlined" sx={{ p: 3, maxWidth: 600 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Typography variant="subtitle1" fontWeight={600}>
+          Home Page
+        </Typography>
+        <ToggleButtonGroup
+          value={locale}
+          exclusive
+          onChange={(_, v: 'en' | 'es') => { if (v) setLocale(v); }}
+          size="small"
+        >
+          <ToggleButton value="en">English</ToggleButton>
+          <ToggleButton value="es">Español</ToggleButton>
+        </ToggleButtonGroup>
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        {isEn ? (
+          <>
+            <SectionLabel>Header</SectionLabel>
+            <TextField
+              value={form.homeHeaderEn}
+              onChange={(e) => setForm((f) => ({ ...f, homeHeaderEn: e.target.value }))}
+              disabled={saving}
+              fullWidth
+              placeholder={HOME_HEADER_DEFAULT_EN}
+              helperText={`Default: "${HOME_HEADER_DEFAULT_EN}"`}
+            />
+            <SectionLabel>Subheader</SectionLabel>
+            <TextField
+              value={form.homeSubheaderEn}
+              onChange={(e) => setForm((f) => ({ ...f, homeSubheaderEn: e.target.value }))}
+              disabled={saving}
+              fullWidth
+              multiline
+              minRows={2}
+              placeholder={HOME_SUBHEADER_DEFAULT_EN}
+              helperText={`Default: "${HOME_SUBHEADER_DEFAULT_EN}"`}
+            />
+          </>
+        ) : (
+          <>
+            <SectionLabel>Header</SectionLabel>
+            <TextField
+              value={form.homeHeaderEs}
+              onChange={(e) => setForm((f) => ({ ...f, homeHeaderEs: e.target.value }))}
+              disabled={saving}
+              fullWidth
+              placeholder={form.homeHeaderEn || HOME_HEADER_DEFAULT_EN}
+              helperText="Leave blank to use the English value."
+            />
+            <SectionLabel>Subheader</SectionLabel>
+            <TextField
+              value={form.homeSubheaderEs}
+              onChange={(e) => setForm((f) => ({ ...f, homeSubheaderEs: e.target.value }))}
+              disabled={saving}
+              fullWidth
+              multiline
+              minRows={2}
+              placeholder={form.homeSubheaderEn || HOME_SUBHEADER_DEFAULT_EN}
+              helperText="Leave blank to use the English value."
+            />
+          </>
+        )}
+      </Box>
+
+      <Box sx={{ mt: 3 }}>
+        <Button variant="contained" onClick={() => void handleSave()} disabled={saving}>
+          {saving ? 'Saving…' : 'Save'}
         </Button>
       </Box>
     </Paper>

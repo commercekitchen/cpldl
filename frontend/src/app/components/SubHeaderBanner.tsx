@@ -1,11 +1,18 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+const DEFAULT_HEADER = 'Digital Literacy Hub';
+const DEFAULT_SUBHEADER = 'Gain skills and confidence for today\'s digital world.';
+
 type Props = {
-  text: string;
+  header?: string;
+  subheader?: string;
 };
 
-export function SubHeaderBanner({ text }: Props) {
+export function SubHeaderBanner({ header, subheader }: Props) {
+  const displayHeader = header || DEFAULT_HEADER;
+  const displaySubheader = subheader || DEFAULT_SUBHEADER;
+
   return (
     <Box
       sx={{
@@ -29,13 +36,13 @@ export function SubHeaderBanner({ text }: Props) {
           mb: 0.5,
         }}
       >
-        Digital Literacy Hub
+        {displayHeader}
       </Typography>
       <Typography
         variant="h2"
         component="h2"
         sx={{ fontSize: '16px', lineHeight: 1.5, fontWeight: 400 }}
-        dangerouslySetInnerHTML={{ __html: text }}
+        dangerouslySetInnerHTML={{ __html: displaySubheader }}
       />
     </Box>
   );

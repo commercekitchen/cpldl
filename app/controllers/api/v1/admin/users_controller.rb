@@ -81,6 +81,7 @@ module Api
         def export
           users = policy_scope(User)
                     .includes(:profile, :roles, course_progresses: [:course])
+                    .where.not(email: nil).where.not(email: '')
                     .order('users.created_at DESC')
 
           csv_data = users_csv(users)
@@ -99,7 +100,7 @@ module Api
         end
 
         def filtered_users(q)
-          base = policy_scope(User).includes(:profile, :roles)
+          base = policy_scope(User).includes(:profile, :roles).where.not(email: nil).where.not(email: '')
 
           if q.present?
             term = "%#{ActiveRecord::Base.sanitize_sql_like(q)}%"

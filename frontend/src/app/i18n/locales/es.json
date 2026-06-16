@@ -12,7 +12,16 @@
   "home": {
     "coursesForYou": "Cursos para ti",
     "featuredCourses": "Cursos destacados",
-    "popularLessons": "Lecciones populares"
+    "popularLessons": "Lecciones populares",
+    "getconnectedPromo": {
+      "heading": "⭐ ¡Comparte tus opiniones, reclama tu recompensa! ⭐",
+      "p1": "¿Listo para dar forma al futuro del aprendizaje digital? Responda a nuestra breve encuesta antes y después de completar los cursos y actividades recomendados para compartir sus opiniones. Como muestra de nuestro agradecimiento, les ofrecemos una tarjeta de regalo de $25 por su tiempo.",
+      "p2": "Simplemente haga clic en el enlace a continuación para comenzar y la encuesta aparecerá en una nueva pestaña.",
+      "p3": "Tenga en cuenta: esta encuesta se realiza de forma independiente; cualquier información que elija compartir no está asociada con la Asociación de Bibliotecas Públicas (PLA), ni PLA es responsable de ella.",
+      "p4": "¡Gracias por ser parte de nuestra comunidad de aprendizaje! Hagamos que el aprendizaje sea mejor, juntos. 💡",
+      "cta": "Comenzar la Encuesta Aquí",
+      "surveyUrl": "https://aprendamosenlinea.com"
+    }
   },
   "courses": {
     "pageTitle": "Cursos",
@@ -84,6 +93,7 @@
     "courses": "Cursos",
     "users": "Usuarios",
     "settings": "Configuración",
+    "cmsPages": "Páginas CMS",
     "plaCatalog": "Catálogo de cursos PLA",
     "plaCatalogPage": {
       "colTitle": "Título",
