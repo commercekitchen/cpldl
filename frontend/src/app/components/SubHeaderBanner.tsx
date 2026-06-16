@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import DOMPurify from 'dompurify';
 
 const DEFAULT_HEADER = 'Digital Literacy Hub';
 const DEFAULT_SUBHEADER = 'Gain skills and confidence for today\'s digital world.';
@@ -39,10 +40,10 @@ export function SubHeaderBanner({ header, subheader }: Props) {
         {displayHeader}
       </Typography>
       <Typography
-        variant="h2"
-        component="h2"
+        variant="body1"
+        component="p"
         sx={{ fontSize: '16px', lineHeight: 1.5, fontWeight: 400 }}
-        dangerouslySetInnerHTML={{ __html: displaySubheader }}
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(displaySubheader) }}
       />
     </Box>
   );

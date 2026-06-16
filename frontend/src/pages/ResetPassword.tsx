@@ -86,7 +86,7 @@ export default function ResetPassword() {
       >
         <Stack spacing={2.5}>
           <Box>
-            <Typography variant="h4" sx={{ mb: 0.75 }}>
+            <Typography variant="h4" component="h1" sx={{ mb: 0.75 }}>
               {t('auth.resetPasswordTitle')}
             </Typography>
             <Typography variant="body2" color="text.secondary">

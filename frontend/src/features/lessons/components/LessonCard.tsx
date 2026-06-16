@@ -115,13 +115,13 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Schedule />
+            <Schedule aria-hidden="true" />
             <Typography variant="body2" color="text.secondary">
               {durationLabel}
             </Typography>
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Speed />
+            <Speed aria-hidden="true" />
             <Typography variant="body2" color="text.secondary">
               {levelLabel}
             </Typography>

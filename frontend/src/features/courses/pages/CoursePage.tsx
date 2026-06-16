@@ -105,7 +105,7 @@ export function CoursePage() {
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 1 }}>
-            <Typography variant="h4">{course.title}</Typography>
+            <Typography variant="h4" component="h1">{course.title}</Typography>
             {course.completed ? (
               <CourseCompletedBadge />
             ) : (
@@ -140,7 +140,7 @@ export function CoursePage() {
         <Box sx={{ mt: 4 }}>
           {additionalResources.length > 0 && (
             <Box sx={{ mb: 3 }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>
+              <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
                 {t('courses.additionalResources')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -157,7 +157,7 @@ export function CoursePage() {
           )}
           {textCopies.length > 0 && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 1 }}>
+              <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
                 {t('courses.textCopies')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

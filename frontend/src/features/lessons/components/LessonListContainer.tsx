@@ -26,7 +26,7 @@ export function LessonListContainer({ title, params }: Props) {
   return (
     <Box sx={{ my: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 2, mb: 1 }}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h6" component="h2">{title}</Typography>
       </Box>
 
       {isLoading && <CircularProgress />}

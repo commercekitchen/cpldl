@@ -122,6 +122,7 @@ function GetconnectedPromo({ uuid }: { uuid: string }) {
         target="_blank"
         rel="noopener noreferrer"
         variant="contained"
+        aria-label={`${t('home.getconnectedPromo.cta')} (opens in new tab)`}
         sx={{ mt: 2 }}
       >
         {t('home.getconnectedPromo.cta')}
