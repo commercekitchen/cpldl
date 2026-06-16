@@ -29,6 +29,7 @@ import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
+import { StagingBanner } from '../app/components/StagingBanner';
 
 type NavButtonProps = {
   to: string;
@@ -337,6 +338,8 @@ export function UserLayout() {
           />
         </Box>
       </AppBar>
+
+      <StagingBanner />
 
       {showGuestBanner && (
         <Box
