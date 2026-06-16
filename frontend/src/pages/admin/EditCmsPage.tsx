@@ -24,18 +24,10 @@ const PUB_STATUS_OPTIONS = [
   { value: 'A', label: 'Archived' },
 ];
 
-const AUDIENCE_OPTIONS = [
-  { value: 'All', label: 'Everyone' },
-  { value: 'Unauth', label: 'Unauthenticated Users' },
-  { value: 'Auth', label: 'Authenticated Users' },
-  { value: 'Admin', label: 'Administrators' },
-];
-
 interface FormState {
   title: string;
   languageId: number | null;
   body: string | null;
-  audience: string;
   author: string;
   pubStatus: string;
   seoPageTitle: string;
@@ -86,7 +78,6 @@ export default function AdminEditCmsPage() {
           title: (p.title as string) ?? '',
           languageId: (p.language_id as number | null) ?? null,
           body: (p.body as string | null) ?? null,
-          audience: (p.audience as string) ?? 'All',
           author: (p.author as string) ?? '',
           pubStatus: (p.pub_status as string) ?? 'D',
           seoPageTitle: (p.seo_page_title as string | null) ?? '',
@@ -124,7 +115,7 @@ export default function AdminEditCmsPage() {
             title: form.title,
             language_id: form.languageId,
             body: form.body,
-            audience: form.audience,
+            audience: 'All',
             author: form.author,
             pub_status: form.pubStatus,
             seo_page_title: form.seoPageTitle || null,
@@ -246,20 +237,6 @@ export default function AdminEditCmsPage() {
 
         <SectionHeader>Publication</SectionHeader>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-          <FormControl fullWidth disabled={saving}>
-            <InputLabel>Audience</InputLabel>
-            <Select
-              value={form.audience}
-              label="Audience"
-              onChange={(e) => handleChange('audience', e.target.value)}
-            >
-              {AUDIENCE_OPTIONS.map((o) => (
-                <MenuItem key={o.value} value={o.value}>
-                  {o.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
           <TextField
             label="Author"
             value={form.author}

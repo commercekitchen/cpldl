@@ -15,6 +15,7 @@ module Api
           org_attrs.merge!(general_params.to_h) if params[:general].present?
           org_attrs.merge!(survey_org_params.to_h) if params[:survey].present?
           org_attrs.merge!(theme_params.to_h) if params[:theme].present?
+          org_attrs.merge!(custom_text_params.to_h) if params[:custom_text].present?
 
           if org_attrs.present? && !current_organization.update(org_attrs)
             render status: :unprocessable_entity, json: { errors: current_organization.errors.full_messages }
@@ -79,6 +80,10 @@ module Api
           params.require(:survey).permit(:user_survey_enabled, :user_survey_link, :spanish_survey_link)
         end
 
+        def custom_text_params
+          params.require(:custom_text).permit(:home_header_en, :home_subheader_en, :home_header_es, :home_subheader_es)
+        end
+
         def update_translation(locale, value)
           key = "course_completion_page.#{current_organization.subdomain}.user_survey_button_text"
           translation = Translation.find_or_initialize_by(locale: locale, key: key)
@@ -126,6 +131,12 @@ module Api
             branches: {
               enabled: current_organization.branches || false,
               locations: library_locations_payload
+            },
+            customText: {
+              homeHeaderEn: current_organization.home_header_en,
+              homeSubheaderEn: current_organization.home_subheader_en,
+              homeHeaderEs: current_organization.home_header_es,
+              homeSubheaderEs: current_organization.home_subheader_es
             },
             languages: Language.order(:name).map { |l| { id: l.id, name: l.name } }
           }

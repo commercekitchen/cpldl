@@ -12,14 +12,24 @@ import { CourseListContainer } from '../features/courses/components/CourseListCo
 import { LessonListContainer } from '../features/lessons/components/LessonListContainer';
 import { SurveyBanner } from '../features/survey/components/SurveyBanner';
 import { useAuth } from '../auth/useAuth';
+import { useLocale } from '../app/locale/LocaleContext';
 
 export default function Home() {
   const { t } = useTranslation();
   const { status, user } = useAuth();
+  const { locale } = useLocale();
   const location = useLocation();
   const navigate = useNavigate();
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
-  const bannerText = rootData?.orgConfig.bannerText?.trim();
+  const customText = rootData?.orgConfig.customText;
+  const isSpanish = locale === 'es';
+
+  const bannerHeader = isSpanish
+    ? (customText?.homeHeaderEs || customText?.homeHeaderEn)
+    : customText?.homeHeaderEn;
+  const bannerSubheader = isSpanish
+    ? (customText?.homeSubheaderEs || customText?.homeSubheaderEn)
+    : customText?.homeSubheaderEn;
 
   const surveyJustCompleted =
     (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;
@@ -37,7 +47,7 @@ export default function Home() {
 
   return (
     <>
-      {bannerText ? <SubHeaderBanner text={bannerText} /> : null}
+      <SubHeaderBanner header={bannerHeader} subheader={bannerSubheader} />
       {showSurveyBanner ? <SurveyBanner /> : null}
       {showGetconnectedPromo && <GetconnectedPromo uuid={user!.uuid!} />}
       <Container

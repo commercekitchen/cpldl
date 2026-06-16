@@ -6,11 +6,19 @@ export type Organization = {
   features: Record<string, boolean>;
 };
 
+export type CustomText = {
+  homeHeaderEn?: string;
+  homeSubheaderEn?: string;
+  homeHeaderEs?: string;
+  homeSubheaderEs?: string;
+};
+
 export type OrganizationConfig = {
   subdomain: string;
   displayName: string;
   mainSite: boolean;
   bannerText: string;
+  customText?: CustomText;
   trainingSiteLink?: string;
   footerLinks?: Array<{
     title: string;

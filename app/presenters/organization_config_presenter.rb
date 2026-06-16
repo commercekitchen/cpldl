@@ -15,6 +15,7 @@ class OrganizationConfigPresenter
       displayName: @organization.name,
       mainSite: @organization.main_site?,
       bannerText: banner_text,
+      customText: custom_text_payload,
       trainingSiteLink: @organization.training_site_link.presence,
       footerLinks: footer_links_payload,
 
@@ -46,6 +47,15 @@ class OrganizationConfigPresenter
 
   def banner_text
     CGI.unescape_html(i18n_with_default("home.#{@organization.subdomain}.custom_banner_greeting"))
+  end
+
+  def custom_text_payload
+    {
+      homeHeaderEn: @organization.home_header_en.presence,
+      homeSubheaderEn: @organization.home_subheader_en.presence,
+      homeHeaderEs: @organization.home_header_es.presence,
+      homeSubheaderEs: @organization.home_subheader_es.presence
+    }.compact
   end
 
   def footer_logo_url

@@ -27,6 +27,10 @@ class Organization < ApplicationRecord
     survey_required              Boolean, default: false
     deidentify_reports           Boolean, default: false
     use_spa                      Boolean, default: false
+    home_header_en               String
+    home_subheader_en            String
+    home_header_es               String
+    home_subheader_es            String
   end
 
   store_accessor :theme_data,

@@ -26,7 +26,6 @@ interface AdminCmsPage {
   slug: string;
   title: string;
   pub_status: string;
-  audience: string | null;
   language: string | null;
 }
 
@@ -104,7 +103,6 @@ export default function AdminCmsPages() {
             <TableRow>
               <TableCell>Title</TableCell>
               <TableCell>Language</TableCell>
-              <TableCell>Audience</TableCell>
               <TableCell>Status</TableCell>
               <TableCell align="right" />
             </TableRow>
@@ -123,7 +121,6 @@ export default function AdminCmsPages() {
               <TableRow key={page.id} hover>
                 <TableCell>{page.title}</TableCell>
                 <TableCell>{page.language ?? '—'}</TableCell>
-                <TableCell>{page.audience ?? '—'}</TableCell>
                 <TableCell>
                   <Select
                     size="small"
