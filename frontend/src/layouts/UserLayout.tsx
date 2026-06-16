@@ -137,7 +137,8 @@ export function UserLayout() {
   const isAdmin = Boolean(user?.is_org_admin);
 
   const AUTH_EXEMPT_PATHS = new Set(['/login', '/signup', '/forgot-password', '/reset-password', '/accept-invitation', '/terms-of-use', '/privacy-policy']);
-  const shouldRedirectToLogin = orgConfig.features?.loginRequired === true && status === 'unauthenticated' && !AUTH_EXEMPT_PATHS.has(location.pathname);
+  const isCmsPage = location.pathname.startsWith('/cms_pages/');
+  const shouldRedirectToLogin = orgConfig.features?.loginRequired === true && status === 'unauthenticated' && !AUTH_EXEMPT_PATHS.has(location.pathname) && !isCmsPage;
 
   const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
   const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
@@ -501,9 +502,6 @@ export function UserLayout() {
       <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
         <Box
           sx={{
-            border: '2px solid',
-            borderColor: 'primary.main',
-            borderRadius: 0,
             p: 2,
           }}
         >
