@@ -9,7 +9,7 @@
     <div class="progress">
       <div class="percent-complete"><%= percent_complete(course) %></div>
       <div class="duration">
-        <i class="icon-clock grey"></i><%= course.duration %>
+        <i class="icon-clock grey" aria-hidden="true"></i><%= course.duration %>
       </div>
     </div>
     <% if course.new_course? %>

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -49,6 +50,7 @@ function compareCourseOrder(a: Course, b: Course) {
 export function CoursesPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  usePageMetadata({ title: t('courses.pageTitle') });
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -190,6 +192,11 @@ export function CoursesPage() {
                       '&:hover': {
                         borderColor: 'primary.main',
                         color: 'primary.main',
+                      },
+                      '&:focus-visible': {
+                        outline: '3px solid',
+                        outlineColor: 'primary.main',
+                        outlineOffset: 2,
                       },
                     }}
                   >

@@ -6,7 +6,7 @@
 <% end %>
 <%= content_for :callout, flush: true do %>
   <h1><%="#{@lesson.lesson_order}. #{@lesson.title}" %></h1>
-  <small><i class="icon-clock white"></i><%= @lesson.duration_str %></small>
+  <small><i class="icon-clock white" aria-hidden="true"></i><%= @lesson.duration_str %></small>
 <% end %>
 <%= content_for :course_progress do %>
   <%= render partial: "shared/courses/course_progress",

@@ -66,6 +66,11 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
               alignItems: 'center',
               justifyContent: 'center',
               p: 3,
+              '&.Mui-focusVisible': {
+                outline: '3px solid',
+                outlineColor: 'primary.main',
+                outlineOffset: 2,
+              },
             }}
           >
             <Typography variant="subtitle1">View All</Typography>

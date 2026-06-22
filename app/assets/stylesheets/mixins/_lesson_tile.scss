@@ -11,10 +11,14 @@
     display: block;
     text-decoration: none;
 
-    &:hover,
-    &:focus {
+    &:hover {
       box-shadow: 0 0 10px $grey;
-      outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 10px $grey;
+      outline: 3px solid currentColor;
+      outline-offset: 2px;
     }
 
     .lesson-header {

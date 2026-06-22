@@ -13,6 +13,7 @@ import { LessonListContainer } from '../features/lessons/components/LessonListCo
 import { SurveyBanner } from '../features/survey/components/SurveyBanner';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
+import { usePageMetadata } from '../app/metadata/usePageMetadata';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -22,6 +23,12 @@ export default function Home() {
   const navigate = useNavigate();
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const customText = rootData?.orgConfig.customText;
+  const orgName = rootData?.orgConfig.name;
+  const subdomain = rootData?.orgConfig.subdomain;
+
+  usePageMetadata({
+    title: subdomain === 'www' ? 'DigitalLearn' : (orgName ? `${orgName} - DigitalLearn` : 'DigitalLearn'),
+  });
   const isSpanish = locale === 'es';
 
   const bannerHeader = isSpanish
@@ -34,7 +41,6 @@ export default function Home() {
   const surveyJustCompleted =
     (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;
   const isAuthenticated = status === 'authenticated';
-  const subdomain = rootData?.orgConfig.subdomain;
 
   const showSurveyBanner =
     isAuthenticated && !user?.surveyCompleted && !user?.optOutOfRecommendations;
