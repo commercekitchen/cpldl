@@ -30,6 +30,7 @@ import ResetPassword from '../../pages/ResetPassword';
 import AcceptInvitation from '../../pages/AcceptInvitation';
 import TermsOfUse from '../../pages/TermsOfUse';
 import PrivacyPolicy from '../../pages/PrivacyPolicy';
+import Redesign from '../../pages/Redesign';
 import CmsPage from '../../pages/CmsPage';
 
 export function createAppRouter() {
@@ -76,6 +77,7 @@ export function createAppRouter() {
               { path: 'survey', element: <CourseRecommendationSurvey /> },
               { path: 'terms-of-use', element: <TermsOfUse /> },
               { path: 'privacy-policy', element: <PrivacyPolicy /> },
+              { path: 'redesign', element: <Redesign /> },
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
               { path: 'cms_pages/:slug', element: <CmsPage /> },
               lessonRoute,

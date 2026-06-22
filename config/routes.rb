@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     get '/survey', to: 'spa#index'
     get '/terms-of-use', to: 'spa#index'
     get '/privacy-policy', to: 'spa#index'
+    get '/redesign', to: 'spa#index'
     get '/courses', to: 'spa#index'
     get '/courses/:course_id', to: 'spa#index'
     get '/courses/:course_id/completed', to: 'spa#index'

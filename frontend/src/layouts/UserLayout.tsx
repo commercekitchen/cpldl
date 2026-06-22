@@ -30,6 +30,7 @@ import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
 import { StagingBanner } from '../app/components/StagingBanner';
+import { AnnouncementBanner } from '../app/components/AnnouncementBanner';
 
 type NavButtonProps = {
   to: string;
@@ -340,6 +341,7 @@ export function UserLayout() {
       </AppBar>
 
       <StagingBanner />
+      <AnnouncementBanner />
 
       {showGuestBanner && (
         <Box

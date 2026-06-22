@@ -23,7 +23,7 @@ export default function Home() {
   const navigate = useNavigate();
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const customText = rootData?.orgConfig.customText;
-  const orgName = rootData?.orgConfig.name;
+  const orgName = rootData?.orgConfig.displayName;
   const subdomain = rootData?.orgConfig.subdomain;
 
   usePageMetadata({
