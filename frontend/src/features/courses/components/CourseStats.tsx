@@ -27,16 +27,16 @@ export function CourseStats({ course, showLessons = false, color = 'text.seconda
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Schedule sx={{ color }} />
+        <Schedule sx={{ color }} aria-hidden="true" />
         <Typography variant="body2" color={color}>{durationLabel}</Typography>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <Speed sx={{ color }} />
+        <Speed sx={{ color }} aria-hidden="true" />
         <Typography variant="body2" color={color}>{levelLabel}</Typography>
       </Box>
       {showLessons && (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <PlayLesson sx={{ color }} />
+          <PlayLesson sx={{ color }} aria-hidden="true" />
           <Typography variant="body2" color={color}>{lessonsLabel}</Typography>
         </Box>
       )}

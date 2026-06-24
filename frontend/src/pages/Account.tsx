@@ -170,7 +170,7 @@ export default function Account() {
         sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2 }}
       >
         <Stack spacing={2}>
-          <Typography variant="h4">Account</Typography>
+          <Typography variant="h4" component="h1">Account</Typography>
           <Typography variant="body2" color="text.secondary">
             Manage your profile details below.
           </Typography>

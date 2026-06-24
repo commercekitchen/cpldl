@@ -26,12 +26,14 @@ function isBrowserOpenable(contentType?: string): boolean {
 
 export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
   const openable = isBrowserOpenable(contentType);
+  const action = openable ? 'Open' : 'Download';
   return (
     <Paper
       component="a"
       href={url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={`${action} ${fileName} (opens in new tab)`}
       {...(!openable && { download: true })}
       onClick={() => window.gtag?.('event', 'material_downloaded', { file_name: fileName })}
       variant="elevation"

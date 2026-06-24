@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -16,6 +16,8 @@ import { CourseCompletedBadge } from '../components/CourseCompletedBadge';
 import { CourseStats } from '../components/CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import DOMPurify from 'dompurify';
+import type { OrganizationConfig } from '../../../app/organization/types';
+import { useAuth } from '../../../auth/useAuth';
 
 
 function buildCourseTitle(course: Course) {
@@ -30,6 +32,9 @@ export function CoursePage() {
   const { t } = useTranslation();
   const { courseId = '' } = useParams();
   const { data: course, isLoading, error: loadError } = useCourseQuery(courseId);
+  const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
+  const { status } = useAuth();
+  const showAttachments = !(orgConfig.features?.loginRequired === true && status === 'unauthenticated');
 
   const [error] = useState<string | null>(null);
 
@@ -100,7 +105,7 @@ export function CoursePage() {
         />
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 1 }}>
-            <Typography variant="h4">{course.title}</Typography>
+            <Typography variant="h4" component="h1">{course.title}</Typography>
             {course.completed ? (
               <CourseCompletedBadge />
             ) : (
@@ -131,11 +136,11 @@ export function CoursePage() {
 
       <LessonListContainer title="Lessons" params={{ courseId: course.id }} />
 
-      {(additionalResources.length > 0 || textCopies.length > 0) && (
+      {showAttachments && (additionalResources.length > 0 || textCopies.length > 0) && (
         <Box sx={{ mt: 4 }}>
           {additionalResources.length > 0 && (
             <Box sx={{ mb: 3 }}>
-              <Typography variant="h6" sx={{ mb: 1 }}>
+              <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
                 {t('courses.additionalResources')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
@@ -152,7 +157,7 @@ export function CoursePage() {
           )}
           {textCopies.length > 0 && (
             <Box>
-              <Typography variant="h6" sx={{ mb: 1 }}>
+              <Typography variant="h6" component="h2" sx={{ mb: 1 }}>
                 {t('courses.textCopies')}
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>

@@ -45,7 +45,7 @@ function CourseRecommendationSurveyInner() {
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
-      <Typography variant="h4" sx={{ mb: 1 }}>
+      <Typography variant="h4" component="h1" sx={{ mb: 1 }}>
         {t('survey.pageTitle')}
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>

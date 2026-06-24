@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { usePageMetadata } from '../app/metadata/usePageMetadata';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -15,6 +16,7 @@ import { useAuth } from '../auth/useAuth';
 
 export default function Login() {
   const { t } = useTranslation();
+  usePageMetadata({ title: 'Sign In' });
   const { login, loginWithPhone } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,7 +85,7 @@ export default function Login() {
       >
         <Stack spacing={2.5}>
           <Box>
-            <Typography variant="h4" sx={{ mb: 0.75 }}>
+            <Typography variant="h4" component="h1" sx={{ mb: 0.75 }}>
               {usePhoneLogin ? 'Continue with Phone Number' : 'Log in'}
             </Typography>
             <Typography variant="body2" color="text.secondary">

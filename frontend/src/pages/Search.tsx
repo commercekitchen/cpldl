@@ -69,12 +69,34 @@ export default function Search() {
 
   return (
     <Container sx={{ py: 3 }}>
+      <Box
+        component="span"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        sx={{
+          position: 'absolute',
+          width: 1,
+          height: 1,
+          overflow: 'hidden',
+          clip: 'rect(0,0,0,0)',
+          whiteSpace: 'nowrap',
+          border: 0,
+        }}
+      >
+        {!loading && query
+          ? hasResults
+            ? `${results.courses.length + results.lessons.length} result${results.courses.length + results.lessons.length !== 1 ? 's' : ''} found for "${query}"`
+            : `No results found for "${query}"`
+          : ''}
+      </Box>
+
       {query ? (
-        <Typography variant="h4" sx={{ mb: 2 }}>
-          Results for '{query}'
+        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
+          Results for &lsquo;{query}&rsquo;
         </Typography>
       ) : (
-        <Typography variant="h4" sx={{ mb: 2 }}>
+        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
           Search Results
         </Typography>
       )}
@@ -89,7 +111,7 @@ export default function Search() {
 
       {!loading && !error && results.courses.length > 0 && (
         <>
-          <Typography variant="h5" sx={{ mt: 2, mb: 1 }}>
+          <Typography variant="h5" component="h2" sx={{ mt: 2, mb: 1 }}>
             Courses
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
@@ -109,7 +131,7 @@ export default function Search() {
 
       {!loading && !error && results.lessons.length > 0 && (
         <>
-          <Typography variant="h5" sx={{ mt: 3, mb: 1 }}>
+          <Typography variant="h5" component="h2" sx={{ mt: 3, mb: 1 }}>
             Lessons
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>

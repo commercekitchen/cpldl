@@ -2,8 +2,10 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
+import { usePageMetadata } from '../app/metadata/usePageMetadata';
 
 export default function PrivacyPolicy() {
+  usePageMetadata({ title: 'Privacy Policy' });
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <Typography variant="h4" component="h1" gutterBottom>

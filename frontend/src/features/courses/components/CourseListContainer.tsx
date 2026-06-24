@@ -35,7 +35,7 @@ export function CourseListContainer({ title, params, headerAction }: Props) {
   return (
     <Box sx={{ my: 3 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-        <Typography variant="h6">{title}</Typography>
+        <Typography variant="h6" component="h2">{title}</Typography>
         {headerAction}
       </Box>
 

@@ -6,6 +6,7 @@
     "account": "Account",
     "signIn": "Sign In",
     "userLogin": "User Login (Optional)",
+    "userLoginRequired": "User Login",
     "adminDashboard": "Admin Dashboard",
     "openSearch": "Open search"
   },

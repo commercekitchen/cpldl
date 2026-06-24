@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -49,6 +50,7 @@ function compareCourseOrder(a: Course, b: Course) {
 export function CoursesPage() {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  usePageMetadata({ title: t('courses.pageTitle') });
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
   const [activeId, setActiveId] = useState<string | null>(null);
 
@@ -131,7 +133,7 @@ export function CoursesPage() {
 
   return (
     <Container sx={{ py: 3 }}>
-      <Typography variant="h4" sx={{ mb: 3 }}>
+      <Typography variant="h4" component="h1" sx={{ mb: 3 }}>
         {t('courses.pageTitle')}
       </Typography>
 
@@ -143,6 +145,8 @@ export function CoursesPage() {
         }}
       >
         <Box
+          component="nav"
+          aria-labelledby="category-nav-heading"
           sx={{
             width: { xs: '100%', md: 240 },
             flexShrink: 0,
@@ -156,53 +160,63 @@ export function CoursesPage() {
             pr: { md: 2 },
           }}
         >
-          <Typography variant="h6" sx={{ mb: 1.5 }}>
+          <Typography variant="h6" component="h2" id="category-nav-heading" sx={{ mb: 1.5 }}>
             {t('courses.categories')}
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <Box
+            component="ul"
+            sx={{ listStyle: 'none', m: 0, p: 0, display: 'flex', flexDirection: 'column', gap: 1 }}
+          >
             {sections.map((section) => {
               const active = activeId === section.id;
               return (
-                <Box
-                  key={section.id}
-                  component="a"
-                  href={`#category-${section.slug}`}
-                  sx={{
-                    position: 'relative',
-                    display: 'flex',
-                    alignItems: 'center',
-                    px: 1.5,
-                    py: 0.75,
-                    borderRadius: 1,
-                    border: '1.5px solid',
-                    borderColor: active ? 'primary.main' : 'divider',
-                    color: active ? 'primary.main' : 'text.primary',
-                    fontWeight: active ? 600 : 400,
-                    fontSize: '0.875rem',
-                    textDecoration: 'none',
-                    transition: 'border-color 0.15s, color 0.15s',
-                    '&:hover': {
-                      borderColor: 'primary.main',
-                      color: 'primary.main',
-                    },
-                  }}
-                >
-                  {section.name}
+                <Box component="li" key={section.id}>
                   <Box
+                    component="a"
+                    href={`#category-${section.slug}`}
+                    aria-current={active ? 'true' : undefined}
                     sx={{
-                      position: 'absolute',
-                      right: 0,
-                      top: '50%',
-                      transform: 'translate(1.5px, -50%)',
-                      width: 0,
-                      height: 0,
-                      borderTop: '9px solid transparent',
-                      borderBottom: '9px solid transparent',
-                      borderRight: '12px solid',
-                      borderRightColor: active ? 'primary.main' : 'transparent',
-                      transition: 'border-right-color 0.15s',
+                      position: 'relative',
+                      display: 'flex',
+                      alignItems: 'center',
+                      px: 1.5,
+                      py: 0.75,
+                      borderRadius: 1,
+                      border: '1.5px solid',
+                      borderColor: active ? 'primary.main' : 'divider',
+                      color: active ? 'primary.main' : 'text.primary',
+                      fontWeight: active ? 600 : 400,
+                      fontSize: '0.875rem',
+                      textDecoration: 'none',
+                      transition: 'border-color 0.15s, color 0.15s',
+                      '&:hover': {
+                        borderColor: 'primary.main',
+                        color: 'primary.main',
+                      },
+                      '&:focus-visible': {
+                        outline: '3px solid',
+                        outlineColor: 'primary.main',
+                        outlineOffset: 2,
+                      },
                     }}
-                  />
+                  >
+                    {section.name}
+                    <Box
+                      sx={{
+                        position: 'absolute',
+                        right: 0,
+                        top: '50%',
+                        transform: 'translate(1.5px, -50%)',
+                        width: 0,
+                        height: 0,
+                        borderTop: '9px solid transparent',
+                        borderBottom: '9px solid transparent',
+                        borderRight: '12px solid',
+                        borderRightColor: active ? 'primary.main' : 'transparent',
+                        transition: 'border-right-color 0.15s',
+                      }}
+                    />
+                  </Box>
                 </Box>
               );
             })}
@@ -212,7 +226,7 @@ export function CoursesPage() {
         <Box sx={{ flex: 1, minWidth: 0 }}>
           {sections.map((section) => (
             <Box key={section.id} id={`category-${section.slug}`} sx={{ mb: 4, scrollMarginTop: 80 }}>
-              <Typography variant="h5" sx={{ mb: 1 }}>
+              <Typography variant="h5" component="h2" sx={{ mb: 1 }}>
                 {section.name}
               </Typography>
               <CourseList

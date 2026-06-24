@@ -29,6 +29,8 @@ import { CourseSearchBar } from '../features/search/components/CourseSearchBar';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
+import { StagingBanner } from '../app/components/StagingBanner';
+import { AnnouncementBanner } from '../app/components/AnnouncementBanner';
 
 type NavButtonProps = {
   to: string;
@@ -135,10 +137,16 @@ export function UserLayout() {
 
   const isAuthenticated = status === 'authenticated';
   const isAdmin = Boolean(user?.is_org_admin);
+  const loginRequired = orgConfig.features?.loginRequired === true;
 
-  const AUTH_EXEMPT_PATHS = new Set(['/login', '/signup', '/forgot-password', '/reset-password', '/accept-invitation', '/terms-of-use', '/privacy-policy']);
-  const isCmsPage = location.pathname.startsWith('/cms_pages/');
-  const shouldRedirectToLogin = orgConfig.features?.loginRequired === true && status === 'unauthenticated' && !AUTH_EXEMPT_PATHS.has(location.pathname) && !isCmsPage;
+  const isLessonContentPath = location.pathname.startsWith('/lessons/');
+  const shouldRedirectToLogin = loginRequired && status === 'unauthenticated' && isLessonContentPath;
+
+  const loginLabel = isAuthenticated
+    ? t('nav.account')
+    : loginRequired
+      ? t('nav.userLoginRequired')
+      : t('nav.userLogin');
 
   const { count: guestCount, clear: clearGuestProgress } = useGuestProgress();
   const showGuestBanner = status === 'unauthenticated' && guestCount > 0;
@@ -282,7 +290,7 @@ export function UserLayout() {
             {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
               <NavButton
                 to={isAuthenticated ? '/account' : '/login'}
-                label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
+                label={loginLabel}
                 icon={<AccountCircle />}
               />
             )}
@@ -297,7 +305,7 @@ export function UserLayout() {
                 to={isAuthenticated ? '/account' : '/login'}
                 variant="text"
                 color="inherit"
-                aria-label={isAuthenticated ? t('nav.account') : t('nav.userLogin')}
+                aria-label={loginLabel}
                 sx={{ minWidth: 0, p: 0.5 }}
               >
                 <AccountCircle />
@@ -331,6 +339,9 @@ export function UserLayout() {
           />
         </Box>
       </AppBar>
+
+      <StagingBanner />
+      <AnnouncementBanner />
 
       {showGuestBanner && (
         <Box

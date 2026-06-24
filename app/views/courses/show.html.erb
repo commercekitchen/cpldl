@@ -5,9 +5,9 @@
 <div class="course">
   <div class='course-info'>
     <div class="course-details text-color">
-      <div><i class="icon-pencil"></i><%= @course.lessons.count %> <%= t('course_page.lessons') %></div>
-      <div><i class="icon-clock"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
-      <div><i class="icon-plus"></i><%= t("course_page.#{@course.level.downcase}") %></div>
+      <div><i class="icon-pencil" aria-hidden="true"></i><%= @course.lessons.count %> <%= t('course_page.lessons') %></div>
+      <div><i class="icon-clock" aria-hidden="true"></i><%= @course.duration("#{t('course_page.minutes')}") %></div>
+      <div><i class="icon-plus" aria-hidden="true"></i><%= t("course_page.#{@course.level.downcase}") %></div>
     </div>
     <div><small><%= t('course_page.contributed_by') %> <%= @course.contributor %></small></div>
     <div><small><%= t('course_page.topics') %>: <%= @course.topics_str %></small></div>

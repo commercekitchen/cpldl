@@ -23,6 +23,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../auth/useAuth';
 import type { OrganizationConfig } from '../app/organization/types';
+import { StagingBanner } from '../app/components/StagingBanner';
 
 const DRAWER_WIDTH = 240;
 
@@ -117,6 +118,8 @@ export function AdminLayout() {
           </Box>
         </Toolbar>
       </AppBar>
+
+      <StagingBanner />
 
       <Box sx={{ display: 'flex', flex: 1 }}>
         <Drawer

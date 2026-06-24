@@ -82,7 +82,7 @@ export default function Signup() {
       >
         <Stack spacing={2.5}>
           <Box>
-            <Typography variant="h4" sx={{ mb: 0.75 }}>
+            <Typography variant="h4" component="h1" sx={{ mb: 0.75 }}>
               Create account
             </Typography>
             <Typography variant="body2" color="text.secondary">

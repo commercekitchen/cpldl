@@ -6,6 +6,7 @@
     "account": "Cuenta",
     "signIn": "Iniciar sesión",
     "userLogin": "Inicio de sesión (Opcional)",
+    "userLoginRequired": "Inicio de sesión",
     "adminDashboard": "Panel de administración",
     "openSearch": "Abrir búsqueda"
   },
