@@ -3,8 +3,32 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DigitalLearn</title>
   </head>
-  <body>
-    <%= yield %>
+  <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: sans-serif;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4;">
+      <tr>
+        <td align="center" style="padding: 24px 16px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width: 560px;">
+            <tr>
+              <td style="background-color: #0081a1; padding: 24px 32px; border-radius: 4px 4px 0 0;">
+                <p style="margin: 0; font-size: 22px; font-weight: bold; color: #ffffff; letter-spacing: 0.5px;">DigitalLearn</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="background-color: #ffffff; padding: 32px; color: #333333; font-size: 16px; line-height: 1.6; border-left: 1px solid #dddddd; border-right: 1px solid #dddddd;">
+                <%= yield %>
+              </td>
+            </tr>
+            <tr>
+              <td style="background-color: #f4f4f4; padding: 20px 32px; border-top: 1px solid #dddddd; color: #888888; font-size: 13px; line-height: 1.5;">
+                <p style="margin: 0 0 4px;">DigitalLearn.org &mdash; Free digital skills training for everyone.</p>
+                <p style="margin: 0;">American Library Association &bull; 225 N Michigan Ave, Suite 1300 &bull; Chicago, IL 60601</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
