@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(user)
     if session[:oauth_request].present?
       oauth_request = session.delete(:oauth_request)
+      # Devise's FailureApp stashes the same /oauth/authorize URL here when it bounced
+      # the unauthenticated user to the login page; left uncleared it hijacks the user's
+      # next unrelated login via stored_location_for in user_after_sign_in_path_for.
+      session.delete(:user_return_to)
 
       params = {
         response_type: 'code',
