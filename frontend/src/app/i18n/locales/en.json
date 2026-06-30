@@ -315,7 +315,7 @@
       "logoUploaded": "Footer logo uploaded successfully.",
       "logoUploadError": "Failed to upload logo. Please use a PNG or JPEG file.",
       "footerLogoLink": "Footer Logo Link URL",
-      "loginRequired": "Require login to access site",
+      "loginRequired": "Require login to access Course Content",
       "footerLinks": {
         "colLabel": "Label",
         "colUrl": "URL",

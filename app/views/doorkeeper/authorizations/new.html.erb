@@ -1,9 +1,9 @@
 <header class="page-header" role="banner" style="text-align: center;">
   <% case  current_organization.subdomain %>
   <% when "www" %>
-    <%= image_tag "dl_logo.png", alt: "DigitalLearn Logo" %>
+    <%= image_tag "dl_logo.png", alt: "DigitalLearn Logo", style: "max-height: 80px; width: auto;" %>
   <% else %>
-    <%= safe_image_tag "#{current_organization.subdomain}_logo_header", alt: "#{current_organization.name} Logo" %>
+    <%= safe_image_tag "#{current_organization.subdomain}_logo_header", alt: "#{current_organization.name} Logo", style: "max-height: 80px; width: auto;" %>
   <% end %>
 
   <h1 style="margin: 1rem;"><%= t('.title') %></h1>

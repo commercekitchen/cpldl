@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import Link from '@mui/material/Link';
 import { type FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { apiFetch } from '../app/api/apiFetch';
 import { useAuth } from '../auth/useAuth';
 
@@ -29,7 +29,7 @@ type AccountPayload = {
 };
 
 export default function Account() {
-  const { user, refresh, logout } = useAuth();
+  const { user, refresh, logout, status } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [profileSaving, setProfileSaving] = useState(false);
@@ -54,6 +54,8 @@ export default function Account() {
   };
 
   useEffect(() => {
+    if (status !== 'authenticated') return;
+
     const loadProfile = async () => {
       setLoading(true);
       setLoadError(null);
@@ -82,7 +84,7 @@ export default function Account() {
     };
 
     void loadProfile();
-  }, []);
+  }, [status]);
 
   const onSubmitProfile = async (e: FormEvent) => {
     e.preventDefault();
@@ -162,6 +164,8 @@ export default function Account() {
       setAccountSaving(false);
     }
   };
+
+  if (status === 'unauthenticated') return <Navigate to="/login" replace />;
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
