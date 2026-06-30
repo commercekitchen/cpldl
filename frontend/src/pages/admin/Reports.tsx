@@ -21,11 +21,6 @@ interface Report {
   title: string;
 }
 
-interface AnalyticsLink {
-  title: string;
-  url: string;
-}
-
 function defaultStartDate(): string {
   const d = new Date();
   d.setMonth(d.getMonth() - 1);
@@ -43,7 +38,7 @@ export default function AdminReports() {
   const { t } = useTranslation();
 
   const [reports, setReports] = useState<Report[]>([]);
-  const [analyticsLinks, setAnalyticsLinks] = useState<AnalyticsLink[]>([]);
+  const [analyticsDashboardUrl, setAnalyticsDashboardUrl] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -57,12 +52,12 @@ export default function AdminReports() {
     apiFetch('/api/v1/admin/reports')
       .then((res) => {
         if (!res.ok) throw new Error('Failed to load reports');
-        return res.json() as Promise<{ reports: Report[]; analyticsLinks: AnalyticsLink[] }>;
+        return res.json() as Promise<{ reports: Report[]; analyticsDashboardUrl: string | null }>;
       })
       .then((data) => {
         if (cancelled) return;
         setReports(data.reports);
-        setAnalyticsLinks(data.analyticsLinks ?? []);
+        setAnalyticsDashboardUrl(data.analyticsDashboardUrl ?? null);
         if (data.reports.length > 0) setSelectedReport(data.reports[0].key);
       })
       .catch(() => {
@@ -147,26 +142,18 @@ export default function AdminReports() {
             {t('admin.reportsPage.download')}
           </Button>
 
-          {analyticsLinks.length > 0 && (
+          {analyticsDashboardUrl && (
             <>
               <Divider />
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="subtitle1" fontWeight={600}>
-                  {t('admin.reportsPage.analyticsTitle')}
-                </Typography>
-                {analyticsLinks.map((link) => (
-                  <Link
-                    key={link.url}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}
-                  >
-                    {link.title}
-                    <OpenInNewIcon fontSize="inherit" />
-                  </Link>
-                ))}
-              </Box>
+              <Link
+                href={analyticsDashboardUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{ display: 'inline-flex', alignItems: 'center', gap: 0.5 }}
+              >
+                Analytics Dashboard
+                <OpenInNewIcon fontSize="inherit" />
+              </Link>
             </>
           )}
         </Box>

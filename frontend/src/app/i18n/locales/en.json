@@ -91,6 +91,11 @@
   },
   "admin": {
     "reports": "Reports",
+    "analytics": "Analytics",
+    "analyticsPage": {
+      "openDashboard": "Open Analytics Dashboard",
+      "notConfigured": "Your organization's analytics dashboard has not been set up yet."
+    },
     "courses": "Courses",
     "categories": "Categories",
     "users": "Users",
@@ -303,6 +308,7 @@
       "tabFooterLinks": "Footer Links",
       "tabSurvey": "Course Completion Survey",
       "tabBranches": "Branches",
+      "tabAnalytics": "Analytics",
       "headerLogo": "Header Logo",
       "uploadHeaderLogo": "Upload Header Logo",
       "replaceHeaderLogo": "Replace Header Logo",

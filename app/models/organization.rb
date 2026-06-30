@@ -31,6 +31,7 @@ class Organization < ApplicationRecord
     home_subheader_en            String
     home_header_es               String
     home_subheader_es            String
+    looker_studio_dashboard_url  String
   end
 
   store_accessor :theme_data,
