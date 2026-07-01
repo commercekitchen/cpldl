@@ -35,7 +35,7 @@ module Api
       end
 
       def sign_up_allowed?
-        !current_organization.main_site? && !current_organization.phone_number_users_enabled
+        !current_organization.phone_number_users_enabled
       end
     end
   end
