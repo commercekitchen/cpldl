@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   # Admin SPA routes — these must come before the `namespace :admin` block.
   constraints SpaConstraint.new do
     get '/admin', to: 'spa#index'
+    get '/admin/dashboard', to: 'spa#index'
     get '/admin/reports', to: 'spa#index'
     get '/admin/courses', to: 'spa#index'
     get '/admin/courses/new', to: 'spa#index'

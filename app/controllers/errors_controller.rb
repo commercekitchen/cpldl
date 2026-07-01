@@ -3,9 +3,14 @@
 class ErrorsController < ApplicationController
   def error404
     skip_authorization
-    respond_to do |format|
-      format.html { render 'errors/error404', status: :not_found }
-      format.any  { head :not_found }
+    skip_policy_scope
+    if current_organization.use_spa?
+      render 'spa/index', layout: 'spa', status: :not_found
+    else
+      respond_to do |format|
+        format.html { render 'errors/error404', status: :not_found }
+        format.any  { head :not_found }
+      end
     end
   end
 
