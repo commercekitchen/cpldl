@@ -140,7 +140,8 @@ export function UserLayout() {
   const loginRequired = orgConfig.features?.loginRequired === true;
 
   const isLessonContentPath = location.pathname.startsWith('/lessons/');
-  const shouldRedirectToLogin = loginRequired && status === 'unauthenticated' && isLessonContentPath;
+  const shouldRedirectToLogin =
+    loginRequired && status === 'unauthenticated' && isLessonContentPath;
 
   const loginLabel = isAuthenticated
     ? t('nav.account')
@@ -230,7 +231,11 @@ export function UserLayout() {
             )}
           </Box>
 
-          <Box component="nav" aria-label={t('a11y.mainNav')} sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}>
+          <Box
+            component="nav"
+            aria-label={t('a11y.mainNav')}
+            sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', gap: 2 }}
+          >
             {searchActive ? (
               <Box sx={{ width: { xs: 220, sm: 320, md: 420 } }} onBlur={handleSearchBlur}>
                 <CourseSearchBar
@@ -564,17 +569,19 @@ export function UserLayout() {
               {t('footer.linksComingSoon')}
             </Typography>
           )}
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
-            <MuiLink
-              component={NavLink}
-              to="/login"
-              variant="body2"
-              color="text.secondary"
-              underline="hover"
-            >
-              Admin Login
-            </MuiLink>
-          </Box>
+          {!isAuthenticated && (
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+              <MuiLink
+                component={NavLink}
+                to="/login"
+                variant="body2"
+                color="text.secondary"
+                underline="hover"
+              >
+                Sign In
+              </MuiLink>
+            </Box>
+          )}
         </Box>
       </Box>
 

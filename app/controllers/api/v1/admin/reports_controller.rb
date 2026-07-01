@@ -8,7 +8,7 @@ module Api
 
         def index
           skip_authorization
-          render json: { reports: available_reports, analyticsLinks: analytics_links }
+          render json: { reports: available_reports, analyticsDashboardUrl: current_organization.looker_studio_dashboard_url }
         end
 
         private
@@ -17,21 +17,6 @@ module Api
           unless current_user&.admin?
             render status: :forbidden, json: { message: 'You are not authorized to perform this action.' }
           end
-        end
-
-        def analytics_links
-          links = []
-          subdomain = current_organization.subdomain
-
-          if I18n.exists?("google_analytics_url.#{subdomain}")
-            links << { title: 'Google Analytics Dashboard', url: I18n.t("google_analytics_url.#{subdomain}") }
-          end
-
-          if I18n.exists?("google_studio_url.#{subdomain}")
-            links << { title: 'Google Analytics Report', url: I18n.t("google_studio_url.#{subdomain}") }
-          end
-
-          links
         end
 
         def available_reports
