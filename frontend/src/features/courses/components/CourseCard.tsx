@@ -11,6 +11,7 @@ import { CourseCategoryPill } from './CourseCategoryPill';
 import { CourseCompletedBadge } from './CourseCompletedBadge';
 import { CourseStats } from './CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
+import { pushGaEvent } from '../../../app/analytics';
 import attLogo from '../../../assets/att_logo.svg';
 
 type Props = {
@@ -54,7 +55,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
               color="inherit"
               startIcon={<PlayArrow />}
               onClick={() => {
-                window.gtag?.('event', 'user_open_course', {
+                pushGaEvent('user_open_course', {
                   course_id: course.id,
                   course_name: course.title,
                 });
@@ -107,7 +108,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
             color="primary"
             size="small"
             onClick={() => {
-              window.gtag?.('event', 'user_open_course', {
+              pushGaEvent('user_open_course', {
                 course_id: course.id,
                 course_name: course.title,
               });

@@ -15,6 +15,7 @@ import type { Lesson } from '../types';
 import { useLessonQuery } from '../queries/lessonQuery';
 import { useAuth } from '../../../auth/useAuth';
 import { markGuestLessonComplete } from '../../progress/guestProgress';
+import { pushGaEvent } from '../../../app/analytics';
 
 function buildLessonTitle(lesson: Lesson) {
   return lesson.seoPageTitle?.trim() || lesson.title.trim() || 'Lesson';
@@ -73,7 +74,7 @@ export function LessonPlayerPage() {
 
   useEffect(() => {
     if (!lesson || storylineStatus !== 'ready') return;
-    window.gtag?.('event', 'lesson_progress', {
+    pushGaEvent('lesson_progress', {
       lesson_id: lesson.id,
       lesson_name: lesson.title,
       course_id: lesson.courseId ?? undefined,
@@ -90,7 +91,7 @@ export function LessonPlayerPage() {
         courseId: lesson.courseId,
       });
 
-      window.gtag?.('event', 'lesson_completed', {
+      pushGaEvent('lesson_completed', {
         lesson_id: lesson.id,
         lesson_name: lesson.title,
         course_id: lesson.courseId ?? undefined,

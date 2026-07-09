@@ -18,6 +18,7 @@ import { previewImageForRecord } from '../../../app/images/previewImages';
 import DOMPurify from 'dompurify';
 import type { OrganizationConfig } from '../../../app/organization/types';
 import { useAuth } from '../../../auth/useAuth';
+import { pushGaEvent } from '../../../app/analytics';
 
 
 function buildCourseTitle(course: Course) {
@@ -53,7 +54,7 @@ export function CoursePage() {
     // Old-UI subsites never push this, so the GTM trigger continues to work for them unchanged.
     window.dataLayer?.push({ course_progress_js_handled: true });
     if (!course.completed) {
-      window.gtag?.('event', 'course_progress', {
+      pushGaEvent('course_progress', {
         course_id: course.id,
         course_name: course.title,
         lessons_completed: course.lessonsCompletedCount ?? 0,
