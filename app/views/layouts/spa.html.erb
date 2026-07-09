@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="<%= I18n.locale.to_s %>">
   <head>
+    <%= render "shared/layout/analytics" %>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title><%= current_organization.subdomain == "www" ? "DigitalLearn" : "#{current_organization.name} - DigitalLearn" %></title>
@@ -11,6 +12,7 @@
     <%= vite_spa_tags %>
   </head>
   <body>
+    <%= render "shared/layout/gtm_noscript" %>
     <div id="root"></div>
   </body>
 </html>

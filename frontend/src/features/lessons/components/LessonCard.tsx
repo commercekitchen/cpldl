@@ -10,6 +10,7 @@ import type { Lesson } from '../types';
 import { PlayArrow, Replay, Schedule, Speed } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { previewImageForRecord } from '../../../app/images/previewImages';
+import { pushGaEvent } from '../../../app/analytics';
 import { CourseCompletedBadge } from '../../courses/components/CourseCompletedBadge';
 
 type Props = {
@@ -58,7 +59,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
               color="inherit"
               startIcon={lesson.completed ? <Replay /> : <PlayArrow />}
               onClick={() => {
-                window.gtag?.('event', 'lesson_start', {
+                pushGaEvent('lesson_start', {
                   lesson_id: lesson.id,
                   lesson_name: lesson.title,
                   course_id: lesson.courseId,

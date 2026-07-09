@@ -1,6 +1,7 @@
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import DownloadIcon from '@mui/icons-material/Download';
+import { pushGaEvent } from '../../../app/analytics';
 
 type Props = {
   fileName: string;
@@ -35,7 +36,7 @@ export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
       rel="noopener noreferrer"
       aria-label={`${action} ${fileName} (opens in new tab)`}
       {...(!openable && { download: true })}
-      onClick={() => window.gtag?.('event', 'material_downloaded', { file_name: fileName })}
+      onClick={() => pushGaEvent('material_downloaded', { file_name: fileName })}
       variant="elevation"
       sx={{
         display: 'flex',
