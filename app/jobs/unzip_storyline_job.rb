@@ -159,6 +159,8 @@ class UnzipStorylineJob < ApplicationJob
 
   # Prevent zip-slip (../../etc/passwd) and normalize odd paths.
   def sanitize_zip_entry_path!(entry_name)
+    entry_name = normalize_zip_entry_encoding(entry_name)
+
     # Zip can include backslashes; normalize to forward slash.
     normalized = entry_name.tr("\\", "/")
 
@@ -180,6 +182,23 @@ class UnzipStorylineJob < ApplicationJob
     raise InvalidStorylineError, "Invalid zip entry path: #{entry_name.inspect}" if safe.blank?
 
     safe
+  end
+
+  # rubyzip returns entry names as raw bytes tagged ASCII-8BIT whenever the
+  # archive doesn't set the zip "language encoding flag" (EFS bit) — common
+  # with zips built by older/Windows tools — even though the bytes are
+  # actually a valid text encoding. The AWS SDK later calls String#encode on
+  # the S3 key and raises Encoding::UndefinedConversionError if it's still
+  # tagged ASCII-8BIT, so we have to re-tag/transcode it to UTF-8 up front.
+  def normalize_zip_entry_encoding(name)
+    utf8_name = name.dup.force_encoding(Encoding::UTF_8)
+    return utf8_name if utf8_name.valid_encoding?
+
+    name.dup.force_encoding(Encoding::Windows_1252).encode(Encoding::UTF_8)
+  rescue Encoding::UndefinedConversionError, Encoding::InvalidByteSequenceError
+    name.dup.force_encoding(Encoding::ASCII_8BIT).encode(
+      Encoding::UTF_8, invalid: :replace, undef: :replace, replace: "_"
+    )
   end
 
   def skip_entry?(name)
