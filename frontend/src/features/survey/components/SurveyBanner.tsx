@@ -7,12 +7,13 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../../auth/useAuth';
 import { dismissSurvey } from '../api/surveyApi';
+import { getSurveyPath } from '../surveyNavigation';
 import type { OrganizationConfig } from '../../../app/organization/types';
 
 export function SurveyBanner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { refresh } = useAuth();
+  const { user, refresh } = useAuth();
   const [dismissing, setDismissing] = useState(false);
 
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
@@ -50,7 +51,7 @@ export function SurveyBanner() {
         {t('survey.banner.description')}
       </Typography>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
-        <Button variant="contained" size="large" onClick={() => navigate('/survey')}>
+        <Button variant="contained" size="large" onClick={() => navigate(getSurveyPath(user))}>
           {t('survey.banner.cta')}
         </Button>
         {!surveyRequired && (

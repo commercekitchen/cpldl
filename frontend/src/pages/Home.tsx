@@ -11,6 +11,7 @@ import type { OrganizationConfig } from '../app/organization/types';
 import { CourseListContainer } from '../features/courses/components/CourseListContainer';
 import { LessonListContainer } from '../features/lessons/components/LessonListContainer';
 import { SurveyBanner } from '../features/survey/components/SurveyBanner';
+import { getSurveyPath } from '../features/survey/surveyNavigation';
 import { useAuth } from '../auth/useAuth';
 import { useLocale } from '../app/locale/LocaleContext';
 import { usePageMetadata } from '../app/metadata/usePageMetadata';
@@ -75,7 +76,7 @@ export default function Home() {
             title={t('home.coursesForYou')}
             params={{ scope: 'tracked' }}
             headerAction={
-              <Button variant="outlined" size="small" onClick={() => navigate('/survey')}>
+              <Button variant="outlined" size="small" onClick={() => navigate(getSurveyPath(user))}>
                 {t('survey.retake')}
               </Button>
             }

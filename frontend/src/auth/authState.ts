@@ -11,6 +11,7 @@ export type User = {
   organization_subdomain?: string;
   surveyCompleted?: boolean;
   optOutOfRecommendations?: boolean;
+  profileValid?: boolean;
 };
 
 export type AuthContextValue = {

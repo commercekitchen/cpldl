@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,12 +15,16 @@ import type { Survey, SurveyResponses } from '../features/survey/types';
 function CourseRecommendationSurveyInner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { refresh } = useAuth();
+  const { user, refresh } = useAuth();
   const [survey, setSurvey] = useState<Survey | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const profileValid = user?.profileValid !== false;
+
   useEffect(() => {
+    if (!profileValid) return;
+
     const controller = new AbortController();
     fetchSurvey({ signal: controller.signal })
       .then(setSurvey)
@@ -33,7 +37,7 @@ function CourseRecommendationSurveyInner() {
         if (!controller.signal.aborted) setLoading(false);
       });
     return () => controller.abort();
-  }, [t]);
+  }, [t, profileValid]);
 
   const handleSubmit = async (responses: SurveyResponses) => {
     await submitSurvey(responses);
@@ -42,6 +46,10 @@ function CourseRecommendationSurveyInner() {
   };
 
   const handleSkip = () => navigate('/');
+
+  if (!profileValid) {
+    return <Navigate to="/account" replace />;
+  }
 
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>

@@ -16,6 +16,13 @@ module Api
       # Accepts { desktop_level:, mobile_level:, topic: }, runs the recommendation
       # service, and persists quiz responses if the user hasn't answered before.
       def create
+        unless current_user.profile.present? && current_user.profile.valid?
+          return render status: :unprocessable_entity, json: {
+            error: 'invalid_profile',
+            message: 'You must complete your profile before submitting the survey.'
+          }
+        end
+
         current_user.update!(quiz_responses_object: quiz_params.to_h) if current_user.quiz_responses_object.blank?
         CourseRecommendationService.new(current_organization.id, quiz_params).add_recommended_courses(current_user.id)
         render json: { ok: true }
