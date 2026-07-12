@@ -63,6 +63,11 @@ class UnzipStorylineJob < ApplicationJob
     root_path = lesson.storyline_root_path
     raise InvalidStorylineError, "Missing storyline_root_path for Lesson #{lesson.id}" if root_path.blank?
 
+    # storyline_root_path is also used as a URL path (leading slash required there);
+    # S3 keys should not start with "/", or they end up stored under a hidden
+    # empty-name prefix instead of the "storylines/..." path everything else expects.
+    root_path = root_path.sub(%r{\A/+}, "")
+
     bucket = Rails.configuration.unzipped_lessons_bucket
     s3     = Aws::S3::Client.new
 
