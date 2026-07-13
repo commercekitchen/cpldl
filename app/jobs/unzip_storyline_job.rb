@@ -32,7 +32,8 @@ class UnzipStorylineJob < ApplicationJob
   # archive otherwise looks fine. Opt-in only (normalize_known_dirs:) so it
   # never changes behavior for ordinary uploads — see lib/tasks/storyline.rake.
   KNOWN_STORYLINE_DIR_NAMES = %w[
-    story_content html5 mobile lms data css js lib scripts styles downloads external_files meta assets
+    story_content html5 mobile lms data css js lib scripts styles stylesheets
+    mobile-fonts downloads external_files meta assets
   ].freeze
 
   def perform(lesson_id, purge_destination: true, refuse_child_lessons: true, normalize_known_dirs: false)
