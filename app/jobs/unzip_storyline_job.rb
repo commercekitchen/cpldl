@@ -86,11 +86,13 @@ class UnzipStorylineJob < ApplicationJob
         tmp.rewind
 
         Zip::File.open(tmp.path) do |zip|
+          wrapping_dir = common_wrapping_dir(zip)
+
           zip.each do |entry|
             next if entry.name_is_directory?
             next if skip_entry?(entry.name)
 
-            safe_rel_path = sanitize_zip_entry_path!(entry.name)
+            safe_rel_path = sanitize_zip_entry_path!(entry.name, strip_leading_dir: wrapping_dir)
             key = "#{root_path}/#{safe_rel_path}"
 
             build_body_content_type_and_length(entry) do |io, content_type, length|
@@ -163,14 +165,19 @@ class UnzipStorylineJob < ApplicationJob
   end
 
   # Prevent zip-slip (../../etc/passwd) and normalize odd paths.
-  def sanitize_zip_entry_path!(entry_name)
-    entry_name = normalize_zip_entry_encoding(entry_name)
+  def sanitize_zip_entry_path!(entry_name, strip_leading_dir: nil)
+    parts = resolve_zip_entry_parts(entry_name)
+    parts = parts[1..] if strip_leading_dir && parts.first == strip_leading_dir
 
-    # Zip can include backslashes; normalize to forward slash.
-    normalized = entry_name.tr("\\", "/")
+    safe = parts.join("/")
+    raise InvalidStorylineError, "Invalid zip entry path: #{entry_name.inspect}" if safe.blank?
 
-    # Remove leading slashes
-    normalized = normalized.sub(%r{\A/+}, "")
+    safe
+  end
+
+  def resolve_zip_entry_parts(entry_name)
+    # Zip can include backslashes; normalize to forward slash, and strip leading slashes.
+    normalized = normalize_zip_entry_encoding(entry_name).tr("\\", "/").sub(%r{\A/+}, "")
 
     # Resolve ./ and ../
     parts = []
@@ -183,10 +190,25 @@ class UnzipStorylineJob < ApplicationJob
       end
     end
 
-    safe = parts.join("/")
-    raise InvalidStorylineError, "Invalid zip entry path: #{entry_name.inspect}" if safe.blank?
+    parts
+  end
 
-    safe
+  # Some Storyline exports zip the *folder* rather than its contents, so every
+  # entry is nested under a single top-level directory (often matching the
+  # archive's own filename, which we already use to build root_path). Detect
+  # that shared wrapping folder so we can strip it and avoid doubling it up
+  # in the S3 key, e.g. ".../<dir>/<dir>/story.html" instead of ".../<dir>/story.html".
+  def common_wrapping_dir(zip)
+    entries = zip.entries.reject { |e| e.name_is_directory? || skip_entry?(e.name) }
+    return nil if entries.empty?
+
+    segments = entries.map { |e| resolve_zip_entry_parts(e.name) }
+    return nil if segments.any? { |parts| parts.size <= 1 }
+
+    top_level_dirs = segments.map(&:first).uniq
+    return nil unless top_level_dirs.size == 1
+
+    top_level_dirs.first
   end
 
   # rubyzip returns entry names as raw bytes tagged ASCII-8BIT whenever the
