@@ -26,7 +26,16 @@ class UnzipStorylineJob < ApplicationJob
   discard_on ActiveRecord::RecordNotFound
   discard_on UnzipStorylineJob::InvalidStorylineError
 
-  def perform(lesson_id, purge_destination: true, refuse_child_lessons: true)
+  # Fixed, well-known directory names in Articulate Storyline's HTML5 publish
+  # output. Some archives arrive with these re-cased (e.g. by a translation
+  # vendor's tooling), which breaks on case-sensitive S3 even though the
+  # archive otherwise looks fine. Opt-in only (normalize_known_dirs:) so it
+  # never changes behavior for ordinary uploads — see lib/tasks/storyline.rake.
+  KNOWN_STORYLINE_DIR_NAMES = %w[
+    story_content html5 mobile lms data css js lib scripts styles downloads external_files meta assets
+  ].freeze
+
+  def perform(lesson_id, purge_destination: true, refuse_child_lessons: true, normalize_known_dirs: false)
     Rails.logger.info(
       "UnzipStorylineJob started for Lesson #{lesson_id}, purge_destination=#{purge_destination}, refuse_child_lessons=#{refuse_child_lessons}"
     )
@@ -35,7 +44,12 @@ class UnzipStorylineJob < ApplicationJob
     mark_processing!(lesson)
 
     begin
-      unzip!(lesson, purge_destination: purge_destination, refuse_child_lessons: refuse_child_lessons)
+      unzip!(
+        lesson,
+        purge_destination: purge_destination,
+        refuse_child_lessons: refuse_child_lessons,
+        normalize_known_dirs: normalize_known_dirs
+      )
       mark_complete!(lesson)
       clear_unzip_error!(lesson)
     rescue InvalidStorylineError => e
@@ -49,7 +63,7 @@ class UnzipStorylineJob < ApplicationJob
 
   private
 
-  def unzip!(lesson, purge_destination:, refuse_child_lessons:)
+  def unzip!(lesson, purge_destination:, refuse_child_lessons:, normalize_known_dirs: false)
     if refuse_child_lessons && lesson.parent_id.present?
       raise InvalidStorylineError, "Refusing to unzip storyline for child lesson #{lesson.id} (parent #{lesson.parent_id})"
     end
@@ -92,7 +106,9 @@ class UnzipStorylineJob < ApplicationJob
             next if entry.name_is_directory?
             next if skip_entry?(entry.name)
 
-            safe_rel_path = sanitize_zip_entry_path!(entry.name, strip_leading_dir: wrapping_dir)
+            safe_rel_path = sanitize_zip_entry_path!(
+              entry.name, strip_leading_dir: wrapping_dir, normalize_known_dirs: normalize_known_dirs
+            )
             key = "#{root_path}/#{safe_rel_path}"
 
             build_body_content_type_and_length(entry) do |io, content_type, length|
@@ -165,14 +181,28 @@ class UnzipStorylineJob < ApplicationJob
   end
 
   # Prevent zip-slip (../../etc/passwd) and normalize odd paths.
-  def sanitize_zip_entry_path!(entry_name, strip_leading_dir: nil)
+  def sanitize_zip_entry_path!(entry_name, strip_leading_dir: nil, normalize_known_dirs: false)
     parts = resolve_zip_entry_parts(entry_name)
     parts = parts[1..] if strip_leading_dir && parts.first == strip_leading_dir
+    parts = normalize_known_dir_casing(parts) if normalize_known_dirs
 
     safe = parts.join("/")
     raise InvalidStorylineError, "Invalid zip entry path: #{entry_name.inspect}" if safe.blank?
 
     safe
+  end
+
+  # Re-cases directory segments that match a known, fixed Storyline output
+  # folder name (case-insensitively) to their canonical lowercase spelling.
+  # Only touches directory segments, never the filename itself, and leaves
+  # any segment that isn't in the known list untouched (it's presumably a
+  # real, content-specific folder whose casing we shouldn't guess at).
+  def normalize_known_dir_casing(parts)
+    return parts if parts.size <= 1
+
+    *dirs, filename = parts
+    dirs = dirs.map { |dir| KNOWN_STORYLINE_DIR_NAMES.include?(dir.downcase) ? dir.downcase : dir }
+    dirs + [filename]
   end
 
   def resolve_zip_entry_parts(entry_name)
