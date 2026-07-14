@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useRouteLoaderData } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -10,11 +10,16 @@ import { ArrowBack, CheckCircle, Search } from '@mui/icons-material';
 import { useCourseQuery } from '../queries/courseQuery';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseStats } from '../components/CourseStats';
+import type { OrganizationConfig } from '../../../app/organization/types';
 
 export function CourseCompletedPage() {
   const { courseId = '' } = useParams();
   const navigate = useNavigate();
   const { data: course, isLoading } = useCourseQuery(courseId);
+
+  const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
+  const surveyUrl = course?.surveyUrl || rootData?.orgConfig.features.userSurveyUrl;
+  const surveyButtonText = rootData?.orgConfig.features.userSurveyButtonText;
 
   if (isLoading) return <CircularProgress />;
 
@@ -41,6 +46,20 @@ export function CourseCompletedPage() {
         </Typography>
         {course?.categoryName && (
           <CourseCategoryPill label={course.categoryName.trim()} variant="outlined" />
+        )}
+        {surveyUrl && (
+          <Box sx={{ mt: 3 }}>
+            <Button
+              component="a"
+              href={surveyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="contained"
+              color="secondary"
+            >
+              {surveyButtonText}
+            </Button>
+          </Box>
         )}
       </Box>
 

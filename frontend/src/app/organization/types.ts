@@ -44,6 +44,8 @@ export type OrganizationConfig = {
     userSurveyEnabled?: string;
     userSurveyLink?: string;
     spanishSurveyLink?: string;
+    userSurveyUrl?: string;
+    userSurveyButtonText?: string;
     phoneNumberSignIn: boolean;
     signUpAllowed?: boolean;
     surveyRequired: boolean;
