@@ -172,7 +172,9 @@ export function UserLayout() {
   return (
     <Box
       sx={{
-        minHeight: '100vh',
+        height: isLessonContentPath ? '100vh' : undefined,
+        minHeight: isLessonContentPath ? undefined : '100vh',
+        overflow: isLessonContentPath ? 'hidden' : undefined,
         display: 'flex',
         flexDirection: 'column',
         pb: { xs: '88px', md: 0 },
@@ -345,10 +347,14 @@ export function UserLayout() {
         </Box>
       </AppBar>
 
-      <StagingBanner />
-      <AnnouncementBanner />
+      {!isLessonContentPath && (
+        <>
+          <StagingBanner />
+          <AnnouncementBanner />
+        </>
+      )}
 
-      {showGuestBanner && (
+      {!isLessonContentPath && showGuestBanner && (
         <Box
           sx={{
             bgcolor: 'secondary.main',
@@ -407,183 +413,195 @@ export function UserLayout() {
       )}
 
       <ScrollRestoration />
-      <Box component="main" id="main-content" sx={{ flex: 1 }}>
+      <Box
+        component="main"
+        id="main-content"
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflow: isLessonContentPath ? 'hidden' : undefined,
+        }}
+      >
         <Outlet />
       </Box>
 
-      <Box
-        component="footer"
-        sx={{
-          width: '100%',
-          borderRadius: 0,
-          py: 4,
-          px: 2,
-          textAlign: 'center',
-          background: (theme) =>
-            `linear-gradient(135deg, ${theme.palette.secondary.main} 0%, ${theme.palette.primary.main} 100%)`,
-          color: '#fff',
-        }}
-      >
-        <Typography variant="body1" sx={{ mb: 2 }}>
-          <MuiLink
-            href="https://opensource.org/license/mit"
-            target="_blank"
-            rel="noopener noreferrer"
-            color="inherit"
-            underline="always"
-          >
-            Platform License: MIT
-          </MuiLink>
-          {' | '}
-          <MuiLink
-            href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
-            target="_blank"
-            rel="noopener noreferrer"
-            color="inherit"
-            underline="always"
-          >
-            Content License: CC BY-NC-SA 4.0
-          </MuiLink>
-        </Typography>
-        <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }}>
-          <MuiLink component={NavLink} to="/terms-of-use" color="inherit" underline="always">
-            {t('footer.termsOfUse')}
-          </MuiLink>
-          <MuiLink component={NavLink} to="/privacy-policy" color="inherit" underline="always">
-            {t('footer.privacyPolicy')}
-          </MuiLink>
-        </Box>
-
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 3,
-            flexWrap: 'wrap',
-          }}
-        >
-          {orgConfig.theme.footerLogoUrl ? (
-            orgConfig.theme.footerLogoDestinationUrl ? (
-              <MuiLink
-                href={orgConfig.theme.footerLogoDestinationUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                underline="none"
-                sx={{ display: 'inline-flex' }}
-              >
-                <Box
-                  component="img"
-                  src={orgConfig.theme.footerLogoUrl}
-                  alt={`${orgConfig.displayName} footer logo`}
-                  sx={{ maxHeight: 56, width: 'auto' }}
-                />
-              </MuiLink>
-            ) : (
-              <Box
-                component="img"
-                src={orgConfig.theme.footerLogoUrl}
-                alt={`${orgConfig.displayName} footer logo`}
-                sx={{ maxHeight: 56, width: 'auto' }}
-              />
-            )
-          ) : null}
-
-          {orgConfig.theme.plaFooterLogoUrl ? (
-            <MuiLink
-              href={orgConfig.theme.plaFooterLogoDestinationUrl || 'http://www.ala.org/pla/'}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="none"
-              sx={{ display: 'inline-flex' }}
-            >
-              <Box
-                component="img"
-                src={orgConfig.theme.plaFooterLogoUrl}
-                alt="Public Library Association Logo"
-                sx={{ maxHeight: 56, width: 'auto' }}
-              />
-            </MuiLink>
-          ) : (
-            <Box
-              component="img"
-              src="/assets/pla_logo_footer.png"
-              alt="Public Library Association Logo"
-              sx={{ maxHeight: 56, width: 'auto' }}
-            />
-          )}
-        </Box>
-      </Box>
-
-      <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
-        <Box
-          sx={{
-            p: 2,
-          }}
-        >
+      {!isLessonContentPath && (
+        <>
           <Box
+            component="footer"
             sx={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              mb: 1.5,
+              width: '100%',
+              borderRadius: 0,
+              py: 4,
+              px: 2,
+              textAlign: 'center',
+              background: (theme) =>
+                `linear-gradient(135deg, ${theme.palette.secondary.main} 0%, ${theme.palette.primary.main} 100%)`,
+              color: '#fff',
             }}
           >
-            <Typography component="h3" variant="h6">
-              {t('footer.learnMore')}
-            </Typography>
-            {orgConfig.trainingSiteLink && (
+            <Typography variant="body1" sx={{ mb: 2 }}>
               <MuiLink
-                href={orgConfig.trainingSiteLink}
+                href="https://opensource.org/license/mit"
                 target="_blank"
                 rel="noopener noreferrer"
-                variant="body2"
-                underline="hover"
+                color="inherit"
+                underline="always"
               >
-                {t('footer.trainerResources')}
+                Platform License: MIT
               </MuiLink>
-            )}
-          </Box>
-          {footerLinks.length > 0 ? (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
-              {footerLinks.map((link) => (
-                <Box key={`${link.title}-${link.url}`}>
-                  {link.isInternal ? (
-                    <MuiLink component={NavLink} to={link.url}>
-                      {link.title}
-                    </MuiLink>
-                  ) : (
-                    <MuiLink
-                      href={link.url}
-                      target={link.openInNewTab ? '_blank' : undefined}
-                      rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
-                    >
-                      {link.title}
-                    </MuiLink>
-                  )}
-                </Box>
-              ))}
-            </Box>
-          ) : (
-            <Typography variant="body2" color="text.secondary">
-              {t('footer.linksComingSoon')}
-            </Typography>
-          )}
-          {!isAuthenticated && (
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+              {' | '}
               <MuiLink
-                component={NavLink}
-                to="/login"
-                variant="body2"
-                color="text.secondary"
-                underline="hover"
+                href="https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode"
+                target="_blank"
+                rel="noopener noreferrer"
+                color="inherit"
+                underline="always"
               >
-                Sign In
+                Content License: CC BY-NC-SA 4.0
+              </MuiLink>
+            </Typography>
+            <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', mb: 2 }}>
+              <MuiLink component={NavLink} to="/terms-of-use" color="inherit" underline="always">
+                {t('footer.termsOfUse')}
+              </MuiLink>
+              <MuiLink component={NavLink} to="/privacy-policy" color="inherit" underline="always">
+                {t('footer.privacyPolicy')}
               </MuiLink>
             </Box>
-          )}
-        </Box>
-      </Box>
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 3,
+                flexWrap: 'wrap',
+              }}
+            >
+              {orgConfig.theme.footerLogoUrl ? (
+                orgConfig.theme.footerLogoDestinationUrl ? (
+                  <MuiLink
+                    href={orgConfig.theme.footerLogoDestinationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    underline="none"
+                    sx={{ display: 'inline-flex' }}
+                  >
+                    <Box
+                      component="img"
+                      src={orgConfig.theme.footerLogoUrl}
+                      alt={`${orgConfig.displayName} footer logo`}
+                      sx={{ maxHeight: 56, width: 'auto' }}
+                    />
+                  </MuiLink>
+                ) : (
+                  <Box
+                    component="img"
+                    src={orgConfig.theme.footerLogoUrl}
+                    alt={`${orgConfig.displayName} footer logo`}
+                    sx={{ maxHeight: 56, width: 'auto' }}
+                  />
+                )
+              ) : null}
+
+              {orgConfig.theme.plaFooterLogoUrl ? (
+                <MuiLink
+                  href={orgConfig.theme.plaFooterLogoDestinationUrl || 'http://www.ala.org/pla/'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  underline="none"
+                  sx={{ display: 'inline-flex' }}
+                >
+                  <Box
+                    component="img"
+                    src={orgConfig.theme.plaFooterLogoUrl}
+                    alt="Public Library Association Logo"
+                    sx={{ maxHeight: 56, width: 'auto' }}
+                  />
+                </MuiLink>
+              ) : (
+                <Box
+                  component="img"
+                  src="/assets/pla_logo_footer.png"
+                  alt="Public Library Association Logo"
+                  sx={{ maxHeight: 56, width: 'auto' }}
+                />
+              )}
+            </Box>
+          </Box>
+
+          <Box sx={{ p: 1, backgroundColor: (theme) => theme.palette.background.default }}>
+            <Box
+              sx={{
+                p: 2,
+              }}
+            >
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  mb: 1.5,
+                }}
+              >
+                <Typography component="h3" variant="h6">
+                  {t('footer.learnMore')}
+                </Typography>
+                {orgConfig.trainingSiteLink && (
+                  <MuiLink
+                    href={orgConfig.trainingSiteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="body2"
+                    underline="hover"
+                  >
+                    {t('footer.trainerResources')}
+                  </MuiLink>
+                )}
+              </Box>
+              {footerLinks.length > 0 ? (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
+                  {footerLinks.map((link) => (
+                    <Box key={`${link.title}-${link.url}`}>
+                      {link.isInternal ? (
+                        <MuiLink component={NavLink} to={link.url}>
+                          {link.title}
+                        </MuiLink>
+                      ) : (
+                        <MuiLink
+                          href={link.url}
+                          target={link.openInNewTab ? '_blank' : undefined}
+                          rel={link.openInNewTab ? 'noopener noreferrer' : undefined}
+                        >
+                          {link.title}
+                        </MuiLink>
+                      )}
+                    </Box>
+                  ))}
+                </Box>
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  {t('footer.linksComingSoon')}
+                </Typography>
+              )}
+              {!isAuthenticated && (
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                  <MuiLink
+                    component={NavLink}
+                    to="/login"
+                    variant="body2"
+                    color="text.secondary"
+                    underline="hover"
+                  >
+                    Sign In
+                  </MuiLink>
+                </Box>
+              )}
+            </Box>
+          </Box>
+        </>
+      )}
 
       <Box
         sx={{
