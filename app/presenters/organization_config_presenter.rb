@@ -38,7 +38,9 @@ class OrganizationConfigPresenter
         surveyRequired: @organization.survey_required,
         userSurveyEnabled: @organization.user_survey_enabled,
         userSurveyLink: @organization.user_survey_link,
-        spanishSurveyLink: @organization.spanish_survey_link
+        spanishSurveyLink: @organization.spanish_survey_link,
+        userSurveyUrl: @organization.survey_url(I18n.locale, user: @current_user),
+        userSurveyButtonText: i18n_with_default("course_completion_page.#{@organization.subdomain}.user_survey_button_text")
       }
     }
   end
