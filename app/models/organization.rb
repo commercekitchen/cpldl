@@ -32,6 +32,8 @@ class Organization < ApplicationRecord
     home_header_es               String
     home_subheader_es            String
     looker_studio_dashboard_url  String
+    custom_banner_message        String
+    custom_footer_message        String
   end
 
   store_accessor :theme_data,

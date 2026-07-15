@@ -87,6 +87,8 @@ interface CustomTextSettings {
   homeSubheaderEn: string | null;
   homeHeaderEs: string | null;
   homeSubheaderEs: string | null;
+  customBannerMessage: string | null;
+  customFooterMessage: string | null;
 }
 
 interface SettingsData {
@@ -843,6 +845,8 @@ function CustomTextSection({
     homeSubheaderEn: data.homeSubheaderEn ?? '',
     homeHeaderEs: data.homeHeaderEs ?? '',
     homeSubheaderEs: data.homeSubheaderEs ?? '',
+    customBannerMessage: data.customBannerMessage ?? '',
+    customFooterMessage: data.customFooterMessage ?? '',
   });
   const [saving, setSaving] = useState(false);
 
@@ -858,6 +862,8 @@ function CustomTextSection({
             home_subheader_en: form.homeSubheaderEn || null,
             home_header_es: form.homeHeaderEs || null,
             home_subheader_es: form.homeSubheaderEs || null,
+            custom_banner_message: form.customBannerMessage || null,
+            custom_footer_message: form.customFooterMessage || null,
           },
         }),
       });
@@ -877,6 +883,40 @@ function CustomTextSection({
 
   return (
     <Paper variant="outlined" sx={{ p: 3, maxWidth: 600 }}>
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+        Site Banner
+      </Typography>
+      <SectionLabel>Banner Message</SectionLabel>
+      <TextField
+        value={form.customBannerMessage}
+        onChange={(e) => setForm((f) => ({ ...f, customBannerMessage: e.target.value }))}
+        disabled={saving}
+        fullWidth
+        multiline
+        minRows={2}
+        placeholder="Shown at the top of every page for this organization. Leave blank to hide."
+        helperText="Displayed to all visitors on this organization's site."
+      />
+
+      <Divider sx={{ my: 3 }} />
+
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+        Site Footer
+      </Typography>
+      <SectionLabel>Footer Message</SectionLabel>
+      <TextField
+        value={form.customFooterMessage}
+        onChange={(e) => setForm((f) => ({ ...f, customFooterMessage: e.target.value }))}
+        disabled={saving}
+        fullWidth
+        multiline
+        minRows={2}
+        placeholder="Shown in the footer of every page for this organization. Leave blank to hide."
+        helperText="Displayed to all visitors on this organization's site."
+      />
+
+      <Divider sx={{ my: 3 }} />
+
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
         <Typography variant="subtitle1" fontWeight={600}>
           Home Page

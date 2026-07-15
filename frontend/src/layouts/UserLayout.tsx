@@ -31,6 +31,7 @@ import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
 import { StagingBanner } from '../app/components/StagingBanner';
 import { AnnouncementBanner } from '../app/components/AnnouncementBanner';
+import { OrgBannerMessage } from '../app/components/OrgBannerMessage';
 
 type NavButtonProps = {
   to: string;
@@ -217,7 +218,7 @@ export function UserLayout() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            minHeight: { xs: 56, md: 72 },
+            minHeight: { xs: 64, md: 84 },
           }}
         >
           <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -226,7 +227,7 @@ export function UserLayout() {
                 component="img"
                 src={orgConfig.theme.logoUrl}
                 alt={`${orgConfig.displayName} logo`}
-                sx={{ height: { xs: 32, md: 50 }, width: 'auto' }}
+                sx={{ height: { xs: 38, md: 60 }, width: 'auto' }}
               />
             ) : (
               <Typography variant="h6">{orgConfig.displayName}</Typography>
@@ -350,6 +351,7 @@ export function UserLayout() {
       {!isLessonContentPath && (
         <>
           <StagingBanner />
+          <OrgBannerMessage message={orgConfig.customText?.customBannerMessage} />
           <AnnouncementBanner />
         </>
       )}
@@ -440,6 +442,11 @@ export function UserLayout() {
               color: '#fff',
             }}
           >
+            {orgConfig.customText?.customFooterMessage && (
+              <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
+                {orgConfig.customText.customFooterMessage}
+              </Typography>
+            )}
             <Typography variant="body1" sx={{ mb: 2 }}>
               <MuiLink
                 href="https://opensource.org/license/mit"

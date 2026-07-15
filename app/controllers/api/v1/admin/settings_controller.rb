@@ -82,7 +82,10 @@ module Api
         end
 
         def custom_text_params
-          params.require(:custom_text).permit(:home_header_en, :home_subheader_en, :home_header_es, :home_subheader_es)
+          params.require(:custom_text).permit(
+            :home_header_en, :home_subheader_en, :home_header_es, :home_subheader_es,
+            :custom_banner_message, :custom_footer_message
+          )
         end
 
         def analytics_params
@@ -141,7 +144,9 @@ module Api
               homeHeaderEn: current_organization.home_header_en,
               homeSubheaderEn: current_organization.home_subheader_en,
               homeHeaderEs: current_organization.home_header_es,
-              homeSubheaderEs: current_organization.home_subheader_es
+              homeSubheaderEs: current_organization.home_subheader_es,
+              customBannerMessage: current_organization.custom_banner_message,
+              customFooterMessage: current_organization.custom_footer_message
             },
             analytics: {
               lookerStudioDashboardUrl: current_organization.looker_studio_dashboard_url
