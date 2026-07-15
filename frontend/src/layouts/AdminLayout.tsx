@@ -74,7 +74,7 @@ export function AdminLayout() {
           zIndex: (theme) => theme.zIndex.drawer + 1,
         }}
       >
-        <Toolbar sx={{ minHeight: { xs: 56, md: 64 } }}>
+        <Toolbar sx={{ minHeight: { xs: 64, md: 72 } }}>
           <Box sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
             <Box
               component={NavLink}
@@ -86,7 +86,7 @@ export function AdminLayout() {
                   component="img"
                   src={orgConfig.theme.logoUrl}
                   alt={`${orgConfig.displayName} logo`}
-                  sx={{ height: { xs: 32, md: 40 }, width: 'auto' }}
+                  sx={{ height: { xs: 38, md: 48 }, width: 'auto' }}
                 />
               ) : (
                 <Typography variant="h6" color="text.primary">

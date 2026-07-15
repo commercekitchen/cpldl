@@ -60,7 +60,9 @@ class OrganizationConfigPresenter
       homeHeaderEn: @organization.home_header_en.presence,
       homeSubheaderEn: @organization.home_subheader_en.presence,
       homeHeaderEs: @organization.home_header_es.presence,
-      homeSubheaderEs: @organization.home_subheader_es.presence
+      homeSubheaderEs: @organization.home_subheader_es.presence,
+      customBannerMessage: @organization.custom_banner_message.presence,
+      customFooterMessage: @organization.custom_footer_message.presence
     }.compact
   end
 

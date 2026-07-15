@@ -11,6 +11,8 @@ export type CustomText = {
   homeSubheaderEn?: string;
   homeHeaderEs?: string;
   homeSubheaderEs?: string;
+  customBannerMessage?: string;
+  customFooterMessage?: string;
 };
 
 export type OrganizationConfig = {
