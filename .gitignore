@@ -89,3 +89,5 @@ erd.pdf
 /frontend/dist
 /frontend/.vite
 /public/spa
+
+.claude

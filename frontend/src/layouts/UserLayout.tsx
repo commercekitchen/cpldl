@@ -31,7 +31,6 @@ import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
 import { StagingBanner } from '../app/components/StagingBanner';
 import { AnnouncementBanner } from '../app/components/AnnouncementBanner';
-import { OrgBannerMessage } from '../app/components/OrgBannerMessage';
 
 type NavButtonProps = {
   to: string;
@@ -109,6 +108,7 @@ export function UserLayout() {
   const { status, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { locale } = useLocale();
 
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
 
@@ -351,7 +351,6 @@ export function UserLayout() {
       {!isLessonContentPath && (
         <>
           <StagingBanner />
-          <OrgBannerMessage message={orgConfig.customText?.customBannerMessage} />
           <AnnouncementBanner />
         </>
       )}
@@ -442,11 +441,19 @@ export function UserLayout() {
               color: '#fff',
             }}
           >
-            {orgConfig.customText?.customFooterMessage && (
-              <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
-                {orgConfig.customText.customFooterMessage}
-              </Typography>
-            )}
+            {(() => {
+              const footerMessage =
+                locale === 'es'
+                  ? orgConfig.customText?.customFooterMessageEs || orgConfig.customText?.customFooterMessageEn
+                  : orgConfig.customText?.customFooterMessageEn;
+              return (
+                footerMessage && (
+                  <Typography variant="body1" sx={{ mb: 2, fontWeight: 500 }}>
+                    {footerMessage}
+                  </Typography>
+                )
+              );
+            })()}
             <Typography variant="body1" sx={{ mb: 2 }}>
               <MuiLink
                 href="https://opensource.org/license/mit"
