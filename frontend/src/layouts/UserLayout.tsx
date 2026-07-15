@@ -218,7 +218,7 @@ export function UserLayout() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            minHeight: { xs: 64, md: 84 },
+            minHeight: 100,
           }}
         >
           <Box component={NavLink} to="/" sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -227,7 +227,7 @@ export function UserLayout() {
                 component="img"
                 src={orgConfig.theme.logoUrl}
                 alt={`${orgConfig.displayName} logo`}
-                sx={{ height: { xs: 38, md: 60 }, width: 'auto' }}
+                sx={{ height: { xs: 56, md: 72 }, width: 'auto', my: { xs: 1, md: 1.5 } }}
               />
             ) : (
               <Typography variant="h6">{orgConfig.displayName}</Typography>
