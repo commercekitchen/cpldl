@@ -87,8 +87,8 @@ interface CustomTextSettings {
   homeSubheaderEn: string | null;
   homeHeaderEs: string | null;
   homeSubheaderEs: string | null;
-  customBannerMessage: string | null;
-  customFooterMessage: string | null;
+  customFooterMessageEn: string | null;
+  customFooterMessageEs: string | null;
 }
 
 interface SettingsData {
@@ -517,7 +517,11 @@ function GeneralSection({
       </Box>
 
       <Box sx={{ mt: 3 }}>
-        <Button variant="contained" onClick={() => void handleSave()} disabled={saving || !colorsValid}>
+        <Button
+          variant="contained"
+          onClick={() => void handleSave()}
+          disabled={saving || !colorsValid}
+        >
           {saving ? t('admin.settingsPage.saving') : t('admin.settingsPage.save')}
         </Button>
       </Box>
@@ -817,7 +821,7 @@ function SurveySection({
 // ─── Custom Text Section ──────────────────────────────────────────────────────
 
 const HOME_HEADER_DEFAULT_EN = 'Digital Literacy Hub';
-const HOME_SUBHEADER_DEFAULT_EN = 'Gain skills and confidence for today\'s digital world.';
+const HOME_SUBHEADER_DEFAULT_EN = "Gain skills and confidence for today's digital world.";
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
@@ -845,8 +849,8 @@ function CustomTextSection({
     homeSubheaderEn: data.homeSubheaderEn ?? '',
     homeHeaderEs: data.homeHeaderEs ?? '',
     homeSubheaderEs: data.homeSubheaderEs ?? '',
-    customBannerMessage: data.customBannerMessage ?? '',
-    customFooterMessage: data.customFooterMessage ?? '',
+    customFooterMessageEn: data.customFooterMessageEn ?? '',
+    customFooterMessageEs: data.customFooterMessageEs ?? '',
   });
   const [saving, setSaving] = useState(false);
 
@@ -862,8 +866,8 @@ function CustomTextSection({
             home_subheader_en: form.homeSubheaderEn || null,
             home_header_es: form.homeHeaderEs || null,
             home_subheader_es: form.homeSubheaderEs || null,
-            custom_banner_message: form.customBannerMessage || null,
-            custom_footer_message: form.customFooterMessage || null,
+            custom_footer_message_en: form.customFooterMessageEn || null,
+            custom_footer_message_es: form.customFooterMessageEs || null,
           },
         }),
       });
@@ -883,48 +887,13 @@ function CustomTextSection({
 
   return (
     <Paper variant="outlined" sx={{ p: 3, maxWidth: 600 }}>
-      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-        Site Banner
-      </Typography>
-      <SectionLabel>Banner Message</SectionLabel>
-      <TextField
-        value={form.customBannerMessage}
-        onChange={(e) => setForm((f) => ({ ...f, customBannerMessage: e.target.value }))}
-        disabled={saving}
-        fullWidth
-        multiline
-        minRows={2}
-        placeholder="Shown at the top of every page for this organization. Leave blank to hide."
-        helperText="Displayed to all visitors on this organization's site."
-      />
-
-      <Divider sx={{ my: 3 }} />
-
-      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
-        Site Footer
-      </Typography>
-      <SectionLabel>Footer Message</SectionLabel>
-      <TextField
-        value={form.customFooterMessage}
-        onChange={(e) => setForm((f) => ({ ...f, customFooterMessage: e.target.value }))}
-        disabled={saving}
-        fullWidth
-        multiline
-        minRows={2}
-        placeholder="Shown in the footer of every page for this organization. Leave blank to hide."
-        helperText="Displayed to all visitors on this organization's site."
-      />
-
-      <Divider sx={{ my: 3 }} />
-
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="subtitle1" fontWeight={600}>
-          Home Page
-        </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
         <ToggleButtonGroup
           value={locale}
           exclusive
-          onChange={(_, v: 'en' | 'es') => { if (v) setLocale(v); }}
+          onChange={(_, v: 'en' | 'es') => {
+            if (v) setLocale(v);
+          }}
           size="small"
         >
           <ToggleButton value="en">English</ToggleButton>
@@ -932,7 +901,41 @@ function CustomTextSection({
         </ToggleButtonGroup>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 1 }}>
+        Site Footer
+      </Typography>
+      <SectionLabel>Footer Message</SectionLabel>
+      {isEn ? (
+        <TextField
+          value={form.customFooterMessageEn}
+          onChange={(e) => setForm((f) => ({ ...f, customFooterMessageEn: e.target.value }))}
+          disabled={saving}
+          fullWidth
+          multiline
+          minRows={2}
+          placeholder="Shown in the footer of every page for this organization. Leave blank to hide."
+          helperText="Displayed to all visitors on this organization's site."
+        />
+      ) : (
+        <TextField
+          value={form.customFooterMessageEs}
+          onChange={(e) => setForm((f) => ({ ...f, customFooterMessageEs: e.target.value }))}
+          disabled={saving}
+          fullWidth
+          multiline
+          minRows={2}
+          placeholder={form.customFooterMessageEn || 'Shown in the footer of every page for this organization.'}
+          helperText="Leave blank to use the English value."
+        />
+      )}
+
+      <Divider sx={{ my: 3 }} />
+
+      <Typography variant="subtitle1" fontWeight={600} sx={{ mb: 3 }}>
+        Home Page
+      </Typography>
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {isEn ? (
           <>
             <SectionLabel>Header</SectionLabel>
