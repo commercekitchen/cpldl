@@ -39,6 +39,7 @@ export type OrganizationConfig = {
     secondaryColor?: string;
     fontFamily?: string;
     radius?: number;
+    bigHeaderLogo?: boolean;
   };
 
   features: {
@@ -49,7 +50,6 @@ export type OrganizationConfig = {
     userSurveyUrl?: string;
     userSurveyButtonText?: string;
     phoneNumberSignIn: boolean;
-    signUpAllowed?: boolean;
     surveyRequired: boolean;
   };
 };
