@@ -295,30 +295,26 @@ export function UserLayout() {
                 {t('nav.adminDashboard')}
               </Button>
             ) : null}
-            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
-              <NavButton
-                to={isAuthenticated ? '/account' : '/login'}
-                label={loginLabel}
-                icon={<AccountCircle />}
-              />
-            )}
+            <NavButton
+              to={isAuthenticated ? '/account' : '/login'}
+              label={loginLabel}
+              icon={<AccountCircle />}
+            />
             <LocaleToggle />
           </Box>
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 2 }}>
             <LocaleToggle />
-            {(isAuthenticated || orgConfig.features?.signUpAllowed) && (
-              <Button
-                component={NavLink}
-                to={isAuthenticated ? '/account' : '/login'}
-                variant="text"
-                color="inherit"
-                aria-label={loginLabel}
-                sx={{ minWidth: 0, p: 0.5 }}
-              >
-                <AccountCircle />
-              </Button>
-            )}
+            <Button
+              component={NavLink}
+              to={isAuthenticated ? '/account' : '/login'}
+              variant="text"
+              color="inherit"
+              aria-label={loginLabel}
+              sx={{ minWidth: 0, p: 0.5 }}
+            >
+              <AccountCircle />
+            </Button>
           </Box>
         </Toolbar>
 
@@ -390,25 +386,23 @@ export function UserLayout() {
             >
               Clear Progress
             </Button>
-            {orgConfig.features?.signUpAllowed && (
-              <Button
-                component={NavLink}
-                to="/signup"
-                size="small"
-                sx={{
-                  color: 'inherit',
-                  textDecoration: 'underline',
-                  textTransform: 'none',
-                  p: 0,
-                  minWidth: 0,
-                  fontSize: 'inherit',
-                  fontWeight: 600,
-                  '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
-                }}
-              >
-                Sign Up to Save Progress
-              </Button>
-            )}
+            <Button
+              component={NavLink}
+              to="/signup"
+              size="small"
+              sx={{
+                color: 'inherit',
+                textDecoration: 'underline',
+                textTransform: 'none',
+                p: 0,
+                minWidth: 0,
+                fontSize: 'inherit',
+                fontWeight: 600,
+                '&:hover': { textDecoration: 'underline', bgcolor: 'transparent' },
+              }}
+            >
+              Sign Up to Save Progress
+            </Button>
           </Box>
         </Box>
       )}
@@ -444,7 +438,8 @@ export function UserLayout() {
             {(() => {
               const footerMessage =
                 locale === 'es'
-                  ? orgConfig.customText?.customFooterMessageEs || orgConfig.customText?.customFooterMessageEn
+                  ? orgConfig.customText?.customFooterMessageEs ||
+                    orgConfig.customText?.customFooterMessageEn
                   : orgConfig.customText?.customFooterMessageEn;
               return (
                 footerMessage && (

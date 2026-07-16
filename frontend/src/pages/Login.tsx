@@ -21,7 +21,6 @@ export default function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
-  const signUpAllowed = rootData?.orgConfig.features.signUpAllowed !== false;
   const phoneNumberSignIn = rootData?.orgConfig.features.phoneNumberSignIn === true;
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   const usePhoneLogin = phoneNumberSignIn && !showAdminLogin;
@@ -45,12 +44,14 @@ export default function Login() {
     setError(null);
     setSubmitting(true);
     try {
-      const session = usePhoneLogin
-        ? await loginWithPhone(phone)
-        : await login(email, password);
+      const session = usePhoneLogin ? await loginWithPhone(phone) : await login(email, password);
       if (session?.redirect_to) {
         const target = session.redirect_to;
-        if (target.startsWith('http://') || target.startsWith('https://') || target.startsWith('/oauth')) {
+        if (
+          target.startsWith('http://') ||
+          target.startsWith('https://') ||
+          target.startsWith('/oauth')
+        ) {
           window.location.assign(target);
         } else {
           navigate(target, { replace: true });
@@ -79,8 +80,7 @@ export default function Login() {
           border: '1px solid',
           borderColor: 'divider',
           borderRadius: 3,
-          background:
-            'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%)',
+          background: 'linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(249,250,251,1) 100%)',
         }}
       >
         <Stack spacing={2.5}>
@@ -95,7 +95,11 @@ export default function Login() {
             </Typography>
           </Box>
 
-          {error ? <Alert severity="error" role="alert">{error}</Alert> : null}
+          {error ? (
+            <Alert severity="error" role="alert">
+              {error}
+            </Alert>
+          ) : null}
 
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>
@@ -134,13 +138,25 @@ export default function Login() {
                 </>
               )}
 
-              <Button type="submit" variant="contained" size="large" disabled={submitting} fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                disabled={submitting}
+                fullWidth
+              >
                 {submitting ? 'Signing in…' : usePhoneLogin ? 'Continue' : 'Sign in'}
               </Button>
 
               {!usePhoneLogin ? (
                 <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'right' }}>
-                  <Button component={Link} to="/forgot-password" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
+                  <Button
+                    component={Link}
+                    to="/forgot-password"
+                    size="small"
+                    variant="text"
+                    sx={{ p: 0, minWidth: 0 }}
+                  >
                     {t('auth.forgotPassword')}
                   </Button>
                 </Typography>
@@ -170,7 +186,7 @@ export default function Login() {
             </Typography>
           ) : null}
 
-          {signUpAllowed && !usePhoneLogin ? (
+          {!usePhoneLogin ? (
             <Typography
               component="div"
               variant="body2"
@@ -178,7 +194,13 @@ export default function Login() {
               sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
             >
               <Box component="span">No account?</Box>
-              <Button component={Link} to="/signup" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
+              <Button
+                component={Link}
+                to="/signup"
+                size="small"
+                variant="text"
+                sx={{ p: 0, minWidth: 0 }}
+              >
                 Create one
               </Button>
             </Typography>

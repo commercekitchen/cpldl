@@ -49,7 +49,6 @@ export type OrganizationConfig = {
     userSurveyUrl?: string;
     userSurveyButtonText?: string;
     phoneNumberSignIn: boolean;
-    signUpAllowed?: boolean;
     surveyRequired: boolean;
   };
 };
