@@ -34,6 +34,7 @@ class Organization < ApplicationRecord
     looker_studio_dashboard_url  String
     custom_footer_message_en     String
     custom_footer_message_es     String
+    big_header_logo              Boolean, default: false
   end
 
   store_accessor :theme_data,

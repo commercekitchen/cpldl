@@ -28,7 +28,8 @@ class OrganizationConfigPresenter
         primaryColor: safe_color(@organization.primary_color, DefaultTheme::PRIMARY_COLOR),
         secondaryColor: safe_color(@organization.secondary_color, DefaultTheme::SECONDARY_COLOR),
         fontFamily: @organization.font_family || DefaultTheme::FONT_FAMILY,
-        radius: @organization.theme_radius || DefaultTheme::RADIUS
+        radius: @organization.theme_radius || DefaultTheme::RADIUS,
+        bigHeaderLogo: @organization.big_header_logo
       }.compact,
 
       features: {
