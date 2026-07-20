@@ -23,6 +23,7 @@ export default defineConfig(({ mode }) => {
       host: true,
       port: 5173,
       strictPort: true,
+      allowedHosts: true,
       proxy: {
         "/api": {
           target: railsOrigin,

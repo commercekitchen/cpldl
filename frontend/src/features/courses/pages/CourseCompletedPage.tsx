@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify';
+import { useEffect } from 'react';
 import { useNavigate, useParams, useRouteLoaderData } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,6 +12,7 @@ import { useCourseQuery } from '../queries/courseQuery';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseStats } from '../components/CourseStats';
 import type { OrganizationConfig } from '../../../app/organization/types';
+import { pushGaEvent } from '../../../app/analytics';
 
 export function CourseCompletedPage() {
   const { courseId = '' } = useParams();
@@ -20,6 +22,15 @@ export function CourseCompletedPage() {
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const surveyUrl = course?.surveyUrl || rootData?.orgConfig.features.userSurveyUrl;
   const surveyButtonText = rootData?.orgConfig.features.userSurveyButtonText;
+
+  useEffect(() => {
+    if (!course) return;
+    pushGaEvent('course_completed', {
+      course_id: course.id,
+      course_name: course.title,
+      lessons_total: course.lessonsCount ?? 0,
+    });
+  }, [course?.id]);
 
   if (isLoading) return <CircularProgress />;
 

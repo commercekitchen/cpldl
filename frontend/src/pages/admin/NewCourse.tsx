@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import Alert from '@mui/material/Alert';
@@ -90,6 +91,7 @@ const DEFAULT_FORM: FormState = {
 export default function AdminNewCourse() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const [options, setOptions] = useState<FormOptions>({ languages: [], categories: [], topics: [] });
   const [optionsLoading, setOptionsLoading] = useState(true);
@@ -175,6 +177,7 @@ export default function AdminNewCourse() {
       }
 
       if (data.course) {
+        void queryClient.invalidateQueries({ queryKey: ['courses'] });
         navigate(`/admin/courses/${data.course.id}/edit?tab=lessons`);
       }
     } catch {
