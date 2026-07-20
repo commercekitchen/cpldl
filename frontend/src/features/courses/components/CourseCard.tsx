@@ -12,7 +12,7 @@ import { CourseCompletedBadge } from './CourseCompletedBadge';
 import { CourseStats } from './CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import { pushGaEvent } from '../../../app/analytics';
-import attLogo from '../../../assets/att_logo.svg';
+import attLogo from '../../../assets/att_logo.png';
 
 type Props = {
   course: Course;
@@ -134,27 +134,17 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
     >
       {course.attCourse ? (
         <Box
+          component="img"
+          src={attLogo}
+          alt="ATT logo"
           sx={{
             position: 'absolute',
             top: 12,
             right: 12,
             zIndex: 2,
-            backgroundColor: '#22D3EE', // cyan/400
-            borderRadius: '999px',
-            px: 1.5,
-            py: 0.5,
-            minHeight: 28,
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 12,
-            fontWeight: 700,
-            lineHeight: 1,
-            color: '#0B1D26',
+            height: 28,
           }}
-        >
-          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16, mr: 0.5 }} />
-        </Box>
+        />
       ) : null}
       {content}
     </Card>

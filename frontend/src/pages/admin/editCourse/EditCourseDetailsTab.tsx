@@ -331,6 +331,7 @@ export function EditCourseDetailsTab({ courseId, initialCourse, options, onSaved
 
       setSaveSuccess(true);
       void queryClient.invalidateQueries({ queryKey: ['courses'] });
+      void queryClient.invalidateQueries({ queryKey: ['course', courseId] });
       void queryClient.invalidateQueries({ queryKey: ['lessons'] });
     } catch {
       setSaveErrors([t('admin.editCoursePage.saveError')]);
