@@ -134,17 +134,23 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
     >
       {course.attCourse ? (
         <Box
-          component="img"
-          src={attLogo}
-          alt="ATT logo"
           sx={{
             position: 'absolute',
             top: 12,
             right: 12,
             zIndex: 2,
-            height: 28,
+            backgroundColor: '#fff',
+            borderRadius: '999px',
+            px: 1.5,
+            py: 0.5,
+            minHeight: 28,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
           }}
-        />
+        >
+          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16 }} />
+        </Box>
       ) : null}
       {content}
     </Card>
