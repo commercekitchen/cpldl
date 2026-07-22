@@ -141,15 +141,15 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
             zIndex: 2,
             backgroundColor: '#fff',
             borderRadius: '999px',
-            px: 1.5,
-            py: 0.5,
-            minHeight: 28,
+            px: 2,
+            py: 0.75,
+            minHeight: 36,
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
-          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16 }} />
+          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 24 }} />
         </Box>
       ) : null}
       {content}
