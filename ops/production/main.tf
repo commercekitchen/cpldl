@@ -205,6 +205,7 @@ module "waf" {
   alb_arn                = module.load_balancer.load_balancer_arn
   enable_shield          = false
   rate_limiter_threshold = 1200 # We sometimes get entire labs of students hitting the site at once
+  allowed_host_regex = "^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)*digitallearn\\.org(?::\\d+)?$"
 }
 
 moved {

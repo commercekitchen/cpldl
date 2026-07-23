@@ -244,4 +244,5 @@ module "waf" {
   alb_arn                = module.load_balancer.load_balancer_arn
   enable_shield          = false
   rate_limiter_threshold = 300
+  allowed_host_regex = "^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)*staging\\.digitallearn\\.org(?::\\d+)?$"
 }

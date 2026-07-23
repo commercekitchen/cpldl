@@ -61,6 +61,15 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
+  # Reject requests with a Host header outside our own domains (Rails 6's
+  # config.hosts isn't available on 5.2, so this is the equivalent guard
+  # against Host header injection / password-reset-link poisoning).
+  require Rails.root.join('lib/host_authorization')
+  config.middleware.insert_before 0, HostAuthorization, allowed_hosts: [
+    'digitallearn.org',
+    /\A(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+digitallearn\.org\z/i
+  ]
+
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
   config.log_level = :debug
