@@ -6,6 +6,15 @@ Rails.application.configure do
 
   config.force_ssl = true
 
+  # Reject requests with a Host header outside our own domains (Rails 6's
+  # config.hosts isn't available on 5.2, so this is the equivalent guard
+  # against Host header injection / password-reset-link poisoning).
+  require Rails.root.join('lib/host_authorization')
+  config.middleware.insert_before 0, HostAuthorization, allowed_hosts: [
+    'staging.digitallearn.org',
+    /\A(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+staging\.digitallearn\.org\z/i
+  ]
+
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   # config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?

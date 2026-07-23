@@ -36,6 +36,11 @@ variable "rate_limiter_threshold" {
   default     = 1000
 }
 
+variable "allowed_host_regex" {
+  description = "Regex pattern of Host header values allowed to reach the app; anything else is blocked at the WAF before it hits the ALB (defense against Host header injection / password-reset-link poisoning). Matched inline via regex_match_statement rather than a regex_pattern_set, since the account is already at its NUM_REGEX_PATTERN_SETS_BY_ACCOUNT quota."
+  type        = string
+}
+
 variable "waf_upload_bypass_path_regexes" {
   description = "List of regex strings for paths that should bypass body-size restrictions."
   type        = list(string)
