@@ -12,6 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import { pushGaEvent } from '../../../app/analytics';
 import { CourseCompletedBadge } from '../../courses/components/CourseCompletedBadge';
+import attLogo from '../../../assets/att_logo.png';
 
 type Props = {
   lesson: Lesson;
@@ -150,8 +151,29 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
         minHeight: 'clamp(376px, 40vh, 460px)',
         display: 'flex',
         flexDirection: 'column',
+        position: 'relative',
       }}
     >
+      {lesson.attCourse ? (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 12,
+            right: 12,
+            zIndex: 2,
+            backgroundColor: '#fff',
+            borderRadius: '999px',
+            px: 1.5,
+            py: 0.5,
+            minHeight: 28,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16 }} />
+        </Box>
+      ) : null}
       {content}
     </Card>
   );

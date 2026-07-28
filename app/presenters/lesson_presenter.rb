@@ -12,6 +12,7 @@ class LessonPresenter
       id: @lesson.slug,
       courseId: @course&.slug,
       courseTitle: @course&.title,
+      attCourse: @course&.new_course,
       title: @lesson.title,
       summary: @lesson.summary,
       duration: @lesson.duration,

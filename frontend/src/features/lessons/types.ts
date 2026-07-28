@@ -2,6 +2,7 @@ export type Lesson = {
   id: string;
   courseId?: string;
   courseTitle?: string;
+  attCourse?: boolean;
   title: string;
   summary: string;
   duration: number;
