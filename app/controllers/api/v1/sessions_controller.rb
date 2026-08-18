@@ -90,6 +90,7 @@ module Api
           email: user.email,
           organization_subdomain: user.organization.subdomain,
           is_org_admin: user.has_role?(:admin, user.organization),
+          roles: user.roles.where(resource: user.organization).pluck(:name),
           redirect_to: post_login_redirect_for(user)
         }
       end
