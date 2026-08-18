@@ -1,6 +1,6 @@
 <p>Hello <%= @resource.email %>!</p>
 
-<p>You have been invited to be an admin on the DigitalLearn application.  You can accept it through the link below.</p>
+<p>You have been invited to be an <%= @resource.admin? ? 'admin' : (@resource.trainer? ? 'trainer' : 'user') %> on the DigitalLearn application.  You can accept it through the link below.</p>
 
 <p><%= link_to 'Accept invitation', accept_user_invitation_url(@resource, invitation_token: @token, subdomain: (@resource&.organization&.subdomain || 'www')) %></p>
 
