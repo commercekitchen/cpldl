@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 type Options = {
   iframeRef: React.RefObject<HTMLIFrameElement | null>;
@@ -30,11 +30,11 @@ export function useLessonCompletionListener({ iframeRef, onCompleted, enabled = 
     return () => window.removeEventListener('message', handler, true);
   }, [iframeRef, onCompleted, enabled]);
 
-  // If you ever need to reset (e.g. same component re-used for a new lesson without unmount),
-  // expose a reset method. For routing that remounts, you don’t need this.
-  return {
-    reset: () => {
-      firedRef.current = false;
-    },
-  };
+  // Exposed so callers whose route reuses this component instance across lessons
+  // (no remount) can reset the one-shot guard when the lesson changes.
+  const reset = useCallback(() => {
+    firedRef.current = false;
+  }, []);
+
+  return { reset };
 }

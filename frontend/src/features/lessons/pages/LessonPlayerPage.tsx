@@ -151,11 +151,17 @@ export function LessonPlayerPage() {
   }, [lesson, navigate, queryClient, status]);
 
   // Install listener only once lesson is loaded and iframe is present.
-  useLessonCompletionListener({
+  const { reset: resetCompletionListener } = useLessonCompletionListener({
     iframeRef,
     onCompleted,
     enabled: Boolean(lesson),
   });
+
+  // The route reuses this component instance across lessons (no remount), so the
+  // listener's one-shot guard must be reset whenever we land on a new lesson.
+  useEffect(() => {
+    resetCompletionListener();
+  }, [lesson?.id, resetCompletionListener]);
 
   const iframeTitle = lesson?.title ?? 'Lesson';
 
