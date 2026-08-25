@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,6 +16,7 @@ import type { Survey, SurveyResponses } from '../features/survey/types';
 function CourseRecommendationSurveyInner() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { user, refresh } = useAuth();
   const [survey, setSurvey] = useState<Survey | null>(null);
   const [loading, setLoading] = useState(true);
@@ -42,6 +44,7 @@ function CourseRecommendationSurveyInner() {
   const handleSubmit = async (responses: SurveyResponses) => {
     await submitSurvey(responses);
     void refresh();
+    void queryClient.invalidateQueries({ queryKey: ['courses'] });
     navigate('/', { state: { surveyJustCompleted: true } });
   };
 
