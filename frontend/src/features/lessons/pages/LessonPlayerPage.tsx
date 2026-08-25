@@ -14,7 +14,11 @@ import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import type { Lesson } from '../types';
 import { useLessonQuery } from '../queries/lessonQuery';
 import { useAuth } from '../../../auth/useAuth';
-import { markGuestLessonComplete } from '../../progress/guestProgress';
+import {
+  markGuestCourseComplete,
+  markGuestLessonComplete,
+  readGuestProgressStore,
+} from '../../progress/guestProgress';
 import { pushGaEvent } from '../../../app/analytics';
 
 function buildLessonTitle(lesson: Lesson) {
@@ -118,6 +122,20 @@ export function LessonPlayerPage() {
 
       if (lesson.courseId) {
         const lessons = await listLessons({ courseId: lesson.courseId }, {});
+
+        // The server never reports course_completed for guests (it only tracks
+        // progress for signed-in users), so derive it here from the lesson list
+        // we already fetched plus the just-updated guest progress store, and
+        // cache the result alongside the per-lesson entries for cheap lookup
+        // from course-listing views (CourseCard, etc.).
+        if (status === 'unauthenticated') {
+          const completedLessons = readGuestProgressStore();
+          const allLessonsCompleted = lessons.every((item) => item.id in completedLessons);
+          if (allLessonsCompleted) {
+            markGuestCourseComplete(lesson.courseId);
+          }
+        }
+
         const ordered = [...lessons].sort((a, b) => {
           if (a.lessonOrder !== b.lessonOrder) return a.lessonOrder - b.lessonOrder;
           return a.id.localeCompare(b.id);

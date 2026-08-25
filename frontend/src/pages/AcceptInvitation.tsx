@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { apiFetch } from '../app/api/apiFetch';
 import { useAuth } from '../auth/useAuth';
+import { migrateGuestProgress } from '../features/progress/guestProgress';
+import { completeLesson } from '../features/lessons/api/lessonsApi';
 
 export default function AcceptInvitation() {
   const { t } = useTranslation();
@@ -56,6 +58,7 @@ export default function AcceptInvitation() {
         const body = await res.json().catch(() => null) as { message?: string } | null;
         throw new Error(body?.message ?? t('auth.acceptInvitationError'));
       }
+      await migrateGuestProgress((lessonId, courseId) => completeLesson({ lessonId, courseId }));
       await refresh();
       navigate('/account', { replace: true });
     } catch (err: unknown) {
