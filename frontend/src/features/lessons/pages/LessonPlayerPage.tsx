@@ -144,6 +144,7 @@ export function LessonPlayerPage() {
       navigate(-1);
     } catch (e) {
       // Don’t block the user; show an error and allow retry (refresh).
+      console.error('Failed to complete lesson', lesson.id, e);
       setError(e instanceof Error ? e.message : String(e));
     } finally {
       setCompleting(false);
