@@ -4,6 +4,8 @@ import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
 import type { Course } from '../types';
 import { CourseCard } from './CourseCard';
+import { useAuth } from '../../../auth/useAuth';
+import { useGuestProgress } from '../../progress/useGuestProgress';
 
 type Props = {
   courses: Course[];
@@ -13,9 +15,17 @@ type Props = {
 };
 
 export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref }: Props) {
+  const { status } = useAuth();
+  const { isCourseCompleted } = useGuestProgress();
+  const isGuest = status === 'unauthenticated';
+
   if (courses.length === 0) {
     return <Typography variant="body2">No courses available.</Typography>;
   }
+
+  const displayedCourses = isGuest
+    ? courses.map((c) => ({ ...c, completed: c.completed || isCourseCompleted(c.id) }))
+    : courses;
 
   const cardWidth = 'clamp(216px, 50vw, 488px)';
 
@@ -32,7 +42,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
         scrollSnapType: 'x proximity',
       }}
     >
-      {courses.map((c) => (
+      {displayedCourses.map((c) => (
         <Box
           key={c.id}
           role="listitem"

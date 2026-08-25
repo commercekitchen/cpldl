@@ -11,6 +11,8 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { apiFetch } from '../app/api/apiFetch';
 import { useAuth } from '../auth/useAuth';
+import { migrateGuestProgress } from '../features/progress/guestProgress';
+import { completeLesson } from '../features/lessons/api/lessonsApi';
 
 export default function ResetPassword() {
   const { t } = useTranslation();
@@ -62,6 +64,7 @@ export default function ResetPassword() {
           throw new Error(body?.message || t('auth.resetError'));
         }
       });
+      await migrateGuestProgress((lessonId, courseId) => completeLesson({ lessonId, courseId }));
       await refresh();
       navigate('/', { replace: true });
     } catch (err: unknown) {
