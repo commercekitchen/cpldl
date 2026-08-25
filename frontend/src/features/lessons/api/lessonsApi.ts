@@ -27,27 +27,18 @@ export async function fetchLesson(
   return normalizeLesson(json);
 }
 
-export async function completeLesson(opts: {
-  lessonId: number | string;
-  courseId?: number | string;
-  preview?: boolean;
-  signal?: AbortSignal;
-}): Promise<CompleteLessonResponse> {
-  const { lessonId, courseId, preview, signal } = opts;
-  const url = new URL('/api/v1/lessons/complete', window.location.origin);
-  if (preview) url.searchParams.set('preview', 'true');
-
+async function postCompleteLesson(
+  url: URL,
+  body: Record<string, string>,
+  signal?: AbortSignal,
+): Promise<CompleteLessonResponse> {
   const res = await apiFetch(url.toString(), {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     },
-    keepalive: true,
-    body: JSON.stringify({
-      lesson_id: String(lessonId),
-      ...(courseId ? { course_id: String(courseId) } : {}),
-    }),
+    body: JSON.stringify(body),
     signal,
   });
 
@@ -62,6 +53,31 @@ export async function completeLesson(opts: {
 
   if (res.status === 204) return {};
   return (await res.json()) as CompleteLessonResponse;
+}
+
+export async function completeLesson(opts: {
+  lessonId: number | string;
+  courseId?: number | string;
+  preview?: boolean;
+  signal?: AbortSignal;
+}): Promise<CompleteLessonResponse> {
+  const { lessonId, courseId, preview, signal } = opts;
+  const url = new URL('/api/v1/lessons/complete', window.location.origin);
+  if (preview) url.searchParams.set('preview', 'true');
+  const body = {
+    lesson_id: String(lessonId),
+    ...(courseId ? { course_id: String(courseId) } : {}),
+  };
+
+  try {
+    return await postCompleteLesson(url, body, signal);
+  } catch (err) {
+    // Safari intermittently drops the session cookie on same-origin fetches
+    // (WebKit bug 255524), which makes this write silently no-op for the
+    // signed-in user. The retry is safe: completion is idempotent server-side.
+    if (signal?.aborted) throw err;
+    return await postCompleteLesson(url, body, signal);
+  }
 }
 
 export type ListLessonsParams = {

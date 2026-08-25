@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'dl_guest_progress';
+const COMPLETED_COURSES_STORAGE_KEY = 'dl_guest_completed_courses';
 const CHANGE_EVENT = 'dl_guest_progress_changed';
 
 type GuestProgressEntry = { courseId?: string };
@@ -30,8 +31,39 @@ export function markGuestLessonComplete(lessonId: string, courseId?: string): vo
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
+// Cached the same way as the lesson store above, but keyed by courseId so
+// course-listing views (CourseCard, etc.) can check completion in O(1)
+// instead of re-fetching and scanning each course's full lesson list.
+let _cachedCoursesJson = '';
+let _cachedCompletedCourses: string[] = [];
+
+export function readGuestCompletedCourses(): string[] {
+  try {
+    const json = localStorage.getItem(COMPLETED_COURSES_STORAGE_KEY) ?? '[]';
+    if (json !== _cachedCoursesJson) {
+      _cachedCoursesJson = json;
+      _cachedCompletedCourses = JSON.parse(json) as string[];
+    }
+    return _cachedCompletedCourses;
+  } catch {
+    return _cachedCompletedCourses;
+  }
+}
+
+export function isGuestCourseCompleted(courseId: string): boolean {
+  return readGuestCompletedCourses().includes(courseId);
+}
+
+export function markGuestCourseComplete(courseId: string): void {
+  const courses = readGuestCompletedCourses();
+  if (courses.includes(courseId)) return;
+  localStorage.setItem(COMPLETED_COURSES_STORAGE_KEY, JSON.stringify([...courses, courseId]));
+  window.dispatchEvent(new Event(CHANGE_EVENT));
+}
+
 export function clearGuestProgress(): void {
   localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(COMPLETED_COURSES_STORAGE_KEY);
   window.dispatchEvent(new Event(CHANGE_EVENT));
 }
 
@@ -48,16 +80,40 @@ export function subscribeToGuestProgress(callback: () => void): () => void {
   };
 }
 
-// Called after successful sign-up. Fires completeLesson for each stored entry,
-// then clears localStorage. Individual failures are silently ignored so a bad
-// lesson ID doesn't block the user.
+// Called after successful sign-up/sign-in. Fires completeLesson for each
+// stored entry, then clears localStorage.
+//
+// This runs sequentially, not concurrently: multiple lessons from the same
+// course share one CourseProgress row, and the server's
+// `CourseProgress.find_or_create_by!` has no unique index backing it. Firing
+// these in parallel lets concurrent requests both miss the find and create
+// duplicate rows, which can silently strand the assessment lesson's
+// completed_at flip on the "wrong" duplicate.
+//
+// Entries that still fail (bad lesson id, network error) are kept in
+// localStorage instead of discarded, so they aren't lost — they'll be
+// retried the next time this runs.
 export async function migrateGuestProgress(
   completeLesson: (lessonId: string, courseId?: string) => Promise<unknown>,
 ): Promise<void> {
   const entries = Object.entries(readGuestProgressStore());
   if (entries.length === 0) return;
-  await Promise.allSettled(
-    entries.map(([lessonId, { courseId }]) => completeLesson(lessonId, courseId)),
-  );
-  clearGuestProgress();
+
+  const failed: [string, GuestProgressEntry][] = [];
+  for (const [lessonId, entry] of entries) {
+    try {
+      await completeLesson(lessonId, entry.courseId);
+    } catch {
+      failed.push([lessonId, entry]);
+    }
+  }
+
+  if (failed.length === 0) {
+    clearGuestProgress();
+    return;
+  }
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(Object.fromEntries(failed)));
+  localStorage.removeItem(COMPLETED_COURSES_STORAGE_KEY);
+  window.dispatchEvent(new Event(CHANGE_EVENT));
 }

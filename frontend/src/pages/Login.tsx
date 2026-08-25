@@ -13,6 +13,8 @@ import { useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import type { OrganizationConfig } from '../app/organization/types';
 import { useAuth } from '../auth/useAuth';
+import { migrateGuestProgress } from '../features/progress/guestProgress';
+import { completeLesson } from '../features/lessons/api/lessonsApi';
 
 export default function Login() {
   const { t } = useTranslation();
@@ -45,6 +47,11 @@ export default function Login() {
     setSubmitting(true);
     try {
       const session = usePhoneLogin ? await loginWithPhone(phone) : await login(email, password);
+
+      // A guest may have completed lessons before logging into an existing
+      // account (as opposed to signing up fresh) — carry that progress over.
+      await migrateGuestProgress((lessonId, courseId) => completeLesson({ lessonId, courseId }));
+
       if (session?.redirect_to) {
         const target = session.redirect_to;
         if (

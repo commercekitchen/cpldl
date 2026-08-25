@@ -19,6 +19,8 @@ import DOMPurify from 'dompurify';
 import type { OrganizationConfig } from '../../../app/organization/types';
 import { useAuth } from '../../../auth/useAuth';
 import { pushGaEvent } from '../../../app/analytics';
+import { useLessonsListQuery } from '../../lessons/queries/useLessonsListQuery';
+import { useGuestProgress } from '../../progress/useGuestProgress';
 
 
 function buildCourseTitle(course: Course) {
@@ -35,7 +37,15 @@ export function CoursePage() {
   const { data: course, isLoading, error: loadError } = useCourseQuery(courseId);
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
   const { status } = useAuth();
-  const showAttachments = !(orgConfig.features?.loginRequired === true && status === 'unauthenticated');
+  const isGuest = status === 'unauthenticated';
+  const showAttachments = !(orgConfig.features?.loginRequired === true && isGuest);
+
+  // The server only tracks progress for signed-in users (CoursePresenter always
+  // returns completed: false / lessonsCompletedCount: 0 for anonymous requests),
+  // so for guests we derive both from the same localStorage progress that
+  // LessonListContainer already uses to check off individual lessons.
+  const { data: courseLessons } = useLessonsListQuery({ courseId }, { enabled: isGuest });
+  const { isCompleted: isGuestLessonCompleted } = useGuestProgress();
 
   const [error] = useState<string | null>(null);
 
@@ -74,8 +84,13 @@ export function CoursePage() {
   const textCopies = attachments.filter((item) => item.docType === 'text-copy');
   const previewImageUrl = previewImageForRecord(course.id);
   const lessonsCount = course.lessonsCount;
-  const lessonsCompletedCount = course.lessonsCompletedCount;
-  const titleBadge = course.completed
+  const lessonsCompletedCount = isGuest
+    ? (courseLessons?.filter((l) => isGuestLessonCompleted(l.id)).length ?? course.lessonsCompletedCount)
+    : course.lessonsCompletedCount;
+  const completed = isGuest
+    ? typeof lessonsCount === 'number' && lessonsCount > 0 && lessonsCompletedCount === lessonsCount
+    : course.completed;
+  const titleBadge = completed
     ? 'Completed'
     : typeof lessonsCount === 'number' && typeof lessonsCompletedCount === 'number'
       ? `[${lessonsCompletedCount} of ${lessonsCount} completed]`
@@ -107,7 +122,7 @@ export function CoursePage() {
         <Box sx={{ flex: 1, minWidth: 0 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5, mb: 1 }}>
             <Typography variant="h4" component="h1">{course.title}</Typography>
-            {course.completed ? (
+            {completed ? (
               <CourseCompletedBadge />
             ) : (
               titleBadge && (
