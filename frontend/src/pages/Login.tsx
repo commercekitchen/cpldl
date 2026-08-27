@@ -71,7 +71,7 @@ export default function Login() {
       }
       navigate(from, { replace: true });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Login failed';
+      const message = err instanceof Error ? err.message : t('auth.loginFailed');
       setError(message);
     } finally {
       setSubmitting(false);
@@ -93,12 +93,10 @@ export default function Login() {
         <Stack spacing={2.5}>
           <Box>
             <Typography variant="h4" component="h1" sx={{ mb: 0.75 }}>
-              {usePhoneLogin ? 'Continue with Phone Number' : 'Log in'}
+              {usePhoneLogin ? t('auth.continueWithPhone') : t('auth.login')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              {usePhoneLogin
-                ? 'Enter your phone number to continue and track your course progress.'
-                : 'Sign in with your DigitalLearn account to track progress and continue courses.'}
+              {usePhoneLogin ? t('auth.continueWithPhoneSubtitle') : t('auth.loginSubtitle')}
             </Typography>
           </Box>
 
@@ -112,19 +110,19 @@ export default function Login() {
             <Stack spacing={2}>
               {usePhoneLogin ? (
                 <TextField
-                  label="Phone Number"
+                  label={t('auth.phoneNumber')}
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   autoComplete="tel"
                   fullWidth
                   required
-                  helperText="Numbers only are fine; formatting will be ignored."
+                  helperText={t('auth.phoneNumberHelperText')}
                 />
               ) : (
                 <>
                   <TextField
-                    label="Email"
+                    label={t('auth.email')}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -134,7 +132,7 @@ export default function Login() {
                   />
 
                   <TextField
-                    label="Password"
+                    label={t('auth.password')}
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -152,7 +150,7 @@ export default function Login() {
                 disabled={submitting}
                 fullWidth
               >
-                {submitting ? 'Signing in…' : usePhoneLogin ? 'Continue' : 'Sign in'}
+                {submitting ? t('auth.signingIn') : usePhoneLogin ? t('auth.continue') : t('auth.signIn')}
               </Button>
 
               {!usePhoneLogin ? (
@@ -178,7 +176,7 @@ export default function Login() {
               color="text.secondary"
               sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
             >
-              <Box component="span">{usePhoneLogin ? 'Organization admin?' : 'Not an admin?'}</Box>
+              <Box component="span">{usePhoneLogin ? t('auth.organizationAdmin') : t('auth.notAnAdmin')}</Box>
               <Button
                 size="small"
                 variant="text"
@@ -188,7 +186,7 @@ export default function Login() {
                   setShowAdminLogin((v) => !v);
                 }}
               >
-                {usePhoneLogin ? 'Log in as admin' : 'Use phone number instead'}
+                {usePhoneLogin ? t('auth.logInAsAdmin') : t('auth.usePhoneInstead')}
               </Button>
             </Typography>
           ) : null}
@@ -200,7 +198,7 @@ export default function Login() {
               color="text.secondary"
               sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}
             >
-              <Box component="span">No account?</Box>
+              <Box component="span">{t('auth.noAccount')}</Box>
               <Button
                 component={Link}
                 to="/signup"
@@ -208,7 +206,7 @@ export default function Login() {
                 variant="text"
                 sx={{ p: 0, minWidth: 0 }}
               >
-                Create one
+                {t('auth.createOne')}
               </Button>
             </Typography>
           ) : null}

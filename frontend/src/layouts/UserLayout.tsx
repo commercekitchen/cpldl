@@ -19,7 +19,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGaPageViews } from '../app/useGaPageViews';
 import type { OrganizationConfig } from '../app/organization/types';
@@ -31,6 +31,14 @@ import { useLocale } from '../app/locale/LocaleContext';
 import { useGuestProgress } from '../features/progress/useGuestProgress';
 import { StagingBanner } from '../app/components/StagingBanner';
 import { AnnouncementBanner } from '../app/components/AnnouncementBanner';
+
+export type UserLayoutOutletContext = {
+  // Re-runs the screen-reader focus/announcement that normally fires on route
+  // change. Pages whose content loads asynchronously (via useAnnounceContentReady)
+  // call this once their real content replaces the loading state, since the
+  // route-change effect only sees whatever was in <main> at navigation time.
+  announceContent: () => void;
+};
 
 type NavButtonProps = {
   to: string;
@@ -121,20 +129,27 @@ export function UserLayout() {
 
   const mainRef = useRef<HTMLDivElement>(null);
   const isFirstRouteRender = useRef(true);
+  const announceTimer = useRef<number | undefined>(undefined);
   const [routeAnnouncement, setRouteAnnouncement] = useState('');
 
   // Client-side navigation doesn't reload the page or move focus, so a screen
   // reader's browse-mode buffer goes stale after each route change. Moving
   // focus to the main landmark forces a refresh and re-announces the page.
+  const announceContent = useCallback(() => {
+    mainRef.current?.focus({ preventScroll: true });
+    window.clearTimeout(announceTimer.current);
+    announceTimer.current = window.setTimeout(() => setRouteAnnouncement(document.title), 100);
+  }, []);
+
   useEffect(() => {
     if (isFirstRouteRender.current) {
       isFirstRouteRender.current = false;
       return;
     }
-    mainRef.current?.focus({ preventScroll: true });
-    const timer = window.setTimeout(() => setRouteAnnouncement(document.title), 100);
-    return () => window.clearTimeout(timer);
-  }, [location.pathname]);
+    announceContent();
+  }, [location.pathname, announceContent]);
+
+  useEffect(() => () => window.clearTimeout(announceTimer.current), []);
   const searchActive = isSearchPage || isSearchOpen;
   const searchValue = searchDraft;
 
@@ -453,7 +468,7 @@ export function UserLayout() {
           '&:focus-visible': { outline: 'none' },
         }}
       >
-        <Outlet />
+        <Outlet context={{ announceContent } satisfies UserLayoutOutletContext} />
       </Box>
 
       {!isLessonContentPath && (
