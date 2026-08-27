@@ -56,7 +56,7 @@ export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
         color="primary"
         sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}
       >
-        Download {fileTypeLabel(contentType)}
+        {action} {fileTypeLabel(contentType)}
         <DownloadIcon fontSize="small" />
       </Typography>
     </Paper>

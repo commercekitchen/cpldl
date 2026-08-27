@@ -45,6 +45,11 @@ export function CourseCategoryPill({ label, variant = 'filled' }: Props) {
               }),
           fontSize: '0.75rem',
           fontWeight: 600,
+          '&:focus-visible': {
+            outline: '3px solid',
+            outlineColor: 'primary.main',
+            outlineOffset: -2,
+          },
         }}
       >
         {label}

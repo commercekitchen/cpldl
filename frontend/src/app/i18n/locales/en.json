@@ -36,7 +36,10 @@
     "lessonsTbd": "Lessons TBD",
     "lessonCount_one": "{{count}} lesson",
     "lessonCount_other": "{{count}} lessons",
-    "durationMins": "{{count}} mins"
+    "durationMins": "{{count}} mins",
+    "durationLabel": "Duration",
+    "levelLabel": "Level",
+    "lessonsLabel": "Lessons"
   },
   "lessons": {
     "playLesson": "Play Lesson",
