@@ -19,7 +19,7 @@ import {
   Menu,
   MenuItem,
 } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGaPageViews } from '../app/useGaPageViews';
 import type { OrganizationConfig } from '../app/organization/types';
@@ -118,6 +118,23 @@ export function UserLayout() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchDraft, setSearchDraft] = useState(() => (isSearchPage ? query : ''));
   const [searchFocusSignal, setSearchFocusSignal] = useState(0);
+
+  const mainRef = useRef<HTMLDivElement>(null);
+  const isFirstRouteRender = useRef(true);
+  const [routeAnnouncement, setRouteAnnouncement] = useState('');
+
+  // Client-side navigation doesn't reload the page or move focus, so a screen
+  // reader's browse-mode buffer goes stale after each route change. Moving
+  // focus to the main landmark forces a refresh and re-announces the page.
+  useEffect(() => {
+    if (isFirstRouteRender.current) {
+      isFirstRouteRender.current = false;
+      return;
+    }
+    mainRef.current?.focus({ preventScroll: true });
+    const timer = window.setTimeout(() => setRouteAnnouncement(document.title), 100);
+    return () => window.clearTimeout(timer);
+  }, [location.pathname]);
   const searchActive = isSearchPage || isSearchOpen;
   const searchValue = searchDraft;
 
@@ -412,12 +429,28 @@ export function UserLayout() {
 
       <ScrollRestoration />
       <Box
+        aria-live="polite"
+        sx={{
+          position: 'absolute',
+          width: 1,
+          height: 1,
+          overflow: 'hidden',
+          clip: 'rect(0 0 0 0)',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {routeAnnouncement}
+      </Box>
+      <Box
         component="main"
         id="main-content"
+        ref={mainRef}
+        tabIndex={-1}
         sx={{
           flex: 1,
           minHeight: 0,
           overflow: isLessonContentPath ? 'hidden' : undefined,
+          '&:focus-visible': { outline: 'none' },
         }}
       >
         <Outlet />
@@ -549,29 +582,9 @@ export function UserLayout() {
                 p: 2,
               }}
             >
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'flex-start',
-                  mb: 1.5,
-                }}
-              >
-                <Typography component="h3" variant="h6">
-                  {t('footer.learnMore')}
-                </Typography>
-                {orgConfig.trainingSiteLink && (
-                  <MuiLink
-                    href={orgConfig.trainingSiteLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    variant="body2"
-                    underline="hover"
-                  >
-                    {t('footer.trainerResources')}
-                  </MuiLink>
-                )}
-              </Box>
+              <Typography component="h3" variant="h6" sx={{ mb: 1.5 }}>
+                {t('footer.learnMore')}
+              </Typography>
               {footerLinks.length > 0 ? (
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.75 }}>
                   {footerLinks.map((link) => (
@@ -596,6 +609,19 @@ export function UserLayout() {
                 <Typography variant="body2" color="text.secondary">
                   {t('footer.linksComingSoon')}
                 </Typography>
+              )}
+              {orgConfig.trainingSiteLink && (
+                <Box sx={{ mt: 1.5 }}>
+                  <MuiLink
+                    href={orgConfig.trainingSiteLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    variant="body2"
+                    underline="hover"
+                  >
+                    {t('footer.trainerResources')}
+                  </MuiLink>
+                </Box>
               )}
               {!isAuthenticated && (
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>

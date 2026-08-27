@@ -17,7 +17,9 @@ export function usePageMetadata(meta: PageMetadata | null) {
       document.querySelector<HTMLMetaElement>('meta[name="robots"]')?.content ?? null;
 
     if (meta.title) {
-      document.title = meta.title;
+      document.title = meta.title.includes('DigitalLearn')
+        ? meta.title
+        : `${meta.title} - DigitalLearn`;
     }
 
     if (meta.description !== undefined) {

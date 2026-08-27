@@ -70,6 +70,10 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
                 '&:hover, &:focus-visible': {
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 },
+                '&:focus-visible': {
+                  outline: '3px solid #fff',
+                  outlineOffset: -2,
+                },
               }}
             >
               {t('courses.startCourse')}

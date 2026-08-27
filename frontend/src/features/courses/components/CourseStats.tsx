@@ -26,18 +26,30 @@ export function CourseStats({ course, showLessons = false, color = 'text.seconda
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 2, flexWrap: 'wrap' }}>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box
+        role="group"
+        aria-label={`${t('courses.durationLabel')}: ${durationLabel}`}
+        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+      >
         <Schedule sx={{ color }} aria-hidden="true" />
-        <Typography variant="body2" color={color}>{durationLabel}</Typography>
+        <Typography variant="body2" color={color} aria-hidden="true">{durationLabel}</Typography>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+      <Box
+        role="group"
+        aria-label={`${t('courses.levelLabel')}: ${levelLabel}`}
+        sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+      >
         <Speed sx={{ color }} aria-hidden="true" />
-        <Typography variant="body2" color={color}>{levelLabel}</Typography>
+        <Typography variant="body2" color={color} aria-hidden="true">{levelLabel}</Typography>
       </Box>
       {showLessons && (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box
+          role="group"
+          aria-label={`${t('courses.lessonsLabel')}: ${lessonsLabel}`}
+          sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+        >
           <PlayLesson sx={{ color }} aria-hidden="true" />
-          <Typography variant="body2" color={color}>{lessonsLabel}</Typography>
+          <Typography variant="body2" color={color} aria-hidden="true">{lessonsLabel}</Typography>
         </Box>
       )}
     </Box>

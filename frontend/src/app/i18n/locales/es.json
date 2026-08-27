@@ -36,7 +36,10 @@
     "lessonsTbd": "Lecciones por determinar",
     "lessonCount_one": "{{count}} lección",
     "lessonCount_other": "{{count}} lecciones",
-    "durationMins": "{{count}} min"
+    "durationMins": "{{count}} min",
+    "durationLabel": "Duración",
+    "levelLabel": "Nivel",
+    "lessonsLabel": "Lecciones"
   },
   "lessons": {
     "playLesson": "Reproducir lección",

@@ -78,6 +78,10 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
                 '&:hover, &:focus-visible': {
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 },
+                '&:focus-visible': {
+                  outline: '3px solid #fff',
+                  outlineOffset: -2,
+                },
               }}
             >
               {lesson.completed ? t('lessons.replay') : t('lessons.playLesson')}
@@ -116,15 +120,23 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
             flexWrap: 'wrap',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box
+            role="group"
+            aria-label={`${t('courses.durationLabel')}: ${durationLabel}`}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             <Schedule aria-hidden="true" />
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" aria-hidden="true">
               {durationLabel}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box
+            role="group"
+            aria-label={`${t('courses.levelLabel')}: ${levelLabel}`}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             <Speed aria-hidden="true" />
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" aria-hidden="true">
               {levelLabel}
             </Typography>
           </Box>
