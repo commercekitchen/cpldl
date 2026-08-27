@@ -7,6 +7,7 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import { DownloadAttachmentRow } from '../components/DownloadAttachmentRow';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
+import { useAnnounceContentReady } from '../../../layouts/useAnnounceContentReady';
 import type { Course } from '../types';
 import { useCourseQuery } from '../queries/courseQuery';
 import { LessonListContainer } from '../../lessons/components/LessonListContainer';
@@ -48,6 +49,8 @@ export function CoursePage() {
   const { isCompleted: isGuestLessonCompleted } = useGuestProgress();
 
   const [error] = useState<string | null>(null);
+
+  useAnnounceContentReady(!isLoading && Boolean(course));
 
   usePageMetadata(
     course

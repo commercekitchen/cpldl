@@ -68,7 +68,7 @@ export default function ForgotPassword() {
               <Box component="form" onSubmit={onSubmit}>
                 <Stack spacing={2}>
                   <TextField
-                    label="Email"
+                    label={t('auth.email')}
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}

@@ -1,5 +1,6 @@
 import { type FormEvent, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ import { migrateGuestProgress } from '../features/progress/guestProgress';
 import { completeLesson } from '../features/lessons/api/lessonsApi';
 
 export default function Signup() {
+  const { t } = useTranslation();
   const { refresh } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -37,7 +39,7 @@ export default function Signup() {
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (password !== passwordConfirmation) {
-      setError('Passwords do not match.');
+      setError(t('auth.passwordsMustMatch'));
       return;
     }
     setError(null);
@@ -60,7 +62,7 @@ export default function Signup() {
       await refresh();
       navigate(from, { replace: true });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Signup failed';
+      const message = err instanceof Error ? err.message : t('auth.signupFailed');
       setError(message);
     } finally {
       setSubmitting(false);
@@ -83,10 +85,10 @@ export default function Signup() {
         <Stack spacing={2.5}>
           <Box>
             <Typography variant="h4" component="h1" sx={{ mb: 0.75 }}>
-              Create account
+              {t('auth.createAccount')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Sign up for a free DigitalLearn account to track your progress and continue courses.
+              {t('auth.signupSubtitle')}
             </Typography>
           </Box>
 
@@ -95,7 +97,7 @@ export default function Signup() {
           <Box component="form" onSubmit={onSubmit}>
             <Stack spacing={2}>
               <TextField
-                label="Email"
+                label={t('auth.email')}
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -105,7 +107,7 @@ export default function Signup() {
               />
 
               <TextField
-                label="Password"
+                label={t('auth.password')}
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -115,7 +117,7 @@ export default function Signup() {
               />
 
               <TextField
-                label="Confirm Password"
+                label={t('auth.confirmPassword')}
                 type="password"
                 value={passwordConfirmation}
                 onChange={(e) => setPasswordConfirmation(e.target.value)}
@@ -123,19 +125,19 @@ export default function Signup() {
                 fullWidth
                 required
                 error={passwordMismatch}
-                helperText={passwordMismatch ? 'Passwords do not match.' : undefined}
+                helperText={passwordMismatch ? t('auth.passwordsMustMatch') : undefined}
               />
 
               <Button type="submit" variant="contained" size="large" disabled={submitting} fullWidth>
-                {submitting ? 'Creating…' : 'Create account'}
+                {submitting ? t('auth.creatingAccount') : t('auth.createAccount')}
               </Button>
             </Stack>
           </Box>
 
           <Typography variant="body2" color="text.secondary">
-            Already have an account?{' '}
+            {t('auth.alreadyHaveAccount')}{' '}
             <Button component={Link} to="/login" size="small" variant="text" sx={{ p: 0, minWidth: 0 }}>
-              Log in
+              {t('auth.login')}
             </Button>
           </Typography>
         </Stack>

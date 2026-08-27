@@ -13,11 +13,14 @@ import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseStats } from '../components/CourseStats';
 import type { OrganizationConfig } from '../../../app/organization/types';
 import { pushGaEvent } from '../../../app/analytics';
+import { useAnnounceContentReady } from '../../../layouts/useAnnounceContentReady';
 
 export function CourseCompletedPage() {
   const { courseId = '' } = useParams();
   const navigate = useNavigate();
   const { data: course, isLoading } = useCourseQuery(courseId);
+
+  useAnnounceContentReady(!isLoading && Boolean(course));
 
   const rootData = useRouteLoaderData('org') as { orgConfig: OrganizationConfig } | undefined;
   const surveyUrl = course?.surveyUrl || rootData?.orgConfig.features.userSurveyUrl;
