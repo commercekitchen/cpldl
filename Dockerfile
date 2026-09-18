@@ -1,12 +1,11 @@
 FROM ruby:2.7.8-slim-bullseye
 
 # Debian 11 (bullseye) is past its LTS window, so deb.debian.org no longer
-# serves it — point apt at the frozen archive instead, and stop checking
-# Release file expiry since archived suites don't get refreshed.
-RUN sed -i \
-      -e 's|deb.debian.org/debian-security|archive.debian.org/debian-security|g' \
-      -e 's|deb.debian.org/debian|archive.debian.org/debian|g' \
-      /etc/apt/sources.list && \
+# serves it — point apt at the frozen archive instead. archive.debian.org
+# doesn't carry a separate bullseye-security suite once a release is folded
+# in, so drop that source entirely rather than relocate it. Also stop
+# checking Release file expiry since archived suites don't get refreshed.
+RUN echo 'deb http://archive.debian.org/debian bullseye main' > /etc/apt/sources.list && \
     echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
 
 # Install OS / Rails dependencies
