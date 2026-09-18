@@ -4,7 +4,7 @@ module Api
   module V1
     class CmsPagesController < Api::V1::BaseController
       def show
-        cms_page = CmsPage.friendly.find(params[:id])
+        cms_page = CmsPage.where.not(pub_status: 'A').friendly.find(params[:id])
         skip_authorization
         render json: {
           slug: cms_page.slug,
