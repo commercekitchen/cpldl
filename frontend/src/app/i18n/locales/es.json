@@ -50,7 +50,11 @@
     "completedCoursesPageTitle": "Cursos completados",
     "totalCoursesCompleted": "Cursos completados",
     "totalTimeSpent": "Tiempo total dedicado",
-    "noCompletedCourses": "Todavía no has completado ningún curso."
+    "noCompletedCourses": "Todavía no has completado ningún curso.",
+    "downloadCsv": "Descargar CSV",
+    "csvCourseColumn": "Curso",
+    "csvCompletedColumn": "Fecha de finalización",
+    "csvTimeSpentColumn": "Tiempo total dedicado"
   },
   "lessons": {
     "playLesson": "Reproducir lección",
