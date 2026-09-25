@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import type { Course } from '../types';
 import { CourseCard } from './CourseCard';
 import { useAuth } from '../../../auth/useAuth';
@@ -15,6 +16,7 @@ type Props = {
 };
 
 export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref }: Props) {
+  const { t } = useTranslation();
   const { status } = useAuth();
   const { isCourseCompleted } = useGuestProgress();
   const isGuest = status === 'unauthenticated';
@@ -65,7 +67,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
           <ButtonBase
             component={RouterLink}
             to={viewAllHref}
-            aria-label="View all courses"
+            aria-label={t('courses.viewAllAriaLabel')}
             sx={{
               height: '100%',
               width: '100%',
@@ -83,7 +85,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
               },
             }}
           >
-            <Typography variant="subtitle1">View All</Typography>
+            <Typography variant="subtitle1">{t('courses.viewAll')}</Typography>
           </ButtonBase>
         </Box>
       )}

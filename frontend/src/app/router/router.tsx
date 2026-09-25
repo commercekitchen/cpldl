@@ -23,6 +23,7 @@ import AdminEditCmsPage from '../../pages/admin/EditCmsPage';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
+import { completedCoursesRoute } from '../../features/courses/routes/completedCoursesRoute';
 import { CourseCompletedPage } from '../../features/courses/pages/CourseCompletedPage';
 import Signup from '../../pages/Signup';
 import ForgotPassword from '../../pages/ForgotPassword';
@@ -81,6 +82,7 @@ export function createAppRouter() {
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
               { path: 'cms_pages/:slug', element: <CmsPage /> },
               lessonRoute,
+              completedCoursesRoute,
               coursesRoute,
               courseRoute,
             ],

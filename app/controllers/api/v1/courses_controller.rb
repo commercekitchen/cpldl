@@ -17,6 +17,13 @@ module Api
           courses = courses.where(id: tracked_course_ids)
         end
 
+        if params[:scope] == 'completed'
+          return render json: { courses: [] } unless current_user
+
+          completed_course_ids = current_user.course_progresses.completed.pluck(:course_id)
+          courses = courses.where(id: completed_course_ids)
+        end
+
         render json: CourseCollectionPresenter.new(courses, user: current_user).as_json
       end
 

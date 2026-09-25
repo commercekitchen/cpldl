@@ -91,5 +91,46 @@ RSpec.describe 'Api::V1::Courses', type: :request do
       expect(course_payloads.size).to eq(1)
       expect(course_payloads.first['summary']).to eq('Category match')
     end
+
+    it 'returns an empty list for scope=completed when there is no current user' do
+      create(:course, organization: organization, language: language, pub_status: 'P', access_level: :everyone)
+
+      get '/api/v1/courses', params: { scope: 'completed' }
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body).fetch('courses')).to be_empty
+    end
+
+    it 'returns only the current user\'s completed courses for scope=completed' do
+      user = create(:user, organization: organization)
+      completed_course = create(
+        :course,
+        organization: organization,
+        language: language,
+        pub_status: 'P',
+        access_level: :everyone,
+        summary: 'Completed course'
+      )
+      incomplete_course = create(
+        :course,
+        organization: organization,
+        language: language,
+        pub_status: 'P',
+        access_level: :everyone,
+        summary: 'Incomplete course'
+      )
+      create(:course_progress, user: user, course: completed_course, completed_at: Time.current)
+      create(:course_progress, user: user, course: incomplete_course, completed_at: nil)
+      allow_any_instance_of(Api::V1::CoursesController).to receive(:current_user).and_return(user)
+
+      get '/api/v1/courses', params: { scope: 'completed' }
+
+      expect(response).to have_http_status(:ok)
+
+      course_payloads = JSON.parse(response.body).fetch('courses')
+
+      expect(course_payloads.size).to eq(1)
+      expect(course_payloads.first['summary']).to eq('Completed course')
+    end
   end
 end
