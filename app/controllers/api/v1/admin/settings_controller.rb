@@ -61,6 +61,11 @@ module Api
           end
         end
 
+        def destroy_footer_logo
+          current_organization.footer_logo_file.purge
+          render json: { footerLogoUrl: footer_logo_url }
+        end
+
         private
 
         def require_admin
