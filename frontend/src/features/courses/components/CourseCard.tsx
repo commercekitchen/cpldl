@@ -73,6 +73,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
                 '&:focus-visible': {
                   outline: '3px solid #fff',
                   outlineOffset: -2,
+                  boxShadow: '0 0 0 5px rgba(0, 0, 0, 0.6)',
                 },
               }}
             >
