@@ -15,6 +15,7 @@
     "completedCourses": "Cursos completados",
     "featuredCourses": "Cursos destacados",
     "popularLessons": "Lecciones populares",
+    "viewAllCompletedCourses": "Ver todos los cursos completados",
     "getconnectedPromo": {
       "heading": "⭐ ¡Comparte tus opiniones, reclama tu recompensa! ⭐",
       "p1": "¿Listo para dar forma al futuro del aprendizaje digital? Responda a nuestra breve encuesta antes y después de completar los cursos y actividades recomendados para compartir sus opiniones. Como muestra de nuestro agradecimiento, les ofrecemos una tarjeta de regalo de $25 por su tiempo.",
@@ -43,12 +44,17 @@
     "levelLabel": "Nivel",
     "lessonsLabel": "Lecciones",
     "completedInDuration": "Completado en {{duration}}",
+    "completedOn": "Completado: {{date}}",
     "viewAll": "Ver todo",
     "viewAllAriaLabel": "Ver todos los cursos",
     "completedCoursesPageTitle": "Cursos completados",
     "totalCoursesCompleted": "Cursos completados",
     "totalTimeSpent": "Tiempo total dedicado",
-    "noCompletedCourses": "Todavía no has completado ningún curso."
+    "noCompletedCourses": "Todavía no has completado ningún curso.",
+    "downloadCsv": "Descargar CSV",
+    "csvCourseColumn": "Curso",
+    "csvCompletedColumn": "Fecha de finalización",
+    "csvTimeSpentColumn": "Tiempo total dedicado"
   },
   "lessons": {
     "playLesson": "Reproducir lección",

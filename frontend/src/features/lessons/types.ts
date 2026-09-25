@@ -14,4 +14,5 @@ export type Lesson = {
   level: string;
   previewImageUrl?: string;
   completed?: boolean;
+  completedAt?: string;
 };

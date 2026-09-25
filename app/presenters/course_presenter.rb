@@ -27,6 +27,7 @@ class CoursePresenter
       categoryOrder: @course.category&.category_order,
       attachments: attachments_payload,
       completed: completed?,
+      completedAt: completed_at,
       lessonsCount: @course.lessons.count,
       lessonsCompletedCount: lessons_completed_count,
       totalDuration: @course.lessons.sum(:duration)
@@ -38,7 +39,19 @@ class CoursePresenter
   def completed?
     return false if @user.blank?
 
-    @user.course_progresses.find_by(course_id: @course.id)&.completed_at.present?
+    course_progress&.completed_at.present?
+  end
+
+  def completed_at
+    return nil if @user.blank?
+
+    course_progress&.completed_at&.iso8601
+  end
+
+  def course_progress
+    return @course_progress if defined?(@course_progress)
+
+    @course_progress = @user.course_progresses.find_by(course_id: @course.id)
   end
 
   def lessons_completed_count
