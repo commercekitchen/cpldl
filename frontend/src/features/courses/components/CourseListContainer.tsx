@@ -8,11 +8,27 @@ import type { ListCoursesParams } from '../api/coursesApi';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
 import { listLessons } from '../../lessons/api/lessonsApi';
 
-type Props = { title: string; params?: ListCoursesParams; headerAction?: React.ReactNode };
+type Props = {
+  title: string;
+  params?: ListCoursesParams;
+  headerAction?: React.ReactNode;
+  viewAllHref?: string;
+  hideWhenEmpty?: boolean;
+};
 
-export function CourseListContainer({ title, params, headerAction }: Props) {
+export function CourseListContainer({
+  title,
+  params,
+  headerAction,
+  viewAllHref = '/courses',
+  hideWhenEmpty = false,
+}: Props) {
   const navigate = useNavigate();
   const { data: courses = [], isLoading, error } = useCoursesListQuery(params);
+
+  if (hideWhenEmpty && !isLoading && !error && courses.length === 0) {
+    return null;
+  }
 
   const startCourse = async (courseId: string) => {
     try {
@@ -49,7 +65,7 @@ export function CourseListContainer({ title, params, headerAction }: Props) {
           onStartCourse={(id) => {
             void startCourse(id);
           }}
-          viewAllHref="/courses"
+          viewAllHref={viewAllHref}
         />
       )}
     </Box>

@@ -12,6 +12,7 @@
   },
   "home": {
     "coursesForYou": "Cursos para ti",
+    "completedCourses": "Cursos completados",
     "featuredCourses": "Cursos destacados",
     "popularLessons": "Lecciones populares",
     "getconnectedPromo": {
@@ -37,9 +38,17 @@
     "lessonCount_one": "{{count}} lección",
     "lessonCount_other": "{{count}} lecciones",
     "durationMins": "{{count}} min",
+    "durationHoursMins": "{{hours}} h {{minutes}} min",
     "durationLabel": "Duración",
     "levelLabel": "Nivel",
-    "lessonsLabel": "Lecciones"
+    "lessonsLabel": "Lecciones",
+    "completedInDuration": "Completado en {{duration}}",
+    "viewAll": "Ver todo",
+    "viewAllAriaLabel": "Ver todos los cursos",
+    "completedCoursesPageTitle": "Cursos completados",
+    "totalCoursesCompleted": "Cursos completados",
+    "totalTimeSpent": "Tiempo total dedicado",
+    "noCompletedCourses": "Todavía no has completado ningún curso."
   },
   "lessons": {
     "playLesson": "Reproducir lección",

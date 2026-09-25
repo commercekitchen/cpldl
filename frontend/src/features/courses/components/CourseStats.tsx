@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import { PlayLesson, Schedule, Speed } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import type { Course } from '../types';
+import { formatDurationMinutes } from '../utils/duration';
 
 type Props = {
   course: Course;
@@ -13,10 +14,7 @@ type Props = {
 export function CourseStats({ course, showLessons = false, color = 'text.secondary' }: Props) {
   const { t } = useTranslation();
   const durationSeconds = Number(course.totalDuration);
-  const durationLabel =
-    Number.isFinite(durationSeconds) && durationSeconds > 0
-      ? t('courses.durationMins', { count: Math.floor(durationSeconds / 60) })
-      : t('courses.durationTbd');
+  const durationLabel = formatDurationMinutes(durationSeconds, t);
   const levelLabel = course.level?.trim() || t('courses.levelTbd');
   const lessonsCount = course.lessonsCount;
   const lessonsLabel =

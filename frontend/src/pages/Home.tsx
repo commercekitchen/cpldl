@@ -83,6 +83,15 @@ export default function Home() {
           />
         )}
 
+        {isAuthenticated && (
+          <CourseListContainer
+            title={t('home.completedCourses')}
+            params={{ scope: 'completed', limit: 10 }}
+            viewAllHref="/completed-courses"
+            hideWhenEmpty
+          />
+        )}
+
         <CourseListContainer
           title={t('home.featuredCourses')}
           params={{ scope: 'homepage', limit: 10 }}

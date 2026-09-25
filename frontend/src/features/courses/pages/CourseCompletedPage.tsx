@@ -1,6 +1,7 @@
 import DOMPurify from 'dompurify';
 import { useEffect } from 'react';
 import { useNavigate, useParams, useRouteLoaderData } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
@@ -11,11 +12,13 @@ import { ArrowBack, CheckCircle, Search } from '@mui/icons-material';
 import { useCourseQuery } from '../queries/courseQuery';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseStats } from '../components/CourseStats';
+import { formatDurationMinutes } from '../utils/duration';
 import type { OrganizationConfig } from '../../../app/organization/types';
 import { pushGaEvent } from '../../../app/analytics';
 import { useAnnounceContentReady } from '../../../layouts/useAnnounceContentReady';
 
 export function CourseCompletedPage() {
+  const { t } = useTranslation();
   const { courseId = '' } = useParams();
   const navigate = useNavigate();
   const { data: course, isLoading } = useCourseQuery(courseId);
@@ -55,9 +58,16 @@ export function CourseCompletedPage() {
         <Typography variant="body1" color="primary.contrastText" sx={{ opacity: 0.85, mb: 1.5 }}>
           You've Completed
         </Typography>
-        <Typography variant="h4" color="primary.contrastText" sx={{ fontWeight: 700, mb: 3 }}>
+        <Typography variant="h4" color="primary.contrastText" sx={{ fontWeight: 700, mb: 1 }}>
           {course?.title ?? 'this course'}
         </Typography>
+        {course && (
+          <Typography variant="body1" color="primary.contrastText" sx={{ opacity: 0.85, mb: 2 }}>
+            {t('courses.completedInDuration', {
+              duration: formatDurationMinutes(Number(course.totalDuration), t),
+            })}
+          </Typography>
+        )}
         {course?.categoryName && (
           <CourseCategoryPill label={course.categoryName.trim()} variant="outlined" />
         )}
