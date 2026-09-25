@@ -44,6 +44,7 @@ module Api
         {
           profile: {
             firstName: p.first_name,
+            lastName: p.last_name,
             zipCode: p.zip_code,
             languageId: p.language_id,
             optOutOfRecommendations: p.opt_out_of_recommendations == true
@@ -53,7 +54,7 @@ module Api
       end
 
       def profile_params
-        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :zip_code, :opt_out_of_recommendations)
+        raw = params.fetch(:profile, {}).permit(:language_id, :first_name, :last_name, :zip_code, :opt_out_of_recommendations)
         raw[:language_id] = raw[:language_id].presence
         raw
       end
