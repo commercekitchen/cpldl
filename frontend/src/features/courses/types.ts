@@ -15,6 +15,7 @@ export type Course = {
   level?: string;
   totalDuration?: string;
   completed?: boolean;
+  completedAt?: string;
   lessonsCount?: number;
   lessonsCompletedCount?: number;
   previewImageUrl?: string;

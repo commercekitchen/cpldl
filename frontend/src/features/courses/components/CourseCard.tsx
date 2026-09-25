@@ -12,6 +12,8 @@ import { CourseCompletedBadge } from './CourseCompletedBadge';
 import { CourseStats } from './CourseStats';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import { pushGaEvent } from '../../../app/analytics';
+import { useLocale } from '../../../app/locale/LocaleContext';
+import { formatCompletedDate } from '../utils/formatCompletedDate';
 import attLogo from '../../../assets/att_logo.png';
 
 type Props = {
@@ -23,6 +25,7 @@ type Props = {
 
 export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: Props) {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const imageUrl = previewImageForRecord(course.id);
   const categoryLabel = course.categoryName?.trim();
   const content = (
@@ -89,6 +92,11 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
           <Typography variant="h6">{course.title}</Typography>
           {course.completed && <CourseCompletedBadge />}
         </Box>
+        {course.completed && course.completedAt && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {t('courses.completedOn', { date: formatCompletedDate(course.completedAt, locale) })}
+          </Typography>
+        )}
         {course.summary && (
           <Typography
             variant="body2"

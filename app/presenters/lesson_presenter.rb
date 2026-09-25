@@ -24,6 +24,7 @@ class LessonPresenter
       level: @course.level,
       course: CoursePresenter.new(@course).as_json,
       completed: completed?,
+      completedAt: completed_at,
       category: @course.category&.name,
       topics: @course.topics.map(&:title),
       storylinePath: storyline_path,
@@ -37,6 +38,13 @@ class LessonPresenter
     return false unless @user
 
     @user.completed_lesson_ids(@course).include?(@lesson.id)
+  end
+
+  def completed_at
+    return nil unless @user
+
+    progress = @user.course_progresses.find_by(course_id: @course.id)
+    progress&.lesson_completions&.find_by(lesson_id: @lesson.id)&.created_at&.iso8601
   end
 
   def storyline_path

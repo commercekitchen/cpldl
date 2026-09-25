@@ -15,6 +15,7 @@
     "completedCourses": "Completed Courses",
     "featuredCourses": "Featured Courses",
     "popularLessons": "Popular Lessons",
+    "viewAllCompletedCourses": "View All Completed Courses",
     "getconnectedPromo": {
       "heading": "⭐ Share Your Opinions, Claim Your Reward! ⭐",
       "p1": "Ready to shape the future of digital learning? Take our quick survey and let us know your thoughts! As a token of our appreciation, we're offering a $25 gift card to thank you for your time.",
@@ -43,6 +44,7 @@
     "levelLabel": "Level",
     "lessonsLabel": "Lessons",
     "completedInDuration": "Completed in {{duration}}",
+    "completedOn": "Completed: {{date}}",
     "viewAll": "View All",
     "viewAllAriaLabel": "View all courses",
     "completedCoursesPageTitle": "Completed Courses",

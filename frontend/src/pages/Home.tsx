@@ -83,15 +83,6 @@ export default function Home() {
           />
         )}
 
-        {isAuthenticated && (
-          <CourseListContainer
-            title={t('home.completedCourses')}
-            params={{ scope: 'completed', limit: 10 }}
-            viewAllHref="/completed-courses"
-            hideWhenEmpty
-          />
-        )}
-
         <CourseListContainer
           title={t('home.featuredCourses')}
           params={{ scope: 'homepage', limit: 10 }}
@@ -101,6 +92,20 @@ export default function Home() {
           title={t('home.popularLessons')}
           params={{ scope: 'popular', limit: 10 }}
         />
+
+        {isAuthenticated && (
+          <CourseListContainer
+            title={t('home.completedCourses')}
+            params={{ scope: 'completed', limit: 10 }}
+            viewAllHref="/completed-courses"
+            hideWhenEmpty
+            headerAction={
+              <Button variant="outlined" size="small" onClick={() => navigate('/completed-courses')}>
+                {t('home.viewAllCompletedCourses')}
+              </Button>
+            }
+          />
+        )}
       </Container>
     </>
   );
