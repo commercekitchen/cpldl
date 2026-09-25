@@ -297,6 +297,7 @@ function GeneralSection({
   const colorsValid = isValidHex(form.primaryColor) && isValidHex(form.secondaryColor);
   const [saving, setSaving] = useState(false);
   const [uploadingFooterLogo, setUploadingFooterLogo] = useState(false);
+  const [removingFooterLogo, setRemovingFooterLogo] = useState(false);
   const [uploadingHeaderLogo, setUploadingHeaderLogo] = useState(false);
 
   const handleSave = async () => {
@@ -344,6 +345,28 @@ function GeneralSection({
       onError(t('admin.settingsPage.logoUploadError'));
     } finally {
       setUploadingFooterLogo(false);
+    }
+  };
+
+  const handleFooterLogoRemove = async () => {
+    setRemovingFooterLogo(true);
+    try {
+      const res = await apiFetch('/api/v1/admin/settings/footer_logo', {
+        method: 'DELETE',
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { errors?: string[] } | null;
+        onError(body?.errors?.[0] ?? t('admin.settingsPage.logoRemoveError'));
+        return;
+      }
+      await queryClient.invalidateQueries({ queryKey: ['admin-settings'] });
+      organizationClient.clearCache();
+      revalidate();
+      onSuccess(t('admin.settingsPage.logoRemoved'));
+    } catch {
+      onError(t('admin.settingsPage.logoRemoveError'));
+    } finally {
+      setRemovingFooterLogo(false);
     }
   };
 
@@ -440,13 +463,13 @@ function GeneralSection({
             />
           </Box>
         )}
-        <Box>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <Button
             component="label"
             variant="outlined"
             size="small"
             startIcon={uploadingFooterLogo ? <CircularProgress size={14} /> : <CloudUploadIcon />}
-            disabled={uploadingFooterLogo}
+            disabled={uploadingFooterLogo || removingFooterLogo}
           >
             {uploadingFooterLogo
               ? t('admin.settingsPage.uploading')
@@ -465,6 +488,18 @@ function GeneralSection({
               }}
             />
           </Button>
+          {data.footerLogoUrl && (
+            <Button
+              variant="outlined"
+              color="error"
+              size="small"
+              startIcon={removingFooterLogo ? <CircularProgress size={14} /> : <DeleteIcon />}
+              disabled={uploadingFooterLogo || removingFooterLogo}
+              onClick={() => void handleFooterLogoRemove()}
+            >
+              {removingFooterLogo ? t('admin.settingsPage.removing') : t('admin.settingsPage.removeLogo')}
+            </Button>
+          )}
         </Box>
       </Box>
 

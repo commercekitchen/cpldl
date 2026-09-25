@@ -278,6 +278,7 @@ es:
     name_fill_long: "_________________________________________"
     has_completed: "ha completado"
     as_of: "el"
+    time_spent: "Tiempo dedicado"
     att:
       disclaimer: "<strong>Exención de responsabilidad:</strong> Ninguna de las otras compañías cuyos nombres o logotipos aparecen en estos materiales educativos han participado en la creación de estos materiales, ni los han aprobado ni patrocinado. Tampoco están afiliadas de ninguna manera con estos materiales."
   google_analytics_url:

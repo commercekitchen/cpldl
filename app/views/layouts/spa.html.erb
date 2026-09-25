@@ -4,6 +4,9 @@
     <%= render "shared/layout/analytics" %>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <% if !Rails.env.production? || request.path.start_with?("/admin") %>
+      <meta name="robots" content="noindex, nofollow">
+    <% end %>
     <title><%= current_organization.subdomain == "www" ? "DigitalLearn" : "#{current_organization.name} - DigitalLearn" %></title>
 
     <%= csrf_meta_tags %>

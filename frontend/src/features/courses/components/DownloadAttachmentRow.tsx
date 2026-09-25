@@ -1,3 +1,4 @@
+import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -34,7 +35,6 @@ export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${action} ${fileName} (opens in new tab)`}
       {...(!openable && { download: true })}
       onClick={() => pushGaEvent('material_downloaded', { file_name: fileName })}
       variant="elevation"
@@ -56,8 +56,21 @@ export function DownloadAttachmentRow({ fileName, url, contentType }: Props) {
         color="primary"
         sx={{ display: 'flex', alignItems: 'center', gap: 0.5, whiteSpace: 'nowrap' }}
       >
-        Download {fileTypeLabel(contentType)}
+        {action} {fileTypeLabel(contentType)}
         <DownloadIcon fontSize="small" />
+        <Box
+          component="span"
+          sx={{
+            position: 'absolute',
+            width: 1,
+            height: 1,
+            overflow: 'hidden',
+            clip: 'rect(0 0 0 0)',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          (opens in new tab)
+        </Box>
       </Typography>
     </Paper>
   );

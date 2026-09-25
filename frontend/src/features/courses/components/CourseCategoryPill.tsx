@@ -36,12 +36,22 @@ export function CourseCategoryPill({ label, variant = 'filled' }: Props) {
                 borderColor: 'primary.main',
                 color: 'primary.contrastText',
                 '&:hover': { filter: 'brightness(0.9)' },
+                '&:focus-visible': {
+                  outline: '3px solid',
+                  outlineColor: 'primary.contrastText',
+                  outlineOffset: -2,
+                },
               }
             : {
                 bgcolor: 'transparent',
                 borderColor: 'primary.contrastText',
                 color: 'primary.contrastText',
                 '&:hover': { filter: 'brightness(0.85)' },
+                '&:focus-visible': {
+                  outline: '3px solid',
+                  outlineColor: 'primary.main',
+                  outlineOffset: -2,
+                },
               }),
           fontSize: '0.75rem',
           fontWeight: 600,

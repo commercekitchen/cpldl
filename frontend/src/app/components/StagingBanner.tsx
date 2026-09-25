@@ -27,7 +27,7 @@ export function StagingBanner() {
       role="status"
       sx={{
         bgcolor: 'warning.main',
-        color: 'warning.contrastText',
+        color: 'rgba(0, 0, 0, 0.87)',
         px: 2,
         py: 0.75,
         display: 'flex',

@@ -1,21 +1,38 @@
 @import "vars";
 
 .cert-box {
-  border: solid;
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 2px solid;
   border-color: $teal;
+  border-radius: 14px;
   height: 43.5em;
+  padding-top: 1em;
   text-align: center;
   color: $grey;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  .cert-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 0.45em;
+    background-color: $teal;
+  }
 
   h1 {
-    font-size: 3.5em;
-    margin: 1.5em 0;
+    font-size: 3em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin: 1.35em 0 0.75em;
   }
 
   h2 {
-    font-size: 2.5em;
-    margin: 0.5em 0;
-    font-weight: lighter;
+    font-size: 2.25em;
+    margin: 0.4em 0;
+    font-weight: 600;
     &.name {
       color: $purple;
     }
@@ -25,13 +42,21 @@
   }
 
   p {
-    font-size: 1.5em;
+    font-size: 1.35em;
     margin: 0.2em 0;
+
+    &.time-spent {
+      margin-top: 0.75em;
+      font-size: 1.1em;
+      font-weight: 600;
+      color: $dark-grey;
+    }
   }
 
-  img {
+  .cert-logo {
     position: absolute;
-    bottom: 2em;
+    bottom: 1.5em;
     left: 2.5em;
+    height: 3em;
   }
 }

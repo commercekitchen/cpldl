@@ -11,7 +11,9 @@ import { PlayArrow, Replay, Schedule, Speed } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import { previewImageForRecord } from '../../../app/images/previewImages';
 import { pushGaEvent } from '../../../app/analytics';
+import { useLocale } from '../../../app/locale/LocaleContext';
 import { CourseCompletedBadge } from '../../courses/components/CourseCompletedBadge';
+import { formatCompletedDate } from '../../courses/utils/formatCompletedDate';
 import attLogo from '../../../assets/att_logo.png';
 
 type Props = {
@@ -24,6 +26,7 @@ type Props = {
 
 export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hideCourseContext }: Props) {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const imageUrl = previewImageForRecord(lesson.id);
   const durationLabel = lesson.duration
     ? t('courses.durationMins', { count: Math.floor(lesson.duration / 60) })
@@ -78,6 +81,11 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
                 '&:hover, &:focus-visible': {
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 },
+                '&:focus-visible': {
+                  outline: '3px solid #fff',
+                  outlineOffset: -2,
+                  boxShadow: '0 0 0 5px rgba(0, 0, 0, 0.6)',
+                },
               }}
             >
               {lesson.completed ? t('lessons.replay') : t('lessons.playLesson')}
@@ -92,6 +100,11 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
           <Typography variant="h6">{lesson.title}</Typography>
           {lesson.completed && <CourseCompletedBadge />}
         </Box>
+        {lesson.completed && lesson.completedAt && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {t('courses.completedOn', { date: formatCompletedDate(lesson.completedAt, locale) })}
+          </Typography>
+        )}
         {lesson.summary && (
           <Typography
             variant="body2"
@@ -116,15 +129,23 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
             flexWrap: 'wrap',
           }}
         >
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box
+            role="group"
+            aria-label={`${t('courses.durationLabel')}: ${durationLabel}`}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             <Schedule aria-hidden="true" />
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" aria-hidden="true">
               {durationLabel}
             </Typography>
           </Box>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box
+            role="group"
+            aria-label={`${t('courses.levelLabel')}: ${levelLabel}`}
+            sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+          >
             <Speed aria-hidden="true" />
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" aria-hidden="true">
               {levelLabel}
             </Typography>
           </Box>

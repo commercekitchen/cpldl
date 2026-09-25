@@ -21,7 +21,7 @@ import { useAuth } from '../auth/useAuth';
 
 type LanguageOption = { id: number; name: string };
 type ProfilePayload = {
-  profile: { firstName: string | null; zipCode: string | null; languageId: number | null; optOutOfRecommendations: boolean };
+  profile: { firstName: string | null; lastName: string | null; zipCode: string | null; languageId: number | null; optOutOfRecommendations: boolean };
   languages: LanguageOption[];
 };
 type AccountPayload = {
@@ -42,6 +42,7 @@ export default function Account() {
   const [languages, setLanguages] = useState<LanguageOption[]>([]);
   const [languageId, setLanguageId] = useState<number | ''>('');
   const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [zipCode, setZipCode] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -73,6 +74,7 @@ export default function Account() {
         setLanguages(profileData.languages);
         setLanguageId(profileData.profile.languageId ?? '');
         setFirstName(profileData.profile.firstName ?? '');
+        setLastName(profileData.profile.lastName ?? '');
         setZipCode(profileData.profile.zipCode ?? '');
         setOptOutOfRecommendations(profileData.profile.optOutOfRecommendations ?? false);
         setEmail(accountData.account.email ?? '');
@@ -99,6 +101,7 @@ export default function Account() {
           profile: {
             language_id: languageId || null,
             first_name: firstName,
+            last_name: lastName,
             zip_code: zipCode,
             opt_out_of_recommendations: optOutOfRecommendations,
           },
@@ -227,6 +230,13 @@ export default function Account() {
                   onChange={(e) => setFirstName(e.target.value)}
                   fullWidth
                   required
+                />
+
+                <TextField
+                  label="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  fullWidth
                 />
 
                 <TextField

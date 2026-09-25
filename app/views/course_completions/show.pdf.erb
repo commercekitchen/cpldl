@@ -1,10 +1,17 @@
-<div class="cert-box">
-  <h1><%= t('completed_courses_page.certificate_of_completion') %></h1>
+<%
+  primary_color = certificate_brand_color(current_organization, :primary_color, DefaultTheme::PRIMARY_COLOR)
+  secondary_color = certificate_brand_color(current_organization, :secondary_color, DefaultTheme::SECONDARY_COLOR)
+  identifier = certificate_user_identifier(current_user)
+  time_spent = course_time_spent(@course)
+%>
+<div class="cert-box" style="border-color: <%= primary_color %>;">
+  <div class="cert-accent" style="background-color: <%= primary_color %>;"></div>
+  <h1 style="color: <%= primary_color %>;"><%= t('completed_courses_page.certificate_of_completion') %></h1>
   <p>
     <%= t('certificate.this_award') %>
   </p>
-  <% if current_user %>
-    <%= content_tag :h2, "#{user_display_name} #{current_user.last_name}", class: "name" %>
+  <% if identifier %>
+    <%= content_tag :h2, identifier, class: "name", style: "color: #{secondary_color};" %>
   <% else %>
     <br/><br/>
     <%= t('certificate.name_fill_long') %>
@@ -13,9 +20,14 @@
   <p>
     <%= t('certificate.has_completed') %>
   </p>
-  <%= content_tag :h2, "#{@course.title}", class: "course" %>
+  <%= content_tag :h2, "#{@course.title}", class: "course", style: "color: #{primary_color};" %>
   <p>
     <%= t('certificate.as_of') %> <%= course_completion_date(current_user, @course) %>
   </p>
-  <%= image_tag wicked_pdf_asset_base64 "dl_logo.png" %>
+  <% if time_spent %>
+    <p class="time-spent">
+      <%= t('certificate.time_spent') %>: <%= time_spent %>
+    </p>
+  <% end %>
+  <%= image_tag wicked_pdf_asset_base64("dl_logo.png"), class: "cert-logo" %>
 </div>

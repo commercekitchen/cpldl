@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Link from '@tiptap/extension-link';
@@ -6,6 +6,15 @@ import Box from '@mui/material/Box';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import IconButton from '@mui/material/IconButton';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 import FormatBoldIcon from '@mui/icons-material/FormatBold';
 import FormatItalicIcon from '@mui/icons-material/FormatItalic';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
@@ -23,11 +32,20 @@ interface Props {
 
 export function RichTextEditor({ label, value, onChange, disabled, helperText }: Props) {
   const prevValueRef = useRef(value);
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState('');
+  const [linkText, setLinkText] = useState('');
+  const [linkNewTab, setLinkNewTab] = useState(false);
 
   const editor = useEditor({
     extensions: [
       StarterKit,
-      Link.configure({ openOnClick: false }),
+      Link.configure({
+        openOnClick: false,
+        // Don't force every link open in a new tab silently — admins opt in
+        // per-link via the dialog below, so screen reader users get a heads-up.
+        HTMLAttributes: { target: null, rel: null },
+      }),
     ],
     content: value ?? '',
     editable: !disabled,
@@ -37,6 +55,44 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
       onChange(html);
     },
   });
+
+  const openLinkDialog = () => {
+    if (!editor) return;
+    editor.chain().focus().extendMarkRange('link').run();
+    const { from, to, empty } = editor.state.selection;
+    const attrs = editor.getAttributes('link');
+    setLinkUrl(attrs.href ?? '');
+    setLinkText(empty ? '' : editor.state.doc.textBetween(from, to, ' '));
+    setLinkNewTab(attrs.target === '_blank');
+    setLinkDialogOpen(true);
+  };
+
+  const handleLinkSave = () => {
+    if (!editor) return;
+    const url = linkUrl.trim();
+    const text = linkText.trim();
+    if (!url || !text) return;
+
+    editor.chain().focus().extendMarkRange('link').run();
+    const { from, to, empty } = editor.state.selection;
+    const currentText = empty ? '' : editor.state.doc.textBetween(from, to, ' ');
+    const attrs = {
+      href: url,
+      target: linkNewTab ? '_blank' : null,
+      rel: linkNewTab ? 'noopener noreferrer' : null,
+    };
+
+    if (empty || currentText !== text) {
+      editor
+        .chain()
+        .focus()
+        .insertContentAt({ from, to }, { type: 'text', text, marks: [{ type: 'link', attrs }] })
+        .run();
+    } else {
+      editor.chain().focus().setLink(attrs).run();
+    }
+    setLinkDialogOpen(false);
+  };
   useEffect(() => {
     if (!editor || value === prevValueRef.current) return;
     prevValueRef.current = value;
@@ -124,7 +180,19 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
           >
             <FormatListNumberedIcon fontSize="small" />
           </IconButton>
-          {editor?.isActive('link') ? (
+          <IconButton
+            size="small"
+            onMouseDown={(e) => {
+              e.preventDefault();
+              openLinkDialog();
+            }}
+            disabled={disabled}
+            color={editor?.isActive('link') ? 'primary' : 'default'}
+            title={editor?.isActive('link') ? 'Edit link' : 'Insert link'}
+          >
+            <InsertLinkIcon fontSize="small" />
+          </IconButton>
+          {editor?.isActive('link') && (
             <IconButton
               size="small"
               onMouseDown={(e) => {
@@ -132,24 +200,10 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
                 editor.chain().focus().unsetLink().run();
               }}
               disabled={disabled}
-              color="primary"
+              color="default"
               title="Remove link"
             >
               <LinkOffIcon fontSize="small" />
-            </IconButton>
-          ) : (
-            <IconButton
-              size="small"
-              onMouseDown={(e) => {
-                e.preventDefault();
-                const url = window.prompt('Enter URL');
-                if (url) editor?.chain().focus().setLink({ href: url }).run();
-              }}
-              disabled={disabled}
-              color="default"
-              title="Insert link"
-            >
-              <InsertLinkIcon fontSize="small" />
             </IconButton>
           )}
         </Box>
@@ -171,6 +225,45 @@ export function RichTextEditor({ label, value, onChange, disabled, helperText }:
         </Box>
       </Box>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      <Dialog open={linkDialogOpen} onClose={() => setLinkDialogOpen(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>{editor?.isActive('link') ? 'Edit link' : 'Insert link'}</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ mt: 1 }}>
+            <TextField
+              label="Link text"
+              value={linkText}
+              onChange={(e) => setLinkText(e.target.value)}
+              required
+              autoFocus
+              fullWidth
+              helperText="What readers and screen readers will see — required so the link is never blank."
+            />
+            <TextField
+              label="URL"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              required
+              fullWidth
+              placeholder="https://example.com"
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={linkNewTab}
+                  onChange={(e) => setLinkNewTab(e.target.checked)}
+                />
+              }
+              label="Open in a new tab"
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setLinkDialogOpen(false)}>Cancel</Button>
+          <Button onClick={handleLinkSave} variant="contained" disabled={!linkUrl.trim() || !linkText.trim()}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }

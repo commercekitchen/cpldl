@@ -7,10 +7,13 @@ import Box from '@mui/material/Box';
 import DOMPurify from 'dompurify';
 import { useCmsPageQuery } from '../features/cms_pages/queries/cmsPageQuery';
 import { usePageMetadata } from '../app/metadata/usePageMetadata';
+import { useAnnounceContentReady } from '../layouts/useAnnounceContentReady';
 
 export default function CmsPage() {
   const { slug = '' } = useParams();
   const { data: page, isLoading, error } = useCmsPageQuery(slug);
+
+  useAnnounceContentReady(!isLoading && Boolean(page));
 
   usePageMetadata(
     page

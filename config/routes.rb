@@ -230,6 +230,7 @@ Rails.application.routes.draw do
         end
         resource :settings, only: [:show, :update] do
           patch :footer_logo, on: :member
+          delete 'footer_logo', on: :member, action: :destroy_footer_logo
           patch :header_logo, on: :member
         end
         resources :footer_links, only: [:create, :destroy]
