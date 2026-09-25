@@ -3,7 +3,6 @@
 User-agent: *
 Disallow: /course_progresses
 Disallow: *.php
-Disallow: /sitemap.xml
 Disallow: /dialogs*
 Disallow: /users/sign_up
 
