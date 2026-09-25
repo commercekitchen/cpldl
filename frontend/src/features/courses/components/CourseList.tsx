@@ -81,7 +81,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
               '&.Mui-focusVisible': {
                 outline: '3px solid',
                 outlineColor: 'primary.main',
-                outlineOffset: -2,
+                outlineOffset: 2,
               },
             }}
           >

@@ -196,7 +196,7 @@ export function CoursesPage() {
                       '&:focus-visible': {
                         outline: '3px solid',
                         outlineColor: 'primary.main',
-                        outlineOffset: -2,
+                        outlineOffset: 2,
                       },
                     }}
                   >
