@@ -45,6 +45,7 @@
     "lessonsLabel": "Lessons",
     "completedInDuration": "Completed in {{duration}}",
     "completedOn": "Completed: {{date}}",
+    "downloadCertificate": "Download Completion Certificate",
     "viewAll": "View All",
     "viewAllAriaLabel": "View all courses",
     "completedCoursesPageTitle": "Completed Courses",

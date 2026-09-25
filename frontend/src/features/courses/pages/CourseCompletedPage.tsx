@@ -8,7 +8,7 @@ import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
-import { ArrowBack, CheckCircle, Search } from '@mui/icons-material';
+import { ArrowBack, CheckCircle, Download, Search } from '@mui/icons-material';
 import { useCourseQuery } from '../queries/courseQuery';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
 import { CourseStats } from '../components/CourseStats';
@@ -67,6 +67,25 @@ export function CourseCompletedPage() {
               duration: formatDurationMinutes(Number(course.totalDuration), t),
             })}
           </Typography>
+        )}
+        {courseId && (
+          <Box sx={{ mb: 2 }}>
+            <Button
+              component="a"
+              href={`/courses/${courseId}/complete.pdf`}
+              variant="contained"
+              color="secondary"
+              startIcon={<Download />}
+              onClick={() => {
+                pushGaEvent('certificate_downloaded', {
+                  course_id: courseId,
+                  course_name: course?.title,
+                });
+              }}
+            >
+              {t('courses.downloadCertificate')}
+            </Button>
+          </Box>
         )}
         {course?.categoryName && (
           <CourseCategoryPill label={course.categoryName.trim()} variant="outlined" />
