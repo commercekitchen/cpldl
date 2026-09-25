@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
+import { Download } from '@mui/icons-material';
 import { DownloadAttachmentRow } from '../components/DownloadAttachmentRow';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import { useAnnounceContentReady } from '../../../layouts/useAnnounceContentReady';
@@ -101,6 +103,24 @@ export function CoursePage() {
 
   return (
     <Container sx={{ py: 3 }}>
+      {completed && (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 2 }}>
+          <Button
+            component="a"
+            href={`/courses/${course.id}/complete.pdf`}
+            variant="outlined"
+            startIcon={<Download />}
+            onClick={() => {
+              pushGaEvent('certificate_downloaded', {
+                course_id: course.id,
+                course_name: course.title,
+              });
+            }}
+          >
+            {t('courses.downloadCertificate')}
+          </Button>
+        </Box>
+      )}
       <Box
         sx={{
           display: 'flex',
