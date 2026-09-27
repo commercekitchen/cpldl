@@ -16,14 +16,15 @@ class CourseCompletionsController < ApplicationController
   end
 
   def show
-    # TODO: Do we want to ensure that the assessment was completed to get here?
-    # TODO: Yes, we do - the page errors if there's no completed_at date
     @course = Course.friendly.find(params[:course_id])
     authorize @course
 
     respond_to do |format|
       format.html
       format.pdf do
+        @completed_at = resolve_certificate_completed_at
+        return head :forbidden unless @completed_at
+
         @pdf = render_to_string pdf: 'file_name',
                template: pdf_template_path,
                layout: 'pdf.html.erb',
@@ -54,4 +55,28 @@ class CourseCompletionsController < ApplicationController
     end
   end
 
+  # CourseProgress#completed_at is stamped as soon as every lesson is complete
+  # (see LessonCompletion#update_course_progress), so this is normally already
+  # set by the time a signed-in user gets here. The lesson_completions fallback
+  # below exists for CourseProgress rows from before that fix - completed in
+  # full, but never stamped because completion used to require the assessment
+  # lesson specifically. A course_id with no matching progress at all
+  # (bots/crawlers guessing course slugs) gets a 403 instead of a certificate.
+  def resolve_certificate_completed_at
+    return guest_session_completed_at unless current_user
+
+    course_progress = current_user.course_progresses.find_by(course_id: @course.id)
+    return course_progress.completed_at if course_progress&.completed_at.present?
+    return nil unless course_progress&.all_lessons_completed?
+
+    course_progress.lesson_completions.maximum(:created_at) || Time.zone.now
+  end
+
+  # Guests never get a CourseProgress row; their only record of progress is the
+  # session-tracked lesson ids set in Api::V1::LessonsController#complete.
+  def guest_session_completed_at
+    return nil unless @course.all_lessons_completed?(session[:completed_lessons] || [])
+
+    Time.zone.now
+  end
 end
