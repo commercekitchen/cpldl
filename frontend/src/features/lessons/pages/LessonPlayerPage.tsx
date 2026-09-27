@@ -122,30 +122,38 @@ export function LessonPlayerPage() {
 
       if (lesson.courseId) {
         const lessons = await listLessons({ courseId: lesson.courseId }, {});
-
-        // The server never reports course_completed for guests (it only tracks
-        // progress for signed-in users), so derive it here from the lesson list
-        // we already fetched plus the just-updated guest progress store, and
-        // cache the result alongside the per-lesson entries for cheap lookup
-        // from course-listing views (CourseCard, etc.).
-        if (status === 'unauthenticated') {
-          const completedLessons = readGuestProgressStore();
-          const allLessonsCompleted = lessons.every((item) => item.id in completedLessons);
-          if (allLessonsCompleted) {
-            markGuestCourseComplete(lesson.courseId);
-          }
-        }
-
         const ordered = [...lessons].sort((a, b) => {
           if (a.lessonOrder !== b.lessonOrder) return a.lessonOrder - b.lessonOrder;
           return a.id.localeCompare(b.id);
         });
-        const currentIndex = ordered.findIndex((item) => item.id === lesson.id);
-        const nextLesson = currentIndex >= 0 ? ordered[currentIndex + 1] : null;
 
-        if (nextLesson) {
-          navigate(`/lessons/${nextLesson.id}`);
-          return;
+        // Lessons can be completed in any order, so "next" means the next
+        // incomplete lesson, not simply the one after this in course order -
+        // otherwise finishing the last-ordered lesson would look like course
+        // completion even with earlier lessons still outstanding.
+        if (status === 'unauthenticated') {
+          // The server never reports course_completed for guests (it only tracks
+          // progress for signed-in users), so derive it here from the lesson list
+          // we already fetched plus the just-updated guest progress store, and
+          // cache the result alongside the per-lesson entries for cheap lookup
+          // from course-listing views (CourseCard, etc.).
+          const completedLessons = readGuestProgressStore();
+          const allLessonsCompleted = ordered.every((item) => item.id in completedLessons);
+          if (allLessonsCompleted) {
+            markGuestCourseComplete(lesson.courseId);
+          } else {
+            const nextLesson = ordered.find((item) => !(item.id in completedLessons));
+            if (nextLesson) {
+              navigate(`/lessons/${nextLesson.id}`);
+              return;
+            }
+          }
+        } else {
+          const nextLesson = ordered.find((item) => !item.completed);
+          if (nextLesson) {
+            navigate(`/lessons/${nextLesson.id}`);
+            return;
+          }
         }
 
         navigate(`/courses/${lesson.courseId}/completed`);

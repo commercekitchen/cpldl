@@ -7,6 +7,9 @@ class LessonCompletion < ApplicationRecord
   after_save :update_course_progress
 
   def update_course_progress
-    course_progress.update(completed_at: Time.zone.now) if lesson.is_assessment?
+    return if course_progress.completed_at.present?
+    return unless course_progress.all_lessons_completed?
+
+    course_progress.update(completed_at: Time.zone.now)
   end
 end
