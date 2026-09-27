@@ -22,7 +22,7 @@
   </p>
   <%= content_tag :h2, "#{@course.title}", class: "course", style: "color: #{primary_color};" %>
   <p>
-    <%= t('certificate.as_of') %> <%= course_completion_date(current_user, @course) %>
+    <%= t('certificate.as_of') %> <%= local_time(@completed_at, :date_only) %>
   </p>
   <% if time_spent %>
     <p class="time-spent">

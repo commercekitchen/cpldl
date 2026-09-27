@@ -20,10 +20,11 @@ module Api
         authorize_completion(course, lesson)
 
         course_progress = update_course_progress(course, lesson)
+        course_completed = course_completed?(course, course_progress)
 
         render status: :ok, json: {
-          redirect_path: completion_redirect_path(course, lesson),
-          course_completed: course_progress&.reload&.complete? || false
+          redirect_path: completion_redirect_path(course, lesson, course_completed),
+          course_completed: course_completed
         }
       end
 
@@ -37,8 +38,19 @@ module Api
         end
       end
 
-      def completion_redirect_path(course, lesson)
-        if lesson.is_assessment
+      # Lessons can be completed in any order, so a course is only "complete"
+      # once every lesson is - completing the assessment lesson alone is not
+      # sufficient. See Course#all_lessons_completed?.
+      def course_completed?(course, course_progress)
+        if course_progress
+          course_progress.reload.complete?
+        else
+          course.all_lessons_completed?(session[:completed_lessons] || [])
+        end
+      end
+
+      def completion_redirect_path(course, lesson, course_completed)
+        if course_completed
           preview_request? ? admin_course_preview_path(course) : course_completion_path(course)
         else
           course_lesson_lesson_complete_path(course, lesson, preview: params[:preview])

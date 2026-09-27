@@ -100,6 +100,16 @@ class Course < ApplicationRecord
     topics.pluck(:title).join(', ')
   end
 
+  # Lessons can be completed in any order, so a course counts as complete once
+  # every one of its lessons is in the given set of completed lesson ids -
+  # completing the assessment lesson alone is not sufficient.
+  def all_lessons_completed?(completed_lesson_ids)
+    lesson_ids = lessons.pluck(:id)
+    return false if lesson_ids.empty?
+
+    (lesson_ids - completed_lesson_ids).empty?
+  end
+
   def lesson_after(lesson = nil)
     raise StandardError, 'There are no available lessons for this course.' if lessons.count.zero?
 
