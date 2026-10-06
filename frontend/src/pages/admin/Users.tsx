@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useRouteLoaderData } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -29,12 +30,14 @@ import DownloadIcon from '@mui/icons-material/Download';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import SearchIcon from '@mui/icons-material/Search';
 import { apiFetch } from '../../app/api/apiFetch';
+import type { OrganizationConfig } from '../../app/organization/types';
 
 interface User {
   id: number;
   firstName: string | null;
   lastName: string | null;
   email: string | null;
+  phoneNumber: string | null;
   role: 'user' | 'admin' | 'trainer';
   createdAt: string;
 }
@@ -56,9 +59,18 @@ function useDebounce(value: string, delay: number) {
   return debounced;
 }
 
+function formatPhone(phone: string | null) {
+  if (!phone) return '—';
+  const m = /^(\d{3})(\d{3})(\d{4})$/.exec(phone);
+  return m ? `(${m[1]}) ${m[2]}-${m[3]}` : phone;
+}
+
 export default function AdminUsers() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
+  const showPhone = orgConfig.features.phoneNumberSignIn;
+  const columnCount = showPhone ? 6 : 5;
 
   const [page, setPage] = useState(0); // MUI TablePagination is 0-indexed
   const [searchInput, setSearchInput] = useState('');
@@ -182,7 +194,7 @@ export default function AdminUsers() {
       </Box>
 
       <TextField
-        placeholder={t('admin.usersPage.searchPlaceholder')}
+        placeholder={t(showPhone ? 'admin.usersPage.searchPlaceholderPhone' : 'admin.usersPage.searchPlaceholder')}
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
         size="small"
@@ -210,6 +222,7 @@ export default function AdminUsers() {
                 <TableCell>{t('admin.usersPage.colFirstName')}</TableCell>
                 <TableCell>{t('admin.usersPage.colLastName')}</TableCell>
                 <TableCell>{t('admin.usersPage.colEmail')}</TableCell>
+                {showPhone && <TableCell>{t('admin.usersPage.colPhone')}</TableCell>}
                 <TableCell>{t('admin.usersPage.colRole')}</TableCell>
                 <TableCell>{t('admin.usersPage.colJoined')}</TableCell>
               </TableRow>
@@ -217,13 +230,13 @@ export default function AdminUsers() {
             <TableBody>
               {isLoading ? (
                 <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ py: 4 }}>
+                  <TableCell colSpan={columnCount} align="center" sx={{ py: 4 }}>
                     <CircularProgress size={28} />
                   </TableCell>
                 </TableRow>
               ) : users.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ py: 4, color: 'text.secondary' }}>
+                  <TableCell colSpan={columnCount} align="center" sx={{ py: 4, color: 'text.secondary' }}>
                     {t('admin.usersPage.empty')}
                   </TableCell>
                 </TableRow>
@@ -233,6 +246,7 @@ export default function AdminUsers() {
                     <TableCell>{user.firstName ?? '—'}</TableCell>
                     <TableCell>{user.lastName ?? '—'}</TableCell>
                     <TableCell>{user.email ?? '—'}</TableCell>
+                    {showPhone && <TableCell>{formatPhone(user.phoneNumber)}</TableCell>}
                     <TableCell sx={{ minWidth: 130 }}>
                       <FormControl size="small" fullWidth disabled={updatingRoles.has(user.id)}>
                         <Select
