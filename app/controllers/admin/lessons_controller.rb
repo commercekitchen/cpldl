@@ -23,10 +23,6 @@ module Admin
       @lesson.duration_to_int(lesson_params[:duration])
       @lesson.lesson_order = @course.lessons.count + 1
 
-      if @lesson.is_assessment?
-        validate_assessment || return
-      end
-
       if @lesson.save
         @lesson.enqueue_storyline_unzip if lesson_params[:story_line_archive].present?
         add_lesson_to_child_courses!
@@ -91,22 +87,8 @@ module Admin
                                      :story_line_archive,
                                      :seo_page_title,
                                      :meta_desc,
-                                     :is_assessment,
                                      :lesson_order,
                                      :subdomain)
-    end
-
-    def validate_assessment
-      if @course.lessons.where(is_assessment: true).blank?
-        @lesson.lesson_order = @lesson.course.lessons.count + 1
-        true
-      else
-        warnings = ['There can only be one assessment for a Course.',
-                    'If you are sure you want to replace it, please delete the existing one and try again.',
-                    'Otherwise, please edit the existing assessment for this course.']
-        flash.now[:alert] = warnings
-        render :new and return # rubocop:disable Style/AndOr
-      end
     end
 
     def add_lesson_to_child_courses!

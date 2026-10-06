@@ -161,17 +161,4 @@ feature 'Admin user creates new course and lesson' do
     expect(current_path).to eq(new_admin_course_lesson_path(course.to_param))
   end
 
-  scenario 'attempts to add two assessments' do
-    FactoryBot.create(:lesson, course: course, is_assessment: true)
-    visit edit_admin_course_path(course_id: course, id: course.id)
-    click_button 'Save & Edit Lessons'
-    click_link 'Add Another Lesson'
-    expect(current_path).to eq(new_admin_course_lesson_path(course))
-    page.find('#lesson_is_assessment_true').click
-    click_button 'Save Lesson'
-
-    expect(page).to have_content('There can only be one assessment for a Course.')
-    expect(page).to have_content('If you are sure you want to replace it, please delete the existing one and try again.')
-    expect(page).to have_content('Otherwise, please edit the existing assessment for this course.')
-  end
 end
