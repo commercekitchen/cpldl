@@ -152,4 +152,33 @@ RSpec.describe 'Api::V1::Lessons', type: :request do
       expect(body['course_completed']).to eq(true)
     end
   end
+
+  describe 'GET /api/v1/lessons/:id' do
+    let(:organization) { create(:organization, survey_required: true) }
+    let(:course) { create(:course, organization: organization) }
+    let(:lesson) { create(:lesson, course: course) }
+    let(:user) { create(:user, organization: organization) }
+
+    before do
+      host! "#{organization.subdomain}.test.host"
+    end
+
+    it 'blocks signed-in users who have not completed a required survey' do
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
+
+      get "/api/v1/lessons/#{lesson.id}"
+
+      expect(response).to have_http_status(:forbidden)
+      expect(JSON.parse(response.body)['code']).to eq('survey_required')
+    end
+
+    it 'returns the lesson once the survey is completed' do
+      user.update!(quiz_responses_object: { 'foo' => 'bar' })
+      allow_any_instance_of(Api::V1::LessonsController).to receive(:current_user).and_return(user)
+
+      get "/api/v1/lessons/#{lesson.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

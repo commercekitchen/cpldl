@@ -3,6 +3,8 @@
 module Api
   module V1
     class CoursesController < Api::V1::BaseController
+      before_action :require_survey_completion, only: :show
+
       def index
         courses = policy_scope(Course).where(language: current_language, pub_status: %w[P C]).order(updated_at: :desc)
 
