@@ -4,11 +4,9 @@ import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
 import Divider from '@mui/material/Divider';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
 import TextField from '@mui/material/TextField';
@@ -28,7 +26,6 @@ interface LessonDetail {
   summary: string | null;
   duration: number | null;
   lessonOrder: number;
-  isAssessment: boolean;
   seoPageTitle: string | null;
   metaDesc: string | null;
   storylineFilename: string | null;
@@ -193,7 +190,6 @@ export default function AdminEditLesson() {
             duration: form.duration,
             seo_page_title: form.seoPageTitle,
             meta_desc: form.metaDesc,
-            is_assessment: form.isAssessment,
           },
         }),
       });
@@ -302,16 +298,6 @@ export default function AdminEditLesson() {
               disabled={saving}
               inputProps={{ min: 1 }}
               sx={{ maxWidth: 220 }}
-            />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={form.isAssessment ?? false}
-                  onChange={(e) => handleChange('isAssessment', e.target.checked)}
-                  disabled={saving}
-                />
-              }
-              label={t('admin.editLessonPage.fieldAssessment')}
             />
           </Box>
 
