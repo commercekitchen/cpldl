@@ -318,10 +318,12 @@
     "usersPage": {
       "title": "Users",
       "searchPlaceholder": "Search by name or email…",
+      "searchPlaceholderPhone": "Search by name, email, or phone…",
       "export": "Export CSV",
       "colFirstName": "First Name",
       "colLastName": "Last Name",
       "colEmail": "Email",
+      "colPhone": "Phone Number",
       "colRole": "Role",
       "colJoined": "Joined",
       "loadError": "Unable to load users. Please try again later.",
