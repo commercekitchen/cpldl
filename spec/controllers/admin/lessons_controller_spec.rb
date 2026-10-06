@@ -42,18 +42,6 @@ describe Admin::LessonsController do
         seo_page_title:  'Seo | Beo | Meo ',
         meta_desc:  'Its good to Meta-Tate',
         summary:  'Sum-tings-smelly',
-        is_assessment: false,
-        story_line_archive: story_line,
-        pub_status: 'P' }
-    end
-
-    let(:assessment_attributes) do
-      { duration: '01:20',
-        title:  'I am an assessment',
-        seo_page_title:  'See | Bee | Mee ',
-        meta_desc:  'is this like inception',
-        summary:  'Sum-tings-smelly',
-        is_assessment: true,
         story_line_archive: story_line,
         pub_status: 'P' }
     end
@@ -64,7 +52,6 @@ describe Admin::LessonsController do
         seo_page_title:  '',
         meta_desc:  '',
         summary:  '',
-        is_assessment: '',
         pub_status: nil }
     end
 
@@ -99,24 +86,16 @@ describe Admin::LessonsController do
         end.to change { subsite.lessons.count }.by(1)
       end
 
-      it 'creates a new assessment for both parent and child' do
-        expect do
-          post :create, params: { course_id: pla_course.to_param, lesson: assessment_attributes }, format: :js
-        end.to change { Lesson.where(is_assessment: true).count }.by(2)
-      end
-
-      it 'assigns a new assessment to the end of the course lessons' do
+      it 'assigns a new lesson to the end of the course lessons' do
         FactoryBot.create(:lesson, course: pla_course)
-        post :create, params: { course_id: pla_course.to_param, lesson: assessment_attributes }, format: :js
+        post :create, params: { course_id: pla_course.to_param, lesson: valid_attributes }, format: :js
         lesson = Lesson.last
         expect(lesson.lesson_order).to eq(2)
       end
 
-      it 'does not create a second assessment' do
-        post :create, params: { course_id: pla_course.to_param, lesson: assessment_attributes }, format: :js
-        expect do
-          post :create, params: { course_id: pla_course.to_param, lesson: assessment_attributes, title: 'something different' }
-        end.to_not change(Lesson, :count)
+      it 'ignores an is_assessment param, since the admin form no longer exposes it' do
+        post :create, params: { course_id: pla_course.to_param, lesson: valid_attributes.merge(is_assessment: true) }, format: :js
+        expect(Lesson.last.is_assessment).to be_falsey
       end
 
       it 'assigns a new lesson as @lesson' do

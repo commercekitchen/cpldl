@@ -58,11 +58,11 @@ class LessonsController < ApplicationController
     @preview = params[:preview]
 
     authorize_lesson
-    update_course_progress
+    course_progress = update_course_progress
 
     respond_to do |format|
       format.json do
-        if @lesson.is_assessment
+        if course_completed?(course_progress)
           redirect_path = @preview ? admin_course_preview_path(@course) : course_completion_path(@course)
           render status: :ok, json: { redirect_path: redirect_path }
         else
@@ -99,13 +99,26 @@ class LessonsController < ApplicationController
     end
   end
 
+  # Lessons can be completed in any order, so a course is only "complete" once
+  # every lesson is - completing the assessment lesson alone is not
+  # sufficient. See Course#all_lessons_completed?.
+  def course_completed?(course_progress)
+    if course_progress
+      course_progress.reload.complete?
+    else
+      @course.all_lessons_completed?(session[:completed_lessons] || [])
+    end
+  end
+
   def update_course_progress
     if current_user
       course_progress = CourseProgress.find_or_create_by!(user: current_user, course: @course)
       LessonCompletion.find_or_create_by!(course_progress: course_progress, lesson: @lesson)
+      course_progress
     else
       session[:completed_lessons] ||= []
       session[:completed_lessons] << @lesson.id unless session[:completed_lessons].include?(@lesson.id)
+      nil
     end
   end
 end

@@ -85,19 +85,46 @@ describe LessonsController do
       expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(course, lesson2))
     end
 
-    it 'marks a course as complete if the assessment was completed' do
+    it 'does not mark a course as complete just because the assessment lesson was completed' do
       lesson3.is_assessment = true
       lesson3.save
       post :complete, params: { course_id: course.to_param, lesson_id: lesson3.to_param }, format: :json
       progress = user.course_progresses.find_by(course_id: course.id)
-      expect(progress.complete?).to be true
+      expect(progress.complete?).to be false
     end
 
-    it 'renders the course completion view if the assessment was completed' do
+    it 'renders the next lesson view if lessons remain, even after completing the assessment lesson' do
       lesson3.is_assessment = true
       lesson3.save
       post :complete, params: { course_id: course.to_param, lesson_id: lesson3.to_param }, format: :json
+      expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(course, lesson3))
+    end
+
+    it 'marks a course as complete once every lesson is completed' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, lesson: lesson1, course_progress: course_progress)
+      FactoryBot.create(:lesson_completion, lesson: lesson2, course_progress: course_progress)
+
+      post :complete, params: { course_id: course.to_param, lesson_id: lesson3.to_param }, format: :json
+      expect(course_progress.reload.complete?).to be true
+    end
+
+    it 'renders the course completion view once every lesson is completed' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, lesson: lesson1, course_progress: course_progress)
+      FactoryBot.create(:lesson_completion, lesson: lesson2, course_progress: course_progress)
+
+      post :complete, params: { course_id: course.to_param, lesson_id: lesson3.to_param }, format: :json
       expect(JSON.parse(response.body)['redirect_path']).to eq(course_completion_path(course.to_param))
+    end
+
+    it 'marks a course as complete when lessons are finished out of order' do
+      course_progress = FactoryBot.create(:course_progress, course: course, user: user)
+      FactoryBot.create(:lesson_completion, lesson: lesson3, course_progress: course_progress)
+      FactoryBot.create(:lesson_completion, lesson: lesson1, course_progress: course_progress)
+
+      post :complete, params: { course_id: course.to_param, lesson_id: lesson2.to_param }, format: :json
+      expect(course_progress.reload.complete?).to be true
     end
 
     it 'succeeds without a logged in user' do
@@ -142,11 +169,23 @@ describe LessonsController do
         expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(pla_course, pla_lesson, preview: true))
       end
 
-      it 'returns to course preview if finishing a preview course' do
-        pla_assessment = pla_course.lessons.last
-        pla_assessment.update(is_assessment: true)
-        post :complete, params: { course_id: pla_course.to_param, lesson_id: pla_assessment.to_param, preview: true }, format: :json
+      it 'returns to course preview once every lesson (including the assessment) is finished' do
+        first, second, third = pla_course.lessons.order(:lesson_order)
+        third.update(is_assessment: true)
+        progress = FactoryBot.create(:course_progress, course: pla_course, user: subsite_admin)
+        FactoryBot.create(:lesson_completion, lesson: first, course_progress: progress)
+        FactoryBot.create(:lesson_completion, lesson: second, course_progress: progress)
+
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: third.to_param, preview: true }, format: :json
         expect(JSON.parse(response.body)['redirect_path']).to eq(admin_course_preview_path(pla_course.to_param))
+      end
+
+      it 'does not return to course preview if lessons remain, even after the assessment is finished' do
+        third = pla_course.lessons.order(:lesson_order).last
+        third.update(is_assessment: true)
+
+        post :complete, params: { course_id: pla_course.to_param, lesson_id: third.to_param, preview: true }, format: :json
+        expect(JSON.parse(response.body)['redirect_path']).to eq(course_lesson_lesson_complete_path(pla_course, third, preview: true))
       end
     end
   end

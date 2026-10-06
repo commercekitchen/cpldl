@@ -170,6 +170,8 @@ export default function Account() {
 
   if (status === 'unauthenticated') return <Navigate to="/login" replace />;
 
+  const showLoginInfo = !user?.phoneNumber || user?.is_org_admin || user?.isTrainer;
+
   return (
     <Container maxWidth="sm" sx={{ py: 4 }}>
       <Paper
@@ -270,7 +272,7 @@ export default function Account() {
         sx={{ p: 3, border: '1px solid', borderColor: 'divider', borderRadius: 2, mt: 4 }}
       >
         <Stack spacing={2}>
-          {!loading ? (
+          {!loading && showLoginInfo ? (
             <Box component="form" onSubmit={onSubmitAccount}>
               <Stack spacing={2}>
                 <Typography variant="h6">Login Information</Typography>

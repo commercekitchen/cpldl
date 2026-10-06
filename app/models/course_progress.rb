@@ -18,6 +18,10 @@ class CourseProgress < ApplicationRecord
     false
   end
 
+  def all_lessons_completed?
+    course.all_lessons_completed?(lesson_completions.pluck(:lesson_id))
+  end
+
   def percent_complete
     total = course.lessons.count
     completed = lessons_completed

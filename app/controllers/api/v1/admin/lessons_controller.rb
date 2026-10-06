@@ -132,12 +132,12 @@ module Api
         end
 
         def lesson_create_params
-          params.require(:lesson).permit(:title, :summary, :duration, :is_assessment)
+          params.require(:lesson).permit(:title, :summary, :duration)
         end
 
         def lesson_update_params
           params.require(:lesson).permit(
-            :title, :summary, :duration, :seo_page_title, :meta_desc, :is_assessment, :story_line_archive
+            :title, :summary, :duration, :seo_page_title, :meta_desc, :story_line_archive
           )
         end
       end

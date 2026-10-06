@@ -50,10 +50,61 @@ describe CourseCompletionsController do
         expect(assigns(:course)).to eq(course1)
       end
 
-      it 'generates a PDF when send as format pdf' do
-        # the send on this opens a term window on run
-        get :show, params: { course_id: course1, format: 'pdf' }
-        expect(assigns(:pdf)).not_to be_empty
+      context 'when the course progress has a completed_at' do
+        let!(:course_progress) do
+          FactoryBot.create(:course_progress, user: user, course: course1, completed_at: Time.zone.now)
+        end
+
+        it 'generates a PDF when sent as format pdf' do
+          # the send on this opens a term window on run
+          get :show, params: { course_id: course1, format: 'pdf' }
+          expect(response).to have_http_status(:success)
+          expect(assigns(:pdf)).not_to be_empty
+        end
+      end
+
+      context 'when every lesson is complete but none of them is the assessment lesson' do
+        let(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+        let!(:course_progress) { FactoryBot.create(:course_progress, user: user, course: course) }
+
+        before(:each) do
+          course.lessons.each do |lesson|
+            FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: lesson)
+          end
+        end
+
+        it 'still generates a certificate PDF instead of erroring' do
+          get :show, params: { course_id: course, format: 'pdf' }
+          expect(response).to have_http_status(:success)
+          expect(assigns(:pdf)).not_to be_empty
+        end
+      end
+
+      context 'with a historical row from before completion required every lesson' do
+        # Simulates a CourseProgress saved back when only the assessment lesson
+        # set completed_at: every lesson is done, but completed_at is still nil.
+        let(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+        let!(:course_progress) { FactoryBot.create(:course_progress, user: user, course: course) }
+
+        before(:each) do
+          course.lessons.each do |lesson|
+            FactoryBot.create(:lesson_completion, course_progress: course_progress, lesson: lesson)
+          end
+          course_progress.update_columns(completed_at: nil)
+        end
+
+        it 'falls back to the lesson completions and still generates a certificate' do
+          get :show, params: { course_id: course, format: 'pdf' }
+          expect(response).to have_http_status(:success)
+          expect(assigns(:pdf)).not_to be_empty
+        end
+      end
+
+      context 'when the user has no progress at all on the course' do
+        it 'returns forbidden instead of erroring' do
+          get :show, params: { course_id: course1, format: 'pdf' }
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
 
@@ -62,6 +113,25 @@ describe CourseCompletionsController do
         get :show, params: { course_id: course1 }
         expect(response).to have_http_status(:success)
         expect(assigns(:course)).to eq(course1)
+      end
+
+      context 'when every lesson was completed in session' do
+        let(:course) { FactoryBot.create(:course_with_lessons, organization: organization) }
+
+        it 'generates a certificate PDF' do
+          session[:completed_lessons] = course.lessons.pluck(:id)
+
+          get :show, params: { course_id: course, format: 'pdf' }
+          expect(response).to have_http_status(:success)
+          expect(assigns(:pdf)).not_to be_empty
+        end
+      end
+
+      context 'when nothing was completed in session' do
+        it 'returns forbidden instead of generating a certificate' do
+          get :show, params: { course_id: course1, format: 'pdf' }
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end

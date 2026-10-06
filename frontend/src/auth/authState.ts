@@ -8,6 +8,7 @@ export type User = {
   email: string | null;
   phoneNumber: string | null;
   is_org_admin?: boolean;
+  isTrainer?: boolean;
   organization_subdomain?: string;
   surveyCompleted?: boolean;
   optOutOfRecommendations?: boolean;
