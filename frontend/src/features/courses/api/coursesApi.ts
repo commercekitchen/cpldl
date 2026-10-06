@@ -1,11 +1,13 @@
 import type { Course } from '../types';
 import { apiFetch } from '../../../app/api/apiFetch';
+import { throwIfSurveyRequired } from '../../survey/surveyRequired';
 
 export async function fetchCourse(
   courseId: string,
   opts: { signal?: AbortSignal } = {},
 ): Promise<Course> {
   const res = await apiFetch(`/api/v1/courses/${courseId}`, { signal: opts.signal });
+  await throwIfSurveyRequired(res);
   if (!res.ok) throw new Error(`Failed to load course: ${res.status}`);
   return (await res.json()) as Course;
 }
