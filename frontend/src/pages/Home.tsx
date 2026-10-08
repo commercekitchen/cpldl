@@ -26,6 +26,7 @@ export default function Home() {
   const customText = rootData?.orgConfig.customText;
   const orgName = rootData?.orgConfig.displayName;
   const subdomain = rootData?.orgConfig.subdomain;
+  const surveyRequired = rootData?.orgConfig.features.surveyRequired ?? false;
 
   usePageMetadata({
     title: subdomain === 'www' ? 'DigitalLearn' : (orgName ? `${orgName} - DigitalLearn` : 'DigitalLearn'),
@@ -43,8 +44,12 @@ export default function Home() {
     (location.state as { surveyJustCompleted?: boolean } | null)?.surveyJustCompleted === true;
   const isAuthenticated = status === 'authenticated';
 
+  // When the org requires the survey, signed-in users see only the survey
+  // prompt until they complete it - a previous opt-out doesn't apply.
+  const surveyBlocking = isAuthenticated && surveyRequired && !user?.surveyCompleted;
+
   const showSurveyBanner =
-    isAuthenticated && !user?.surveyCompleted && !user?.optOutOfRecommendations;
+    surveyBlocking || (isAuthenticated && !user?.surveyCompleted && !user?.optOutOfRecommendations);
 
   const showGetconnectedPromo =
     subdomain === 'getconnected' &&
@@ -57,56 +62,66 @@ export default function Home() {
       <SubHeaderBanner header={bannerHeader} subheader={bannerSubheader} />
       {showSurveyBanner ? <SurveyBanner /> : null}
       {showGetconnectedPromo && <GetconnectedPromo uuid={user!.uuid!} />}
-      <Container
-        maxWidth={false}
-        disableGutters
-        sx={{
-          py: 2,
-          px: { xs: 1, sm: 2, md: 3 },
-        }}
-      >
-        {surveyJustCompleted && (
-          <Alert severity="success" sx={{ mb: 3 }}>
-            {t('survey.completed')}
-          </Alert>
-        )}
+      {!surveyBlocking && (
+        <Container
+          maxWidth={false}
+          disableGutters
+          sx={{
+            py: 2,
+            px: { xs: 1, sm: 2, md: 3 },
+          }}
+        >
+          {surveyJustCompleted && (
+            <Alert severity="success" sx={{ mb: 3 }}>
+              {t('survey.completed')}
+            </Alert>
+          )}
 
-        {isAuthenticated && (
+          {isAuthenticated && (
+            <CourseListContainer
+              title={t('home.coursesForYou')}
+              params={{ scope: 'tracked' }}
+              headerAction={
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => navigate(getSurveyPath(user))}
+                >
+                  {t('survey.retake')}
+                </Button>
+              }
+            />
+          )}
+
           <CourseListContainer
-            title={t('home.coursesForYou')}
-            params={{ scope: 'tracked' }}
-            headerAction={
-              <Button variant="outlined" size="small" onClick={() => navigate(getSurveyPath(user))}>
-                {t('survey.retake')}
-              </Button>
-            }
+            title={t('home.featuredCourses')}
+            params={{ scope: 'homepage', limit: 10 }}
           />
-        )}
 
-        <CourseListContainer
-          title={t('home.featuredCourses')}
-          params={{ scope: 'homepage', limit: 10 }}
-        />
-
-        <LessonListContainer
-          title={t('home.popularLessons')}
-          params={{ scope: 'popular', limit: 10 }}
-        />
-
-        {isAuthenticated && (
-          <CourseListContainer
-            title={t('home.completedCourses')}
-            params={{ scope: 'completed', limit: 10 }}
-            viewAllHref="/completed-courses"
-            hideWhenEmpty
-            headerAction={
-              <Button variant="outlined" size="small" onClick={() => navigate('/completed-courses')}>
-                {t('home.viewAllCompletedCourses')}
-              </Button>
-            }
+          <LessonListContainer
+            title={t('home.popularLessons')}
+            params={{ scope: 'popular', limit: 10 }}
           />
-        )}
-      </Container>
+
+          {isAuthenticated && (
+            <CourseListContainer
+              title={t('home.completedCourses')}
+              params={{ scope: 'completed', limit: 10 }}
+              viewAllHref="/completed-courses"
+              hideWhenEmpty
+              headerAction={
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => navigate('/completed-courses')}
+                >
+                  {t('home.viewAllCompletedCourses')}
+                </Button>
+              }
+            />
+          )}
+        </Container>
+      )}
     </>
   );
 }

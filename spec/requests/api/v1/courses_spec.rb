@@ -133,4 +133,47 @@ RSpec.describe 'Api::V1::Courses', type: :request do
       expect(course_payloads.first['summary']).to eq('Completed course')
     end
   end
+
+  describe 'GET /api/v1/courses/:id' do
+    let(:organization) { create(:organization, survey_required: true) }
+    let(:course) { create(:course, organization: organization, pub_status: 'P', access_level: :everyone) }
+    let(:user) { create(:user, organization: organization) }
+
+    before do
+      host! "#{organization.subdomain}.test.host"
+    end
+
+    it 'blocks signed-in users who have not completed a required survey' do
+      allow_any_instance_of(Api::V1::CoursesController).to receive(:current_user).and_return(user)
+
+      get "/api/v1/courses/#{course.id}"
+
+      expect(response).to have_http_status(:forbidden)
+      expect(JSON.parse(response.body)['code']).to eq('survey_required')
+    end
+
+    it 'returns the course once the survey is completed' do
+      user.update!(quiz_responses_object: { 'foo' => 'bar' })
+      allow_any_instance_of(Api::V1::CoursesController).to receive(:current_user).and_return(user)
+
+      get "/api/v1/courses/#{course.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'does not gate guests' do
+      get "/api/v1/courses/#{course.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'does not gate when the survey is not required' do
+      organization.update!(survey_required: false)
+      allow_any_instance_of(Api::V1::CoursesController).to receive(:current_user).and_return(user)
+
+      get "/api/v1/courses/#{course.id}"
+
+      expect(response).to have_http_status(:ok)
+    end
+  end
 end

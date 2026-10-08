@@ -44,6 +44,18 @@ module Api
         @current_organization ||= OrganizationResolver.resolve(subdomain: request.subdomain)
       end
 
+      # Mirrors the legacy CoursesController/LessonsController gate: when the
+      # org requires the recommendation survey, signed-in users can't view
+      # course or lesson content until they've submitted it.
+      def require_survey_completion
+        return unless current_user && current_organization.survey_required? && current_user.quiz_responses_object.blank?
+
+        render status: :forbidden, json: {
+          code: 'survey_required',
+          message: 'Please complete the Course Recommendation Survey before accessing courses.'
+        }
+      end
+
       def user_not_authorized
         render status: :forbidden, json: { message: 'You are not authorized to perform this action.' }
       end

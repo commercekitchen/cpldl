@@ -81,7 +81,6 @@ module Api
         def export
           users = policy_scope(User)
                     .includes(:profile, :roles, course_progresses: [:course])
-                    .where.not(email: nil).where.not(email: '')
                     .order('users.created_at DESC')
 
           csv_data = users_csv(users)
@@ -100,20 +99,27 @@ module Api
         end
 
         def filtered_users(q)
-          base = policy_scope(User).includes(:profile, :roles).where.not(email: nil).where.not(email: '')
+          base = policy_scope(User).includes(:profile, :roles)
+          return base if q.blank?
 
-          if q.present?
-            term = "%#{ActiveRecord::Base.sanitize_sql_like(q)}%"
-            base
-              .joins('LEFT JOIN profiles ON profiles.user_id = users.id')
-              .where(
-                'users.email ILIKE :term OR profiles.first_name ILIKE :term OR profiles.last_name ILIKE :term',
-                term: term
-              )
-              .distinct
-          else
-            base
+          term = "%#{ActiveRecord::Base.sanitize_sql_like(q)}%"
+          conditions = ['users.email ILIKE :term', 'profiles.first_name ILIKE :term', 'profiles.last_name ILIKE :term']
+          binds = { term: term }
+
+          phone_digits = q.gsub(/\D/, '')
+          if phone_numbers_enabled? && phone_digits.present?
+            conditions << 'users.phone_number LIKE :phone'
+            binds[:phone] = "%#{phone_digits}%"
           end
+
+          base
+            .joins('LEFT JOIN profiles ON profiles.user_id = users.id')
+            .where(conditions.join(' OR '), binds)
+            .distinct
+        end
+
+        def phone_numbers_enabled?
+          current_organization.phone_number_users_enabled?
         end
 
         def user_payload(user)
@@ -121,7 +127,8 @@ module Api
             id: user.id,
             firstName: user.first_name,
             lastName: user.last_name,
-            email: user.email,
+            email: user.email.presence,
+            phoneNumber: phone_numbers_enabled? ? user.phone_number.presence : nil,
             role: primary_role(user),
             createdAt: user.created_at.strftime('%Y-%m-%d')
           }
@@ -135,9 +142,11 @@ module Api
         end
 
         def users_csv(users)
+          include_phone = phone_numbers_enabled?
+
           CSV.generate do |csv|
             csv << [
-              'First Name', 'Last Name', 'Email', 'Role',
+              'First Name', 'Last Name', 'Email', *(['Phone Number'] if include_phone), 'Role',
               'Preferred Language', 'Registration Date',
               'Branch', 'Zip Code',
               'Courses In Progress', 'Courses Completed'
@@ -149,6 +158,7 @@ module Api
                 profile&.first_name,
                 profile&.last_name,
                 user.email,
+                *([user.phone_number] if include_phone),
                 user.roles.map(&:name).map(&:capitalize).join(', '),
                 user.preferred_language,
                 user.created_at.in_time_zone('Central Time (US & Canada)').strftime('%m-%d-%Y'),
