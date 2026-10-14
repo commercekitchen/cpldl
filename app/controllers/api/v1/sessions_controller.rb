@@ -19,6 +19,11 @@ module Api
             return
           end
 
+          if user.trainer?
+            render status: :forbidden, json: { message: 'Phone number sign-in is not allowed for trainer accounts.' }
+            return
+          end
+
           unless user.valid?
             render status: :unprocessable_entity, json: { message: user.errors.full_messages.join(', ') }
             return

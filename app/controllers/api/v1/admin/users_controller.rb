@@ -10,6 +10,7 @@ module Api
 
         PER_PAGE = 25
         ALLOWED_ROLES = %w[user admin trainer].freeze
+        STAFF_ROLES = %w[admin trainer].freeze
 
         def index
           users = filtered_users(params[:q])
@@ -37,10 +38,20 @@ module Api
             return
           end
 
-          user.roles = []
-          user.add_role(new_role.to_sym, current_organization)
+          if STAFF_ROLES.include?(new_role) && user.email.blank?
+            render status: :unprocessable_entity,
+                   json: { errors: ["An email address is required before assigning the #{new_role} role."] }
+            return
+          end
 
-          if user.save
+          # Role changes are written immediately, so roll them back if the user fails validation
+          saved = User.transaction do
+            user.roles = []
+            user.add_role(new_role.to_sym, current_organization)
+            user.save || raise(ActiveRecord::Rollback)
+          end
+
+          if saved
             render json: { role: primary_role(user) }
           else
             render status: :unprocessable_entity, json: { errors: user.errors.full_messages }

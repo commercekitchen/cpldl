@@ -42,6 +42,40 @@ RSpec.describe 'Api::V1::Admin::Users', type: :request do
       expect(rows.first).to include('Phone Number')
       expect(rows.flatten).to include('5551234567')
     end
+
+    describe 'updating roles' do
+      %w[trainer admin].each do |role|
+        it "requires an email before assigning the #{role} role" do
+          patch "/api/v1/admin/users/#{phone_user.id}/update_role", params: { role: role }
+
+          expect(response).to have_http_status(:unprocessable_entity)
+          expect(json['errors']).to eq(["An email address is required before assigning the #{role} role."])
+          expect(phone_user.reload.trainer?).to be false
+          expect(phone_user.admin?).to be false
+          expect(phone_user.has_role?(:user, organization)).to be true
+        end
+      end
+
+      it 'promotes a phone number user with an email to trainer' do
+        phone_user.update!(email: 'promoted@example.com')
+
+        patch "/api/v1/admin/users/#{phone_user.id}/update_role", params: { role: 'trainer' }
+
+        expect(response).to have_http_status(:ok)
+        expect(json['role']).to eq('trainer')
+        expect(phone_user.reload.trainer?).to be true
+      end
+
+      it 'rolls back the role change when the user fails validation' do
+        trainer = create(:user, :trainer, organization: organization)
+
+        # Demoting an email-only trainer makes them a phone number user without a phone number
+        patch "/api/v1/admin/users/#{trainer.id}/update_role", params: { role: 'user' }
+
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(trainer.reload.trainer?).to be true
+      end
+    end
   end
 
   context 'when the organization does not have phone number users enabled' do
