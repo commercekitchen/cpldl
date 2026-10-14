@@ -183,5 +183,28 @@ describe User do
         expect(subject.errors[:phone_number]).to contain_exactly('must be exactly 10 digits')
       end
     end
+
+    %w[admin trainer].each do |role|
+      describe "invited #{role}" do
+        let(:invitee) { UserInvitationService.invite(email: "#{role}@example.com", organization: org, role: role) }
+
+        it 'is not a phone number user' do
+          expect(invitee.phone_number_user?).to be false
+        end
+
+        it 'accepts the invitation with email and password only' do
+          user = User.accept_invitation!(invitation_token: invitee.raw_invitation_token,
+                                         password: 'Secure-password-1', password_confirmation: 'Secure-password-1')
+          expect(user.errors).to be_empty
+          expect(user.valid_password?('Secure-password-1')).to be true
+        end
+
+        it 'requires a password to accept the invitation' do
+          user = User.accept_invitation!(invitation_token: invitee.raw_invitation_token,
+                                         password: '', password_confirmation: '')
+          expect(user.errors[:password]).to be_present
+        end
+      end
+    end
   end
 end

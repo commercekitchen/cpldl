@@ -115,10 +115,13 @@ export default function AdminUsers() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole }),
       });
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as { errors?: string[] } | null;
+        throw new Error(body?.errors?.[0]);
+      }
       await queryClient.invalidateQueries({ queryKey: ['admin-users'] });
-    } catch {
-      setRoleError(t('admin.usersPage.roleError'));
+    } catch (err: unknown) {
+      setRoleError(err instanceof Error && err.message ? err.message : t('admin.usersPage.roleError'));
     } finally {
       setUpdatingRoles((prev) => {
         const next = new Set(prev);

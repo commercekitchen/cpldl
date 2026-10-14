@@ -141,7 +141,7 @@ class User < ApplicationRecord
   end
 
   def phone_number_user?
-    organization&.phone_number_users_enabled && !admin?
+    organization&.phone_number_users_enabled && !admin? && !trainer?
   end
 
   ###
