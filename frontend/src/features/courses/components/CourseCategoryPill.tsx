@@ -1,18 +1,11 @@
 import Box from '@mui/material/Box';
 import { Link as RouterLink } from 'react-router-dom';
+import { toCategorySlug } from '../utils/categorySlug';
 
 type Props = {
   label: string;
   variant?: 'filled' | 'outlined';
 };
-
-function toCategorySlug(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-');
-}
 
 export function CourseCategoryPill({ label, variant = 'filled' }: Props) {
   const slug = toCategorySlug(label);
