@@ -5,7 +5,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Snackbar from '@mui/material/Snackbar';
@@ -159,7 +159,7 @@ export default function AdminCourses() {
         </Button>
       </Box>
 
-      {loading && <CircularProgress />}
+      {loading && <PageLoader />}
       {error && <Alert severity="error">{error}</Alert>}
 
       <Snackbar

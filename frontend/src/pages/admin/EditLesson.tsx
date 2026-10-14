@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
 import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Skeleton from '@mui/material/Skeleton';
@@ -258,7 +259,7 @@ export default function AdminEditLesson() {
       </Typography>
 
       {loadError && <Alert severity="error">{loadError}</Alert>}
-      {loading && <CircularProgress />}
+      {loading && <PageLoader />}
 
       {!loading && !loadError && form && lesson && (
         <Paper variant="outlined" sx={{ p: 3 }}>

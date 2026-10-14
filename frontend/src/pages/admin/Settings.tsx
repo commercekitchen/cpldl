@@ -8,6 +8,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -123,7 +124,7 @@ export default function AdminSettings() {
   const showSuccess = (msg: string) => setSuccessMsg(msg);
   const showError = (msg: string) => setErrorMsg(msg);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (isError || !data) return <Alert severity="error">{t('admin.settingsPage.loadError')}</Alert>;
 
   return (

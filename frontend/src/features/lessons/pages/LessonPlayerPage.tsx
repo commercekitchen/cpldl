@@ -3,6 +3,7 @@ import { useNavigate, useParams, Link as RouterLink } from 'react-router-dom'; /
 import { useQueryClient } from '@tanstack/react-query';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
@@ -192,11 +193,11 @@ export function LessonPlayerPage() {
 
   const iframeTitle = lesson?.title ?? 'Lesson';
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (loadError || !lesson)
     return <Alert severity="error">{loadError?.message ?? 'Lesson not found'}</Alert>;
   if (error) return <Alert severity="error">{error ?? 'Error completing lesson'}</Alert>;
-  if (storylineStatus === 'checking') return <CircularProgress />;
+  if (storylineStatus === 'checking') return <PageLoader />;
   if (storylineStatus === 'unavailable')
     return (
       <Alert severity="error">

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
@@ -128,7 +128,7 @@ export function CoursesPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sections]);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (error) return <Alert severity="error">{error.message}</Alert>;
 
   return (

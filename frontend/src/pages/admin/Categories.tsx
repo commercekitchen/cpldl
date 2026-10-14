@@ -21,6 +21,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -321,7 +322,7 @@ export default function AdminCategories() {
     }
   };
 
-  if (loading) return <CircularProgress />;
+  if (loading) return <PageLoader />;
   if (error && categories.length === 0) return <Alert severity="error">{error}</Alert>;
 
   return (

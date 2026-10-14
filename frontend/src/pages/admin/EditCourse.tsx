@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Skeleton from '@mui/material/Skeleton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -115,7 +115,7 @@ export default function AdminEditCourse() {
       </Typography>
 
       {loadError && <Alert severity="error">{loadError}</Alert>}
-      {loading && <CircularProgress />}
+      {loading && <PageLoader />}
 
       {!loading && !loadError && course && (
         <>

@@ -7,7 +7,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -203,7 +203,7 @@ export default function AdminNewCourse() {
         {t('admin.newCoursePage.title')}
       </Typography>
 
-      {optionsLoading && <CircularProgress />}
+      {optionsLoading && <PageLoader />}
       {optionsError && <Alert severity="error">{optionsError}</Alert>}
 
       {!optionsLoading && !optionsError && (

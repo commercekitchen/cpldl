@@ -4,7 +4,7 @@ import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Chip from '@mui/material/Chip';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
@@ -81,7 +81,7 @@ export default function AdminCmsPages() {
     }
   };
 
-  if (loading) return <CircularProgress />;
+  if (loading) return <PageLoader />;
   if (error) return <Alert severity="error">{error}</Alert>;
 
   return (

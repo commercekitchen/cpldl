@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../components/PageLoader';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { searchAll } from '../features/search/api/searchApi';
@@ -106,7 +106,7 @@ export default function Search() {
           Enter a search term to see results.
         </Typography>
       )}
-      {loading && <CircularProgress />}
+      {loading && <PageLoader />}
       {error && <Alert severity="error">{error}</Alert>}
 
       {!loading && !error && results.courses.length > 0 && (

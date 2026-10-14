@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Divider from '@mui/material/Divider';
 import Link from '@mui/material/Link';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -90,7 +90,7 @@ export default function AdminReports() {
         {t('admin.reportsPage.title')}
       </Typography>
 
-      {loading && <CircularProgress />}
+      {loading && <PageLoader />}
 
       {error && <Alert severity="error">{error}</Alert>}
 
