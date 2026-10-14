@@ -155,10 +155,12 @@
     "usersPage": {
       "title": "Usuarios",
       "searchPlaceholder": "Buscar por nombre o correo…",
+      "searchPlaceholderPhone": "Buscar por nombre, correo o teléfono…",
       "export": "Exportar CSV",
       "colFirstName": "Nombre",
       "colLastName": "Apellido",
       "colEmail": "Correo",
+      "colPhone": "Teléfono",
       "colRole": "Rol",
       "colJoined": "Registrado",
       "loadError": "No se pudieron cargar los usuarios. Por favor, inténtalo más tarde.",

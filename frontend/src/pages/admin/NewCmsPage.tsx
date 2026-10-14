@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../components/PageLoader';
 import Divider from '@mui/material/Divider';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -135,7 +135,7 @@ export default function AdminNewCmsPage() {
 
       <Typography variant="h4" gutterBottom>New Page</Typography>
 
-      {optionsLoading && <CircularProgress />}
+      {optionsLoading && <PageLoader />}
       {optionsError && <Alert severity="error">{optionsError}</Alert>}
 
       {!optionsLoading && !optionsError && (

@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import { ArrowBack, CheckCircle, Download, Search } from '@mui/icons-material';
 import { useCourseQuery } from '../queries/courseQuery';
 import { CourseCategoryPill } from '../components/CourseCategoryPill';
@@ -38,7 +38,7 @@ export function CourseCompletedPage() {
     });
   }, [course?.id]);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
 
   return (
     <Box>

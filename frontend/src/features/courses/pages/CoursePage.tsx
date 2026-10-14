@@ -3,7 +3,7 @@ import { useParams, useRouteLoaderData } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import { Download } from '@mui/icons-material';
@@ -79,7 +79,7 @@ export function CoursePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [course?.id, course?.completed]);
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (loadError || !course)
     return <Alert severity="error">{loadError?.message ?? 'Course not found'}</Alert>;
   if (error) return <Alert severity="error">{error ?? 'Error completing course'}</Alert>;

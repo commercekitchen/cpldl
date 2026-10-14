@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from 'react-router-dom';
@@ -29,7 +29,7 @@ export function LessonListContainer({ title, params }: Props) {
         <Typography variant="h6" component="h2">{title}</Typography>
       </Box>
 
-      {isLoading && <CircularProgress />}
+      {isLoading && <PageLoader />}
       {error && <Alert severity="error">{error.message}</Alert>}
 
       {!isLoading && !error && (

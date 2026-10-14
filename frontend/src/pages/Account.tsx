@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../components/PageLoader';
 import Link from '@mui/material/Link';
 import { type FormEvent, useEffect, useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
@@ -184,7 +184,7 @@ export default function Account() {
             Manage your profile details below.
           </Typography>
 
-          {loading ? <CircularProgress /> : null}
+          {loading ? <PageLoader /> : null}
           {user ? (
             <Box>
               <Typography variant="body1">

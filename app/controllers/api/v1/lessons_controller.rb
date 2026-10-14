@@ -3,6 +3,8 @@
 module Api
   module V1
     class LessonsController < Api::V1::BaseController
+      before_action :require_survey_completion, only: :show
+
       def index
         lessons = fetch_lessons_for_index
         render json: LessonCollectionPresenter.new(lessons, user: current_user).as_json

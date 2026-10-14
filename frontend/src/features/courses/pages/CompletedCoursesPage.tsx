@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Container from '@mui/material/Container';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
@@ -64,7 +64,7 @@ export function CompletedCoursesPage() {
   };
 
   if (status === 'unauthenticated') return <Navigate to="/login" replace />;
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (error) return <Alert severity="error">{error.message}</Alert>;
 
   return (

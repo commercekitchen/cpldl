@@ -1,5 +1,6 @@
 import type { Lesson } from '../types';
 import { apiFetch } from '../../../app/api/apiFetch';
+import { throwIfSurveyRequired } from '../../survey/surveyRequired';
 
 export type CompleteLessonResponse = {
   course_completed?: boolean;
@@ -22,6 +23,7 @@ export async function fetchLesson(
   opts: { signal?: AbortSignal } = {},
 ): Promise<Lesson> {
   const res = await apiFetch(`/api/v1/lessons/${lessonId}`, { signal: opts.signal });
+  await throwIfSurveyRequired(res);
   if (!res.ok) throw new Error(`Failed to load lesson: ${res.status}`);
   const json = (await res.json()) as LessonResponse;
   return normalizeLesson(json);

@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../components/PageLoader';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -24,7 +24,7 @@ export default function CmsPage() {
       : { title: '' },
   );
 
-  if (isLoading) return <CircularProgress />;
+  if (isLoading) return <PageLoader />;
   if (error || !page) return <Alert severity="error">{error?.message ?? 'Page not found'}</Alert>;
 
   return (

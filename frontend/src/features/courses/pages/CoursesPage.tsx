@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { usePageMetadata } from '../../../app/metadata/usePageMetadata';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+import { PageLoader } from '../../../components/PageLoader';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import { useCoursesListQuery } from '../queries/useCoursesListQuery';
 import type { Course } from '../types';
 import { CourseList } from '../components/CourseList';
 import { listLessons } from '../../lessons/api/lessonsApi';
+import { toCategorySlug } from '../utils/categorySlug';
 
 type CategorySection = {
   id: string;
@@ -28,16 +29,6 @@ function toCategoryName(course: Course) {
   return course.categoryName?.trim() || 'Uncategorized';
 }
 
-function toCategorySlug(name: string): string {
-  return name
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '') || 'uncategorized';
-}
-
 function compareCourseOrder(a: Course, b: Course) {
   const aOrder = Number(a.courseOrder);
   const bOrder = Number(b.courseOrder);
@@ -49,6 +40,7 @@ function compareCourseOrder(a: Course, b: Course) {
 
 export function CoursesPage() {
   const navigate = useNavigate();
+  const { hash } = useLocation();
   const { t } = useTranslation();
   usePageMetadata({ title: t('courses.pageTitle') });
   const { data: courses = [], isLoading, error } = useCoursesListQuery({ scope: 'all' });
@@ -128,7 +120,23 @@ export function CoursesPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [sections]);
 
-  if (isLoading) return <CircularProgress />;
+  // The browser's native anchor scroll runs before the sections exist (and not at all for
+  // client-side navigations), so scroll to and select the hash's category once they render.
+  useEffect(() => {
+    const slug = decodeURIComponent(hash.replace(/^#category-/, ''));
+    if (!slug || slug === hash) return;
+    const section = sections.find((s) => s.slug === slug);
+    if (!section) return;
+    const el = document.getElementById(`category-${section.slug}`);
+    if (!el) return;
+    el.scrollIntoView({ block: 'start' });
+    // Select after the scroll handler runs, which would otherwise pick a later section when
+    // the target is too close to the bottom of the page to reach the top of the viewport.
+    const frame = requestAnimationFrame(() => setActiveId(section.id));
+    return () => cancelAnimationFrame(frame);
+  }, [hash, sections]);
+
+  if (isLoading) return <PageLoader />;
   if (error) return <Alert severity="error">{error.message}</Alert>;
 
   return (
