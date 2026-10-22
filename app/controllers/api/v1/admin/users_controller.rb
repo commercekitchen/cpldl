@@ -155,7 +155,7 @@ module Api
         def users_csv(users)
           include_phone = phone_numbers_enabled?
 
-          CSV.generate do |csv|
+          SafeCsv.generate do |csv|
             csv << [
               'First Name', 'Last Name', 'Email', *(['Phone Number'] if include_phone), 'Role',
               'Preferred Language', 'Registration Date',

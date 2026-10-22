@@ -31,6 +31,13 @@ FactoryBot.define do
     end
 
     trait :admin do
+      # Assign the role before saving so role-dependent validations (e.g.
+      # phone_number_user?) see it. The after(:create) below then drops the
+      # :user role the base factory adds.
+      before(:create) do |user|
+        user.add_role(:admin, user.organization)
+      end
+
       after(:create) do |user|
         user.roles.destroy_all
         user.add_role(:admin, user.organization)
@@ -38,6 +45,13 @@ FactoryBot.define do
     end
 
     trait :trainer do
+      # Assign the role before saving so role-dependent validations (e.g.
+      # phone_number_user?) see it. The after(:create) below then drops the
+      # :user role the base factory adds.
+      before(:create) do |user|
+        user.add_role(:trainer, user.organization)
+      end
+
       after(:create) do |user|
         user.roles.destroy_all
         user.add_role(:trainer, user.organization)

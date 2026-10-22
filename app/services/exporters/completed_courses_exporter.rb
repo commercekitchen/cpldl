@@ -13,11 +13,11 @@ module Exporters
 
     def stream_csv
       Enumerator.new do |yielder|
-        yielder << CSV.generate_line(column_headers)
+        yielder << SafeCsv.generate_line(column_headers)
 
         course_completions.find_in_batches(batch_size: 1000) do |batch|
           batch.each do |cc|
-            yielder << CSV.generate_line(course_progress_row(cc.user, cc))
+            yielder << SafeCsv.generate_line(course_progress_row(cc.user, cc))
           end
         end
       end
