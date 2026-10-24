@@ -214,6 +214,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       namespace :admin do
         resources :reports, only: [:index]
+        resources :report_exports, only: [:create] do
+          get :download, on: :collection
+        end
         resources :courses, only: [:index, :show, :create, :update] do
           get :new_form_options, on: :collection
           patch :pub_status, on: :member

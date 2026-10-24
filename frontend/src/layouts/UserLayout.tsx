@@ -169,7 +169,7 @@ export function UserLayout() {
   }
 
   const isAuthenticated = status === 'authenticated';
-  const isAdmin = Boolean(user?.is_org_admin);
+  const canAccessAdmin = Boolean(user?.is_org_admin || user?.isTrainer);
   const loginRequired = orgConfig.features?.loginRequired === true;
 
   const isLessonContentPath = location.pathname.startsWith('/lessons/');
@@ -315,7 +315,7 @@ export function UserLayout() {
             )}
             <NavButton to="/" label={t('nav.home')} icon={<Home />} />
             <NavButton to="/courses" label={t('nav.categories')} icon={<Category />} />
-            {isAdmin ? (
+            {canAccessAdmin ? (
               <Button
                 variant="text"
                 color="inherit"
@@ -327,7 +327,7 @@ export function UserLayout() {
                   borderRadius: 0,
                 }}
               >
-                {t('nav.adminDashboard')}
+                {t(user?.is_org_admin ? 'nav.adminDashboard' : 'nav.trainerDashboard')}
               </Button>
             ) : null}
             <NavButton

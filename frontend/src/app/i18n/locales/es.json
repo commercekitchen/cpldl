@@ -8,6 +8,7 @@
     "userLogin": "Inicio de sesión (Opcional)",
     "userLoginRequired": "Inicio de sesión",
     "adminDashboard": "Panel de administración",
+    "trainerDashboard": "Panel de capacitador",
     "openSearch": "Abrir búsqueda"
   },
   "home": {
@@ -189,7 +190,8 @@
       "download": "Descargar reporte",
       "analyticsTitle": "Paneles de análisis",
       "loadError": "No se pudieron cargar los reportes. Por favor, inténtalo más tarde.",
-      "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin."
+      "dateRangeError": "La fecha de inicio debe ser anterior a la fecha de fin.",
+      "downloadError": "No se pudo descargar el informe. Inténtelo de nuevo."
     }
   },
   "a11y": {

@@ -6,7 +6,7 @@ class OrganizationPolicy < AdminOnlyPolicy
   end
 
   def download_reports?
-    admin_user?
+    admin_user? || trainer?(organization)
   end
 
   def customize?

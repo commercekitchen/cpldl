@@ -43,6 +43,16 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json['id']).to eq(trainer.id)
       expect(json['roles']).to eq(['trainer'])
+      expect(json['redirect_to']).to eq('/admin')
+    end
+
+    it 'redirects a regular user to the home page' do
+      organization.update!(phone_number_users_enabled: false)
+      create(:user, organization: organization, email: 'learner@example.com')
+
+      post '/api/v1/session', params: { email: 'learner@example.com', password: 'abcd1234' }
+
+      expect(json['redirect_to']).to eq('/')
     end
   end
 end
