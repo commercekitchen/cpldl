@@ -8,6 +8,7 @@
     "userLogin": "User Login (Optional)",
     "userLoginRequired": "User Login",
     "adminDashboard": "Admin Dashboard",
+    "trainerDashboard": "Trainer Dashboard",
     "openSearch": "Open search"
   },
   "home": {
@@ -55,7 +56,8 @@
     "downloadCsv": "Download CSV",
     "csvCourseColumn": "Course",
     "csvCompletedColumn": "Completion Date",
-    "csvTimeSpentColumn": "Total Time Spent"
+    "csvTimeSpentColumn": "Total Time Spent",
+    "contributedBy": "Contributed by {{contributor}}"
   },
   "lessons": {
     "playLesson": "Play Lesson",
@@ -432,7 +434,8 @@
       "download": "Download Report",
       "analyticsTitle": "Analytics Dashboards",
       "loadError": "Unable to load reports. Please try again later.",
-      "dateRangeError": "Start date must be before end date."
+      "dateRangeError": "Start date must be before end date.",
+      "downloadError": "Unable to download the report. Please try again."
     }
   },
   "a11y": {

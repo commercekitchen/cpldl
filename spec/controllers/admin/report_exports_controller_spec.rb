@@ -63,6 +63,8 @@ describe Admin::ReportExportsController do
     end
 
     describe 'completion reports' do
+      let(:organization) { FactoryBot.create(:organization, branches: true, accepts_partners: true) }
+
       it 'calls completion report service with group_by zip_code' do
         expect_any_instance_of(CompletionReportService).to receive(:generate_completion_report).with(group_by: 'zip_code', start_date: default_start, end_date: default_end)
         get :show, params: { report: 'completions_by_zip_code', format: 'csv', group_by: 'zip_code' }
@@ -72,6 +74,34 @@ describe Admin::ReportExportsController do
         expect_any_instance_of(CompletionReportService).to receive(:generate_completion_report).with(group_by: 'partner', start_date: default_start, end_date: default_end)
         get :show, params: { report: 'completions_by_partner', format: 'csv', group_by: 'partner' }
       end
+    end
+  end
+
+  it 'denies unknown report types' do
+    get :show, params: { report: 'not_a_report' }, format: :csv
+    expect(response).to redirect_to root_path
+  end
+
+  it 'denies reports that do not apply to the organization' do
+    get :show, params: { report: 'completions_by_partner' }, format: :csv
+    expect(response).to redirect_to root_path
+  end
+
+  context 'as a trainer' do
+    let(:user) { FactoryBot.create(:user, :trainer, organization: organization) }
+
+    it 'denies access (trainers download through the API)' do
+      get :show, params: { report: 'registrations' }, format: :csv
+      expect(response).to redirect_to root_path
+    end
+  end
+
+  context 'as a regular user' do
+    let(:user) { FactoryBot.create(:user, organization: organization) }
+
+    it 'denies access' do
+      get :show, params: { report: 'registrations' }, format: :csv
+      expect(response).to redirect_to root_path
     end
   end
 end

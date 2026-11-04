@@ -157,6 +157,26 @@ RSpec.describe OrganizationPolicy, type: :policy do
         expect(subject).to_not permit(subsite_admin, Organization.new)
       end
     end
+
+    context 'trainer' do
+      let(:trainer) { FactoryBot.create(:user, :trainer, organization: organization) }
+
+      it 'denies access when the subsite has not opted in' do
+        expect(subject).to_not permit(trainer, organization)
+      end
+
+      context 'when the subsite has opted in' do
+        before { organization.update!(trainer_reports_enabled: true) }
+
+        it 'allows access for user subsite' do
+          expect(subject).to permit(trainer, organization)
+        end
+
+        it 'denies access for another organization' do
+          expect(subject).to_not permit(trainer, Organization.new)
+        end
+      end
+    end
   end
 
   permissions :invite_user? do

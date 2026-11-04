@@ -1,4 +1,11 @@
-import { NavLink, Navigate, Outlet, useNavigate, useRouteLoaderData } from 'react-router-dom';
+import {
+  NavLink,
+  Navigate,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useRouteLoaderData,
+} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -31,11 +38,13 @@ export function AdminLayout() {
   const { t } = useTranslation();
   const { status, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
   const isAuthenticated = status === 'authenticated';
+  const isAdmin = user?.adminAccess === 'full';
 
-  const navItems = [
-    { key: 'reports', path: '/admin/reports', icon: <BarChartIcon /> },
+  const allNavItems = [
+    { key: 'reports', path: '/admin/reports', icon: <BarChartIcon />, reportsAccess: true },
     { key: 'courses', path: '/admin/courses', icon: <SchoolIcon /> },
     ...(!orgConfig.mainSite
       ? [{ key: 'plaCatalog', path: '/admin/pla-catalog', icon: <CollectionsBookmarkIcon /> }]
@@ -45,6 +54,7 @@ export function AdminLayout() {
     { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
     { key: 'cmsPages', path: '/admin/cms_pages', icon: <CollectionsBookmarkIcon /> },
   ];
+  const navItems = isAdmin ? allNavItems : allNavItems.filter((item) => item.reportsAccess);
 
   if (status === 'loading') {
     return (
@@ -56,8 +66,14 @@ export function AdminLayout() {
     );
   }
 
-  if (status === 'unauthenticated' || !user?.is_org_admin) {
+  if (status === 'unauthenticated' || !user?.adminAccess) {
     return <Navigate to="/" replace />;
+  }
+
+  // Reports-only users get the sections flagged with reportsAccess; anything else
+  // (including the /admin index, which defaults to courses) lands on reports.
+  if (!isAdmin && !navItems.some((item) => location.pathname.startsWith(item.path))) {
+    return <Navigate to="/admin/reports" replace />;
   }
 
   return (
@@ -101,7 +117,7 @@ export function AdminLayout() {
             fontWeight={600}
             sx={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
           >
-            {t('nav.adminDashboard')}
+            {t(isAdmin ? 'nav.adminDashboard' : 'nav.trainerDashboard')}
           </Typography>
 
           <Box sx={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>

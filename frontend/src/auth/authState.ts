@@ -9,6 +9,8 @@ export type User = {
   phoneNumber: string | null;
   is_org_admin?: boolean;
   isTrainer?: boolean;
+  // Server-decided admin area access: everything, the reports page only, or none.
+  adminAccess?: 'full' | 'reports' | null;
   organization_subdomain?: string;
   surveyCompleted?: boolean;
   optOutOfRecommendations?: boolean;

@@ -13,12 +13,12 @@ module Exporters
 
     def stream_csv
       Enumerator.new do |yielder|
-        yielder << CSV.generate_line(column_headers)
+        yielder << SafeCsv.generate_line(column_headers)
 
         users.find_in_batches(batch_size: 1000) do |batch|
           batch.each do |user|
             values = [user.send(@primary_id_field), user.created_at]
-            yielder << CSV.generate_line(values)
+            yielder << SafeCsv.generate_line(values)
           end
         end
       end

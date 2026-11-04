@@ -6,7 +6,7 @@ class OrganizationPolicy < AdminOnlyPolicy
   end
 
   def download_reports?
-    admin_user?
+    user.organization == organization && user.report_role.present?
   end
 
   def customize?

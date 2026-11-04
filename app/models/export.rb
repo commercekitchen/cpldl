@@ -18,7 +18,7 @@ class Export
   end
 
   def self.generate_csv_for_partner
-    CSV.generate do |csv|
+    SafeCsv.generate do |csv|
       csv << ['Partner', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |partner, data|
         csv.add_row [partner, data[:sign_ups]]
@@ -31,7 +31,7 @@ class Export
   end
 
   def self.generate_csv_for_zip
-    CSV.generate do |csv|
+    SafeCsv.generate do |csv|
       csv << ['Zip Code', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |zip_code, info|
         sign_ups = info[:sign_ups]
@@ -50,7 +50,7 @@ class Export
   end
 
   def self.generate_csv_for_lib
-    CSV.generate do |csv|
+    SafeCsv.generate do |csv|
       csv << ['Library', 'Sign-Ups(total)', 'Course Title', 'Completions']
       @data.each do |library, info|
         library_name = if library.present?
@@ -77,7 +77,7 @@ class Export
   def self.generate_csv_for_survey_responses(organization)
     translation_prefix = organization&.custom_recommendation_survey ? "course_recommendation_survey.#{organization.subdomain}" : "course_recommendation_survey.default"
 
-    CSV.generate do |csv|
+    SafeCsv.generate do |csv|
       csv << [I18n.t("#{translation_prefix}.desktop.question"),
               I18n.t("#{translation_prefix}.mobile.question"),
               I18n.t("#{translation_prefix}.topics.question"),

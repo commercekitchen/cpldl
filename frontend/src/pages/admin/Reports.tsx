@@ -46,6 +46,8 @@ export default function AdminReports() {
   const [startDate, setStartDate] = useState(defaultStartDate);
   const [endDate, setEndDate] = useState(defaultEndDate);
   const [dateError, setDateError] = useState<string | null>(null);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -69,19 +71,34 @@ export default function AdminReports() {
     return () => { cancelled = true; };
   }, [t]);
 
-  function handleDownload() {
+  async function handleDownload() {
     if (startDate > endDate) {
       setDateError(t('admin.reportsPage.dateRangeError'));
       return;
     }
     setDateError(null);
+    setDownloadError(null);
+    setDownloading(true);
 
-    const params = new URLSearchParams({
-      report: selectedReport,
-      start_date: startDate,
-      end_date: endDate,
-    });
-    window.location.href = `/admin/report_export.csv?${params.toString()}`;
+    // Step 1: validate and get a short-lived signed URL (JSON errors land here).
+    // Step 2: navigate to it so the CSV streams straight to disk.
+    try {
+      const res = await apiFetch('/api/v1/admin/report_exports', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ report: selectedReport, start_date: startDate, end_date: endDate }),
+      });
+      const data = (await res.json().catch(() => ({}))) as { url?: string; message?: string };
+      if (!res.ok || !data.url?.startsWith('/api/v1/admin/report_exports/download?')) {
+        setDownloadError(data.message ?? t('admin.reportsPage.downloadError'));
+        return;
+      }
+      window.location.assign(data.url);
+    } catch {
+      setDownloadError(t('admin.reportsPage.downloadError'));
+    } finally {
+      setDownloading(false);
+    }
   }
 
   return (
@@ -132,12 +149,13 @@ export default function AdminReports() {
           </Box>
 
           {dateError && <Alert severity="error">{dateError}</Alert>}
+          {downloadError && <Alert severity="error">{downloadError}</Alert>}
 
           <Button
             variant="contained"
             startIcon={<DownloadIcon />}
             onClick={handleDownload}
-            disabled={!selectedReport}
+            disabled={!selectedReport || downloading}
           >
             {t('admin.reportsPage.download')}
           </Button>
