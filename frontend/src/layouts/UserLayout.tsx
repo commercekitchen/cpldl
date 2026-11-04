@@ -169,7 +169,7 @@ export function UserLayout() {
   }
 
   const isAuthenticated = status === 'authenticated';
-  const canAccessAdmin = Boolean(user?.is_org_admin || user?.isTrainer);
+  const canAccessAdmin = Boolean(user?.adminAccess);
   const loginRequired = orgConfig.features?.loginRequired === true;
 
   const isLessonContentPath = location.pathname.startsWith('/lessons/');
@@ -327,7 +327,7 @@ export function UserLayout() {
                   borderRadius: 0,
                 }}
               >
-                {t(user?.is_org_admin ? 'nav.adminDashboard' : 'nav.trainerDashboard')}
+                {t(user?.adminAccess === 'full' ? 'nav.adminDashboard' : 'nav.trainerDashboard')}
               </Button>
             ) : null}
             <NavButton

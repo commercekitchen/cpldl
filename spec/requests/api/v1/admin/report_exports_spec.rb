@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Admin::ReportExports', type: :request do
   include Devise::Test::IntegrationHelpers
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, trainer_reports_enabled: true) }
   let(:admin) { create(:user, :admin, organization: organization) }
   let(:trainer) { create(:user, :trainer, organization: organization) }
   let(:valid_params) { { report: 'registrations', start_date: '2025-01-01', end_date: '2025-03-01' } }
@@ -34,6 +34,13 @@ RSpec.describe 'Api::V1::Admin::ReportExports', type: :request do
       issue_url(trainer)
 
       expect(response).to have_http_status(:ok)
+    end
+
+    it 'rejects trainers when the organization has not opted in' do
+      organization.update!(trainer_reports_enabled: false)
+      issue_url(trainer)
+
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'rejects guests' do
@@ -169,6 +176,15 @@ RSpec.describe 'Api::V1::Admin::ReportExports', type: :request do
       get url
 
       expect(response.status).to be_in([401, 403])
+    end
+
+    it 'rejects a token after the organization opts out' do
+      url = issue_url(trainer)
+
+      organization.update!(trainer_reports_enabled: false)
+      get url
+
+      expect(response).to have_http_status(:forbidden)
     end
 
     it 'rejects a token after the user loses their role' do

@@ -207,4 +207,38 @@ describe User do
       end
     end
   end
+
+  describe '#report_role and #admin_access' do
+    let(:organization) { FactoryBot.create(:organization) }
+
+    it 'grants admins full access' do
+      admin = FactoryBot.create(:user, :admin, organization: organization)
+
+      expect(admin.report_role).to eq(:admin)
+      expect(admin.admin_access).to eq('full')
+    end
+
+    it 'grants trainers nothing when the organization has not opted in' do
+      trainer = FactoryBot.create(:user, :trainer, organization: organization)
+
+      expect(trainer.report_role).to be_nil
+      expect(trainer.admin_access).to be_nil
+    end
+
+    it 'grants trainers reports access when the organization has opted in' do
+      organization.update!(trainer_reports_enabled: true)
+      trainer = FactoryBot.create(:user, :trainer, organization: organization)
+
+      expect(trainer.report_role).to eq(:trainer)
+      expect(trainer.admin_access).to eq('reports')
+    end
+
+    it 'grants regular users nothing even when the organization has opted in' do
+      organization.update!(trainer_reports_enabled: true)
+      learner = FactoryBot.create(:user, organization: organization)
+
+      expect(learner.report_role).to be_nil
+      expect(learner.admin_access).to be_nil
+    end
+  end
 end

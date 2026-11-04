@@ -41,11 +41,10 @@ export function AdminLayout() {
   const location = useLocation();
   const { orgConfig } = useRouteLoaderData('org') as { orgConfig: OrganizationConfig };
   const isAuthenticated = status === 'authenticated';
-  const isAdmin = Boolean(user?.is_org_admin);
-  const isTrainer = Boolean(user?.isTrainer);
+  const isAdmin = user?.adminAccess === 'full';
 
   const allNavItems = [
-    { key: 'reports', path: '/admin/reports', icon: <BarChartIcon />, trainerAccess: true },
+    { key: 'reports', path: '/admin/reports', icon: <BarChartIcon />, reportsAccess: true },
     { key: 'courses', path: '/admin/courses', icon: <SchoolIcon /> },
     ...(!orgConfig.mainSite
       ? [{ key: 'plaCatalog', path: '/admin/pla-catalog', icon: <CollectionsBookmarkIcon /> }]
@@ -55,7 +54,7 @@ export function AdminLayout() {
     { key: 'settings', path: '/admin/settings', icon: <SettingsIcon /> },
     { key: 'cmsPages', path: '/admin/cms_pages', icon: <CollectionsBookmarkIcon /> },
   ];
-  const navItems = isAdmin ? allNavItems : allNavItems.filter((item) => item.trainerAccess);
+  const navItems = isAdmin ? allNavItems : allNavItems.filter((item) => item.reportsAccess);
 
   if (status === 'loading') {
     return (
@@ -67,11 +66,11 @@ export function AdminLayout() {
     );
   }
 
-  if (status === 'unauthenticated' || (!isAdmin && !isTrainer)) {
+  if (status === 'unauthenticated' || !user?.adminAccess) {
     return <Navigate to="/" replace />;
   }
 
-  // Trainers only get the sections flagged with trainerAccess; anything else
+  // Reports-only users get the sections flagged with reportsAccess; anything else
   // (including the /admin index, which defaults to courses) lands on reports.
   if (!isAdmin && !navItems.some((item) => location.pathname.startsWith(item.path))) {
     return <Navigate to="/admin/reports" replace />;

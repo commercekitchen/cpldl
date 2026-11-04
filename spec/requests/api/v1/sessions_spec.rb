@@ -43,6 +43,15 @@ RSpec.describe 'Api::V1::Sessions', type: :request do
       expect(response).to have_http_status(:ok)
       expect(json['id']).to eq(trainer.id)
       expect(json['roles']).to eq(['trainer'])
+      expect(json['redirect_to']).to eq('/')
+    end
+
+    it 'redirects a trainer to the admin area when the organization has opted in to trainer reports' do
+      organization.update!(trainer_reports_enabled: true)
+      create(:user, :trainer, organization: organization, email: 'trainer@example.com')
+
+      post '/api/v1/session', params: { email: 'trainer@example.com', password: 'abcd1234' }
+
       expect(json['redirect_to']).to eq('/admin')
     end
 

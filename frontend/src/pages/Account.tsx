@@ -195,7 +195,7 @@ export default function Account() {
                   You are signed in as an organization admin.{' '}
                   <Link href="/admin">Go to Admin Dashboard</Link>
                 </Alert>
-              ) : user.isTrainer ? (
+              ) : user.adminAccess === 'reports' ? (
                 <Alert severity="info" sx={{ mt: 2 }}>
                   You are signed in as a trainer.{' '}
                   <Link href="/admin">Go to Trainer Dashboard</Link>
