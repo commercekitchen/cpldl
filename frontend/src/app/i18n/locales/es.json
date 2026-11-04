@@ -56,7 +56,8 @@
     "downloadCsv": "Descargar CSV",
     "csvCourseColumn": "Curso",
     "csvCompletedColumn": "Fecha de finalización",
-    "csvTimeSpentColumn": "Tiempo total dedicado"
+    "csvTimeSpentColumn": "Tiempo total dedicado",
+    "contributedBy": "Creado por {{contributor}}"
   },
   "lessons": {
     "playLesson": "Reproducir lección",

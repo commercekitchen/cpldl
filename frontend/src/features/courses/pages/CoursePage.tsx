@@ -161,6 +161,11 @@ export function CoursePage() {
             </Typography>
           )}
           {course.categoryName && <CourseCategoryPill label={course.categoryName.trim()} />}
+          {course.contributor?.trim() && (
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              {t('courses.contributedBy', { contributor: course.contributor.trim() })}
+            </Typography>
+          )}
           <CourseStats course={course} />
         </Box>
       </Box>
