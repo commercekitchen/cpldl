@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Admin::Reports', type: :request do
   include Devise::Test::IntegrationHelpers
 
-  let(:organization) { create(:organization) }
+  let(:organization) { create(:organization, trainer_reports_enabled: true) }
 
   before { host! "#{organization.subdomain}.test.host" }
 
@@ -29,6 +29,15 @@ RSpec.describe 'Api::V1::Admin::Reports', type: :request do
 
     expect(response).to have_http_status(:ok)
     expect(json['reports'].map { |r| r['key'] }).to include('registrations', 'completed_courses')
+  end
+
+  it 'forbids trainers when the organization has not opted in' do
+    organization.update!(trainer_reports_enabled: false)
+    sign_in create(:user, :trainer, organization: organization)
+
+    get '/api/v1/admin/reports'
+
+    expect(response).to have_http_status(:forbidden)
   end
 
   it 'only lists reports permitted for the user role' do

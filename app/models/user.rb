@@ -187,6 +187,23 @@ class User < ApplicationRecord
     has_role?(:trainer, organization)
   end
 
+  # The role under which this user may use admin reporting, or nil. Trainers
+  # only get reporting at organizations that have opted in.
+  def report_role
+    return :admin if admin?
+    return :trainer if trainer? && organization&.trainer_reports_enabled
+
+    nil
+  end
+
+  # What the SPA admin area should offer: 'full' admin, 'reports' only, or nil.
+  def admin_access
+    return 'full' if admin?
+    return 'reports' if report_role
+
+    nil
+  end
+
   def reportable_role?(org)
     return true if self.has_role?(:user, org) || self.has_role?(:parent, org) || self.has_role?(:student, org)
 

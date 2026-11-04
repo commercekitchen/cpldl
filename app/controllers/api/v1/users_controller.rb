@@ -18,6 +18,7 @@ module Api
           organization_subdomain: user.organization.subdomain,
           is_org_admin: user.has_role?(:admin, user.organization),
           isTrainer: user.trainer?,
+          adminAccess: user.admin_access,
           surveyCompleted: user.quiz_responses_object.present?,
           optOutOfRecommendations: user.profile&.opt_out_of_recommendations == true,
           profileValid: user.profile.present? && user.profile.valid?

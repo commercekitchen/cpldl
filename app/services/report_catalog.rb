@@ -12,7 +12,7 @@ class ReportCatalog
     def permitted_for?(user, organization)
       return false unless user && user.organization == organization
 
-      roles.any? { |role| user.has_role?(role, organization) }
+      roles.include?(user.report_role)
     end
 
     # Streamed reports are row-by-row exporters; the rest are aggregate

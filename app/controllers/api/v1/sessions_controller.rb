@@ -86,7 +86,7 @@ module Api
       end
 
       def post_login_redirect_for(user)
-        stored_location_for(user) || (user.admin? || user.trainer? ? '/admin' : '/')
+        stored_location_for(user) || (user.admin_access ? '/admin' : '/')
       end
 
       def session_payload(user)

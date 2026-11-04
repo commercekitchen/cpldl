@@ -15,4 +15,8 @@ class GuestUser
   def trainer?
     false
   end
+
+  def report_role
+    nil
+  end
 end
