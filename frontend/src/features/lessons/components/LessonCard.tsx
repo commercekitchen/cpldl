@@ -22,9 +22,18 @@ type Props = {
   onPlayLesson?: (lesson: Lesson) => void;
   lessonPosition?: { index: number; total: number };
   hideCourseContext?: boolean;
+  // Cards near the start of a row are likely above the fold; load those eagerly.
+  imageLoading?: 'eager' | 'lazy';
 };
 
-export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hideCourseContext }: Props) {
+export function LessonCard({
+  lesson,
+  metadata,
+  onPlayLesson,
+  lessonPosition,
+  hideCourseContext,
+  imageLoading = 'lazy',
+}: Props) {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const imageUrl = previewImageForRecord(lesson.id);
@@ -40,6 +49,10 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
           component="img"
           image={imageUrl}
           alt={`${lesson.title} preview`}
+          width={488}
+          height={325}
+          loading={imageLoading}
+          decoding="async"
           sx={{
             height: 180,
             minHeight: 120,
@@ -97,7 +110,7 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
         sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1, mb: 1 }}>
-          <Typography variant="h6">{lesson.title}</Typography>
+          <Typography variant="h6" component="h3">{lesson.title}</Typography>
           {lesson.completed && <CourseCompletedBadge />}
         </Box>
         {lesson.completed && lesson.completedAt && (
@@ -192,7 +205,14 @@ export function LessonCard({ lesson, metadata, onPlayLesson, lessonPosition, hid
             justifyContent: 'center',
           }}
         >
-          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16 }} />
+          <Box
+            component="img"
+            src={attLogo}
+            alt="ATT logo"
+            width={45}
+            height={16}
+            sx={{ height: 16, width: 'auto' }}
+          />
         </Box>
       ) : null}
       {content}

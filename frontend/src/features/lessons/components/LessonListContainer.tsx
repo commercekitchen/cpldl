@@ -29,7 +29,12 @@ export function LessonListContainer({ title, params }: Props) {
         <Typography variant="h6" component="h2">{title}</Typography>
       </Box>
 
-      {isLoading && <PageLoader />}
+      {isLoading && (
+        // Reserve about a row of cards so sections below don't shift when it loads.
+        <Box sx={{ minHeight: 'clamp(376px, 40vh, 460px)', display: 'flex', alignItems: 'center' }}>
+          <PageLoader />
+        </Box>
+      )}
       {error && <Alert severity="error">{error.message}</Alert>}
 
       {!isLoading && !error && (

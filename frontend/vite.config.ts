@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
       outDir: "../public/spa",
       emptyOutDir: true,
       manifest: true,
+      sourcemap: true,
     },
 
     server: {

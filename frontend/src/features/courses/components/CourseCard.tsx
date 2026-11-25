@@ -21,9 +21,17 @@ type Props = {
   metadata?: React.ReactNode;
   onViewLessons?: (course: Course) => void;
   onStartCourse?: (course: Course) => void;
+  // Cards near the start of a row are likely above the fold; load those eagerly.
+  imageLoading?: 'eager' | 'lazy';
 };
 
-export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: Props) {
+export function CourseCard({
+  course,
+  metadata,
+  onViewLessons,
+  onStartCourse,
+  imageLoading = 'lazy',
+}: Props) {
   const { t } = useTranslation();
   const { locale } = useLocale();
   const imageUrl = previewImageForRecord(course.id);
@@ -35,6 +43,10 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
           component="img"
           image={imageUrl}
           alt={`${course.title} preview`}
+          width={488}
+          height={325}
+          loading={imageLoading}
+          decoding="async"
           sx={{
             height: 180,
             minHeight: 120,
@@ -89,7 +101,7 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
         sx={{ flex: '1 1 auto', display: 'flex', flexDirection: 'column', minHeight: 0 }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1, mb: 1 }}>
-          <Typography variant="h6">{course.title}</Typography>
+          <Typography variant="h6" component="h3">{course.title}</Typography>
           {course.completed && <CourseCompletedBadge />}
         </Box>
         {course.completed && course.completedAt && (
@@ -162,7 +174,14 @@ export function CourseCard({ course, metadata, onViewLessons, onStartCourse }: P
             justifyContent: 'center',
           }}
         >
-          <Box component="img" src={attLogo} alt="ATT logo" sx={{ height: 16 }} />
+          <Box
+            component="img"
+            src={attLogo}
+            alt="ATT logo"
+            width={45}
+            height={16}
+            sx={{ height: 16, width: 'auto' }}
+          />
         </Box>
       ) : null}
       {content}
