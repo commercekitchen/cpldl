@@ -20,6 +20,19 @@ Rails.application.configure do
   # config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.serve_static_files = true
 
+  # Cache static files served from public/. Fingerprinted Vite/Sprockets assets
+  # are upgraded to a 1-year immutable lifetime; everything else (preview
+  # images, favicon, robots.txt) gets a week. Gzip responses (including the
+  # SPA bundle) since nothing in front of Puma compresses them.
+  static_cache_control = "public, max-age=#{1.week.to_i}"
+  config.public_file_server.headers = { 'Cache-Control' => static_cache_control }
+  require Rails.root.join('lib/fingerprinted_asset_caching')
+  config.middleware.insert_before ActionDispatch::Static, FingerprintedAssetCaching,
+                                  static_cache_control: static_cache_control
+  config.middleware.insert_before FingerprintedAssetCaching, Rack::Deflater,
+                                  include: %w[text/html text/css text/plain text/csv application/javascript
+                                              text/javascript application/json image/svg+xml]
+
   # Attempt to read encrypted secrets from `config/secrets.yml.enc`.
   # Requires an encryption key in `ENV["RAILS_MASTER_KEY"]` or
   # `config/secrets.yml.key`.

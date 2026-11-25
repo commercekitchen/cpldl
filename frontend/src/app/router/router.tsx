@@ -2,24 +2,11 @@ import { createBrowserRouter, Navigate } from 'react-router-dom';
 import { rootLoader } from './loaders';
 import { OrgConfigLayout } from '../../layouts/OrgConfigLayout';
 import { UserLayout } from '../../layouts/UserLayout';
-import { AdminLayout } from '../../layouts/AdminLayout';
 import Home from '../../pages/Home';
 import Search from '../../pages/Search';
 import Login from '../../pages/Login';
 import Account from '../../pages/Account';
 import CourseRecommendationSurvey from '../../pages/CourseRecommendationSurvey';
-import AdminReports from '../../pages/admin/Reports';
-import AdminCourses from '../../pages/admin/Courses';
-import AdminEditCourse from '../../pages/admin/EditCourse';
-import AdminEditLesson from '../../pages/admin/EditLesson';
-import AdminPlaCatalog from '../../pages/admin/PlaCatalog';
-import AdminNewCourse from '../../pages/admin/NewCourse';
-import AdminUsers from '../../pages/admin/Users';
-import AdminSettings from '../../pages/admin/Settings';
-import AdminCategories from '../../pages/admin/Categories';
-import AdminCmsPages from '../../pages/admin/CmsPages';
-import AdminNewCmsPage from '../../pages/admin/NewCmsPage';
-import AdminEditCmsPage from '../../pages/admin/EditCmsPage';
 import { lessonRoute } from '../../features/lessons/routes/lessonRoute';
 import { courseRoute } from '../../features/courses/routes/courseRoute';
 import { coursesRoute } from '../../features/courses/routes/coursesRoute';
@@ -31,8 +18,13 @@ import ResetPassword from '../../pages/ResetPassword';
 import AcceptInvitation from '../../pages/AcceptInvitation';
 import TermsOfUse from '../../pages/TermsOfUse';
 import PrivacyPolicy from '../../pages/PrivacyPolicy';
-import Redesign from '../../pages/Redesign';
 import CmsPage from '../../pages/CmsPage';
+
+// Admin pages (rich text editor, drag-and-drop) and the static redesign page
+// are code-split so learners don't download them on first load.
+const lazyPage = (load: () => Promise<{ default: React.ComponentType }>) => async () => ({
+  Component: (await load()).default,
+});
 
 export function createAppRouter() {
   const basename = '/';
@@ -47,21 +39,23 @@ export function createAppRouter() {
         children: [
           {
             path: 'admin',
-            element: <AdminLayout />,
+            lazy: async () => ({
+              Component: (await import('../../layouts/AdminLayout')).AdminLayout,
+            }),
             children: [
               { index: true, element: <Navigate to="/admin/courses" replace /> },
-              { path: 'reports', element: <AdminReports /> },
-              { path: 'courses', element: <AdminCourses /> },
-              { path: 'courses/new', element: <AdminNewCourse /> },
-              { path: 'courses/:courseId/edit', element: <AdminEditCourse /> },
-              { path: 'courses/:courseId/lessons/:lessonId/edit', element: <AdminEditLesson /> },
-              { path: 'pla-catalog', element: <AdminPlaCatalog /> },
-              { path: 'users', element: <AdminUsers /> },
-              { path: 'settings', element: <AdminSettings /> },
-              { path: 'categories', element: <AdminCategories /> },
-              { path: 'cms_pages', element: <AdminCmsPages /> },
-              { path: 'cms_pages/new', element: <AdminNewCmsPage /> },
-              { path: 'cms_pages/:pageId/edit', element: <AdminEditCmsPage /> },
+              { path: 'reports', lazy: lazyPage(() => import('../../pages/admin/Reports')) },
+              { path: 'courses', lazy: lazyPage(() => import('../../pages/admin/Courses')) },
+              { path: 'courses/new', lazy: lazyPage(() => import('../../pages/admin/NewCourse')) },
+              { path: 'courses/:courseId/edit', lazy: lazyPage(() => import('../../pages/admin/EditCourse')) },
+              { path: 'courses/:courseId/lessons/:lessonId/edit', lazy: lazyPage(() => import('../../pages/admin/EditLesson')) },
+              { path: 'pla-catalog', lazy: lazyPage(() => import('../../pages/admin/PlaCatalog')) },
+              { path: 'users', lazy: lazyPage(() => import('../../pages/admin/Users')) },
+              { path: 'settings', lazy: lazyPage(() => import('../../pages/admin/Settings')) },
+              { path: 'categories', lazy: lazyPage(() => import('../../pages/admin/Categories')) },
+              { path: 'cms_pages', lazy: lazyPage(() => import('../../pages/admin/CmsPages')) },
+              { path: 'cms_pages/new', lazy: lazyPage(() => import('../../pages/admin/NewCmsPage')) },
+              { path: 'cms_pages/:pageId/edit', lazy: lazyPage(() => import('../../pages/admin/EditCmsPage')) },
             ],
           },
           {
@@ -78,7 +72,7 @@ export function createAppRouter() {
               { path: 'survey', element: <CourseRecommendationSurvey /> },
               { path: 'terms-of-use', element: <TermsOfUse /> },
               { path: 'privacy-policy', element: <PrivacyPolicy /> },
-              { path: 'redesign', element: <Redesign /> },
+              { path: 'redesign', lazy: lazyPage(() => import('../../pages/Redesign')) },
               { path: 'courses/:courseId/completed', element: <CourseCompletedPage /> },
               { path: 'cms_pages/:slug', element: <CmsPage /> },
               lessonRoute,

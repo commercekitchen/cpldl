@@ -3,6 +3,9 @@ import type { Lesson } from '../types';
 import Box from '@mui/material/Box';
 import { LessonCard } from './LessonCard';
 
+// Roughly how many cards fit across a wide viewport.
+const EAGER_IMAGE_COUNT = 4;
+
 type Props = {
   lessons: Lesson[];
   onPlayLesson: (lessonId: string) => void;
@@ -43,7 +46,7 @@ export function LessonList({ lessons, onPlayLesson, hideCourseContext }: Props) 
         scrollSnapType: 'x proximity',
       }}
     >
-      {lessons.map((l) => (
+      {lessons.map((l, i) => (
         <Box
           key={l.id}
           role="listitem"
@@ -59,6 +62,7 @@ export function LessonList({ lessons, onPlayLesson, hideCourseContext }: Props) 
             onPlayLesson={(lesson) => onPlayLesson(lesson.id)}
             lessonPosition={lessonPosition[l.id]}
             hideCourseContext={hideCourseContext}
+            imageLoading={i < EAGER_IMAGE_COUNT ? 'eager' : 'lazy'}
           />
         </Box>
       ))}

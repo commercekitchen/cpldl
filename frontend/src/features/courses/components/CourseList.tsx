@@ -8,6 +8,9 @@ import { CourseCard } from './CourseCard';
 import { useAuth } from '../../../auth/useAuth';
 import { useGuestProgress } from '../../progress/useGuestProgress';
 
+// Roughly how many cards fit across a wide viewport.
+const EAGER_IMAGE_COUNT = 4;
+
 type Props = {
   courses: Course[];
   onViewLessons: (courseId: string) => void;
@@ -44,7 +47,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
         scrollSnapType: 'x proximity',
       }}
     >
-      {displayedCourses.map((c) => (
+      {displayedCourses.map((c, i) => (
         <Box
           key={c.id}
           role="listitem"
@@ -59,6 +62,7 @@ export function CourseList({ courses, onViewLessons, onStartCourse, viewAllHref 
             course={c}
             onViewLessons={(course) => onViewLessons(course.id)}
             onStartCourse={(course) => onStartCourse(course.id)}
+            imageLoading={i < EAGER_IMAGE_COUNT ? 'eager' : 'lazy'}
           />
         </Box>
       ))}

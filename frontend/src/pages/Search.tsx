@@ -115,10 +115,11 @@ export default function Search() {
             Courses
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
-            {results.courses.map((course) => (
+            {results.courses.map((course, i) => (
               <CourseCard
                 key={course.id}
                 course={course}
+                imageLoading={i < 4 ? 'eager' : 'lazy'}
                 onViewLessons={() => navigate(`/courses/${course.id}`)}
                 onStartCourse={() => {
                   void startCourse(course.id);

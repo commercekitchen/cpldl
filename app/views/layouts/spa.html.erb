@@ -8,6 +8,7 @@
       <meta name="robots" content="noindex, nofollow">
     <% end %>
     <title><%= current_organization.subdomain == "www" ? "DigitalLearn" : "#{current_organization.name} - DigitalLearn" %></title>
+    <meta name="description" content="<%= t("spa.meta_description") %>">
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
